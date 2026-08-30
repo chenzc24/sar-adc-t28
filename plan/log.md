@@ -4,6 +4,35 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Complete topology-aware electrical macro-model
+
+- Target: replace isolated phase fixtures with one closed-loop pre-transistor
+  electrical model for sampling, differential 5+5 CDAC switching, reference
+  memory, comparator regeneration/reset/kickback, and SAR sequencing.
+- Local changed areas: one parameter contract, electrical DUT and testbench,
+  unrolled Verilog-A controller, analytical/Spectre runner, focused regression,
+  architecture/result documentation, OA generator, manifest, and target plan.
+- Remote OA changes: created only `sar_cdac_macro_10b`,
+  `sar_sampling_macro`, `sar_comparator_macro`, their symbols, and
+  `tb_sar_macro_transient` in `SAR_ADC_T28`. Existing OA cells, PDK content,
+  and the unsaved `PLAYGROUND_AMP` schematic remained untouched.
+- OA correction: enlarged CDAC switch spacing and replaced the compact
+  generated CDAC symbol with a wide-pitch review symbol after readback exposed
+  adjacent terminal-stub shorts. Final connectivity readback is clean and the
+  hierarchical Spectre netlist exports successfully.
+- Validation: exact capacitance-matrix/static regressions, eleven Spectre 21.1
+  transients, waveform/metric extraction, focused tests, OA parameter/net
+  readback, symbol-port audit, Check and Save, hierarchical netlist export,
+  and visual review.
+- Results: the canonical split load is `32Cu=219.53504 fF`. Six nominal code
+  centers were exact with <=0.102 LSB settling residual and 49.52 ns latency.
+  Deliberate slow-RC, assumed-parasitic, and 1-fF-kickback cases exposed
+  expected failures.
+- Scope limit: no PDK block or dimensions are frozen; random noise, nonlinear
+  device effects, PVT, mismatch, reliability, and extraction remain open.
+- Commit status: ready to commit as
+  `feat: add topology-aware SAR macro-model`; push was not requested.
+
 ## 2026-08-30 - Complete module first-order models
 
 - Target: close the abstraction layer between the behavioral ADC and

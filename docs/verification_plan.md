@@ -37,6 +37,27 @@ because its optional Rust backend is unavailable on the current Windows host.
 Remote Spectre 21.1 AHDL compilation and transient execution are the final
 simulator gate. EVAS acceptance alone is explicitly not Spectre portability.
 
+## Topology-aware electrical macro-model
+
+- Exact capacitance-matrix regression: 32-Cu effective top load, unity base
+  coupling, and binary weights from 1/2 through 1/1024.
+- Static analytical regression: nominal zero missing codes and numerical-zero
+  DNL/INL; assumed parasitic sensitivity must measurably alter the transfer.
+- Closed-loop transient regression: six code centers, ten resolved MSB-first
+  comparisons, correct comparator signs, exact charge-model codes, conversion
+  latency below 60 ns, and every nominal pre-compare residual below 0.25 LSB.
+- Negative sensitivity regression: slow reference/switch settling, assumed
+  top/bridge parasitics, and elevated direct kickback must expose their
+  respective timing, code, or comparator-sign failures.
+- OA structural regression: exact owned cells only, instance/parameter/net
+  readback, no adjacent-control-net shorts, symbol-port audit, Check and Save,
+  and successful hierarchical Spectre netlist export.
+
+This is a deterministic electrical closure gate. Do not combine its RC and
+kickback errors with the prior random-noise run by simple sample-wise addition;
+noise, PVT, mismatch, and extraction are introduced when replacing macros with
+PDK blocks.
+
 ## Unit-level transistor verification
 
 - Comparator: offset, noise, delay, metastability, kickback, and energy/conversion.

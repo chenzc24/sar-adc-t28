@@ -79,8 +79,8 @@ statistics, comparator noise bandwidth, or reference-network memory.
 
 ## Stage-4B CDAC/reference first-order contract
 
-The first module-level dynamic model treats the ideal 5+5 split array as an
-effective `Cside = 33*Cu` load per comparator side. A conservative independent
+The first module-level dynamic fixture treated the ideal 5+5 split array as a
+conservative `Cside = 33*Cu` load per comparator side. A conservative independent
 two-side kT/C estimate sets a nominal lower bound of `Cside = 82.787 fF` and
 `Cu = 2.509 fF` at 300.15 K for the allocated 0.316406 mV RMS sampling noise.
 This is not a matching- or layout-qualified capacitor size.
@@ -112,3 +112,23 @@ For comparator timing sensitivity, a 20 fF regeneration node must provide
 4.5 MHz and -1 dBFS. These values close the first-order constraint layer but
 do not replace transistor noise, offset, nonlinear switch, PVT, mismatch, or
 post-layout verification.
+
+## Stage-4C topology-aware electrical macro-model
+
+The topology-complete pre-transistor model is documented in
+`docs/electrical_macro_model.md`. Unlike the isolated first-order fixtures, it
+solves the full differential 5+5 capacitor network, every bottom-plate and
+sampling switch, local reference impedance/decoupling, dynamic comparator
+regeneration/reset/kickback, and ten closed-loop SAR decisions in one Spectre
+transient.
+
+The canonical split network is a 31-Cu active MSB array, a 32-Cu LSB array
+including its dummy, and a `(32/31)Cu` bridge. Its exact comparator-side load
+is `32Cu = 219.53504 fF` at the tracked `Cu=6.86047 fF`, while the older 33-Cu
+fixture remains a conservative historical envelope. Six nominal code centers
+complete in 49.52 ns, reproduce the charge-model code exactly, and keep every
+pre-compare settling residual below 0.102 LSB.
+
+This stage fixes the macro topology and phase interactions, not transistor
+dimensions. Random noise remains a separate budget regression, and PDK PVT,
+mismatch, nonlinear switch behavior, reliability, and extraction remain open.

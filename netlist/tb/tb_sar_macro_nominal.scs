@@ -1,0 +1,37 @@
+// Library name: SAR_ADC_T28
+// Cell name:    tb_sar_macro_transient
+// View name:    spectre
+
+simulator lang=spectre
+global 0
+
+VDD_SRC (VDD 0) vsource dc=@VDD@ type=dc
+VREFP_SRC (VREFP_IDEAL 0) vsource dc=@VREFP@ type=dc
+VREFN_SRC (VREFN_IDEAL 0) vsource dc=@VREFN@ type=dc
+VCM_SRC (VCM 0) vsource dc=@VCM@ type=dc
+VINP_SRC (VINP 0) vsource dc=@VINP@ type=dc
+VINN_SRC (VINN 0) vsource dc=@VINN@ type=dc
+VSAMPLE (CLK_SAMPLE 0) vsource type=pwl wave=[ @SAMPLE_WAVE@ ]
+VTRIAL (CLK_TRIAL 0) vsource type=pwl wave=[ @TRIAL_WAVE@ ]
+VLATCH (CLK_LATCH 0) vsource type=pwl wave=[ @LATCH_WAVE@ ]
+VCMPRESET (CMP_RESET 0) vsource type=pwl wave=[ @RESET_WAVE@ ]
+
+XDUT (
++ VINP VINN VREFP_IDEAL VREFN_IDEAL VCM
++ CLK_SAMPLE CLK_TRIAL CLK_LATCH CMP_RESET VDD 0
++ TOPP TOPN VREFP VREFN COMP_P COMP_N
++ D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 BUSY VALID
++ ) sar_adc_macro_10b
++ cu=@CU@ ctoppar=@CTOPPAR@ cbridgepar=@CBRIDGEPAR@
++ rsample=@RSAMPLE@ rsource=@RSOURCE@ rbottom=@RBOTTOM@ ropen=@ROPEN@
++ rref=@RREF@ cdecap=@CDECAP@
++ gm_input=@GMINPUT@ gm_reg=@GMREG@ ccomp=@CCOMP@ rreset=@RRESET@ rcm=@RCM@ ckb=@CKB@
++ cmp_offset=@CMPOFFSET@ vt1=@VT1@ vt2=@VT2@
+
+simulatorOptions options reltol=1e-5 vabstol=1e-7 iabstol=1e-13
++ temp=27 tnom=27 gmin=1e-14
+tran tran stop=@TSTOP@ maxstep=@MAXSTEP@ errpreset=conservative
+save TOPP TOPN VREFP VREFN COMP_P COMP_N D9 D8 D7 D6 D5 D4 D3 D2 D1 D0 BUSY VALID CLK_SAMPLE CLK_TRIAL CLK_LATCH CMP_RESET
+
+include "@DUT_PATH@"
+ahdl_include "@CONTROLLER_PATH@"

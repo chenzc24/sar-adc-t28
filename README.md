@@ -97,3 +97,27 @@ E:\bridge-Agent-T28\.venv\Scripts\python.exe `
 EVAS is a voltage-mode event simulator and is only the local timing smoke
 gate. A successful remote Spectre run remains mandatory before the model is
 treated as Spectre-compiled.
+
+## Electrical macro-model
+
+`netlist/dut/sar_macro_10b.scs` and
+`models/veriloga/sar_macro_controller_10b.va` form the topology-aware,
+closed-loop pre-transistor model. It includes the explicit differential 5+5
+split CDAC, sample/bottom-plate switches, finite reference network, dynamic
+gm/C comparator, reset/kickback, and ten electrical decisions. See
+`docs/electrical_macro_model.md` for topology, results, and scope limits.
+
+Run the local analytical regression and the remote Spectre suite with:
+
+```powershell
+.venv\Scripts\python.exe scripts\analysis\run_electrical_macro_model.py
+
+E:\bridge-Agent-T28\virtuoso-bridge-lite\.venv\Scripts\python.exe `
+    scripts\analysis\run_electrical_macro_model.py --spectre --profile t28_io
+
+.venv\Scripts\python.exe verification\system\test_electrical_macro_model.py -v
+```
+
+The matching OA review hierarchy is `sar_sampling_macro ->
+sar_cdac_macro_10b -> sar_comparator_macro`, with
+`tb_sar_macro_transient` as the structural netlisting top.

@@ -2,6 +2,27 @@
 
 ## 2026-08-30
 
+- Completed a topology-aware, closed-loop electrical macro-model before
+  transistor replacement. The Spectre hierarchy contains both 5+5 split
+  CDAC sides, 60 active bottom-plate switches plus dummy/reset paths,
+  sampling impedance, reference memory, gm/C comparator regeneration,
+  reset/kickback, and ten SAR decisions.
+- Corrected the canonical 5+5 topology load to `32Cu`: 31 active MSB units,
+  32 LSB units including the dummy, and a `(32/31)Cu` bridge reproduce exact
+  binary weights. The earlier 33-Cu fixture is now explicitly historical and
+  conservative rather than topology-accurate.
+- Selected the nominal macro comparison point `Ron=1 kOhm`, `Rref=100 Ohm`,
+  `Cdecap=2 pF`, comparator `gm_in/gm_reg=60/100 uS`, `Cdiff=20 fF`, and
+  direct kickback `0.05 fF`. These are executable sensitivity parameters,
+  not frozen transistor specifications.
+- Six nominal Spectre code centers were exact, completed in 49.52 ns, and
+  showed at most 0.102 LSB pre-compare settling error. Deliberate slow-RC,
+  assumed-parasitic, and 1-fF-kickback cases exposed the expected failures.
+- Created and read back `sar_cdac_macro_10b`, `sar_sampling_macro`,
+  `sar_comparator_macro`, and `tb_sar_macro_transient` in `SAR_ADC_T28`.
+  A wide-pitch CDAC symbol and expanded schematic placement are required to
+  prevent generated OA terminal stubs from touching; the final hierarchy
+  checks, saves, and exports a Spectre netlist successfully.
 - Completed the module-level first-order layer by adding sampling-acquisition,
   comparator-regeneration, and clock-jitter constraints to the existing
   CDAC/reference envelope. No whole-ADC linear model was created because the
