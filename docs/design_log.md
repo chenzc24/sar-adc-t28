@@ -2,6 +2,22 @@
 
 ## 2026-08-30
 
+- Established the first module-level CDAC/reference settling envelope without
+  freezing a capacitor or switch size. The ideal 5+5 split gives
+  `Cside = 33*Cu`; the differential kT/C allocation requires at least
+  82.787 fF per side, or 2.509 fF per unit before parasitics.
+- Converted the 0.25 LSB deterministic settling allocation into an allowed
+  `Rref + Ron` envelope over Cu and 2-4 ns settling windows. At the
+  characterized 6.86047 fF comparison point, the 3 ns limit is 1.593 kΩ;
+  at the 35.6304 fF specimen it tightens to 306.7 Ω.
+- Created and netlisted only
+  `SAR_ADC_T28/tb_cdac_ref_settling/schematic`. Four ideal-RC Spectre
+  transients matched the closed-form exponential result, including explicit
+  feasible, settling-fail, and kT/C-fail examples.
+- Kept reference memory/noise, nonlinear Ron, physical switching trajectories,
+  mismatch, charge injection, kickback, and parasitics outside this first-order
+  model so their later PDK results cannot be mistaken for already validated
+  behavior.
 - Adopted a 10-bit, 10 MS/s, 0.9 V fully differential default specification.
 - Selected a 5+5 split CDAC, StrongARM comparator, and synchronous SAR baseline.
 - Assigned text sources and verification automation to the local Git repository.

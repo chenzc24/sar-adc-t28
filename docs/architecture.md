@@ -76,3 +76,24 @@ ADC transfer calculation.
 The nonideality controls are architectural sensitivity mechanisms. They do
 not claim transistor-level independence, physical capacitor mismatch
 statistics, comparator noise bandwidth, or reference-network memory.
+
+## Stage-4B CDAC/reference first-order contract
+
+The first module-level dynamic model treats the ideal 5+5 split array as an
+effective `Cside = 33*Cu` load per comparator side. A conservative independent
+two-side kT/C estimate sets a nominal lower bound of `Cside = 82.787 fF` and
+`Cu = 2.509 fF` at 300.15 K for the allocated 0.316406 mV RMS sampling noise.
+This is not a matching- or layout-qualified capacitor size.
+
+During conversion, the reference and selected CDAC switch are reduced to the
+first-order Thevenin path `Rref + Ron`. The permitted sum is parameterized by
+Cu and the settling portion of the 5 ns bit cycle. For example, the
+characterized 6.86047 fF comparison point gives `Cside = 226.396 fF` and
+permits 1.593 kΩ at 3 ns for the 0.25 LSB residual guardrail. Neither 3 ns nor
+that capacitor is frozen.
+
+The tracked analytical sweep and four correlated Spectre transients are
+documented in `docs/cdac_reference_settling.md`. Code-dependent reference
+memory, physical switch nonlinearity, reference/switch noise, mismatch,
+charge injection, comparator kickback, and parasitics remain later-stage
+transistor- and extracted-level work.

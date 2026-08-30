@@ -1,7 +1,7 @@
 library: SAR_ADC_T28
 remote_path: /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28
 technology_library: tsmcN28
-library_status: characterization_cells_created
+library_status: characterization_and_first_order_settling_cells_created
 technology_binding_verified: true
 
 cells:
@@ -14,6 +14,9 @@ cells:
   tb_cap_char:
     role: two_terminal_mom_ac_characterization
     status: schematic_netlisted_and_tt_simulated
+  tb_cdac_ref_settling:
+    role: cdac_reference_first_order_half_circuit
+    status: schematic_read_back_netlisted_and_spectre_correlated
   sar_adc_ideal_10b:
     role: clocked_veriloga_golden_model
     status: local_model_only

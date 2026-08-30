@@ -4,6 +4,31 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Establish CDAC/reference settling envelope
+
+- Target: translate the sampling-noise and deterministic-settling allocations
+  into a parameterized first-order feasibility envelope for the 5+5 split
+  CDAC, reference path, and switch.
+- Local changed areas: tracked YAML inputs, ideal Spectre deck, analytical and
+  simulation runner, focused regression, architecture/design report, cell
+  manifest, target plan, and this log.
+- Remote OA changes: created only
+  `SAR_ADC_T28/tb_cdac_ref_settling/schematic` from analogLib pulse,
+  resistor, capacitor, and ground instances. PDK content and the unrelated
+  unsaved `PLAYGROUND_AMP` schematic remained read-only.
+- Validation: schematic connectivity/parameter readback, Virtuoso Spectre
+  netlist export, four Spectre 21.1 transient runs, analytical correlation,
+  1,440-point local grid generation, two focused tests, and plot inspection.
+- Results: kT/C imposes `Cu >= 2.509 fF` in the parasitic-free 33-Cu
+  equivalent. For Cu=6.86047 fF and a 3 ns window, total `Rref + Ron` must be
+  at most 1.593 kΩ. Four Spectre residuals matched the analytical model within
+  the specified 1% or 1 uV tolerance.
+- Scope limit: no production capacitor or switch was selected; nonlinear Ron,
+  reference memory/noise, switching trajectory, mismatch, charge injection,
+  kickback, PVT, and parasitics remain open.
+- Commit status: ready to commit as
+  `feat: establish CDAC reference settling envelope`; push was not requested.
+
 ## 2026-08-30 - Establish T28 primitive characterization
 
 - Target: create verified NMOS, PMOS, and MOM characterization schematics and

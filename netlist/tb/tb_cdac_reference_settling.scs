@@ -1,0 +1,17 @@
+// Parameterized first-order half-circuit for CDAC/reference settling.
+// The analysis runner replaces the tagged parameter tokens for each case.
+simulator lang=spectre
+global 0
+
+parameters vstep=@VSTEP@ tdelay=@TDELAY@ trise=@TRISE@
+parameters rref=@RREF@ rswitch=@RSWITCH@ cside=@CSIDE@
+
+VSTEP (VREF_SRC 0) vsource type=pulse val0=0 val1=vstep \
+    delay=tdelay rise=trise fall=trise width=20n period=40n
+RREF (VREF_SRC VREF_INT) resistor r=rref
+RSW (VREF_INT VDAC) resistor r=rswitch
+CDAC (VDAC 0) capacitor c=cside
+
+simulatorOptions options reltol=1e-6 vabstol=1e-9 iabstol=1e-15 temp=27 tnom=27
+tran_settle tran stop=@TSTOP@ maxstep=@MAXSTEP@ errpreset=conservative
+save VREF_SRC VREF_INT VDAC

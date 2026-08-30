@@ -1,0 +1,53 @@
+stage: module_level_first_order_cdac_reference
+
+source_spec:
+  resolution_bits: 10
+  differential_full_scale_v: 1.8
+  temperature_k: 300.15
+  sampling_noise_rms_lsb: 0.18
+  settling_abs_max_lsb: 0.25
+  bit_cycle_ns: 5.0
+
+split_cdac:
+  architecture: 5_plus_5
+  msb_subarray_units: 32.0
+  lsb_subarray_units: 32.0
+  ideal_bridge_units: 1.032258064516129
+  lsb_series_equivalent_units: 1.0
+  comparator_side_units: 33.0
+  parasitic_capacitance_ff: 0.0
+
+scan:
+  unit_capacitance_ff: [1.0, 2.0, 2.5, 3.0, 4.0, 6.86047, 8.0, 16.0, 35.6304]
+  settling_time_ns: [2.0, 2.5, 3.0, 4.0]
+  reference_resistance_ohm: [0.0, 100.0, 250.0, 500.0, 1000.0]
+  switch_resistance_ohm: [100.0, 250.0, 500.0, 1000.0, 1500.0, 2000.0, 3000.0, 5000.0]
+
+representative_spectre_cases:
+  - name: characterized_default_feasible
+    unit_capacitance_ff: 6.86047
+    settling_time_ns: 3.0
+    reference_resistance_ohm: 500.0
+    switch_resistance_ohm: 1000.0
+  - name: characterized_default_settling_fail
+    unit_capacitance_ff: 6.86047
+    settling_time_ns: 3.0
+    reference_resistance_ohm: 500.0
+    switch_resistance_ohm: 1500.0
+  - name: small_cap_noise_fail
+    unit_capacitance_ff: 2.0
+    settling_time_ns: 3.0
+    reference_resistance_ohm: 500.0
+    switch_resistance_ohm: 1000.0
+  - name: characterized_specimen_near_boundary
+    unit_capacitance_ff: 35.6304
+    settling_time_ns: 3.0
+    reference_resistance_ohm: 100.0
+    switch_resistance_ohm: 200.0
+
+spectre:
+  single_ended_step_v: 0.9
+  step_delay_ns: 1.0
+  rise_time_ps: 1.0
+  stop_time_ns: 6.0
+  max_step_ps: 2.0
