@@ -4,6 +4,18 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Record Verilog-A noise-injection learning
+
+- Target: record the reviewed distinction between RMS parameters, event-level
+  random realizations, and physical continuous-time noise modeling.
+- Local changed areas: one learning note, its bounded plan, and this log.
+- Remote OA changes: none; all remote state remained read-only.
+- Validation: numerical cross-check against the design spec and fixed-seed
+  Spectre summary, targeted Markdown inspection, owned-path review, and
+  `git diff --check`.
+- Commit status: ready to commit as
+  `docs: record Verilog-A noise injection learning`; push was not requested.
+
 ## 2026-08-30 - Validate allocated Verilog-A random noise
 
 - Target: enable the stage-1 sampling, comparator, and reference/switching
