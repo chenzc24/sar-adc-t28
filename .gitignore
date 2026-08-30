@@ -1,0 +1,50 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Spectre / Cadence generated data
+*.raw/
+psf/
+*.psf
+*.sdb
+*.rdb
+*.log
+*.log.*
+*.ic
+*.fc
+input.ahdlSimDB/
+
+# Disposable run output
+output/**
+!output/.gitkeep
+
+# Downloaded binary/sign-off artifacts
+artifacts/gds/**
+artifacts/cdl/**
+artifacts/pex/**
+artifacts/reports/**
+!artifacts/gds/.gitkeep
+!artifacts/cdl/.gitkeep
+!artifacts/pex/.gitkeep
+!artifacts/reports/.gitkeep
+
+# Virtuoso captures and exports
+virtuoso/snapshots/**
+virtuoso/exports/**
+!virtuoso/snapshots/.gitkeep
+!virtuoso/exports/.gitkeep
+
+# Editors and OS files
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
+
