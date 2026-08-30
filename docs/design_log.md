@@ -2,6 +2,17 @@
 
 ## 2026-08-30
 
+- Repaired the OA electrical macro hierarchy after review found that the
+  earlier top was only a structural skeleton. Added the parsed
+  `sar_macro_controller_10b/veriloga` view and symbol, connected comparator
+  outputs to all SAR/CDAC controls, added finite reference RC, correct phase
+  clocks, comparator rail clamps, and high-impedance digital observation
+  loads. All four schematics now have zero check markers.
+- Made controller electrical ports statically scalar (`SEL0_9..0`,
+  `SEL1_9..0`, and `D9..0`) so IC6.1.8, the OA symbol, and Spectre share one
+  unambiguous port order. The automatically exported OA circuit deck was not
+  edited; an analysis-only wrapper produced code 768 in 49.5201 ns with
+  0.08735 LSB maximum settling residual and all ten comparisons resolved.
 - Completed a topology-aware, closed-loop electrical macro-model before
   transistor replacement. The Spectre hierarchy contains both 5+5 split
   CDAC sides, 60 active bottom-plate switches plus dummy/reset paths,

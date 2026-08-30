@@ -4,6 +4,32 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Repair OA electrical macro-model loop
+
+- Target: replace the floating structural OA top with an executable nominal
+  closed-loop SAR electrical macro testbench.
+- Local changed areas: controller scalar port contract, OA builder, focused
+  contract test, electrical-macro documentation, manifest, target plan, and
+  this log.
+- Remote OA changes: created `sar_macro_controller_10b/symbol+veriloga` and
+  rebuilt the owned CDAC, sampling, comparator, and top schematics. No
+  placeholder controller schematic remains. Unrelated libraries, PDK data,
+  and the unsaved `PLAYGROUND_AMP/canvas_test` window were untouched.
+- Validation: all four schematic check-marker counts are zero; OA readback
+  and automatic Spectre export contain the complete controller/CDAC path;
+  Spectre 21.1 completed the unmodified exported circuit with zero errors.
+  The code-768 case returned 768, asserted `VALID` after 49.5201 ns, stayed at
+  0.08735 LSB maximum pre-compare residual, and resolved all ten decisions
+  with the correct sign. The remaining five Spectre warnings are external
+  AHDL/PDK environment notices.
+- The full 11-case correlated Spectre regression also passed execution after
+  the shared controller update. All six nominal code centers remained exact
+  and below 0.25 LSB; the deliberate slow-RC, parasitic, and 1-fF-kickback
+  cases continued to expose their expected resolution, code, and sign
+  failures.
+- Commit status: ready to commit as `fix: close OA SAR macro-model loop`; push
+  was not requested.
+
 ## 2026-08-30 - Complete topology-aware electrical macro-model
 
 - Target: replace isolated phase fixtures with one closed-loop pre-transistor

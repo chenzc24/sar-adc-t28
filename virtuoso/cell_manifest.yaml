@@ -1,7 +1,7 @@
 library: SAR_ADC_T28
 remote_path: /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28
 technology_library: tsmcN28
-library_status: topology_aware_electrical_macro_cells_created_correlated_and_netlisted
+library_status: oa_closed_loop_electrical_macro_schematic_spectre_validated
 technology_binding_verified: true
 
 cells:
@@ -31,10 +31,13 @@ cells:
     status: schematic_and_symbol_read_back_hierarchically_netlisted
   sar_comparator_macro:
     role: dynamic_gm_c_regeneration_reset_and_kickback_macro
-    status: schematic_and_symbol_read_back_hierarchically_netlisted
+    status: schematic_and_symbol_read_back_zero_markers_and_transient_validated
+  sar_macro_controller_10b:
+    role: closed_loop_veriloga_sar_sequencer
+    status: veriloga_and_symbol_parsed_hierarchically_netlisted_and_transient_validated
   tb_sar_macro_transient:
-    role: oa_structural_review_testbench_for_electrical_macro_hierarchy
-    status: schematic_read_back_and_spectre_netlisted
+    role: oa_closed_loop_nominal_electrical_macro_testbench
+    status: schematic_read_back_zero_markers_exported_and_spectre_transient_validated
   sar_adc_ideal_10b:
     role: clocked_veriloga_golden_model
     status: local_model_only

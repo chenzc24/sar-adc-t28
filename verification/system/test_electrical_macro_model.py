@@ -9,6 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+OA_BUILDER_PATH = ROOT / "scripts" / "virtuoso" / "create_electrical_macro_model.py"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -77,6 +78,17 @@ class ElectricalMacroModelTest(unittest.TestCase):
             self.assertNotIn("@", text)
             self.assertIn("sar_macro_10b", text)
             self.assertIn("ahdl_include", text)
+
+    def test_oa_builder_closes_controller_and_reference_paths(self):
+        source = OA_BUILDER_PATH.read_text(encoding="utf-8")
+        self.assertIn('CONTROLLER = "sar_macro_controller_10b"', source)
+        self.assertIn('("XCTRL", "COMP_P", "COMP_P")', source)
+        self.assertIn('sch.add(label_term("XCTRL", f"SEL0_{bit}", f"SEL0<{bit}>"))', source)
+        self.assertIn('sch.add(label_term("XCTRL", f"SEL1_{bit}", f"SEL1<{bit}>"))', source)
+        self.assertIn('sch.add(label_term("XCTRL", f"D{bit}", f"DOUT<{bit}>"))', source)
+        self.assertIn('("P", "VREFP_IDEAL", "VREFP", 1.0)', source)
+        self.assertIn('"V_CLK_SAMPLE": {"v1": "900m", "v2": "0"', source)
+        self.assertNotIn('(\"VDD\", -20.0, \"VDD\"', source)
 
     def test_saved_spectre_regression_when_available(self):
         path = ROOT / "output" / "electrical_macro_model" / "summary.json"

@@ -26,8 +26,12 @@ from virtuoso_bridge.virtuoso.symbol.ops import (
 
 LIBRARY = "SAR_ADC_T28"
 BLOCKS = ("sar_cdac_macro_10b", "sar_sampling_macro", "sar_comparator_macro")
+CONTROLLER = "sar_macro_controller_10b"
 TB = "tb_sar_macro_transient"
-CELLS = (*BLOCKS, TB)
+SCHEMATIC_CELLS = (*BLOCKS, TB)
+CELLS = (*BLOCKS, CONTROLLER, TB)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+CONTROLLER_SOURCE = PROJECT_ROOT / "models" / "veriloga" / "sar_macro_controller_10b.va"
 CU_FF = 6.86047
 BIT_WEIGHTS = {9: 16, 8: 8, 7: 4, 6: 2, 5: 1, 4: 16, 3: 8, 2: 4, 1: 2, 0: 1}
 
@@ -56,9 +60,29 @@ def _close_owned_window(client: VirtuosoClient, cell: str, view: str = "schemati
         raise RuntimeError(f"failed to close owned window {LIBRARY}/{cell}/{view}: {result.errors}")
 
 
-def _add_switch(sch, name: str, x: float, y: float, nplus: str, nminus: str, control: str) -> None:
+def _close_owned_db_view(client: VirtuosoClient, cell: str, view: str) -> None:
+    """Close an exact owned DB view even when it has no visible editor window."""
+    result = client.execute_skill(
+        f'let((cv) cv=dbFindOpenCellViewByName("{LIBRARY}" "{cell}" "{view}") '
+        'if(cv then progn(dbSave(cv) dbClose(cv)) else t))',
+        timeout=30,
+    )
+    if result.errors or (result.output or "").strip() == "nil":
+        raise RuntimeError(f"failed to close owned DB view {LIBRARY}/{cell}/{view}: {result.errors}")
+
+
+def _add_switch(
+    sch,
+    name: str,
+    x: float,
+    y: float,
+    nplus: str,
+    nminus: str,
+    control: str,
+    vss: str = "VSS",
+) -> None:
     sch.add(inst("analogLib", "switch", "symbol", name, x, y, "R0"))
-    for terminal, net in (("N+", nplus), ("N-", nminus), ("NC+", control), ("NC-", "gnd!")):
+    for terminal, net in (("N+", nplus), ("N-", nminus), ("NC+", control), ("NC-", vss)):
         sch.add(label_term(name, terminal, net))
 
 
@@ -158,6 +182,7 @@ def _create_cdac(client: VirtuosoClient) -> None:
 
 def _create_sampling(client: VirtuosoClient) -> None:
     cell = "sar_sampling_macro"
+    _close_owned_window(client, cell)
     with client.schematic.create(LIBRARY, cell) as sch:
         _add_ground(sch, "G0", 0.0, -2.0)
         for name, x, y, direction in (
@@ -182,6 +207,7 @@ def _create_sampling(client: VirtuosoClient) -> None:
 
 def _create_comparator(client: VirtuosoClient) -> None:
     cell = "sar_comparator_macro"
+    _close_owned_window(client, cell)
     with client.schematic.create(LIBRARY, cell) as sch:
         _add_ground(sch, "G0", 0.0, -3.0)
         for name, x, y, direction in (
@@ -210,7 +236,7 @@ def _create_comparator(client: VirtuosoClient) -> None:
         sch.add(label_term("CCOMP", "MINUS", "COMP_N"))
         sch.add(inst("analogLib", "vdc", "symbol", "VOFF", -3.0, -1.0, "R0"))
         sch.add(label_term("VOFF", "PLUS", "CMP_OFFSET"))
-        sch.add(label_term("VOFF", "MINUS", "gnd!"))
+        sch.add(label_term("VOFF", "MINUS", "VSS"))
 
         for side, node, x in (("P", "COMP_P", 1.5), ("N", "COMP_N", 2.5)):
             _add_switch(sch, f"SRESET{side}", x, 0.0, node, "VCM", "CMP_RESET")
@@ -221,6 +247,18 @@ def _create_comparator(client: VirtuosoClient) -> None:
             sch.add(label_term(f"CKB{side}", "PLUS", node))
             sch.add(label_term(f"CKB{side}", "MINUS", f"TOP{side}"))
 
+            # Match the curated macro's rail limiting with explicit diode
+            # branches. The analysis wrapper supplies the macro_clamp model
+            # card; the electrical connectivity remains schematic-owned.
+            for suffix, anode, cathode, y in (
+                ("H", node, "VDD", 3.5),
+                ("L", "VSS", node, -2.0),
+            ):
+                dname = f"D{suffix}{side}"
+                sch.add(inst("analogLib", "diode", "symbol", dname, 3.5 + (0.8 if side == "N" else 0.0), y, "R0"))
+                sch.add(label_term(dname, "PLUS", anode))
+                sch.add(label_term(dname, "MINUS", cathode))
+
     client.open_window(LIBRARY, cell, view="schematic")
     set_instance_params(client, "GIN", ggain="60u", param_filters=None, strict=True)
     set_instance_params(client, "GREG", ggain="100u", param_filters=None, strict=True)
@@ -229,6 +267,15 @@ def _create_comparator(client: VirtuosoClient) -> None:
     set_instance_params(client, "CKBP", c="0.05f", param_filters=None, strict=True)
     set_instance_params(client, "CKBN", c="0.05f", param_filters=None, strict=True)
     set_instance_params(client, "VOFF", vdc="0", param_filters=None, strict=True)
+    for side in ("P", "N"):
+        for suffix in ("H", "L"):
+            set_instance_params(
+                client,
+                f"D{suffix}{side}",
+                model="macro_clamp",
+                param_filters=None,
+                strict=True,
+            )
     for side in ("P", "N"):
         _set_switch(client, f"SRESET{side}", rc="10")
         set_instance_params(client, f"RCM{side}", r="1G", param_filters=None, strict=True)
@@ -285,37 +332,142 @@ def _generate_symbols(client: VirtuosoClient) -> dict[str, object]:
     return generated
 
 
+def _create_controller_symbol(client: VirtuosoClient) -> None:
+    """Create the symbol directly so no empty schematic shadows Verilog-A."""
+    inputs = ("COMP_P", "COMP_N", "CLK_SAMPLE", "CLK_TRIAL", "CLK_LATCH", "VDD", "VSS")
+    outputs = (
+        *(f"SEL0_{bit}" for bit in range(9, -1, -1)),
+        *(f"SEL1_{bit}" for bit in range(9, -1, -1)),
+        "BASE",
+        *(f"D{bit}" for bit in range(9, -1, -1)),
+        "BUSY",
+        "VALID",
+    )
+    with client.symbol.create(LIBRARY, CONTROLLER, timeout=120) as sym:
+        sym.add(symbol_create_rect("device", "drawing", 0.75, -7.25, 7.25, 7.0))
+        sym.add(symbol_create_selection_box(0.0, -7.5, 8.0, 7.25))
+        for index, name in enumerate(inputs):
+            y = 6.5 - index
+            sym.add(symbol_create_pin(name, 0.0, y, direction="input", half_size=0.025,
+                                      label_x=0.9, label_y=y))
+        for index, name in enumerate(outputs):
+            y = 6.5 - index * 0.42
+            sym.add(symbol_create_pin(name, 8.0, y, direction="output", half_size=0.025,
+                                      label_x=7.1, label_y=y, label_justification="centerRight"))
+        sym.add(symbol_create_instance_label(2.0, 7.4))
+        sym.add(symbol_create_logical_label(4.0, 0.0))
+        sym.add(symbol_set_term_order([*inputs, *outputs]))
+
+
+def _controller_remote_path(client: VirtuosoClient) -> str:
+    result = client.execute_skill(f'ddGetObj("{LIBRARY}")~>readPath', timeout=30)
+    path = (result.output or "").strip().strip('"')
+    if result.errors or not path or path == "nil":
+        raise RuntimeError(f"cannot resolve OA readPath for {LIBRARY}: {result.errors}")
+    return f"{path}/{CONTROLLER}/veriloga/veriloga.va"
+
+
+def _delete_controller_placeholder(client: VirtuosoClient) -> None:
+    _close_owned_window(client, CONTROLLER)
+    result = client.execute_skill(
+        f'let((obj) obj=ddGetObj("{LIBRARY}" "{CONTROLLER}" "schematic") '
+        'if(obj then ddDeleteObj(obj) else t))',
+        timeout=30,
+    )
+    if result.errors or (result.output or "").strip() == "nil":
+        raise RuntimeError(f"controller placeholder cleanup failed: {result.errors}")
+
+
+def _create_controller_veriloga(client: VirtuosoClient) -> None:
+    if not CONTROLLER_SOURCE.is_file():
+        raise FileNotFoundError(CONTROLLER_SOURCE)
+    if not _exists(client, CONTROLLER, "veriloga"):
+        inputs = ("COMP_P", "COMP_N", "CLK_SAMPLE", "CLK_TRIAL", "CLK_LATCH", "VDD", "VSS")
+        outputs = (
+            *(f"SEL0_{bit}" for bit in range(9, -1, -1)),
+            *(f"SEL1_{bit}" for bit in range(9, -1, -1)),
+            "BASE",
+            *(f"D{bit}" for bit in range(9, -1, -1)),
+            "BUSY",
+            "VALID",
+        )
+        try:
+            with client.schematic.create(LIBRARY, CONTROLLER) as sch:
+                for index, name in enumerate(inputs):
+                    sch.add(pin(name, 0.0, -float(index), "R0", direction="input"))
+                for index, name in enumerate(outputs):
+                    sch.add(pin(name, 6.0, -float(index), "R0", direction="output"))
+            _close_owned_db_view(client, CONTROLLER, "symbol")
+            client.symbol.generate_from_schematic(
+                LIBRARY,
+                CONTROLLER,
+                sort_pins="geometric",
+                overwrite=True,
+                timeout=120,
+            )
+            result = client.execute_skill(
+                f'schViewToView("{LIBRARY}" "{CONTROLLER}" "{LIBRARY}" "{CONTROLLER}" '
+                '"symbol" "veriloga" '
+                '"schSymbolToPinList" "ahdlPinListToveriloga")',
+                timeout=120,
+            )
+            if result.errors or not (result.output or "").strip() or (result.output or "").strip() == "nil":
+                raise RuntimeError(f"controller Verilog-A skeleton failed: {result.errors}")
+        finally:
+            _delete_controller_placeholder(client)
+    client.upload_file(CONTROLLER_SOURCE, _controller_remote_path(client), timeout=120)
+    result = client.execute_skill(
+        f'ahdlUpdateViewInfo("{LIBRARY}" ?cell "{CONTROLLER}" ?view "veriloga")',
+        timeout=120,
+    )
+    if result.errors:
+        raise RuntimeError(f"controller Verilog-A reparse failed: {result.errors}")
+    # Restore the compact review symbol after Cadence has created and parsed
+    # the behavioural view. It has the same terminal contract.
+    _create_controller_symbol(client)
+
+
 def _create_tb(client: VirtuosoClient) -> None:
     _close_owned_window(client, TB)
     with client.schematic.create(LIBRARY, TB) as sch:
-        # The generated CDAC symbol has 28 pins and is intentionally tall.
-        # Keep sources and neighbouring blocks well outside its bounding box:
-        # a label attached to an overlapping symbol terminal is a real OA
-        # connection, not merely a drawing collision.
-        _add_ground(sch, "G0", -20.0, -8.0)
-        sch.add(inst(LIBRARY, "sar_sampling_macro", "symbol", "XSAMPLE", -13.0, 4.0, "R0"))
-        sch.add(inst(LIBRARY, "sar_cdac_macro_10b", "symbol", "XCDAC", 0.0, 4.0, "R0"))
-        sch.add(inst(LIBRARY, "sar_comparator_macro", "symbol", "XCOMP", 13.0, 4.0, "R0"))
+        # Keep the tall CDAC symbol and controller pins spatially
+        # separated. Connectivity is name-based and is verified by readback.
+        _add_ground(sch, "G0", -22.0, -10.0)
+        sch.add(inst(LIBRARY, "sar_sampling_macro", "symbol", "XSAMPLE", -14.0, 4.0, "R0"))
+        sch.add(inst(LIBRARY, "sar_cdac_macro_10b", "symbol", "XCDAC", -2.0, 4.0, "R0"))
+        sch.add(inst(LIBRARY, "sar_comparator_macro", "symbol", "XCOMP", 11.0, 4.0, "R0"))
+        sch.add(inst(LIBRARY, CONTROLLER, "symbol", "XCTRL", 20.0, 2.0, "R0"))
         for source, x, net, value in (
-            ("VDD", -20.0, "VDD", "900m"),
-            ("VREFP", -18.0, "VREFP", "900m"),
-            ("VREFN", -16.0, "VREFN", "0"),
-            ("VCM", -14.0, "VCM", "450m"),
-            ("VINP", -12.0, "VINP", "675.439m"),
-            ("VINN", -10.0, "VINN", "224.561m"),
+            ("V_SRC_DD", -22.0, "VDD", "900m"),
+            ("V_SRC_REFP", -20.0, "VREFP_IDEAL", "900m"),
+            ("V_SRC_REFN", -18.0, "VREFN_IDEAL", "0"),
+            ("V_SRC_CM", -16.0, "VCM", "450m"),
+            ("V_SRC_INP", -14.0, "VINP", "675.439m"),
+            ("V_SRC_INN", -12.0, "VINN", "224.561m"),
         ):
-            sch.add(inst("analogLib", "vdc", "symbol", source, x, -7.0, "R0"))
+            sch.add(inst("analogLib", "vdc", "symbol", source, x, -9.0, "R0"))
             sch.add(label_term(source, "PLUS", net))
             sch.add(label_term(source, "MINUS", "gnd!"))
         for source, x, net in (
-            ("VSAMPLE", -6.0, "CLK_SAMPLE"),
-            ("VTRIAL", -4.0, "CLK_TRIAL"),
-            ("VLATCH", -2.0, "CLK_LATCH"),
-            ("VRESET", 0.0, "CMP_RESET"),
+            ("V_CLK_SAMPLE", -8.0, "CLK_SAMPLE"),
+            ("V_CLK_TRIAL", -6.0, "CLK_TRIAL"),
+            ("V_CLK_LATCH", -4.0, "CLK_LATCH"),
+            ("V_CMP_RESET", -2.0, "CMP_RESET"),
         ):
-            sch.add(inst("analogLib", "vpulse", "symbol", source, x, -7.0, "R0"))
+            sch.add(inst("analogLib", "vpulse", "symbol", source, x, -9.0, "R0"))
             sch.add(label_term(source, "PLUS", net))
             sch.add(label_term(source, "MINUS", "gnd!"))
+
+        for side, ideal_net, local_net, x in (
+            ("P", "VREFP_IDEAL", "VREFP", 1.0),
+            ("N", "VREFN_IDEAL", "VREFN", 3.0),
+        ):
+            sch.add(inst("analogLib", "res", "symbol", f"RREF{side}", x, -7.0, "R90"))
+            sch.add(label_term(f"RREF{side}", "PLUS", ideal_net))
+            sch.add(label_term(f"RREF{side}", "MINUS", local_net))
+            sch.add(inst("analogLib", "cap", "symbol", f"CREF{side}", x, -9.0, "R0"))
+            sch.add(label_term(f"CREF{side}", "PLUS", local_net))
+            sch.add(label_term(f"CREF{side}", "MINUS", "gnd!"))
 
         for instance, terminal, net in (
             ("XSAMPLE", "VINP", "VINP"), ("XSAMPLE", "VINN", "VINN"),
@@ -329,32 +481,54 @@ def _create_tb(client: VirtuosoClient) -> None:
             ("XCOMP", "COMP_P", "COMP_P"), ("XCOMP", "COMP_N", "COMP_N"),
             ("XCOMP", "CMP_RESET", "CMP_RESET"), ("XCOMP", "VCM", "VCM"),
             ("XCOMP", "VDD", "VDD"), ("XCOMP", "VSS", "gnd!"),
+            ("XCTRL", "COMP_P", "COMP_P"), ("XCTRL", "COMP_N", "COMP_N"),
+            ("XCTRL", "CLK_SAMPLE", "CLK_SAMPLE"), ("XCTRL", "CLK_TRIAL", "CLK_TRIAL"),
+            ("XCTRL", "CLK_LATCH", "CLK_LATCH"), ("XCTRL", "VDD", "VDD"),
+            ("XCTRL", "VSS", "gnd!"), ("XCTRL", "BASE", "BASE"),
+            ("XCTRL", "BUSY", "BUSY"),
+            ("XCTRL", "VALID", "VALID"),
         ):
             sch.add(label_term(instance, terminal, net))
         for bit in range(9, -1, -1):
             sch.add(label_term("XCDAC", f"SEL0<{bit}>", f"SEL0<{bit}>"))
             sch.add(label_term("XCDAC", f"SEL1<{bit}>", f"SEL1<{bit}>"))
+            sch.add(label_term("XCTRL", f"SEL0_{bit}", f"SEL0<{bit}>"))
+            sch.add(label_term("XCTRL", f"SEL1_{bit}", f"SEL1<{bit}>"))
+            sch.add(label_term("XCTRL", f"D{bit}", f"DOUT<{bit}>"))
+
+        for index, net in enumerate([*(f"DOUT<{bit}>" for bit in range(10)), "BUSY", "VALID"]):
+            name = f"RLOAD{index}"
+            sch.add(inst("analogLib", "res", "symbol", name, 10.0 + index, -7.0, "R0"))
+            sch.add(label_term(name, "PLUS", net))
+            sch.add(label_term(name, "MINUS", "gnd!"))
 
     client.open_window(LIBRARY, TB, view="schematic")
     for source, value in (
-        ("VDD", "900m"), ("VREFP", "900m"), ("VREFN", "0"),
-        ("VCM", "450m"), ("VINP", "675.439m"), ("VINN", "224.561m"),
+        ("V_SRC_DD", "900m"), ("V_SRC_REFP", "900m"), ("V_SRC_REFN", "0"),
+        ("V_SRC_CM", "450m"), ("V_SRC_INP", "675.439m"), ("V_SRC_INN", "224.561m"),
     ):
         set_instance_params(client, source, vdc=value, param_filters=None, strict=True)
-    for source, td in (("VSAMPLE", "41n"), ("VTRIAL", "46n"), ("VLATCH", "45.5n"), ("VRESET", "44n")):
+    pulse_params = {
+        "V_CLK_SAMPLE": {"v1": "900m", "v2": "0", "td": "41n", "pw": "100n", "per": "200n"},
+        "V_CLK_TRIAL": {"v1": "0", "v2": "900m", "td": "46n", "pw": "200p", "per": "5n"},
+        "V_CLK_LATCH": {"v1": "0", "v2": "900m", "td": "45.5n", "pw": "200p", "per": "5n"},
+        "V_CMP_RESET": {"v1": "900m", "v2": "0", "td": "44n", "pw": "1.53n", "per": "5n"},
+    }
+    for source, values in pulse_params.items():
         set_instance_params(
             client,
             source,
-            v1="0",
-            v2="900m",
-            td=td,
+            **values,
             tr="20p",
             tf="20p",
-            pw="200p",
-            per="5n",
             param_filters=None,
             strict=True,
         )
+    for side in ("P", "N"):
+        set_instance_params(client, f"RREF{side}", r="100", param_filters=None, strict=True)
+        set_instance_params(client, f"CREF{side}", c="2p", param_filters=None, strict=True)
+    for index in range(12):
+        set_instance_params(client, f"RLOAD{index}", r="1G", param_filters=None, strict=True)
 
 
 def _readback(client: VirtuosoClient, cell: str) -> dict[str, object]:
@@ -379,9 +553,26 @@ def _readback(client: VirtuosoClient, cell: str) -> dict[str, object]:
 
 def _refresh_schematic_checks(client: VirtuosoClient) -> None:
     """Check/save after parameter edits so hierarchical extraction is current."""
-    for cell in CELLS:
+    for cell in SCHEMATIC_CELLS:
         with client.schematic.modify(LIBRARY, cell, timeout=120):
             pass
+
+
+def _controller_readback(client: VirtuosoClient) -> dict[str, object]:
+    views = client.execute_skill(f'ddGetObj("{LIBRARY}" "{CONTROLLER}")~>views~>name', timeout=30)
+    terminals = client.execute_skill(
+        f'let((cv) cv=dbOpenCellViewByType("{LIBRARY}" "{CONTROLLER}" "veriloga" nil "r") '
+        'prog1(when(cv cv~>terminals~>name) when(cv dbClose(cv))))',
+        timeout=30,
+    )
+    return {
+        "library": LIBRARY,
+        "cell": CONTROLLER,
+        "views": (views.output or "").strip(),
+        "veriloga_terminals": (terminals.output or "").strip(),
+        "symbol_ports": client.symbol.read_ports(LIBRARY, CONTROLLER),
+        "source": str(CONTROLLER_SOURCE),
+    }
 
 
 def main() -> int:
@@ -393,32 +584,42 @@ def main() -> int:
     parser.add_argument(
         "--repair-tb",
         action="store_true",
-        help="replace only the owned macro testbench after exact-cell preflight",
+        help="legacy alias for --repair-oa-loop",
+    )
+    parser.add_argument(
+        "--repair-oa-loop",
+        action="store_true",
+        help="rebuild the owned macros, import the controller, and close the OA loop",
     )
     args = parser.parse_args()
 
     client = VirtuosoClient.from_env(profile=args.profile)
     existing = [cell for cell in CELLS if _exists(client, cell)]
-    if args.readback_only and args.repair_tb:
-        raise SystemExit("--readback-only and --repair-tb are mutually exclusive")
+    repair = args.repair_tb or args.repair_oa_loop
+    if args.readback_only and repair:
+        raise SystemExit("--readback-only and repair modes are mutually exclusive")
     if args.readback_only:
         missing = [cell for cell in CELLS if cell not in existing]
         if missing:
             raise SystemExit(f"Cannot read back missing cells: {', '.join(missing)}")
-        symbols: dict[str, object] = {cell: "existing" for cell in BLOCKS}
-    elif args.repair_tb:
+        symbols: dict[str, object] = {cell: "existing" for cell in (*BLOCKS, CONTROLLER)}
+    elif repair:
         missing_blocks = [cell for cell in BLOCKS if cell not in existing]
         if missing_blocks:
-            raise SystemExit(f"Cannot repair TB before blocks exist: {', '.join(missing_blocks)}")
+            raise SystemExit(f"Cannot repair OA loop before blocks exist: {', '.join(missing_blocks)}")
         if TB not in existing:
             raise SystemExit(f"Refusing repair because exact target {LIBRARY}/{TB}/schematic is absent")
+        _create_controller_veriloga(client)
         _create_cdac(client)
+        _create_sampling(client)
+        _create_comparator(client)
         _create_cdac_review_symbol(client)
         _create_tb(client)
-        symbols = {cell: "existing" for cell in BLOCKS}
+        symbols = {cell: "rebuilt" for cell in (*BLOCKS, CONTROLLER)}
     else:
         if existing:
             raise SystemExit(f"Refusing to overwrite existing cells: {', '.join(existing)}")
+        _create_controller_veriloga(client)
         _create_cdac(client)
         _create_sampling(client)
         _create_comparator(client)
@@ -432,9 +633,10 @@ def main() -> int:
         _refresh_schematic_checks(client)
 
     result: dict[str, object] = {
-        "schematics": {cell: _readback(client, cell) for cell in CELLS},
+        "schematics": {cell: _readback(client, cell) for cell in SCHEMATIC_CELLS},
+        "controller": _controller_readback(client),
         "symbols": symbols,
-        "symbol_ports": {cell: client.symbol.read_ports(LIBRARY, cell) for cell in BLOCKS},
+        "symbol_ports": {cell: client.symbol.read_ports(LIBRARY, cell) for cell in (*BLOCKS, CONTROLLER)},
     }
     if args.export_root:
         exports = {}

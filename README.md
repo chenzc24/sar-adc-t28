@@ -118,6 +118,8 @@ E:\bridge-Agent-T28\virtuoso-bridge-lite\.venv\Scripts\python.exe `
 .venv\Scripts\python.exe verification\system\test_electrical_macro_model.py -v
 ```
 
-The matching OA review hierarchy is `sar_sampling_macro ->
-sar_cdac_macro_10b -> sar_comparator_macro`, with
-`tb_sar_macro_transient` as the structural netlisting top.
+The matching OA hierarchy is `sar_sampling_macro + sar_cdac_macro_10b +
+sar_comparator_macro + sar_macro_controller_10b`, with
+`tb_sar_macro_transient` as an executable closed-loop nominal testbench.
+Its automatically exported Spectre hierarchy is validated without editing the
+generated circuit netlist.

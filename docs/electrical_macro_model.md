@@ -9,19 +9,32 @@ switches, reference memory, comparator regeneration, kickback path, reset,
 and closed-loop SAR decisions coexist in one KCL/KVL simulation. It does not
 mean PDK transistor, mismatch, PVT, reliability, or extracted-layout closure.
 
-The executable source of truth is the curated Spectre hierarchy:
+The nominal connectivity source of truth is the Virtuoso OA hierarchy:
+
+- `sar_sampling_macro`, `sar_cdac_macro_10b`, and
+  `sar_comparator_macro` schematics;
+- `sar_macro_controller_10b/veriloga` and its scalar electrical symbol;
+- `tb_sar_macro_transient/schematic`, including reference memory, clocks, and
+  output observation loads.
+
+The correlated local hierarchy remains the parameterized regression and
+sensitivity harness:
 
 - `netlist/dut/sar_macro_10b.scs`: differential CDAC, switches, references,
   sampling paths, and dynamic comparator;
 - `models/veriloga/sar_macro_controller_10b.va`: ten-decision event
-  controller with statically unrolled electrical ports;
+  controller with statically scalarized electrical ports shared by OA and the
+  curated deck;
 - `netlist/tb/tb_sar_macro_nominal.scs`: parameterized transient testbench;
 - `scripts/analysis/run_electrical_macro_model.py`: capacitance-matrix oracle,
   stimulus generation, Spectre execution, waveform extraction, and gates.
 
-The OA cells are a reviewable electrical mirror. The top-level OA testbench
-netlists successfully, while the curated deck remains canonical because it
-contains the closed-loop controller and deterministic result extraction.
+The OA top is closed loop rather than a structural mirror: comparator outputs
+feed the controller; the controller drives all twenty CDAC selection nets and
+`BASE`; and `D9..D0`, `BUSY`, and `VALID` have high-impedance observation
+loads. The exported circuit deck is not edited. A separate analysis wrapper
+adds only the `macro_clamp` diode model card and transient statement, matching
+the role normally held by ADE model/analysis setup.
 
 ## CDAC topology and charge model
 
@@ -82,6 +95,15 @@ All nominal comparisons exceeded the 0.45 V resolution criterion, had the
 correct sign, and stayed below the 0.25 LSB settling allocation. The nominal
 ideal capacitance matrix has zero missing codes and only floating-point-level
 DNL/INL.
+
+The repaired OA nominal testbench independently converted the code-768 input
+to code 768. `VALID` rose at 90.5201 ns, or 49.5201 ns after the sample edge;
+maximum pre-compare residual was 0.08735 LSB, maximum reference droop was
+25.990 mV, and all ten comparator decisions resolved with the correct sign.
+Schematic checks report zero markers across the four schematic cellviews.
+Spectre 21.1 completed with zero errors; its remaining five warnings are the
+site AHDL environment notice and repeated PDK `scalefactor` declarations, not
+floating-pin or hierarchy-connectivity warnings.
 
 ## Sensitivity cases and interpretation
 

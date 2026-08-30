@@ -3,7 +3,7 @@
 
 // Closed-loop phase controller for the topology-aware SAR electrical macro.
 //
-// During sampling, SEL_ZERO/SEL_ONE/BASE are low so each CDAC bottom plate is
+// During sampling, SEL0_*/SEL1_*/BASE are low so each CDAC bottom plate is
 // held at VCM by the electrical network's sample-controlled relays. The sample
 // falling edge establishes the code-zero reference state. Each CLK_TRIAL edge
 // flips one capacitor pair, and each CLK_LATCH edge retains or rejects that
@@ -17,10 +17,37 @@ module sar_macro_controller_10b (
     input  electrical       CLK_LATCH,
     input  electrical       VDD,
     input  electrical       VSS,
-    output electrical [9:0] SEL_ZERO,
-    output electrical [9:0] SEL_ONE,
+    output electrical       SEL0_9,
+    output electrical       SEL0_8,
+    output electrical       SEL0_7,
+    output electrical       SEL0_6,
+    output electrical       SEL0_5,
+    output electrical       SEL0_4,
+    output electrical       SEL0_3,
+    output electrical       SEL0_2,
+    output electrical       SEL0_1,
+    output electrical       SEL0_0,
+    output electrical       SEL1_9,
+    output electrical       SEL1_8,
+    output electrical       SEL1_7,
+    output electrical       SEL1_6,
+    output electrical       SEL1_5,
+    output electrical       SEL1_4,
+    output electrical       SEL1_3,
+    output electrical       SEL1_2,
+    output electrical       SEL1_1,
+    output electrical       SEL1_0,
     output electrical       BASE,
-    output electrical [9:0] DOUT,
+    output electrical       D9,
+    output electrical       D8,
+    output electrical       D7,
+    output electrical       D6,
+    output electrical       D5,
+    output electrical       D4,
+    output electrical       D3,
+    output electrical       D2,
+    output electrical       D1,
+    output electrical       D0,
     output electrical       BUSY,
     output electrical       VALID
 );
@@ -107,39 +134,39 @@ module sar_macro_controller_10b (
         V(VALID, VSS) <+ transition(valid_state != 0 ? logic_high_v : 0.0,
             0.0, output_transition_s, output_transition_s);
 
-        // Explicitly unrolled electrical-bus contributions are required for
-        // unambiguous Spectre elaboration.
-        V(SEL_ONE[9], VSS) <+ transition(hold_state != 0 && (((code_work & 512) != 0) || (trial_active != 0 && bit_index == 9)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[8], VSS) <+ transition(hold_state != 0 && (((code_work & 256) != 0) || (trial_active != 0 && bit_index == 8)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[7], VSS) <+ transition(hold_state != 0 && (((code_work & 128) != 0) || (trial_active != 0 && bit_index == 7)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[6], VSS) <+ transition(hold_state != 0 && (((code_work & 64) != 0) || (trial_active != 0 && bit_index == 6)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[5], VSS) <+ transition(hold_state != 0 && (((code_work & 32) != 0) || (trial_active != 0 && bit_index == 5)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[4], VSS) <+ transition(hold_state != 0 && (((code_work & 16) != 0) || (trial_active != 0 && bit_index == 4)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[3], VSS) <+ transition(hold_state != 0 && (((code_work & 8) != 0) || (trial_active != 0 && bit_index == 3)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[2], VSS) <+ transition(hold_state != 0 && (((code_work & 4) != 0) || (trial_active != 0 && bit_index == 2)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[1], VSS) <+ transition(hold_state != 0 && (((code_work & 2) != 0) || (trial_active != 0 && bit_index == 1)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ONE[0], VSS) <+ transition(hold_state != 0 && (((code_work & 1) != 0) || (trial_active != 0 && bit_index == 0)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        // Explicit scalar contributions keep the OA symbol and Spectre
+        // positional port contract unambiguous.
+        V(SEL1_9, VSS) <+ transition(hold_state != 0 && (((code_work & 512) != 0) || (trial_active != 0 && bit_index == 9)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_8, VSS) <+ transition(hold_state != 0 && (((code_work & 256) != 0) || (trial_active != 0 && bit_index == 8)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_7, VSS) <+ transition(hold_state != 0 && (((code_work & 128) != 0) || (trial_active != 0 && bit_index == 7)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_6, VSS) <+ transition(hold_state != 0 && (((code_work & 64) != 0) || (trial_active != 0 && bit_index == 6)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_5, VSS) <+ transition(hold_state != 0 && (((code_work & 32) != 0) || (trial_active != 0 && bit_index == 5)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_4, VSS) <+ transition(hold_state != 0 && (((code_work & 16) != 0) || (trial_active != 0 && bit_index == 4)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_3, VSS) <+ transition(hold_state != 0 && (((code_work & 8) != 0) || (trial_active != 0 && bit_index == 3)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_2, VSS) <+ transition(hold_state != 0 && (((code_work & 4) != 0) || (trial_active != 0 && bit_index == 2)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_1, VSS) <+ transition(hold_state != 0 && (((code_work & 2) != 0) || (trial_active != 0 && bit_index == 1)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL1_0, VSS) <+ transition(hold_state != 0 && (((code_work & 1) != 0) || (trial_active != 0 && bit_index == 0)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
 
-        V(SEL_ZERO[9], VSS) <+ transition(hold_state != 0 && !(((code_work & 512) != 0) || (trial_active != 0 && bit_index == 9)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[8], VSS) <+ transition(hold_state != 0 && !(((code_work & 256) != 0) || (trial_active != 0 && bit_index == 8)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[7], VSS) <+ transition(hold_state != 0 && !(((code_work & 128) != 0) || (trial_active != 0 && bit_index == 7)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[6], VSS) <+ transition(hold_state != 0 && !(((code_work & 64) != 0) || (trial_active != 0 && bit_index == 6)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[5], VSS) <+ transition(hold_state != 0 && !(((code_work & 32) != 0) || (trial_active != 0 && bit_index == 5)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[4], VSS) <+ transition(hold_state != 0 && !(((code_work & 16) != 0) || (trial_active != 0 && bit_index == 4)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[3], VSS) <+ transition(hold_state != 0 && !(((code_work & 8) != 0) || (trial_active != 0 && bit_index == 3)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[2], VSS) <+ transition(hold_state != 0 && !(((code_work & 4) != 0) || (trial_active != 0 && bit_index == 2)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[1], VSS) <+ transition(hold_state != 0 && !(((code_work & 2) != 0) || (trial_active != 0 && bit_index == 1)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(SEL_ZERO[0], VSS) <+ transition(hold_state != 0 && !(((code_work & 1) != 0) || (trial_active != 0 && bit_index == 0)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_9, VSS) <+ transition(hold_state != 0 && !(((code_work & 512) != 0) || (trial_active != 0 && bit_index == 9)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_8, VSS) <+ transition(hold_state != 0 && !(((code_work & 256) != 0) || (trial_active != 0 && bit_index == 8)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_7, VSS) <+ transition(hold_state != 0 && !(((code_work & 128) != 0) || (trial_active != 0 && bit_index == 7)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_6, VSS) <+ transition(hold_state != 0 && !(((code_work & 64) != 0) || (trial_active != 0 && bit_index == 6)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_5, VSS) <+ transition(hold_state != 0 && !(((code_work & 32) != 0) || (trial_active != 0 && bit_index == 5)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_4, VSS) <+ transition(hold_state != 0 && !(((code_work & 16) != 0) || (trial_active != 0 && bit_index == 4)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_3, VSS) <+ transition(hold_state != 0 && !(((code_work & 8) != 0) || (trial_active != 0 && bit_index == 3)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_2, VSS) <+ transition(hold_state != 0 && !(((code_work & 4) != 0) || (trial_active != 0 && bit_index == 2)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_1, VSS) <+ transition(hold_state != 0 && !(((code_work & 2) != 0) || (trial_active != 0 && bit_index == 1)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(SEL0_0, VSS) <+ transition(hold_state != 0 && !(((code_work & 1) != 0) || (trial_active != 0 && bit_index == 0)) ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
 
-        V(DOUT[9], VSS) <+ transition((code_out & 512) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[8], VSS) <+ transition((code_out & 256) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[7], VSS) <+ transition((code_out & 128) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[6], VSS) <+ transition((code_out & 64) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[5], VSS) <+ transition((code_out & 32) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[4], VSS) <+ transition((code_out & 16) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[3], VSS) <+ transition((code_out & 8) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[2], VSS) <+ transition((code_out & 4) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[1], VSS) <+ transition((code_out & 2) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
-        V(DOUT[0], VSS) <+ transition((code_out & 1) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D9, VSS) <+ transition((code_out & 512) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D8, VSS) <+ transition((code_out & 256) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D7, VSS) <+ transition((code_out & 128) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D6, VSS) <+ transition((code_out & 64) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D5, VSS) <+ transition((code_out & 32) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D4, VSS) <+ transition((code_out & 16) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D3, VSS) <+ transition((code_out & 8) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D2, VSS) <+ transition((code_out & 4) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D1, VSS) <+ transition((code_out & 2) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
+        V(D0, VSS) <+ transition((code_out & 1) != 0 ? logic_high_v : 0.0, 0.0, output_transition_s, output_transition_s);
     end
 endmodule
