@@ -4,6 +4,19 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Record error-budget learning
+
+- Target: record the human-requested learning process behind the first
+  top-down module error allocation.
+- Local changed areas: one note under `docs/learning/`, its target plan, and
+  this maintenance entry.
+- Remote OA changes: none; all Virtuoso and PDK state remained read-only.
+- Validation: numerical cross-check against the tracked design spec and
+  behavioral summary, targeted Markdown inspection, owned-path review, and
+  `git diff --check`.
+- Commit status: ready to commit as
+  `docs: record top-down error budget learning`; push was not requested.
+
 ## 2026-08-30 - Complete behavioral baseline
 
 - Target: complete the system error budget and bit-accurate ideal model for
