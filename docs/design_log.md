@@ -14,3 +14,14 @@
 - Established the stage-2 bit-accurate golden model using the ideal binary
   equivalent of the 5+5 split CDAC. Bridge ratio error, parasitics, switching,
   and settling remain explicit later-stage CDAC work.
+- Defined the stage-3 behavioral interface with separate sample and 200 MHz
+  SAR clocks, active-low reset, 10-bit output, busy, and valid. Keeping the SAR
+  clock visible makes the state machine replaceable and testable before the
+  clock-generator implementation is selected.
+- Implemented the ideal 10-bit transfer as ten explicit MSB-first decisions
+  with a falling-edge sample event. The zero-error model remains the golden
+  contract; offset, noise, effective weight error, and settling parameters are
+  disabled-by-default sensitivity controls rather than transistor models.
+- Assigned sampling-clock jitter to the testbench instead of the ADC core so
+  it perturbs the acquisition instant without being counted again as decision
+  noise.

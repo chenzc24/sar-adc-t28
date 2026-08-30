@@ -4,6 +4,34 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Implement clocked Verilog-A SAR baseline
+
+- Target: add the stage-3 cycle-accurate 10-bit fully differential Verilog-A
+  model, curated timing/static/dynamic decks, and Python correlation flow.
+- Local changed areas: Verilog-A model, three Spectre-format testbenches,
+  EVAS dependency pin, run/analysis automation, focused tests, architecture
+  and verification documentation, manifest, and target plan.
+- Remote OA changes: none. The `SAR_ADC_T28` library, PDK, active CIW, and an
+  unrelated unsaved `PLAYGROUND_AMP` schematic remained read-only.
+- Local validation: EVAS 0.7.0 Python backend compiled the model with zero
+  lint diagnostics and produced codes 768 and 256 for the held-input timing
+  vectors; both conversions completed in 47.5 ns. Source-contract tests and
+  1024-code/16,384-sample analysis regressions passed.
+- Remote validation: configured the bridge's generic Cadence startup file to
+  `/home/cshrc/.cshrc.cadence.IC618SP201`, matching the working `t28_io`
+  profile. Spectre 21.1 then compiled the AHDL model and completed timing,
+  8,192-sample static, and 16,384-sample coherent-sine runs with zero errors.
+  Timing produced codes 768 and 256 with 47.5 ns conversion latency. Static
+  analysis produced zero missing codes and zero ideal DNL/INL. Dynamic
+  analysis produced 60.954 dB SNDR, 82.213 dB SFDR, and 9.833 bit ENOB, with
+  0.001 dB SNDR delta from the Python golden result.
+- Correlation correction: aligned the Python dynamic stimulus time with the
+  actual 0.45 V crossing at the midpoint of the testbench's 20 ps sampling
+  edge. The resulting 10 ps correction reduced code mismatches from 1,362 to
+  zero; every mismatch before correction was only one LSB.
+- Commit status: committed locally as
+  `feat: add clocked Verilog-A SAR baseline`; push was not requested.
+
 ## 2026-08-30 - Record error-budget learning
 
 - Target: record the human-requested learning process behind the first

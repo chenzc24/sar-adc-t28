@@ -37,3 +37,42 @@ Use synchronous control with a nominal 200 MHz internal bit clock. Allocate appr
 ### Reference network
 
 Use ideal VREFP/VREFN/VCM sources for the architectural baseline. Add reference source resistance, decoupling, and an optional buffer only after CDAC switching-current requirements are known.
+
+## Stage-3 clocked Verilog-A contract
+
+The local `sar_adc_ideal_10b` module is the executable timing contract between
+the function-level Python golden model and later block-level or transistor
+implementations. It is intentionally a single voltage-mode module so that
+algorithm and timing can be verified before analog hierarchy is introduced.
+
+### Interface
+
+- Analog inputs: `VINP`, `VINN`, `VREFP`, and `VREFN`.
+- Timing inputs: `CLK_SAMPLE` and `CLK_SAR`.
+- Control and supplies: active-low `RST_N`, `VDD`, and `VSS`.
+- Outputs: `DOUT<9:0>`, `BUSY`, and `VALID`.
+
+`CLK_SAMPLE` is high during acquisition. Its falling edge captures
+`V(VINP,VINN)`, clears `VALID`, and asserts `BUSY`. Each subsequent rising
+edge of the nominal 200 MHz `CLK_SAR` resolves one bit, MSB first. The tenth
+decision deasserts `BUSY` and asserts `VALID`, which remains high until the
+next sample. With the nominal phases, conversion takes 47.5 ns and remains
+inside the 60 ns conversion allocation.
+
+The core exposes the SAR clock so the conversion state machine can be tested
+without simultaneously designing clock generation. A later `sar_clock_gen`
+may internalize this clock at the integrated top level.
+
+### Nonideality controls
+
+The ideal transfer is recovered when all nonideality parameters are zero.
+Optional controls provide comparator offset, per-conversion sampling noise,
+per-decision comparator and reference noise, ten explicit effective CDAC
+weight errors, and a residual CDAC settling fraction. Fixed integer seeds make
+the random contributions reproducible. Sample-clock jitter remains a
+testbench stimulus because it changes the acquisition instant rather than the
+ADC transfer calculation.
+
+The nonideality controls are architectural sensitivity mechanisms. They do
+not claim transistor-level independence, physical capacitor mismatch
+statistics, comparator noise bandwidth, or reference-network memory.

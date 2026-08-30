@@ -5,6 +5,9 @@ library_status: created_empty
 technology_binding_verified: true
 
 cells:
+  sar_adc_ideal_10b:
+    role: clocked_veriloga_golden_model
+    status: local_model_only
   sar_adc_top:
     role: integrated_adc
     status: planned
@@ -35,6 +38,15 @@ cells:
   tb_sar_adc_dynamic:
     role: dynamic_performance_testbench
     status: planned
+  tb_sar_adc_ideal_timing:
+    role: veriloga_timing_testbench
+    status: local_netlist_only
+  tb_sar_adc_ideal_static:
+    role: veriloga_static_testbench
+    status: local_netlist_only
+  tb_sar_adc_ideal_dynamic:
+    role: veriloga_dynamic_testbench
+    status: local_netlist_only
   tb_sar_comp:
     role: comparator_testbench
     status: planned

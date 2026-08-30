@@ -69,3 +69,31 @@ uv pip install --python .venv\Scripts\python.exe -r requirements.txt
 The runner writes `summary.json`, the static-linearity plot, and the dynamic
 spectrum under `output/behavioral_baseline/`. Generated output remains ignored;
 the spec, model, tests, and numerical gates are tracked.
+
+## Clocked Verilog-A baseline
+
+`models/veriloga/sar_adc_ideal_10b.va` is the stage-3 cycle-accurate model. It
+captures the differential input on the falling edge of `CLK_SAMPLE` and makes
+one MSB-first decision on each rising edge of the 200 MHz `CLK_SAR`. The model
+exports `DOUT<9:0>`, `BUSY`, and `VALID`; all nonideality parameters default to
+zero.
+
+Run the local timing smoke test with the project's EVAS Python backend:
+
+```powershell
+.venv\Scripts\python.exe scripts\analysis\run_veriloga_baseline.py `
+    --backend evas --cases timing --analyze
+```
+
+Run the curated decks through the configured remote Spectre bridge with the
+workspace bridge Python, then analyze them with the project Python:
+
+```powershell
+E:\bridge-Agent-T28\.venv\Scripts\python.exe `
+    scripts\analysis\run_veriloga_baseline.py --backend spectre
+.venv\Scripts\python.exe scripts\analysis\run_veriloga_baseline.py --analyze
+```
+
+EVAS is a voltage-mode event simulator and is only the local timing smoke
+gate. A successful remote Spectre run remains mandatory before the model is
+treated as Spectre-compiled.
