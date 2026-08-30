@@ -18,6 +18,7 @@ from models.behavioral.sar_adc import SarAdcModel
 from scripts.analysis.run_veriloga_baseline import (
     FIRST_SAMPLE_CROSSING_S,
     _valid_samples,
+    analyze_allocated_noise,
     analyze_dynamic,
     analyze_static,
 )
@@ -103,6 +104,35 @@ class VerilogABaselineTest(unittest.TestCase):
             dynamic = analyze_dynamic(dynamic_csv)
             self.assertGreaterEqual(dynamic["sndr_db"], 55.94)
             self.assertGreaterEqual(dynamic["enob_bits"], 9.0)
+
+    def test_allocated_noise_analysis_matches_partial_rss(self) -> None:
+        model = SarAdcModel(10, (-0.9, 0.9))
+        sample_count = 16384
+        sample_rate_hz = 10e6
+        input_frequency_hz = sample_rate_hz * 7373 / sample_count
+        sample_time = (
+            FIRST_SAMPLE_CROSSING_S
+            + np.arange(sample_count) / sample_rate_hz
+        )
+        differential_peak_v = 0.9 * 10.0 ** (-1.0 / 20.0)
+        vin = differential_peak_v * np.sin(
+            2.0 * np.pi * input_frequency_hz * sample_time
+        )
+        lsb_v = 1.8 / 1024.0
+        enabled_noise_rms_v = lsb_v * np.sqrt(0.18**2 + 0.18**2 + 0.12**2)
+        rng = np.random.default_rng(20260830)
+        noisy_vin = vin + rng.normal(0.0, enabled_noise_rms_v, sample_count)
+        noisy_codes = model.unsigned_codes(model.convert(noisy_vin))
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "allocated_noise.csv"
+            self._write_code_csv(path, noisy_codes)
+            result = analyze_allocated_noise(path)
+
+        self.assertEqual(result["sample_count"], sample_count)
+        self.assertGreater(result["changed_code_count"], 0)
+        self.assertGreaterEqual(result["sndr_db"], 55.94)
+        self.assertLess(abs(result["sndr_delta_from_partial_rss_db"]), 1.0)
 
 
 if __name__ == "__main__":

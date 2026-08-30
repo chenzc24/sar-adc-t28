@@ -4,6 +4,26 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Validate allocated Verilog-A random noise
+
+- Target: enable the stage-1 sampling, comparator, and reference/switching
+  random-noise allocations in a separate fixed-seed Verilog-A dynamic deck.
+- Local changed areas: allocated-noise testbench, analysis and focused test
+  support, verification/design records, target plan, and this log.
+- Remote OA changes: none; all libraries, PDK content, and the unrelated
+  unsaved `PLAYGROUND_AMP` schematic remained read-only.
+- Validation: Spectre 21.1 completed 16,384 conversions with zero errors;
+  Python compilation, four focused tests, YAML parsing, and diff checks
+  passed.
+- Results: 58.059 dB SNDR, 87.453 dB SFDR, and 9.352 bit ENOB versus a
+  58.066 dB partial RSS prediction. Of 16,384 codes, 3,641 differed from the
+  ideal sequence, all by one LSB, with -0.001 LSB mean error.
+- Scope limit: clock jitter, unmodeled distortion, comparator offset, and
+  CDAC settling were not included because they are not equivalent to the
+  three enabled independent random sources.
+- Commit status: ready to commit as
+  `feat: validate allocated Verilog-A noise budget`; push was not requested.
+
 ## 2026-08-30 - Implement clocked Verilog-A SAR baseline
 
 - Target: add the stage-3 cycle-accurate 10-bit fully differential Verilog-A

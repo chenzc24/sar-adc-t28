@@ -25,6 +25,12 @@ clocked Verilog-A or RTL model; the present function model has no clock state.
 - Nonideality regression: zero-valued controls preserve ideal results; fixed
   seeds reproduce noise sequences; individual errors are enabled separately
   before any combined budget run.
+- Allocated-noise experiment: enable the 0.18 LSB sampling, 0.18 LSB
+  comparator, and 0.12 LSB reference/switching random-noise allocations with
+  fixed seeds in a separate 16,384-sample coherent-sine deck. Require the
+  project SNDR/ENOB gates and compare with the corresponding partial RSS
+  prediction. Keep jitter, unmodeled distortion, offset, and settling out of
+  this run because they require different error models.
 
 EVAS 0.7.0 with its Python engine is limited to the short local timing smoke
 because its optional Rust backend is unavailable on the current Windows host.

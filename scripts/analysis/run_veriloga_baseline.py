@@ -25,8 +25,12 @@ MODEL_PATH = PROJECT_ROOT / "models" / "veriloga" / "sar_adc_ideal_10b.va"
 TB_DIR = PROJECT_ROOT / "netlist" / "tb"
 DEFAULT_OUTPUT = PROJECT_ROOT / "output" / "veriloga_baseline"
 CASES = ("timing", "static", "dynamic")
+ALL_CASES = (*CASES, "allocated_noise")
 TB_PATHS = {
-    case: TB_DIR / f"tb_sar_adc_ideal_{case}.scs" for case in CASES
+    "timing": TB_DIR / "tb_sar_adc_ideal_timing.scs",
+    "static": TB_DIR / "tb_sar_adc_ideal_static.scs",
+    "dynamic": TB_DIR / "tb_sar_adc_ideal_dynamic.scs",
+    "allocated_noise": TB_DIR / "tb_sar_adc_allocated_noise_dynamic.scs",
 }
 LOGIC_THRESHOLD_V = 0.45
 OUTPUT_SETTLE_S = 100e-12
@@ -289,11 +293,98 @@ def analyze_dynamic(path: Path) -> dict:
     }
 
 
+def analyze_allocated_noise(path: Path) -> dict:
+    """Analyze the fixed-seed subset of explicitly modeled random sources."""
+
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+    from adctoolbox import analyze_spectrum
+    from models.behavioral.sar_adc import SarAdcModel
+    from scripts.analysis.run_behavioral_baseline import derive_error_budget, load_spec
+
+    data = _load_csv(path)
+    _, codes = _valid_samples(data)
+    sample_count = 16384
+    if len(codes) != sample_count:
+        raise AssertionError(f"allocated-noise samples={len(codes)} != {sample_count}")
+
+    coherent_bin = 7373
+    sample_rate_hz = 10e6
+    input_frequency_hz = sample_rate_hz * coherent_bin / sample_count
+    differential_peak_v = 0.9 * 10.0 ** (-1.0 / 20.0)
+    sample_time = FIRST_SAMPLE_CROSSING_S + np.arange(sample_count) / sample_rate_hz
+    input_diff = differential_peak_v * np.sin(
+        2.0 * np.pi * input_frequency_hz * sample_time
+    )
+    model = SarAdcModel(10, (-0.9, 0.9))
+    ideal_codes = model.unsigned_codes(model.convert(input_diff))
+    code_error = codes.astype(float) - ideal_codes.astype(float)
+
+    reconstructed = -0.9 + codes.astype(float) * (1.8 / 1024.0)
+    metrics = analyze_spectrum(
+        reconstructed - np.mean(reconstructed),
+        fs=sample_rate_hz,
+        max_scale_range=(-0.9, 0.9),
+        win_type="rectangular",
+        side_bin=0,
+        create_plot=False,
+    )
+    sndr_db = float(metrics["sndr_dbc"])
+    enob_bits = float(metrics["enob"])
+
+    budget = derive_error_budget(
+        load_spec(PROJECT_ROOT / "config" / "design_spec.yaml")
+    )
+    partial_error_rms_v = float(
+        np.sqrt(
+            budget["quantization_noise_rms_v"] ** 2
+            + budget["sampling_noise_rms_v"] ** 2
+            + budget["comparator_noise_rms_v"] ** 2
+            + budget["reference_switching_noise_rms_v"] ** 2
+        )
+    )
+    partial_sndr_db = float(
+        20.0 * np.log10(budget["dynamic_signal_rms_v"] / partial_error_rms_v)
+    )
+    sndr_delta_db = sndr_db - partial_sndr_db
+    if (
+        sndr_db < 55.94
+        or enob_bits < 9.0
+        or sndr_db >= 60.95402278783933
+        or abs(sndr_delta_db) > 1.0
+    ):
+        raise AssertionError(
+            "allocated-noise gates failed: "
+            f"SNDR={sndr_db}, ENOB={enob_bits}, delta={sndr_delta_db}"
+        )
+    return {
+        "sample_count": int(len(codes)),
+        "coherent_bin": coherent_bin,
+        "input_frequency_hz": input_frequency_hz,
+        "sampling_noise_rms_v": budget["sampling_noise_rms_v"],
+        "comparator_noise_rms_v": budget["comparator_noise_rms_v"],
+        "reference_noise_rms_v": budget["reference_switching_noise_rms_v"],
+        "partial_rss_error_rms_v": partial_error_rms_v,
+        "partial_rss_sndr_db": partial_sndr_db,
+        "sndr_db": sndr_db,
+        "snr_db": float(metrics["snr_dbc"]),
+        "sfdr_db": float(metrics["sfdr_dbc"]),
+        "thd_db": float(metrics["thd_dbc"]),
+        "enob_bits": enob_bits,
+        "sndr_delta_from_partial_rss_db": sndr_delta_db,
+        "changed_code_count": int(np.count_nonzero(code_error)),
+        "code_error_mean_lsb": float(np.mean(code_error)),
+        "code_error_rms_lsb": float(np.sqrt(np.mean(code_error**2))),
+        "code_error_abs_max_lsb": float(np.max(np.abs(code_error))),
+    }
+
+
 def analyze_cases(cases: list[str], output_root: Path) -> dict:
     analyzers = {
         "timing": analyze_timing,
         "static": analyze_static,
         "dynamic": analyze_dynamic,
+        "allocated_noise": analyze_allocated_noise,
     }
     summary: dict[str, object] = {
         "model": "sar_adc_ideal_10b",
@@ -310,7 +401,7 @@ def analyze_cases(cases: list[str], output_root: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend", choices=("none", "evas", "spectre"), default="none")
-    parser.add_argument("--cases", nargs="+", choices=CASES, default=list(CASES))
+    parser.add_argument("--cases", nargs="+", choices=ALL_CASES, default=list(CASES))
     parser.add_argument("--analyze", action="store_true")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()

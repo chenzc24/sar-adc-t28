@@ -25,3 +25,13 @@
 - Assigned sampling-clock jitter to the testbench instead of the ADC core so
   it perturbs the acquisition instant without being counted again as decision
   noise.
+- Kept the first allocated-noise Verilog-A experiment limited to the three
+  explicitly modeled random sources. Clock jitter remains a sampling-time
+  perturbation, distortion remains an unspecified guard band, and comparator
+  offset/CDAC settling remain deterministic checks rather than being
+  relabeled as Gaussian noise.
+- The fixed-seed Spectre experiment measured 58.059 dB SNDR and 9.352 bit
+  ENOB, only -0.007 dB from the 58.066 dB partial RSS prediction. This
+  validates the random-noise abstraction for top-down SNDR allocation while
+  leaving physical bandwidth, correlation, memory, and PVT behavior to the
+  transistor-level blocks.
