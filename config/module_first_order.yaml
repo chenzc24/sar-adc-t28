@@ -1,0 +1,74 @@
+stage: complete_module_level_first_order
+
+source_spec:
+  resolution_bits: 10
+  differential_full_scale_v: 1.8
+  sampling_time_ns: 40.0
+  bit_cycle_ns: 5.0
+  settling_abs_max_lsb: 0.25
+  sampling_noise_rms_lsb: 0.18
+  comparator_noise_rms_lsb: 0.18
+  comparator_offset_abs_max_lsb: 0.25
+  temperature_k: 300.15
+
+sampling_acquisition:
+  comparator_side_units: 33.0
+  parasitic_capacitance_ff: 0.0
+  unit_capacitance_ff: [3.0, 4.0, 6.86047, 8.0, 16.0, 35.6304]
+  source_resistance_ohm: [50.0, 500.0, 1000.0, 5000.0, 10000.0, 19000.0, 24000.0]
+  switch_resistance_ohm: [250.0, 500.0, 1000.0, 2000.0]
+  representative_spectre_cases:
+    - name: nominal_margin
+      unit_capacitance_ff: 6.86047
+      source_resistance_ohm: 5000.0
+      switch_resistance_ohm: 1000.0
+    - name: near_envelope_feasible
+      unit_capacitance_ff: 6.86047
+      source_resistance_ohm: 19000.0
+      switch_resistance_ohm: 1000.0
+    - name: acquisition_fail
+      unit_capacitance_ff: 6.86047
+      source_resistance_ohm: 24000.0
+      switch_resistance_ohm: 1000.0
+
+comparator_regeneration:
+  initial_input_lsb: [0.25, 0.5, 1.0]
+  resolved_differential_v: 0.45
+  node_capacitance_ff: [5.0, 10.0, 20.0, 40.0]
+  effective_gm_us: [25.0, 50.0, 100.0, 200.0, 400.0]
+  decision_time_budget_ns: [0.5, 1.0, 1.5, 2.0]
+  pdk_nominal_scale_reference:
+    provenance: eb68f98_nmos_min_l_tt_vds_0p9_gmoverid_15
+    gm_over_id_v_inv: 14.99076120680158
+    gm_density_us_per_um: 429.665798166325
+    id_density_ua_per_um: 28.6620749640992
+  representative_spectre_cases:
+    - name: nominal_feasible
+      initial_input_lsb: 0.25
+      node_capacitance_ff: 20.0
+      effective_gm_us: 100.0
+      decision_time_budget_ns: 1.5
+    - name: insufficient_gm
+      initial_input_lsb: 0.25
+      node_capacitance_ff: 20.0
+      effective_gm_us: 50.0
+      decision_time_budget_ns: 1.5
+    - name: fast_regeneration
+      initial_input_lsb: 0.25
+      node_capacitance_ff: 20.0
+      effective_gm_us: 200.0
+      decision_time_budget_ns: 1.0
+
+clock_jitter:
+  rms_ps: 20.0
+  input_frequency_hz: [100000.0, 1000000.0, 2000000.0, 3000000.0, 4000000.0, 4500000.0, 5000000.0]
+  input_level_dbfs: -1.0
+  tracked_budget_frequency_hz: 4500000.0
+
+spectre:
+  single_ended_step_v: 0.9
+  step_delay_ns: 1.0
+  rise_time_ps: 1.0
+  sampling_stop_time_ns: 45.0
+  sampling_max_step_ps: 10.0
+  comparator_max_step_ps: 1.0

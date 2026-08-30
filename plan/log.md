@@ -4,6 +4,31 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Complete module first-order models
+
+- Target: close the abstraction layer between the behavioral ADC and
+  transistor blocks with sampling acquisition, comparator regeneration, and
+  clock-jitter sensitivity models.
+- Local changed areas: tracked model inputs, two ideal Spectre decks, unified
+  analysis/simulation runner, focused regression, architecture and result
+  documentation, cell manifest, target plan, and this log.
+- Remote OA changes: created only
+  `SAR_ADC_T28/tb_sampling_acquisition/schematic` and
+  `tb_comparator_regeneration/schematic`. Existing OA cells, PDK content, and
+  the unrelated unsaved `PLAYGROUND_AMP` schematic remained read-only.
+- Validation: both schematic readbacks and Virtuoso netlist exports, six
+  Spectre 21.1 transients, analytical correlation, parametric grid/plot
+  generation, and focused pass/fail/jitter tests.
+- Results: at Cu=6.86047 fF, 40 ns acquisition permits 21.242 kΩ total source
+  plus switch resistance. A 20 fF comparator regeneration node requires
+  92.42 uS effective gm for a 1.5 ns decision from 0.25 LSB. The tracked clock
+  point produces 0.182464 LSB RMS jitter error.
+- Scope limit: comparator noise/offset, nonlinear switch behavior, charge
+  injection, reference memory, PVT, mismatch, and extracted parasitics remain
+  transistor-level work; no production device dimensions were frozen.
+- Commit status: ready to commit as
+  `feat: complete module first-order models`; push was not requested.
+
 ## 2026-08-30 - Establish CDAC/reference settling envelope
 
 - Target: translate the sampling-noise and deterministic-settling allocations

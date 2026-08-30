@@ -1,0 +1,16 @@
+// First-order single-ended half-circuit for sampling acquisition.
+simulator lang=spectre
+global 0
+
+parameters vstep=@VSTEP@ tdelay=@TDELAY@ trise=@TRISE@
+parameters rsource=@RSOURCE@ rswitch=@RSWITCH@ cside=@CSIDE@
+
+VIN (VIN_SRC 0) vsource type=pulse val0=0 val1=vstep \
+    delay=tdelay rise=trise fall=trise width=100n period=200n
+RSOURCE (VIN_SRC VIN_PAD) resistor r=rsource
+RSW (VIN_PAD VSAMPLE) resistor r=rswitch
+CSAMPLE (VSAMPLE 0) capacitor c=cside
+
+simulatorOptions options reltol=1e-6 vabstol=1e-9 iabstol=1e-15 temp=27 tnom=27
+tran_acquire tran stop=@TSTOP@ maxstep=@MAXSTEP@ errpreset=conservative
+save VIN_SRC VIN_PAD VSAMPLE

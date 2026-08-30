@@ -97,3 +97,18 @@ documented in `docs/cdac_reference_settling.md`. Code-dependent reference
 memory, physical switch nonlinearity, reference/switch noise, mismatch,
 charge injection, comparator kickback, and parasitics remain later-stage
 transistor- and extracted-level work.
+
+## Stage-4 module first-order closure
+
+The remaining phase models are documented in
+`docs/module_first_order_models.md`. At the 6.86047 fF comparison point, the
+40 ns acquisition phase permits `Rsource + Ron <= 21.242 kΩ`, while a 3 ns
+conversion-settling allocation permits `Rref + Ron <= 1.593 kΩ`. The latter is
+the tighter switch/reference constraint.
+
+For comparator timing sensitivity, a 20 fF regeneration node must provide
+`gm_eff >= 92.42 uS` to amplify a 0.25 LSB initial differential to 0.45 V in
+1.5 ns. The clock's tracked 20 ps RMS jitter produces 0.182464 LSB RMS error at
+4.5 MHz and -1 dBFS. These values close the first-order constraint layer but
+do not replace transistor noise, offset, nonlinear switch, PVT, mismatch, or
+post-layout verification.

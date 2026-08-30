@@ -2,6 +2,24 @@
 
 ## 2026-08-30
 
+- Completed the module-level first-order layer by adding sampling-acquisition,
+  comparator-regeneration, and clock-jitter constraints to the existing
+  CDAC/reference envelope. No whole-ADC linear model was created because the
+  SAR signal path changes by phase.
+- At Cu=6.86047 fF and Cside=226.396 fF, the 40 ns acquisition constraint is
+  `Rsource + Ron <= 21.242 kΩ`. Three Spectre cases reproduced the analytical
+  pass/fail boundary.
+- A 20 fF comparator node requires `gm_eff >= 92.42 uS` to resolve 0.25 LSB to
+  0.45 V in 1.5 ns. Three positive-feedback Spectre cases matched analytical
+  decision times within 0.02 ps. This constrains later sizing but does not
+  validate StrongARM noise, offset, or topology-dependent gm/C.
+- Reproduced the 20 ps RMS, 4.5 MHz, -1 dBFS jitter allocation as 0.320738 mV
+  RMS or 0.182464 LSB RMS. Clock behavior remains a timing sensitivity rather
+  than an AC circuit model.
+- Created and netlisted only
+  `SAR_ADC_T28/tb_sampling_acquisition/schematic` and
+  `tb_comparator_regeneration/schematic`; all production blocks remain
+  planned.
 - Established the first module-level CDAC/reference settling envelope without
   freezing a capacitor or switch size. The ideal 5+5 split gives
   `Cside = 33*Cu`; the differential kT/C allocation requires at least
