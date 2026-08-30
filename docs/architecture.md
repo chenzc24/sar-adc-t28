@@ -4,6 +4,18 @@
 
 `VINP/VINN -> sampling network -> differential split CDAC -> StrongARM comparator -> SAR logic -> DOUT<9:0>`
 
+## Behavioral golden model
+
+The executable stage-2 model is `models/behavioral/sar_adc.py`. It accepts the
+differential signal `VINP - VINN` over `[-0.9, 0.9] V`, performs ten explicit
+MSB-first decisions, and returns both raw decision bits and unsigned codes.
+
+At ideal accuracy a 5+5 split CDAC has the same binary transfer weights as a
+10-bit array. The golden model therefore checks the algorithm and system
+metrics without pretending to model bridge-capacitor ratio error, parasitics,
+switching trajectory, or finite settling. Those effects enter when the CDAC
+is characterized.
+
 ## Blocks
 
 ### Sampling network
@@ -25,4 +37,3 @@ Use synchronous control with a nominal 200 MHz internal bit clock. Allocate appr
 ### Reference network
 
 Use ideal VREFP/VREFN/VCM sources for the architectural baseline. Add reference source resistance, decoupling, and an optional buffer only after CDAC switching-current requirements are known.
-

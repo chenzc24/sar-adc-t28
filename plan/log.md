@@ -4,6 +4,24 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Complete behavioral baseline
+
+- Target: complete the system error budget and bit-accurate ideal model for
+  the default 10-bit, 10 MS/s fully differential SAR ADC.
+- Local changed areas: design spec, dependency pin, behavioral model, unified
+  analysis runner, focused system regression, architecture/verification/error
+  budget documentation, and target plan.
+- Remote OA changes: none; `SAR_ADC_T28` and all Virtuoso state remained
+  read-only.
+- Validation: YAML parse, Python compile, two focused regression tests, full
+  1024-code ramp, 16,384-sample near-Nyquist coherent sine, JSON/plot artifact
+  generation, and visual plot inspection.
+- Results: zero missing codes and zero ideal DNL/INL; 60.953 dB SNDR,
+  82.033 dB SFDR, and 9.833 bit ENOB at -1 dBFS; allocated error budget
+  projects 9.140 bit ENOB with 0.844 dB SNDR margin.
+- Commit status: ready to commit as `feat: add SAR ADC behavioral baseline`;
+  push was not requested.
+
 ## 2026-08-30 - Adopt SAR ADC Agent workflow
 
 - Target: adapt the portable plan-log-experience kernel for a split local Git

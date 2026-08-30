@@ -1,6 +1,6 @@
 project:
   name: SAR_ADC_T28
-  maturity: architecture_baseline
+  maturity: behavioral_baseline
 
 process:
   foundry: TSMC
@@ -41,3 +41,17 @@ targets:
   power_max_mw: 1.0
   missing_codes_allowed: 0
 
+behavioral_baseline:
+  fft_samples: 16384
+  coherent_bin: 7373
+  ramp_samples_per_code: 8
+
+error_budget:
+  sampling_noise_rms_lsb: 0.18
+  comparator_noise_rms_lsb: 0.18
+  reference_switching_noise_rms_lsb: 0.12
+  distortion_unmodeled_rms_lsb: 0.15
+  clock_jitter_rms_ps: 20.0
+  jitter_budget_input_hz: 4500000
+  cdac_settling_abs_max_lsb: 0.25
+  comparator_offset_abs_max_lsb: 0.25

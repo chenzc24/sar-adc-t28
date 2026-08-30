@@ -50,3 +50,22 @@ under `docs/experience/` only when requested by a human.
 Small bounded targets may commit directly to `main` while the project remains
 single-owner. Pushes require explicit user authorization; published history is
 never force-rewritten without explicit authorization.
+
+## Behavioral baseline
+
+The first two design stages are executable locally: the system error budget is
+documented in `docs/error_budget.md`, and `models/behavioral/sar_adc.py`
+implements the ideal 10-bit fully differential SAR decisions.
+
+On Windows PowerShell:
+
+```powershell
+uv venv .venv
+uv pip install --python .venv\Scripts\python.exe -r requirements.txt
+.venv\Scripts\python.exe scripts\analysis\run_behavioral_baseline.py
+.venv\Scripts\python.exe verification\system\test_behavioral_baseline.py -v
+```
+
+The runner writes `summary.json`, the static-linearity plot, and the dynamic
+spectrum under `output/behavioral_baseline/`. Generated output remains ignored;
+the spec, model, tests, and numerical gates are tracked.
