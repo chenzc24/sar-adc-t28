@@ -31,3 +31,22 @@ Text sources, specifications, automation, curated netlists, metrics, and reports
 4. Run static, dynamic, PVT, and Monte Carlo verification.
 5. Complete layout, DRC/LVS, extraction, and post-layout simulation.
 
+## Agent workflow
+
+The repository adopts a project-specific version of the
+[Agent Workflow Kernel](https://github.com/chenzc24/agent-workflow-kernel).
+Every bounded target follows:
+
+```text
+target plan -> implementation -> deterministic validation -> factual log -> commit
+```
+
+Create plans under `plan/<date-goal-slug>/plan.md`. Root `AGENTS.md` defines
+the ownership boundary between local tracked sources, generated artifacts, and
+remote Virtuoso OA cellviews. `plan/log.md` records maintenance facts;
+`docs/design_log.md` records circuit decisions; reusable lessons are drafted
+under `docs/experience/` only when requested by a human.
+
+Small bounded targets may commit directly to `main` while the project remains
+single-owner. Pushes require explicit user authorization; published history is
+never force-rewritten without explicit authorization.
