@@ -1,6 +1,15 @@
 technology_library: tsmcN28
 model_include: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/toplevel.scs
 verified_model_section: TOP_TT
+virtuoso_netlisted_model_include: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+virtuoso_netlisted_sections:
+  - pre_simu
+  - noise_worst
+  - ttmacro_mos_moscap
+  - tt_res_bip_dio_disres
+  - tt_mom
+  - tt_ind_jvar
+  - tt_r_metal
 
 mos_devices:
   nmos_standard: nch_mac
@@ -10,9 +19,9 @@ mos_devices:
   nmos_ehvt: nch_ehvt_mac
 
 capacitor:
-  preferred_type: null
-  cell: null
-  status: pending_virtuoso_library_characterization
+  preferred_type: two_terminal_finger_mom
+  cell: cfmom_2t
+  status: verified_for_characterization_not_yet_selected_as_cdac_unit
 
 standard_cell_candidates:
   - tcbn28hpcplusbwp12t30p140
@@ -20,4 +29,3 @@ standard_cell_candidates:
   - tcbn28hpcplusbwp12t30p140lvt
 
 io_library: tphn28hpcpgv18
-

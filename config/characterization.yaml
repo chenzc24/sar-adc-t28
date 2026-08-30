@@ -1,0 +1,65 @@
+stage: pdk_primitive_characterization
+baseline:
+  process: TT
+  supply_v: 0.9
+  temperature_c: 27
+  status: simulated
+
+library:
+  design: SAR_ADC_T28
+  technology: tsmcN28
+
+devices:
+  nmos:
+    master: tsmcN28/nch_mac/symbol
+    terminals: [B, D, G, S]
+    geometry:
+      l: 30n
+      Wfg: 1u
+      fingers: 1
+      simM: 1
+  pmos:
+    master: tsmcN28/pch_mac/symbol
+    terminals: [B, D, G, S]
+    geometry:
+      l: 30n
+      Wfg: 1u
+      fingers: 1
+      simM: 1
+  capacitor:
+    master: tsmcN28/cfmom_2t/symbol
+    terminals: [MINUS, PLUS]
+    geometry:
+      Wfinger: 50n
+      Sfinger: 50n
+      Lfinger: 4u
+      Nfinger: 32
+      StartMn: 1
+      StopMn: 3
+    cdf_capacitance_ff: 35.6304
+    note: Characterization specimen only; not a selected CDAC unit.
+
+analyses:
+  mos_transfer:
+    drain_bias_v: 0.9
+    gate_start_v: 0.0
+    gate_stop_v: 0.9
+    gate_step_v: 0.005
+    points: 181
+    outputs: [id, gm, gds, gmoverid, self_gain, ft, vth]
+  capacitor_ac:
+    start_hz: 1.0e3
+    stop_hz: 1.0e10
+    points_per_decade: 20
+    points: 141
+
+testbenches:
+  tb_nmos_char: simulated
+  tb_pmos_char: simulated
+  tb_cap_char: simulated
+
+artifacts:
+  root: output/pdk_characterization
+  schematic_readback: output/pdk_characterization/schematic_readback.json
+  spectre_summary: output/pdk_characterization/spectre/run_summary.json
+  extracted_summary: output/pdk_characterization/analysis/characterization_summary.json

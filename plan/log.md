@@ -4,6 +4,30 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-30 - Establish T28 primitive characterization
+
+- Target: create verified NMOS, PMOS, and MOM characterization schematics and
+  obtain the first nominal PDK sizing data.
+- Local changed areas: PDK/characterization mappings, reproducible audit,
+  schematic creation, netlist export, Spectre run and extraction scripts,
+  characterization report, cell manifest, target plan, and this log.
+- Remote OA changes: created only `SAR_ADC_T28/tb_nmos_char/schematic`,
+  `tb_pmos_char/schematic`, and `tb_cap_char/schematic`. The PDK and unrelated
+  unsaved `PLAYGROUND_AMP` schematic remained read-only.
+- Validation: bridge/CIW/Spectre health, PDK terminal/CDF audit, schematic
+  connectivity and parameter readback, Virtuoso netlisting, three Spectre
+  runs, PSF extraction, CSV/JSON generation, visual plot inspection, and six
+  existing system regression tests.
+- Results: 181-point nominal DC sweeps for each core MOS and a 141-point MOM
+  AC sweep all completed with zero errors. At full 0.9 V bias, NMOS/PMOS
+  currents are 728/615 uA per um. The 35.6304 fF MOM CDF value correlates to
+  35.6355 fF in Spectre, a 0.0143% difference.
+- Scope limit: one TT geometry/bias only; no PVT, output/length sweep, noise,
+  Monte Carlo, mismatch, or extracted parasitics. The MOM fixture is not a
+  final CDAC unit selection.
+- Commit status: ready to commit as
+  `feat: establish T28 primitive characterization`; push was not requested.
+
 ## 2026-08-30 - Record Verilog-A noise-injection learning
 
 - Target: record the reviewed distinction between RMS parameters, event-level
