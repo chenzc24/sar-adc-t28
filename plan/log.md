@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Screen bootstrapped main switch
+
+- Target: test the new bootstrapped-NMOS architecture at the main-switch level
+  before building its transistor-level clock/charge driver.
+- Local changed areas: PVT/device matrix, three OA create/export tools, batched
+  Spectre runner, analysis/Pareto reporting, PDK mapping, manifest, target plan,
+  and design documentation.
+- Remote OA change: created only `tb_bootstrap_core_main_char`,
+  `tb_bootstrap_dnw_main_char`, and `tb_bootstrap_18_main_char` schematics in
+  `SAR_ADC_T28`. Each has one real PDK MOS and three sources with explicit body
+  connection; existing SAR cellviews were not modified.
+- Validation: 27/27 Spectre jobs completed with zero failures, producing 486
+  Ron curves and 486 leakage measurements. Fourteen of 18 candidates met the
+  global 1-kOhm Ron target. DNW L60/W2 is the preferred electrical seed at
+  321.2-Ohm worst Ron and 143.8-nA maximum leakage.
+- Scope boundary: the drive was ideal `Vgate=Vin+VDD`; no finite bootstrap
+  capacitor, transient driver loss, foundry reliability sign-off, or production
+  switch is claimed.
+- Commit status: ready to commit as `feat: screen bootstrapped main switch`;
+  push was not requested.
+
 ## 2026-08-31 - Screen transmission gate across PVT
 
 - Target: compare standard- and high-VT plain transmission gates across the

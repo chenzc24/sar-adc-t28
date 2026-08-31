@@ -2,6 +2,21 @@
 
 ## 2026-08-31
 
+- Completed ideal-bootstrap main-NMOS screening with real core, deep-N-well,
+  and 1.8-V T28 devices. All 27 SS/TT/FF, supply, and temperature Spectre jobs
+  succeeded, yielding 486 Ron curves and 486 leakage points; 14 of 18 candidates
+  met the 1-kOhm Ron target globally.
+- Selected DNW `L=60 nm, W=2 um` as the preferred electrical seed: 321.2-Ohm
+  worst Ron, essentially zero DC common-mode Ron variation, and 143.8-nA
+  worst off leakage. It improves leakage about 14 times over the same-width
+  L30 DNW device while retaining ample Ron margin.
+- Kept 1.8-V `L=150 nm, W=8.96 um` as a lower-leakage fallback (65.3 nA) rather
+  than the performance seed because its worst Ron is 964.5 Ohm and its
+  common-mode flatness is 69.1%.
+- Did not claim reliability sign-off or create a production switch. The ideal
+  gate reaches 1.979 V absolute at VDD=0.99 V; foundry terminal limits and an
+  actual transient bootstrap driver remain mandatory. Model-limit warnings at
+  the upper commanded terminal differences remain an explicit design gate.
 - Completed global-PVT screening of eight plain transmission-gate candidates
   across SS/TT/FF, 0.81/0.90/0.99 V, and -40/27/125 C. All 27 batched Spectre
   jobs succeeded, producing 216 Ron curves and 216 leakage measurements.
