@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Screen bootstrap-driver error reduction
+
+- Target: determine whether MN7/MN10 discharge strength, MP8 sizing, or
+  external non-overlap can repair the complete bootstrap driver's held error
+  before any OA edit.
+- Local changed areas: audited diagnostic configuration, exact-export Spectre
+  runner, analyzer/plots, result report, target plan, design log, and this log.
+- Remote OA change: none. All generated decks assert the existing OA-export
+  hash and restrict subcircuit edits to declared instance multipliers.
+- Validation: 13/13 one-factor, 8/8 final combination, and 24/24 confirmation
+  Spectre cases succeeded. One intermediate SSH upload reset was explicitly
+  retained and its exact case reran successfully. Baseline 12.026 mV was
+  reproduced; the reasonable and extreme candidates reached only 10.298 and
+  9.097 mV. Python/YAML, provenance, result assertions, and both plots passed.
+- Decision: do not update OA. Stronger discharge removes the later gate event
+  but not the dominant immediate turn-off step, while reducing sample VGS and
+  leaving 1.787-V/SOA concerns intact. Next evaluate independent isolation and
+  charge-cancellation topology.
+- Commit status: ready to commit as
+  `test: screen bootstrap driver error reduction`; push was not requested.
+
 ## 2026-08-31 - Isolate bootstrap held-sample error
 
 - Target: separate the selected main DNW switch's deterministic turn-off error

@@ -2,6 +2,19 @@
 
 ## 2026-08-31
 
+- Rejected transistor sizing and external non-overlap as the primary fix for
+  bootstrap held error. Thirteen one-factor, eight combination, and 24
+  full-input confirmation Spectre cases showed that the best reasonable
+  MN7/MN10/MP8/gap combination still has 10.298-mV differential error; an
+  extreme MN7/MN10 multi 16/32 case still has 9.097 mV versus 0.439 mV.
+- The extreme discharge candidate reduces fitted gain error from -1.510% to
+  -1.132% but lowers minimum sample VGS from 0.811 V to 0.742 V. Its later
+  discharge and hold drift are effectively zero; the remaining 9.097 mV is
+  created at the immediate PHI turn-off edge. Do not implement it in OA.
+- The next bootstrap change must target edge charge directly with independent
+  boosted-path isolation timing, a complementary dummy/cancellation device,
+  or bottom-plate sequencing in the differential CDAC. The approximately
+  1.787-V terminal stress and PDK SOA warnings remain unchanged blockers.
 - Isolated the first bootstrap prototype's held-sample error with 40/40
   successful TT/0.9-V/27-C Spectre cases from the exact OA export. The complete
   differential pair reaches 12.026 mV raw error and -1.510% fitted gain error;
