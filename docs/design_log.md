@@ -1,5 +1,18 @@
 # Design Log
 
+## 2026-08-31
+
+- Started transistor-level sizing with a PDK `nch_mac + pch_mac`
+  transmission-gate fixture. Twelve TT/27-C width combinations were swept
+  across 0.001-to-0.899-V signal common mode using a 1-mV resistance probe.
+- The minimum-total-width point meeting the current 1-kOhm macro allocation is
+  `Wn=2 um, Wp=2 um, L=30 nm`; its Ron spans 167.6 to 911.4 Ohm. This is a
+  sizing seed, not a frozen switch, because the TT resistance margin is only
+  about 9% and PVT has not been run.
+- The same candidate leaks 36.0 nA in the full 0.9-V off-stress fixture. That
+  result makes leakage/hold-state analysis and longer-/higher-VT device
+  comparison mandatory before creating a production sampling or CDAC switch.
+
 ## 2026-08-30
 
 - Repaired the OA electrical macro hierarchy after review found that the

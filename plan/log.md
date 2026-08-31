@@ -4,6 +4,26 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Characterize T28 transmission-gate switch
+
+- Target: begin transistor-level CDAC/sampling design with a bounded PDK
+  transmission-gate Ron and leakage fixture.
+- Local changed areas: switch-characterization configuration, OA
+  create/export automation, Spectre runner, analysis/reporting script, design
+  documentation, manifest, target plan, and this log.
+- Remote OA change: created only
+  `SAR_ADC_T28/tb_tg_switch_char/schematic` with verified
+  `tsmcN28/nch_mac` and `pch_mac` devices. Readback confirmed the two parallel
+  channels, complementary gate sources, and explicit body connections. The
+  unrelated unsaved ISCAS IO-ring session and dialog were not touched.
+- Validation: the automatic OA export preserved the topology; all 12 TT/27-C
+  Spectre Ron cases completed with zero errors. Four met the 1-kOhm limit. The
+  minimum-width passing seed is `Wn=Wp=2 um, L=30 nm`, with 911.4-Ohm maximum
+  Ron and 36.0-nA full-stress off leakage. It remains intentionally unfrozen
+  pending PVT, leakage/hold, and transient error checks.
+- Commit status: ready to commit as
+  `feat: characterize T28 transmission-gate switch`; push was not requested.
+
 ## 2026-08-30 - Repair OA electrical macro-model loop
 
 - Target: replace the floating structural OA top with an executable nominal
