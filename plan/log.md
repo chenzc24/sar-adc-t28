@@ -4,6 +4,29 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Screen transmission gate across PVT
+
+- Target: compare standard- and high-VT plain transmission gates across the
+  verified SS/TT/FF, supply, and temperature grid before creating a production
+  sampling switch.
+- Local changed areas: PVT configuration, audited corner/device mappings,
+  high-VT OA create/export automation, batched Spectre runner, analysis and
+  design documentation, manifest, target plan, and this log.
+- Remote OA change: created only
+  `SAR_ADC_T28/tb_tg_switch_hvt_char/schematic`. Readback confirmed the two
+  intended HVT MOS devices, five sources, six nets, body ties, and no floating
+  terminals; existing SAR cellviews were not modified.
+- Validation: 27/27 batched Spectre jobs completed with zero errors, covering
+  216 Ron curves and 216 off-leakage measurements. The batching exactly
+  reproduced the independent TT nominal Ron and leakage. No candidate passed
+  all PVT points; the target reports the bounded no-solution rather than
+  relaxing 1 kOhm.
+- Decision: do not create a production plain-TG sampling switch. The next
+  target is a reliability-aware bootstrapped NMOS sampling switch; CDAC
+  bottom-plate switches remain separate.
+- Commit status: ready to commit as `feat: screen T28 switch across PVT`;
+  push was not requested.
+
 ## 2026-08-31 - Characterize T28 transmission-gate switch
 
 - Target: begin transistor-level CDAC/sampling design with a bounded PDK

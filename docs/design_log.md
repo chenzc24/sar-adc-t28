@@ -2,6 +2,17 @@
 
 ## 2026-08-31
 
+- Completed global-PVT screening of eight plain transmission-gate candidates
+  across SS/TT/FF, 0.81/0.90/0.99 V, and -40/27/125 C. All 27 batched Spectre
+  jobs succeeded, producing 216 Ron curves and 216 leakage measurements.
+- No candidate met the 1-kOhm rail-to-rail target at every corner. The best
+  screened worst case was 13.462 kOhm for standard-VT `Wn=Wp=4 um, L=30 nm`
+  at SS/0.81 V/-40 C near mid-supply; first-order width scaling would require
+  about 54 um per device and is rejected as a production approach.
+- The sampling-switch path will therefore move to a bootstrapped NMOS
+  architecture. CDAC bottom-plate switches will be designed separately for
+  their discrete reference/ground switching states. No production plain-TG
+  switch was created or frozen.
 - Started transistor-level sizing with a PDK `nch_mac + pch_mac`
   transmission-gate fixture. Twelve TT/27-C width combinations were swept
   across 0.001-to-0.899-V signal common mode using a 1-mV resistance probe.

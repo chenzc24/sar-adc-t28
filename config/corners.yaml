@@ -7,15 +7,16 @@ baseline:
 
 planned:
   - process: slow
-    model_section: null
+    model_section: SSMacro_MOS_MOSCAP
+    verified: true
   - process: fast
-    model_section: null
+    model_section: FFMacro_MOS_MOSCAP
+    verified: true
   - supply_v: 0.81
   - supply_v: 0.99
   - temperature_c: -40
   - temperature_c: 125
 
 notes:
-  - Non-TT model section names must be read from the PDK before use.
-  - Do not infer or hardcode unverified corner section names.
-
+  - SS/TT/FF MOS section names were read from the PDK top-level model library on 2026-08-31.
+  - Do not infer or hardcode any additional corner section names.

@@ -1,6 +1,10 @@
 technology_library: tsmcN28
 model_include: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/toplevel.scs
 verified_model_section: TOP_TT
+verified_mos_model_sections:
+  slow: SSMacro_MOS_MOSCAP
+  typical: TTMacro_MOS_MOSCAP
+  fast: FFMacro_MOS_MOSCAP
 virtuoso_netlisted_model_include: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
 virtuoso_netlisted_sections:
   - pre_simu
@@ -14,6 +18,8 @@ virtuoso_netlisted_sections:
 mos_devices:
   nmos_standard: nch_mac
   pmos_standard: pch_mac
+  nmos_hvt: nch_hvt_mac
+  pmos_hvt: pch_hvt_mac
   nmos_ulvt: nch_ulvt_mac
   pmos_ulvt: pch_ulvt_mac
   nmos_ehvt: nch_ehvt_mac
