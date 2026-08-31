@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Isolate bootstrap held-sample error
+
+- Target: separate the selected main DNW switch's deterministic turn-off error
+  from the complete bootstrap driver's contribution before changing OA or
+  expanding PVT.
+- Local changed areas: one diagnostic matrix, reproducible Spectre runner,
+  analyzer/plots, focused result report, target plan, design log, and this log.
+- Remote OA change: none. The analysis preserves the exact automatic OA export
+  hash and exact main-device statement; all `SAR_ADC_T28` cellviews remained
+  read-only.
+- Validation: 40/40 Spectre 21.1 cases completed at TT/0.9 V/27 C. The complete
+  differential pair reaches 12.026-mV raw error and -1.510% gain error; the
+  absolute-off isolated main reaches 1.390 mV and -0.173%. The driver-added
+  fitted term is -1.337%. Both generated plots were visually inspected and
+  deterministic case/provenance/result assertions passed.
+- Decision: correct the driver discharge/isolation/non-overlap path before
+  another main-width sweep or global PVT. Raw 0.439-mV compliance and the
+  separate approximately 1.79-V SOA issue remain open.
+- Commit status: ready to commit as `test: isolate bootstrap held-sample error`;
+  push was not requested.
+
 ## 2026-08-31 - Prototype transistor bootstrap driver
 
 - Target: create and correlate the first finite-capacitor transistor-level

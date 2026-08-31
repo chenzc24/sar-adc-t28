@@ -2,6 +2,24 @@
 
 ## 2026-08-31
 
+- Isolated the first bootstrap prototype's held-sample error with 40/40
+  successful TT/0.9-V/27-C Spectre cases from the exact OA export. The complete
+  differential pair reaches 12.026 mV raw error and -1.510% fitted gain error;
+  its 0.109-mV post-fit residual is below 0.439 mV, but no calibration contract
+  exists, so the raw path remains failed.
+- The same real DNW main switch with an ideal fixed-ground off drive reaches
+  1.390 mV and -0.173% differential gain error, only 11.56% of the full
+  maximum. A source-relative-off control cancels to below 1 nV in the matched
+  pair. The driver network therefore adds about -1.337% gain error and is the
+  dominant next correction target.
+- Load and ideal-edge sweeps confirm a capacitive turn-off mechanism. Larger
+  hold capacitance and slower gate edges reduce the isolated-device error, but
+  neither is accepted as a production fix without acquisition, jitter, and
+  linearity checks. Next inspect MN7/MN10 discharge, MP8 isolation, and
+  non-overlap timing before dummy-switch or bottom-plate compensation.
+- No OA object changed in this diagnostic. Global PVT and circuit freeze remain
+  blocked by the held-error failure and the independent approximately 1.79-V
+  core-device terminal stress.
 - Created the first transistor-level `sar_bootstrap` OA prototype and dynamic
   off-phase-step testbench. Rebuild/readback corrected the clock multiplier to
   Abo Figure 5.5 NMOS `MN1/MN2/MN3`; both schematics now have zero check
