@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-08-31 - Prototype transistor bootstrap driver
+
+- Target: create and correlate the first finite-capacitor transistor-level
+  bootstrap sampling switch before global PVT or production-cell design.
+- Local changed areas: bootstrap OA create/readback/export automation,
+  nominal and width-screen configurations, Spectre runner/analyzer, design
+  documentation, manifest, target plan, and this log.
+- Remote OA change: created only `SAR_ADC_T28/sar_bootstrap/schematic+symbol`
+  and `tb_sar_bootstrap_transient/schematic`. Exact readback confirms the Abo
+  NMOS multiplier, all B/D/G/S connections, dynamic input step, symbol ports,
+  and zero check markers in both schematics.
+- Validation: 9/9 nominal Cboot/input jobs and 12/12 main-width jobs completed
+  in Spectre 21.1 from one unedited OA export hash. Acquisition, gate
+  overdrive, and Cboot droop pass, but nominal held error reaches 6.463 mV
+  versus 0.439 mV. The 2-um main switch remains the best screened seed.
+- Blockers: core-device SOA warnings reach about 1.79-V terminal differences,
+  and the signal-dependent held error is not fixed by main-switch width.
+  Global PVT and production freeze are deliberately deferred.
+- Commit status: ready to commit as
+  `feat: prototype transistor bootstrap driver`; push was not requested.
+
 ## 2026-08-31 - Screen bootstrapped main switch
 
 - Target: test the new bootstrapped-NMOS architecture at the main-switch level

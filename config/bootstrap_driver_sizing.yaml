@@ -1,0 +1,43 @@
+stage: transistor_level_bootstrap_driver_sizing_screen
+
+model_sections:
+  SS: SSMacro_MOS_MOSCAP
+  TT: TTMacro_MOS_MOSCAP
+  FF: FFMacro_MOS_MOSCAP
+
+conditions:
+  process: [TT]
+  supply_v: [0.90]
+  temperature_c: [27]
+  input_v: [0.05, 0.45, 0.85]
+  cboot_f: [2.0e-13]
+  main_switch_width_m: [2.5e-7, 5.0e-7, 1.0e-6, 2.0e-6]
+
+timing:
+  period_s: 1.0e-7
+  precharge_end_s: 2.10e-7
+  sample_start_s: 2.11e-7
+  sample_end_s: 2.50e-7
+  hold_start_s: 2.51e-7
+  hold_measure_s: 2.70e-7
+  stop_s: 3.20e-7
+  edge_s: 1.0e-10
+
+load:
+  source_resistance_ohm: 50.0
+  cdac_side_capacitance_f: 2.195e-13
+
+targets:
+  maximum_acquisition_error_v: 4.39e-4
+  maximum_hold_error_v: 4.39e-4
+  minimum_gate_overdrive_v: 0.70
+  maximum_gate_overdrive_v: 1.05
+  maximum_bootstrap_droop_v: 4.39e-2
+
+scope_limits:
+  - total main-switch width is implemented as integer 250-nm fingers in the analysis wrapper
+  - auxiliary capacitors are ideal and not yet mapped to MOM layout
+  - PHI and PHIB are ideal external non-overlap clocks
+  - nominal topology bring-up precedes full global PVT
+  - simulator convergence does not imply foundry reliability sign-off
+  - no extracted parasitics, mismatch, noise, or production cell freeze

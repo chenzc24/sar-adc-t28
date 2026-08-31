@@ -2,6 +2,21 @@
 
 ## 2026-08-31
 
+- Created the first transistor-level `sar_bootstrap` OA prototype and dynamic
+  off-phase-step testbench. Rebuild/readback corrected the clock multiplier to
+  Abo Figure 5.5 NMOS `MN1/MN2/MN3`; both schematics now have zero check
+  markers and the unedited OA export is the source for every Spectre wrapper.
+- All nine TT/0.9-V/27-C input/Cboot runs completed. Acquisition settled in at
+  most 0.681 ns with <=0.000729 mV end error, main `VGS` stayed 0.780-0.841 V,
+  and Cboot droop stayed below 2.421 mV. However, held error reached 6.463 mV
+  versus the 0.439-mV gate, so the prototype is not accepted.
+- A 0.25/0.5/1/2-um main-switch width screen did not repair the held error;
+  the 2-um seed had the best screened worst value. Keep 200 fF / DNW L60 W2
+  only as the next-iteration seed.
+- Spectre SOA warnings and terminal reconstruction show about 1.79 V maximum
+  core-device gate-to-bulk stress in the multiplier and about 1.29 V `VDS` on
+  MN7. Global PVT and production-cell freeze are blocked until the protection
+  topology and signal-dependent hold error are corrected.
 - Completed ideal-bootstrap main-NMOS screening with real core, deep-N-well,
   and 1.8-V T28 devices. All 27 SS/TT/FF, supply, and temperature Spectre jobs
   succeeded, yielding 486 Ron curves and 486 leakage points; 14 of 18 candidates
