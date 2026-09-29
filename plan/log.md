@@ -4,6 +4,26 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Verify first-pass T28 StrongARM noise and interfaces
+
+- Target: screen transistor-level comparator noise, local mismatch, selected
+  PVT/output loads, and finite-input kickback against initial SAR budgets.
+- Local changed areas: dedicated plan, YAML configuration, read-only OA-export
+  and Spectre verification script, and result report. Raw exports, decks,
+  Monte Carlo samples, PSF, and logs remain under ignored
+  `output/strongarm_t28_verification/`.
+- Remote OA changes: none. The exact 11-T28-MOS DUT netlist hash matched the
+  first-pass baseline; only temporary Spectre analysis decks were derived.
+- Validation: Spectre 21.1 noise, mismatch, PVT, and kickback runs; source
+  hash/section checks and PSF parsing. Noise was 51 wrong decisions in 192
+  near-threshold cycles. Corrected local-MC mismatch had 27 of 32 paired
+  draws outside ±0.439 mV. Four deterministic PVT/load points met 1.5 ns,
+  with FF/0.99-V device-voltage warnings. The 219.535-fF kickback fixture
+  stayed below 0.439 mV; 50 fF exceeded it. An earlier MC model-section
+  choice was found inert and its 48 apparent passes were invalidated.
+- Commit status: commit only this target's files as
+  `test: screen T28 StrongARM noise mismatch and loading`; no push requested.
+
 ## 2026-09-29 - Screen bottom-plate top-clamp widths
 
 - Target: hold the full-CDAC bottom-plate fixture and 22 bootstrap pumps
