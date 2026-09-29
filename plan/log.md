@@ -4,6 +4,25 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Map bootstrap terminal stress
+
+- Target: locate complete-driver transistor terminal overstress before
+  selecting an independently named protected bootstrap topology.
+- Local changed areas: target plan, read-only OA-export/waveform audit script,
+  result report, design log, and this maintenance entry. Ranked JSON and CSV
+  remain ignored under `output/bootstrap_soa_map/`.
+- Remote OA changes: none. All `SAR_ADC_T28` cells and PDK files were
+  read-only; the healthy `t28_io` bridge and Spectre 21.1 were checked.
+- Validation: exact OA-export SHA-256 and successful baseline-run identity;
+  12 source-parsed MOS devices per differential side, six terminal pairs each
+  (144 metrics), finite and aligned saved waveforms, and 19 Spectre SOA
+  warning witnesses consistent within 20 mV. The driven cycle showed up to
+  1.787 V on pump devices, 1.674 V in control/discharge, and 1.148 V `Vgd`
+  on the main switch. Python compiled, generated JSON parsed, and the owned
+  diff was checked. This is a model-warning screen, not foundry sign-off.
+- Commit status: commit only this target as
+  `test: map bootstrap terminal stress`; push was not requested.
+
 ## 2026-09-29 - Verify first-pass T28 StrongARM noise and interfaces
 
 - Target: screen transistor-level comparator noise, local mismatch, selected

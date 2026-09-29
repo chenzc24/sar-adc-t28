@@ -2,6 +2,16 @@
 
 ## 2026-09-29
 
+- A full per-device bootstrap terminal-stress reconstruction from the exact
+  OA-exported full-driver differential transient found more than one unsafe
+  path: pump MN1/MN2/MN3 reach about 1.78 V, control/discharge MN7/MN13
+  about 1.67 V, and main MN11 `Vgd` 1.148 V against the logged 0.99-V
+  model-warning level. Nineteen printed Spectre warnings agree with the
+  saved-waveform reconstruction. This is a nominal warning screen, not a
+  foundry transient SOA/lifetime rule. A protected topology must address
+  pump, control, and main-edge stress together while independently reducing
+  the already identified 11.692-mV immediate turn-off error; neither width
+  tuning nor a pump-only device swap is sufficient.
 - A one-factor T28 NMOS top/split-node clamp width screen, keeping the full
   CDAC, 22 bottom bootstrap instances, clocking, and reference handoff fixed,
   found a narrow nominal raw-error window. W500, W250, W200, and W100 gave
