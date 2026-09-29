@@ -4,6 +4,35 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Screen StrongARM input-pair scaling
+
+- Target: isolate two- and four-finger T28 input-pair sizing effects on the
+  original StrongARM's near-threshold timing, transient noise and local
+  mismatch; do not replace the original comparator.
+- Local changed areas: target plan, YAML conditions, two bounded OA/Spectre
+  scripts, result report, cell manifest and this log. Generated exact OA
+  exports, decks, model sampling, logs and PSF remain ignored under
+  `output/strongarm_input_pair_scaling/`.
+- Remote OA changes: new independent `sar_strongarm_t28_f2/f4` schematic
+  and symbol cells and their two standalone testbench schematics. Each
+  comparator has 11 T28 MOS; each bench has eight instances; all new
+  schematics have zero markers. The original comparator and CDAC were
+  read-only.
+- Validation: Bridge 0.8.0 `t28_io`/CIW/Spectre 21.1 preflight, live OA
+  readback, exact netlist-device comparison, two-sign TT nominal/noise/MC
+  Spectre screens, active local statistics, paired sampled-parameter hashes,
+  Python/YAML checks and owned diff. Nominal delay improved to 161.53/133.73
+  ps, but noise wrong counts were 24/96 and 17/96, and paired mismatch
+  brackets only 1/16 and 0/16. Neither candidate is accepted; no full-CDAC
+  kickback or PVT claim is made. An initial SSH ControlMaster download error
+  was resolved by disabling connection reuse, and a strict netlist checker
+  was corrected to the PDK's total-width `Wfg × fingers` mapping.
+- Ownership: after a concurrent bootstrap checkout changed the original
+  branch, this target moved into an independent worktree from `main`; the
+  bootstrap branch and its commit were not staged or modified.
+- Commit status: commit only this target as
+  `test: screen StrongARM input-pair scaling`; no push requested.
+
 ## 2026-09-29 - Integrate T28 StrongARM with full split CDAC
 
 - Target: diagnose the direct comparator/CDAC electrical interface, including

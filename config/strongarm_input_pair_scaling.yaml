@@ -1,0 +1,29 @@
+stage: strongarm_input_pair_scaling_screen
+library: SAR_ADC_T28
+profile: t28_io
+baseline_dut: sar_strongarm_t28
+baseline_testbench: tb_sar_strongarm_t28
+candidates:
+  - {tag: f2, dut: sar_strongarm_t28_f2, testbench: tb_sar_strongarm_t28_f2, input_pair_fingers: 2}
+  - {tag: f4, dut: sar_strongarm_t28_f4, testbench: tb_sar_strongarm_t28_f4, input_pair_fingers: 4}
+conditions:
+  supply_v: 0.9
+  temperature_c: 27
+  common_mode_v: 0.45
+  output_load_f: 5.0e-15
+  clock_period_s: 5.0e-9
+  first_clock_crossing_s: 5.01e-9
+  decision_window_s: 1.5e-9
+  output_differential_threshold_v: 0.45
+  differential_inputs_v: [0.000439453125, -0.000439453125]
+noise:
+  model_section: ttmacro_mos_moscap
+  fmin_hz: 1.0e3
+  fmax_hz: 1.0e10
+  maxstep_s: 5.0e-12
+  seed: 271828
+  cycles: 48
+mismatch:
+  model_section: TTGlobalCorner_LocalMC_MOS_MOSCAP
+  seed: 314163
+  numruns: 16
