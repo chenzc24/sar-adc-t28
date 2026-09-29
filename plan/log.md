@@ -4,6 +4,19 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Plan bootstrap sampling topology comparison
+
+- Target: define the next bounded switch experiment after the held-error
+  ablation and ineffective discharge-device resizing.
+- Local change: added `plan/2026-09-29-bootstrap-bottom-plate-evaluation/plan.md`
+  with a full-CDAC top-plate baseline, true bottom-plate sampling comparison,
+  aperture and raw-error measurements, and an independent SOA gate.
+- Remote OA change: none. No new simulation was run for this planning target.
+- Validation: reviewed the existing macro connectivity and bootstrap reports;
+  checked the plan's owned paths, numerical gates, and `git diff --check`.
+- Status: plan ready for execution; no sampling-topology decision has been
+  made. The planning change is committed locally and not pushed.
+
 ## 2026-08-31 - Screen bootstrap-driver error reduction
 
 - Target: determine whether MN7/MN10 discharge strength, MP8 sizing, or
