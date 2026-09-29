@@ -4,6 +4,29 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Integrate T28 StrongARM with full split CDAC
+
+- Target: diagnose the direct comparator/CDAC electrical interface, including
+  on/off-clock controls at positive, negative and zero small differential input.
+- Local changed areas: target plan, YAML conditions, OA creator, exact-export
+  Spectre runner, result report, cell manifest, and this log. OA export, PSF,
+  decks, readback, and six run logs remain ignored under
+  `output/strongarm_cdac_integration/`.
+- Remote OA change: new `SAR_ADC_T28/tb_sar_cdac_strongarm_diag/schematic`
+  only. Existing W185 CDAC, StrongARM, bootstrap cells, and PDK were read-only.
+  The new schematic has 25 instances and zero markers; exact netlist export
+  connects StrongARM input gates to the full CDAC comparator-side top plates.
+- Validation: six TT/0.9-V/27-C Spectre 21.1 runs completed with zero errors;
+  matched ±0.439453-mV cases resolved in 224.116 ps with correct polarity.
+  A/B clock-induced peak was 0.374181 mV, still 0.365124 mV at decision.
+  Zero-input control showed a 0.375136-mV latch-dependent kickback but has
+  no correctness verdict. Exact OA/source hashes, PSF coverage, Python/YAML
+  and owned diff were checked. Existing bootstrap SOA warnings remain a
+  physical-design blocker; no noise, mismatch, PVT, or full-conversion
+  acceptance is claimed.
+- Commit status: commit only this target as
+  `test: integrate T28 StrongARM with split CDAC`; no push requested.
+
 ## 2026-09-29 - Map bootstrap terminal stress
 
 - Target: locate complete-driver transistor terminal overstress before
