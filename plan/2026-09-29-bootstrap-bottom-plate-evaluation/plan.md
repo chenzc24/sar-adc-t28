@@ -2,8 +2,11 @@
 
 ## Status and goal
 
-Ready for execution. This record defines the next bounded switch-design
-target; writing the plan does not start an OA or Spectre experiment.
+Screening complete; the T28-clamp candidate is rejected and production
+promotion is blocked. The first two owned OA cells contain the ideal
+top-clamp fixture. The independently named T28-clamp variant preserves that
+reference while measuring physical clamp effects. Nine ideal-clamp and five
+physical-clamp Spectre cases completed; see `docs/bootstrap_bottom_plate_eval.md`.
 
 Determine whether true bottom-plate sampling in the differential 5+5 split
 CDAC reduces the T28 bootstrap sampling path's signal-dependent held error.
@@ -31,6 +34,10 @@ proposed new cell name already exists, inspect ownership and revise this
 plan before creating or editing it. Stop on an unsaved user-owned window,
 unexpected technology binding, modal dialog, or lock.
 
+During final staging, separate untracked `strongarm-t28-first-pass` plan and
+`create_strongarm_t28.py`/`run_strongarm_t28.py` files appeared. They do not
+overlap this target's owned paths or inputs; leave them untouched and unstaged.
+
 ## Local owned files for execution
 
 - `plan/2026-09-29-bootstrap-bottom-plate-evaluation/plan.md`
@@ -50,6 +57,8 @@ set; any expansion requires a plan update first.
 
 - `SAR_ADC_T28/sar_cdac_bottom_plate_eval_10b/schematic` and `/symbol`
 - `SAR_ADC_T28/tb_sar_bottom_plate_eval/schematic`
+- `SAR_ADC_T28/sar_cdac_bottom_plate_t28clamp_eval_10b/schematic` and `/symbol`
+- `SAR_ADC_T28/tb_sar_bottom_plate_t28clamp_eval/schematic`
 
 These are proposed new experimental cellviews only. The existing
 `SAR_ADC_T28/sar_bootstrap`, `sar_cdac_macro_10b`, their symbols and
@@ -118,6 +127,18 @@ overwriting them; promotion is a separate target.
 The OA schematics are the electrical source of truth. Export them automatically
 and keep the exported circuit section unedited; parameterized analysis
 wrappers may set stimuli, model section, saves, and analysis statements.
+
+## Screening exit adopted during execution
+
+The independently named T28 NMOS clamp failed the raw 0.439-mV gate at both
+0.4- and 0.8-V differential magnitudes, and its own `Vgd` also triggered
+PDK SOA warnings. This activates the fail branch of the target: retain the
+five-point physical screen and raw warnings, but do not spend further runs
+on a full 1024-code physical static transfer, global PVT, detailed all-device
+terminal reconstruction, or comparator integration for this rejected clamp.
+The exact OA exports, 1024-level *ideal-capacitor analytical* transfer, and
+bounded timing sensitivity cases remain required. These omissions must be
+stated as unverified work in the result report, not marked as passes.
 
 ## Validation and decision gates
 

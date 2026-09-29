@@ -1,5 +1,32 @@
 # Design Log
 
+## 2026-09-29
+
+- Built matched, full 5+5 CDAC top-plate and true bottom-plate sampling OA
+  fixtures without altering the existing `sar_bootstrap` or macro cells.
+  The bottom version opens the top/split-node clamp before the 22 input
+  switches, then connects all bottom plates to VCM. Its ideal charge
+  conservation reverses comparator polarity while preserving exact binary
+  weights for the `(32/31)Cu` bridge.
+- With a zero-parasitic top clamp, five TT/0.9-V/27-C Spectre points gave
+  0.00790-mV maximum raw bottom-plate held error versus 1.5320 mV for the
+  matched top-plate baseline. This demonstrates the sequence's potential but
+  is not a physical-clamp result.
+- With four T28 L30/W1-um NMOS top/split clamps, five matched inputs gave
+  2.0960-mV maximum bottom-plate raw error, −0.2602% fitted gain-error
+  slope, and 0.0288-mV post-fit residual. The raw 0.439-mV gate fails.
+  Approximately 0.74 mV of common-mode clamp release step mostly cancels
+  differentially; the residual signal-dependent loss is consistent with
+  clamp parasitic/off-state effects but not yet uniquely attributed.
+- Both variants still use 22 complete bootstrap pumps on the CDAC bottoms,
+  versus two in the top-plate fixture. Their internal nominal pump-capacitor
+  inventory is 6.6 versus 0.6 pF; ideal clock sources do not validate the
+  required clock energy or edges. Spectre reports millions of suppressed
+  T28 bootstrap SOA warnings per run; the new NMOS clamp itself also exceeds
+  its 0.990-V `Vgd` model limit. Do not promote either experimental
+  fixture; separately target a low-parasitic clamp/shared pump arrangement
+  and protected bootstrap terminal voltages before PVT or physical DNL/INL.
+
 ## 2026-08-31
 
 - Rejected transistor sizing and external non-overlap as the primary fix for

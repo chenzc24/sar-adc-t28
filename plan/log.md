@@ -4,6 +4,37 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Evaluate bootstrap bottom-plate sampling
+
+- Target: compare same-bootstrap top-plate and true bottom-plate sampling in
+  matched full differential 5+5 CDAC fixtures, then test a T28 top clamp.
+- Local changed areas: target plan, parameterized OA creator, exact-export
+  Spectre runner, analytical/phase analyzer, configuration, result report,
+  cell manifest, design log, and this maintenance entry. Generated netlists,
+  PSF, warnings, CSV/JSON, and SVG remain ignored under
+  `output/bootstrap_bottom_plate_eval/`.
+- Remote OA change: created only the two experimental CDAC schematic/symbol
+  cells and their two testbench schematics named in the target plan. Readback
+  found 93/21 electrical instances and zero markers per variant; exact OA
+  exports contain 22 bottom plus two top copies of the existing bootstrap.
+  Existing bootstrap and macro-model OA objects remained read-only.
+- Validation: 9/9 ideal-clamp and 5/5 T28-clamp TT/0.9-V/27-C Spectre cases
+  completed with zero simulator errors from separately hashed OA exports.
+  An initial 1-ns result download failed at the Windows transport/rename
+  stage; the exact case reran successfully. The analytical matrix gives
+  ideal binary bit weights and monotonic 1024-level transfer, explicitly not
+  a transistor-level physical DNL/INL claim. Python compiled; YAML parsed;
+  both phase SVGs parsed; OA markers, hashes, selected netlist statements,
+  and raw error metrics were checked. Every transient retains SOA warnings.
+- Decision: the ideal clamp reduced the matched raw held error from 1.5320
+  to 0.00790 mV, but the T28 NMOS clamp yielded 2.0960 mV versus the
+  0.439-mV guardrail and itself triggered a `Vgd` SOA warning. Do not
+  promote this physical candidate, start PVT/mismatch, or claim a verified
+  physical code ramp. Next isolate clamp parasitics and reduce the 22-pump
+  implementation while independently resolving bootstrap/clamp SOA.
+- Commit status: ready to commit as
+  `test: evaluate bootstrap bottom-plate sampling`; push was not requested.
+
 ## 2026-09-29 - Plan bootstrap sampling topology comparison
 
 - Target: define the next bounded switch experiment after the held-error
