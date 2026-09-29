@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Screen independent mixed-voltage bootstrap candidates
+
+- Target: build separately named OA experiments to address known bootstrap
+  terminal-stress paths and measure stress and raw sample/hold error together.
+- Local changed areas: target plan, two candidate YAMLs, OA creator,
+  exact-export Spectre runner, result report, manifest, design log, and this
+  entry. Generated readback, OA exports, decks, PSF, and logs remain ignored.
+- Remote OA changes: created only the two experimental bootstrap
+  schematic/symbol cells and their two differential schematic testbenches.
+  All four schematics read back with zero check markers; existing bootstrap,
+  CDAC, comparator, and PDK cells were not modified.
+- Validation: two TT/0.9-V/27-C Spectre 21.1 differential transients completed
+  with zero errors. The first retained 20 SOA warning examples and failed
+  raw hold at -8.972 mV. The second had zero `CMI-275x` warnings and 144
+  terminal metrics below diagnostic comparison levels, but failed raw hold
+  at -8.755 mV versus 0.439 mV. Exact OA netlist hashes, model mappings,
+  and source/readback correspondence were checked. No reliability signoff,
+  PVT, noise, layout, or full-CDAC acceptance is claimed.
+- Commit status: commit this target locally on
+  `exp/bootstrap-protected-eval`; do not push without request.
+
 ## 2026-09-29 - Integrate T28 StrongARM with full split CDAC
 
 - Target: diagnose the direct comparator/CDAC electrical interface, including

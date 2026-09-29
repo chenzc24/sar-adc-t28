@@ -2,6 +2,17 @@
 
 ## 2026-09-29
 
+- Built two independently named mixed-voltage bootstrap OA screening cells
+  without changing the existing driver. The initial candidate moved the
+  known stressed pump, MN7/MN13, and main switch to 1.8-V PDK classes; the
+  remaining core MP4/MN5 then showed model overvoltage warnings. Moving
+  those controls to 1.8-V classes in the second candidate eliminated nominal
+  `CMI-275x` warnings and kept 144 reconstructed D/G/S/B pair metrics below
+  the diagnostic levels. But the latter's +0.8-V differential raw held error
+  is -8.755 mV, about 20 times the 0.439-mV allocation. Device-class
+  substitution therefore is not a complete protected sampling design; a
+  separate turn-off/isolation and charge-transfer topology is still needed.
+  Model-warning clearance is not transient lifetime or layout signoff.
 - A full per-device bootstrap terminal-stress reconstruction from the exact
   OA-exported full-driver differential transient found more than one unsafe
   path: pump MN1/MN2/MN3 reach about 1.78 V, control/discharge MN7/MN13
