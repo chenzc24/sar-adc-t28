@@ -4,6 +4,35 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Screen bottom-plate top-clamp widths
+
+- Target: hold the full-CDAC bottom-plate fixture and 22 bootstrap pumps
+  fixed while testing narrow T28 top/split clamp widths against the raw
+  0.439-mV held-error gate; a bounded W185 probe was added after W200
+  narrowly missed. No shared-boost construction or PVT was authorized.
+- Local changed areas: plan, width configuration, independent OA creator,
+  backward-compatible Spectre runner/analyzer options, cell manifest,
+  result report, design log, and this maintenance entry. OA exports, source
+  hashes, readback, decks, PSF, warnings, metrics, and plots remain under
+  ignored `output/bootstrap_bottom_plate_clamp_width_screen/`.
+- Remote OA changes: created only five independently named experimental CDAC
+  schematic/symbol pairs and five testbench schematics, W500/W250/W200/W185/
+  W100. Readback found 93 CDAC and 21 testbench instances and zero markers
+  per variant; the technology remained `tsmcN28`. Existing bootstrap,
+  prior CDACs, macro, PDK, and StrongARM cellviews remained read-only.
+- Validation: exact OA Spectre exports had separate SHA-256 hashes and
+  verified four T28 clamp sizing/connectivity statements plus the 22+2
+  bootstrap hierarchy. Three TT/0.9-V/27-C static-input transients completed
+  for each W500/W250/W200/W100 variant; all five completed for W185, with
+  zero simulator errors. The W185 maximum raw error was 0.43378 mV, a
+  5.22-uV nominal margin; all cases retain device SOA warnings, so physical
+  acceptance is blocked. An OA-export formatting difference (`185.00n`)
+  initially tripped the runner's strict width regex before simulation; the
+  regex was corrected and the identical hashed export was used. Python
+  syntax, YAML parsing, readback, metrics, and owned diff were checked.
+- Commit status: commit only this target's files as
+  `test: screen bottom-plate clamp width`; push was not requested.
+
 ## 2026-09-29 - Start T28 StrongARM transistor-level design
 
 - Target: create an isolated first-pass 11-MOS `tsmcN28` StrongARM comparator,

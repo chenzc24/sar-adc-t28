@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -139,6 +140,7 @@ def main() -> int:
     global OUTPUT, SOURCE_DIR, SOURCE, CELL, CDAC
     parser = argparse.ArgumentParser()
     parser.add_argument("--profile", default="t28_io")
+    parser.add_argument("--config", type=Path, default=CONFIG)
     parser.add_argument("--no-export", action="store_true")
     parser.add_argument("--case-limit", type=int)
     parser.add_argument("--delay-ps", type=int, action="append",
@@ -146,8 +148,11 @@ def main() -> int:
     parser.add_argument("--vdiff-mv", type=int, action="append",
                         help="Only run selected differential inputs, in millivolts")
     parser.add_argument("--skip-existing", action="store_true")
-    parser.add_argument("--t28-clamp", action="store_true",
-                        help="Use independently named T28 NMOS top-clamp OA variant")
+    variant = parser.add_mutually_exclusive_group()
+    variant.add_argument("--t28-clamp", action="store_true",
+                         help="Use independently named T28 NMOS top-clamp OA variant")
+    variant.add_argument("--clamp-width-nm", type=int, choices=(100, 185, 200, 250, 500),
+                         help="Use independently named narrow-width clamp OA variant")
     args = parser.parse_args()
     if args.t28_clamp:
         OUTPUT = OUTPUT / "t28_clamp"
@@ -155,7 +160,14 @@ def main() -> int:
         CDAC = "sar_cdac_bottom_plate_t28clamp_eval_10b"
         SOURCE_DIR = OUTPUT / "netlist" / CELL
         SOURCE = SOURCE_DIR / "input.scs"
-    config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    if args.clamp_width_nm is not None:
+        width = args.clamp_width_nm
+        OUTPUT = ROOT / "output" / "bootstrap_bottom_plate_clamp_width_screen" / f"w{width}"
+        CELL = f"tb_sar_bottom_plate_clamp_w{width}_eval"
+        CDAC = f"sar_cdac_bottom_plate_clamp_w{width}_eval_10b"
+        SOURCE_DIR = OUTPUT / "netlist" / CELL
+        SOURCE = SOURCE_DIR / "input.scs"
+    config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     if args.no_export:
         source = SOURCE.read_text(encoding="utf-8")
         source_hash = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
@@ -165,6 +177,16 @@ def main() -> int:
         raise RuntimeError("OA source missing experimental CDAC or T28 bootstrap")
     if source.count("sar_bootstrap\n") < 24:
         raise RuntimeError("Expected 22 bottom and two top bootstrap instances")
+    if args.clamp_width_nm is not None:
+        finger_width, multiplier = {
+            500: (250, 2), 250: (250, 1), 200: (200, 1), 185: (185, 1), 100: (100, 1),
+        }[args.clamp_width_nm]
+        for side in ("P", "N"):
+            for stem in ("SCLAMPTOP", "SCLAMPLSB"):
+                name = f"{stem}{side}"
+                expression = rf"\b{name} \([^\n]+\) nch_mac l=30n w={finger_width}(?:\.0+)?n multi={multiplier}\b"
+                if not re.search(expression, source):
+                    raise RuntimeError(f"OA-exported clamp sizing/connectivity changed: {name}")
     cases = [(float(v), float(d)) for d in config["timing"]["clamp_to_bootstrap_delay_s"]
              for v in config["conditions"]["differential_input_v"]]
     if args.delay_ps is not None:
@@ -212,7 +234,9 @@ def main() -> int:
             else:
                 row["ok"] = False
                 row["errors"].extend(parsed.errors)
-        summaries.append(row)
+        elif result.ok:
+            row["ok"] = False
+            row["errors"].append(f"Transient PSF not found under {case_dir}")
         summaries = [old for old in summaries if old.get("name") != name]
         summaries.append(row)
         summary_path.write_text(json.dumps(summaries, indent=2) + "\n", encoding="utf-8")

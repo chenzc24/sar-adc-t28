@@ -120,11 +120,16 @@ def phase_plot(row: dict) -> None:
 def main() -> None:
     global BASE
     parser = argparse.ArgumentParser()
-    parser.add_argument("--t28-clamp", action="store_true")
+    parser.add_argument("--config", type=Path, default=CONFIG)
+    variant = parser.add_mutually_exclusive_group()
+    variant.add_argument("--t28-clamp", action="store_true")
+    variant.add_argument("--clamp-width-nm", type=int, choices=(100, 185, 200, 250, 500))
     args = parser.parse_args()
     if args.t28_clamp:
         BASE = BASE / "t28_clamp"
-    config = yaml.safe_load(CONFIG.read_text(encoding="utf-8"))
+    if args.clamp_width_nm is not None:
+        BASE = ROOT / "output" / "bootstrap_bottom_plate_clamp_width_screen" / f"w{args.clamp_width_nm}"
+    config = yaml.safe_load(args.config.read_text(encoding="utf-8"))
     rows = json.loads((BASE / "spectre" / "run_summary.json").read_text(encoding="utf-8"))
     phase_updated = False
     for row in rows:
@@ -183,7 +188,7 @@ def main() -> None:
         "analytical_oracle": ideal_cdac(float(config["conditions"]["unit_capacitance_f"])),
         "physical_acceptance": (
             "blocked: unresolved T28 bootstrap or clamp SOA warnings"
-            if args.t28_clamp else
+            if args.t28_clamp or args.clamp_width_nm is not None else
             "blocked: T28 bootstrap SOA warnings and ideal top clamp"
         ),
     }

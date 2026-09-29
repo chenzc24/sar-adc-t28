@@ -2,6 +2,18 @@
 
 ## 2026-09-29
 
+- A one-factor T28 NMOS top/split-node clamp width screen, keeping the full
+  CDAC, 22 bottom bootstrap instances, clocking, and reference handoff fixed,
+  found a narrow nominal raw-error window. W500, W250, W200, and W100 gave
+  1.0533, 0.53152, 0.44865, and 2.5385 mV maximum errors at three static
+  inputs. W185 gave 0.43378 mV across five inputs, only 5.22 uV below the
+  0.439-mV gate. W100 failed to reset the top/split nodes before clamp
+  release. The width trend is compatible with a parasitic-versus-reset
+  tradeoff, not proof of its unique mechanism. All variants retain T28 clamp
+  and bootstrap SOA violations, and the 22-pump architecture remains
+  unvalidated for clock load. The W185 nominal pass is not a transistor
+  acceptance or a reason to proceed directly to PVT/full-code integration;
+  resolve terminal stress and isolate clamp reset/off-parasitic behavior first.
 - Built matched, full 5+5 CDAC top-plate and true bottom-plate sampling OA
   fixtures without altering the existing `sar_bootstrap` or macro cells.
   The bottom version opens the top/split-node clamp before the 22 input
