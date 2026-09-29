@@ -4,6 +4,33 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-29 - Start T28 StrongARM transistor-level design
+
+- Target: create an isolated first-pass 11-MOS `tsmcN28` StrongARM comparator,
+  symbol, and transient testbench; measure nominal polarity, reset, and
+  near-threshold resolution without claiming statistical closure.
+- Local changed areas: this target's plan, OA creation/readback automation,
+  exact-export Spectre runner, and focused result report. Generated OA
+  export, PSF, JSON, and run decks remain under ignored
+  `output/strongarm_t28_first_pass/`.
+- Remote OA changes: created only `SAR_ADC_T28/sar_strongarm_t28` schematic
+  and symbol and `SAR_ADC_T28/tb_sar_strongarm_t28` schematic. Readback
+  verified 11 T28 MOS, pin/terminal/size connections, and zero markers in
+  both schematics. Existing macro, active bottom-plate cells, PDK, and
+  Analog Canvas remained read-only.
+- Validation: exact OA netlist SHA-256
+  `628f493c46c7c4df1e5e6262ab563c466958fd7ce182489515c507f3689be581`;
+  six TT/0.9-V/27-C Spectre 21.1 transients completed with zero errors.
+  ±0.439453-mV input gave correct polarity, complete reset, and 223.35-ps
+  signed 0.45-V output resolution against the nominal 1.5-ns window.
+  Initial local SSH export and input-parameter declaration errors were
+  diagnosed and repaired; one testbench instance/signal name collision was
+  removed before the final full rerun. Four PDK scoped-`scalefactor`
+  warnings remained. Noise, mismatch, PVT, kickback, and layout are open.
+- Commit status: commit only owned files as
+  `feat: add T28 StrongARM first-pass schematic and testbench`; push was
+  not requested.
+
 ## 2026-09-29 - Evaluate bootstrap bottom-plate sampling
 
 - Target: compare same-bootstrap top-plate and true bottom-plate sampling in
