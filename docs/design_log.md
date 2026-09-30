@@ -2,6 +2,20 @@
 
 ## 2026-09-30
 
+- Separated ideal `GMAIN` turn-off from the PHIB-driven BOOT/G reset
+  sequence in six copied-netlist Spectre cases. With OFF_MAIN rising at
+  250.2 ns and reset delayed by 0.1-1.0 ns after its completed edge,
+  MN11 drain current reaches the nA/pA range before reset. The PHIB
+  sequence changes differential VOUT by only +0.080 mV, while the
+  approximately -2.53-mV error is already present before reset. A
+  no-reset control drifts only +0.0000026 mV over the matched window.
+  Best final raw error is -2.452 mV versus the 0.439-mV allocation.
+- An imposed 19.922-mV differential VIN step between isolation and reset
+  still induces 0.559-mV VOUT response, despite low static MN11 drain
+  current; the 10-ps input edge is a stress test, not the specified sine.
+  "Turn off first, then reset" is therefore valid sequencing but not
+  sufficient accuracy or perfect electrical isolation. The ideal GMAIN
+  relays must not be promoted as a transistor-level design.
 - Ran eight exact-export, netlist-only Spectre A/B cases of the full-control
   bootstrap at +0.8-V differential input. Changing only MN9 body VIN->VSS
   reduced hold input current from 25.858 uA to 0.00326 uA but left

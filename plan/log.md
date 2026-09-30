@@ -4,6 +4,26 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-30 - Isolate bootstrap output before reset
+
+- Target: test the independent OFF_MAIN-before-PHIB-reset sequence on the
+  existing full-control bootstrap export, including a no-reset control and
+  a short VIN-step isolation challenge.
+- Local changed areas: one bounded plan, exact-export copied-netlist
+  generator/analyzer, result report, design-log entry, and this maintenance
+  entry. Six decks, PSF/logs and JSON are ignored under
+  `output/bootstrap_isolate_before_reset/`.
+- Remote OA changes: none; direct-SSH Spectre 21.1 ran copied decks only.
+  Original OA, original hashed netlist and PDK files stayed read-only.
+- Validation: six zero-error TT/0.9-V/27-C transients, hash check, finite
+  aligned waveforms, source-resistor and MN11/load KCL, full-transient
+  PDK-terminal diagnostic comparison, zero printed CMI warnings, Python
+  compile, JSON parse and owned diff check. Delayed PHIB reset sequence contributes
+  about +0.080 mV after a -2.53-mV turn-off error; best held error remains
+  -2.452 mV, failing the 0.439-mV gate. Ideal relays are not physical T28.
+- Commit status: commit locally as
+  `test: isolate bootstrap output before reset`; no push requested.
+
 ## 2026-09-30 - Simplify review into block-linked flow diagrams
 
 - Target: respond to user review by replacing the flat, document-centric UI
