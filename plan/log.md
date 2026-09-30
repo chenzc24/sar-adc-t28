@@ -803,3 +803,14 @@ human-triggered note in `docs/experience/`.
   branch layout with no console errors. Preview: output/review/sampling-flow-preview.png.
 - Remote OA changes: none. Local scoped commit; no push. Concurrent circuit
   files and its separate maintenance-log entry are excluded.
+
+## 2026-09-30 - Compact review presentation
+
+- Reduced card padding, duplicate heading chrome and action rows; preserved all
+  visible reasons and all 31 nodes' detailed content and evidence bindings.
+- Moved method/experiment tables to a shared dialog, keeping flow geometry
+  stable. Promoted sampling numerical comparisons into the main diagram.
+- Validation: 22 tests, formulas, build, JS syntax, diff check; browser verified
+  desktop/narrow layout, dialogs, figures, topology, Escape and no console errors.
+- Artifact: output/review/compact-preview.png. No circuit/OA changes or push;
+  local commit: style(review): compact flow layout and experiment details.

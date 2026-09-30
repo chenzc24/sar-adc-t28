@@ -87,16 +87,16 @@
     $('legend').innerHTML='<span><i class="solid"></i>推导 / 验证步骤</span><span><i class="dashed"></i>暂定分配 / 待完成</span>';
     $('flow-nodes').style.setProperty('--columns',graph.columns);
     $('flow-nodes').innerHTML=graph.nodes.map((n,i)=>`<article class="flow-node ${esc(n.tone||'')} ${graph.layout==='branch' && n.span===graph.columns?'wide-node':''}" style="grid-column:${n.col}/span ${n.span||1};grid-row:${n.row}" data-node="${n.id}">
-      ${state.focus!=='all'?`<span class="node-index">${String(i+1).padStart(2,'0')} / ${esc(blocks[state.focus].subtitle)}</span>`:''}
-      <span class="node-top"><b>${esc(n.title)}</b>${n.needs_review?'<small class="node-tag">需复核</small>':n.tag?`<small class="node-tag">${esc(n.tag)}</small>`:''}</span>
+      <div class="node-copy"><span class="node-top"><b>${state.focus!=='all'?`<span class="node-index">${String(i+1).padStart(2,'0')}</span>`:''}${esc(n.title)}</b>${n.needs_review?'<small class="node-tag">需复核</small>':n.tag?`<small class="node-tag">${esc(n.tag)}</small>`:''}</span>
       <span class="node-line">${esc(expand(n.line))}</span><span class="node-sub">${esc(expand(n.sub))}</span>
+      </div>
       ${n.reasons?`<ul class="node-reasons">${n.reasons.map(reason=>`<li>${esc(expand(reason))}</li>`).join('')}</ul>`:''}
+      <div class="node-actions">
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
-      ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">查看${esc(data.figures[id].kind)} ↗</button>`).join('')}
-      <details class="inline-detail"><summary>展开方法与实验</summary><p>${esc(expand(n.detail))}</p>
-        ${renderExperiments(n.evidence || [])}
-      </details>
-      ${n.topology_topic?`<button class="figure-button" data-topology="${n.topology_topic}">电路联动 · 抽象样例 ↗</button>`:n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
+      <button class="detail-button" data-experiment="${n.id}">方法 / 实验 ${n.evidence.length} ↗</button>
+      ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">${esc(data.figures[id].kind)} ↗</button>`).join('')}
+      ${n.topology_topic?`<button class="figure-button" data-topology="${n.topology_topic}">电路样例 ↗</button>`:n.canvas?'<span class="node-sub">Canvas 预留</span>':''}
+      </div>
     </article>`).join('');
     $('budget-footnote').textContent=state.focus==='all'
       ?'初始分配可迭代，非唯一合理解。含量化的分配 RSS = '+fmt(values.rss*1000)+' mV，其中包含 '+fmt(values.distortion*1000)+' mV RMS 等效失真余量；采样与 CDAC 共享采样噪声预算，不重复计入。'
@@ -105,6 +105,13 @@
   }
   document.addEventListener('click',e=>{
     const b=e.target.closest('button');
+    if(b?.dataset.experiment){
+      const n=graph.nodes.find(n=>n.id===b.dataset.experiment);
+      $('experiment-title').textContent=n.title;
+      $('experiment-body').innerHTML=`<p class="method-note">${esc(expand(n.detail))}</p>${renderExperiments(n.evidence)}`;
+      $('experiment-dialog').showModal(); return;
+    }
+    if(b?.id==='close-experiment'){$('experiment-dialog').close();return;}
     if(b?.dataset.figure){
       const figure=data.figures[b.dataset.figure];
       $('figure-kind').textContent=figure.kind;
