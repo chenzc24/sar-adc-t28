@@ -1,148 +1,102 @@
-# ADC design review workbench
+# ADC design review — maintenance guide
 
-Local, read-only branch maps: one global map leads to five circuit-module
-branches. Each branch combines benchmark constraints, design progress, results
-and next actions. Bootstrap has two parallel acquisition/turn-off chains.
-Explanations expand within nodes; Canvas is a placeholder inside each module.
-No separate theory/progress tabs, detail panel, document links or report viewer.
-The app composes existing curated flow nodes into these consolidated maps;
-numerical facts still come from the common calculation/evidence registry.
+The HTML in output/review is a generated offline bundle, never an editing target.
+There is no framework or backend service to maintain. The compiler resolves and
+validates references; the browser renders the compiled snapshot.
 
-Each module node has 2–3 visible analysis points in `node-notes.yaml`, keyed by
-module/node ID. Optional figure IDs refer to `figures.json`: explicit artifact
-path, reviewed SHA-256, plot type and scope caption. The builder embeds only
-available reviewed PNG/restricted SVG bytes as image data URLs, so no artifact
-directory is served. Changed images fail validation; missing images omit the
-entry instead of breaking navigation. Re-review before updating a figure hash.
-Analytical envelopes are explicitly not transistor simulation results. The
-figure dialog supports keyboard opening, Escape/close, and return to the node.
+## Ownership map
 
-## Static topology linkage sample
+| Concern | Maintained source | Responsibility |
+| --- | --- | --- |
+| Specification / formulas | config/design_spec.yaml, model.yaml, app/formulas.js | Inputs, units, benchmark calculation |
+| Experimental records | evidence.yaml | Observations, scope, gate and report references |
+| Flow presentation | flows.json | Six actual graphs, nodes, edges, layout and evidence references |
+| Node analysis | node-notes.yaml | 2–3 curated reasons and optional figure references |
+| Result plots | figures.json | Artifact path, caption/type and reviewed image fingerprint |
+| Topology input | topology/bootstrap.cir | Original supplied example, separate from T28 DUT |
+| Topology analysis | topology/analysis.json | Functional groups, phases, facts, inference and verification |
+| Diagram binding | topology/diagram.json | Static-image coordinates, net strokes and snapshot fingerprints |
+| Reviewed baselines | source-lock.json, evidence-baseline.json, topology/connectivity-baseline.json | Explicit last-reviewed state |
+| Display conversion | app/presentation.js | Format calculated/evidence values into tokens |
+| Rendering | app/app.js, app/topology.js | Graph/dialog interaction; no graph composition |
+| Image adapter | app/diagram-static.js | Render semantic device/net selections on a static image |
+| Compilation | scripts/review/build.py | Validate references, resolve analysis, embed assets and report impact |
 
-Sampling nodes open the user-supplied Bootstrap sample from `topology/`.
-The original .cir and PNG remain separate from the T28 design DUT. YAML stores
-manual image anchors, functional groups, phases and typed analysis. `net0` has
-display alias GBOOT only; original names and body terminals are retained.
-The builder parses this bounded example (not a general SPICE importer), checks
-anchor/reference coverage and embeds the diagram plus normalized pin mapping.
-D/G/S/B remains an explicit model-interface assumption. Blue device outlines are
-attention markers, not simulated switch states; orange net segments are existing
-connections, not current paths. Device selection lists its related topics.
-Phase selection clears topic highlights; topic selection selects its stated phase.
-Netlist/image fingerprints identify the snapshot, not an LVS certificate.
-No real Canvas IDs or live connection are claimed. A future adapter must bind
-the same instance/net IDs to actual Canvas objects and verify the imported graph
-before applying annotations; it must not identify a diagram by title alone.
+A graph node references analysis by module/node ID, experiments by evidence ID,
+figures by figure ID, and the optional circuit entry by topology_topic. The builder
+rejects missing references and orphan analysis notes. Browser code does not carry
+Bootstrap-specific lists of entry nodes or assemble alternate graphs.
 
-## Build and open
+The older flows.yaml and combined topology/bootstrap.yaml were replaced, not kept
+as competing sources. Quantitative formula outputs remain in the shared registry.
+Historical explanatory prose is still curated, not mechanically proven consistent
+with every number. Do not treat impact detection as an automatic reasoning engine.
 
-From the ADC repository in PowerShell:
+## Daily workflow
+
+From the ADC repository:
 
 ```powershell
+.venv/Scripts/python.exe scripts/review/build.py --impact
+.venv/Scripts/python.exe scripts/review/build.py --check
 .venv/Scripts/python.exe scripts/review/build.py
-Start-Process output/review/index.html
 ```
 
-The output embeds CSS, JavaScript and extracted structured facts, with no server
-or CDN dependency. Direct file preview is not permitted by the in-app browser;
-use a normal browser or the tested loopback preview. To preview in a
-browser which only accepts HTTP, serve **only the generated review directory**:
+- Edit a phase or circuit explanation in topology/analysis.json.
+- Edit graph order or layout in flows.json; keep stable IDs when meaning is unchanged.
+- Add a result in evidence.yaml, then bind its ID to the relevant graph nodes.
+- Add a plot in figures.json and reference it from node-notes.yaml.
+- Change the original circuit only within an authorized circuit task. Run --impact
+  before updating its diagram mapping or accepting a new reviewed baseline.
+- Review affected conclusions first. Only then update the relevant baseline.
+  source-lock.json acknowledges report/spec bytes; evidence-baseline.json stores
+  SHA-256 of each record serialized with Python json.dumps(record, sort_keys=True).
+  connectivity-baseline.json stores reviewed instance-terminal mappings.
+  There is deliberately no command that silently accepts all changed inputs.
+
+--impact is read-only and works even when a topology hash mismatch blocks normal
+builds. It reports changed source reports, changed evidence records, affected graph
+nodes, changed/neighboring circuit devices, affected topics and diagram-review
+requirements. Connectivity impact conservatively includes devices sharing touched
+nets. A non-connectivity netlist change requires all topics to be reviewed; an
+image-only change requires anchor review, not new electrical conclusions.
+The normal UI marks affected nodes as “需复核”. No report documents or filesystem
+paths are embedded in the public panel.
+
+## Circuit / Canvas boundary
+
+The sample parser handles this bounded X-device fixture; it is not a general SPICE
+parser. D/G/S/B is an explicit interface assumption. Body terminals are retained.
+The adapter receives a snapshot plus selected device IDs, net IDs and attention
+IDs. It emits device selection via data-device. Coordinates exist only in the
+static adapter data, not in the phase/topic analysis.
+
+A future real Canvas adapter must obtain actual Canvas object IDs and verify
+connectivity against the netlist before enabling annotations. It must support
+selection/highlighting, or report unsupported operations. Do not substitute image
+coordinates or fabricated Canvas IDs. No live Canvas connection is implemented.
+
+## Preview and verification
 
 ```powershell
 .venv/Scripts/python.exe -m http.server 8765 --bind 127.0.0.1 --directory output/review
-```
-
-Open `http://127.0.0.1:8765`. This serves extracted design facts, not raw reports,
-model/OA files or document paths. Do not bind to a public interface. Stop the
-preview server when unused. Extracted facts still contain private project
-information: review before sharing outside the project.
-
-## Source of truth and maintenance
-
-- `config/design_spec.yaml` remains the authoritative system specification.
-  The separate experiment hold guard is read from
-  `config/bootstrap_protected_full18_eval.yaml` (0.439 mV), not silently
-  equated to the exact 0.25-LSB value (0.439453125 mV).
-- `review/model.yaml`: stable IDs, module membership, premises, formula IDs,
-  constraint relationships, steps, coverage and historical circuit bindings.
-- `review/evidence.yaml`: small, curated observations and explicit limits from
-  reports. These records are NOT automatically guessed from prose. A simulator
-  adapter can later emit the same records after its numerical checks.
-- `review/source-lock.json`: fingerprints of sources at last deliberate review.
-- `review/flows.yaml`: concise graph nodes, typed arrows, grid placement and
-  explicit circuit block ownership. Numerical tokens use the calculation
-  registry or curated observations; prose must be self-contained.
-- `review/app/formulas.js`: the single calculation registry shared by the
-  browser and Node tests. Display expressions/premises are kept in model.yaml.
-- `review/app/`: browser source, intentionally plain JS/CSS/HTML for zero-build
-  runtime dependencies. A TypeScript migration is not required to extend data.
-- `output/review/`: ignored generated artifacts. Never hand-edit the output.
-
-For each bounded design target, update only the affected step/metric/evidence
-records, then rebuild. Keep failed experiments and their scope limits. Read the
-changed reports and reconcile the structured record before acknowledging new
-fingerprints:
-
-```powershell
-.venv/Scripts/python.exe scripts/review/build.py --record-source-lock
-```
-
-Do not run that command merely to clear warnings. Changed source hashes produce
-a short stale warning, but paths, hashes and source documents stay behind the
-build boundary. `public_snapshot` strips them before HTML and data.json are
-written. Curated observations remain unchanged. This is build-time detection,
-not file watching or live OA synchronization.
-
-The simplified UI intentionally removes scenario controls, provenance panels,
-raw source dialogs and the sidebar. The calculation registry still supports
-scenario unit tests. URL hashes identify block/view; legacy dashboard links
-open the global flow orientation.
-
-## Data contract v1
-
-IDs must be unique within each record type. References must resolve. `parents`
-is the acyclic constraint/derivation dependency; it is distinct from module
-ownership. `depends_on` is an acyclic workflow dependency, not a pass assertion.
-
-Metric fields: `id`, `module`, `kind`, `formula`, SI `unit`, `display_unit`,
-`scale`, `expression`, `premise`, `sources`, `parents`. Kinds are `derived`
-(conditional), `allocation` (tentative), and `model` (prediction). System input
-specifications are read directly, not duplicated as hardcoded records.
-
-Step fields include purpose, abstraction method, work state, verdict, coverage,
-result, next action, metrics, evidence and dependencies. Work state and verdict
-are independent: completed work can fail. Allowed verdicts are scoped,
-diagnostic, fail and unverified. No unqualified module pass is inferred.
-
-Evidence records require sources, scope and limitations. Observations use
-finite SI values with supported units V/F/A/s/count. A scored observation must
-bind to a metric with matching units, a historical threshold/comparison, and a
-numerically consistent pass/fail gate. Thresholds are not retroactively replaced
-when the current budget changes. A record with an
-unavailable raw directory remains readable but cannot claim reproducibility.
-Current artifact existence is not a waveforms-integrity verification.
-
-Circuit bindings record historical library/cell/view and exported netlist hash,
-plus evidence references with the same hash. They are not live OA readbacks.
-Canvas is a slot only: no credentials, claim codes, simulated connection or
-invented embedding capability are included.
-
-## Focused validation
-
-```powershell
-.venv/Scripts/python.exe scripts/review/build.py --check
 .venv/Scripts/python.exe verification/review/test_build.py -v
 node verification/review/test_formulas.cjs
 node --check review/app/app.js
+node --check review/app/presentation.js
+node --check review/app/topology.js
+node --check review/app/diagram-static.js
 git diff --check
 ```
 
-Flow nodes must name known blocks; edge endpoints must exist and flow diagrams
-must be acyclic. Allocation and pending-work arrows are dashed. Solid arrows
-represent the stated derivation or workflow relationship, not pass assertions.
+Open http://127.0.0.1:8765. Serve only the generated review directory, not the
+repository or PDK. The bundle includes reviewed local images; missing optional
+figures omit controls, changed image hashes block the build. Generated files
+remain ignored. Private design facts remain private even though the bundle is
+self-contained.
 
-Browser acceptance: open all five module branches and return to the overview,
-check arrow endpoints and fork/merge relationships, expand node explanations
-and the module Canvas placeholder, and verify no document links/viewers.
-Narrow screens scroll diagrams locally rather than shrinking text illegibly.
-Changing formulas or evidence requires re-running the relevant numerical tests.
+Tests include broken references, orphan notes, gate consistency, graph structure,
+MN11 gate-change impact and A/B record-change propagation without editing real
+inputs. Browser smoke checks cover all module entries, node details, figures and
+topology phase/device selection. Conclusions and figure provenance still require
+human/agent review; new files are not automatically discovered or approved.

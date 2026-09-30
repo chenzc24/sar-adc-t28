@@ -1,0 +1,849 @@
+{
+  "schema_version": 1,
+  "blocks": [
+    {
+      "id": "sampling",
+      "title": "采样开关",
+      "subtitle": "Bootstrap",
+      "description": "跟踪输入并在采样结束时断开；真正保存电荷的是 CDAC，不是另加一块独立 S/H。"
+    },
+    {
+      "id": "cdac",
+      "title": "CDAC",
+      "subtitle": "5+5 split array",
+      "description": "采样时保存输入电荷，转换时按 SAR 判决切换参考，生成送给比较器的残差。"
+    },
+    {
+      "id": "comparator",
+      "title": "比较器",
+      "subtitle": "StrongARM",
+      "description": "每个 bit 判断 CDAC 残差极性，结果交给 SAR 逻辑。再生速度、输入噪声、失调和回踢分别约束。"
+    },
+    {
+      "id": "reference",
+      "title": "Reference",
+      "subtitle": "buffer + switches",
+      "description": "为 CDAC 提供参考电压和瞬时充放电电流；输出阻抗、建立时间和噪声会影响 bit 判决。"
+    },
+    {
+      "id": "clock",
+      "title": "时钟 / SAR 逻辑",
+      "subtitle": "phases + bit control",
+      "description": "产生采样和比较相位，保存比较结果，并控制 CDAC 的逐位切换。这里合并展示，不表示两个电路已经完成。"
+    }
+  ],
+  "graphs": {
+    "all": {
+      "title": "从总指标到五个电路分支",
+      "note": "设计依赖图 · 每个电路 block 集中显示指标、进度和入口，不再分开查阅。",
+      "columns": 5,
+      "nodes": [
+        {
+          "id": "system",
+          "row": 1,
+          "col": 2,
+          "span": 3,
+          "title": "SAR ADC · 理论 benchmark 与架构基线",
+          "line": "{{bits}} bit · {{rate}} MS/s · ENOB ≥ {{enob}}",
+          "sub": "σ模拟 = √(σ总² − σ量化²) = {{analog}} mV RMS；σ总 {{total}} mV",
+          "blocks": [],
+          "detail": "工作电压 {{vdd}} V，共模 0.45 V。精度预算必须连同输入幅度与差分定义一起使用。 LSB = 1.8 / 2¹⁰；SNDR下限 = 6.02 × ENOB + 1.76 = {{sndr}} dB。σ总 = V信号,rms / 10^(SNDR/20)，包含量化误差。扣除方差假设各项不相关。 采用理想量化与行为模型。理想 SNDR 60.953 dB、ENOB 9.833，无缺码；不包含真实开关和比较器的完整物理误差。 用 RC 建立、kT/C、gm/C 再生及电气开关模型验证功能和时序。此阶段不能替代 T28 管级的电荷注入、体端应力、噪声与失配验证。",
+          "evidence": [
+            "budget_baseline",
+            "macro_model",
+            "rc_model"
+          ]
+        },
+        {
+          "id": "sampling",
+          "row": 2,
+          "col": 1,
+          "title": "采样开关",
+          "line": "热噪声 ≤ {{sampling_noise}} mV RMS",
+          "sub": "八个 A/B 变体仍未达标",
+          "blocks": [
+            "sampling"
+          ],
+          "tag": "当前瓶颈",
+          "tone": "fail",
+          "focus": "sampling",
+          "detail": "跟踪输入并在采样结束时断开；真正保存电荷的是 CDAC，不是另加一块独立 S/H。 采样分配为 0.18 × LSB，不是 MOS 器件直接给出的数值。电容增大会降热噪声，但也增加驱动与建立负担。 原始完整驱动误差 {{audit_hold}} mV。最新复制网表实验可去掉输入加载，但精度仍失败；−2.482 mV 的理想分离门控边界不是已实现的 T28 开关。未改 OA。",
+          "span": 1,
+          "evidence": [
+            "fast_ab"
+          ]
+        },
+        {
+          "id": "cdac",
+          "row": 2,
+          "col": 2,
+          "title": "CDAC",
+          "line": "Cside ≥ {{capacitance}} fF（热噪声下限）",
+          "sub": "底板采样有改善，余量很窄",
+          "blocks": [
+            "cdac"
+          ],
+          "tag": "受阻",
+          "tone": "fail",
+          "focus": "cdac",
+          "detail": "采样时保存输入电荷，转换时按 SAR 判决切换参考，生成送给比较器的残差。 采样分配为 0.18 × LSB，不是 MOS 器件直接给出的数值。电容增大会降热噪声，但也增加驱动与建立负担。 完整 CDAC 的五输入 TT 筛查仅有 5.22 µV 名义余量，仍有应力告警。Reference 管级 buffer 的整体通过证据尚未建立。此夹具不同于 Bootstrap 单电容测试。",
+          "span": 1,
+          "evidence": [
+            "bottom_screen"
+          ]
+        },
+        {
+          "title": "Reference",
+          "line": "噪声 ≤ {{reference_noise}} mV RMS",
+          "sub": "一阶约束已有；buffer 管级待验证",
+          "detail": "为 CDAC 提供参考电压和瞬时充放电电流；输出阻抗、建立时间和噪声会影响 bit 判决。 这是 Reference 与开关的共享 RMS 预算；确定性建立残差另外验收，不能当作同一个随机噪声项。 目前只有参考网络的一阶建立约束，需要实现真实缓冲器并验证瞬态负载、输出阻抗和噪声。",
+          "tone": "planned",
+          "tag": "待设计",
+          "blocks": [
+            "reference"
+          ],
+          "id": "reference",
+          "row": 2,
+          "col": 3,
+          "span": 1,
+          "focus": "reference",
+          "evidence": [
+            "rc_model"
+          ]
+        },
+        {
+          "id": "comparator",
+          "row": 2,
+          "col": 4,
+          "title": "比较器",
+          "line": "输入噪声 ≤ {{comparator_noise}} mV RMS",
+          "sub": "能判决，噪声 / 失调仍需优化",
+          "blocks": [
+            "comparator"
+          ],
+          "tag": "受阻",
+          "tone": "fail",
+          "focus": "comparator",
+          "detail": "每个 bit 判断 CDAC 残差极性，结果交给 SAR 逻辑。再生速度、输入噪声、失调和回踢分别约束。 输入等效噪声与系统失调分开约束；确定性正确判决并不证明噪声或失调满足要求。 完整 CDAC 接口六次无噪声 TT 实验中非零输入判决正确，但已有噪声和局部失配筛查未达分配。不能用速度结果覆盖这些失败。",
+          "span": 1,
+          "evidence": [
+            "strongarm_interface"
+          ]
+        },
+        {
+          "id": "clock",
+          "row": 2,
+          "col": 5,
+          "title": "时钟 / SAR 逻辑",
+          "line": "σt = {{jitter_ps}} ps RMS",
+          "sub": "相位预算已有，物理实现待验证",
+          "blocks": [
+            "clock"
+          ],
+          "tag": "待验证",
+          "tone": "planned",
+          "focus": "clock",
+          "detail": "产生采样和比较相位，保存比较结果，并控制 CDAC 的逐位切换。这里合并展示，不表示两个电路已经完成。 σjitter ≈ 2π × fin × V信号,rms × σt。20 ps 是选定的时间抖动预算，不是时钟电路实测值。 已有理想相位与控制参考。真实负载、非重叠、时钟边沿与 jitter 联合验证未完成。",
+          "span": 1,
+          "evidence": [
+            "rc_model"
+          ]
+        },
+        {
+          "id": "integrate",
+          "row": 3,
+          "col": 2,
+          "span": 3,
+          "title": "模块汇合 → 全管级 ADC → 版图后仿",
+          "line": "模块通过后再联合验收",
+          "sub": "SNDR / DNL / INL / 功耗 / PVT / MC",
+          "blocks": [
+            "sampling",
+            "cdac",
+            "reference",
+            "comparator",
+            "clock"
+          ],
+          "tag": "未到验收",
+          "tone": "planned",
+          "detail": "现阶段不能声称完整管级 ADC 已达标。必须组合通过模块关口的真实电路，再跑完整转换和系统指标；版图及 PEX 在后续。 版图寄生、匹配、版图井连接与工艺可靠性需要独立验证。无模型告警不等于 foundry 寿命签核。",
+          "evidence": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "system",
+          "to": "sampling",
+          "kind": "allocate"
+        },
+        {
+          "from": "sampling",
+          "to": "integrate",
+          "kind": "pending"
+        },
+        {
+          "from": "system",
+          "to": "cdac",
+          "kind": "allocate"
+        },
+        {
+          "from": "cdac",
+          "to": "integrate",
+          "kind": "pending"
+        },
+        {
+          "from": "system",
+          "to": "reference",
+          "kind": "allocate"
+        },
+        {
+          "from": "reference",
+          "to": "integrate",
+          "kind": "pending"
+        },
+        {
+          "from": "system",
+          "to": "comparator",
+          "kind": "allocate"
+        },
+        {
+          "from": "comparator",
+          "to": "integrate",
+          "kind": "pending"
+        },
+        {
+          "from": "system",
+          "to": "clock",
+          "kind": "allocate"
+        },
+        {
+          "from": "clock",
+          "to": "integrate",
+          "kind": "pending"
+        }
+      ],
+      "layout": "overview"
+    },
+    "sampling": {
+      "title": "Bootstrap · 获取与关断，两条链一起审查",
+      "note": "VIN → 采样开关 → CDAC → 比较器；电荷保存在 CDAC。左侧看获取，右侧看关断后的电荷准确度。",
+      "columns": 4,
+      "nodes": [
+        {
+          "id": "sample_root",
+          "row": 1,
+          "col": 1,
+          "span": 4,
+          "title": "总精度与采样时间",
+          "line": "LSB {{lsb}} mV · 获取 {{sample_ns}} ns",
+          "sub": "模拟总误差余量 {{analog}} mV RMS",
+          "blocks": [
+            "sampling",
+            "cdac"
+          ],
+          "detail": "电路位置是 VIN → Bootstrap 采样开关 → CDAC。此处是功能分解，具体底板切换和钳位顺序要在实际电路中实现。",
+          "canvas": "sampling",
+          "evidence": [
+            "budget_baseline"
+          ],
+          "analysis": "sampling/sample_root",
+          "topology_topic": "bootstrap"
+        },
+        {
+          "id": "cap",
+          "row": 2,
+          "col": 1,
+          "span": 2,
+          "title": "获取链 · 热噪声 → 电容 → Ron",
+          "line": "σsample ≤ {{sampling_noise}} mV RMS → Cside ≥ {{capacitance}} fF",
+          "sub": "40 ns RC 示例：Rs + Ron ≤ 21.242 kΩ",
+          "blocks": [
+            "cdac",
+            "sampling"
+          ],
+          "detail": "分配变化会影响电容下限，再影响驱动与建立负担。不能由此断定当前开关的热噪声已通过。 Cside ≥ 2kT / σsample² = {{capacitance}} fF。这是每侧的等效采样电容下限，不是单位电容 Cu。完整 split CDAC 与单个集总负载的有效电容定义不能混用。 ΔV · exp[−Tacq / ((Rs + Ron) C)] ≤ ε。该示例使用 40 ns 获取、1.8 V 初始差分阶跃与 0.25 LSB 残差。它是单极点近似，不是 Bootstrap MOS 的最终 Ron 设计值，更不验证关断误差。",
+          "evidence": [
+            "rc_model",
+            "budget_baseline"
+          ],
+          "analysis": "sampling/cap"
+        },
+        {
+          "id": "deterministic",
+          "row": 2,
+          "col": 3,
+          "span": 2,
+          "title": "关断链 · 独立的原始保持误差要求",
+          "line": "|Vhold − Vtarget| < {{hold}} mV",
+          "sub": "约 0.25 LSB，不扣增益拟合或校准",
+          "blocks": [
+            "sampling"
+          ],
+          "tag": "暂定分配",
+          "detail": "保持误差门限沿用 0.25 LSB 思路；实验采用舍入值 0.439 mV。它检查系统性的关断误差，不是 0.316 mV RMS 的随机噪声预算。",
+          "evidence": [
+            "protected_screen"
+          ],
+          "analysis": "sampling/deterministic"
+        },
+        {
+          "id": "ideal",
+          "row": 3,
+          "col": 1,
+          "span": 2,
+          "title": "① 理想栅驱动 + T28 主 MOS",
+          "line": "主开关导通能力筛选完成",
+          "sub": "1.8 V 候选最坏 Ron = 964.5 Ω；27 PVT 组合",
+          "blocks": [
+            "sampling"
+          ],
+          "tone": "done",
+          "detail": "用理想 Vgate = Vin + VDD 隔离主 MOS 能力。这个实验不包含实际泵电容下垂、非重叠区跟踪和关断耦合。",
+          "evidence": [
+            "main_screen"
+          ],
+          "analysis": "sampling/ideal",
+          "topology_topic": "bootstrap"
+        },
+        {
+          "id": "driver",
+          "row": 3,
+          "col": 3,
+          "span": 2,
+          "title": "② 换成真实 Bootstrap 驱动",
+          "line": "获取误差很小；保持误差 {{audit_hold}} mV",
+          "sub": "T28 MOS + 理想电容 / 时钟；单点 TT",
+          "blocks": [
+            "sampling"
+          ],
+          "tone": "fail",
+          "detail": "Full-control 候选获取误差约 −0.000374 mV，但原始保持误差 {{audit_hold}} mV。无 CMI-275x 电压告警只通过标称模型告警筛查，不等于可靠性签核。",
+          "evidence": [
+            "protected_screen"
+          ],
+          "analysis": "sampling/driver"
+        },
+        {
+          "id": "input_path",
+          "row": 4,
+          "col": 1,
+          "span": 2,
+          "title": "电流审计 → 去掉输入加载通路",
+          "line": "25.858 µA → 约 34.3 pA",
+          "sub": "厚栅 MN9 变体保持误差 {{thick_hold}} mV；仍失败",
+          "blocks": [
+            "sampling"
+          ],
+          "tag": "已确认",
+          "tone": "fail",
+          "detail": "270 ns 时高侧输入比理想源低 1.293 mV，50 Ω 源电流与 MN9 端子电流相符。但不能据此把已存储的 {{audit_hold}} mV 输出误差全部归因于此通路。 使用厚栅器件并接地体端后，输入加载基本去除，但同时改变了器件尺寸，不能把精度改善唯一归因为体端。纯改核心管体端则几乎不改善精度，并产生应力告警。",
+          "evidence": [
+            "current_audit",
+            "fast_ab"
+          ],
+          "analysis": "sampling/input_path",
+          "topology_topic": "shared"
+        },
+        {
+          "id": "charge_loss",
+          "row": 4,
+          "col": 3,
+          "span": 2,
+          "title": "电荷审计 → 分离关断控制",
+          "line": "{{audit_hold}} → −{{split_bound}} mV，仍未达标",
+          "sub": "后者仅为理想分离门控边界，不是管级成果",
+          "blocks": [
+            "sampling"
+          ],
+          "tag": "机制待拆解",
+          "tone": "fail",
+          "detail": "上述两个数是连续区间的输出变化量，不是两个绝对输出电压。随后保持漂移仅 +0.022 mV；唯一寄生/器件归因还需独立拓扑消融。 理想继电器分开主栅控制，不包含自身注入、馈通和器件应力。−2.482 mV 不是管级设计成果；同时把共享栅在保持期拉到 VIN 还会造成 MN9 反向导通。",
+          "evidence": [
+            "current_audit",
+            "fast_ab"
+          ],
+          "analysis": "sampling/charge_loss",
+          "topology_topic": "reset"
+        },
+        {
+          "id": "next_topology",
+          "row": 5,
+          "col": 1,
+          "span": 4,
+          "title": "下一步 · 独立 T28 主栅控制",
+          "line": "分开主开关与 Bootstrap 输入管的关断控制",
+          "sub": "实现真实采样 / 保持门控与安全复位",
+          "blocks": [
+            "sampling",
+            "clock"
+          ],
+          "tag": "待设计",
+          "tone": "planned",
+          "detail": "需用真实 T28 器件实现两条主栅控制路径，同时保证 MN9 关断和复位安全。先复验电流、关断电荷、获取和各端子电压，不能把理想继电器直接视为最终实现。 目前仍未达标。单点通过不替代输入范围、PVT、噪声、失配和实际 CDAC 负载验证。",
+          "evidence": [
+            "fast_ab"
+          ],
+          "analysis": "sampling/next_topology"
+        }
+      ],
+      "edges": [
+        {
+          "from": "sample_root",
+          "to": "cap",
+          "kind": "allocate"
+        },
+        {
+          "from": "sample_root",
+          "to": "deterministic",
+          "kind": "allocate"
+        },
+        {
+          "from": "cap",
+          "to": "ideal",
+          "kind": "derive"
+        },
+        {
+          "from": "deterministic",
+          "to": "driver",
+          "kind": "next"
+        },
+        {
+          "from": "ideal",
+          "to": "driver",
+          "kind": "next",
+          "axis": "horizontal"
+        },
+        {
+          "from": "driver",
+          "to": "input_path",
+          "kind": "next"
+        },
+        {
+          "from": "driver",
+          "to": "charge_loss",
+          "kind": "next"
+        },
+        {
+          "from": "input_path",
+          "to": "next_topology",
+          "kind": "pending"
+        },
+        {
+          "from": "charge_loss",
+          "to": "next_topology",
+          "kind": "pending"
+        }
+      ],
+      "layout": "branch"
+    },
+    "cdac": {
+      "title": "CDAC · 从约束到下一步",
+      "note": "采样时保存输入电荷，转换时按 SAR 判决切换参考，生成送给比较器的残差。",
+      "columns": 4,
+      "nodes": [
+        {
+          "id": "requirement",
+          "row": 1,
+          "col": 1,
+          "title": "采样开关 + CDAC",
+          "line": "热噪声 ≤ {{sampling_noise}} mV RMS",
+          "sub": "分配 0.18 LSB",
+          "blocks": [
+            "sampling",
+            "cdac"
+          ],
+          "tag": "暂定分配",
+          "detail": "采样分配为 0.18 × LSB，不是 MOS 器件直接给出的数值。电容增大会降热噪声，但也增加驱动与建立负担。",
+          "span": 4,
+          "canvas": "cdac",
+          "evidence": [
+            "budget_baseline",
+            "bottom_screen"
+          ],
+          "analysis": "cdac/requirement"
+        },
+        {
+          "id": "constraint",
+          "row": 2,
+          "col": 1,
+          "title": "限制采样电容与关断误差",
+          "line": "C每侧 ≥ {{capacitance}} fF",
+          "sub": "另配原始保持误差 < {{hold}} mV",
+          "blocks": [
+            "sampling",
+            "cdac"
+          ],
+          "detail": "C每侧 ≥ 2kT/σ采样²，T = 300.15 K，假设两侧等值且噪声独立。保持误差 0.439 mV 是独立确定性分配，不是由热噪声直接推导而来。",
+          "span": 4,
+          "evidence": [
+            "budget_baseline",
+            "bottom_screen"
+          ],
+          "analysis": "cdac/constraint"
+        },
+        {
+          "id": "result",
+          "row": 3,
+          "col": 1,
+          "title": "③ CDAC / Reference",
+          "line": "底板采样有改善，余量很窄",
+          "sub": "W185 原始误差 {{bottom_hold}} mV",
+          "blocks": [
+            "cdac",
+            "reference"
+          ],
+          "tag": "受阻",
+          "tone": "fail",
+          "detail": "完整 CDAC 的五输入 TT 筛查仅有 5.22 µV 名义余量，仍有应力告警。Reference 管级 buffer 的整体通过证据尚未建立。此夹具不同于 Bootstrap 单电容测试。",
+          "span": 4,
+          "evidence": [
+            "budget_baseline",
+            "bottom_screen"
+          ],
+          "analysis": "cdac/result"
+        },
+        {
+          "id": "next",
+          "row": 4,
+          "col": 1,
+          "span": 4,
+          "title": "下一步 / 验收缺口",
+          "line": "扩大底板采样余量，同时解决应力告警",
+          "sub": "模块通过后，回到全 ADC 联合验收",
+          "detail": "当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。",
+          "blocks": [
+            "cdac"
+          ],
+          "tone": "planned",
+          "evidence": [
+            "budget_baseline",
+            "bottom_screen"
+          ],
+          "analysis": "cdac/next"
+        }
+      ],
+      "edges": [
+        {
+          "from": "requirement",
+          "to": "constraint",
+          "kind": "allocate"
+        },
+        {
+          "from": "constraint",
+          "to": "result",
+          "kind": "next"
+        },
+        {
+          "from": "result",
+          "to": "next",
+          "kind": "pending"
+        }
+      ],
+      "layout": "chain"
+    },
+    "reference": {
+      "title": "Reference · 从约束到下一步",
+      "note": "为 CDAC 提供参考电压和瞬时充放电电流；输出阻抗、建立时间和噪声会影响 bit 判决。",
+      "columns": 4,
+      "nodes": [
+        {
+          "id": "requirement",
+          "row": 1,
+          "col": 1,
+          "title": "Reference + CDAC 开关",
+          "line": "噪声 ≤ {{reference_noise}} mV RMS",
+          "sub": "共享分配 0.12 LSB",
+          "blocks": [
+            "reference",
+            "cdac"
+          ],
+          "tag": "暂定分配",
+          "detail": "这是 Reference 与开关的共享 RMS 预算；确定性建立残差另外验收，不能当作同一个随机噪声项。",
+          "span": 4,
+          "canvas": "reference",
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "reference/requirement"
+        },
+        {
+          "id": "constraint",
+          "row": 2,
+          "col": 1,
+          "title": "限制参考网络建立",
+          "line": "决策前残差 ≤ {{settling}} mV",
+          "sub": "|ΔV| · exp(−t / RC) ≤ ε",
+          "blocks": [
+            "reference",
+            "cdac"
+          ],
+          "tag": "独立分配",
+          "detail": "残差独立分配为 0.25 LSB。3 ns、C每侧 = 226.396 fF 的一阶示例得到 Rref + Ron ≤ 1.593 kΩ；不是由 0.211 mV 噪声预算直接推出。",
+          "span": 4,
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "reference/constraint"
+        },
+        {
+          "title": "Reference",
+          "line": "一阶约束已有；buffer 管级待验证",
+          "sub": "尚无完整物理 buffer 通过证据",
+          "detail": "目前只有参考网络的一阶建立约束，需要实现真实缓冲器并验证瞬态负载、输出阻抗和噪声。",
+          "tone": "planned",
+          "tag": "待设计",
+          "blocks": [
+            "reference"
+          ],
+          "id": "result",
+          "row": 3,
+          "col": 1,
+          "span": 4,
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "reference/result"
+        },
+        {
+          "id": "next",
+          "row": 4,
+          "col": 1,
+          "span": 4,
+          "title": "下一步 / 验收缺口",
+          "line": "实现真实参考缓冲器，验证动态负载与噪声",
+          "sub": "模块通过后，回到全 ADC 联合验收",
+          "detail": "当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。",
+          "blocks": [
+            "reference"
+          ],
+          "tone": "planned",
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "reference/next"
+        }
+      ],
+      "edges": [
+        {
+          "from": "requirement",
+          "to": "constraint",
+          "kind": "allocate"
+        },
+        {
+          "from": "constraint",
+          "to": "result",
+          "kind": "next"
+        },
+        {
+          "from": "result",
+          "to": "next",
+          "kind": "pending"
+        }
+      ],
+      "layout": "chain"
+    },
+    "comparator": {
+      "title": "比较器 · 从约束到下一步",
+      "note": "每个 bit 判断 CDAC 残差极性，结果交给 SAR 逻辑。再生速度、输入噪声、失调和回踢分别约束。",
+      "columns": 4,
+      "nodes": [
+        {
+          "id": "requirement",
+          "row": 1,
+          "col": 1,
+          "title": "StrongARM 比较器",
+          "line": "输入噪声 ≤ {{comparator_noise}} mV RMS",
+          "sub": "分配 0.18 LSB",
+          "blocks": [
+            "comparator"
+          ],
+          "tag": "暂定分配",
+          "detail": "输入等效噪声与系统失调分开约束；确定性正确判决并不证明噪声或失调满足要求。",
+          "span": 4,
+          "canvas": "comparator",
+          "evidence": [
+            "rc_model",
+            "strongarm_interface"
+          ],
+          "analysis": "comparator/requirement"
+        },
+        {
+          "id": "constraint",
+          "row": 2,
+          "col": 1,
+          "title": "限制失调与决策时间",
+          "line": "|Vos| ≤ {{offset}} mV",
+          "sub": "决策时间暂分 1.5 ns",
+          "blocks": [
+            "comparator"
+          ],
+          "tag": "独立分配",
+          "detail": "失调分配 0.25 LSB，决策时间暂分 1.5 ns。用 τ ≈ Cnode/gm,eff 估算再生；这些要求不是由噪声分配唯一推得。",
+          "span": 4,
+          "evidence": [
+            "rc_model",
+            "strongarm_interface"
+          ],
+          "analysis": "comparator/constraint"
+        },
+        {
+          "id": "result",
+          "row": 3,
+          "col": 1,
+          "title": "③ StrongARM",
+          "line": "能判决，噪声 / 失调仍需优化",
+          "sub": "接口决策约 {{decision_ps}} ps",
+          "blocks": [
+            "comparator"
+          ],
+          "tag": "受阻",
+          "tone": "fail",
+          "detail": "完整 CDAC 接口六次无噪声 TT 实验中非零输入判决正确，但已有噪声和局部失配筛查未达分配。不能用速度结果覆盖这些失败。",
+          "span": 4,
+          "evidence": [
+            "rc_model",
+            "strongarm_interface"
+          ],
+          "analysis": "comparator/result"
+        },
+        {
+          "id": "next",
+          "row": 4,
+          "col": 1,
+          "span": 4,
+          "title": "下一步 / 验收缺口",
+          "line": "优化噪声与失调，再联合检查速度和回踢",
+          "sub": "模块通过后，回到全 ADC 联合验收",
+          "detail": "当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。",
+          "blocks": [
+            "comparator"
+          ],
+          "tone": "planned",
+          "evidence": [
+            "rc_model",
+            "strongarm_interface"
+          ],
+          "analysis": "comparator/next"
+        }
+      ],
+      "edges": [
+        {
+          "from": "requirement",
+          "to": "constraint",
+          "kind": "allocate"
+        },
+        {
+          "from": "constraint",
+          "to": "result",
+          "kind": "next"
+        },
+        {
+          "from": "result",
+          "to": "next",
+          "kind": "pending"
+        }
+      ],
+      "layout": "chain"
+    },
+    "clock": {
+      "title": "时钟 / SAR 逻辑 · 从约束到下一步",
+      "note": "产生采样和比较相位，保存比较结果，并控制 CDAC 的逐位切换。这里合并展示，不表示两个电路已经完成。",
+      "columns": 4,
+      "nodes": [
+        {
+          "id": "requirement",
+          "row": 1,
+          "col": 1,
+          "title": "采样时钟",
+          "line": "σt = {{jitter_ps}} ps RMS",
+          "sub": "4.5 MHz 输入时 → {{jitter}} mV RMS",
+          "blocks": [
+            "clock"
+          ],
+          "tag": "暂定分配",
+          "detail": "σjitter ≈ 2π × fin × V信号,rms × σt。20 ps 是选定的时间抖动预算，不是时钟电路实测值。",
+          "span": 4,
+          "canvas": "clock",
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "clock/requirement"
+        },
+        {
+          "id": "constraint",
+          "row": 2,
+          "col": 1,
+          "title": "限制各相位时间",
+          "line": "采样 {{sample_ns}} ns → 转换 {{conversion_ns}} ns",
+          "sub": "每 bit {{bit_ns}} ns；还需关断非重叠",
+          "blocks": [
+            "clock",
+            "sampling"
+          ],
+          "tag": "独立分配",
+          "detail": "10 MS/s 对应 100 ns 周期。当前分为 40 ns 获取与 60 ns 转换；每 bit 5 ns 中，3 ns 建立、1.5 ns 决策、0.5 ns 其他开销仅为可行性分配。",
+          "span": 4,
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "clock/constraint"
+        },
+        {
+          "id": "result",
+          "row": 3,
+          "col": 1,
+          "title": "③ 时钟 / SAR 逻辑",
+          "line": "相位预算已有，物理实现待验证",
+          "sub": "理想控制 ≠ 实际时钟链",
+          "blocks": [
+            "clock"
+          ],
+          "tag": "待验证",
+          "tone": "planned",
+          "detail": "已有理想相位与控制参考。真实负载、非重叠、时钟边沿与 jitter 联合验证未完成。",
+          "span": 4,
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "clock/result"
+        },
+        {
+          "id": "next",
+          "row": 4,
+          "col": 1,
+          "span": 4,
+          "title": "下一步 / 验收缺口",
+          "line": "落实真实非重叠时序、边沿与 jitter",
+          "sub": "模块通过后，回到全 ADC 联合验收",
+          "detail": "当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。",
+          "blocks": [
+            "clock"
+          ],
+          "tone": "planned",
+          "evidence": [
+            "rc_model"
+          ],
+          "analysis": "clock/next"
+        }
+      ],
+      "edges": [
+        {
+          "from": "requirement",
+          "to": "constraint",
+          "kind": "allocate"
+        },
+        {
+          "from": "constraint",
+          "to": "result",
+          "kind": "next"
+        },
+        {
+          "from": "result",
+          "to": "next",
+          "kind": "pending"
+        }
+      ],
+      "layout": "chain"
+    }
+  }
+}

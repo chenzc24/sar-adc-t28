@@ -216,11 +216,32 @@ def load_node_notes(figures):
     return notes
 
 
-def load_topology():
-    folder = REVIEW / 'topology'
-    netlist = (folder / 'bootstrap.cir').read_text(encoding='utf-8')
-    topology = read_yaml(folder / 'bootstrap.yaml')
-    require(hashlib.sha256(netlist.encode('utf-8')).hexdigest() == topology.pop('netlist_sha256'), 'topology netlist changed: re-review mapping')
+def resolve_graphs(flows, notes, figures, evidence, topology):
+    """Compile maintained references into a render-only graph payload."""
+    result = deepcopy(flows)
+    validate_flows(result)
+    topics = {t['id'] for t in topology['topics']}
+    records = {e['id']: e for e in evidence}
+    used = set()
+    for name, graph in result['graphs'].items():
+        require(graph.get('layout') in {'overview', 'branch', 'chain'}, 'unknown graph layout')
+        for node in graph['nodes']:
+            require(all(e in records for e in node['evidence']), 'unknown graph evidence')
+            require(not node.get('focus') or node['focus'] in result['graphs'], 'unknown graph destination')
+            require(not node.get('topology_topic') or node['topology_topic'] in topics, 'unknown topology topic')
+            if name != 'all':
+                ref = node.get('analysis')
+                require(ref in notes, 'missing graph analysis')
+                used.add(ref)
+                node.update(deepcopy(notes[ref]))
+            require(all(f in figures for f in node.get('figures', [])), 'unknown graph figure')
+            node['needs_review'] = any(records[e].get('stale', False) for e in node['evidence'])
+    require(used == set(notes), 'orphan node analysis')
+    return result
+
+
+def parse_topology_netlist(netlist):
+    """Bounded parser for this X-device fixture, not a general SPICE parser."""
     devices = {}
     for line in netlist.splitlines():
         fields = line.split()
@@ -228,8 +249,18 @@ def load_topology():
             continue
         capacitor = fields[0].startswith('XC')
         terminals = ['A', 'B'] if capacitor else ['D', 'G', 'S', 'B']
+        require(len(fields) > len(terminals) + 1, 'incomplete topology instance')
         require(fields[0] not in devices, 'duplicate topology instance')
         devices[fields[0]] = dict(zip(terminals, fields[1:1 + len(terminals)]))
+    return devices
+
+
+def load_topology():
+    folder = REVIEW / 'topology'
+    netlist = (folder / 'bootstrap.cir').read_text(encoding='utf-8')
+    topology = {**read_yaml(folder / 'analysis.json'), **read_yaml(folder / 'diagram.json')}
+    require(hashlib.sha256(netlist.encode('utf-8')).hexdigest() == topology.pop('netlist_sha256'), 'topology netlist changed: re-review mapping')
+    devices = parse_topology_netlist(netlist)
     require(set(devices) == set(topology['anchors']), 'topology anchor mismatch')
     nets = {net for pins in devices.values() for net in pins.values()}
     for item in topology['groups'] + topology['phases'] + topology['topics']:
@@ -238,7 +269,7 @@ def load_topology():
     require(set(topology['net_marks']) <= nets, 'unknown overlay net')
     require(all(t['phase'] in {p['id'] for p in topology['phases']} for t in topology['topics']), 'unknown topology phase')
     for x, y, w, h in topology['anchors'].values():
-        require(0 <= x < x+w <= 1034 and 0 <= y < y+h <= 675, 'invalid image anchor')
+        require(0 <= x < x+w <= topology['width'] and 0 <= y < y+h <= topology['height'], 'invalid image anchor')
     raw = (folder / 'bootstrap.png').read_bytes()
     require(hashlib.sha256(raw).hexdigest() == topology.pop('image_sha256'), 'topology image changed: re-review anchors')
     topology.update(devices=devices, image='data:image/png;base64,' + base64.b64encode(raw).decode('ascii'),
@@ -247,32 +278,78 @@ def load_topology():
     return topology
 
 
+def topology_impact(before, after, topology, netlist_changed=False, image_changed=False):
+    changed = sorted(d for d in set(before) | set(after) if before.get(d) != after.get(d))
+    changed_nets = {n for d in changed for pins in [before.get(d, {}), after.get(d, {})] for n in pins.values()}
+    # Conservatively include consumers on touched nets, not only the edited device.
+    touched = set(changed) | {d for d, pins in {**before, **after}.items() if set(pins.values()) & changed_nets}
+    non_connectivity = netlist_changed and not changed
+    topics = [t['id'] for t in topology['topics'] if non_connectivity or set(t['devices']) & touched or set(t['nets']) & changed_nets]
+    return {'changed_devices': changed, 'related_devices': sorted(touched),
+            'affected_topics': topics, 'image_mapping_needs_review': image_changed or bool(changed),
+            'non_connectivity_change': non_connectivity}
+
+
+def impact_report(model, records, flows, lock):
+    changed_sources = [s for s, path in model['sources'].items()
+                       if hashlib.sha256(source_path(path).read_bytes()).hexdigest() != lock.get('sources', {}).get(s, {}).get('sha256')]
+    reviewed = json.loads((REVIEW / 'evidence-baseline.json').read_text(encoding='utf-8'))
+    changed_records = [e['id'] for e in records if hashlib.sha256(json.dumps(e, sort_keys=True).encode()).hexdigest() != reviewed.get(e['id'])]
+    changed_records += sorted(set(reviewed) - {e['id'] for e in records})
+    evidence = [e['id'] for e in records if set(e['sources']) & set(changed_sources) or 'spec' in changed_sources or e['id'] in changed_records]
+    evidence = sorted(set(evidence) | set(changed_records))
+    folder = REVIEW / 'topology'
+    topology = {**read_yaml(folder / 'analysis.json'), **read_yaml(folder / 'diagram.json')}
+    baseline = json.loads((folder / 'connectivity-baseline.json').read_text(encoding='utf-8'))
+    text = (folder / 'bootstrap.cir').read_text(encoding='utf-8')
+    impact = topology_impact(baseline, parse_topology_netlist(text), topology,
+                            hashlib.sha256(text.encode('utf-8')).hexdigest() != topology['netlist_sha256'],
+                            hashlib.sha256((folder / 'bootstrap.png').read_bytes()).hexdigest() != topology['image_sha256'])
+    affected = [f'{g}/{n["id"]}' for g, graph in flows['graphs'].items() for n in graph['nodes']
+                if set(n['evidence']) & set(evidence) or n.get('topology_topic') in impact['affected_topics']
+                or impact['image_mapping_needs_review'] and n.get('topology_topic')]
+    return {'changed_sources': changed_sources, 'changed_records': changed_records, 'affected_evidence': evidence,
+            'affected_nodes': affected, 'topology': impact}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--record-source-lock", action="store_true", help="Only after reviewing source changes: acknowledge current source fingerprints")
     parser.add_argument("--check", action="store_true", help="Validate without writing a snapshot")
+    parser.add_argument('--impact', action='store_true', help='Read-only change impact report; does not accept new baselines')
     args = parser.parse_args()
     model, evidence = read_yaml(REVIEW / "model.yaml"), read_yaml(REVIEW / "evidence.yaml")
     validate(model, evidence)
-    flows = read_yaml(REVIEW / "flows.yaml")
+    flows = read_yaml(REVIEW / "flows.json")
     validate_flows(flows)
     lock_path = REVIEW / "source-lock.json"
+    if args.impact:
+        require(not args.record_source_lock, '--impact cannot acknowledge source changes')
+        print(json.dumps(impact_report(model, evidence['records'], flows, json.loads(lock_path.read_text(encoding='utf-8'))), ensure_ascii=False, indent=2))
+        return
     if args.record_source_lock:
         require(not args.check, "--check cannot record source lock")
         lock = {"schema_version": 1, "sources": {k: {"path": v, "sha256": hashlib.sha256(source_path(v).read_bytes()).hexdigest()} for k, v in model["sources"].items()}}
         lock_path.write_text(json.dumps(lock, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     lock = json.loads(lock_path.read_text(encoding="utf-8")) if lock_path.exists() else {}
+    impact = impact_report(model, evidence['records'], flows, lock)
     data = snapshot(model, evidence, lock)
     public = public_snapshot(data, flows)
     public['figures'] = load_figures(json.loads((REVIEW / 'figures.json').read_text(encoding='utf-8')))
     public['node_notes'] = load_node_notes(public['figures'])
     public['topology'] = load_topology()
+    public['flows'] = resolve_graphs(flows, public['node_notes'], public['figures'], public['evidence'], public['topology'])
+    for graph_id, graph in public['flows']['graphs'].items():
+        for node in graph['nodes']:
+            node['needs_review'] |= f'{graph_id}/{node["id"]}' in impact['affected_nodes']
+    public['meta']['needs_review'] |= bool(impact['affected_nodes'])
+    public.pop('node_notes')
     if not args.check:
         out = ROOT / "output" / "review"
         out.mkdir(parents=True, exist_ok=True)
         serialized = json.dumps(public, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
         template = (REVIEW / "app" / "index.html").read_text(encoding="utf-8")
-        assets = {"__STYLE__": "style.css", "__FORMULAS__": "formulas.js", "__APP__": "app.js", "__TOPOLOGY__": "topology.js"}
+        assets = {"__STYLE__": "style.css", "__FORMULAS__": "formulas.js", "__APP__": "app.js", "__TOPOLOGY__": "topology.js", "__PRESENTATION__": "presentation.js", "__DIAGRAM__": "diagram-static.js"}
         for placeholder, filename in assets.items():
             template = template.replace(placeholder, (REVIEW / "app" / filename).read_text(encoding="utf-8"))
         template = template.replace("__DATA__", serialized)
@@ -281,6 +358,7 @@ def main():
         print(f"Built {out / 'index.html'}")
     print(f"Validated {len(model['metrics'])} metrics, {len(model['steps'])} steps, {len(evidence['records'])} evidence records")
     print(f"Stale source references: {data['meta']['stale_sources'] or 'none'}; OA/Canvas not connected")
+    print(f"Nodes requiring review: {impact['affected_nodes'] or 'none'}")
 
 
 if __name__ == "__main__":

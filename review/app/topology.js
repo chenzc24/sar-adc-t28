@@ -15,7 +15,7 @@
     $('group-controls').innerHTML=buttons(t.groups,'group',group);
     $('phase-explanation').textContent=p.clock+'。'+p.text;
     $('group-explanation').textContent=g?g.text:'';
-    $('topology-picture').innerHTML=`<img src="${t.image}" alt="用户提供的 Bootstrap 电路静态图"><svg viewBox="0 0 1034 675" aria-hidden="true">${(a?a.nets:[]).filter(n=>t.net_marks[n]).map(n=>`<path d="${t.net_marks[n].path}" class="net-highlight"/>`).join('')}</svg>${Object.entries(t.anchors).map(([id,[x,y,w,h]])=>`<button class="device-hotspot ${attention.has(id)?'attention':''} ${id===selected?'picked':''}" data-device="${id}" aria-label="查看 ${id} 端子" title="${id}" style="left:${x/1034*100}%;top:${y/675*100}%;width:${w/1034*100}%;height:${h/675*100}%"></button>`).join('')}`;
+    ReviewDiagram.render($('topology-picture'), t, {attention, selected, nets:a?a.nets:[]});
     $('topic-explanation').innerHTML=a?`<p class="analysis-fact"><b>连接</b>${esc(a.fact)}</p><p class="analysis-inference"><b>推断</b>${esc(a.inference)}</p><p class="analysis-check"><b>验证</b>${esc(a.verify)}</p>`:`<p class="analysis-check"><b>本相位验证</b>${esc(p.verify)}</p>`;
     if(selected){
       const pins=t.devices[selected],related=t.topics.filter(a=>a.devices.includes(selected));

@@ -20,6 +20,57 @@ class ReviewContractTests(unittest.TestCase):
     def test_valid_model(self):
         build.validate(self.model, self.evidence)
 
+    def test_compiled_graph_references(self):
+        flows = build.read_yaml(ROOT / 'review/flows.json')
+        figures = build.load_figures(json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8')))
+        notes = build.load_node_notes(figures)
+        topology = build.load_topology()
+        compiled = build.resolve_graphs(flows, notes, figures, self.evidence['records'], topology)
+        self.assertEqual({k:len(g['nodes']) for k,g in compiled['graphs'].items()},
+                         {'all':7, 'sampling':8, 'cdac':4, 'reference':4, 'comparator':4, 'clock':4})
+        for field, value, message in [('evidence',['missing'],'unknown graph evidence'),
+                                      ('analysis','missing','missing graph analysis'),
+                                      ('topology_topic','missing','unknown topology topic')]:
+            bad = deepcopy(flows)
+            bad['graphs']['sampling']['nodes'][0][field] = value
+            with self.assertRaisesRegex(ValueError, message):
+                build.resolve_graphs(bad, notes, figures, self.evidence['records'], topology)
+        orphan = deepcopy(notes)
+        orphan['sampling/unused'] = {'reasons':['one','two']}
+        with self.assertRaisesRegex(ValueError, 'orphan'):
+            build.resolve_graphs(flows, orphan, figures, self.evidence['records'], topology)
+
+    def test_terminal_change_impact_without_mutating_fixture(self):
+        topology = build.load_topology()
+        before = topology['devices']
+        after = deepcopy(before)
+        after['XMN11']['G'] = 'independent_gate'
+        impact = build.topology_impact(before, after, topology, netlist_changed=True)
+        self.assertEqual(impact['changed_devices'], ['XMN11'])
+        self.assertEqual(set(impact['affected_topics']), {'bootstrap','shared','reset'})
+        self.assertTrue(impact['image_mapping_needs_review'])
+        self.assertEqual(before['XMN11']['G'], 'net0')
+
+    def test_evidence_change_reaches_related_nodes(self):
+        records = deepcopy(self.evidence['records'])
+        next(r for r in records if r['id']=='fast_ab')['observations'][0]['value'] = -0.005
+        report = build.impact_report(self.model, records, build.read_yaml(ROOT/'review/flows.json'),
+                                    json.loads((ROOT/'review/source-lock.json').read_text(encoding='utf-8')))
+        self.assertIn('fast_ab', report['changed_records'])
+        self.assertIn('sampling/input_path', report['affected_nodes'])
+        self.assertIn('all/sampling', report['affected_nodes'])
+        self.assertNotIn('clock/result', report['affected_nodes'])
+
+    def test_image_and_parameter_change_have_distinct_impact(self):
+        topology = build.load_topology()
+        devices = topology['devices']
+        image = build.topology_impact(devices, devices, topology, image_changed=True)
+        self.assertTrue(image['image_mapping_needs_review'])
+        self.assertEqual(image['affected_topics'], [])
+        parameter = build.topology_impact(devices, devices, topology, netlist_changed=True)
+        self.assertTrue(parameter['non_connectivity_change'])
+        self.assertEqual(len(parameter['affected_topics']), 3)
+
     def test_topology_sample_binding_and_body_terminals(self):
         topology = build.load_topology()
         self.assertEqual(len(topology['devices']), 15)
@@ -120,20 +171,20 @@ class ReviewContractTests(unittest.TestCase):
             build.validate(self.model, self.evidence)
 
     def test_flow_graphs_are_connected_to_known_blocks(self):
-        flows = build.read_yaml(ROOT / "review/flows.yaml")
+        flows = build.read_yaml(ROOT / "review/flows.json")
         build.validate_flows(flows)
-        flows["graphs"]["theory"]["nodes"][0]["blocks"] = ["missing-block"]
+        flows["graphs"]["all"]["nodes"][0]["blocks"] = ["missing-block"]
         with self.assertRaisesRegex(ValueError, "unknown flow block"):
             build.validate_flows(flows)
 
     def test_flow_edge_endpoint_rejected(self):
-        flows = build.read_yaml(ROOT / "review/flows.yaml")
-        flows["graphs"]["theory"]["edges"][0]["to"] = "missing-node"
+        flows = build.read_yaml(ROOT / "review/flows.json")
+        flows["graphs"]["all"]["edges"][0]["to"] = "missing-node"
         with self.assertRaisesRegex(ValueError, "endpoint"):
             build.validate_flows(flows)
 
     def test_public_payload_contains_no_repository_documents(self):
-        flows = build.read_yaml(ROOT / "review/flows.yaml")
+        flows = build.read_yaml(ROOT / "review/flows.json")
         private = build.snapshot(self.model, self.evidence, {})
         public = build.public_snapshot(private, flows)
         encoded = json.dumps(public, ensure_ascii=False)

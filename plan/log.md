@@ -1,5 +1,20 @@
 # Maintenance Log
 
+## 2026-09-30 - Review maintainability boundaries
+
+- Moved graph composition from browser code into one declarative graph source;
+  build resolves analysis, figure, experiment and topology references. Retired
+  obsolete flow and combined topology files (recoverable through Git).
+- Split presentation formatting and static-diagram adapter; separated topology
+  reasoning from image coordinates. Added reviewed evidence/connectivity baselines
+  and read-only --impact reporting, with affected-node review status.
+- Validation: 22 focused tests, formula regression, JS/build/diff checks, 31-node
+  migration comparison and browser navigation/device-selection smoke pass.
+- No OA, Canvas connection, simulator or experimental result changes. Screenshot:
+  output/review/refactor-preview.png. Concurrent circuit plan preserved.
+- Commit policy: refactor: separate review data rendering and impact checks;
+  local only, no push requested.
+
 ## 2026-09-30 - Screen protected bootstrap in full CDAC
 
 - Target: integrate the independent OFF_MAIN-before-reset protected-bootstrap
