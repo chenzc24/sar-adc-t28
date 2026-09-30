@@ -23,6 +23,21 @@ Text sources, specifications, automation, curated netlists, metrics, and reports
 - `artifacts/`: downloaded GDS/CDL/PEX/reports; large generated files are ignored by Git.
 - `output/`: disposable simulation output; ignored by Git.
 
+## Local design review workbench
+
+The linked benchmark / workflow / circuit-slot viewer is maintained in
+`review/`. Build an offline snapshot with:
+
+```powershell
+.venv/Scripts/python.exe scripts/review/build.py
+Start-Process output/review/index.html
+```
+
+See [review/README.md](review/README.md) for maintenance and validation.
+Sampling/bootstrap is the v1 vertical slice. The viewer neither connects to
+Analog Canvas nor changes remote OA; experiment scope and unresolved gates
+remain explicit.
+
 ## Initial workflow
 
 1. Establish and verify the behavioral 10-bit golden model.

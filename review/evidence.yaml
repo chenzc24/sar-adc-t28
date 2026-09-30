@@ -1,0 +1,75 @@
+schema_version: 1
+records:
+  - id: budget_baseline
+    title: 架构预算与理想行为基线
+    sources: [spec, budget]
+    scope: 10 bit / −1 dBFS / 理想行为模型
+    result: 理想 SNDR 60.953 dB、ENOB 9.833；1024 码无缺码。不是管级验证。
+    observations: []
+    limitations: [理想量化不包含实际电路, RSS 分配需要独立性假设]
+  - id: rc_model
+    title: 模块级一阶动态模型
+    sources: [first_order]
+    scope: 线性 RC / gm-C / 解析 jitter 敏感度
+    result: 确立 R-C-t 的条件可行域，未冻结器件尺寸或电容。
+    observations: []
+    limitations: [不验证电荷注入或开关非线性, 再生模型不验证输入噪声和 offset]
+  - id: main_screen
+    title: 理想栅驱动主 MOS 筛选
+    sources: [main_switch]
+    scope: T28 / 27 PVT 组合 / 理想 Vgate
+    result: 1.8 V L150/W8.96 的最坏 Ron 为 964.5 Ω；完整驱动尚未被该实验验证。
+    observations: []
+    limitations: [理想驱动排除了泵电容下垂与关断耦合, 电气筛查不是可靠性签核]
+  - id: protected_screen
+    title: 混合电压候选筛查
+    sources: [protected, full18_config]
+    scope: Spectre 21.1 / TT / 0.9 V / 27 °C / 单一静态输入
+    result: Full-control 清除 CMI-275x 告警，但原始保持误差约为预算的 19.9 倍。
+    artifact_path: output/bootstrap_protected_eval/full18
+    netlist_sha256: f466793e8655f2d81bdb7ce98d1041f00cdd90a374be3341750d2cb22a9bdd4d
+    observations:
+      - {label: 初始候选保持误差, value: -0.008972, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: Full-control 保持误差, value: -0.008755, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: Full-control 获取误差, value: -0.000000374, unit: V}
+      - {label: Full-control CMI-275x 数量, value: 0, unit: count}
+    limitations: [50 Ω 源阻抗与每侧 219.5 fF 集总负载, 理想时钟和泵电容, 无 PVT / MC / 噪声 / PEX, 0.99/1.98 V 仅为告警比较值而非 foundry 寿命标准]
+  - id: current_audit
+    title: 2026-09-30 · 关断电流路径审计
+    sources: [audit, full18_config]
+    scope: Spectre 21.1 / TT / 0.9 V / 27 °C / 同一 OA 导出
+    result: 输入加载通路已确认；关断损失的唯一器件/寄生归因仍需独立拓扑消融。
+    artifact_path: output/bootstrap_current_path_audit
+    netlist_sha256: f466793e8655f2d81bdb7ce98d1041f00cdd90a374be3341750d2cb22a9bdd4d
+    observations:
+      - {label: 原始保持误差 @270 ns, value: -0.008755, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: 高侧保持输入电流, value: 0.000025858, unit: A}
+      - {label: 非重叠区输出变化, value: -0.002939, unit: V}
+      - {label: 栅放电区输出变化, value: -0.005837, unit: V}
+      - {label: 随后保持阶段输出变化, value: 0.000022, unit: V}
+    limitations: [输入加载不是已存储 −8.755 mV 误差的唯一原因, 端子电流不能拆分所有内部寄生分量, 诊断没有修改或修复 OA 电路]
+  - id: bottom_screen
+    title: 完整 CDAC · W185 钳位筛查
+    sources: [bottom_plate]
+    scope: 完整 5+5 CDAC / TT / 五个静态输入
+    result: 在该夹具原始误差标称过线，但应力告警阻塞整体验收。
+    observations:
+      - {label: 五输入最大原始保持误差, value: 0.00043378, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: pass}
+    limitations: [与单电容夹具不直接比较, 名义余量仅 5.22 µV, 保留 SOA 告警, 无管级 1024 码线性验收]
+  - id: strongarm_interface
+    title: 完整 CDAC / StrongARM 接口
+    sources: [comparator]
+    scope: Spectre 21.1 / 6 TT 无噪声瞬态 / ±0.439453 mV 与零输入
+    result: 非零输入判决极性正确，但噪声/失调筛查未通过；接口通过不替代模块验收。
+    netlist_sha256: 046ff86701d1a8e7bc6973be5c8885d64d844fbc67cc7ea150cee78ffa02fe28
+    observations:
+      - {label: 非零输入决策延迟, value: 2.24116e-10, unit: s}
+      - {label: 决策时钟诱发输入扰动幅值, value: 0.000365124, unit: V}
+    limitations: [动态回踢不是等效静态 offset, 零输入不作极性正确性判决, 无全转换验收 / PVT / PEX]
+  - id: macro_model
+    title: 闭环电气宏模型
+    sources: [macro]
+    scope: 电气宏模型 / 并非完整晶体管实现
+    result: 保留闭环架构参考；实际模块的噪声、应力和关断误差仍需独立通过。
+    observations: []
+    limitations: [宏模型通过不能向上覆盖管级失败, 系统级功耗与后仿证据未纳入本版]

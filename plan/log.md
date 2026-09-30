@@ -4,6 +4,28 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-30 - Add local design review workbench v1
+
+- Target: link formal benchmark constraints, module workflow and a future
+  Analog Canvas slot in a maintainable local review interface.
+- Local changed areas: `review/` source/data/fingerprints/maintenance guide,
+  `scripts/review/build.py`, focused `verification/review/` checks, README,
+  target plan and this entry. Generated self-contained HTML/data remain ignored
+  under `output/review/`. Existing specs and circuit reports remain read-only.
+- Content: 13 metric nodes, 12 steps and eight evidence records; sampling and
+  Bootstrap form the vertical slice. Other modules explicitly retain partial
+  coverage. September 30 current-path diagnosis is not presented as a repair.
+- Validation: ten Python contract tests, Node benchmark/formula/gate/scenario
+  checks, Python compile, JS syntax and diff checks. Browser-tested all three
+  views, module/evidence links, embedded source reading, candidate/reset and
+  320/390-pixel no-overflow layouts. No captured browser errors/warnings.
+  The in-app browser disallows file URLs; no bypass was attempted. The verified
+  preview is loopback-only at port 8765. No external frontend assets are needed.
+- Remote OA/Canvas changes: none; historical netlist hashes are explicitly
+  not a fresh readback. Concurrent bootstrap fast-A/B files are unrelated and
+  excluded from this commit. No simulator was run for this frontend target.
+- Commit policy: local `feat: add local ADC design review workbench`; no push.
+
 ## 2026-09-30 - Audit full-control bootstrap turn-off currents
 
 - Target: distinguish turn-off output charge error from unintended hold input
