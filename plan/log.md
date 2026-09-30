@@ -1,5 +1,24 @@
 # Maintenance Log
 
+## 2026-09-30 - First T28 PGATE local driver (netlist only)
+
+- Added generator/analyzer and circuit report for six thick-oxide driver
+  devices per side, replacing only ideal PGATE steering. Kept multi=4
+  hold path, external timing and STRACK baseline fixed; updated active
+  status/design notes. No OA, PDK or prior export modifications.
+- Five TT/0.9-V/27-C Spectre runs completed with zero errors, four
+  inherited SFE-1131 warnings each, no CMI or suppressed warnings.
+  Worst raw error 0.605518 mV versus 0.842425 mV matched control;
+  still fails 0.439 mV. PGATEB reset exposes 0.497386-V positive
+  PMOS drain/body bias; this candidate is not reliability-cleared.
+- Two transport failures on -0.4 V were excluded; a final bounded retry
+  retrieved complete results. No indefinite retries or OA fallback.
+- Validation: compile, five-input generator/boundary checks, deck delta
+  review, per-run hash and PSF validation, zero-error logs, diff check.
+  Artifacts: output/top_plate_pgate_driver/. Report:
+  docs/top_plate_pgate_driver.md. Scoped local commit:
+  `test: implement T28 top-plate PGATE driver`; no push.
+
 ## 2026-09-30 - Return to top-plate sampling and screen T28 GMAIN hold path
 
 - Selected top-plate sampling as the sole active design line; marked the

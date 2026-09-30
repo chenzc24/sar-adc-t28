@@ -36,7 +36,7 @@ GMAIN close to VIN, but the five-point `multi=4` raw hold error still
 reaches **0.842425 mV** at ±0.4 V; smaller matched devices improve it
 without closing the 0.439-mV gate in the measured midrange case.
 
-The complementary screen still uses **ideal** `STRACK`, ideal boosted
+That first complementary screen uses **ideal** `STRACK`, ideal boosted
 PMOS-gate tracking/hold steering, ideal `OFF_MAIN`/PHIB sources, and
 idealized CDAC reference switches. Its PMOS body follows GMAIN only as
 a dynamic-well feasibility hypothesis. Zero printed CMI in nominal runs
@@ -46,11 +46,18 @@ reference settling, or ADC-level static/dynamic performance.
 
 ## Immediate design target
 
-Keep the top-plate topology and `GMAIN→VIN` off strategy. Determine
-whether the remaining input-dependent hold step is primarily control
-edge timing, NMOS/PMOS sizing asymmetry, or device-to-top-node charge
-injection, using one-factor Spectre tests. Then implement the boosted
-`GMAIN` tracking path and PMOS gate steering with actual T28 devices
-and a realizable 0.9-V-system control network. Do not freeze this
-pass-device size, modify production OA, or claim sampling-block signoff
-until raw error, acquisition, stress, and full-range tests pass.
+The next netlist iteration implements PGATE steering with six T28
+thick-oxide devices per side: a 0.9-V inverter and dynamic-G-powered
+cross-coupled level shifter. See `docs/top_plate_pgate_driver.md`.
+The same multi=4 hold pair is retained. At +0.8 V the final raw error
+is +0.080368 mV; at +0.4 V it is -0.605518 mV, still outside the
+0.439-mV allocation. This is a working switching candidate, not a
+validated driver: PGATEB retains charge when G resets, with approximately
+0.497-V peak positive drain-to-body bias on its PMOS pullup.
+
+Keep the top-plate topology and `GMAIN→VIN` off strategy. Next test
+reset-aware PGATEB discharge and audit dynamic-well junction bias, then
+isolate hold-pair charge/edge effects. STRACK is still ideal and remains
+a subsequent transistorization target. External clocks and CDAC reference
+switches remain ideal. No production OA, frozen size, reliability clearance,
+or sampling-block signoff follows from these nominal runs.

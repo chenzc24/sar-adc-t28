@@ -2,6 +2,15 @@
 
 ## 2026-09-30
 
+- Implemented the first netlist-only PGATE driver using a real 0.9-V
+  inverter and dynamic-G-powered T28 thick-oxide level shifter. Kept
+  the multi=4 hold devices and external timing fixed. +0.8/+0.4-V
+  raw errors are +0.080368/-0.605518 mV, so successful gate switching
+  does not close the accuracy target. PGATEB retains charge during
+  G reset, creating approximately 0.497-V positive PMOS drain/body
+  bias despite absent CMI warnings. Resolve this reset/well concern
+  before promotion; STRACK and external clocks remain ideal. See
+  `docs/top_plate_pgate_driver.md`; no OA modification.
 - Architecture decision: return to **top-plate sampling** as the only active
   SAR input/CDAC circuit line. Preserve bottom-plate fixtures as historical
   A/B evidence, not parallel production designs. The selected top path uses
