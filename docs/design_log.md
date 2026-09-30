@@ -2,6 +2,14 @@
 
 ## 2026-09-30
 
+- User provisionally froze the top-plate sampling circuit at `522aa0f`,
+  retaining the multi=4 hold pair, ratio-4 PGATE driver and existing timing.
+  Accept 0.605518-mV measured five-point nominal maximum for this stage;
+  pause further experiments. This is an explicit provisional exception,
+  not compliance with the original 0.439-mV allocation or an RMS-noise
+  rebudget. PGATEB reset/well risk remains open and deferred; ideal
+  STRACK/clocks remain disclosed. No OA promotion or reliability/ADC
+  signoff. Reopen only on user direction or later validation review.
 - Implemented the first netlist-only PGATE driver using a real 0.9-V
   inverter and dynamic-G-powered T28 thick-oxide level shifter. Kept
   the multi=4 hold devices and external timing fixed. +0.8/+0.4-V

@@ -44,9 +44,24 @@ does not clear foundry reliability, well isolation, layout, PVT,
 noise, dynamic aperture, input distortion, next-cycle acquisition,
 reference settling, or ADC-level static/dynamic performance.
 
-## Immediate design target
+## Provisional baseline decision
 
-The next netlist iteration implements PGATE steering with six T28
+On 2026-09-30 the user provisionally accepted circuit revision **522aa0f**
+on `exp/top-plate-gmain-t28`. Retain the top-plate topology, multi=4
+GMAIN-to-VIN hold pair, ratio-4 PGATE driver and existing timing unchanged.
+Pause further circuit/size/timing experiments pending user direction.
+
+Accept **0.605518 mV (about 0.345 LSB)** as the measured maximum of the
+five TT/0.9-V/27-C input points for this stage. This is a provisional
+exception to the original 0.439-mV allocation, not a claim that it passed
+that allocation, a new full-range/PVT limit, or an RMS noise budget change.
+ADC-level INL/DNL/SNDR and broader validation may reopen this decision.
+The reset/well risk below remains open and deferred, not fixed or waived
+as a reliability requirement. No production or tapeout signoff is implied.
+
+## Retained implementation and deferred work
+
+The retained netlist iteration implements PGATE steering with six T28
 thick-oxide devices per side: a 0.9-V inverter and dynamic-G-powered
 cross-coupled level shifter. See `docs/top_plate_pgate_driver.md`.
 The same multi=4 hold pair is retained. At +0.8 V the final raw error
@@ -55,9 +70,10 @@ is +0.080368 mV; at +0.4 V it is -0.605518 mV, still outside the
 validated driver: PGATEB retains charge when G resets, with approximately
 0.497-V peak positive drain-to-body bias on its PMOS pullup.
 
-Keep the top-plate topology and `GMAIN→VIN` off strategy. Next test
-reset-aware PGATEB discharge and audit dynamic-well junction bias, then
-isolate hold-pair charge/edge effects. STRACK is still ideal and remains
-a subsequent transistorization target. External clocks and CDAC reference
-switches remain ideal. No production OA, frozen size, reliability clearance,
-or sampling-block signoff follows from these nominal runs.
+If the user resumes development, first consider reset-aware PGATEB
+discharge and dynamic-well junction-bias review. Further sampling-error
+optimization is deferred rather than automatically scheduled. STRACK
+is still ideal and remains a later transistorization target. External
+clocks and CDAC reference switches remain ideal. Dimensions are retained
+only for this provisional baseline, not finalized for production. No OA
+promotion, reliability clearance or sampling-block signoff follows.

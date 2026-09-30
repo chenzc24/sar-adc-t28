@@ -1,5 +1,18 @@
 # Maintenance Log
 
+## 2026-09-30 - Provisional sampling baseline freeze
+
+- Recorded user acceptance of circuit revision 522aa0f with 0.605518-mV
+  five-point nominal error as a provisional stage baseline. Retained
+  topology, sizes and timing; paused further experiments.
+- Updated active architecture status, PGATE report and design decision
+  log. Original 0.439-mV allocation, measured results and open reset/well
+  risks preserved. No circuit, simulation, PDK or remote OA changes.
+- Validation: scoped documentation review and git diff --check. Local
+  commit: `docs: freeze provisional top-plate sampling baseline`.
+  Circuit revision was previously pushed; this documentation update is
+  local only, with no push or merge in this target.
+
 ## 2026-09-30 - First T28 PGATE local driver (netlist only)
 
 - Added generator/analyzer and circuit report for six thick-oxide driver

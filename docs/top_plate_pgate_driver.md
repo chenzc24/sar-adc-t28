@@ -1,7 +1,16 @@
 # Top-plate PGATE: first T28 local driver
 
 Date: 2026-09-30. Netlist-only experiment; no schematic/OA changes.
-This is a functional driver candidate, not an accepted sampling switch.
+This is a functional driver candidate, not a signed-off sampling switch.
+
+**Subsequent user decision (2026-09-30): provisional stage acceptance.**
+Retain circuit revision `522aa0f` and its existing sizes/timing as the
+working baseline. Accept the measured five-point maximum 0.605518 mV
+for now; pause further optimization and reset experiments until resumed
+by the user. The original 0.439-mV allocation is not retrospectively
+passed or rewritten. The report below remains the experimental evidence;
+this decision does not clear the PGATEB junction-bias risk, ideal-control
+boundaries, full-range/PVT verification, or ADC-level performance.
 
 ## Circuit and controlled comparison
 
@@ -118,9 +127,10 @@ switches are still ideal. MP14's body-at-GMAIN connection and the new
 dynamic-G wells require actual well/isolation/reliability review. This is
 not a fully transistorized bootstrap control or ADC.
 
-Next isolate the PGATEB reset problem: test a reset-aware discharge path
+Deferred proposal, not an active experiment: isolate the PGATEB reset
+problem with a reset-aware discharge path
 that clears PGATEB without shorting the active boosted rail or turning
-MP14 on during track. Then reassess the midrange sampling step with a
-one-factor hold-pair size/edge experiment. Keep STRACK implementation as
-the following separate target. Do not promote this candidate into OA or
-freeze dimensions based on endpoint accuracy alone.
+MP14 on during track. Reassess the midrange sampling step only if later
+validation or a new user decision requires it. STRACK implementation is
+a separate future target. The provisional freeze does not promote this
+candidate into OA or finalize dimensions for production.
