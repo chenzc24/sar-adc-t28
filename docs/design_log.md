@@ -2,6 +2,26 @@
 
 ## 2026-09-30
 
+- Integrated the independent OFF_MAIN-before-PHIB-reset protected bootstrap
+  into copied OA-exported 5+5 CDAC decks, using 22 bottom sampling switches
+  and two matched top-plate controls. With the ideal top clamp, holding
+  `GMAIN=VIN` produces ±6.261925-mV raw bottom error at ±0.8-V differential
+  input, despite microvolt-level B9 acquisition. After reference handoff,
+  the high-side `GMAIN-B9` is +390.30 mV; one MN11 carries 6.25772 uA
+  against its B9 reference relay, and the 50-ohm input source carries
+  68.83530 uA. Source-relative gate bias thus fails to keep MN11 off when
+  the CDAC bottom plate moves toward VCM.
+- In the same copied full-CDAC fixture, changing only the ideal SHOLD
+  terminal to VSS removes sustained bottom-switch current and reduces the
+  ideal-clamp five-point maximum raw bottom error to 0.004218 mV. It is
+  only a mechanism bound: the top-plate control then reaches ±8.752611 mV,
+  endpoint pump MP8 CMI warnings appear, and a T28 physical clamp with
+  VSS-off remains at -7.538001 mV at +0.8 V with clamp SOA warnings.
+  The prior 0.00790/2.0960-mV bottom-plate findings used a different
+  bootstrap and are not one-factor baselines. Next design must provide a
+  physically safe main-gate off bias over bottom-plate excursion and a
+  separately corrected top/split-node clamp before OA promotion.
+
 - A nine-case copied-netlist charge screen on the split-GMAIN bootstrap
   candidate found that the ideal hold relay switches much faster than the
   OFF_MAIN clock: 50-600-ps clock edges produced only 1.1-5.0-ps GMAIN

@@ -1,5 +1,27 @@
 # Maintenance Log
 
+## 2026-09-30 - Screen protected bootstrap in full CDAC
+
+- Target: integrate the independent OFF_MAIN-before-reset protected-bootstrap
+  copied netlist into the exact full 5+5 CDAC exports and compare top/bottom
+  paths, ideal/T28 top clamps, and VIN/VSS ideal main-gate hold biases.
+- Local changed areas: bounded plan, exact-hash copied-deck generator and
+  analyzer, result report, design-log entry, and this log. Fifteen decks,
+  logs, PSF, and per-case/aggregate JSON remain ignored under
+  `output/bootstrap_full_cdac_isolation/`.
+- Remote OA changes: none. Original OA exports and PDK files remained
+  read-only. Spectre 21.1 ran only generated copied decks via `t28_io`.
+- Validation: fifteen zero-error TT/0.9-V/27-C transients, hashed source
+  checks, 24-call/full-CDAC deck-contract checks, finite waveform reads,
+  phase-order checks, targeted MN11/reference/source-current probe,
+  warning inventory, Python compile, JSON reanalysis, and owned diff review.
+  With ideal clamp, VIN-relative hold failed at ±0.8 V by 6.261925 mV;
+  ideal VSS-off hold reduced five-point bottom raw error to 0.004218 mV
+  maximum, but printed MP8 SOA warnings. T28 clamp + VSS-off still had
+  -7.538001 mV raw error and printed clamp SOA warnings. No OA promotion.
+- Commit policy: `test: screen protected bootstrap in full CDAC`; local
+  commit only, no push requested.
+
 ## 2026-09-30 - Simplify topology review copy
 
 - Removed repeated disclaimers and duplicate headings; moved assumptions/version
