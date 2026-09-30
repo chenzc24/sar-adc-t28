@@ -1,9 +1,10 @@
 # ADC design review workbench
 
-Local, read-only v1: benchmark derivations, module workflow and an unconnected
-Analog Canvas slot. Sampling/bootstrap is the complete vertical slice; other
-modules deliberately show partial coverage. No remote OA or PDK mutation,
-network dependency, or simulator run is part of this application.
+Local, read-only block-linked flow diagrams: benchmark derivations and design
+progress. A functional ADC block diagram stays above both views. Click a block
+to highlight its constraints; Bootstrap has detailed derivation/workflow
+branches. All necessary explanations are extracted into panel text, with no
+repository document links or raw report viewer. Canvas is a collapsed slot.
 
 ## Build and open
 
@@ -14,18 +15,19 @@ From the ADC repository in PowerShell:
 Start-Process output/review/index.html
 ```
 
-The output embeds all CSS, JavaScript, structured records and plain-text source
-snapshots, so it also works via `file://` with no server or CDN. To preview in a
+The output embeds CSS, JavaScript and extracted structured facts, with no server
+or CDN dependency. Direct file preview is not permitted by the in-app browser;
+use a normal browser or the tested loopback preview. To preview in a
 browser which only accepts HTTP, serve **only the generated review directory**:
 
 ```powershell
 .venv/Scripts/python.exe -m http.server 8765 --bind 127.0.0.1 --directory output/review
 ```
 
-Open `http://127.0.0.1:8765`. This exposes curated reports, not raw model/OA
-files. Do not bind to a public interface. Stop the preview server when unused.
-Source snapshots may still contain project-private design information: review
-them before sharing the generated HTML outside the project.
+Open `http://127.0.0.1:8765`. This serves extracted design facts, not raw reports,
+model/OA files or document paths. Do not bind to a public interface. Stop the
+preview server when unused. Extracted facts still contain private project
+information: review before sharing outside the project.
 
 ## Source of truth and maintenance
 
@@ -39,6 +41,9 @@ them before sharing the generated HTML outside the project.
   reports. These records are NOT automatically guessed from prose. A simulator
   adapter can later emit the same records after its numerical checks.
 - `review/source-lock.json`: fingerprints of sources at last deliberate review.
+- `review/flows.yaml`: concise graph nodes, typed arrows, grid placement and
+  explicit circuit block ownership. Numerical tokens use the calculation
+  registry or curated observations; prose must be self-contained.
 - `review/app/formulas.js`: the single calculation registry shared by the
   browser and Node tests. Display expressions/premises are kept in model.yaml.
 - `review/app/`: browser source, intentionally plain JS/CSS/HTML for zero-build
@@ -54,17 +59,16 @@ fingerprints:
 .venv/Scripts/python.exe scripts/review/build.py --record-source-lock
 ```
 
-Do not run that command merely to clear warnings. Without it, changed source
-hashes produce visible stale warnings. Each build captures current local source
-text and reports whether its reviewed fingerprint matches. If it does not,
-historic curated observations are preserved but marked for review. This is
-build-time detection, not file watching or live OA synchronization. A stale
-system spec also marks all experiment interpretations for review.
+Do not run that command merely to clear warnings. Changed source hashes produce
+a short stale warning, but paths, hashes and source documents stay behind the
+build boundary. `public_snapshot` strips them before HTML and data.json are
+written. Curated observations remain unchanged. This is build-time detection,
+not file watching or live OA synchronization.
 
-Temporary ENOB/sampling-budget scenarios live only in browser memory. They do
-not write files, change experimental thresholds, rescore historical runs, or
-produce fake new measurements. Refresh resets the scenario. URL hashes preserve
-the selected module/view/object, not edited scenario parameters.
+The simplified UI intentionally removes scenario controls, provenance panels,
+raw source dialogs and the sidebar. The calculation registry still supports
+scenario unit tests. URL hashes identify block/view; legacy dashboard links
+open the global flow orientation.
 
 ## Data contract v1
 
@@ -105,7 +109,12 @@ node --check review/app/app.js
 git diff --check
 ```
 
-Browser acceptance: switch all three views, inspect derivation parents and step
-dependencies, open embedded sources, preview/reset budget changes, check the
-current audit observations, and verify desktop and narrow-width rendering.
+Flow nodes must name known blocks; edge endpoints must exist and flow diagrams
+must be acyclic. Allocation and pending-work arrows are dashed. Solid arrows
+represent the stated derivation or workflow relationship, not pass assertions.
+
+Browser acceptance: switch the two flow views, check arrow endpoints and fork /
+merge relationships, click a block and a node to verify mutual correspondence,
+inspect inline extracted explanations, and verify no document links/viewers.
+Narrow screens scroll diagrams locally rather than shrinking text illegibly.
 Changing formulas or evidence requires re-running the relevant numerical tests.

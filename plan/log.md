@@ -4,6 +4,26 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-30 - Simplify review into block-linked flow diagrams
+
+- Target: respond to user review by replacing the flat, document-centric UI
+  with explicit circuit correspondence and connected derivation/progress graphs.
+- Local changes: review frontend, extracted flow content and latest A/B summary,
+  public-payload filtering, focused tests, maintenance guide and target plan.
+  Repository document links, raw source viewer, sidebar, hashes and scenario
+  controls were removed from the frontend. Internal provenance stays in source
+  data/build checks; generated HTML/data contains no report documents or paths.
+- The separate committed `e0c12e7` A/B report was read and summarized without
+  modifying any circuit-target file. Ideal split-gate -2.482-mV results are
+  explicitly mechanism bounds, not implemented T28 acceptance.
+- Validation: 13 Python contract tests; existing formula/observation gates;
+  Python compile and JS syntax. Browser checked global and Bootstrap flow views,
+  node/block highlighting and explanations, no document links/viewer, no edge
+  crossing unrelated Bootstrap nodes, and 390px graph-local scrolling without
+  page overflow. No browser errors/warnings in the inspected log.
+- Remote OA/Canvas changes: none; no simulation. Existing loopback preview
+  remains available at port 8765. Local commit only; no push requested.
+
 ## 2026-09-30 - Screen bootstrap netlist A/B variants
 
 - Target: rapidly test hold-leakage removal, PHIB timing, and ideal

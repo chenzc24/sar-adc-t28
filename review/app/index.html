@@ -4,31 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>SAR ADC · 设计审查台</title>
+  <title>SAR ADC · 设计流程</title>
   <style>__STYLE__</style>
 </head>
 <body>
-  <div class="shell">
-    <aside class="sidebar" aria-label="模块导航">
-      <a class="brand" href="#sampling/theory/hold"><span class="brand-mark">S /</span><span>SAR ADC<span class="brand-sub">DESIGN REVIEW · T28</span></span></a>
-      <div class="project-tag">10 BIT <span> / </span> 10 MS/s <span> / </span> 0.9 V</div>
-      <p class="nav-caption">设计层次</p>
-      <nav id="modules"></nav>
-      <div class="sidebar-note"><span class="live-dot"></span> 本地审查快照<p>指标 → 设计步骤 → 电路证据<br>不代表实时 OA 状态</p></div>
-      <div class="sidebar-footer">V1 · 采样 / Bootstrap 样板<br><span id="snapshot-date"></span></div>
-    </aside>
-    <div class="workspace">
-      <header class="topbar"><div class="breadcrumb">SAR_ADC_T28 <span>/</span> <span id="breadcrumb">采样与 Bootstrap</span></div><button id="snapshot-button" class="quiet-button">数据与版本 ↗</button></header>
-      <main>
-        <div id="stale-banner" class="notice warning" hidden></div>
-        <section class="page-heading"><div><div class="eyebrow">BENCHMARK / WORKFLOW / CIRCUIT</div><h1 id="page-title">采样与 Bootstrap</h1><p id="page-subtitle"></p></div><span class="baseline-label">架构预算 v1 <span>暂定分配</span></span></section>
-        <div class="tabs" role="tablist" aria-label="审查视图"><button id="tab-theory" role="tab" aria-selected="true" aria-controls="view" data-tab="theory">01 <span>指标推导</span></button><button id="tab-workflow" role="tab" aria-selected="false" aria-controls="view" data-tab="workflow">02 <span>设计进度</span></button><button id="tab-circuit" role="tab" aria-selected="false" aria-controls="view" data-tab="circuit">03 <span>电路视图</span><small>SLOT</small></button></div>
-        <div class="review-layout"><section id="view" role="tabpanel" aria-labelledby="tab-theory"></section><aside id="inspector" aria-label="所选对象详情"></aside></div>
-        <footer class="page-footer">约束有来源 · 结论有边界 · 失败保留记录<span id="build-version"></span></footer>
-      </main>
-    </div>
-  </div>
-  <dialog id="document-dialog"><div class="dialog-top"><div><span class="eyebrow">SOURCE SNAPSHOT</span><h2 id="document-title"></h2></div><button id="close-dialog" class="quiet-button">关闭 ×</button></div><p id="document-meta" class="small muted"></p><pre id="document-text"></pre></dialog>
+  <header class="topbar"><div><span class="brand">SAR /</span><h1>ADC 设计流程</h1><span id="spec-line"></span></div><span class="snapshot-label">设计状态快照</span></header>
+  <main>
+    <section class="circuit-section" aria-labelledby="circuit-title">
+      <div class="section-heading"><h2 id="circuit-title">电路 block 对应关系</h2><p>功能关系示意 · 点击 block 看对应指标与进度</p></div>
+      <div class="diagram-scroll"><div id="circuit-map" aria-label="ADC 功能框图"></div></div>
+      <p class="circuit-note">采样时，Bootstrap 把输入接到 CDAC；电荷保存在 CDAC。转换时，SAR 控制参考切换，比较器判决残差。此图不是管级连线图。</p>
+    </section>
+    <div class="view-toolbar"><div class="tabs" role="tablist" aria-label="流程视图"><button id="tab-theory" data-tab="theory" role="tab" aria-selected="true" aria-controls="view">指标推导图</button><button id="tab-workflow" data-tab="workflow" role="tab" aria-selected="false" aria-controls="view">设计进度图</button></div><button id="show-all" class="quiet-button" hidden>← 返回全 ADC</button></div>
+    <div id="stale-banner" class="stale-note" hidden>部分设计记录有更新，下面的历史结论需要复核。</div>
+    <section id="view" role="tabpanel" aria-labelledby="tab-theory">
+      <div class="flow-heading"><div><h2 id="flow-title"></h2><p id="flow-note"></p></div><div id="legend" class="legend"></div></div>
+      <div class="diagram-scroll"><div id="flow-canvas"><svg id="flow-edges" aria-hidden="true"></svg><div id="flow-nodes"></div></div></div>
+      <p id="budget-footnote" class="graph-footnote"></p>
+    </section>
+    <section id="node-detail" class="node-detail" aria-live="polite" hidden></section>
+    <details class="canvas-slot"><summary>电路细节 · Analog Canvas 预留</summary><p id="canvas-context"></p><p>尚未连接。后续用于查看所选 block 的原理图与相位 / 电荷路径。</p></details>
+    <footer><span>初始分配可以迭代 · 完成实验不等于指标通过</span><span id="review-date"></span></footer>
+  </main>
   <script id="review-data" type="application/json">__DATA__</script>
   <script>__FORMULAS__</script>
   <script>__APP__</script>

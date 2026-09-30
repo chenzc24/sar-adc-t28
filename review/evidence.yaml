@@ -73,3 +73,13 @@ records:
     result: 保留闭环架构参考；实际模块的噪声、应力和关断误差仍需独立通过。
     observations: []
     limitations: [宏模型通过不能向上覆盖管级失败, 系统级功耗与后仿证据未纳入本版]
+  - id: fast_ab
+    title: 网表级快速 A/B · 八个变体
+    sources: [fast_ab]
+    scope: Spectre 21.1 / 单点 TT / 0.9 V / 27 °C / 复制网表，未改 OA
+    result: 去除输入加载不足以修复精度；分离主栅控制是下一设计方向，所有候选仍未通过。
+    netlist_sha256: f466793e8655f2d81bdb7ce98d1041f00cdd90a374be3341750d2cb22a9bdd4d
+    observations:
+      - {label: 厚栅 MN9 去加载候选, value: -0.006842, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: 分离主栅加提前 PHIB 理想边界, value: -0.002482, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+    limitations: [理想继电器边界不是 T28 实现, 厚栅变体同时改变体连接与尺寸，非单因素比较, 单输入单工艺角，无完整 CDAC 验证]

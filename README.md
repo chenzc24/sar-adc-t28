@@ -25,7 +25,7 @@ Text sources, specifications, automation, curated netlists, metrics, and reports
 
 ## Local design review workbench
 
-The linked benchmark / workflow / circuit-slot viewer is maintained in
+The block-linked derivation / workflow flow diagrams are maintained in
 `review/`. Build an offline snapshot with:
 
 ```powershell
@@ -34,9 +34,10 @@ Start-Process output/review/index.html
 ```
 
 See [review/README.md](review/README.md) for maintenance and validation.
-Sampling/bootstrap is the v1 vertical slice. The viewer neither connects to
-Analog Canvas nor changes remote OA; experiment scope and unresolved gates
-remain explicit.
+The panel contains extracted explanations, not document links or report viewers.
+Sampling/bootstrap has a detailed branch; the ADC block diagram maps each
+constraint to its circuit. Analog Canvas remains an unconnected slot. No remote
+OA changes are made by the viewer.
 
 ## Initial workflow
 

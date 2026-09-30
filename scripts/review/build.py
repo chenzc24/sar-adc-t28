@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import math
@@ -108,6 +109,42 @@ def validate(model, evidence):
         require(any(records[e].get("netlist_sha256") == binding["netlist_sha256"] for e in binding["evidence"]), "circuit/evidence hash mismatch")
 
 
+def validate_flows(flows):
+    require(flows["schema_version"] == 1, "unsupported flow schema")
+    blocks = by_id(flows["blocks"], "blocks")
+    for graph in flows["graphs"].values():
+        nodes = by_id(graph["nodes"], "flow nodes")
+        grid = set()
+        for node in nodes.values():
+            require(all(b in blocks for b in node["blocks"]), "unknown flow block")
+            require(node["row"] > 0 and node["col"] > 0 and node["col"] + node.get("span", 1) - 1 <= graph["columns"], "invalid flow position")
+            for col in range(node["col"], node["col"] + node.get("span", 1)):
+                require((node["row"], col) not in grid, "overlapping flow nodes")
+                grid.add((node["row"], col))
+        dependencies = {ident: {"parents": []} for ident in nodes}
+        for edge in graph["edges"]:
+            require(edge["from"] in nodes and edge["to"] in nodes, "unknown flow edge endpoint")
+            require(edge["kind"] in {"derive", "allocate", "next", "pending"}, "unknown flow edge kind")
+            dependencies[edge["to"]]["parents"].append(edge["from"])
+        acyclic(dependencies, "parents")
+
+
+def public_snapshot(data, flows):
+    """Extract panel facts, not repository documents, source paths or hashes."""
+    public = deepcopy(data)
+    public.pop("sources")
+    public["model"].pop("sources")
+    public["model"].pop("circuits")
+    for metric in public["model"]["metrics"]:
+        metric.pop("sources")
+    for record in public["evidence"]:
+        for key in ("sources", "artifact_path", "artifact_available", "netlist_sha256"):
+            record.pop(key, None)
+    public["meta"] = {"reviewed_at": data["model"]["reviewed_at"], "needs_review": bool(data["meta"]["stale_sources"])}
+    public["flows"] = flows
+    return public
+
+
 def snapshot(model, evidence, lock):
     sources = {}
     for ident, relative in model["sources"].items():
@@ -142,6 +179,8 @@ def main():
     args = parser.parse_args()
     model, evidence = read_yaml(REVIEW / "model.yaml"), read_yaml(REVIEW / "evidence.yaml")
     validate(model, evidence)
+    flows = read_yaml(REVIEW / "flows.yaml")
+    validate_flows(flows)
     lock_path = REVIEW / "source-lock.json"
     if args.record_source_lock:
         require(not args.check, "--check cannot record source lock")
@@ -149,17 +188,18 @@ def main():
         lock_path.write_text(json.dumps(lock, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     lock = json.loads(lock_path.read_text(encoding="utf-8")) if lock_path.exists() else {}
     data = snapshot(model, evidence, lock)
+    public = public_snapshot(data, flows)
     if not args.check:
         out = ROOT / "output" / "review"
         out.mkdir(parents=True, exist_ok=True)
-        serialized = json.dumps(data, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
+        serialized = json.dumps(public, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
         template = (REVIEW / "app" / "index.html").read_text(encoding="utf-8")
         assets = {"__STYLE__": "style.css", "__FORMULAS__": "formulas.js", "__APP__": "app.js"}
         for placeholder, filename in assets.items():
             template = template.replace(placeholder, (REVIEW / "app" / filename).read_text(encoding="utf-8"))
         template = template.replace("__DATA__", serialized)
         (out / "index.html").write_text(template, encoding="utf-8")
-        (out / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        (out / "data.json").write_text(json.dumps(public, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
         print(f"Built {out / 'index.html'}")
     print(f"Validated {len(model['metrics'])} metrics, {len(model['steps'])} steps, {len(evidence['records'])} evidence records")
     print(f"Stale source references: {data['meta']['stale_sources'] or 'none'}; OA/Canvas not connected")

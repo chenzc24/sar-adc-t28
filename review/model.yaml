@@ -14,6 +14,7 @@ sources:
   bottom_plate: docs/bootstrap_bottom_plate_clamp_width_screen.md
   comparator: docs/strongarm_cdac_integration.md
   macro: docs/electrical_macro_model.md
+  fast_ab: docs/bootstrap_netlist_fast_ab.md
 modules:
   - id: system
     title: 系统与架构
@@ -101,7 +102,7 @@ metrics:
     display_unit: mV RMS
     scale: 1000
     expression: σsample = αsample × LSB
-    premise: αsample 来自 error_budget.sampling_noise_rms_lsb；是工程分配，不是唯一理论解。
+    premise: αsample 暂分 0.18 LSB；是工程分配，不是唯一理论解。
     sources: [spec, budget]
     parents: [analog]
   - id: comparator_noise
@@ -266,6 +267,19 @@ steps:
     metrics: [hold]
     evidence: [current_audit]
     depends_on: [protected]
+  - id: fast_ab
+    module: sampling
+    title: 网表级快速 A/B
+    purpose: 区分去除输入加载、提前 PHIB 和分离主栅控制的影响。
+    method: 复制网表上的 T28 器件修改 / 理想继电器机理边界
+    work: complete
+    verdict: fail
+    coverage: 八个变体 / 单点 TT / 未改 OA
+    result: 厚栅 MN9 去加载后误差 −6.842 mV；分离主栅理想边界 −2.482 mV，仍未达标。
+    next: 独立实现 T28 主栅控制与安全复位，再验证电流、误差和端子应力。
+    metrics: [hold]
+    evidence: [fast_ab]
+    depends_on: [audit]
   - id: topology
     module: sampling
     title: 独立拓扑修订与消融
@@ -274,11 +288,11 @@ steps:
     work: planned
     verdict: unverified
     coverage: 未运行
-    result: 当前下一设计步骤，尚无新拓扑仿真结果。
+    result: 已有网表机理边界实验，尚无合格的独立 T28 主栅控制实现。
     next: 定义新候选、体端/复位路径、输入电流数值门限，再开展对应实验。
     metrics: [hold]
     evidence: []
-    depends_on: [audit]
+    depends_on: [fast_ab]
   - id: sampler_acceptance
     module: sampling
     title: 采样模块联合验收

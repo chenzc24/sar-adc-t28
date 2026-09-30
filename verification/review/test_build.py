@@ -2,6 +2,7 @@
 from copy import deepcopy
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
 import unittest
 
@@ -69,6 +70,32 @@ class ReviewContractTests(unittest.TestCase):
         self.model["circuits"][0]["netlist_sha256"] = "0" * 64
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             build.validate(self.model, self.evidence)
+
+    def test_flow_graphs_are_connected_to_known_blocks(self):
+        flows = build.read_yaml(ROOT / "review/flows.yaml")
+        build.validate_flows(flows)
+        flows["graphs"]["theory"]["nodes"][0]["blocks"] = ["missing-block"]
+        with self.assertRaisesRegex(ValueError, "unknown flow block"):
+            build.validate_flows(flows)
+
+    def test_flow_edge_endpoint_rejected(self):
+        flows = build.read_yaml(ROOT / "review/flows.yaml")
+        flows["graphs"]["theory"]["edges"][0]["to"] = "missing-node"
+        with self.assertRaisesRegex(ValueError, "endpoint"):
+            build.validate_flows(flows)
+
+    def test_public_payload_contains_no_repository_documents(self):
+        flows = build.read_yaml(ROOT / "review/flows.yaml")
+        private = build.snapshot(self.model, self.evidence, {})
+        public = build.public_snapshot(private, flows)
+        encoded = json.dumps(public, ensure_ascii=False)
+        for forbidden in ("docs/", "config/", "netlist_sha256", "reviewed_sha256", "# System Error Budget"):
+            self.assertNotIn(forbidden, encoded)
+        self.assertNotIn("sources", public)
+        self.assertNotIn("sources", public["model"])
+        current = next(r for r in public["evidence"] if r["id"] == "current_audit")
+        self.assertAlmostEqual(next(o["value"] for o in current["observations"] if o["unit"] == "A"), 25.858e-6)
+        self.assertTrue(public["meta"]["needs_review"])
 
 
 if __name__ == "__main__":
