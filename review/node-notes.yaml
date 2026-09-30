@@ -1,0 +1,56 @@
+schema_version: 1
+nodes:
+  sampling/sample_root:
+    reasons: [精度决定误差容限，采样时间决定建立窗口。, 获取与保持是两道关口：跟得上输入不代表断开后电荷正确。]
+  sampling/cap:
+    reasons: [增大电容可降低 kT/C 噪声，但会增加开关驱动负担。, 用 RC 建立要求反推 Rs + Ron 上限；它不能预测关断注入。]
+    figures: [sampling_rc]
+  sampling/deterministic:
+    reasons: [保持误差单独验收，不与随机热噪声混做 RSS。, 使用原始误差，不靠增益拟合或校准掩盖电荷损失。]
+  sampling/ideal:
+    reasons: [理想栅驱动隔离主 MOS 的导通能力，便于比较尺寸和器件族。, PVT 的 Ron 结果不包含真实驱动的下垂、馈通和关断注入。]
+    figures: [main_ron]
+  sampling/driver:
+    reasons: [获取误差很小而保持误差超标，当前矛盾不在单纯降低 Ron。, 无电压模型告警只是诊断筛查，不等于 foundry 可靠性签核。]
+  sampling/input_path:
+    reasons: [输入源与 MN9 端子电流相符，确认保持期间存在加载通路。, 去加载后精度仍失败，说明加载并非全部误差来源。, 厚栅变体同时改了体连接与尺寸，不能作单因素归因。]
+  sampling/charge_loss:
+    reasons: [误差主要在非重叠与栅放电区形成，随后保持漂移较小。, 分离控制改善了误差但仍超标，尚不能锁定唯一寄生来源。, 理想继电器排除了自身注入，改善幅度不是管级承诺。]
+  sampling/next_topology:
+    reasons: [主开关与 Bootstrap 输入管需要不同的安全关断路径。, 先核对电流、负载电荷和端子应力，再扩大输入范围与 PVT。, 该节点表示已审阅快照的设计方向，不代表真实门控已通过。]
+  cdac/requirement:
+    reasons: [采样开关与 CDAC 共享同一采样噪声预算，不能重复计入。, 电容增大有利于噪声，但对参考驱动和建立速度不利。]
+  cdac/constraint:
+    reasons: [两侧独立噪声叠加决定每侧等效采样电容下限，不是单位 Cu。, 原始保持误差另行约束；不能从 kT/C 通过推断关断通过。]
+  cdac/result:
+    reasons: [五输入 TT 最大误差仅有 5.22 µV 名义余量，尚不稳健。, 钳位器件应力告警仍阻塞验收，不能只看精度数值。, 图为 W185 的单个 −0.8 V 输入相位轨迹，不是五输入汇总。]
+    figures: [bottom_phase]
+  cdac/next:
+    reasons: [继续权衡钳位尺寸的获取能力与关断寄生，扩大误差余量。, 消除应力问题后仍需输入范围、PVT 与完整码序验证。]
+  reference/requirement:
+    reasons: [参考与开关共享噪声预算，不能各自用满后再相加。, 噪声与确定性建立残差是不同验收项。]
+  reference/constraint:
+    reasons: [逐 bit 参考切换必须在比较器判决前完成建立。, 单极点 RC 给出条件可行域，真实 buffer 的阻抗会随频率与负载变化。]
+    figures: [reference_rc]
+  reference/result:
+    reasons: [现有结果属于约束模型，不是完整参考缓冲器实现。, 需要实际输出电流和瞬态恢复证据才能确认驱动能力。]
+  reference/next:
+    reasons: [按 CDAC 切换负载设计缓冲器，再检查建立与稳定性。, 在速度、输出噪声和功耗之间重新平衡初始预算。]
+  comparator/requirement:
+    reasons: [输入等效噪声与系统失调分开分配，不能用同一结果覆盖。, 正确判断非零输入只验证极性，不证明小输入错误概率满足要求。]
+  comparator/constraint:
+    reasons: [再生时间由有效 gm 与节点电容共同决定，不是普通静态 AC 增益。, 失调与决策时间是独立分配，不能由噪声预算唯一推出。]
+    figures: [comparator_gm]
+  comparator/result:
+    reasons: [六次无噪声 TT 接口实验中非零输入极性正确，速度已有参考。, 噪声与局部失配筛查仍未达分配，模块并未通过。, 动态回踢是时钟触发的扰动，不能直接当成静态 offset。]
+  comparator/next:
+    reasons: [优化噪声和失调时，必须同步检查速度与输入回踢。, 扩展 PVT、噪声与失配覆盖，再进入全转换联合验收。]
+  clock/requirement:
+    reasons: [相同 jitter 在更高输入频率下造成更大的电压误差。, 20 ps 是初始时间预算，不是物理时钟链实测。]
+    figures: [clock_jitter]
+  clock/constraint:
+    reasons: [采样、参考建立和比较器判决共同消耗周期时间。, 非重叠可避免通路重叠，但过长也可能恶化 Bootstrap 关断误差。]
+  clock/result:
+    reasons: [已有理想相位控制参考，尚未验证完整物理时钟链。, 实际边沿、负载与抖动不能由理想数字控制结果推断。]
+  clock/next:
+    reasons: [结合真实开关负载落实非重叠和边沿时序。, 再联合检查 jitter、速度和功耗，避免局部优化挤占总时间预算。]

@@ -115,6 +115,14 @@
     ],edges:[edge('requirement','constraint','allocate'),edge('constraint','result'),edge('result','next','pending')]};
   }
   let state={focus:'all'}, graph, resizeFrame;
+  for(const [module,map] of Object.entries(maps)) {
+    if(module==='all')continue;
+    for(const node of map.nodes) {
+      const note=data.node_notes[module+'/'+node.id];
+      if(!note)throw new Error('Missing node analysis: '+module+'/'+node.id);
+      Object.assign(node,note);
+    }
+  }
   const ns='http://www.w3.org/2000/svg';
   function svgElement(tag,attrs={}) {
     const el=document.createElementNS(ns,tag);
@@ -160,16 +168,21 @@
 
   function render(){
     graph=maps[state.focus];
+    $('view').classList.toggle('module-view',state.focus!=='all');
+    $('view').classList.toggle('single-chain',state.focus!=='all' && state.focus!=='sampling');
     $('flow-title').textContent=graph.title;
     $('flow-note').textContent=graph.note;
     $('breadcrumb').textContent=state.focus==='all'?'全 ADC / 设计总图':'全 ADC / '+blocks[state.focus].title;
     $('show-all').hidden=state.focus==='all';
     $('legend').innerHTML='<span><i class="solid"></i>推导 / 验证步骤</span><span><i class="dashed"></i>暂定分配 / 待完成</span>';
     $('flow-nodes').style.setProperty('--columns',graph.columns);
-    $('flow-nodes').innerHTML=graph.nodes.map(n=>`<article class="flow-node ${esc(n.tone||'')}" style="grid-column:${n.col}/span ${n.span||1};grid-row:${n.row}" data-node="${n.id}">
+    $('flow-nodes').innerHTML=graph.nodes.map((n,i)=>`<article class="flow-node ${esc(n.tone||'')} ${state.focus==='sampling' && n.span===4?'wide-node':''}" style="grid-column:${n.col}/span ${n.span||1};grid-row:${n.row}" data-node="${n.id}">
+      ${state.focus!=='all'?`<span class="node-index">${String(i+1).padStart(2,'0')} / ${esc(blocks[state.focus].subtitle)}</span>`:''}
       <span class="node-top"><b>${esc(n.title)}</b>${n.tag?`<small class="node-tag">${esc(n.tag)}</small>`:''}</span>
       <span class="node-line">${esc(expand(n.line))}</span><span class="node-sub">${esc(expand(n.sub))}</span>
+      ${n.reasons?`<ul class="node-reasons">${n.reasons.map(reason=>`<li>${esc(expand(reason))}</li>`).join('')}</ul>`:''}
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
+      ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">查看${esc(data.figures[id].kind)} ↗</button>`).join('')}
       <details class="inline-detail"><summary>展开依据与说明</summary><p>${esc(expand(n.detail))}</p></details>
       ${n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
     </article>`).join('');
@@ -180,6 +193,16 @@
   }
   document.addEventListener('click',e=>{
     const b=e.target.closest('button');
+    if(b?.dataset.figure){
+      const figure=data.figures[b.dataset.figure];
+      $('figure-kind').textContent=figure.kind;
+      $('figure-title').textContent=figure.title;
+      $('figure-caption').textContent=figure.caption;
+      $('figure-image').src=figure.src;
+      $('figure-image').alt=figure.title+'。'+figure.caption;
+      $('figure-dialog').showModal(); return;
+    }
+    if(b?.id==='close-figure'){$('figure-dialog').close();return;}
     const focus=b?.dataset.block || (b?.id==='show-all'?'all':null);
     if(!focus)return;
     state.focus=focus;

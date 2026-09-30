@@ -1,5 +1,17 @@
 # Maintenance Log
 
+## 2026-09-30 - Node analysis and result-figure entries
+
+- Added 24 module-node analysis lists, six scoped/hash-pinned figure bindings,
+  embedded image dialog and tighter module layout. Local review sources/build/
+  focused tests only; remote OA and ongoing circuit experiments untouched.
+- Validation: 17 Python tests, formula regression and syntax checks pass. Browser
+  verified all figure loads and keyboard navigation/dialog behavior, node coverage,
+  and narrow layout. Automated pointer input did not actuate controls this session;
+  pointer acceptance remains unconfirmed. No simulation rerun.
+- Artifacts: output/review/index.html, node-analysis-preview.png, figure-preview.png.
+- Commit policy: feat: add node analysis and result figures; local only, no push.
+
 ## 2026-09-30 - Consolidate review into module branch maps
 
 - One global map now opens five module branches combining constraints, progress,

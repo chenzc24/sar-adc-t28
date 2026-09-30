@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 from copy import deepcopy
 import hashlib
 import json
@@ -9,6 +10,7 @@ import math
 from datetime import datetime, timezone
 from pathlib import Path
 import subprocess
+import xml.etree.ElementTree as ET
 
 import yaml
 
@@ -172,6 +174,48 @@ def snapshot(model, evidence, lock):
                      "evidence_sha256": hashlib.sha256((REVIEW / "evidence.yaml").read_bytes()).hexdigest()}}
 
 
+def load_figures(records):
+    """Embed only reviewed image bytes; never expose artifact filesystem paths."""
+    figures = {}
+    for record in records:
+        ident = record['id']
+        require(ident not in figures, 'duplicate figure')
+        path = (ROOT / record['path']).resolve()
+        require(path.is_relative_to(ROOT / 'output') and not path.is_relative_to(ROOT / 'output/review'), 'unsafe figure path')
+        require(path.suffix in {'.png', '.svg'}, 'unsupported figure format')
+        public = {k: record[k] for k in ('title', 'kind', 'caption')}
+        public['available'] = path.is_file()
+        if path.is_file():
+            raw = path.read_bytes()
+            require(len(raw) <= 5_000_000, 'figure too large')
+            require(hashlib.sha256(raw).hexdigest() == record['sha256'], 'figure changed since review')
+            if path.suffix == '.png':
+                require(raw.startswith(b'\x89PNG\r\n\x1a\n'), 'invalid PNG')
+                mime = 'image/png'
+            else:
+                require(b'<!DOCTYPE' not in raw and b'<!ENTITY' not in raw, 'unsafe SVG')
+                root = ET.fromstring(raw)
+                allowed = {'svg', 'rect', 'style', 'text', 'line', 'polyline', 'path', 'g', 'circle', 'title', 'desc'}
+                for element in root.iter():
+                    require(element.tag.split('}')[-1] in allowed, 'unsafe SVG element')
+                    require(all(not k.lower().startswith('on') and 'href' not in k.lower() for k in element.attrib), 'unsafe SVG attribute')
+                lower = raw.lower()
+                require(b'url(' not in lower and b'@import' not in lower, 'unsafe SVG resource')
+                mime = 'image/svg+xml'
+            public['src'] = 'data:' + mime + ';base64,' + base64.b64encode(raw).decode('ascii')
+        figures[ident] = public
+    return figures
+
+
+def load_node_notes(figures):
+    notes = read_yaml(REVIEW / 'node-notes.yaml')['nodes']
+    for key, note in notes.items():
+        require('/' in key and 2 <= len(note['reasons']) <= 3, 'node requires 2–3 reasons')
+        require(all(isinstance(s, str) and s for s in note['reasons']), 'empty node reason')
+        require(all(f in figures for f in note.get('figures', [])), 'unknown node figure')
+    return notes
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--record-source-lock", action="store_true", help="Only after reviewing source changes: acknowledge current source fingerprints")
@@ -189,6 +233,8 @@ def main():
     lock = json.loads(lock_path.read_text(encoding="utf-8")) if lock_path.exists() else {}
     data = snapshot(model, evidence, lock)
     public = public_snapshot(data, flows)
+    public['figures'] = load_figures(json.loads((REVIEW / 'figures.json').read_text(encoding='utf-8')))
+    public['node_notes'] = load_node_notes(public['figures'])
     if not args.check:
         out = ROOT / "output" / "review"
         out.mkdir(parents=True, exist_ok=True)

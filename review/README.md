@@ -8,6 +8,15 @@ No separate theory/progress tabs, detail panel, document links or report viewer.
 The app composes existing curated flow nodes into these consolidated maps;
 numerical facts still come from the common calculation/evidence registry.
 
+Each module node has 2–3 visible analysis points in `node-notes.yaml`, keyed by
+module/node ID. Optional figure IDs refer to `figures.json`: explicit artifact
+path, reviewed SHA-256, plot type and scope caption. The builder embeds only
+available reviewed PNG/restricted SVG bytes as image data URLs, so no artifact
+directory is served. Changed images fail validation; missing images omit the
+entry instead of breaking navigation. Re-review before updating a figure hash.
+Analytical envelopes are explicitly not transistor simulation results. The
+figure dialog supports keyboard opening, Escape/close, and return to the node.
+
 ## Build and open
 
 From the ADC repository in PowerShell:

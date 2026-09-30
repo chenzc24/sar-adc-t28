@@ -20,6 +20,39 @@ class ReviewContractTests(unittest.TestCase):
     def test_valid_model(self):
         build.validate(self.model, self.evidence)
 
+    def test_reviewed_figures_and_notes(self):
+        records = json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8'))
+        figures = build.load_figures(records)
+        notes = build.load_node_notes(figures)
+        self.assertEqual(len(notes), 24)
+        self.assertEqual(len(figures), 6)
+        for figure in figures.values():
+            self.assertNotIn('path', figure)
+            self.assertNotIn('sha256', figure)
+            if figure['available']:
+                self.assertTrue(figure['src'].startswith('data:image/'))
+
+    def test_missing_figure_has_no_image_source(self):
+        record = json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8'))[0]
+        record['path'] = 'output/review-test-intentionally-missing.png'
+        figure = build.load_figures([record])[record['id']]
+        self.assertFalse(figure['available'])
+        self.assertNotIn('src', figure)
+
+    def test_unsafe_figure_path_rejected(self):
+        record = json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8'))[0]
+        record['path'] = '../outside.png'
+        with self.assertRaisesRegex(ValueError, 'unsafe figure path'):
+            build.load_figures([record])
+
+    def test_changed_figure_rejected(self):
+        record = json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8'))[0]
+        if not (ROOT / record['path']).is_file():
+            self.skipTest('optional local plot absent')
+        record['sha256'] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'changed since review'):
+            build.load_figures([record])
+
     def test_duplicate_id_rejected(self):
         self.model["metrics"].append(deepcopy(self.model["metrics"][0]))
         with self.assertRaisesRegex(ValueError, "duplicate"):
