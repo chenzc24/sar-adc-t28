@@ -4,6 +4,27 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-30 - Screen bootstrap netlist A/B variants
+
+- Target: rapidly test hold-leakage removal, PHIB timing, and ideal
+  source-relative main-gate steering on an exact OA-exported full-control
+  bootstrap netlist.
+- Local changed areas: target plan, one controlled variant generator/runner,
+  result report, bounded design-log entry, and this maintenance entry.
+  Eight copied decks, Spectre logs/PSF, and JSON remain ignored under
+  `output/bootstrap_netlist_fast_ab/`. The unrelated design-review
+  workbench was left untouched.
+- Remote OA changes: none; all simulations used direct SSH Spectre 21.1 and
+  left OA, original export, and PDK models read-only.
+- Validation: original SHA-256 checked; eight TT/0.9-V/27-C transients
+  completed with zero Spectre errors; finite/aligned waveforms, input
+  source-resistor balance, output-node KCL, full-transient MOS terminal
+  diagnostic limits and printed CMI warnings reviewed. All variants fail
+  0.439-mV raw held-error target. The body-only core variant also has
+  five printed CMI warnings; ideal-relay bounds are not T28 implementations.
+- Commit status: commit only this target locally as
+  `test: screen bootstrap netlist A/B`; no push requested.
+
 ## 2026-09-30 - Add local design review workbench v1
 
 - Target: link formal benchmark constraints, module workflow and a future

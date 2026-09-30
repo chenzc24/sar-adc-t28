@@ -2,6 +2,24 @@
 
 ## 2026-09-30
 
+- Ran eight exact-export, netlist-only Spectre A/B cases of the full-control
+  bootstrap at +0.8-V differential input. Changing only MN9 body VIN->VSS
+  reduced hold input current from 25.858 uA to 0.00326 uA but left
+  -8.806-mV raw error and introduced five printed core `Vgb` warnings.
+  Replacing MN9 with a known `nch_18_mac` geometry plus B=VSS reduced
+  current to 0.0000343 uA and error to -6.842 mV without CMI warnings;
+  the model/geometry and body changes are confounded, and raw error fails.
+- Advancing PHIB by 0.8 ns alone changed the baseline error only to
+  -8.656 mV and did not fix input loading. An ideal shared G-to-VIN hold
+  clamp improved raw error to -1.102 mV but produced 76.974-uA input
+  current because MN9 reversely conducts from VIN to low BBOT when
+  `G≈VIN`. Main switch and MN9 cannot share that off bias.
+- An optimistic split-MN11-gate relay bound maintained near-zero hold
+  input current and reduced raw error to -3.014 mV, or -2.482 mV with
+  early PHIB. Both exceed the 0.439-mV budget and exclude real relay
+  parasitics/stress. Do not promote any variant to OA; next physical
+  candidate requires separate T28 main-gate control and stress-safe MN9
+  off/reset, followed by multi-input and full-CDAC checks.
 - Audited terminal currents on the exact OA-exported full-control mixed-voltage
   bootstrap differential fixture without changing its circuit. The -8.755-mV
   held error forms mainly during turn-off: -2.939 mV in the 250.1-251.0-ns
