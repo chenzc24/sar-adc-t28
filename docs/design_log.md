@@ -2,6 +2,21 @@
 
 ## 2026-09-30
 
+- A nine-case copied-netlist charge screen on the split-GMAIN bootstrap
+  candidate found that the ideal hold relay switches much faster than the
+  OFF_MAIN clock: 50-600-ps clock edges produced only 1.1-5.0-ps GMAIN
+  90-10 transitions. Increasing the hold relay's closed resistance from
+  1 ohm to 1/5/20 kohm did slow GMAIN to 20.6/74.4/293 ps, but worsened
+  raw held error from -2.452 to -2.514/-2.563/-2.647 mV. This does not
+  support gate-slew tuning as the cure for the remaining 2.5-mV error.
+- At 109.75/219.5/439 fF ideal load, the differential MN11 drain-terminal
+  charge was 0.347/0.578/0.805 fC, not a fixed injected charge, while
+  load and MN11 currents satisfied output KCL. Terminal current combines
+  channel and displacement effects, so the physical mechanism is not yet
+  uniquely decomposed. All nine cases fail the 0.439-mV raw-error gate;
+  keep off-before-reset ordering but test charge routing in a full CDAC
+  and real T28 gate-control topology next.
+
 - Separated ideal `GMAIN` turn-off from the PHIB-driven BOOT/G reset
   sequence in six copied-netlist Spectre cases. With OFF_MAIN rising at
   250.2 ns and reset delayed by 0.1-1.0 ns after its completed edge,

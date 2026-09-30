@@ -1,5 +1,25 @@
 # Maintenance Log
 
+## 2026-09-30 - Screen bootstrap turn-off charge
+
+- Target: distinguish ideal-relay control-clock timing from actual MN11 gate
+  slew, and measure held-load sensitivity and charge balance for the
+  independent OFF_MAIN-before-reset candidate.
+- Local changed areas: one bounded plan, copied-netlist generator/analyzer,
+  result report, design-log entry, and this log. Nine exact decks, logs, PSF,
+  and JSON are ignored under `output/bootstrap_turnoff_charge_screen/`.
+- Remote OA changes: none; the original hashed OA export and PDK stayed
+  read-only. Spectre 21.1 ran only copied decks via `t28_io`.
+- Validation: nine zero-error TT/0.9-V/27-C transients, finite PSF, output
+  KCL and load-charge checks, deck-diff review, zero printed CMI warnings,
+  and no diagnostic terminal-level crossings. The 1-ohm relay makes a
+  1.6-ps actual gate edge despite a 100-ps clock. Raising SHOLD resistance
+  to 20 kohm stretches gate fall to 293 ps but worsens held error to
+  -2.647 mV. No case meets the 0.439-mV raw-error gate.
+- Commit policy: `test: screen bootstrap turn-off charge`; no push requested.
+- Unrelated untracked Canvas-review paths and a modification to
+  `scripts/review/build.py` appeared during execution and were left untouched.
+
 ## 2026-09-30 - Node analysis and result-figure entries
 
 - Added 24 module-node analysis lists, six scoped/hash-pinned figure bindings,
