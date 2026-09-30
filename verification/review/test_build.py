@@ -91,7 +91,7 @@ class ReviewContractTests(unittest.TestCase):
         figures = build.load_figures(records)
         notes = build.load_node_notes(figures)
         self.assertEqual(len(notes), 24)
-        self.assertEqual(len(figures), 6)
+        self.assertEqual(len(figures), 7)
         for figure in figures.values():
             self.assertNotIn('path', figure)
             self.assertNotIn('sha256', figure)

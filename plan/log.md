@@ -851,3 +851,13 @@ human-triggered note in `docs/experience/`.
   output/review/isolated-diagram-preview.png.
 - No remote OA edits or simulation. Scoped local commit; no push. Unrelated
   top-plate GMAIN device experiment files preserved.
+
+## 2026-09-30 - GMAIN result comparison image
+
+- Added user-provided top-plate comparison image to the GMAIN safety node,
+  with 0.8 V input, 270 ns measurement and partial-transistor caption.
+- Stored original PNG in review/assets with reviewed SHA-256; builder accepts
+  this bounded curated-image directory as well as existing output figures.
+- 23 tests/build/diff checks pass; browser image dialog verified. Preview:
+  output/review/gmain-comparison-preview.png. No OA/simulation or push.
+- Preserved pre-existing full_cdac need-review state and unrelated circuit work.

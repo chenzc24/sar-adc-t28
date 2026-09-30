@@ -14,6 +14,7 @@ nodes:
     reasons: [底板接 VCM 后，原本相对 VIN 关断的 MN11 可能重新导通。, 理想 VSS 关断消除该通路，理想钳位五输入最大误差为 0.004218 mV。, 真实钳位仍失败；隔离、钳位和端子应力必须分别收敛。]
   sampling/next_topology:
     reasons: [关断条件必须覆盖底板切换后的电位，不能只检查栅对 VIN 电压。, 真实驱动应兼顾隔离、端子应力与下一周期获取。]
+    figures: [gmain_comparison]
   sampling/clamp:
     reasons: [消除 MN11 持续导通后，比较器端仍有较大残差。, 钳位要能充分复位，同时减少释放注入、寄生耦合与应力。]
   sampling/verify:

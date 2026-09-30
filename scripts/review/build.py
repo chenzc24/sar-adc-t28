@@ -181,7 +181,8 @@ def load_figures(records):
         ident = record['id']
         require(ident not in figures, 'duplicate figure')
         path = (ROOT / record['path']).resolve()
-        require(path.is_relative_to(ROOT / 'output') and not path.is_relative_to(ROOT / 'output/review'), 'unsafe figure path')
+        require((path.is_relative_to(ROOT / 'output') and not path.is_relative_to(ROOT / 'output/review'))
+                or path.is_relative_to(REVIEW / 'assets'), 'unsafe figure path')
         require(path.suffix in {'.png', '.svg'}, 'unsupported figure format')
         public = {k: record[k] for k in ('title', 'kind', 'caption')}
         public['available'] = path.is_file()
