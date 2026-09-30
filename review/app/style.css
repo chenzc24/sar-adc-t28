@@ -130,6 +130,14 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 .module-view #flow-nodes { column-gap: 24px; row-gap: 22px; }
 .module-view .flow-node { padding: 11px 14px; border-radius: 5px; min-height: 0; }
 .node-copy { min-width: 0; }
+.derivation-chain { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 22px; margin: 12px 0 3px; }
+.derivation-chain section { position: relative; border-left: 2px solid #a7bad7; padding: 3px 10px; font-size: 12px; line-height: 1.7; }
+.derivation-chain section:not(:last-child)::after { content: '→'; position: absolute; right: -18px; top: 20px; color: #8193a8; }
+.derivation-chain b, .derivation-chain span, .derivation-chain strong { display: block; }
+.derivation-chain b { color: #52677f; font-size: 11px; margin-bottom: 4px; }
+.derivation-chain strong { color: #315cd6; font-weight: 600; }
+#view:not(.module-view) [data-node="system"] { background: #f8fbff; }
+#view:not(.module-view) .node-reasons { border-top: 1px solid #e7ecf3; padding-top: 8px; }
 .node-index { font: 11px/1.4 "Segoe UI", sans-serif; color: #8190a4; margin-right: 8px; }
 .node-top { margin-bottom: 4px; }
 .node-line, .node-sub { display: block; }

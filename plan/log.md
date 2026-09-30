@@ -1,5 +1,16 @@
 # Maintenance Log
 
+## 2026-09-30 - Visible overview derivation
+
+- Restored an always-visible four-step LSB/quantization → ENOB/SNDR → total
+  error → analog remainder derivation inside the main ADC graph.
+- Added short module allocation formulas, retaining provisional allocations
+  and separating deterministic limits from RMS noise. Shared numeric registry
+  supplies results; no specification or experiment changes.
+- Build, formulas, 23 tests, JS syntax and diff checks pass. Browser confirms
+  both routes and visible formulas; click automation was inconclusive.
+- Preview: output/review/math-overview-preview.png. Local commit only, no push.
+
 ## 2026-09-30 - Review active top-plate freeze
 
 - Refreshed global/sampling/CDAC progress for top-plate-only architecture,

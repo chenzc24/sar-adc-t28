@@ -90,6 +90,7 @@
       <div class="node-copy"><span class="node-top"><b>${state.focus!=='all'?`<span class="node-index">${String(i+1).padStart(2,'0')}</span>`:''}${esc(n.title)}</b>${n.needs_review?'<small class="node-tag">需复核</small>':n.tag?`<small class="node-tag">${esc(n.tag)}</small>`:''}</span>
       <span class="node-line">${esc(expand(n.line))}</span><span class="node-sub">${esc(expand(n.sub))}</span>
       </div>
+      ${n.derivation?`<div class="derivation-chain" aria-label="理论指标推导">${n.derivation.map(step=>`<section><b>${esc(step.title)}</b><span>${esc(expand(step.formula))}</span><strong>${esc(expand(step.result))}</strong></section>`).join('')}</div>`:''}
       ${n.reasons?`<ul class="node-reasons">${n.reasons.map(reason=>`<li>${esc(expand(reason))}</li>`).join('')}</ul>`:''}
       <div class="node-actions">
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}

@@ -35,23 +35,45 @@
   "graphs": {
     "all": {
       "title": "从总指标到五个电路分支",
-      "note": "设计依赖图 · 每个电路 block 集中显示指标、进度和入口，不再分开查阅。",
+      "note": "实线：公式推导；虚线：可迭代的工程分配。下方各 block 同时显示指标与进度。",
       "columns": 5,
       "nodes": [
         {
           "id": "system",
           "row": 1,
-          "col": 2,
-          "span": 3,
-          "title": "SAR ADC · 理论 benchmark 与架构基线",
-          "line": "{{bits}} bit · {{rate}} MS/s · ENOB ≥ {{enob}}",
-          "sub": "σ模拟 = √(σ总² − σ量化²) = {{analog}} mV RMS；σ总 {{total}} mV",
+          "col": 1,
+          "span": 5,
+          "title": "理论 benchmark · 从系统精度到模块预算",
+          "line": "{{bits}} bit · {{rate}} MS/s · ENOB ≥ {{enob}} · 差分跨度 {{span}} V",
+          "sub": "−1 dBFS 正弦；不相关误差按方差相加。以下为输入等效 RMS，确定性误差另列。",
           "blocks": [],
           "detail": "工作电压 {{vdd}} V，共模 0.45 V。精度预算必须连同输入幅度与差分定义一起使用。 LSB = 1.8 / 2¹⁰；SNDR下限 = 6.02 × ENOB + 1.76 = {{sndr}} dB。σ总 = V信号,rms / 10^(SNDR/20)，包含量化误差。扣除方差假设各项不相关。 采用理想量化与行为模型。理想 SNDR 60.953 dB、ENOB 9.833，无缺码；不包含真实开关和比较器的完整物理误差。 用 RC 建立、kT/C、gm/C 再生及电气开关模型验证功能和时序。此阶段不能替代 T28 管级的电荷注入、体端应力、噪声与失配验证。",
           "evidence": [
             "budget_baseline",
             "macro_model",
             "rc_model"
+          ],
+          "derivation": [
+            {
+              "title": "① 量化基准",
+              "formula": "LSB = Vspan / 2ᴺ = {{lsb}} mV",
+              "result": "σq = LSB / √12 = {{quantization}} mV"
+            },
+            {
+              "title": "② 精度要求",
+              "formula": "SNDRmin = 6.02 × ENOB + 1.76",
+              "result": "ENOB {{enob}} → {{sndr}} dB"
+            },
+            {
+              "title": "③ 总误差上限",
+              "formula": "σ总 = Vsig,rms / 10^(SNDRmin/20)",
+              "result": "Vsig,rms = {{signal}} mV → σ总 ≤ {{total}} mV"
+            },
+            {
+              "title": "④ 扣除量化误差",
+              "formula": "σ模拟 = √(σ总² − σq²)",
+              "result": "σ模拟 ≤ {{analog}} mV → 初始分配至下方模块"
+            }
           ]
         },
         {
@@ -72,6 +94,10 @@
           "evidence": [
             "fast_ab",
             "pgate"
+          ],
+          "reasons": [
+            "σsample = 0.18 LSB = {{sampling_noise}} mV",
+            "保持误差另验：|εhold| < {{hold}} mV（原分配）"
           ]
         },
         {
@@ -92,6 +118,10 @@
           "evidence": [
             "top_hold",
             "pgate"
+          ],
+          "reasons": [
+            "Cside ≥ 2kT / σsample² = {{capacitance}} fF",
+            "|εsettle| < 0.25 LSB = {{settling}} mV"
           ]
         },
         {
@@ -111,6 +141,10 @@
           "focus": "reference",
           "evidence": [
             "rc_model"
+          ],
+          "reasons": [
+            "σref+switch = 0.12 LSB = {{reference_noise}} mV",
+            "ΔV·exp[−tsettle/(Req·Ceq)] ≤ εsettle"
           ]
         },
         {
@@ -130,6 +164,10 @@
           "span": 1,
           "evidence": [
             "strongarm_interface"
+          ],
+          "reasons": [
+            "σcmp = 0.18 LSB = {{comparator_noise}} mV",
+            "|Vos| < 0.25 LSB = {{offset}} mV"
           ]
         },
         {
@@ -149,6 +187,10 @@
           "span": 1,
           "evidence": [
             "rc_model"
+          ],
+          "reasons": [
+            "σjitter = 2πfin·Vsig,rms·σt",
+            "20 ps @ 4.5 MHz → {{jitter}} mV RMS"
           ]
         },
         {
