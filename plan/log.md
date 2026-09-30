@@ -1,5 +1,17 @@
 # Maintenance Log
 
+## 2026-09-30 - Consolidate review into module branch maps
+
+- One global map now opens five module branches combining constraints, progress,
+  results and next actions. Details expand inside nodes; Canvas slots stay with
+  their module. Removed separate tabs, block-map panel and bottom detail panel.
+- Owned changes: review/app, review README and bounded target plan. No remote
+  OA changes, simulation, evidence refresh or source-lock acknowledgment.
+- Validation: 13 data tests, formula regression, JS syntax, branch navigation,
+  inline expansion, narrow local scrolling and browser error check passed.
+- Generated preview: output/review/index.html; loopback port 8765. Local commit
+  policy: feat: consolidate review into module branch maps; no push requested.
+
 This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.

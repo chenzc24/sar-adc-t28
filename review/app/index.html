@@ -10,20 +10,13 @@
 <body>
   <header class="topbar"><div><span class="brand">SAR /</span><h1>ADC 设计流程</h1><span id="spec-line"></span></div><span class="snapshot-label">设计状态快照</span></header>
   <main>
-    <section class="circuit-section" aria-labelledby="circuit-title">
-      <div class="section-heading"><h2 id="circuit-title">电路 block 对应关系</h2><p>功能关系示意 · 点击 block 看对应指标与进度</p></div>
-      <div class="diagram-scroll"><div id="circuit-map" aria-label="ADC 功能框图"></div></div>
-      <p class="circuit-note">采样时，Bootstrap 把输入接到 CDAC；电荷保存在 CDAC。转换时，SAR 控制参考切换，比较器判决残差。此图不是管级连线图。</p>
-    </section>
-    <div class="view-toolbar"><div class="tabs" role="tablist" aria-label="流程视图"><button id="tab-theory" data-tab="theory" role="tab" aria-selected="true" aria-controls="view">指标推导图</button><button id="tab-workflow" data-tab="workflow" role="tab" aria-selected="false" aria-controls="view">设计进度图</button></div><button id="show-all" class="quiet-button" hidden>← 返回全 ADC</button></div>
+    <nav class="view-toolbar" aria-label="当前位置"><span id="breadcrumb">全 ADC / 设计总图</span><button id="show-all" class="quiet-button" hidden>← 返回全 ADC</button></nav>
     <div id="stale-banner" class="stale-note" hidden>部分设计记录有更新，下面的历史结论需要复核。</div>
-    <section id="view" role="tabpanel" aria-labelledby="tab-theory">
+    <section id="view" aria-labelledby="flow-title">
       <div class="flow-heading"><div><h2 id="flow-title"></h2><p id="flow-note"></p></div><div id="legend" class="legend"></div></div>
       <div class="diagram-scroll"><div id="flow-canvas"><svg id="flow-edges" aria-hidden="true"></svg><div id="flow-nodes"></div></div></div>
       <p id="budget-footnote" class="graph-footnote"></p>
     </section>
-    <section id="node-detail" class="node-detail" aria-live="polite" hidden></section>
-    <details class="canvas-slot"><summary>电路细节 · Analog Canvas 预留</summary><p id="canvas-context"></p><p>尚未连接。后续用于查看所选 block 的原理图与相位 / 电荷路径。</p></details>
     <footer><span>初始分配可以迭代 · 完成实验不等于指标通过</span><span id="review-date"></span></footer>
   </main>
   <script id="review-data" type="application/json">__DATA__</script>

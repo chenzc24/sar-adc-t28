@@ -41,53 +41,86 @@
     if (!(key in tokens)) throw new Error('Unknown flow token: ' + key);
     return tokens[key];
   });
-  let state = {focus: 'all', tab: 'theory', node: null};
-  let graph;
-  let resizeFrame;
-  const ns = 'http://www.w3.org/2000/svg';
 
-  function svgElement(tag, attrs = {}) {
-    const el = document.createElementNS(ns, tag);
-    for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
+  const pick=(g,id,x={})=>({...flows.graphs[g].nodes.find(n=>n.id===id),...x});
+  const edge=(from,to,kind='next')=>({from,to,kind});
+  const maps={};
+  const configs={
+    sampling:['sample_budget','sample_limit','sampling_branch'],
+    cdac:['sample_budget','sample_limit','cdac_branch'],
+    reference:['ref_budget','ref_limit',null],
+    comparator:['cmp_budget','cmp_limit','cmp_branch'],
+    clock:['clk_budget','clk_limit','clock_branch']
+  };
+  const result=id=>configs[id][2]?pick('workflow',configs[id][2]):{
+    title:'Reference',line:'一阶约束已有；buffer 管级待验证',
+    sub:'尚无完整物理 buffer 通过证据',detail:'目前只有参考网络的一阶建立约束，需要实现真实缓冲器并验证瞬态负载、输出阻抗和噪声。',tone:'planned',tag:'待设计',blocks:['reference']
+  };
+  maps.all={
+    title:'从总指标到五个电路分支',
+    note:'设计依赖图 · 每个电路 block 集中显示指标、进度和入口，不再分开查阅。',
+    columns:5,
+    nodes:[
+      pick('theory','system',{row:1,col:2,span:3,title:'SAR ADC · 理论 benchmark 与架构基线',
+        sub:'σ模拟 = √(σ总² − σ量化²) = {{analog}} mV RMS；σ总 {{total}} mV',
+        detail:pick('theory','system').detail+' '+pick('theory','budget').detail+' '+pick('workflow','behavioral').detail+' '+pick('workflow','macro').detail}),
+      ...Object.entries(configs).map(([id,[budget]],i)=>({
+        ...result(id),id,row:2,col:i+1,span:1,title:blocks[id].title,blocks:[id],focus:id,
+        line:id==='cdac'?'Cside ≥ {{capacitance}} fF（热噪声下限）':pick('theory',budget).line,sub:result(id).line,
+        detail:blocks[id].description+' '+pick('theory',budget).detail+' '+result(id).detail
+      })),
+      pick('workflow','integrate',{row:3,col:2,span:3,title:'模块汇合 → 全管级 ADC → 版图后仿',
+        detail:pick('workflow','integrate').detail+' '+pick('workflow','layout').detail})
+    ],
+    edges:Object.keys(configs).flatMap(id=>[edge('system',id,'allocate'),edge(id,'integrate','pending')])
+  };
+  const st=id=>pick('sampling_theory',id), sw=id=>pick('sampling_workflow',id);
+  maps.sampling={
+    title:'Bootstrap · 获取与关断，两条链一起审查',
+    note:'VIN → 采样开关 → CDAC → 比较器；电荷保存在 CDAC。左侧看获取，右侧看关断后的电荷准确度。',
+    columns:4,
+    nodes:[
+      {...st('sample_root'),row:1,col:1,span:4,canvas:'sampling'},
+      {...st('cap'),row:2,col:1,span:2,title:'获取链 · 热噪声 → 电容 → Ron',
+        line:'σsample ≤ {{sampling_noise}} mV RMS → Cside ≥ {{capacitance}} fF',
+        sub:'40 ns RC 示例：Rs + Ron ≤ 21.242 kΩ',
+        detail:st('random').detail+' '+st('cap').line+'。'+st('cap').detail+' '+st('rc').line+'。'+st('rc').detail},
+      {...st('deterministic'),row:2,col:3,span:2,title:'关断链 · 独立的原始保持误差要求'},
+      {...sw('ideal'),row:3,col:1,span:2},
+      {...sw('driver'),row:3,col:3,span:2},
+      {...sw('input_path'),row:4,col:1,span:2,title:'电流审计 → 去掉输入加载通路',
+        line:'25.858 µA → 约 34.3 pA',
+        sub:'厚栅 MN9 变体保持误差 {{thick_hold}} mV；仍失败',
+        detail:sw('input_path').detail+' '+sw('fix').detail},
+      {...sw('charge_loss'),row:4,col:3,span:2,title:'电荷审计 → 分离关断控制',
+        line:'−8.755 → −{{split_bound}} mV，仍未达标',
+        sub:'后者仅为理想分离门控边界，不是管级成果',
+        detail:sw('charge_loss').detail+' '+sw('isolate').detail},
+      {...sw('next_topology'),row:5,col:1,span:4,detail:sw('next_topology').detail+' '+sw('acceptance').detail}
+    ],
+    edges:[edge('sample_root','cap','allocate'),edge('sample_root','deterministic','allocate'),edge('cap','ideal','derive'),edge('deterministic','driver'),{...edge('ideal','driver'),axis:'horizontal'},edge('driver','input_path'),edge('driver','charge_loss'),edge('input_path','next_topology','pending'),edge('charge_loss','next_topology','pending')]
+  };
+  for(const [id,[budget,limit]] of Object.entries(configs)){
+    if(id==='sampling')continue;
+    maps[id]={title:blocks[id].title+' · 从约束到下一步',note:blocks[id].description,columns:4,nodes:[
+      pick('theory',budget,{id:'requirement',row:1,col:1,span:4,canvas:id}),
+      pick('theory',limit,{id:'constraint',row:2,col:1,span:4}),
+      {...result(id),id:'result',row:3,col:1,span:4,focus:undefined},
+      {id:'next',row:4,col:1,span:4,title:'下一步 / 验收缺口',line:{
+        cdac:'扩大底板采样余量，同时解决应力告警',
+        reference:'实现真实参考缓冲器，验证动态负载与噪声',
+        comparator:'优化噪声与失调，再联合检查速度和回踢',
+        clock:'落实真实非重叠时序、边沿与 jitter'
+      }[id],sub:'模块通过后，回到全 ADC 联合验收',detail:'当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。',blocks:[id],tone:'planned'}
+    ],edges:[edge('requirement','constraint','allocate'),edge('constraint','result'),edge('result','next','pending')]};
+  }
+  let state={focus:'all'}, graph, resizeFrame;
+  const ns='http://www.w3.org/2000/svg';
+  function svgElement(tag,attrs={}) {
+    const el=document.createElementNS(ns,tag);
+    for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);
     return el;
   }
-
-  function circuitMap() {
-    const rects = {
-      sampling: [110, 32, 160, 62],
-      cdac: [360, 32, 155, 62],
-      comparator: [610, 32, 160, 62],
-      reference: [360, 151, 155, 53],
-      clock: [850, 126, 180, 66]
-    };
-    $('circuit-map').innerHTML = `<svg viewBox="0 0 1120 224" class="block-wires" aria-hidden="true"><defs><marker id="circuit-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/></marker></defs>
-      <g class="signal-wire"><path d="M55 63 H108"/><path d="M272 63 H358"/><path d="M517 63 H608"/><path d="M772 63 H940 V124"/><path d="M1032 159 H1090"/><path d="M438 149 V96"/></g>
-      <g class="control-wire"><path d="M848 157 H785 V116 H485 V96"/><path d="M880 194 V215 H190 V96"/><path d="M900 194 V208 H690 V96"/></g>
-      <g class="wire-text"><text x="18" y="58">VIN±</text><text x="294" y="54">采样</text><text x="541" y="54">残差</text><text x="835" y="53">判决</text><text x="1039" y="147">DOUT</text><text x="448" y="137">VREF</text><text x="604" y="110">逐位切换控制</text><text x="243" y="210">采样相位</text><text x="701" y="202">比较时钟</text></g>
-      </svg>${Object.entries(rects).map(([id,[x,y,w,h]]) => `<button class="circuit-block" data-block="${id}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px"><strong>${esc(blocks[id].title)}</strong><span>${esc(blocks[id].subtitle)}</span></button>`).join('')}`;
-  }
-
-  function activeBlocks() {
-    const node = graph.nodes.find(n => n.id === state.node);
-    return node ? node.blocks : state.focus === 'all' ? [] : [state.focus];
-  }
-
-  function highlight() {
-    const active = activeBlocks();
-    document.querySelectorAll('.circuit-block').forEach(el => {
-      el.classList.toggle('active', active.includes(el.dataset.block));
-      el.setAttribute('aria-pressed', String(active.includes(el.dataset.block)));
-    });
-    document.querySelectorAll('.flow-node').forEach(el => {
-      const node = graph.nodes.find(n => n.id === el.dataset.node);
-      el.classList.toggle('selected', el.dataset.node === state.node);
-      el.classList.toggle('related', active.length > 0 && node.blocks.some(b => active.includes(b)));
-      el.classList.toggle('subdued', active.length > 0 && node.blocks.length > 0 && !node.blocks.some(b => active.includes(b)));
-    });
-    const names = active.map(id => blocks[id].title).join(' + ');
-    $('canvas-context').textContent = names ? '对应电路：' + names : '对应电路：SAR ADC 全局';
-  }
-
   function drawEdges() {
     if (!graph) return;
     const canvas = $('flow-canvas');
@@ -124,65 +157,45 @@
     }
   }
 
-  function detail() {
-    const node = graph.nodes.find(n => n.id === state.node);
-    const panel = $('node-detail');
-    if (!node) { panel.hidden = true; return; }
-    panel.hidden = false;
-    const hardware = node.blocks.map(b => blocks[b].title).join(' + ') || 'ADC 全局';
-    panel.innerHTML = `<div class="detail-title"><div><span>${esc(hardware)}</span><h3>${esc(node.title)}</h3></div><button id="close-detail" class="quiet-button" aria-label="收起说明">×</button></div><p>${esc(expand(node.detail))}</p>${node.focus === 'sampling' && state.focus !== 'sampling' ? '<button class="branch-button" data-block="sampling">展开 Bootstrap 的步骤分支 →</button>' : ''}`;
-  }
 
-  function render() {
-    graph = flows.graphs[state.focus === 'sampling' ? 'sampling_'+state.tab : state.tab];
-    if (!graph.nodes.some(n => n.id === state.node)) state.node = null;
-    $('flow-title').textContent = graph.title;
-    $('flow-note').textContent = graph.note;
-    $('legend').innerHTML = state.tab === 'theory'
-      ? '<span><i class="solid"></i>推导 / 约束关系</span><span><i class="dashed"></i>暂定分配</span>'
-      : '<span><i class="dot done"></i>已做</span><span><i class="dot fail"></i>问题</span><span><i class="dot planned"></i>待做</span>';
-    $('show-all').hidden = state.focus === 'all';
-    $('flow-nodes').style.setProperty('--columns', graph.columns);
-    $('flow-nodes').innerHTML = graph.nodes.map(node => `<button class="flow-node ${esc(node.tone || '')}" style="grid-column:${node.col}/span ${node.span || 1};grid-row:${node.row}" data-node="${node.id}"><span class="node-top"><b>${esc(node.title)}</b>${node.tag ? `<small class="node-tag">${esc(node.tag)}</small>` : ''}</span><span class="node-line">${esc(expand(node.line))}</span><span class="node-sub">${esc(expand(node.sub))}</span></button>`).join('');
-    $('budget-footnote').textContent = state.tab === 'theory' && state.focus !== 'sampling'
-      ? `另预留 ${fmt(values.distortion*1000)} mV RMS 等效失真 / 未建模误差；包含量化后的 RSS 为 ${fmt(values.rss*1000)} mV。预算在假设下闭合，不代表电路通过。`
-      : state.focus !== 'all' && state.focus !== 'sampling' ? '上方所选 block 在流程图中高亮；共享节点保留，用于看清上下游。' : '';
-    document.querySelectorAll('[data-tab]').forEach(el => el.setAttribute('aria-selected',String(el.dataset.tab === state.tab)));
-    $('view').setAttribute('aria-labelledby','tab-'+state.tab);
-    highlight(); detail();
+  function render(){
+    graph=maps[state.focus];
+    $('flow-title').textContent=graph.title;
+    $('flow-note').textContent=graph.note;
+    $('breadcrumb').textContent=state.focus==='all'?'全 ADC / 设计总图':'全 ADC / '+blocks[state.focus].title;
+    $('show-all').hidden=state.focus==='all';
+    $('legend').innerHTML='<span><i class="solid"></i>推导 / 验证步骤</span><span><i class="dashed"></i>暂定分配 / 待完成</span>';
+    $('flow-nodes').style.setProperty('--columns',graph.columns);
+    $('flow-nodes').innerHTML=graph.nodes.map(n=>`<article class="flow-node ${esc(n.tone||'')}" style="grid-column:${n.col}/span ${n.span||1};grid-row:${n.row}" data-node="${n.id}">
+      <span class="node-top"><b>${esc(n.title)}</b>${n.tag?`<small class="node-tag">${esc(n.tag)}</small>`:''}</span>
+      <span class="node-line">${esc(expand(n.line))}</span><span class="node-sub">${esc(expand(n.sub))}</span>
+      ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
+      <details class="inline-detail"><summary>展开依据与说明</summary><p>${esc(expand(n.detail))}</p></details>
+      ${n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
+    </article>`).join('');
+    $('budget-footnote').textContent=state.focus==='all'
+      ?'初始分配可迭代，非唯一合理解。含量化的分配 RSS = '+fmt(values.rss*1000)+' mV，其中包含 '+fmt(values.distortion*1000)+' mV RMS 等效失真余量；采样与 CDAC 共享采样噪声预算，不重复计入。'
+      :'已审阅实验快照；绿色表示做过该实验，不表示模块整体通过。';
     requestAnimationFrame(drawEdges);
-    const hash = `#${state.focus}/${state.tab}${state.node ? '/'+state.node : ''}`;
-    if (location.hash !== hash) history.replaceState(null,'',hash);
   }
-
-  document.addEventListener('click', event => {
-    const button = event.target.closest('button');
-    if (!button) return;
-    if (button.dataset.block) { state.focus = button.dataset.block; state.node = null; render(); }
-    else if (button.dataset.tab) { state.tab = button.dataset.tab; state.node = null; render(); }
-    else if (button.dataset.node) { state.node = state.node === button.dataset.node ? null : button.dataset.node; highlight(); detail(); }
-    else if (button.id === 'show-all') { state.focus = 'all'; state.node = null; render(); }
-    else if (button.id === 'close-detail') { state.node = null; highlight(); detail(); }
+  document.addEventListener('click',e=>{
+    const b=e.target.closest('button');
+    const focus=b?.dataset.block || (b?.id==='show-all'?'all':null);
+    if(!focus)return;
+    state.focus=focus;
+    history.pushState(null,'',focus==='all'?'#all':'#module/'+focus);
+    render(); window.scrollTo(0,0);
   });
-  document.querySelector('.tabs').addEventListener('keydown', event => {
-    if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
-    event.preventDefault();
-    state.tab = event.key === 'Home' ? 'theory' : event.key === 'End' ? 'workflow' : state.tab === 'theory' ? 'workflow' : 'theory';
-    state.node = null; render(); $('tab-'+state.tab).focus();
-  });
-  function readHash() {
-    const [focus,tab,node] = location.hash.slice(1).split('/');
-    if (node && ['hold','lsb','total'].includes(node)) return;
-    if ((focus === 'all' || focus in blocks) && ['theory','workflow'].includes(tab)) state = {focus,tab,node:node || null};
+  function readHash(){
+    const p=location.hash.slice(1).split('/');
+    const focus=p[0]==='module'?p[1]:p[0];
+    state.focus=Object.hasOwn(maps,focus)?focus:'all';
   }
-  const observer = new ResizeObserver(() => {
-    cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(drawEdges);
-  });
-  observer.observe($('flow-nodes'));
-  window.addEventListener('hashchange', () => {readHash();render();});
-  $('spec-line').textContent = `${tokens.bits} bit · ${tokens.rate} MS/s · ${tokens.vdd} V`;
-  $('review-date').textContent = '整理至 '+data.meta.reviewed_at;
-  $('stale-banner').hidden = !data.meta.needs_review;
-  circuitMap(); readHash(); render();
+  new ResizeObserver(()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(drawEdges);}).observe($('flow-nodes'));
+  window.addEventListener('hashchange',()=>{readHash();render();window.scrollTo(0,0);});
+  window.addEventListener('popstate',()=>{readHash();render();});
+  $('spec-line').textContent=`${tokens.bits} bit · ${tokens.rate} MS/s · ${tokens.vdd} V`;
+  $('review-date').textContent='整理至 '+data.meta.reviewed_at;
+  $('stale-banner').hidden=!data.meta.needs_review;
+  readHash();render();
 })();

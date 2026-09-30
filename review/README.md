@@ -1,10 +1,12 @@
 # ADC design review workbench
 
-Local, read-only block-linked flow diagrams: benchmark derivations and design
-progress. A functional ADC block diagram stays above both views. Click a block
-to highlight its constraints; Bootstrap has detailed derivation/workflow
-branches. All necessary explanations are extracted into panel text, with no
-repository document links or raw report viewer. Canvas is a collapsed slot.
+Local, read-only branch maps: one global map leads to five circuit-module
+branches. Each branch combines benchmark constraints, design progress, results
+and next actions. Bootstrap has two parallel acquisition/turn-off chains.
+Explanations expand within nodes; Canvas is a placeholder inside each module.
+No separate theory/progress tabs, detail panel, document links or report viewer.
+The app composes existing curated flow nodes into these consolidated maps;
+numerical facts still come from the common calculation/evidence registry.
 
 ## Build and open
 
@@ -113,8 +115,8 @@ Flow nodes must name known blocks; edge endpoints must exist and flow diagrams
 must be acyclic. Allocation and pending-work arrows are dashed. Solid arrows
 represent the stated derivation or workflow relationship, not pass assertions.
 
-Browser acceptance: switch the two flow views, check arrow endpoints and fork /
-merge relationships, click a block and a node to verify mutual correspondence,
-inspect inline extracted explanations, and verify no document links/viewers.
+Browser acceptance: open all five module branches and return to the overview,
+check arrow endpoints and fork/merge relationships, expand node explanations
+and the module Canvas placeholder, and verify no document links/viewers.
 Narrow screens scroll diagrams locally rather than shrinking text illegibly.
 Changing formulas or evidence requires re-running the relevant numerical tests.
