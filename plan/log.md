@@ -1,5 +1,23 @@
 # Maintenance Log
 
+## 2026-09-30 - Screen T28 GMAIN hold pull-down in full CDAC
+
+- Replaced only the copied-netlist ideal `SHOLD` relay with a real T28
+  `nch_18_mac` NMOS, sweeping multiplicity 4/16/64 while retaining ideal
+  `STRACK`, clamp and clock driver. No OA or PDK changes.
+- Seven zero-error Spectre 21.1 transients: five inputs at `multi=4`,
+  +0.8 V at `multi=16/64`. Five-point bottom maximum raw error was
+  0.004223 mV and representative gate-off margin before reset at least
+  0.846 ns. Top-control error still reached 6.822 mV. Printed MP8 SOA
+  warnings and 550-11,010 suppressed warnings prevent signoff.
+- Validated hashed OA-source and ideal-control deck identity, a bounded
+  deck diff, phase order, saved terminal currents, source-current reduction,
+  warning inventory, Python compile and per-case JSON reanalysis. Results
+  and raw logs are ignored under `output/bootstrap_t28_hold_pulldown/`;
+  curated evidence is in `docs/bootstrap_t28_hold_pulldown.md`.
+- Commit policy: `test: screen T28 bootstrap hold pull-down`; local only,
+  no push requested.
+
 ## 2026-09-30 - Review maintainability boundaries
 
 - Moved graph composition from browser code into one declarative graph source;

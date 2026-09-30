@@ -2,6 +2,18 @@
 
 ## 2026-09-30
 
+- Replaced the copied full-CDAC protected bootstrap's ideal `GMAIN`-to-VSS
+  hold relay with a T28 1.8-V NMOS while leaving `STRACK` ideal. Across
+  five ±0.8-V-range static inputs, `multi=4` gave at most 0.004223-mV
+  bottom raw hold error and lowered representative MN11 sustained current
+  from 6.25772 uA to about 0.0000218 uA. Its latest GMAIN<0.1-V
+  crossing was 250.454 ns, at least 0.846 ns before BOOT reset.
+  Larger `multi=16/64` barely changed terminal bottom error. The top
+  control still fails at up to 6.822 mV; printed MP8 CMI warnings and
+  550-11,010 suppressed warnings prevent an SOA/pass claim. Keep the
+  separate-gate/off-before-reset architecture, but solve top/clamp and
+  remaining ideal driver/STRACK before OA promotion or size freeze.
+
 - Integrated the independent OFF_MAIN-before-PHIB-reset protected bootstrap
   into copied OA-exported 5+5 CDAC decks, using 22 bottom sampling switches
   and two matched top-plate controls. With the ideal top clamp, holding
