@@ -1,5 +1,14 @@
 # Maintenance Log
 
+## 2026-09-30 - Simplify topology review copy
+
+- Removed repeated disclaimers and duplicate headings; moved assumptions/version
+  metadata into a disclosure. Retained phase conditions and connection/inference/
+  verification content. No netlist, image, simulation or remote changes.
+- Build, JS syntax, diff check and browser visual inspection passed.
+- Screenshot: output/review/topology-compact-preview.png. Local commit only;
+  style: simplify topology review copy. No push.
+
 ## 2026-09-30 - Static Bootstrap topology linkage sample
 
 - Preserved user-supplied netlist/image separately from the T28 DUT; added 15

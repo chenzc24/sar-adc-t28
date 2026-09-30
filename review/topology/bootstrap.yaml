@@ -2,8 +2,8 @@ schema_version: 1
 netlist_sha256: b5dc06b7e18761de80330b426269a20f3829a2ccfcbeef7856724ec51d52ea2f
 image_sha256: a3f0dfa636e6945c698636c62b07094f182ba66e55206a138699a1cec2616c40
 title: Bootstrap · 拓扑与相位审查
-notice: 用户提供的 SKY130 标签网表与静态配图，仅作抽象分析；不是 T28 仿真 DUT，未连接实时 Analog Canvas。MOS 端序暂按 D/G/S/B，尚未取得模型接口定义确认。
-mapping: 人工核对实例与主要网络；热点是图片坐标，不是 Canvas 对象 ID。体端以网表为准，图未完整显示所有体连接。模型与尺寸不参与本轮推断。
+notice: SKY130 标签样例 · 静态图联动，未连接 Canvas。MOS 端序暂按 D/G/S/B，模型接口待确认。
+mapping: 实例与主要网络人工映射，体端以网表为准；本轮不分析尺寸与工艺参数。
 aliases: {net0: GBOOT}
 anchors:
   XCBOOT: [355, 342, 51, 55]
@@ -28,35 +28,35 @@ net_marks:
   VIN: {label: VIN, x: 665, y: 624, path: 'M535 630 H829 V425 M579 630 V585'}
 groups:
   - {id: pump, title: 辅助升压 / 预充电, devices: [XCP1, XCP2, XMN1, XMN2, XMN3], text: 时钟耦合与交叉连接为 BTOP 预充电提供条件；最终电压取决于时钟历史。}
-  - {id: store, title: 自举储能, devices: [XCBOOT], text: 保存 BTOP 与 BBOT 的电压差；理想电荷保持不等于真实寄生下的保持。}
+  - {id: store, title: 自举储能, devices: [XCBOOT], text: 保存 BTOP 与 BBOT 的电压差。}
   - {id: sample, title: 输入跟随 / 主采样, devices: [XMN9, XMN11], text: MN9 接 VIN 与 BBOT；MN11 接 VIN 与 VOUT，两管共用 GBOOT。}
-  - {id: control, title: 自举接入 / 内部控制, devices: [XMP4, XMN5, XMN13, XMP8], text: CTRL 控制 MP8，把 BTOP 接入 GBOOT；不能只按逻辑时钟判断所有管的状态。}
+  - {id: control, title: 自举接入 / 内部控制, devices: [XMP4, XMN5, XMN13, XMP8], text: CTRL 控制 MP8，将 BTOP 接入 GBOOT。}
   - {id: reset, title: 关断 / 复位, devices: [XMN7, XMN10, XMN12], text: MN7/MN10 构成栅放电支路，MN12 复位 BBOT；先后关系需瞬态验证。}
 phases:
   - id: precharge
     title: 预充电
     clock: PHI=L，PHIB=H（约定）
     devices: [XCP1, XCP2, XMN1, XMN2, XMN3, XMP4, XMN7, XMN10, XMN12]
-    text: 预期 MN12 拉低 BBOT，MP4 拉高 CTRL 使 MP8 倾向关闭；GBOOT 经 MN7/MN10 放电，辅助网络经 MN3 为 BTOP 预充电。高亮是关注器件，不是自动判定导通。
-    verify: 核对 CBOOT 初始压差和 GBOOT 复位，不能从静态图认定 CBOOT 充到 VDD。
+    text: 预期 MN12 拉低 BBOT，MP4 拉高 CTRL、关闭 MP8；MN7/MN10 释放栅电荷，MN3 为 BTOP 预充电。
+    verify: 核对 CBOOT 初始压差与 GBOOT 复位。
   - id: track
     title: 采样跟踪
     clock: PHI=H，PHIB=L（约定）
     devices: [XCBOOT, XMN5, XMN13, XMP8, XMN9, XMN11]
-    text: 在预充电充分且相关器件能导通的条件下，MN9 使 BBOT 跟随 VIN，MN5/MN13 控制 CTRL，MP8 将 BTOP 接到 GBOOT，MN11 传递 VIN 至 VOUT。
-    verify: 检查 V(GBOOT)−V(VIN) 是否保持；启动过程和驱动能力仍待验证。
+    text: 预充电充分、传输支路导通时，MN9 使 BBOT 跟随 VIN，MP8 接通 BTOP/GBOOT，MN11 将 VIN 传到 VOUT。
+    verify: 检查 V(GBOOT)−V(VIN) 的保持与启动过程。
   - id: turnoff
     title: 关断过渡
     clock: PHI/PHIB 边沿与非重叠时间未定义
     devices: [XCBOOT, XMP8, XMN7, XMN10, XMN12, XMN9, XMN11]
-    text: 需要比较主栅下降、MN11 隔离和 BBOT 复位的先后；可能的耦合属于待验证机制，不能从图推得误差符号或幅度。
+    text: 比较主栅下降、MN11 隔离与 BBOT 复位的先后，定位可能的电荷扰动。
     verify: 同时观察 GBOOT、BBOT、VOUT、电容电荷与主开关电流，改变复位时刻做对照。
   - id: hold
     title: 保持 / 复位
     clock: PHI=L，PHIB=H；与预充电电平相同，历史不同
     devices: [XMN11, XMN9, XMN7, XMN10, XMN12]
-    text: 预期主开关关断，内部恢复预充电；VOUT 是否保持由外部 CDAC/电容及泄漏决定，本子电路没有该负载。
-    verify: 添加明确的外部保持负载后，检查 VIN 变化是否影响 VOUT；体端连接必须保留。
+    text: 预期主开关关断，内部恢复预充电；VOUT 由外部 CDAC/电容保持，本子电路未包含该负载。
+    verify: 接入保持负载后，检查 VIN 变化对 VOUT 的影响。
 topics:
   - id: bootstrap
     title: 自举为何有效
@@ -65,20 +65,20 @@ topics:
     nets: [BTOP, BBOT, net0, VIN]
     fact: CBOOT 跨接 BTOP/BBOT；MN9 接 VIN/BBOT；MP8 接 BTOP/net0；MN11 栅接 net0。
     inference: 若 CBOOT 压差近似保持且传输支路有效，则 GBOOT≈VIN+VCBOOT，主开关 VGS≈VCBOOT。
-    verify: 观察 CBOOT 压差及主开关 VGS 随 VIN 的变化；真实下垂、寄生和阈值效应未计入。
+    verify: 扫描 VIN，观察 CBOOT 压差与主开关 VGS。
   - id: shared
     title: 共享栅控制的约束
     phase: turnoff
     devices: [XMN9, XMN11, XMN13]
     nets: [net0]
     fact: MN9.G、MN11.G、MN13.G 均接 net0；MN9.B 与 MN11.B 接 VIN。
-    inference: 三管共享栅波形，但源极电位不同，不能推断同时导通或同时关断；独立调节关断顺序受限。
-    verify: 对照三管端子电压与电流，检验分别控制的必要性；本例不宣称某条体电流已经发生。
+    inference: 同栅、不同源极电位，开关时刻不一定相同；独立调节关断顺序受限。
+    verify: 对照三管端子电压与电流，判断是否需要分开控制。
   - id: reset
     title: 复位如何影响保持电荷
     phase: turnoff
     devices: [XCBOOT, XMP8, XMN7, XMN10, XMN12, XMN11]
     nets: [BBOT, BTOP, net0]
     fact: MN12 接 BBOT/VSS；CBOOT 连接 BBOT/BTOP；MP8 连接 BTOP/net0，net0 又控制 MN11。
-    inference: 若底板复位时自举传输或主开关尚未隔离，内部变化可能经导通或寄生耦合影响 VOUT；不是已确认的误差归因。
-    verify: 固定外部负载，改变关断与复位间隔，观察主栅、VOUT 与负载电荷；拓扑本身不能给出数值结论。
+    inference: 若复位时自举支路或主开关尚未隔离，内部变化可能经导通或寄生耦合影响 VOUT。
+    verify: 固定负载、扫描关断与复位间隔，对照主栅、VOUT 与负载电荷。
