@@ -197,5 +197,18 @@ class ReviewContractTests(unittest.TestCase):
         self.assertTrue(public["meta"]["needs_review"])
 
 
+class IsolatedDiagramTests(unittest.TestCase):
+    def test_isolated_fixture_is_distinct_and_uncompleted(self):
+        original = build.load_topology()
+        isolated = original['variants']['isolated']
+        self.assertEqual(original['devices']['XMN11']['G'], 'net0')
+        self.assertEqual(isolated['devices']['XMN11']['G'], 'net1')
+        self.assertEqual(isolated['devices']['Cu'], {'A': 'VOUT', 'B': 'VCM'})
+        self.assertEqual(sum('net1' in p.values() for p in isolated['devices'].values()), 1)
+        self.assertEqual(len(isolated['anchors']), 16)
+        self.assertNotEqual(original['image_revision'], isolated['image_revision'])
+        self.assertIn('未定义', isolated['notice'])
+
+
 if __name__ == "__main__":
     unittest.main()

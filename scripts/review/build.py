@@ -228,7 +228,10 @@ def resolve_graphs(flows, notes, figures, evidence, topology):
         for node in graph['nodes']:
             require(all(e in records for e in node['evidence']), 'unknown graph evidence')
             require(not node.get('focus') or node['focus'] in result['graphs'], 'unknown graph destination')
-            require(not node.get('topology_topic') or node['topology_topic'] in topics, 'unknown topology topic')
+            variant = node.get('topology_variant')
+            require(not variant or variant in topology.get('variants', {}), 'unknown topology variant')
+            node_topics = {t['id'] for t in topology['variants'][variant]['topics']} if variant else topics
+            require(not node.get('topology_topic') or node['topology_topic'] in node_topics, 'unknown topology topic')
             if name != 'all':
                 ref = node.get('analysis')
                 require(ref in notes, 'missing graph analysis')
@@ -241,13 +244,13 @@ def resolve_graphs(flows, notes, figures, evidence, topology):
 
 
 def parse_topology_netlist(netlist):
-    """Bounded parser for this X-device fixture, not a general SPICE parser."""
+    """Bounded X-device / primitive-C fixture parser, not a general SPICE parser."""
     devices = {}
     for line in netlist.splitlines():
         fields = line.split()
-        if not fields or not fields[0].startswith('X'):
+        if not fields or not fields[0].upper().startswith(('X', 'C')):
             continue
-        capacitor = fields[0].startswith('XC')
+        capacitor = fields[0].upper().startswith(('XC', 'C'))
         terminals = ['A', 'B'] if capacitor else ['D', 'G', 'S', 'B']
         require(len(fields) > len(terminals) + 1, 'incomplete topology instance')
         require(fields[0] not in devices, 'duplicate topology instance')
@@ -255,8 +258,11 @@ def parse_topology_netlist(netlist):
     return devices
 
 
-def load_topology():
+def load_topology(variant=None):
+    require(variant in {None, 'isolated'}, 'unknown topology variant')
     folder = REVIEW / 'topology'
+    if variant:
+        folder = folder / variant
     netlist = (folder / 'bootstrap.cir').read_text(encoding='utf-8')
     topology = {**read_yaml(folder / 'analysis.json'), **read_yaml(folder / 'diagram.json')}
     require(hashlib.sha256(netlist.encode('utf-8')).hexdigest() == topology.pop('netlist_sha256'), 'topology netlist changed: re-review mapping')
@@ -275,6 +281,8 @@ def load_topology():
     topology.update(devices=devices, image='data:image/png;base64,' + base64.b64encode(raw).decode('ascii'),
                     revision=hashlib.sha256(netlist.encode('utf-8')).hexdigest()[:12],
                     image_revision=hashlib.sha256(raw).hexdigest()[:12])
+    if variant is None:
+        topology['variants'] = {'isolated': load_topology('isolated')}
     return topology
 
 
@@ -305,11 +313,19 @@ def impact_report(model, records, flows, lock):
     impact = topology_impact(baseline, parse_topology_netlist(text), topology,
                             hashlib.sha256(text.encode('utf-8')).hexdigest() != topology['netlist_sha256'],
                             hashlib.sha256((folder / 'bootstrap.png').read_bytes()).hexdigest() != topology['image_sha256'])
+    variant_changes = {}
+    for variant in {'isolated'}:
+        variant_folder = folder / variant
+        binding = read_yaml(variant_folder / 'diagram.json')
+        variant_changes[variant] = (
+            hashlib.sha256((variant_folder / 'bootstrap.cir').read_text(encoding='utf-8').encode()).hexdigest() != binding['netlist_sha256']
+            or hashlib.sha256((variant_folder / 'bootstrap.png').read_bytes()).hexdigest() != binding['image_sha256'])
     affected = [f'{g}/{n["id"]}' for g, graph in flows['graphs'].items() for n in graph['nodes']
                 if set(n['evidence']) & set(evidence) or n.get('topology_topic') in impact['affected_topics']
-                or impact['image_mapping_needs_review'] and n.get('topology_topic')]
+                or impact['image_mapping_needs_review'] and n.get('topology_topic')
+                or variant_changes.get(n.get('topology_variant'), False)]
     return {'changed_sources': changed_sources, 'changed_records': changed_records, 'affected_evidence': evidence,
-            'affected_nodes': affected, 'topology': impact}
+            'affected_nodes': affected, 'topology': impact, 'topology_variants_changed': variant_changes}
 
 
 def main():

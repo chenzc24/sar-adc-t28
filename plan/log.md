@@ -814,3 +814,16 @@ human-triggered note in `docs/experience/`.
   desktop/narrow layout, dialogs, figures, topology, Escape and no console errors.
 - Artifact: output/review/compact-preview.png. No circuit/OA changes or push;
   local commit: style(review): compact flow layout and experiment details.
+
+## 2026-09-30 - Stage-specific isolation diagram
+
+- Added supplied isolated-GMAIN drawing and exact draft netlist as a separate
+  static topology snapshot; retained original pre-isolation diagram.
+- Bound isolation and later relevant sampling nodes to the new version, with
+  MN11/net1 and Cu/VOUT/VCM readback. TRACK/OFF remain drawing-only, not invented
+  netlist devices; Cu is not represented as a complete CDAC.
+- Validation: 23 tests, build, JS syntax and diff check; browser verified old/new
+  diagrams, MN11/Cu selection and no console errors. Preview:
+  output/review/isolated-diagram-preview.png.
+- No remote OA edits or simulation. Scoped local commit; no push. Unrelated
+  top-plate GMAIN device experiment files preserved.

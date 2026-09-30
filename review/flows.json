@@ -309,7 +309,8 @@
           ],
           "detail": "目的：区分持续加载、主开关关断和 BOOT 复位。方法：端子电流审计、理想 GMAIN 分离控制、复位延迟及边沿/负载扫描。25.858 µA 输入加载去除后仍有 −6.842 mV；分离门控边界为 −2.482 mV。先关主开关、后复位得到 −2.452 mV，其中后续复位窗口仅 +0.080 mV。放慢栅边沿或加倍电容都未解决问题，因此转向完整 CDAC 的相位与电荷路径。",
           "analysis": "sampling/input_path",
-          "topology_topic": "shared"
+          "topology_topic": "shared",
+          "topology_variant": "isolated"
         },
         {
           "id": "full_cdac",
@@ -330,7 +331,9 @@
           ],
           "detail": "目的：验证底板采样切换后的隔离。方法：顶板/分裂节点先释放 → MN11 关断 → BOOT 复位 → 底板接 VCM；270 ns 读取原始差分误差，目标极性为 −(TOPP−TOPN)=VINP−VINN。VIN 关断时，高侧 GMAIN 比底板高约 390 mV，代表性 MN11 与参考支路均约 6.258 µA，直接确认反向导通。只改为理想 VSS 关断后，理想钳位五输入最大误差降至 0.004218 mV；真实钳位单点仍为 −7.538 mV。旧 W185 的 0.43378 mV 属于旧 Bootstrap，不是本次单因素基线。",
           "tone": "fail",
-          "analysis": "sampling/full_cdac"
+          "analysis": "sampling/full_cdac",
+          "topology_variant": "isolated",
+          "topology_topic": "hold"
         },
         {
           "id": "next_topology",
@@ -350,7 +353,8 @@
           "detail": "用真实 T28 门控替代理想 STRACK/SHOLD。逐相检查 CDAC 底板全摆幅下的关断条件、输入到参考的电流及 MP8 等器件端子应力；再检查下一周期获取。理想 VSS 关断仅证明机制，不直接冻结实际栅偏置。",
           "tone": "planned",
           "analysis": "sampling/next_topology",
-          "topology_topic": "reset"
+          "topology_topic": "reset",
+          "topology_variant": "isolated"
         },
         {
           "id": "clamp",
@@ -390,7 +394,9 @@
           ],
           "detail": "先将物理 GMAIN 控制与物理钳位接入同一完整 CDAC 夹具；检查原始差分保持误差 <0.439 mV、全相位端子应力、参考支路电流和重复采样。再做多输入/PVT、动态输入孔径、噪声与失配；版图后补 PEX。",
           "tone": "planned",
-          "analysis": "sampling/verify"
+          "analysis": "sampling/verify",
+          "topology_variant": "isolated",
+          "topology_topic": "hold"
         }
       ],
       "edges": [

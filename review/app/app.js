@@ -95,7 +95,7 @@
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
       <button class="detail-button" data-experiment="${n.id}">方法 / 实验 ${n.evidence.length} ↗</button>
       ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">${esc(data.figures[id].kind)} ↗</button>`).join('')}
-      ${n.topology_topic?`<button class="figure-button" data-topology="${n.topology_topic}">电路样例 ↗</button>`:n.canvas?'<span class="node-sub">Canvas 预留</span>':''}
+      ${n.topology_topic?`<button class="figure-button" data-topology="${n.topology_topic}" data-variant="${n.topology_variant||''}">${n.topology_variant?'隔离方案图':'原始电路图'} ↗</button>`:n.canvas?'<span class="node-sub">Canvas 预留</span>':''}
       </div>
     </article>`).join('');
     $('budget-footnote').textContent=state.focus==='all'
