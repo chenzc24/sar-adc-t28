@@ -1,5 +1,18 @@
 # Maintenance Log
 
+## 2026-09-30 - Review active top-plate freeze
+
+- Refreshed global/sampling/CDAC progress for top-plate-only architecture,
+  physical complementary hold path and six-device PGATE driver.
+- Recorded 522aa0f provisional freeze, 0.605518-mV five-point maximum and
+  unchanged failing 0.439-mV allocation. Kept PGATEB/well risk and ideal
+  STRACK/clock/reference boundaries; did not resume experiments.
+- Retained bottom-plate experiments and earlier comparison image as history;
+  removed obsolete VSS-off schematic links from current top-plate stages.
+- Validation: 23 tests, build/diff checks and browser five-point table/flow,
+  no console errors. Preview: output/review/topplate-progress-preview.png.
+- Local frontend/data commit only; no OA changes, simulation or push.
+
 ## 2026-09-30 - Provisional sampling baseline freeze
 
 - Recorded user acceptance of circuit revision 522aa0f with 0.605518-mV

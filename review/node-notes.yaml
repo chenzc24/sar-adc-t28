@@ -10,24 +10,24 @@ nodes:
     reasons: [获取误差很小而保持误差超标，当前矛盾不在单纯降低 Ron。, 无电压模型告警只是诊断筛查，不等于 foundry 可靠性签核。]
   sampling/input_path:
     reasons: [去加载后仍失败，持续输入电流不是全部原因。, 延迟复位将复位贡献降至约 +0.080 mV，主要误差在此前已形成。, 慢边沿与加倍负载也未通过，需检查实际 CDAC 的节点切换。]
-  sampling/full_cdac:
-    reasons: [底板接 VCM 后，原本相对 VIN 关断的 MN11 可能重新导通。, 理想 VSS 关断消除该通路，理想钳位五输入最大误差为 0.004218 mV。, 真实钳位仍失败；隔离、钳位和端子应力必须分别收敛。]
-  sampling/next_topology:
-    reasons: [关断条件必须覆盖底板切换后的电位，不能只检查栅对 VIN 电压。, 真实驱动应兼顾隔离、端子应力与下一周期获取。]
+  sampling/top_plate:
+    reasons: [顶板路线保持 GMAIN 接 VIN，不能沿用底板路线的 VSS 结论。, 底板采样与钳位实验保留为历史，当前只推进顶板主线。]
+  sampling/hold_pair:
+    reasons: [互补管覆盖高低输入端，单管方案分别受阈值限制。, 端点误差较小，中间输入仍超标；必须看五点结果。]
     figures: [gmain_comparison]
-  sampling/clamp:
-    reasons: [消除 MN11 持续导通后，比较器端仍有较大残差。, 钳位要能充分复位，同时减少释放注入、寄生耦合与应力。]
-  sampling/verify:
-    reasons: [两条分支必须在同一完整 CDAC 中联合通过。, 单点静态通过后，再扩展动态与工艺覆盖。]
+  sampling/pgate:
+    reasons: [同一保持对只替换 PGATE 控制，最坏误差降低约 28%。, PGATEB 复位残留产生约 0.497 V 正向漏体偏置，风险未解决。]
+  sampling/freeze:
+    reasons: [阶段接受不等于通过原 0.439 mV 分配；噪声预算不变。, STRACK、时钟和参考开关仍理想；复位/阱风险待处理。, 暂停进一步实验，等待用户决定后续联合验证或恢复优化。]
   cdac/requirement:
     reasons: [采样开关与 CDAC 共享同一采样噪声预算，不能重复计入。, 电容增大有利于噪声，但对参考驱动和建立速度不利。]
   cdac/constraint:
     reasons: [两侧独立噪声叠加决定每侧等效采样电容下限，不是单位 Cu。, 原始保持误差另行约束；不能从 kT/C 通过推断关断通过。]
   cdac/result:
-    reasons: [理想钳位结果说明底板隔离机制有效，不代表真实采样链已通过。, 换真实钳位后单点仍失败，需要独立分析释放扰动。, 下方相位图为旧 W185 夹具，仅供历史对照。]
+    reasons: [顶板采样已成为唯一当前主线，底板支线不再继续优化。, 采样器为暂定混合管级基线，全转换与参考驱动仍待验证。, 下方相位图是历史底板 W185 夹具，不是当前方案。]
     figures: [bottom_phase]
   cdac/next:
-    reasons: [先拆分钳位复位能力、释放注入与节点耦合。, 再与真实主栅门控汇合，检查完整采样链与下一周期获取。]
+    reasons: [保留当前尺寸和时序，不自动恢复实验。, 后续系统线性/动态性能可能要求重新分配采样误差。]
   reference/requirement:
     reasons: [参考与开关共享噪声预算，不能各自用满后再相加。, 噪声与确定性建立残差是不同验收项。]
   reference/constraint:

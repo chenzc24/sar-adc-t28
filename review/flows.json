@@ -60,18 +60,18 @@
           "col": 1,
           "title": "采样开关",
           "line": "热噪声 ≤ {{sampling_noise}} mV RMS",
-          "sub": "导通/获取可行；关断隔离仍待实现",
+          "sub": "顶板采样 · 0.605518 mV 暂定冻结",
           "blocks": [
             "sampling"
           ],
-          "tag": "当前瓶颈",
-          "tone": "fail",
+          "tag": "阶段基线",
+          "tone": "planned",
           "focus": "sampling",
-          "detail": "单开关夹具已验证导通与获取。完整 CDAC 发现底板切到 VCM 后，VIN 相对关断可能使 MN11 重新导通。当前需要真实 GMAIN 控制与真实钳位两条分支同时收敛。",
+          "detail": "已实现 T28 互补保持对与六管 PGATE 驱动，五点 TT 最大误差 0.605518 mV。用户暂定接受 522aa0f，暂停优化；原 0.439 mV 分配与复位/阱风险保留。",
           "span": 1,
           "evidence": [
             "fast_ab",
-            "full_cdac"
+            "pgate"
           ]
         },
         {
@@ -80,17 +80,18 @@
           "col": 2,
           "title": "CDAC",
           "line": "Cside ≥ {{capacitance}} fF（热噪声下限）",
-          "sub": "真实钳位是独立瓶颈",
+          "sub": "顶板采样主线；底板支线归档",
           "blocks": [
             "cdac"
           ],
-          "tag": "受阻",
-          "tone": "fail",
+          "tag": "待联合验证",
+          "tone": "planned",
           "focus": "cdac",
-          "detail": "完整 CDAC 中，理想钳位 + 理想 VSS 关断五输入最大误差 0.004218 mV；换真实钳位后，+0.8 V 单点为 −7.538 mV。理想结果确认机制，实际钳位及应力仍待解决。",
+          "detail": "采样时输入接 CDAC 顶板，底板初始 VCM；隔离后由底板参考切换形成 SAR 残差。底板采样与真实钳位实验保留为历史，不再是并行优化主线。当前参考开关仍理想，全转换验证待做。",
           "span": 1,
           "evidence": [
-            "full_cdac"
+            "top_hold",
+            "pgate"
           ]
         },
         {
@@ -226,8 +227,8 @@
       "layout": "overview"
     },
     "sampling": {
-      "title": "Bootstrap · 从导通可行到准确保持",
-      "note": "导通 / 获取已验证 → 保持未达标。夹具 A：单开关；B：完整 CDAC，误差不可跨夹具直接比较。",
+      "title": "顶板采样 · T28 保持路径与 PGATE 驱动",
+      "note": "当前基线 522aa0f：五点最大 0.605518 mV，阶段暂定接受；原分配 0.439 mV 未通过。尺寸 / 时序冻结，暂停实验。",
       "columns": 4,
       "layout": "branch",
       "nodes": [
@@ -294,7 +295,7 @@
           "row": 3,
           "col": 1,
           "span": 4,
-          "title": "误差定位 · 加载 / 关断 / 复位",
+          "title": "历史定位 · 从关断误差到独立主栅",
           "line": "去加载 −6.842 → 分离控制 −2.482 → 延迟复位 −2.452 mV",
           "sub": "A · 单开关夹具 · 历史 A/B 与单因素扫描",
           "blocks": [
@@ -305,98 +306,93 @@
             "current_audit",
             "fast_ab",
             "isolate_reset",
-            "turnoff_charge"
+            "turnoff_charge",
+            "full_cdac",
+            "bottom_screen"
           ],
-          "detail": "目的：区分持续加载、主开关关断和 BOOT 复位。方法：端子电流审计、理想 GMAIN 分离控制、复位延迟及边沿/负载扫描。25.858 µA 输入加载去除后仍有 −6.842 mV；分离门控边界为 −2.482 mV。先关主开关、后复位得到 −2.452 mV，其中后续复位窗口仅 +0.080 mV。放慢栅边沿或加倍电容都未解决问题，因此转向完整 CDAC 的相位与电荷路径。",
+          "detail": "目的：区分持续加载、主开关关断和 BOOT 复位。方法：端子电流审计、理想 GMAIN 分离控制、复位延迟及边沿/负载扫描。25.858 µA 输入加载去除后仍有 −6.842 mV；分离门控边界为 −2.482 mV。先关主开关、后复位得到 −2.452 mV，其中后续复位窗口仅 +0.080 mV。放慢栅边沿或加倍电容都未解决问题，因此转向完整 CDAC 的相位与电荷路径。 历史底板支线：VIN 关断在底板切换后可能重新导通；理想 VSS 关断/理想钳位最大 0.004218 mV，真实钳位单点 −7.538 mV。该支线现已保留为历史，不是当前顶板采样设计。",
           "analysis": "sampling/input_path",
           "topology_topic": "shared",
           "topology_variant": "isolated"
         },
         {
-          "id": "full_cdac",
+          "id": "top_plate",
           "row": 4,
           "col": 1,
           "span": 4,
-          "title": "完整 CDAC · 底板切换后重新导通",
-          "line": "理想钳位：VIN 关断 6.262 → VSS 关断 0.004218 mV",
-          "sub": "B · 五输入最大误差 · T28 MOS + 理想 GMAIN 门控",
+          "title": "主线选择 · 顶板采样",
+          "line": "VIN → Bootstrap → CDAC 顶板；底板初始接 VCM",
+          "sub": "理想 SHOLD 五点上界 0.174132 mV；顶板专用 +0.8 V 复现 0.174102 mV",
           "blocks": [
             "sampling",
             "cdac",
             "reference"
           ],
           "evidence": [
-            "full_cdac",
-            "bottom_screen"
+            "top_hold"
           ],
-          "detail": "目的：验证底板采样切换后的隔离。方法：顶板/分裂节点先释放 → MN11 关断 → BOOT 复位 → 底板接 VCM；270 ns 读取原始差分误差，目标极性为 −(TOPP−TOPN)=VINP−VINN。VIN 关断时，高侧 GMAIN 比底板高约 390 mV，代表性 MN11 与参考支路均约 6.258 µA，直接确认反向导通。只改为理想 VSS 关断后，理想钳位五输入最大误差降至 0.004218 mV；真实钳位单点仍为 −7.538 mV。旧 W185 的 0.43378 mV 属于旧 Bootstrap，不是本次单因素基线。",
-          "tone": "fail",
-          "analysis": "sampling/full_cdac",
-          "topology_variant": "isolated",
-          "topology_topic": "hold"
+          "detail": "当前只推进顶板采样。保持目标为 TOPP−TOPN≈VINP−VINN；独立 OFF_MAIN 在 BOOT 复位前关断主路径。顶板路线的保持路径接 VIN，不是历史底板路线的 VSS。旧底板实验与钳位问题保留为历史。理想 STRACK/SHOLD 的结果用于机制参考，并非完整管级通过。",
+          "tone": "done",
+          "analysis": "sampling/top_plate"
         },
         {
-          "id": "next_topology",
+          "id": "hold_pair",
           "row": 5,
           "col": 1,
           "span": 2,
-          "title": "当前 1 · GMAIN 安全关断",
-          "line": "隔离有效，同时满足端子应力",
-          "sub": "MN11 / 主栅驱动 / BOOT 复位",
+          "title": "已实现 · T28 互补保持管",
+          "line": "multi=4：五点最大 0.842425 mV",
+          "sub": "MN14 + MP14；此阶段 PGATE 控制仍理想",
           "blocks": [
             "sampling",
             "clock"
           ],
           "evidence": [
-            "full_cdac"
+            "top_hold"
           ],
-          "detail": "用真实 T28 门控替代理想 STRACK/SHOLD。逐相检查 CDAC 底板全摆幅下的关断条件、输入到参考的电流及 MP8 等器件端子应力；再检查下一周期获取。理想 VSS 关断仅证明机制，不直接冻结实际栅偏置。",
-          "tone": "planned",
-          "analysis": "sampling/next_topology",
-          "topology_topic": "reset",
-          "topology_variant": "isolated"
+          "detail": "单 NMOS 无法覆盖高 VIN，单 PMOS 无法覆盖低 VIN。并联互补管解决持续栅偏置缺陷，但关断电荷扰动仍存在。multi=4 的 +0.8 V 误差 −0.279944 mV，而 +0.4 V 为 −0.842425 mV。multi=1/2 在 +0.4 V 分别为 −0.481913/−0.567460 mV；当前保留 multi=4，未据端点或不同尺寸挑选通过结论。",
+          "tone": "done",
+          "analysis": "sampling/hold_pair"
         },
         {
-          "id": "clamp",
+          "id": "pgate",
           "row": 5,
           "col": 3,
           "span": 2,
-          "title": "当前 2 · 低扰动钳位",
-          "line": "真实钳位仍有 −7.538 mV 单点误差",
-          "sub": "顶板 / 分裂节点 · 复位能力与关断扰动",
+          "title": "已实现 · T28 PGATE 驱动",
+          "line": "0.842425 → 0.605518 mV（五点最大）",
+          "sub": "每侧 6 管 · 反相器 + 动态 G 电平转换 · ratio=4",
           "blocks": [
             "cdac",
             "sampling"
           ],
           "evidence": [
-            "full_cdac",
-            "bottom_screen"
+            "pgate"
           ],
-          "detail": "独立扫描真实钳位的器件、尺寸、控制边沿及释放顺序。VSS 关断下，底板残差仅 0.05838 mV 而比较器端误差为 −7.538 mV，不能继续把全部误差归因于 MN11 持续导通。需要分解钳位寄生、释放注入与 CDAC 节点间耦合。",
-          "tone": "planned",
-          "analysis": "sampling/clamp"
+          "detail": "只将同一 multi=4 保持对的两只理想 PGATE 继电器替换为六只 T28 厚氧管；泵、MN11、CDAC、尺寸和外部时序保持匹配。+0.8 V 最终误差 +0.080368 mV，+0.4 V 为 −0.605518 mV。五次零仿真错误、无 CMI；PGATEB 在 G 复位时仍存电荷，MP16 正向漏体偏置峰值 0.497386 V，因此可靠性风险未消除。",
+          "tone": "done",
+          "analysis": "sampling/pgate"
         },
         {
-          "id": "verify",
+          "id": "freeze",
           "row": 6,
           "col": 1,
           "span": 4,
-          "title": "汇合 · 采样链验收",
-          "line": "保持精度 + 应力 + 下一周期获取",
-          "sub": "随后扩展输入范围、PVT、动态输入、噪声与失配",
+          "title": "当前 · 阶段基线冻结",
+          "line": "暂定接受 0.605518 mV ≈ 0.345 LSB",
+          "sub": "522aa0f · 保持拓扑、multi=4、ratio=4 与现有时序",
           "blocks": [
             "sampling",
             "cdac",
             "clock"
           ],
           "evidence": [
-            "full_cdac"
+            "pgate"
           ],
-          "detail": "先将物理 GMAIN 控制与物理钳位接入同一完整 CDAC 夹具；检查原始差分保持误差 <0.439 mV、全相位端子应力、参考支路电流和重复采样。再做多输入/PVT、动态输入孔径、噪声与失配；版图后补 PEX。",
+          "detail": "用户已暂定接受当前五点 TT 结果；原 0.439 mV 分配仍未通过，不调整噪声 RSS。暂停进一步电路、尺寸和时序实验，待用户指示再继续。复位残留/动态阱风险保留；STRACK、外部时钟及参考开关仍理想。恢复后可先评估 PGATEB 安全放电和阱偏置，再安排 STRACK 管级化与重复获取、PVT、动态输入、ADC INL/DNL/SNDR 验证。当前未提升 OA。",
           "tone": "planned",
-          "analysis": "sampling/verify",
-          "topology_variant": "isolated",
-          "topology_topic": "hold"
+          "analysis": "sampling/freeze",
+          "tag": "暂定冻结"
         }
       ],
       "edges": [
@@ -418,28 +414,24 @@
         },
         {
           "from": "input_path",
-          "to": "full_cdac",
+          "to": "top_plate",
           "kind": "next"
         },
         {
-          "from": "full_cdac",
-          "to": "next_topology",
-          "kind": "pending"
+          "from": "top_plate",
+          "to": "hold_pair",
+          "kind": "next"
         },
         {
-          "from": "full_cdac",
-          "to": "clamp",
-          "kind": "pending"
+          "from": "hold_pair",
+          "to": "pgate",
+          "kind": "next",
+          "axis": "horizontal"
         },
         {
-          "from": "next_topology",
-          "to": "verify",
-          "kind": "pending"
-        },
-        {
-          "from": "clamp",
-          "to": "verify",
-          "kind": "pending"
+          "from": "pgate",
+          "to": "freeze",
+          "kind": "next"
         }
       ]
     },
@@ -492,19 +484,19 @@
           "id": "result",
           "row": 3,
           "col": 1,
-          "title": "完整 CDAC · 理想与真实钳位对照",
-          "line": "理想边界 0.004218 mV；真实钳位 −7.538 mV",
-          "sub": "前者五输入最大；后者仅 +0.8 V 单点",
+          "title": "当前 · 顶板采样接口",
+          "line": "顶板保存输入；底板进行参考切换",
+          "sub": "采样基线五点最大 0.605518 mV · 阶段暂定接受",
           "blocks": [
             "cdac",
             "reference"
           ],
-          "tag": "受阻",
-          "tone": "fail",
-          "detail": "同一受保护 Bootstrap / 理想 VSS 门控背景下，真实钳位使比较器端保持误差仍然超标。理想边界还有 MP8 应力告警。旧 W185 筛查的 0.43378 mV 属于旧驱动，作为历史参考保留在展开实验中；相位图也属于旧 W185 夹具。",
+          "tag": "阶段基线",
+          "tone": "planned",
+          "detail": "当前主线是顶板采样的完整 5+5 CDAC，GMAIN 保持路径接 VIN。理想控制边界、真实保持对及 PGATE 驱动已依次验证。历史底板钳位结果留在下方记录与图片中，不作为当前设计的验收。",
           "span": 4,
           "evidence": [
-            "full_cdac",
+            "pgate",
             "bottom_screen"
           ],
           "analysis": "cdac/result"
@@ -515,15 +507,15 @@
           "col": 1,
           "span": 4,
           "title": "下一步 / 验收缺口",
-          "line": "钳位释放扰动与复位能力联合优化",
+          "line": "基线冻结；全转换与参考管级验证待开展",
           "sub": "模块通过后，回到全 ADC 联合验收",
-          "detail": "先拆分顶板/分裂节点钳位的寄生、释放注入和节点耦合，再与真实 GMAIN 控制汇合。复验原始误差、全相位应力、下一周期获取，之后扩展输入/PVT。",
+          "detail": "当前暂停采样器进一步优化。后续按用户决定验证重复采样、参考建立和全 SAR 转换，并通过 INL/DNL/SNDR 与 PVT 重新评估暂定误差接受。",
           "blocks": [
             "cdac"
           ],
           "tone": "planned",
           "evidence": [
-            "full_cdac"
+            "pgate"
           ],
           "analysis": "cdac/next"
         }

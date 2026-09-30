@@ -1,5 +1,28 @@
 schema_version: 1
 records:
+  - id: top_hold
+    title: 顶板采样 · T28 互补保持路径
+    sources: [top_hold, sampling_status]
+    scope: 顶板专用 5+5 CDAC · TT / 0.9 V / 27 °C · 270 ns 原始误差
+    result: 单 NMOS/PMOS 分别受高/低输入端限制；互补 multi=4 解决保持栅偏置，但五点最大误差 0.842425 mV。端点 −0.279944 mV 不能代表中间输入。
+    observations:
+      - {label: 理想 SHOLD · +0.8 V 复现, value: 0.000174102, unit: V}
+      - {label: 互补 multi=4 · 五点最大, value: 0.000842425, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+    limitations: [STRACK 和 PGATE 控制仍理想, PMOS 体接 GMAIN 为动态阱假设，未可靠性确认]
+  - id: pgate
+    title: T28 PGATE 驱动 · 当前暂定基线
+    sources: [pgate, sampling_status]
+    scope: 522aa0f · 顶板采样 · 五个静态输入 / TT / 0.9 V / 27 °C · 270 ns
+    result: 每侧 6 管实现反相器及动态 G 供电电平转换，保持 multi=4 不变；五点最大误差由 0.842425 降至 0.605518 mV。用户暂定接受并冻结尺寸/时序，暂停进一步实验。
+    observations:
+      - {label: 输入 −0.8 V, value: -0.000080368, unit: V}
+      - {label: 输入 −0.4 V, value: 0.000605518, unit: V}
+      - {label: 输入 0 V（约）, value: 0, unit: V}
+      - {label: 输入 +0.4 V, value: -0.000605518, unit: V}
+      - {label: 输入 +0.8 V, value: 0.000080368, unit: V}
+      - {label: 五点最大 · 原分配仍未通过, value: 0.000605518, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: PGATEB PMOS 正向漏体偏置峰值, value: 0.497386, unit: V}
+    limitations: [阶段接受不是改写 0.439 mV 分配或 RMS 噪声预算, STRACK / 外部时钟 / CDAC 参考开关仍理想, PGATEB 复位残留及动态阱风险未解决，未做 OA 提升或全范围/PVT 验收]
   - id: isolate_reset
     title: 先隔离主开关，再复位 BOOT
     sources: [isolate_reset]

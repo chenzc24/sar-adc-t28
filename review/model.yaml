@@ -18,6 +18,9 @@ sources:
   isolate_reset: docs/bootstrap_isolate_before_reset.md
   turnoff_charge: docs/bootstrap_turnoff_charge_screen.md
   full_cdac: docs/bootstrap_full_cdac_isolation.md
+  sampling_status: docs/sampling_architecture_status.md
+  top_hold: docs/top_plate_gmain_device_screen.md
+  pgate: docs/top_plate_pgate_driver.md
 modules:
   - id: system
     title: 系统与架构
@@ -285,16 +288,16 @@ steps:
     depends_on: [audit]
   - id: topology
     module: sampling
-    title: 独立拓扑修订与消融
-    purpose: 在 CDAC 底板切换后仍维持安全关断，并处理真实钳位扰动。
-    method: 计划：独立 OA 候选 + 同条件 A/B 实验
-    work: planned
-    verdict: unverified
-    coverage: 未运行
-    result: 完整 CDAC 已确认 VIN 关断可重新导通；理想 VSS 隔离有效，真实门控与钳位尚未通过。
-    next: 并行收敛物理 GMAIN 控制及顶板/分裂节点钳位，再在同一夹具联合验证。
+    title: 顶板采样 · 暂定基线 522aa0f
+    purpose: 用 T28 互补保持对与 PGATE 驱动落实独立主栅控制。
+    method: 顶板专用复制网表；保持 multi=4，六管 PGATE 驱动 ratio=4
+    work: complete
+    verdict: fail
+    coverage: 五点 TT / 0.9 V / 27 °C；阶段暂定接受，非原指标通过
+    result: 五点最大误差 0.605518 mV，原 0.439 mV 仍失败；PGATEB 复位/阱风险保留。
+    next: 尺寸/时序冻结，暂停实验；待用户决定恢复优化或联合验证。
     metrics: [hold]
-    evidence: [isolate_reset, turnoff_charge, full_cdac]
+    evidence: [top_hold, pgate]
     depends_on: [fast_ab]
   - id: sampler_acceptance
     module: sampling
@@ -304,21 +307,21 @@ steps:
     work: blocked
     verdict: unverified
     coverage: 未整体覆盖
-    result: 单点误差、输入加载和可靠性边界仍阻塞联合验收。
-    next: 候选拓扑先通过同条件筛查，再扩展覆盖；无告警不等于寿命签核。
+    result: 阶段基线已暂定接受；原误差分配、PGATEB/阱风险及理想 STRACK 边界仍开放。
+    next: 后续按用户决定开展重复获取、PVT、动态输入及 ADC 线性/动态性能验证。
     metrics: [sampling_noise, hold]
     evidence: []
     depends_on: [topology]
   - id: bottom_plate
     module: cdac
-    title: 完整 CDAC 底板 / 钳位实验
+    title: 历史 · 完整 CDAC 底板 / 钳位实验
     purpose: 比较理想钳位与真实器件的采样电荷转移。
     method: 完整 5+5 CDAC + T28 开关；不同于单电容夹具
     work: complete
     verdict: fail
     coverage: TT / 理想钳位五输入 / 真实钳位 VSS 关断仅 +0.8 V
     result: 理想 VSS 门控与理想钳位最大误差 0.004218 mV；真实钳位单点 −7.538 mV，尚未通过。
-    next: 分解钳位释放扰动与节点耦合，同步解决应力并与物理 GMAIN 联合验证。
+    next: 保留为历史；当前只推进顶板采样，不再并行优化底板钳位。
     metrics: [settling, hold]
     evidence: [bottom_screen, full_cdac]
     depends_on: [architecture]
