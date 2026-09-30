@@ -60,17 +60,18 @@
           "col": 1,
           "title": "采样开关",
           "line": "热噪声 ≤ {{sampling_noise}} mV RMS",
-          "sub": "八个 A/B 变体仍未达标",
+          "sub": "导通/获取可行；关断隔离仍待实现",
           "blocks": [
             "sampling"
           ],
           "tag": "当前瓶颈",
           "tone": "fail",
           "focus": "sampling",
-          "detail": "跟踪输入并在采样结束时断开；真正保存电荷的是 CDAC，不是另加一块独立 S/H。 采样分配为 0.18 × LSB，不是 MOS 器件直接给出的数值。电容增大会降热噪声，但也增加驱动与建立负担。 原始完整驱动误差 {{audit_hold}} mV。最新复制网表实验可去掉输入加载，但精度仍失败；−2.482 mV 的理想分离门控边界不是已实现的 T28 开关。未改 OA。",
+          "detail": "单开关夹具已验证导通与获取。完整 CDAC 发现底板切到 VCM 后，VIN 相对关断可能使 MN11 重新导通。当前需要真实 GMAIN 控制与真实钳位两条分支同时收敛。",
           "span": 1,
           "evidence": [
-            "fast_ab"
+            "fast_ab",
+            "full_cdac"
           ]
         },
         {
@@ -79,17 +80,17 @@
           "col": 2,
           "title": "CDAC",
           "line": "Cside ≥ {{capacitance}} fF（热噪声下限）",
-          "sub": "底板采样有改善，余量很窄",
+          "sub": "真实钳位是独立瓶颈",
           "blocks": [
             "cdac"
           ],
           "tag": "受阻",
           "tone": "fail",
           "focus": "cdac",
-          "detail": "采样时保存输入电荷，转换时按 SAR 判决切换参考，生成送给比较器的残差。 采样分配为 0.18 × LSB，不是 MOS 器件直接给出的数值。电容增大会降热噪声，但也增加驱动与建立负担。 完整 CDAC 的五输入 TT 筛查仅有 5.22 µV 名义余量，仍有应力告警。Reference 管级 buffer 的整体通过证据尚未建立。此夹具不同于 Bootstrap 单电容测试。",
+          "detail": "完整 CDAC 中，理想钳位 + 理想 VSS 关断五输入最大误差 0.004218 mV；换真实钳位后，+0.8 V 单点为 −7.538 mV。理想结果确认机制，实际钳位及应力仍待解决。",
           "span": 1,
           "evidence": [
-            "bottom_screen"
+            "full_cdac"
           ]
         },
         {
@@ -225,187 +226,178 @@
       "layout": "overview"
     },
     "sampling": {
-      "title": "Bootstrap · 获取与关断，两条链一起审查",
-      "note": "VIN → 采样开关 → CDAC → 比较器；电荷保存在 CDAC。左侧看获取，右侧看关断后的电荷准确度。",
+      "title": "Bootstrap · 从导通可行到准确保持",
+      "note": "已验证：导通与获取。当前：切换后的关断隔离 + 真实钳位。A 为单开关夹具，B 为完整 CDAC；两者不作连续改善比较。",
       "columns": 4,
+      "layout": "branch",
       "nodes": [
         {
           "id": "sample_root",
           "row": 1,
           "col": 1,
           "span": 4,
-          "title": "总精度与采样时间",
-          "line": "LSB {{lsb}} mV · 获取 {{sample_ns}} ns",
-          "sub": "模拟总误差余量 {{analog}} mV RMS",
+          "title": "指标与理想基线",
+          "line": "保持 |ε| < {{hold}} mV · 获取 {{sample_ns}} ns",
+          "sub": "初始分配：σsample ≤ {{sampling_noise}} mV RMS；Cside ≥ {{capacitance}} fF",
           "blocks": [
             "sampling",
             "cdac"
           ],
-          "detail": "电路位置是 VIN → Bootstrap 采样开关 → CDAC。此处是功能分解，具体底板切换和钳位顺序要在实际电路中实现。",
-          "canvas": "sampling",
           "evidence": [
-            "budget_baseline"
+            "budget_baseline",
+            "rc_model",
+            "macro_model"
           ],
+          "detail": "目的：把总精度分解成噪声、获取与保持要求。方法：理想电气开关、RC 与 kT/C。Cside ≥ 2kT/σsample²；ΔV·exp[−Tacq/((Rs+Ron)C)] ≤ ε。40 ns RC 示例的 Rs+Ron ≤ 21.242 kΩ，不是最终器件尺寸。0.25 LSB 精确值为 0.439453125 mV，保持实验使用 0.439 mV。",
           "analysis": "sampling/sample_root",
           "topology_topic": "bootstrap"
         },
         {
-          "id": "cap",
-          "row": 2,
-          "col": 1,
-          "span": 2,
-          "title": "获取链 · 热噪声 → 电容 → Ron",
-          "line": "σsample ≤ {{sampling_noise}} mV RMS → Cside ≥ {{capacitance}} fF",
-          "sub": "40 ns RC 示例：Rs + Ron ≤ 21.242 kΩ",
-          "blocks": [
-            "cdac",
-            "sampling"
-          ],
-          "detail": "分配变化会影响电容下限，再影响驱动与建立负担。不能由此断定当前开关的热噪声已通过。 Cside ≥ 2kT / σsample² = {{capacitance}} fF。这是每侧的等效采样电容下限，不是单位电容 Cu。完整 split CDAC 与单个集总负载的有效电容定义不能混用。 ΔV · exp[−Tacq / ((Rs + Ron) C)] ≤ ε。该示例使用 40 ns 获取、1.8 V 初始差分阶跃与 0.25 LSB 残差。它是单极点近似，不是 Bootstrap MOS 的最终 Ron 设计值，更不验证关断误差。",
-          "evidence": [
-            "rc_model",
-            "budget_baseline"
-          ],
-          "analysis": "sampling/cap"
-        },
-        {
-          "id": "deterministic",
-          "row": 2,
-          "col": 3,
-          "span": 2,
-          "title": "关断链 · 独立的原始保持误差要求",
-          "line": "|Vhold − Vtarget| < {{hold}} mV",
-          "sub": "约 0.25 LSB，不扣增益拟合或校准",
-          "blocks": [
-            "sampling"
-          ],
-          "tag": "暂定分配",
-          "detail": "保持误差门限沿用 0.25 LSB 思路；实验采用舍入值 0.439 mV。它检查系统性的关断误差，不是 0.316 mV RMS 的随机噪声预算。",
-          "evidence": [
-            "protected_screen"
-          ],
-          "analysis": "sampling/deterministic"
-        },
-        {
           "id": "ideal",
-          "row": 3,
+          "row": 2,
           "col": 1,
           "span": 2,
-          "title": "① 理想栅驱动 + T28 主 MOS",
-          "line": "主开关导通能力筛选完成",
-          "sub": "1.8 V 候选最坏 Ron = 964.5 Ω；27 PVT 组合",
+          "title": "① 主 MOS：导通能力可行",
+          "line": "27 PVT · 最坏 Ron 964.5 Ω",
+          "sub": "理想升压栅驱动 + 真实 T28 主 MOS",
           "blocks": [
             "sampling"
           ],
-          "tone": "done",
-          "detail": "用理想 Vgate = Vin + VDD 隔离主 MOS 能力。这个实验不包含实际泵电容下垂、非重叠区跟踪和关断耦合。",
           "evidence": [
             "main_screen"
           ],
+          "detail": "目的：先隔离主 MOS 的导通能力。方法：理想 Vgate=VIN+VDD，筛选器件族与尺寸。此处展示 1.8 V L150/W8.96 候选，不与其他器件候选的 Ron 混作同一次结果。",
+          "tone": "done",
           "analysis": "sampling/ideal",
           "topology_topic": "bootstrap"
         },
         {
           "id": "driver",
-          "row": 3,
+          "row": 2,
           "col": 3,
           "span": 2,
-          "title": "② 换成真实 Bootstrap 驱动",
-          "line": "获取误差很小；保持误差 {{audit_hold}} mV",
-          "sub": "T28 MOS + 理想电容 / 时钟；单点 TT",
+          "title": "② 完整驱动：获取好，保持失败",
+          "line": "保持 {{audit_hold}} mV",
+          "sub": "A · 219.5 fF/侧 · T28 驱动 + 理想电容/时钟",
           "blocks": [
             "sampling"
           ],
-          "tone": "fail",
-          "detail": "Full-control 候选获取误差约 −0.000374 mV，但原始保持误差 {{audit_hold}} mV。无 CMI-275x 电压告警只通过标称模型告警筛查，不等于可靠性签核。",
           "evidence": [
             "protected_screen"
           ],
+          "detail": "目的：加入真实驱动后检查获取、关断及应力。Full-control 获取误差约 −0.000374 mV，保持误差 −8.755 mV；单点 TT 清除了 CMI-275x 告警。说明获取速度与保持精度是不同关口，无模型告警也不等于可靠性签核。",
+          "tone": "fail",
           "analysis": "sampling/driver"
         },
         {
           "id": "input_path",
-          "row": 4,
+          "row": 3,
           "col": 1,
-          "span": 2,
-          "title": "电流审计 → 去掉输入加载通路",
-          "line": "25.858 µA → 约 34.3 pA",
-          "sub": "厚栅 MN9 变体保持误差 {{thick_hold}} mV；仍失败",
+          "span": 4,
+          "title": "③ 误差定位：为什么不是继续降低 Ron？",
+          "line": "去加载、分离关断、延迟复位，仍未达标",
+          "sub": "A · 单开关夹具 · 历史 A/B 与单因素扫描",
           "blocks": [
-            "sampling"
+            "sampling",
+            "clock"
           ],
-          "tag": "已确认",
-          "tone": "fail",
-          "detail": "270 ns 时高侧输入比理想源低 1.293 mV，50 Ω 源电流与 MN9 端子电流相符。但不能据此把已存储的 {{audit_hold}} mV 输出误差全部归因于此通路。 使用厚栅器件并接地体端后，输入加载基本去除，但同时改变了器件尺寸，不能把精度改善唯一归因为体端。纯改核心管体端则几乎不改善精度，并产生应力告警。",
           "evidence": [
             "current_audit",
-            "fast_ab"
+            "fast_ab",
+            "isolate_reset",
+            "turnoff_charge"
           ],
+          "detail": "目的：区分持续加载、主开关关断和 BOOT 复位。方法：端子电流审计、理想 GMAIN 分离控制、复位延迟及边沿/负载扫描。25.858 µA 输入加载去除后仍有 −6.842 mV；分离门控边界为 −2.482 mV。先关主开关、后复位得到 −2.452 mV，其中后续复位窗口仅 +0.080 mV。放慢栅边沿或加倍电容都未解决问题，因此转向完整 CDAC 的相位与电荷路径。",
           "analysis": "sampling/input_path",
           "topology_topic": "shared"
         },
         {
-          "id": "charge_loss",
+          "id": "full_cdac",
           "row": 4,
-          "col": 3,
-          "span": 2,
-          "title": "电荷审计 → 分离关断控制",
-          "line": "{{audit_hold}} → −{{split_bound}} mV，仍未达标",
-          "sub": "后者仅为理想分离门控边界，不是管级成果",
+          "col": 1,
+          "span": 4,
+          "title": "④ 完整 CDAC：关断条件随底板电位改变",
+          "line": "GMAIN=VIN 并不保证始终关断",
+          "sub": "B · 5+5 差分 CDAC · 理想 GMAIN 门控对照",
           "blocks": [
-            "sampling"
+            "sampling",
+            "cdac",
+            "reference"
           ],
-          "tag": "机制待拆解",
-          "tone": "fail",
-          "detail": "上述两个数是连续区间的输出变化量，不是两个绝对输出电压。随后保持漂移仅 +0.022 mV；唯一寄生/器件归因还需独立拓扑消融。 理想继电器分开主栅控制，不包含自身注入、馈通和器件应力。−2.482 mV 不是管级设计成果；同时把共享栅在保持期拉到 VIN 还会造成 MN9 反向导通。",
           "evidence": [
-            "current_audit",
-            "fast_ab"
+            "full_cdac",
+            "bottom_screen"
           ],
-          "analysis": "sampling/charge_loss",
-          "topology_topic": "reset"
+          "detail": "目的：验证底板采样切换后的隔离。方法：顶板/分裂节点先释放 → MN11 关断 → BOOT 复位 → 底板接 VCM；270 ns 读取原始差分误差，目标极性为 −(TOPP−TOPN)=VINP−VINN。VIN 关断时，高侧 GMAIN 比底板高约 390 mV，代表性 MN11 与参考支路均约 6.258 µA，直接确认反向导通。只改为理想 VSS 关断后，理想钳位五输入最大误差降至 0.004218 mV；真实钳位单点仍为 −7.538 mV。旧 W185 的 0.43378 mV 属于旧 Bootstrap，不是本次单因素基线。",
+          "tone": "fail",
+          "analysis": "sampling/full_cdac"
         },
         {
           "id": "next_topology",
           "row": 5,
           "col": 1,
-          "span": 4,
-          "title": "下一步 · 独立 T28 主栅控制",
-          "line": "分开主开关与 Bootstrap 输入管的关断控制",
-          "sub": "实现真实采样 / 保持门控与安全复位",
+          "span": 2,
+          "title": "当前分支 1 · 安全的 GMAIN 控制",
+          "line": "隔离有效，同时满足端子应力",
+          "sub": "MN11 / 主栅驱动 / BOOT 复位",
           "blocks": [
             "sampling",
             "clock"
           ],
-          "tag": "待设计",
-          "tone": "planned",
-          "detail": "需用真实 T28 器件实现两条主栅控制路径，同时保证 MN9 关断和复位安全。先复验电流、关断电荷、获取和各端子电压，不能把理想继电器直接视为最终实现。 目前仍未达标。单点通过不替代输入范围、PVT、噪声、失配和实际 CDAC 负载验证。",
           "evidence": [
-            "fast_ab"
+            "full_cdac"
           ],
-          "analysis": "sampling/next_topology"
+          "detail": "用真实 T28 门控替代理想 STRACK/SHOLD。逐相检查 CDAC 底板全摆幅下的关断条件、输入到参考的电流及 MP8 等器件端子应力；再检查下一周期获取。理想 VSS 关断仅证明机制，不直接冻结实际栅偏置。",
+          "tone": "planned",
+          "analysis": "sampling/next_topology",
+          "topology_topic": "reset"
+        },
+        {
+          "id": "clamp",
+          "row": 5,
+          "col": 3,
+          "span": 2,
+          "title": "当前分支 2 · 低扰动钳位",
+          "line": "真实钳位仍有 −7.538 mV 单点误差",
+          "sub": "顶板 / 分裂节点 · 复位能力与关断扰动",
+          "blocks": [
+            "cdac",
+            "sampling"
+          ],
+          "evidence": [
+            "full_cdac",
+            "bottom_screen"
+          ],
+          "detail": "独立扫描真实钳位的器件、尺寸、控制边沿及释放顺序。VSS 关断下，底板残差仅 0.05838 mV 而比较器端误差为 −7.538 mV，不能继续把全部误差归因于 MN11 持续导通。需要分解钳位寄生、释放注入与 CDAC 节点间耦合。",
+          "tone": "planned",
+          "analysis": "sampling/clamp"
+        },
+        {
+          "id": "verify",
+          "row": 6,
+          "col": 1,
+          "span": 4,
+          "title": "汇合 · 完整采样链联合验收",
+          "line": "保持精度 + 应力 + 下一周期获取",
+          "sub": "随后扩展输入范围、PVT、动态输入、噪声与失配",
+          "blocks": [
+            "sampling",
+            "cdac",
+            "clock"
+          ],
+          "evidence": [
+            "full_cdac"
+          ],
+          "detail": "先将物理 GMAIN 控制与物理钳位接入同一完整 CDAC 夹具；检查原始差分保持误差 <0.439 mV、全相位端子应力、参考支路电流和重复采样。再做多输入/PVT、动态输入孔径、噪声与失配；版图后补 PEX。",
+          "tone": "planned",
+          "analysis": "sampling/verify"
         }
       ],
       "edges": [
         {
           "from": "sample_root",
-          "to": "cap",
-          "kind": "allocate"
-        },
-        {
-          "from": "sample_root",
-          "to": "deterministic",
-          "kind": "allocate"
-        },
-        {
-          "from": "cap",
           "to": "ideal",
           "kind": "derive"
-        },
-        {
-          "from": "deterministic",
-          "to": "driver",
-          "kind": "next"
         },
         {
           "from": "ideal",
@@ -419,22 +411,31 @@
           "kind": "next"
         },
         {
-          "from": "driver",
-          "to": "charge_loss",
+          "from": "input_path",
+          "to": "full_cdac",
           "kind": "next"
         },
         {
-          "from": "input_path",
+          "from": "full_cdac",
           "to": "next_topology",
           "kind": "pending"
         },
         {
-          "from": "charge_loss",
-          "to": "next_topology",
+          "from": "full_cdac",
+          "to": "clamp",
+          "kind": "pending"
+        },
+        {
+          "from": "next_topology",
+          "to": "verify",
+          "kind": "pending"
+        },
+        {
+          "from": "clamp",
+          "to": "verify",
           "kind": "pending"
         }
-      ],
-      "layout": "branch"
+      ]
     },
     "cdac": {
       "title": "CDAC · 从约束到下一步",
@@ -485,19 +486,19 @@
           "id": "result",
           "row": 3,
           "col": 1,
-          "title": "③ CDAC / Reference",
-          "line": "底板采样有改善，余量很窄",
-          "sub": "W185 原始误差 {{bottom_hold}} mV",
+          "title": "完整 CDAC · 理想与真实钳位对照",
+          "line": "理想边界 0.004218 mV；真实钳位 −7.538 mV",
+          "sub": "前者五输入最大；后者仅 +0.8 V 单点",
           "blocks": [
             "cdac",
             "reference"
           ],
           "tag": "受阻",
           "tone": "fail",
-          "detail": "完整 CDAC 的五输入 TT 筛查仅有 5.22 µV 名义余量，仍有应力告警。Reference 管级 buffer 的整体通过证据尚未建立。此夹具不同于 Bootstrap 单电容测试。",
+          "detail": "同一受保护 Bootstrap / 理想 VSS 门控背景下，真实钳位使比较器端保持误差仍然超标。理想边界还有 MP8 应力告警。旧 W185 筛查的 0.43378 mV 属于旧驱动，作为历史参考保留在展开实验中；相位图也属于旧 W185 夹具。",
           "span": 4,
           "evidence": [
-            "budget_baseline",
+            "full_cdac",
             "bottom_screen"
           ],
           "analysis": "cdac/result"
@@ -508,16 +509,15 @@
           "col": 1,
           "span": 4,
           "title": "下一步 / 验收缺口",
-          "line": "扩大底板采样余量，同时解决应力告警",
+          "line": "钳位释放扰动与复位能力联合优化",
           "sub": "模块通过后，回到全 ADC 联合验收",
-          "detail": "当前结果只覆盖上方注明的模型和条件。仍需对应管级电路、输入范围、PVT 和适用的噪声 / 失配检查，不能把单点结果升级为整体通过。",
+          "detail": "先拆分顶板/分裂节点钳位的寄生、释放注入和节点耦合，再与真实 GMAIN 控制汇合。复验原始误差、全相位应力、下一周期获取，之后扩展输入/PVT。",
           "blocks": [
             "cdac"
           ],
           "tone": "planned",
           "evidence": [
-            "budget_baseline",
-            "bottom_screen"
+            "full_cdac"
           ],
           "analysis": "cdac/next"
         }

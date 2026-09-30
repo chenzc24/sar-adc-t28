@@ -140,17 +140,17 @@ class ReviewContractTests(unittest.TestCase):
             build.validate(self.model, self.evidence)
 
     def test_unit_mismatch_rejected(self):
-        self.evidence["records"][3]["observations"][0]["unit"] = "A"
+        next(r for r in self.evidence['records'] if r['id'] == 'protected_screen')['observations'][0]['unit'] = 'A'
         with self.assertRaisesRegex(ValueError, "unit/reference mismatch"):
             build.validate(self.model, self.evidence)
 
     def test_false_pass_rejected(self):
-        self.evidence["records"][3]["observations"][0]["gate"] = "pass"
+        next(r for r in self.evidence['records'] if r['id'] == 'protected_screen')['observations'][0]['gate'] = 'pass'
         with self.assertRaisesRegex(ValueError, "contradicts"):
             build.validate(self.model, self.evidence)
 
     def test_stale_propagates_without_rewriting_observations(self):
-        original = deepcopy(self.evidence["records"][4]["observations"])
+        original = deepcopy(next(r for r in self.evidence['records'] if r['id'] == 'current_audit')['observations'])
         lock = {"sources": {k: {"path": p, "sha256": hashlib.sha256(build.source_path(p).read_bytes()).hexdigest()} for k, p in self.model["sources"].items()}}
         clean = build.snapshot(self.model, deepcopy(self.evidence), lock)
         self.assertFalse(clean["meta"]["stale_sources"])

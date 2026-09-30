@@ -14,6 +14,24 @@
   });
 
   const maps = flows.graphs;
+  const experiments = Object.fromEntries(data.evidence.map(e => [e.id, e]));
+  function observationText(o) {
+    const scale = o.unit === 'V' ? 1000 : o.unit === 'A' ? 1e6 : 1;
+    const unit = o.unit === 'V' ? 'mV' : o.unit === 'A' ? 'µA' : o.unit;
+    return Number((o.value * scale).toPrecision(7)) + ' ' + unit;
+  }
+  function renderExperiments(ids) {
+    return ids.map(id => {
+      const e = experiments[id];
+      const rows = e.observations.map(o =>
+        `<tr><td>${esc(o.label)}</td><td>${esc(observationText(o))}</td></tr>`).join('');
+      return `<section class="experiment">
+        <h4>${esc(e.title)}</h4><small>${esc(e.scope)}</small><p>${esc(e.result)}</p>
+        ${rows ? `<table><thead><tr><th>测量 / 条件</th><th>结果</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
+        <p class="experiment-limits">${e.limitations.map(esc).join('；')}</p>
+      </section>`;
+    }).join('');
+  }
   let state={focus:'all'}, graph, resizeFrame;
   const ns='http://www.w3.org/2000/svg';
   function svgElement(tag,attrs={}) {
@@ -75,7 +93,9 @@
       ${n.reasons?`<ul class="node-reasons">${n.reasons.map(reason=>`<li>${esc(expand(reason))}</li>`).join('')}</ul>`:''}
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
       ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">查看${esc(data.figures[id].kind)} ↗</button>`).join('')}
-      <details class="inline-detail"><summary>展开依据与说明</summary><p>${esc(expand(n.detail))}</p></details>
+      <details class="inline-detail"><summary>展开方法与实验</summary><p>${esc(expand(n.detail))}</p>
+        ${renderExperiments(n.evidence || [])}
+      </details>
       ${n.topology_topic?`<button class="figure-button" data-topology="${n.topology_topic}">电路联动 · 抽象样例 ↗</button>`:n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
     </article>`).join('');
     $('budget-footnote').textContent=state.focus==='all'

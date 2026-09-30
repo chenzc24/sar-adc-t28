@@ -789,3 +789,17 @@ human-triggered note in `docs/experience/`.
 - Validation: Python automation compiled and the initial repository state was
   reviewed.
 - Commit status: committed in `069bd7f`.
+
+## 2026-09-30 - Review sampling causal history
+
+- Reorganized the sampling panel into eight key nodes, two current design
+  branches and joint acceptance; refreshed global/CDAC summaries.
+- Curated reset-isolation, edge/load and full-CDAC evidence. Node details now
+  show methods, conditions and result tables without repository document links.
+- Kept lumped-load and full-CDAC fixtures distinct; retained ideal-control and
+  stress qualifications, and the separate static Canvas sample.
+- Validation: 22 focused tests, formula regression, build/check, JS syntax and
+  diff check passed. Browser verified result table, figure/topology entries and
+  branch layout with no console errors. Preview: output/review/sampling-flow-preview.png.
+- Remote OA changes: none. Local scoped commit; no push. Concurrent circuit
+  files and its separate maintenance-log entry are excluded.

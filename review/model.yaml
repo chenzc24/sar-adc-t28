@@ -2,7 +2,7 @@ schema_version: 1
 title: SAR ADC · 设计审查台
 baseline: 架构预算 v1 · 暂定分配
 reviewed_at: '2026-09-30'
-focus: audit
+focus: topology
 sources:
   spec: config/design_spec.yaml
   budget: docs/error_budget.md
@@ -15,6 +15,9 @@ sources:
   comparator: docs/strongarm_cdac_integration.md
   macro: docs/electrical_macro_model.md
   fast_ab: docs/bootstrap_netlist_fast_ab.md
+  isolate_reset: docs/bootstrap_isolate_before_reset.md
+  turnoff_charge: docs/bootstrap_turnoff_charge_screen.md
+  full_cdac: docs/bootstrap_full_cdac_isolation.md
 modules:
   - id: system
     title: 系统与架构
@@ -283,15 +286,15 @@ steps:
   - id: topology
     module: sampling
     title: 独立拓扑修订与消融
-    purpose: 消除保持输入加载，并拆解非重叠区与栅放电区的误差机制。
+    purpose: 在 CDAC 底板切换后仍维持安全关断，并处理真实钳位扰动。
     method: 计划：独立 OA 候选 + 同条件 A/B 实验
     work: planned
     verdict: unverified
     coverage: 未运行
-    result: 已有网表机理边界实验，尚无合格的独立 T28 主栅控制实现。
-    next: 定义新候选、体端/复位路径、输入电流数值门限，再开展对应实验。
+    result: 完整 CDAC 已确认 VIN 关断可重新导通；理想 VSS 隔离有效，真实门控与钳位尚未通过。
+    next: 并行收敛物理 GMAIN 控制及顶板/分裂节点钳位，再在同一夹具联合验证。
     metrics: [hold]
-    evidence: []
+    evidence: [isolate_reset, turnoff_charge, full_cdac]
     depends_on: [fast_ab]
   - id: sampler_acceptance
     module: sampling
@@ -313,11 +316,11 @@ steps:
     method: 完整 5+5 CDAC + T28 开关；不同于单电容夹具
     work: complete
     verdict: fail
-    coverage: W185 / 五个静态输入 / TT
-    result: 原始误差最大 0.43378 mV，名义余量仅 5.22 µV；保留应力告警，不能整体通过。
-    next: 独立处理钳位复位能力与关断寄生；替换不合格 Bootstrap 后复验。
+    coverage: TT / 理想钳位五输入 / 真实钳位 VSS 关断仅 +0.8 V
+    result: 理想 VSS 门控与理想钳位最大误差 0.004218 mV；真实钳位单点 −7.538 mV，尚未通过。
+    next: 分解钳位释放扰动与节点耦合，同步解决应力并与物理 GMAIN 联合验证。
     metrics: [settling, hold]
-    evidence: [bottom_screen]
+    evidence: [bottom_screen, full_cdac]
     depends_on: [architecture]
   - id: reference
     module: cdac

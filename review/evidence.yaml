@@ -1,5 +1,30 @@
 schema_version: 1
 records:
+  - id: isolate_reset
+    title: 先隔离主开关，再复位 BOOT
+    sources: [isolate_reset]
+    scope: 单开关夹具 · 219.5 fF/侧 · TT / 0.9 V / 27 °C · T28 MOS + 理想 GMAIN 继电器
+    result: 先关断后复位将复位窗口变化分离为约 +0.080 mV；总保持误差仍为 −2.452 mV，主开关关断前后已形成主要误差。
+    observations:
+      - {label: 最终原始保持误差, value: -0.002452, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+    limitations: [10 ps 人工输入阶跃引起约 0.559 mV 输出响应，静态低漏电不代表动态隔离, 理想门控未管级实现]
+  - id: turnoff_charge
+    title: 边沿与负载扫描
+    sources: [turnoff_charge]
+    scope: 单开关夹具 · TT / 0.9 V / 27 °C · T28 MOS + 理想 GMAIN 继电器
+    result: 实际栅边沿放慢使误差由 −2.452 恶化至 −2.647 mV；每侧负载加倍到 439 fF 后为 −1.701 mV，仍失败。
+    observations: []
+    limitations: [积分电荷随负载变化，不能简化成固定 Q 除以 C, 此负载不是完整 CDAC]
+  - id: full_cdac
+    title: 完整 CDAC · 关断偏置与钳位对照
+    sources: [full_cdac]
+    scope: 完整 5+5 差分 CDAC · TT / 0.9 V / 27 °C · T28 MOS + 理想 GMAIN 门控 · 复制网表
+    result: 底板切到 VCM 后，GMAIN=VIN 使高侧 MN11 反向导通；改为理想 VSS 关断可消除该通路，但真实钳位与器件应力仍阻塞验收。
+    observations:
+      - {label: 理想钳位 / VIN 关断 · 五输入最大, value: 0.006261925, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+      - {label: 理想钳位 / VSS 关断 · 五输入最大, value: 0.000004218, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: pass}
+      - {label: T28 钳位 / VSS 关断 · 仅 +0.8 V 输入, value: -0.007538001, unit: V, metric: hold, comparison: abs_lt, limit: 0.000439, gate: fail}
+    limitations: [理想 VSS 关断端点仍有 MP8 应力告警, 无物理 GMAIN 驱动 / PVT / 动态输入 / 噪声验证, 实际钳位结果不是五输入最大值]
   - id: budget_baseline
     title: 架构预算与理想行为基线
     sources: [spec, budget]
