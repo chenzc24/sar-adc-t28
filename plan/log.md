@@ -1,5 +1,29 @@
 # Maintenance Log
 
+## 2026-09-30 - Return to top-plate sampling and screen T28 GMAIN hold path
+
+- Selected top-plate sampling as the sole active design line; marked the
+  bottom-plate reports historical and added one current-status source in
+  README/architecture/design notes. No old data or OA cells were deleted.
+- Created exact-hash top-plate-only copied decks from the prior OA export,
+  removing only the unrelated XBP testbench instance/auxiliaries. Spectre
+  21.1 reproduced the ideal-relay +0.8-V bound at 0.174102 mV versus
+  0.174132 mV in the mixed fixture. Fourteen zero-error TT/0.9-V/27-C
+  transients screened single T28 NMOS/PMOS pass devices and their parallel
+  combination. Single devices failed opposite input endpoints; the
+  complementary `multi=4` path passed ±0.8 V but failed ±0.4 V at
+  ±0.842425 mV. Smaller `multi=1/2` remained above 0.439 mV at +0.4 V.
+- No remote OA/PDK modifications. Raw decks, PSF, logs and JSON remain
+  ignored under `output/top_plate_gmain_first_device/`. Current mixed
+  physical/ideal boundary and unresolved control/accuracy/SOA are in
+  `docs/top_plate_gmain_device_screen.md` and
+  `docs/sampling_architecture_status.md`.
+- Validation: Python compile, exact export/deck contracts, bounded changes,
+  Spectre completion, finite/aligned PSF, phase ordering, terminal/current
+  readback and warning inventory, per-case JSON reanalysis, owned diff and
+  `git diff --check`. Commit locally as
+  `test: start T28 top-plate GMAIN hold device`; no push requested.
+
 ## 2026-09-30 - Screen T28 GMAIN hold pull-down in full CDAC
 
 - Replaced only the copied-netlist ideal `SHOLD` relay with a real T28

@@ -2,6 +2,25 @@
 
 ## 2026-09-30
 
+- Architecture decision: return to **top-plate sampling** as the only active
+  SAR input/CDAC circuit line. Preserve bottom-plate fixtures as historical
+  A/B evidence, not parallel production designs. The selected top path uses
+  two input bootstraps and positive comparator top-node polarity; the
+  independent GMAIN-off-before-BOOT-reset concept remains, with VIN-relative
+  hold bias. The prior five-point mixed T28-core/ideal-relay bound is
+  0.174132 mV maximum raw error, not full transistor-level signoff.
+- In a top-plate-only copied netlist, the ideal-relay +0.8-V result
+  reproduced to 0.174102 mV. One T28 NMOS cannot pull GMAIN to high VIN
+  (0.761917-V residual, ±6.986726-mV held error); one T28 PMOS cannot
+  reach low VIN (0.246400-V residual, ∓5.610205-mV error). Parallel T28
+  NMOS+PMOS removes held GMAIN bias but `multi=4` still gives
+  0.842425-mV maximum five-point raw error at ±0.4 V. `multi=1/2`
+  improve the measured +0.4-V case to 0.481913/0.567460 mV, still above
+  0.439 mV. No printed CMI, but ideal boosted gate steering and clocks,
+  dynamic-well layout, PVT and SOA remain unresolved. Do not promote OA;
+  next isolate charge/timing and sizing asymmetry on the top path.
+
+
 - Replaced the copied full-CDAC protected bootstrap's ideal `GMAIN`-to-VSS
   hold relay with a T28 1.8-V NMOS while leaving `STRACK` ideal. Across
   five ±0.8-V-range static inputs, `multi=4` gave at most 0.004223-mV

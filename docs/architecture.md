@@ -20,7 +20,16 @@ is characterized.
 
 ### Sampling network
 
-Start with an ideal switch for system verification. Characterize a transmission-gate implementation next; introduce a bootstrapped switch only if settling or linearity cannot satisfy the 10-bit target.
+The initial ideal-switch, transmission-gate, and bottom-plate experiments
+are historical development stages. The selected 2026-09-30 circuit line is
+**top-plate sampling**: two input bootstrap switches connect VINP/VINN to
+the comparator-side CDAC top nodes during acquisition; CDAC bottom plates
+start at VCM and are switched to references during SAR conversion. The
+top-plate differential polarity is positive (`TOPP-TOPN ≈ VINP-VINN`).
+The current split-GMAIN/early-turn-off result is a mixed T28-core/ideal-
+steering Spectre bound, not a completed sampling cell. Device-level control
+experiments and their unresolved stress/clock limits are tracked in
+`docs/sampling_architecture_status.md`.
 
 ### CDAC
 

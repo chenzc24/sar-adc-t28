@@ -1,5 +1,10 @@
 # Full-CDAC bootstrap sampling-order experiment
 
+> Historical experiment. On 2026-09-30 the project selected top-plate
+> sampling as its active circuit-design line. Results below retain their
+> original provenance but are not the current sampling-cell acceptance
+> path; see `docs/sampling_architecture_status.md`.
+
 ## Decision
 
 The charge-conserving *bottom-plate sequence* is worth retaining as an

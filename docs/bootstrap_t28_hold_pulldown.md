@@ -1,5 +1,11 @@
 # T28 GMAIN hold pull-down: first full-CDAC iteration
 
+> Historical **bottom-plate** VSS-off experiment. The 2026-09-30 selected
+> design line is top-plate sampling, for which the target off bias is VIN,
+> not VSS. The top-control errors in this report therefore do not measure
+> progress of the selected top-plate hold-control implementation. See
+> `docs/sampling_architecture_status.md` for current status.
+
 Date: 2026-09-30. This is a **copied-netlist partial transistor-level
 screen**, not a revised Virtuoso schematic or a completed bootstrap switch.
 The exact full-CDAC OA export and protected-bootstrap transformation are

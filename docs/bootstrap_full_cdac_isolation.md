@@ -1,5 +1,12 @@
 # Protected bootstrap in a full differential CDAC
 
+> Historical bottom-plate isolation experiment. On 2026-09-30 the active
+> design line switched to top-plate sampling. `XTOP` was a separate control
+> in this fixture; its VSS-off error must not be used as the selected
+> top-plate `GMAIN=VIN` result. The original conclusions below are retained
+> as experiment history; current status is in
+> `docs/sampling_architecture_status.md`.
+
 Date: 2026-09-30. This is a **copied-netlist architectural and current-path
 screen**, not a changed Virtuoso schematic or a physical T28 gate driver.
 The full 5+5 split CDAC and matched top-plate comparison come from the exact

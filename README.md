@@ -2,6 +2,16 @@
 
 10-bit, 10 MS/s fully differential SAR-ADC design project for the TSMC 28 nm HPC+ ULL platform.
 
+## Current sampling design line
+
+As of 2026-09-30, the selected circuit-development line is **top-plate
+sampling** with a split `GMAIN` bootstrap control and main-switch turn-off
+before BOOT reset. The bottom-plate OA fixtures and netlist screens are
+preserved as historical experiments, not a concurrent production topology.
+The T28 bootstrap core has been simulated, but the complete GMAIN steering
+and clock drive are not yet transistor-level or signed off. See
+[sampling architecture status](docs/sampling_architecture_status.md).
+
 ## Project ownership
 
 - Local Git repository: `E:\bridge-Agent-T28\projects\sar-adc-t28`
