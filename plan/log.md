@@ -4,6 +4,25 @@ This file records factual project maintenance. Circuit and architecture
 decisions remain in `docs/design_log.md`; reusable lessons require a separate
 human-triggered note in `docs/experience/`.
 
+## 2026-09-30 - Audit full-control bootstrap turn-off currents
+
+- Target: distinguish turn-off output charge error from unintended hold input
+  loading in the existing full-control mixed-voltage bootstrap fixture.
+- Local changed areas: target plan, one exact-export transient-current probe
+  script, audit report, bounded design-log entry, and this maintenance entry.
+  New Spectre deck, log, PSF, and JSON remain ignored under
+  `output/bootstrap_current_path_audit/`.
+- Remote OA changes: none. The bridge tunnel was down at start, so the
+  existing hashed OA export was simulated via direct SSH Spectre; no OA cell
+  or PDK model file was edited.
+- Validation: exact source SHA-256, Spectre 21.1 zero errors, 62 aligned
+  finite saved signals (including terminal currents), source-resistor/device
+  current balance, load-charge/KCL balance, JSON parse, Python compile, and
+  owned diff review. The input-loading path is confirmed; unique parasitic
+  attribution for turn-off charge still requires a distinct OA topology test.
+- Commit status: commit only this audit locally as
+  `test: audit bootstrap turn-off current paths`; do not push without request.
+
 ## 2026-09-29 - Screen independent mixed-voltage bootstrap candidates
 
 - Target: build separately named OA experiments to address known bootstrap

@@ -1,5 +1,23 @@
 # Design Log
 
+## 2026-09-30
+
+- Audited terminal currents on the exact OA-exported full-control mixed-voltage
+  bootstrap differential fixture without changing its circuit. The -8.755-mV
+  held error forms mainly during turn-off: -2.939 mV in the 250.1-251.0-ns
+  non-overlap gap while the boosted gate remains on, then -5.837 mV while
+  the gate discharges. Differential output drift from 251.5 to 270 ns is
+  only +0.022 mV. Output-device/load KCL and load charge agree.
+- Confirmed a separate persistent hold input-loading path in high-side MN9:
+  at 270 ns its body is about 0.840 V above its `BBOT` drain; the 50-ohm
+  source supplies 25.858 uA, matching its drain terminal outflow, while
+  25.293 uA enters the body terminal. This is consistent with a forward
+  body/drain junction and produces 1.293 mV input-source drop. The sustained
+  loading is definite but is not the sole cause of the already stored output
+  error. This candidate remains rejected against the 0.439-mV raw error
+  budget despite no nominal `CMI-275x` warnings. Next variant must address
+  the off-state junction path and independently cancel/isolate turn-off charge.
+
 ## 2026-09-29
 
 - Built two independently named mixed-voltage bootstrap OA screening cells
