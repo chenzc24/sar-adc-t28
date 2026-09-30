@@ -184,7 +184,7 @@
       ${n.focus?`<button class="branch-button" data-block="${n.focus}">进入模块分支 →</button>`:''}
       ${(n.figures||[]).filter(id=>data.figures[id].available).map(id=>`<button class="figure-button" data-figure="${id}">查看${esc(data.figures[id].kind)} ↗</button>`).join('')}
       <details class="inline-detail"><summary>展开依据与说明</summary><p>${esc(expand(n.detail))}</p></details>
-      ${n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
+      ${state.focus==='sampling' && ['sample_root','ideal','input_path','charge_loss'].includes(n.id)?`<button class="figure-button" data-topology="${n.id==='input_path'?'shared':n.id==='charge_loss'?'reset':'bootstrap'}">电路联动 · 抽象样例 ↗</button>`:n.canvas?`<details class="inline-detail canvas-inline"><summary>电路视图 · Canvas 预留</summary><p>${esc(blocks[n.canvas].description)} 尚未连接；此处预留对应模块原理图与相位 / 电荷路径。</p></details>`:''}
     </article>`).join('');
     $('budget-footnote').textContent=state.focus==='all'
       ?'初始分配可迭代，非唯一合理解。含量化的分配 RSS = '+fmt(values.rss*1000)+' mV，其中包含 '+fmt(values.distortion*1000)+' mV RMS 等效失真余量；采样与 CDAC 共享采样噪声预算，不重复计入。'

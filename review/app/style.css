@@ -148,6 +148,27 @@ footer { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wr
 #figure-caption { margin: 12px 0 18px; font-size: 13px; color: #53657c; }
 .figure-scroll { overflow: auto; }
 #figure-image { width: 100%; height: auto; display: block; }
+#topology-dialog { width: min(1450px,96vw); max-height: 94vh; border: 1px solid #cdd7e4; border-radius: 12px; padding: 22px; color: var(--ink); }
+#topology-dialog::backdrop { background: #18283a99; }
+.topology-layout { display: grid; grid-template-columns: minmax(0,2.3fr) minmax(270px,1fr); gap: 22px; }
+#topology-picture { position: relative; background: white; }
+#topology-picture img { display: block; width: 100%; }
+#topology-picture svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.net-highlight { fill: none; stroke: #e3952c; stroke-width: 7; opacity: .65; }
+.device-hotspot { position: absolute; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 0; }
+.device-hotspot:hover, .device-hotspot.attention { border: 2px solid #4b7fe2; background: #537ff215; }
+.device-hotspot.picked { border: 3px solid #ba681a; background: #f2bb5c33; }
+.topology-controls { display: flex; flex-wrap: wrap; gap: 7px; margin: 12px 0; }
+.topology-controls button, #device-explanation button { border: 1px solid #d3dce9; border-radius: 5px; background: white; padding: 6px 9px; font-size: 12px; }
+.topology-controls button[aria-pressed=true] { background: #eaf1ff; border-color: #4876cc; color: #315cd6; }
+#phase-explanation,.topology-key,#group-explanation { font-size: 12px; color: #586c85; line-height: 1.8; margin: 12px 0; }
+#topology-dialog h3 { font-size: 14px; margin: 14px 0 8px; }
+#topic-explanation p { padding: 10px 12px; background: #f6f8fc; border-left: 3px solid #809bc7; font-size: 13px; }
+#topic-explanation b { display: block; margin-bottom: 5px; }
+#topic-explanation .analysis-inference { border-color: #c9994b; }
+#topic-explanation .analysis-check { border-color: #b87d70; }
+#device-explanation { border-top: 1px solid #dce4ef; margin-top: 18px; padding-top: 8px; font-size: 12px; }
+@media(max-width:950px){ .topology-layout { grid-template-columns: 1fr; } #topology-dialog { padding: 14px; } }
 @media (max-width: 600px) {
   .module-view .flow-heading h2 { font-size: 17px; }
   .module-view:not(.single-chain) #flow-canvas { min-width: 760px; }

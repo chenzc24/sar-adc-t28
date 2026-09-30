@@ -20,6 +20,21 @@ class ReviewContractTests(unittest.TestCase):
     def test_valid_model(self):
         build.validate(self.model, self.evidence)
 
+    def test_topology_sample_binding_and_body_terminals(self):
+        topology = build.load_topology()
+        self.assertEqual(len(topology['devices']), 15)
+        self.assertEqual(len(topology['phases']), 4)
+        self.assertEqual(len(topology['topics']), 3)
+        self.assertEqual(topology['devices']['XMN11'], {'D':'VOUT', 'G':'net0', 'S':'VIN', 'B':'VIN'})
+        self.assertEqual(topology['devices']['XMN9']['B'], 'VIN')
+        self.assertEqual(topology['devices']['XMP8']['B'], 'net0')
+        members = [d for g in topology['groups'] for d in g['devices']]
+        self.assertEqual(len(members), len(set(members)))
+        self.assertEqual(set(members), set(topology['devices']))
+        for topic in topology['topics']:
+            for key in ('fact', 'inference', 'verify'):
+                self.assertTrue(topic[key])
+
     def test_reviewed_figures_and_notes(self):
         records = json.loads((ROOT / 'review/figures.json').read_text(encoding='utf-8'))
         figures = build.load_figures(records)

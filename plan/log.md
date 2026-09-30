@@ -1,5 +1,17 @@
 # Maintenance Log
 
+## 2026-09-30 - Static Bootstrap topology linkage sample
+
+- Preserved user-supplied netlist/image separately from the T28 DUT; added 15
+  instance anchors, five groups, four phases and three typed analysis topics.
+  Device selection displays body-inclusive terminals and reverse topic links.
+- Sampling review entries open a scoped static-image dialog; no actual Canvas
+  connection or remote OA mutation, and no simulation/model-validity claim.
+- Validation: 18 focused tests, build/JS/diff checks; browser keyboard phase/group/
+  device/topic navigation, image highlights, Escape and narrow layout verified.
+  Pointer automation remains outside acceptance. Preview: output/review/topology-preview.png.
+- Commit locally as feat: add bootstrap topology review sample; no push requested.
+
 ## 2026-09-30 - Screen bootstrap turn-off charge
 
 - Target: distinguish ideal-relay control-clock timing from actual MN11 gate

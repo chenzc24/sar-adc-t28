@@ -216,6 +216,37 @@ def load_node_notes(figures):
     return notes
 
 
+def load_topology():
+    folder = REVIEW / 'topology'
+    netlist = (folder / 'bootstrap.cir').read_text(encoding='utf-8')
+    topology = read_yaml(folder / 'bootstrap.yaml')
+    require(hashlib.sha256(netlist.encode('utf-8')).hexdigest() == topology.pop('netlist_sha256'), 'topology netlist changed: re-review mapping')
+    devices = {}
+    for line in netlist.splitlines():
+        fields = line.split()
+        if not fields or not fields[0].startswith('X'):
+            continue
+        capacitor = fields[0].startswith('XC')
+        terminals = ['A', 'B'] if capacitor else ['D', 'G', 'S', 'B']
+        require(fields[0] not in devices, 'duplicate topology instance')
+        devices[fields[0]] = dict(zip(terminals, fields[1:1 + len(terminals)]))
+    require(set(devices) == set(topology['anchors']), 'topology anchor mismatch')
+    nets = {net for pins in devices.values() for net in pins.values()}
+    for item in topology['groups'] + topology['phases'] + topology['topics']:
+        require(set(item['devices']) <= set(devices), 'unknown topology device')
+        require(set(item.get('nets', [])) <= nets, 'unknown topology net')
+    require(set(topology['net_marks']) <= nets, 'unknown overlay net')
+    require(all(t['phase'] in {p['id'] for p in topology['phases']} for t in topology['topics']), 'unknown topology phase')
+    for x, y, w, h in topology['anchors'].values():
+        require(0 <= x < x+w <= 1034 and 0 <= y < y+h <= 675, 'invalid image anchor')
+    raw = (folder / 'bootstrap.png').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == topology.pop('image_sha256'), 'topology image changed: re-review anchors')
+    topology.update(devices=devices, image='data:image/png;base64,' + base64.b64encode(raw).decode('ascii'),
+                    revision=hashlib.sha256(netlist.encode('utf-8')).hexdigest()[:12],
+                    image_revision=hashlib.sha256(raw).hexdigest()[:12])
+    return topology
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--record-source-lock", action="store_true", help="Only after reviewing source changes: acknowledge current source fingerprints")
@@ -235,12 +266,13 @@ def main():
     public = public_snapshot(data, flows)
     public['figures'] = load_figures(json.loads((REVIEW / 'figures.json').read_text(encoding='utf-8')))
     public['node_notes'] = load_node_notes(public['figures'])
+    public['topology'] = load_topology()
     if not args.check:
         out = ROOT / "output" / "review"
         out.mkdir(parents=True, exist_ok=True)
         serialized = json.dumps(public, ensure_ascii=False, allow_nan=False).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
         template = (REVIEW / "app" / "index.html").read_text(encoding="utf-8")
-        assets = {"__STYLE__": "style.css", "__FORMULAS__": "formulas.js", "__APP__": "app.js"}
+        assets = {"__STYLE__": "style.css", "__FORMULAS__": "formulas.js", "__APP__": "app.js", "__TOPOLOGY__": "topology.js"}
         for placeholder, filename in assets.items():
             template = template.replace(placeholder, (REVIEW / "app" / filename).read_text(encoding="utf-8"))
         template = template.replace("__DATA__", serialized)

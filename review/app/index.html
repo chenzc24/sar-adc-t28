@@ -25,7 +25,19 @@
     <div class="figure-scroll"><img id="figure-image" alt=""></div>
   </dialog>
   <script id="review-data" type="application/json">__DATA__</script>
+  <dialog id="topology-dialog" aria-labelledby="topology-title">
+    <div class="figure-header"><div><span>静态图联动样例 · 非实时 Canvas</span><h2 id="topology-title"></h2></div><button id="close-topology" class="quiet-button" autofocus>关闭电路 ×</button></div>
+    <p id="topology-notice" class="stale-note"></p>
+    <div id="phase-controls" class="topology-controls" aria-label="工作相位"></div>
+    <p id="phase-explanation"></p>
+    <div class="topology-layout">
+      <div><div id="topology-picture"></div><p class="topology-key">蓝框：关注器件，不代表导通。橙色：所选主题的已连接网络片段，不表示电流方向。点击器件查看端子与相关分析。</p><div id="group-controls" class="topology-controls"></div><p id="group-explanation"></p></div>
+      <aside><h3>分析主题</h3><div id="topic-controls" class="topology-controls"></div><div id="topic-explanation"></div><div id="device-explanation"></div></aside>
+    </div>
+    <details class="inline-detail"><summary>映射与版本边界</summary><p id="topology-mapping"></p></details>
+  </dialog>
   <script>__FORMULAS__</script>
   <script>__APP__</script>
+  <script>__TOPOLOGY__</script>
 </body>
 </html>

@@ -17,6 +17,23 @@ entry instead of breaking navigation. Re-review before updating a figure hash.
 Analytical envelopes are explicitly not transistor simulation results. The
 figure dialog supports keyboard opening, Escape/close, and return to the node.
 
+## Static topology linkage sample
+
+Sampling nodes open the user-supplied Bootstrap sample from `topology/`.
+The original .cir and PNG remain separate from the T28 design DUT. YAML stores
+manual image anchors, functional groups, phases and typed analysis. `net0` has
+display alias GBOOT only; original names and body terminals are retained.
+The builder parses this bounded example (not a general SPICE importer), checks
+anchor/reference coverage and embeds the diagram plus normalized pin mapping.
+D/G/S/B remains an explicit model-interface assumption. Blue device outlines are
+attention markers, not simulated switch states; orange net segments are existing
+connections, not current paths. Device selection lists its related topics.
+Phase selection clears topic highlights; topic selection selects its stated phase.
+Netlist/image fingerprints identify the snapshot, not an LVS certificate.
+No real Canvas IDs or live connection are claimed. A future adapter must bind
+the same instance/net IDs to actual Canvas objects and verify the imported graph
+before applying annotations; it must not identify a diagram by title alone.
+
 ## Build and open
 
 From the ADC repository in PowerShell:
