@@ -1,5 +1,34 @@
 # Design Log
 
+## 2026-10-19 - Eight-bit flat mainline
+
+- User switched the target from 10-bit 5+5 to 8-bit flat. Retain 10 MS/s,
+  0.9-V supply, 0.45-V common mode, +/-0.9-V differential range and existing
+  40/60-ns acquisition/conversion allocation. Provisional ENOB target is seven
+  bits. Archive the original specification; preserve every ten-bit OA cell.
+- New LSB=7.03125 mV and deterministic 0.25-LSB gate=1.7578125 mV. Keep
+  20-ps jitter absolute, not scaled by the changed bit count. Random module
+  shares remain top-down choices; physical noise/offset are not qualified.
+- Implement a literal eight-bit VA pair and a real flat electrical network,
+  not a ten-bit truncation. Per side 255Cu plus dummy=256Cu; no bridge or LSB
+  island. Cu=6.86047 fF remains a comparison value, not a physical MOM choice.
+  Its 1.75628032-pF side load demands a new sampling qualification.
+- Electrical allocation: Rbottom=150 ohm, Rref=50 ohm, Cref=4 pF. Ten nominal
+  macro cases pass with maximum 0.003207-LSB decision-time settling residual;
+  slow-reference/high-R control fails 4.40758 LSB despite a correct final
+  code. The physical reference buffer and selection switches are still open.
+- Preserve the user's native T28 Canvas bootstrap topology. The old 0.5-um
+  main fails the new flat load (12.91-mV acquisition error). In a separate
+  eight-bit copy, Mmain W/L=1 um/150 nm passes five inputs: maximum acquisition
+  0.031228 mV and held error 0.126413 mV. No further 2-um screen is needed
+  for this bounded nominal gate. A new physical Cu may require resizing.
+- Real StrongARM interface at +/-0.25 LSB resolves correctly within 1.5 ns;
+  on/off differential kickback peaks at 0.051338 mV including the zero-input
+  diagnostic. Not a transistor SAR loop, offset/noise or MC qualification.
+- Results/report: `docs/eight_bit_flat_migration.md`. Next circuit task is
+  physical eight-bit flat CDAC/reference implementation, followed by actual
+  load requalification, not further retired bottom-plate/GMAIN experiments.
+
 ## 2026-09-30
 
 - User provisionally froze the top-plate sampling circuit at `522aa0f`,

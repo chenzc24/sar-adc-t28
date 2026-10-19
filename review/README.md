@@ -1,5 +1,12 @@
 # ADC design review — maintenance guide
 
+As of 2026-10-19 this viewer is explicitly the **historical 10-bit 5+5**
+review. Its formulas bind to `config/design_spec_10b.yaml`, so old evidence is
+not silently compared against the new eight-bit gates. The active eight-bit
+results are reviewed in [the migration report](../docs/eight_bit_flat_migration.md).
+Migrating the interactive graph content is a separate presentation task;
+changed source-report fingerprints are still reported as needing review.
+
 The HTML in output/review is a generated offline bundle, never an editing target.
 There is no framework or backend service to maintain. The compiler resolves and
 validates references; the browser renders the compiled snapshot.
@@ -8,7 +15,7 @@ validates references; the browser renders the compiled snapshot.
 
 | Concern | Maintained source | Responsibility |
 | --- | --- | --- |
-| Specification / formulas | config/design_spec.yaml, model.yaml, app/formulas.js | Inputs, units, benchmark calculation |
+| Historical specification / formulas | config/design_spec_10b.yaml, model.yaml, app/formulas.js | Inputs, units, benchmark calculation |
 | Experimental records | evidence.yaml | Observations, scope, gate and report references |
 | Flow presentation | flows.json | Six actual graphs, nodes, edges, layout and evidence references |
 | Node analysis | node-notes.yaml | 2–3 curated reasons and optional figure references |

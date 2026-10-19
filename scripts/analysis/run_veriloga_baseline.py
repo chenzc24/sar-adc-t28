@@ -333,7 +333,7 @@ def analyze_allocated_noise(path: Path) -> dict:
     enob_bits = float(metrics["enob"])
 
     budget = derive_error_budget(
-        load_spec(PROJECT_ROOT / "config" / "design_spec.yaml")
+        load_spec(PROJECT_ROOT / "config" / "design_spec_10b.yaml")
     )
     partial_error_rms_v = float(
         np.sqrt(

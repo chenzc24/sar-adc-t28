@@ -1,5 +1,27 @@
 # Active sampling architecture: top-plate
 
+## 2026-10-19: active converter is now 8-bit flat
+
+Top-plate polarity and the acquisition/hold mechanism are unchanged, but the
+active CDAC is now `sar_cdac_flat_8b`, not the historical 5+5 array. The new
+matched comparison is `tb_bootstrap_flat_8b`; native candidate sizing is
+isolated in `sar_bootstrap_canvas_flat_8b`. The source
+`sar_bootstrap_canvas_cdac_t28` and all ten-bit cells stay unchanged.
+
+At the retained comparison Cu, the new side load is 1.75628032 pF, about
+eight times the split array's effective input load. The old native 0.5-um
+selection fails the new acquisition condition (about 12.91 mV at +/-0.8 V).
+This is a real load-dependent qualification change, despite relaxed LSB.
+See [the eight-bit migration report](eight_bit_flat_migration.md) for the
+new size screen, held-error measurements and current limitations. The ideal
+reference relays/capacitors and schematic-only nominal tests do not clear
+noise, PVT, mismatch, layout or foundry reliability.
+
+## Historical 10-bit development record
+
+All values, split-GMAIN controls and cell names below refer to their original
+10-bit fixtures; they are not the active eight-bit native candidate.
+
 Decision date: 2026-09-30. The active SAR-ADC sampling design line is
 **conventional top-plate sampling**. VINP/VINN connect through one input
 bootstrap switch per side to the comparator-side top nodes of the 5+5

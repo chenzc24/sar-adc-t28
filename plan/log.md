@@ -1,5 +1,53 @@
 # Maintenance Log
 
+## 2026-10-19 - Eight-bit flat migration through native full-load sampling
+
+- Target: `plan/2026-10-19-eight-bit-flat-migration/plan.md`. Clean starting
+  branch `exp/top-plate-gmain-t28`, HEAD c5d6c08, ahead five. No user edits
+  overlapped. Active spec changed to eight-bit flat; original spec copied
+  intact to `config/design_spec_10b.yaml` (SHA256 38d03e97...5ce07fd).
+- New dedicated eight-bit VA/controller, exact-OA run generators, analyzers,
+  RC constraints, evidence audit, figures and focused regressions. Routed
+  historical ten-bit noise/test consumers explicitly to the archived spec.
+  README/architecture/budget/sampling status/manifest updated. Existing
+  interactive review frozen/labeled ten-bit to prevent mixed-bit thresholds;
+  changed report fingerprints intentionally remain requiring review.
+- Remote preflight: bridge 0.8.0, `t28_io`, correct CIW/library/tsmcN28 and
+  Spectre 21.1.0.509. Created seven SAR_ADC_T28 cells: flat CDAC, eight-bit
+  controller (symbol/VA only), comparator macro copy, macro TB, native sized
+  bootstrap copy, matched bootstrap TB and real StrongARM interface TB.
+  All six electrical schematics finish with zero markers. No floating
+  controller schematic placeholder. Preserved unrelated windows/PDK.
+- Six read-only dependencies have equal before/after API readbacks. Three
+  final saved-OA exports equal the primary simulated hierarchy except date;
+  downloaded controller VA equals local bytes. Primary simulations only
+  assign design variables/options/analysis/save, never repair DUT connectivity
+  inside a run netlist. Separate old-branch-removal diagnostic is explicit.
+- 49 accepted Spectre runs: four VA, four RC, thirteen closed-loop macro,
+  sixteen bootstrap, twelve StrongARM on/off interface. Negative controls
+  intentionally fail accuracy/thermal gates, not solver execution. Python
+  and VA cover 256-code ramp; 16384-point ideal VA correlates every code.
+  Ideal/noisy VA ENOB 7.804970/7.329375; no physical-noise claim.
+- Macro: ten nominal/transition inputs pass, 39.52-ns conversion and maximum
+  0.003207-LSB settling error. Slow reference/high relay R fails 4.40758 LSB;
+  top parasitic/kickback single-point sensitivities characterized separately.
+- Native 0.5-um failed larger-load acquisition; independent 1-um copy passed
+  five points, held error <=0.126413 mV against 1.7578125-mV gate. Tighter
+  precision differs <=0.00845 uV. Candidate-only extremes have zero CMI or
+  suppressed warnings, four inherited SFE-1131 each; old core warnings remain.
+  Main terminal-difference audit is bounded, not full foundry reliability.
+- Selected real StrongARM on/off interface: +/-0.25-LSB decisions correct
+  within 1.5 ns, peak differential kickback <=0.051338 mV. Zero-input numerical
+  resolution is not an offset measurement. Full transistor ADC, PDK CDAC,
+  buffer, power, PVT/MC, physical noise and layout are not closed.
+- Evidence: `output/eight_bit_flat/` including raw PSF/logs/decks, source
+  hashes, all accepted result paths, readbacks, inspected three figures and
+  `final_manifest.json`. Durable report: `docs/eight_bit_flat_migration.md`.
+- Validation: six focused eight-bit tests, two directly affected ten-bit
+  behavioral tests, 23 review dependency tests, review build check, full
+  49-run evidence audit, Python compile, YAML parse, full scoped diff check.
+  Local migration commit prepared; no push authorized or performed.
+
 ## 2026-09-30 - Visible overview derivation
 
 - Restored an always-visible four-step LSB/quantization → ENOB/SNDR → total

@@ -1,10 +1,32 @@
 library: SAR_ADC_T28
 remote_path: /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28
 technology_library: tsmcN28
-library_status: oa_closed_loop_electrical_macro_schematic_spectre_validated
+library_status: eight_bit_flat_macro_and_native_sampling_nominal_verified_historical_ten_bit_preserved
 technology_binding_verified: true
 
 cells:
+  sar_cdac_flat_8b:
+    role: active_eight_bit_differential_flat_cdac_electrical_macro
+    status: zero_markers_18_cap_groups_52_relays_no_bridge_exact_oa_spectre_verified
+  sar_macro_controller_8b:
+    role: active_eight_decision_macro_controller
+    views: [symbol, veriloga]
+    status: compiled_in_exact_oa_closed_loop_no_floating_schematic_placeholder
+  sar_comparator_macro_8b:
+    role: electrical_regenerative_comparator_copy_with_parameterized_kickback
+    status: zero_markers_13_closed_loop_spectre_cases_completed
+  tb_sar_macro_flat_8b:
+    role: active_eight_bit_closed_loop_electrical_macro_fixture
+    status: zero_markers_ten_nominal_cases_pass_three_sensitivity_cases_characterized
+  sar_bootstrap_canvas_flat_8b:
+    role: eight_bit_load_specific_native_t28_1v8_bootstrap_candidate
+    status: main_width_1um_length_150nm_five_point_tt_full_flat_cdac_pass
+  tb_bootstrap_flat_8b:
+    role: matched_original_vs_native_eight_bit_full_flat_cdac_fixture
+    status: zero_markers_exact_oa_0p5um_failure_preserved_selected_1um_five_point_pass
+  tb_cdac_strongarm_flat_8b:
+    role: native_bootstrap_flat_cdac_real_strongarm_clock_on_off_interface_diagnostic
+    status: zero_markers_1um_selected_six_on_off_tt_cases_pass_not_full_transistor_sar
   sar_bootstrap_canvas_cdac_t28:
     role: selected_native_0p5um_canvas_bootstrap_without_standalone_1pf_cs
     status: exact_native_source_minus_cs_zero_markers_full_cdac_tt_verified

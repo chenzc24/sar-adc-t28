@@ -1,8 +1,46 @@
 # System Error Budget
 
+## Active 8-bit allocation (2026-10-19)
+
+At the unchanged 1.8 V differential span, LSB=7.03125 mV and
+0.25 LSB=1.7578125 mV. The provisional ENOB >=7 target corresponds to
+SNDR >=43.9 dB. With the unchanged -1 dBFS sine, total permitted RMS error
+is 3.620158 mV. The target is an engineering choice, not a process guarantee.
+
+| Contribution | RMS (mV) | Basis |
+| --- | ---: | --- |
+| Quantization | 2.029747 | LSB/sqrt(12) |
+| Sampling noise | 1.265625 | 0.18 LSB allocation |
+| Comparator noise | 1.265625 | 0.18 LSB allocation |
+| Reference/switching noise | 0.843750 | 0.12 LSB allocation |
+| Clock jitter | 0.320738 | 20 ps at 4.5 MHz, unchanged absolute value |
+| Distortion/unmodeled | 1.054688 | 0.15 LSB guard band |
+
+RSS=3.041486 mV, projected SNDR=45.412833 dB and ENOB=7.251301.
+This is top-down allocation. The three explicit Gaussian noise sources in
+the clocked VA simulation give 45.882836 dB / 7.329375 ENOB; jitter and
+unmodeled distortion are **not injected** in that experiment. Constant offset
+and settling must separately stay below 1.7578125 mV; they are not quietly
+converted into random noise or double-counted.
+
+The flat-array comparison capacitance gives differential sqrt(2kT/C)=
+0.068696 mV at 27 C, excluding switch excess noise and bandwidth effects.
+At 3 ns and a worst-case 1.8 V step, Rtotal must be <=246.435 ohm for
+0.25 LSB first-order settling. New macro allocations are Rbottom=150 ohm,
+Rref=50 ohm, Cref=4 pF. These differ from historical split-array settings
+and are not measured reference-buffer specifications. Full macro transients,
+not a single RC fit, determine the actual eight decisions.
+
+Executable sources: `config/design_spec.yaml`, `config/eight_bit_flat.yaml`,
+`scripts/analysis/run_behavioral_baseline.py`, `scripts/eight_bit/analyze.py`.
+The [migration report](eight_bit_flat_migration.md) separates physical
+measurements from allocations.
+
+## Preserved 10-bit allocation
+
 This is the stage-1 allocation for the default 10-bit, 10 MS/s fully
 differential converter. The executable source values are in
-`config/design_spec.yaml`; `scripts/analysis/run_behavioral_baseline.py`
+`config/design_spec_10b.yaml`; `scripts/analysis/run_behavioral_baseline.py`
 derives the numbers below.
 
 ## Derived limits

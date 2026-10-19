@@ -1,0 +1,42 @@
+stage: eight_bit_flat_electrical_and_native_sampling_baseline
+library: SAR_ADC_T28
+profile: t28_io
+resolution_bits: 8
+unit_capacitance_ff: 6.86047
+unit_capacitance_status: comparison_only_not_selected_physical_mom
+cdac:
+  weights_lsb_first: [1, 2, 4, 8, 16, 32, 64, 128]
+  dummy_units: 1
+  bridge_units: 0
+  bottom_ron_ohm: 150
+  bottom_ropen_ohm: 1.0e12
+reference:
+  resistance_ohm: 50
+  decoupling_pf: 4
+  qualification: first_order_allocation_not_transistor_buffer
+sampling:
+  source_resistance_ohm: 50
+  native_main_width_um: 1.0
+  native_baseline_width_um: 0.5
+  selected_native_cell: sar_bootstrap_canvas_flat_8b
+  selected_oa_tag: w1u
+  native_width_screen_um: [0.5, 1.0, 2.0]
+  bootstrap_capacitance_pf: 1.0
+timing:
+  acquisition_ns: 40
+  bit_cycle_ns: 5
+  cdac_settle_ns: 3
+  compare_ns: 1.5
+  macro_sample_fall_ns: 41
+  macro_stop_ns: 82
+  native_sample_end_ns: 250.15
+  native_reference_handoff_ns: 252.05
+  native_hold_probe_ns: 270
+validation:
+  nominal_codes: [16, 64, 127, 128, 192, 239]
+  native_vdiff_v: [-0.8, -0.4, 0.0, 0.4, 0.8]
+  static_samples_per_code: 8
+  dynamic_samples: 16384
+  coherent_bin: 7373
+  maximum_settling_lsb: 0.25
+  maximum_conversion_ns: 60

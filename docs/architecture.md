@@ -1,5 +1,37 @@
 # Architecture
 
+## Active 8-bit flat architecture (2026-10-19)
+
+`VINP/VINN -> native T28 bootstrap -> differential flat CDAC -> StrongARM -> 8-bit SAR -> DOUT<7:0>`
+
+This is the target block path, not an assertion of fully transistorized
+closed-loop integration. The verified electrical closed-loop macro uses
+resistive ideal switches, ideal capacitors, a regenerative comparator macro
+and an eight-bit Verilog-A controller. Separate native-bootstrap and real
+StrongARM interface benches establish the present device-level boundary.
+
+Every CDAC side contains `[128,64,32,16,8,4,2,1]Cu + 1Cu dummy`.
+At the comparison value Cu=6.86047 fF, Cside=1.75628032 pF. There is no bridge
+capacitor or LSB subarray. Capacitors and reference switches remain electrical
+macros pending PDK implementation. Cu is not a physical unit selection.
+
+Keep VDD=0.9 V, VCM=0.45 V, differential range +/-0.9 V, 10 MS/s, 40 ns
+acquisition, 60 ns conversion allocation, 5 ns per bit. The eight-bit VA
+contract converts in 37.5 ns; the electrical macro, including its distinct
+compare/latch phase, in about 39.52 ns. Do not compare those clocks as
+identical phases.
+
+The active model files are `sar_adc_ideal_8b.va` and
+`sar_macro_controller_8b.va`; both expose exactly eight scalar bit outputs.
+The Python model is already parameterized and now consumes the eight-bit
+active spec. See [the migration report](eight_bit_flat_migration.md) for
+numbers, OA identities and remaining work.
+
+## Preserved 10-bit architecture history
+
+All remaining sections below describe the 10-bit 5+5 line, with its original
+ports/timing/limitations. Its specification is `config/design_spec_10b.yaml`.
+
 ## Baseline signal path
 
 `VINP/VINN -> sampling network -> differential split CDAC -> StrongARM comparator -> SAR logic -> DOUT<9:0>`

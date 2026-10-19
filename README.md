@@ -1,8 +1,37 @@
 # SAR ADC T28
 
-10-bit, 10 MS/s fully differential SAR-ADC design project for the TSMC 28 nm HPC+ ULL platform.
+8-bit, 10 MS/s fully differential **flat-CDAC** SAR-ADC design project for
+the TSMC 28 nm HPC+ ULL platform. Active specification:
+`config/design_spec.yaml`; preserved 10-bit 5+5 specification:
+`config/design_spec_10b.yaml`.
 
-## Current sampling design line
+## Active 8-bit line (2026-10-19)
+
+The migration covers the Python golden model/error allocation, clocked ideal
+and noisy Verilog-A, first-order settling/noise constraints, a complete
+closed-loop electrical macro in Virtuoso, and native T28 bootstrap testing
+on the new flat array. It does **not** mean a completed transistor ADC or
+PDK MOM/reference-switch array. See the
+[migration report and evidence boundaries](docs/eight_bit_flat_migration.md).
+
+Top-plate sampling is retained. Each CDAC side has weights
+`128:64:32:16:8:4:2:1` plus one dummy; no split bridge. Eight decisions use
+the existing 200 MHz bit clock. LSB is 7.03125 mV; the deterministic 0.25-LSB
+gate is 1.7578125 mV. ENOB >=7 is the provisional design target, not a
+transistor-level performance claim.
+
+```powershell
+.venv/Scripts/python.exe scripts/analysis/run_behavioral_baseline.py
+.venv/Scripts/python.exe verification/eight_bit/test_migration.py -v
+```
+
+The bridge/Spectre reproduction commands, exact new OA cell names and
+historical regression commands are in the migration report. New evidence is
+isolated under `output/eight_bit_flat/`; prior 10-bit sources/cells/results
+remain available. The sections below describe the preserved 10-bit design
+history unless explicitly marked otherwise.
+
+## Historical 10-bit sampling design line
 
 As of 2026-09-30, the selected circuit-development line is **top-plate
 sampling** with a split `GMAIN` bootstrap control and main-switch turn-off
@@ -44,6 +73,9 @@ Start-Process output/review/index.html
 ```
 
 See [review/README.md](review/README.md) for maintenance and validation.
+This viewer is now explicitly frozen to the historical 10-bit spec/evidence;
+the active eight-bit review entry is the migration report above. Its old
+results must not be assessed using the new eight-bit voltage limits.
 The panel contains extracted explanations, not document links or report viewers.
 Sampling/bootstrap has a detailed branch; the ADC block diagram maps each
 constraint to its circuit. Analog Canvas remains an unconnected slot. No remote
@@ -77,11 +109,12 @@ Small bounded targets may commit directly to `main` while the project remains
 single-owner. Pushes require explicit user authorization; published history is
 never force-rewritten without explicit authorization.
 
-## Behavioral baseline
+## Parameterized behavioral runner
 
 The first two design stages are executable locally: the system error budget is
 documented in `docs/error_budget.md`, and `models/behavioral/sar_adc.py`
-implements the ideal 10-bit fully differential SAR decisions.
+implements parameterized ideal fully differential SAR decisions (eight bits
+by default; ten bits when the archived spec is explicitly selected).
 
 On Windows PowerShell:
 
@@ -93,10 +126,11 @@ uv pip install --python .venv\Scripts\python.exe -r requirements.txt
 ```
 
 The runner writes `summary.json`, the static-linearity plot, and the dynamic
-spectrum under `output/behavioral_baseline/`. Generated output remains ignored;
+spectrum under `output/eight_bit_flat/behavioral/` for the active spec, or
+`output/behavioral_baseline/` for ten bits. Generated output remains ignored;
 the spec, model, tests, and numerical gates are tracked.
 
-## Clocked Verilog-A baseline
+## Historical 10-bit clocked Verilog-A baseline
 
 `models/veriloga/sar_adc_ideal_10b.va` is the stage-3 cycle-accurate model. It
 captures the differential input on the falling edge of `CLK_SAMPLE` and makes

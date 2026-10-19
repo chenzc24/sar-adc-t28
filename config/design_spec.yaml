@@ -1,6 +1,6 @@
 project:
   name: SAR_ADC_T28
-  maturity: behavioral_baseline
+  maturity: electrical_macro_and_native_sampling_nominal_baseline
 
 process:
   foundry: TSMC
@@ -10,10 +10,10 @@ process:
 
 converter:
   architecture: fully_differential_sar
-  resolution_bits: 10
+  resolution_bits: 8
   sample_rate_hz: 10000000
   internal_sar_clock_hz: 200000000
-  cdac_partition: 5_plus_5_split
+  cdac_partition: flat_binary
   comparator: strongarm_dynamic
   control: synchronous
 
@@ -35,7 +35,7 @@ timing_budget:
   bit_cycle_ns: 5.0
 
 targets:
-  enob_min_bits: 9.0
+  enob_min_bits: 7.0
   dnl_abs_max_lsb: 1.0
   inl_abs_max_lsb: 1.0
   power_max_mw: 1.0

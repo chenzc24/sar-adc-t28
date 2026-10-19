@@ -36,7 +36,7 @@ class BehavioralBaselineTest(unittest.TestCase):
     def test_end_to_end_static_dynamic_and_budget_gates(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             summary = run_baseline(
-                PROJECT_ROOT / "config" / "design_spec.yaml",
+                PROJECT_ROOT / "config" / "design_spec_10b.yaml",
                 Path(temp_dir),
                 make_plots=False,
             )

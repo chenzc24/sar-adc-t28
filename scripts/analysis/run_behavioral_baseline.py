@@ -160,7 +160,7 @@ def _dynamic_baseline(
     }
 
 
-def _save_static_plot(result: dict, path: Path) -> None:
+def _save_static_plot(result: dict, path: Path, resolution_bits: int = 10) -> None:
     fig, axes = plt.subplots(2, 1, figsize=(9, 6), constrained_layout=True)
     axes[0].plot(result["code"], result["dnl"], linewidth=1.0)
     axes[0].set_ylabel("DNL (LSB)")
@@ -169,7 +169,7 @@ def _save_static_plot(result: dict, path: Path) -> None:
     axes[1].set_xlabel("Code / transition")
     axes[1].set_ylabel("INL (LSB)")
     axes[1].grid(True, alpha=0.3)
-    fig.suptitle("Ideal 10-bit SAR static linearity")
+    fig.suptitle(f"Ideal {resolution_bits}-bit SAR static linearity")
     fig.savefig(path, dpi=160)
     plt.close(fig)
 
@@ -202,7 +202,7 @@ def run_baseline(spec_path: Path, output_dir: Path, *, make_plots: bool = True) 
         dynamic_figure = plt.gcf()
         dynamic_figure.savefig(output_dir / "dynamic_spectrum.png", dpi=160, bbox_inches="tight")
         plt.close(dynamic_figure)
-        _save_static_plot(static_result, output_dir / "static_linearity.png")
+        _save_static_plot(static_result, output_dir / "static_linearity.png", model.resolution_bits)
 
     summary = {
         "project": spec["project"]["name"],
@@ -234,10 +234,14 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=PROJECT_ROOT / "output" / "behavioral_baseline",
+        default=None,
     )
     args = parser.parse_args()
-    summary = run_baseline(args.spec, args.output)
+    output = args.output
+    if output is None:
+        bits = int(load_spec(args.spec)["converter"]["resolution_bits"])
+        output = PROJECT_ROOT / "output" / ("eight_bit_flat/behavioral" if bits == 8 else "behavioral_baseline")
+    summary = run_baseline(args.spec, output)
     print(json.dumps(summary, indent=2, sort_keys=True))
 
 
