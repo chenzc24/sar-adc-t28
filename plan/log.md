@@ -918,6 +918,36 @@ human-triggered note in `docs/experience/`.
   output/review/gmain-comparison-preview.png. No OA/simulation or push.
 - Preserved pre-existing full_cdac need-review state and unrelated circuit work.
 
+## 2026-10-19 - Canvas 0.5-um bootstrap on the full differential CDAC
+
+- Created `SAR_ADC_T28/sar_bootstrap_canvas_cdac_t28/{schematic,symbol}` by OA
+  copy of the selected native source minus standalone Cs, and new
+  `tb_bootstrap_canvas_full_cdac/schematic` with two separate full differential
+  5+5 CDAC paths and matched source/clock/reference boundary conditions.
+- Exact OA-export comparison proves both old bootstrap/CDAC definitions are
+  historical-identical and new native candidate is source-identical minus Cs.
+  Two new schematics have zero markers; 1-Tohm inverter monitor terminations
+  resolved initial unloaded-output markers. No original cell/PDK was changed.
+- Completed 14 result.ok Spectre transients: five-point primary comparison,
+  two tighter-accuracy cases, two isolated candidate warning checks, and five
+  reset-crossing-aligned control cases. Primary worst raw held differential
+  error: original 1.535561 mV, native 0.393871 mV (74.35% smaller), all native
+  points nominally within 0.439 mV with only 45.13 uV worst margin. No fitting,
+  PVT, noise, mismatch or complete-ADC acceptance is claimed.
+- Tighter accuracy agrees within 0.105 uV; candidate-only logs have zero CMI
+  or suppressed warnings and four inherited SFE-1131 each. Old core-device
+  SOA warnings remain. Reset-crossing alignment gives original worst
+  1.632060 mV/native 0.393861 mV: gain is not just an earlier reset. Internal
+  waveform shape/topology differs, so no one-factor W/L claim is made.
+- Saved OA final export matches the primary simulated hierarchy except date;
+  all three read-only dependencies have identical before/after API readbacks.
+  Report: `docs/canvas_bootstrap_full_cdac.md`; source/analysis scripts and
+  manifest updated; provenance, raw logs/PSF, metrics and inspected three
+  figures under ignored `output/canvas_full_cdac/`.
+- Validation: finite complete waveforms, edge/consistency assertions, YAML
+  parse, Python compile, rendered figure inspection and diff checks. Scoped
+  local commit; no push.
+
 ## 2026-10-19 - Native T28 bootstrap from the user's Canvas topology
 
 - Source: connected Analog Canvas `Bootstrap switch/dut`, revision 357,
