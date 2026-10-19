@@ -917,3 +917,38 @@ human-triggered note in `docs/experience/`.
 - 23 tests/build/diff checks pass; browser image dialog verified. Preview:
   output/review/gmain-comparison-preview.png. No OA/simulation or push.
 - Preserved pre-existing full_cdac need-review state and unrelated circuit work.
+
+## 2026-10-19 - Native T28 bootstrap from the user's Canvas topology
+
+- Source: connected Analog Canvas `Bootstrap switch/dut`, revision 357,
+  structure revision 32; captured its topology/placement/routes without editing
+  the Canvas. User selected native T28 1.8-V devices and clarified that custom
+  drawing/device wrappers were not desired.
+- Created `SAR_ADC_T28/sar_bootstrap_canvas_t28` schematic/symbol and
+  `tb_bootstrap_canvas_t28` schematic. DUT has twelve actual `tsmcN28`
+  MOS (ten bootstrap plus a two-MOS physical inverter) and two analogLib caps.
+  Verified the original ten MOS body/terminal connections, capacitors and clock
+  inverter. No existing project cell or PDK was changed.
+- Ran seventeen accepted nominal Spectre transients from exact OA exports:
+  all-1-um baseline, 0.5-um and 0.32-um main-switch widths, 0.32-um plus stronger
+  reset, then the selected five-input rerun. Selected Mmain W/L=0.5 um/150 nm;
+  remaining MOS 1 um/150 nm, Cboot=Cs=1 pF. Worst tested single-ended held error
+  improved from 0.554224 to 0.302735 mV; selected worst acquisition error is
+  0.056856 mV. The 0.32-um main fails acquisition (3.307791 mV); stronger reset
+  did not recover it. No fitting/calibration was applied.
+- Final Check & Save: zero markers. Final saved OA netlist equals the selected
+  five-point simulated export except generation timestamp. Five final runs
+  have no printed CMI/suppressed warnings and retain four model SFE-1131
+  warnings each. Sampled MOS terminal-difference peak is 1.75435 V; no PVT,
+  mismatch/noise/layout/full-CDAC acceptance is claimed.
+- Corrected Windows OpenSSH ControlMaster use process-locally after a download
+  failure; repaired three harness read-in failures before accepting baseline.
+  Retired six mistaken wrapper/drawing cells created earlier in this target
+  after checking exact ownership/saved state. Their source/readbacks are in
+  ignored output and can reconstruct them; they were not simulated.
+- Evidence/report: `output/canvas_bootstrap_t28/` and
+  `docs/canvas_bootstrap_t28.md`; source topology in
+  `config/canvas_bootstrap_topology.json`; two new native cells registered in
+  `virtuoso/cell_manifest.yaml`. Validation: native OA readback,
+  seventeen result.ok transients, fresh-export equivalence, rendered figure
+  inspection, Python compile and diff checks. Scoped local commit; no push.
