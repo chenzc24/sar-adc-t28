@@ -21,6 +21,11 @@ It is **not qualified**: reference-reset device-stress failures and a
 SS/0.81-V/cold full-swing Bootstrap acquisition failure remain explicit.
 The earlier electrical macro and all historical cells are preserved.
 
+The next [reset timing/drive experiment](docs/cdac8_reset.md) completed 24
+native APS runs and an independent OA candidate. Moderate PMOS-gate drive
+clears the original nominal test point, but cross-input stress still fails;
+no baseline replacement or PVT qualification is claimed. Bootstrap is unchanged.
+
 Top-plate sampling is retained. Each CDAC side has weights
 `128:64:32:16:8:4:2:1` plus one dummy; no split bridge. Eight decisions use
 the existing 200 MHz bit clock. LSB is 7.03125 mV; the deterministic 0.25-LSB

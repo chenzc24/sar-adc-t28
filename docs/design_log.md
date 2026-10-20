@@ -1,5 +1,24 @@
 # Design Log
 
+## 2026-10-20 - Reset timing and drive experiment, no promotion
+
+- Keep input Bootstrap/PHI, capacitor geometry/count, reference pass-device
+  geometry and SAR decision schedule unchanged. Create independent
+  `cdac8_reset_*` OA objects, never overwrite the earlier device baseline.
+- Eighteen native netlist diagnostics and six exact-OA APS runs identify
+  a local improvement from 2x/4x VCM PMOS-gate inverter pull-down. The 4x
+  OA sample reduces original-point reset worst terminal 1.012168 -> 0.982106 V;
+  literal array and real StrongARM tests at that input have no CMI warnings.
+- Do not promote: +/-0.8-V tests and joint reset-edge tests still fail
+  positive/negative stress. Slowing/strengthening/adding buffers is not
+  universally beneficial. Good final codes/VCM settling do not waive stress.
+- Unchanged -0.8-V baseline already has 1.072523-V Vbd at 47.636 ns during
+  SAR reference switching. Separate that pre-existing conversion-phase issue
+  from reset and from deferred Bootstrap large-signal acquisition.
+- Stop before broad PVT on a known TT cross-input failure. Keep qualified=false;
+  next structural reference-reset choices require explicit design/evidence.
+  Details, limitations and measured timing figures: `docs/cdac8_reset.md`.
+
 ## 2026-10-20 - First native eight-bit flat CDAC candidate
 
 - Added an electrically selected 4.004-fF T28 MOM unit, 256 independent units

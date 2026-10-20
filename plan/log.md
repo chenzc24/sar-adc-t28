@@ -1,5 +1,33 @@
 # Maintenance Log
 
+## 2026-10-20 - CDAC reset timing and native gate drive, bounded experiment
+
+- Target: `plan/2026-10-20-cdac-reset-timing-drive/plan.md`; clean 665594d on
+  `exp/cdac-flat8-device`. User explicitly defers Bootstrap acquisition.
+- Added isolated source/config/report/figures and 13 new OA schematics:
+  eight reference-switch driver cells, nominal/literal arrays, three benches.
+  Historical CDAC/Bootstrap/PDK and input clock were not modified.
+- Completed 24 result.ok native APS runs: 18 diagnostic copies and six exact
+  saved-OA exports. Original-point worst reset terminal 1.012168 V; 2x/4x
+  pull-down 0.980651/0.982106 V. The 4x OA retains -0.201700-mV fixed128 hold
+  error, 0.386133-mV loop comparison error; native StrongARM fixture 0.583577 mV.
+- All checked final codes and final reset levels pass their respective gates,
+  but cross-input positive/negative stress still fails. 4x -0.8-V reset worst
+  1.055154 V. The unmodified negative-input baseline already has 1.072523-V
+  conversion-phase Vbd. No broad PVT/FFT/MC/noise/layout or acceptance claim.
+- Final remote audit: 14 old dependency readbacks identical, 13 schematics
+  zero markers, three final native exports equal primary except timestamp;
+  two remote VA hashes equal unchanged local sources. Nominal diagnostic/OA
+  and aggregate/literal waveforms correlate; no Monte Carlo equivalence claim.
+- Harness checks caught missing analysis NumPy in bridge venv (use project
+  Python), PSF `units` metadata, a continued-master parser omission, a
+  StrongARM-only CKB parameter absence and a synthetic-test typo. Fixed before
+  accepting metrics; no simulator read-in/convergence failure counted as pass.
+- Generated evidence remains ignored under `output/cdac8_reset/`; no PDK,
+  raw OA or model contents staged. Five focused tests, Python compilation,
+  YAML parse, plot inspection and diff checks passed before the scoped local
+  commit. No merge/push. Experiment complete; circuit acceptance open.
+
 ## 2026-10-20 - First device-level eight-bit flat CDAC, acceptance open
 
 - Target: `plan/2026-10-19-eight-bit-device-cdac/plan.md`; clean base
