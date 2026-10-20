@@ -1436,6 +1436,33 @@ human-triggered note in `docs/experience/`.
   verification/sar8_simple/bitwise_approximation.json. Scoped local commit;
   no push. No additional physical ADC/PVT/SOA qualification claimed.
 
+## 2026-10-20 - Rebuild one clean SAR8 simple Canvas hierarchy
+
+- Claimed exact-origin MCP0.17.75, scoped to the user's existing Circuit.
+  Backed up full old12-page Project before replacement; removed its sync/
+  handshake/review pages as requested. Current21 cells only, with explicit8
+  SAR slices and separate P/N banks; top selected/fit, cloud yc3a7geyrf save
+  revision2. No Gallery publication, OA/PDK/VA changes or new simulation.
+- New offline canvas.py derives complete connectivity from the unchanged
+  simple CMOS hierarchy:163 direct definition instances, all formal terminals,
+  real model/child bindings and RC/MOS parameters. Native gate symbols bind
+  internal CMOS cells; state/MUX/delay blocks expand. Named shared connections
+  are actual bound electrical labels, not drafting text. Added short local
+  orthogonal chains without changing electrical membership.
+- Native compare: equal across21 cells, zero device/target/connection/binding/
+  parameter differences; port order deliberately ignored. Final diagnostics
+  zero errors/warnings in every Cell. All21 PNGs exported and visually reviewed;
+  top SVG and full pre/post Project backups in output/sar8_simple_canvas/.
+- Fixed an atomic label-order rejection and visual collisions/dangling label.
+  One top PNG export disconnected during concurrent reads; fresh status
+  attached, sequential retry passed. No uncertain mutation replay. Final cloud
+  Save/export and structural comparison confirmed. Python compile/focused
+  generator, JSON/SVG/hash and diff checks pass; evidence
+  verification/sar8_simple/canvas.json, guide docs/sar8_simple_canvas.md.
+- Generic raw T28 model names are not installed PDK models; diagram equality
+  does not requalify FF SOA, delays or physical ADC integration. Unrelated
+  CDAC10/uniform-scale work preserved. Scoped local commit only, no push.
+
 ## 2026-10-20 - Uniform CDAC reference-switch scale2x/3x/4x
 
 - 17 completed result.ok native APS transients:five static inputs (-.8V,
