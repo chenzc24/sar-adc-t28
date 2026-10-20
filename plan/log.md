@@ -1,5 +1,38 @@
 # Maintenance Log
 
+## 2026-10-20 - Implement the user-approved minimal asynchronous SAR timing
+
+- New target SAR_ADC_T28/sar_logic_8b_async_simple:21 native schematic/symbol
+  cells and two benches. One sampling control, local compare/write/update,
+  bit chain, eight SAR slices and P/N driver banks. One clock SR,16 DFFs;
+  recursively1476 MOS/257 explicit ideal caps/70 ideal resistors. No old
+  handshake/status/deadline/EOC or output bank. Old/user-open cells preserved.
+- Final v2 thirteen result.ok Spectre21.1.0.509.isr12 APS cases pass the bounded
+  code/event/nonoverlap/data-before-reset/read-window assertions. Two normal
+  frames145/85 with exactly8 comparisons/writes/updates; same at maxstep10ps.
+  Representative0/255/85/170, variable delay, SS/FF, sample abort/restart,
+  stuck frame/recovery and unchanged real StrongARM are separately scoped.
+  All use ideal sampled DAC; only StrongARM fixture uses a native comparator.
+- TT v1 PHI_W=-105.802mV and CMI warnings repaired with a stronger local output
+  buffer (accepted CDF sizes N2um/P3um, not the rejected4um P finger). V2
+  minimum=-41.105694mV, tight-step=-41.105690mV, nominal no CMI. Preserve v1
+  evidence; sensitivity is not a unique coupling root-cause proof.
+- SS representative last write74.078ns, StrongARM70.309ns. FF.99V functional
+  code correct but30 printed CMI warnings plus13,031,246 suppressed: device
+  safety is NOT passed. No model-limit changes. Fixed read timing, ideal RC
+  mapping/tolerance/layout and full physical integration/noise/MC/power remain
+  open; no native256-code sweep or ADC performance/qualification claim.
+- Exact OA source/readback, immutable export/deck/wave hashes, shared-control
+  and unchanged-StrongARM checks; actual-export functional abstraction passes
+  256 words/eight stuck recovery positions. Abstract tests do not replace
+  native margins. Remote plant source hash equals local after runs. Raw
+  artifacts output/sar8_simple; curated metrics/cell list verification/sar8_simple;
+  four timing figures and report docs/sar8_simple_async.md.
+- Active control pointer/docs updated; targeted compile/model/YAML/JSON/link/
+  diff and owned review checks pass. Four figures visually inspected; new
+  top/timing/bit schematic windows opened for review. Local scoped commit;
+  no push requested. Concurrent CDAC10/PN-ratio work excluded.
+
 ## 2026-10-20 - Two complete asynchronous sampling periods and key-node diagrams
 
 - User requested two complete sampling periods and all key timing nodes after

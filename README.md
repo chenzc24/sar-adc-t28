@@ -37,11 +37,14 @@ no baseline replacement or PVT qualification is claimed. Bootstrap is unchanged.
 
 Top-plate sampling is retained. Each CDAC side has weights
 `128:64:32:16:8:4:2:1` plus one dummy; no split bridge. The selected control
-is now [asynchronous SAR](docs/sar8_async_implementation.md): external 10-MHz
-sampling, comparator-completion handshake, native RC/reset guards, and an
-independent conversion deadline. An executable event model and 26-cell native
-T28 controller now exist. Nominal representative conversions and fault recovery
-work, but SS timing and device-stress gates remain open; this is not a qualified
+is now [sample-initialized asynchronous SAR](docs/sar8_simple_async.md): one
+external 10-MHz sampling phase, local compare/write/update timing, an eight-bit
+position chain and SAR register, and separate P/N bottom-driver banks. There
+are no independent reset/start/deadline/fault/EOC controls or output bank.
+The new 21-cell native hierarchy passed 13 bounded APS functional/timing cases;
+FF/0.99-V device SOA and physical analog-chain integration remain open. The
+[older 26-cell handshake controller](docs/sar8_async_implementation.md) is
+preserved as history, not the selected implementation. This is not a qualified
 full ADC. Existing 200-MHz clocked models/OA benches remain comparison fixtures,
 not relabelled or requalified as async. LSB is 7.03125 mV; the deterministic 0.25-LSB
 gate is 1.7578125 mV. ENOB >=7 is the provisional design target, not a

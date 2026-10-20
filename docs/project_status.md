@@ -7,6 +7,12 @@
 **目前不是只有模型：采样开关、MOM 阵列/参考开关、StrongARM、异步控制器都
 已有原生器件原型。但“全部模块合并到同一个真实异步 ADC 顶层”尚未完成。**
 
+本日后续控制更新：[精简异步SAR](sar8_simple_async.md)已替代旧多阶段握手
+控制器作为选定方案。新顶层 `sar_logic_8b_async_simple`，仅采样相位及本地
+比较/写入/更新，未增加EOC；21种原生cell、13个有界APS验证case，FF器件
+应力及真实模拟链整合仍未通过。下方库存快照保持原清点时间点，不冒充已包含
+这些新cell；新cell/端口以[专用清单](../verification/sar8_simple/cells.json)为准。
+
 ## 1 项目到底在哪里
 
 ```text
@@ -42,7 +48,7 @@
 | Bootstrap | 历史 core/隔离/延迟复位实验；后按用户 Canvas 拓扑映射 T28 1.8-V MOS | 当前 8-bit 使用独立 1-µm 主开关副本；标称采样已验证，非全角合格 |
 | 器件 CDAC | T28 MOM 单元/512 独立单元阵列、原生参考开关/驱动、全码与动态诊断 | 三轨基线可复现；复位增强/双轨互补是独立候选，尚未取代它 |
 | StrongARM | 11 个 T28 core MOS；速度、噪声、失配及 CDAC 接口测试 | 当前尺寸先作为整机集成起点，暂不因 PVT/失配继续优化 |
-| 原生异步 SAR | 事件参考模型、26 个原生控制 cell、握手/输出寄存器/故障恢复 | 代表性标称功能跑通；真实比较器接口已测，仍使用理想采样/DAC plant |
+| 原生异步 SAR | 新21-cell采样初始化控制器；旧26-cell握手方案保留 | 两帧/代表码/快慢延时/SS/FF功能、打断/恢复及真实比较器接口已测；FF应力和真实采样/DAC整合未完成 |
 | 完整器件级整机 | 两条部分集成线分别存在，见下一节 | 需要合并真实模拟链与原生异步控制，不是已完成整机验收 |
 | 版图与签核 | 本次库清点没有 layout view；没有 DRC/LVS/PEX 闭环 | 尚未进入 |
 
@@ -56,6 +62,8 @@
 | `tb_cdac8_nominal` | 原生 Bootstrap、PDK MOM、原生三轨参考开关 | 电气宏模型 | Verilog-A 固定位周期 | 模拟链的大扫描诊断，不是全原生 ADC |
 | `tb_cdac8_nominal_sar` | 同上 | 真实 `sar_strongarm_t28` | Verilog-A 固定位周期 | 原生模拟链＋真实比较器接口 |
 | `tb_cdac8_dr_strongarm` | 原生 Bootstrap、PDK MOM、原生双轨候选 | 真实 StrongARM | 另一套 Verilog-A 固定位周期 | 双轨候选诊断，不是异步整机 |
+| `tb_sar8s_logic` | 理想 `sar8a_plant` | plant行为轨道 | 新精简原生异步控制器 | 新时序、直接工作码、P/N控制、采样打断/恢复 |
+| `tb_sar8s_strongarm` | 理想 `sar8a_plant` 采样/DAC | 真实StrongARM | 新精简原生异步控制器 | 新本地时序与未修改比较器的代表码接口 |
 | `tb_sar8a_logic` | 理想 `sar8a_plant` | plant 生成的行为轨道 | 原生异步控制器 | 控制握手、存储、故障/恢复 |
 | `tb_sar8a_strongarm` | 理想 `sar8a_plant` 采样/DAC | 真实 StrongARM | 原生异步控制器 | 控制器与实际比较器握手 |
 

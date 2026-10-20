@@ -1,5 +1,24 @@
 # Design Log
 
+## 2026-10-20 - Sample-initialized minimal asynchronous SAR replaces handshake core
+
+- Follow the user's narrowed architecture: one SAMPLE phase initializes the
+  pointer/register and stops the comparator; one local compare/write/update
+  loop, eight position and eight SAR DFFs, P/N bottom-driver banks. Remove
+  independent reset/start/permission/hold/deadline/fault/EOC/status and output
+  bank. Empty bit chain inhibits next launch; it is not a completion latch.
+- Keep only one comparator-clock SR. Capture first, delay update/reset, then
+  overlap comparator reset and the next DAC-control settling interval. ACTIVE
+  gates the next launch, never the pulse driving a changing position chain.
+- Read DOUT in a fixed95..99ns window; SAMPLE clears it. A stalled conversion
+  leaves a partial word and has no error flag, rather than silently retaining
+  an old complete word. New SAMPLE aborts and restarts the local loop.
+- Native sample/work timing runs pass with ideal DAC plant; new top/cells and
+  exact context are in docs/sar8_simple_async.md. TT write-clock drive repair
+  reduces observed multiframe undershoot105.8->41.1mV without adding control
+  states. FF.99V SOA and physical analog-chain/delay implementation remain
+  open. Functional success is not full-ADC qualification.
+
 ## 2026-10-20 - Native asynchronous controller prototype, not PVT/SOA qualified
 
 - Implement the local comparator handshake as26 native modular cells, retaining

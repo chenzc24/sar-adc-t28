@@ -1,0 +1,44 @@
+stage: native_bounded_verification_not_full_ADC_qualified
+resolution_bits: 8
+sample_rate_hz: 10000000
+supply_v: 0.9
+profile: t28_io
+library: SAR_ADC_T28
+top_cell: sar_logic_8b_async_simple
+frame_ns: 100
+acquisition_ns: 40
+fixed_read_window_ns: [95, 99]
+inputs: [SAMPLE, COMP_P, COMP_N, VDD, VSS]
+local_phases: [CMP_CLK, PHI_W, PHI_U]
+independent_controls_removed: [RST_N, HOLD_START, WORK_RST, ACCEPT, USED, HOLD, TRIAL, RESET_OK, DEADLINE, PREPARE, FAULT, BUSY, VALID, EOC]
+initialization: one_complete_SAMPLE_high_phase_required
+output: working_SAR_register_cleared_by_next_acquisition_no_output_bank
+stop: one_hot_chain_empty_inhibits_next_comparator_launch
+switching: conventional_trial_one_CODE_equals_stored_OR_token
+bottom_drivers: separate_P_N_complementary_reference_choices_with_local_BBM
+test_plant: read_only_sar8a_plant_ideal_sampled_DAC_variable_delay_comparator
+physical_cdac_integrated: false
+delay_seeds:
+  sections: 2
+  resistance_per_section_ohm: 10000
+  capacitance_per_section_ff: {quiet: 150, valid: 5, write: 20, bbm: 5}
+  fast_reset: native_MOS_clamps
+  physical_mapping: ideal_schematic_passives_not_PDK_or_layout_qualified
+loads_ff: {word_bit: 5, bottom_select: 10, comparator_clock: 10, comparator_output: 10}
+write_clock_buffer_final_width_um: {nmos: 2, pmos: 3}
+verification:
+  native_Spectre_APS_runs_final_revision: 13
+  nominal_two_frame_words: [145, 85]
+  functional_netlist_abstraction_words: 256
+  full_256_native_sweep_completed: false
+  nominal_CMI_screen_pass: true
+  FF_0p99V_SOA_pass: false
+  raw_saves: 70
+  summary: verification/sar8_simple/summary.json
+open_gates:
+  - FF_0p99V_device_SOA
+  - physical_CDAC_sampling_reference_and_load_integration
+  - PDK_RC_tolerance_and_layout_mapping
+  - metastability_probability_and_fixed_read_window_robustness
+  - noise_mismatch_power_layout_full_ADC_qualification
+qualified: false
