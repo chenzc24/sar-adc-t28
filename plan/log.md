@@ -1435,3 +1435,36 @@ human-triggered note in `docs/experience/`.
   pass. Artifacts docs/figures/sar8_simple/bitwise_*.{png,svg} and
   verification/sar8_simple/bitwise_approximation.json. Scoped local commit;
   no push. No additional physical ADC/PVT/SOA qualification claimed.
+
+## 2026-10-20 - Uniform CDAC reference-switch scale2x/3x/4x
+
+- 17 completed result.ok native APS transients:five static inputs (-.8V,
+  -.5LSB,+.5LSB,+453.515625mV,+.8V) at factors2/3/4, plus positive-full3x/4x
+  maxstep10ps. TT/.9V/27C/300ns; same native Bootstrap/MOM, reference50ohm/4pF,
+  input50ohm,100ps blanking/20ps ideal gates and VA sign comparator/control.
+  All subckts unchanged; only global scale/input values, gate-current saves
+  and optional maxstep differ. No OA/Canvas/PDK/installed-VA or baseline writes.
+- Codes14/127/128/192/241 all correct and all residuals within .25LSB1.7578125mV.
+  Core-SOA passes3/5 at2x,5/5 at3x and4x. 2x true model CMI at both full inputs:
+  negative1.026090V (XSP2.MP_HIGH Vbd,203.129050ns), positive1.019582V
+  (XSN1.MP_HIGH Vgd,103.130169ns), both restore. Printed5/10, suppressed322/1961;
+  every other run CMI/suppressed0 and all17 LTE0. Execution success is not SOA
+  or ADC qualification.
+- Grouped worst ports2x/3x/4x=1.026090/.982771/.959974V; max residuals
+  .439913/.521631/.601917mV. Nominal3x/4x margins about7.2/30mV. More width not
+  uniformly better: negative-half3x .951155V versus4x .953468V, different phase.
+  Recommend4x for next bounded diagnostic, no adoption/freeze/full-input/PVT.
+- All32 reference MOS/five pairs,16 gate equations,32 gate and12 drain current
+  vectors checked. Absolute gate charge maxima .560739/.841598/1.125214pC/cycle
+  (200..300ns) are ideal-driver load proxies, not physical clock power. Largest
+  rail disturbance180.231/191.986/201.455mV and source peak3.605/3.840/4.029mA.
+  4x improves SOA but costs gate load/reference disturbance and residual error.
+- Fresh2x replay within .002uV; fine3x/4x peaks .982777430/.959968403V,
+  delta+6.134/-5.621uV, residual+.000912/-.012373uV, gate charge-6.44/+2.74ppm.
+  Source reversibility, subckt immutability, source/deck/VA/wave hashes,
+  finite complete data, focused code/error/SOA/current/gate/fine assertions,
+  Python compile and diff checks pass. Two timing/summary PNGs visually checked.
+- Report docs/cdac8_uniform_scale.md; curated docs/figures/cdac8_uniform_scale/;
+  raw output/cdac8_uniform_scale/. Concurrent bitwise/simple-Canvas and historical
+  cdac10 work untouched. Scoped local commit, no push. No actual-driver,
+  noise/MC/StrongARM/Bootstrap-internal/layout/lifetime qualification claimed.

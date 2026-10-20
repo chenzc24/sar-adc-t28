@@ -1,0 +1,2569 @@
+{
+  "scope": "five static TT inputs; ideal-gate native CDAC diagnostic, not full ADC/reliability qualification",
+  "conditions": {
+    "vdd_v": 0.9,
+    "corner": "tt",
+    "temperature_c": 27,
+    "stop_ns": 300,
+    "edge_ps": 20,
+    "dead_time_ps": 100,
+    "physical_transient_noise": false
+  },
+  "soa_warning_v": 0.99,
+  "deterministic_limit_mv": 1.7578125,
+  "cases": [
+    {
+      "name": "control_m2",
+      "point": "control",
+      "factor": 2,
+      "vdiff_v": 0.453515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 192,
+      "expected_code": 192,
+      "code_pass": true,
+      "compare_max_error_mv": 0.4057044593678283,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.10409327235505472,
+          "cm_v": 0.4495579685516568
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.2360657213685835,
+          "cm_v": 0.4495552584952558
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.4057044593678283,
+          "cm_v": 0.4495558944337071
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 208,
+          "error_mv": 0.3209167368478649,
+          "cm_v": 0.44955541107701635
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 200,
+          "error_mv": 0.2784830971843677,
+          "cm_v": 0.44955529376422093
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 196,
+          "error_mv": 0.2572644007785563,
+          "cm_v": 0.44955526596883216
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 194,
+          "error_mv": 0.2466555295296824,
+          "cm_v": 0.44955525975538024
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 193,
+          "error_mv": 0.2413521511689387,
+          "cm_v": 0.4495552585647112
+        }
+      ],
+      "acquisition_error_mv": 6.563941612469648e-07,
+      "stress": {
+        "all": {
+          "value_v": 0.9569426678318588,
+          "signed_v": 0.9569426678318588,
+          "time_ns": 47.63051485054945,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9569369753424611,
+          "signed_v": 0.9569369753424611,
+          "time_ns": 147.6305318962393,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9569426678318588,
+          "signed_v": 0.9569426678318588,
+          "time_ns": 47.63051485054945,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9559502804703688,
+          "signed_v": 0.9559502804703688,
+          "time_ns": 103.1304620197368,
+          "instance": "XCDAC.XSN5.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.3056106752219182,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.1661961375249122,
+        "n": 0.13941453769700604
+      },
+      "gate_peak": {
+        "abs_ma": 1.013027841140097,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 2.8209300797279453,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 46.74431780310151,
+          "signed_deviation_mv": -46.74431780310151,
+          "deviation_time_ns": 103.14812971939189,
+          "source_peak_ma": 0.9348863560620296,
+          "source_charge_abs_pc": 1.1506061388527447
+        },
+        "low": {
+          "max_deviation_mv": 46.70559627620077,
+          "signed_deviation_mv": 46.70559627620077,
+          "deviation_time_ns": 203.14822583738862,
+          "source_peak_ma": 0.9341119255240155,
+          "source_charge_abs_pc": 1.160895350864051
+        }
+      },
+      "reference_max_deviation_mv": 46.74431780310151,
+      "reference_source_peak_ma": 0.9348863560620296,
+      "deck_sha256": "dbf25fca33f05fd948ad9b4de9a1d026de95cf594b3b252e4dcd63fc925e9626",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "f8a65a1740db0be32999f91ec1318ed7a76314fa5aee69e10d371f0a4c5cfbf8",
+      "bounded_pass": true
+    },
+    {
+      "name": "control_m3",
+      "point": "control",
+      "factor": 3,
+      "vdiff_v": 0.453515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 192,
+      "expected_code": 192,
+      "code_pass": true,
+      "compare_max_error_mv": 0.4706035896621108,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.10410394358900676,
+          "cm_v": 0.4495579108194162
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.27934346807889643,
+          "cm_v": 0.4495552001208113
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.4706035896621108,
+          "cm_v": 0.44955583626870194
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 208,
+          "error_mv": 0.37501709708576136,
+          "cm_v": 0.4495553525051176
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 200,
+          "error_mv": 0.32716313741443237,
+          "cm_v": 0.4495552357998339
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 196,
+          "error_mv": 0.30323389850345217,
+          "cm_v": 0.4495552082539389
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 194,
+          "error_mv": 0.29127010439039536,
+          "cm_v": 0.4495552021564455
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 193,
+          "error_mv": 0.2852890979970768,
+          "cm_v": 0.44955520102630653
+        }
+      ],
+      "acquisition_error_mv": 6.435506572088912e-07,
+      "stress": {
+        "all": {
+          "value_v": 0.942947896675354,
+          "signed_v": 0.942947896675354,
+          "time_ns": 47.63016043667934,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9429363427159435,
+          "signed_v": 0.9429363427159435,
+          "time_ns": 147.6301808846287,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.942947896675354,
+          "signed_v": 0.942947896675354,
+          "time_ns": 47.63016043667934,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9400141535792605,
+          "signed_v": 0.9400141535792605,
+          "time_ns": 203.1294476712415,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.4575644195563848,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.24891941657291636,
+        "n": 0.20864500298346844
+      },
+      "gate_peak": {
+        "abs_ma": 1.656300457600486,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 4.654548901333141,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 49.347732549297696,
+          "signed_deviation_mv": -49.347732549297696,
+          "deviation_time_ns": 203.1423549488879,
+          "source_peak_ma": 0.986954650985955,
+          "source_charge_abs_pc": 1.3021454615563344
+        },
+        "low": {
+          "max_deviation_mv": 49.360814027186784,
+          "signed_deviation_mv": 49.360814027186784,
+          "deviation_time_ns": 203.1423549488879,
+          "source_peak_ma": 0.9872162805437356,
+          "source_charge_abs_pc": 1.3037277506628384
+        }
+      },
+      "reference_max_deviation_mv": 49.360814027186784,
+      "reference_source_peak_ma": 0.9872162805437356,
+      "deck_sha256": "1a14b9c3c994c32ed20546bfc9ef14b84eb3b1bf1b58ac3cd7c74ae9df9d7b88",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "3676f5aade4401b932185f4123028bb2cb0eba67a13e21fa6dc8eef775a0268b",
+      "bounded_pass": true
+    },
+    {
+      "name": "control_m4",
+      "point": "control",
+      "factor": 4,
+      "vdiff_v": 0.453515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 192,
+      "expected_code": 192,
+      "code_pass": true,
+      "compare_max_error_mv": 0.5353250170000434,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.10410779459019137,
+          "cm_v": 0.4495578826179666
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.3225130476099958,
+          "cm_v": 0.4495551707761373
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.5353250170000434,
+          "cm_v": 0.4495558074460459
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 208,
+          "error_mv": 0.4289782012298904,
+          "cm_v": 0.4495553228294098
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 200,
+          "error_mv": 0.37571498191912855,
+          "cm_v": 0.4495552068243416
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 196,
+          "error_mv": 0.34908099536457016,
+          "cm_v": 0.4495551796489174
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 194,
+          "error_mv": 0.3357644800988657,
+          "cm_v": 0.4495551737491932
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 193,
+          "error_mv": 0.3291074521102333,
+          "cm_v": 0.44955517270815054
+        }
+      ],
+      "acquisition_error_mv": 6.031335986200759e-07,
+      "stress": {
+        "all": {
+          "value_v": 0.9403111588691448,
+          "signed_v": 0.9403111588691448,
+          "time_ns": 47.61520444767491,
+          "instance": "XCDAC.XSP6.MN_LOW",
+          "terminal": "vds"
+        },
+        "post_startup": {
+          "value_v": 0.9403039948504912,
+          "signed_v": 0.9403039948504912,
+          "time_ns": 147.6151369995087,
+          "instance": "XCDAC.XSP6.MN_LOW",
+          "terminal": "vds"
+        },
+        "sar": {
+          "value_v": 0.9403111588691448,
+          "signed_v": 0.9403111588691448,
+          "time_ns": 47.61520444767491,
+          "instance": "XCDAC.XSP6.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.9353143594004957,
+          "signed_v": 0.9353143594004957,
+          "time_ns": 203.0300000500111,
+          "instance": "XCDAC.XSN6.MN_LOW",
+          "terminal": "vds"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.6102383427283737,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.3319990596751452,
+        "n": 0.2782392830532285
+      },
+      "gate_peak": {
+        "abs_ma": 2.4360864125353694,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 6.663575287690421,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 51.40758939195145,
+          "signed_deviation_mv": -51.40758939195145,
+          "deviation_time_ns": 103.1391136582508,
+          "source_peak_ma": 1.028151787839029,
+          "source_charge_abs_pc": 1.4522473459629344
+        },
+        "low": {
+          "max_deviation_mv": 51.49124094818422,
+          "signed_deviation_mv": 51.49124094818422,
+          "deviation_time_ns": 103.1391136582508,
+          "source_peak_ma": 1.0298248189636838,
+          "source_charge_abs_pc": 1.4473663378720165
+        }
+      },
+      "reference_max_deviation_mv": 51.49124094818422,
+      "reference_source_peak_ma": 1.0298248189636838,
+      "deck_sha256": "0eca3d5b168af980a2311b2af2f00434688a07ff30ceea75a199d8850038ab5e",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "a3888fb400028c10fa4de386f3ddbc4cb8e8e9a06f76f07b24ea3bb34b27c919",
+      "bounded_pass": true
+    },
+    {
+      "name": "nfull_m2",
+      "point": "nfull",
+      "factor": 2,
+      "vdiff_v": -0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 14,
+      "expected_code": 14,
+      "code_pass": true,
+      "compare_max_error_mv": 0.43991268990541815,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.20053414855425444,
+          "cm_v": 0.4495598486239222
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.14260271852589712,
+          "cm_v": 0.44955277296938234
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 32,
+          "error_mv": -0.3126277397667854,
+          "cm_v": 0.44955137212987156
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 16,
+          "error_mv": -0.3974957500457038,
+          "cm_v": 0.4495511698743817
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 8,
+          "error_mv": -0.43991268990541815,
+          "cm_v": 0.4495511913053969
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 12,
+          "error_mv": -0.4187097528339512,
+          "cm_v": 0.4495511694929132
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 14,
+          "error_mv": -0.40810945520154684,
+          "cm_v": 0.4495511658992777
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 15,
+          "error_mv": -0.4028114731108867,
+          "cm_v": 0.44955116569741627
+        }
+      ],
+      "acquisition_error_mv": -8.971785092626305e-06,
+      "stress": {
+        "all": {
+          "value_v": 1.0260901176390789,
+          "signed_v": 1.0260901176390789,
+          "time_ns": 203.1290503659358,
+          "instance": "XCDAC.XSP2.MP_HIGH",
+          "terminal": "vbd"
+        },
+        "post_startup": {
+          "value_v": 1.0260901176390789,
+          "signed_v": 1.0260901176390789,
+          "time_ns": 203.1290503659358,
+          "instance": "XCDAC.XSP2.MP_HIGH",
+          "terminal": "vbd"
+        },
+        "sar": {
+          "value_v": 0.9839195846219155,
+          "signed_v": 0.9839195846219155,
+          "time_ns": 47.629459383972666,
+          "instance": "XCDAC.XSN5.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 1.0260901176390789,
+          "signed_v": 1.0260901176390789,
+          "time_ns": 203.1290503659358,
+          "instance": "XCDAC.XSP2.MP_HIGH",
+          "terminal": "vbd"
+        }
+      },
+      "soa_screen_pass": false,
+      "printed_cmi": 5,
+      "printed_cmi_types": [
+        "2755"
+      ],
+      "logged_model_limits_mv": [
+        [
+          "vbd_max",
+          "990"
+        ]
+      ],
+      "suppressed_warnings": 322,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.5607390223233873,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.30539777789757255,
+        "n": 0.2553412444258148
+      },
+      "gate_peak": {
+        "abs_ma": 2.161825210247372,
+        "time_ns": 203.1300000500111,
+        "current": "xcdac.xsn7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 6.41811440958822,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 121.29660683374665,
+          "signed_deviation_mv": -121.29660683374665,
+          "deviation_time_ns": 247.6550592893723,
+          "source_peak_ma": 2.425932136674934,
+          "source_charge_abs_pc": 2.2095429381586915
+        },
+        "low": {
+          "max_deviation_mv": 121.32337945629571,
+          "signed_deviation_mv": 121.32337945629571,
+          "deviation_time_ns": 247.6550592893723,
+          "source_peak_ma": 2.426467589125914,
+          "source_charge_abs_pc": 2.281810752405239
+        }
+      },
+      "reference_max_deviation_mv": 121.32337945629571,
+      "reference_source_peak_ma": 2.426467589125914,
+      "deck_sha256": "01218afefffc78161b3622f604fa827cbe4e94c69006771f6daa3f23d550bb74",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "f33d2a459a32f318ad11147e4177d154a1cb9e7da9ab672a12800176e1920e00",
+      "bounded_pass": false
+    },
+    {
+      "name": "nfull_m3",
+      "point": "nfull",
+      "factor": 3,
+      "vdiff_v": -0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 14,
+      "expected_code": 14,
+      "code_pass": true,
+      "compare_max_error_mv": 0.5216314219117155,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.20055879151581468,
+          "cm_v": 0.44955978684107517
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.18594375005831498,
+          "cm_v": 0.4495527013530114
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 32,
+          "error_mv": -0.37812209551571496,
+          "cm_v": 0.44955170923516163
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 16,
+          "error_mv": -0.4738099425463521,
+          "cm_v": 0.4495515038046195
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 8,
+          "error_mv": -0.5216314219117155,
+          "cm_v": 0.4495515252861475
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 12,
+          "error_mv": -0.4977226004210522,
+          "cm_v": 0.4495515035159664
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 14,
+          "error_mv": -0.4857696773638148,
+          "cm_v": 0.4495514999691951
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 15,
+          "error_mv": -0.4797953687173395,
+          "cm_v": 0.4495514997902906
+        }
+      ],
+      "acquisition_error_mv": -8.894368574985378e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.9750570894406954,
+          "signed_v": 0.9750570894406954,
+          "time_ns": 103.1270327807325,
+          "instance": "XCDAC.XSP3.MP_HIGH",
+          "terminal": "vbd"
+        },
+        "post_startup": {
+          "value_v": 0.9750570894406954,
+          "signed_v": 0.9750570894406954,
+          "time_ns": 103.1270327807325,
+          "instance": "XCDAC.XSP3.MP_HIGH",
+          "terminal": "vbd"
+        },
+        "sar": {
+          "value_v": 0.9511672996591567,
+          "signed_v": 0.9511672996591567,
+          "time_ns": 47.62780891534133,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9750570894406954,
+          "signed_v": 0.9750570894406954,
+          "time_ns": 103.1270327807325,
+          "instance": "XCDAC.XSP3.MP_HIGH",
+          "terminal": "vbd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.8415976989720997,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.4584092440829293,
+        "n": 0.3831884548891704
+      },
+      "gate_peak": {
+        "abs_ma": 3.593998327218729,
+        "time_ns": 203.1300000500111,
+        "current": "xcdac.xsn7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 10.553409238828646,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 130.17474584780265,
+          "signed_deviation_mv": -130.17474584780265,
+          "deviation_time_ns": 147.64761317900332,
+          "source_peak_ma": 2.603494916956052,
+          "source_charge_abs_pc": 2.4322081207122364
+        },
+        "low": {
+          "max_deviation_mv": 130.34242890853488,
+          "signed_deviation_mv": 130.34242890853488,
+          "deviation_time_ns": 247.6472449446378,
+          "source_peak_ma": 2.6068485781706983,
+          "source_charge_abs_pc": 2.4863355915619487
+        }
+      },
+      "reference_max_deviation_mv": 130.34242890853488,
+      "reference_source_peak_ma": 2.6068485781706983,
+      "deck_sha256": "e6c23fcd88081b28e98f79d76681efa5991a198a87ee70d0e493cc52397403eb",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "524cf50b18dc883ca69d86bafafad2bc0285787ceb1a779f8102daa36474d9de",
+      "bounded_pass": true
+    },
+    {
+      "name": "nfull_m4",
+      "point": "nfull",
+      "factor": 4,
+      "vdiff_v": -0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 14,
+      "expected_code": 14,
+      "code_pass": true,
+      "compare_max_error_mv": 0.6019166372550275,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.20056727564843335,
+          "cm_v": 0.44955975443391993
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.22918126175186515,
+          "cm_v": 0.4495526717501481
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 32,
+          "error_mv": -0.44227932285326177,
+          "cm_v": 0.4495512765304269
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 16,
+          "error_mv": -0.5487087360061399,
+          "cm_v": 0.44955107549709505
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 8,
+          "error_mv": -0.6019166372550275,
+          "cm_v": 0.44955109718495934
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 12,
+          "error_mv": -0.5753090456710741,
+          "cm_v": 0.44955107559017804
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 14,
+          "error_mv": -0.562007109917842,
+          "cm_v": 0.44955107210582457
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 15,
+          "error_mv": -0.5553582861670958,
+          "cm_v": 0.44955107195741284
+        }
+      ],
+      "acquisition_error_mv": -8.863771494560524e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.9522757579126401,
+          "signed_v": 0.9522757579126401,
+          "time_ns": 47.61475338402056,
+          "instance": "XCDAC.XSN7.MN_LOW",
+          "terminal": "vds"
+        },
+        "post_startup": {
+          "value_v": 0.9522578936708668,
+          "signed_v": 0.9522578936708668,
+          "time_ns": 147.6148359164568,
+          "instance": "XCDAC.XSN7.MN_LOW",
+          "terminal": "vds"
+        },
+        "sar": {
+          "value_v": 0.9522757579126401,
+          "signed_v": 0.9522757579126401,
+          "time_ns": 47.61475338402056,
+          "instance": "XCDAC.XSN7.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.9501172028247664,
+          "signed_v": 0.9501172028247664,
+          "time_ns": 103.12428869434349,
+          "instance": "XCDAC.XSP3.MP_HIGH",
+          "terminal": "vbd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 1.1252137821857566,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.6127274552109733,
+        "n": 0.5124863269747832
+      },
+      "gate_peak": {
+        "abs_ma": 4.959768283204928,
+        "time_ns": 203.1298067446726,
+        "current": "xcdac.xsn7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 15.035082422269504,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 137.36127489846672,
+          "signed_deviation_mv": -137.36127489846672,
+          "deviation_time_ns": 247.64334234289,
+          "source_peak_ma": 2.747225497969334,
+          "source_charge_abs_pc": 2.6528590623557737
+        },
+        "low": {
+          "max_deviation_mv": 137.7092685588367,
+          "signed_deviation_mv": 137.7092685588367,
+          "deviation_time_ns": 247.64334234289,
+          "source_peak_ma": 2.754185371176734,
+          "source_charge_abs_pc": 2.6924144773290264
+        }
+      },
+      "reference_max_deviation_mv": 137.7092685588367,
+      "reference_source_peak_ma": 2.754185371176734,
+      "deck_sha256": "5ccfa43fc2ac10384c31ea088a67af5d551d0efd8f0c483d45586bbbbc27612c",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "298e43343279cd32eb94318e6b1d02b51e02f63ecae302ee67bde844717a07c9",
+      "bounded_pass": true
+    },
+    {
+      "name": "nhalf_m2",
+      "point": "nhalf",
+      "factor": 2,
+      "vdiff_v": -0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 127,
+      "expected_code": 127,
+      "code_pass": true,
+      "compare_max_error_mv": 0.3391778825178604,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.000791334179572889,
+          "cm_v": 0.4495620484650823
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.3391778825178604,
+          "cm_v": 0.44956466731025724
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 96,
+          "error_mv": -0.1689801500823762,
+          "cm_v": 0.44956268494285934
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 112,
+          "error_mv": -0.08406914346459349,
+          "cm_v": 0.4495622016795422
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 120,
+          "error_mv": -0.041636253774457455,
+          "cm_v": 0.4495620839666582
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 124,
+          "error_mv": -0.02042341671526504,
+          "cm_v": 0.4495620558774858
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 126,
+          "error_mv": -0.009817593293603988,
+          "cm_v": 0.44956204951263923
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 127,
+          "error_mv": -0.0045147906322928755,
+          "cm_v": 0.44956204824625934
+        }
+      ],
+      "acquisition_error_mv": -1.1844871741426011e-07,
+      "stress": {
+        "all": {
+          "value_v": 0.9839082317126963,
+          "signed_v": 0.9839082317126963,
+          "time_ns": 47.629477446205286,
+          "instance": "XCDAC.XSN4.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9838771163976343,
+          "signed_v": 0.9838771163976343,
+          "time_ns": 147.62955098391578,
+          "instance": "XCDAC.XSN4.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9839082317126963,
+          "signed_v": 0.9839082317126963,
+          "time_ns": 47.629477446205286,
+          "instance": "XCDAC.XSN4.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9339102809191943,
+          "signed_v": 0.9339102809191943,
+          "time_ns": 203.0300121126161,
+          "instance": "XCDAC.XSP7.MN_LOW",
+          "terminal": "vds"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.5293078680304011,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.2882872718718943,
+        "n": 0.24102059615850682
+      },
+      "gate_peak": {
+        "abs_ma": 1.893267905737854,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsp7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 7.416182049233639,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 179.96154411823716,
+          "signed_deviation_mv": -179.96154411823716,
+          "deviation_time_ns": 103.1550474218474,
+          "source_peak_ma": 3.599230882364744,
+          "source_charge_abs_pc": 2.221596643365276
+        },
+        "low": {
+          "max_deviation_mv": 180.2309110296654,
+          "signed_deviation_mv": 180.2309110296654,
+          "deviation_time_ns": 103.1550474218474,
+          "source_peak_ma": 3.6046182205933093,
+          "source_charge_abs_pc": 2.212723926433878
+        }
+      },
+      "reference_max_deviation_mv": 180.2309110296654,
+      "reference_source_peak_ma": 3.6046182205933093,
+      "deck_sha256": "4ac51784e32b33c93704ca4c0da5f51a934e55a3097153092bb143075ae403b6",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "824fcb0a903eb22d1d5ef2fe5ee367286ff213479cd1b443118056a0671c2455",
+      "bounded_pass": true
+    },
+    {
+      "name": "nhalf_m3",
+      "point": "nhalf",
+      "factor": 3,
+      "vdiff_v": -0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 127,
+      "expected_code": 127,
+      "code_pass": true,
+      "compare_max_error_mv": 0.38252921852116595,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.0007913855553653981,
+          "cm_v": 0.449561997159888
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.38252921852116595,
+          "cm_v": 0.4495646125230241
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 96,
+          "error_mv": -0.19062814546827456,
+          "cm_v": 0.4495626326879143
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 112,
+          "error_mv": -0.09488978758448452,
+          "cm_v": 0.4495621499549398
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 120,
+          "error_mv": -0.04704577790914932,
+          "cm_v": 0.44956203246372684
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 124,
+          "error_mv": -0.02312796599329703,
+          "cm_v": 0.4495620044721621
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 126,
+          "error_mv": -0.01116979446785793,
+          "cm_v": 0.44956199814860287
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 127,
+          "error_mv": -0.005190849345582116,
+          "cm_v": 0.44956199690180215
+        }
+      ],
+      "acquisition_error_mv": -1.2457675993213235e-07,
+      "stress": {
+        "all": {
+          "value_v": 0.9511554713221858,
+          "signed_v": 0.9511554713221858,
+          "time_ns": 47.62786728289554,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9511308645301395,
+          "signed_v": 0.9511308645301395,
+          "time_ns": 147.62785864833938,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9511554713221858,
+          "signed_v": 0.9511554713221858,
+          "time_ns": 47.62786728289554,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9442056027832181,
+          "signed_v": 0.9442056027832181,
+          "time_ns": 203.0300157238195,
+          "instance": "XCDAC.XSP7.MN_LOW",
+          "terminal": "vds"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.7936594601378674,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.4324359966666753,
+        "n": 0.36122346347119205
+      },
+      "gate_peak": {
+        "abs_ma": 2.937974616203523,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsp7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 11.782473853065365,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 191.59423444490776,
+          "signed_deviation_mv": -191.59423444490776,
+          "deviation_time_ns": 203.1477825197599,
+          "source_peak_ma": 3.831884688898155,
+          "source_charge_abs_pc": 2.4474088599387533
+        },
+        "low": {
+          "max_deviation_mv": 191.9864592979068,
+          "signed_deviation_mv": 191.9864592979068,
+          "deviation_time_ns": 203.1477825197599,
+          "source_peak_ma": 3.839729185958137,
+          "source_charge_abs_pc": 2.4348327931603695
+        }
+      },
+      "reference_max_deviation_mv": 191.9864592979068,
+      "reference_source_peak_ma": 3.839729185958137,
+      "deck_sha256": "81950971fed0b358c3c03f57c7f0cb0f2b61b8d213a7f83594096a996c059864",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "6c29f1c7e3068b7d367e8214d9e60102bc4dd6f76be35bc8176922297a768be2",
+      "bounded_pass": true
+    },
+    {
+      "name": "nhalf_m4",
+      "point": "nhalf",
+      "factor": 4,
+      "vdiff_v": -0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 127,
+      "expected_code": 127,
+      "code_pass": true,
+      "compare_max_error_mv": 0.4257900551681293,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": 0.0007915227626664745,
+          "cm_v": 0.4495619733336085
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 64,
+          "error_mv": -0.4257900551681293,
+          "cm_v": 0.44956458316784004
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 96,
+          "error_mv": -0.21221763525547388,
+          "cm_v": 0.449562607403164
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 112,
+          "error_mv": -0.10568012981676533,
+          "cm_v": 0.44956212543679486
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 120,
+          "error_mv": -0.05243984968278381,
+          "cm_v": 0.44956200826914394
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 124,
+          "error_mv": -0.02582464996586653,
+          "cm_v": 0.44956198043013806
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 126,
+          "error_mv": -0.012518016109630548,
+          "cm_v": 0.44956197419282506
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 127,
+          "error_mv": -0.005864878941663765,
+          "cm_v": 0.4495619729840472
+        }
+      ],
+      "acquisition_error_mv": -2.5736856222591253e-09,
+      "stress": {
+        "all": {
+          "value_v": 0.9534681853247273,
+          "signed_v": 0.9534681853247273,
+          "time_ns": 203.0300137182306,
+          "instance": "XCDAC.XSP7.MN_LOW",
+          "terminal": "vds"
+        },
+        "post_startup": {
+          "value_v": 0.9534681853247273,
+          "signed_v": 0.9534681853247273,
+          "time_ns": 203.0300137182306,
+          "instance": "XCDAC.XSP7.MN_LOW",
+          "terminal": "vds"
+        },
+        "sar": {
+          "value_v": 0.9522694727606806,
+          "signed_v": 0.9522694727606806,
+          "time_ns": 47.61485224674756,
+          "instance": "XCDAC.XSN7.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.9534681853247273,
+          "signed_v": 0.9534681853247273,
+          "time_ns": 203.0300137182306,
+          "instance": "XCDAC.XSP7.MN_LOW",
+          "terminal": "vds"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 1.0593529005118325,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.577191906063725,
+        "n": 0.4821609944481076
+      },
+      "gate_peak": {
+        "abs_ma": 4.072220639337412,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsp7.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 16.277012159764627,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 200.84244122789562,
+          "signed_deviation_mv": -200.84244122789562,
+          "deviation_time_ns": 103.14392647865209,
+          "source_peak_ma": 4.01684882455791,
+          "source_charge_abs_pc": 2.6713199729751937
+        },
+        "low": {
+          "max_deviation_mv": 201.4548959101162,
+          "signed_deviation_mv": 201.4548959101162,
+          "deviation_time_ns": 203.1437650767416,
+          "source_peak_ma": 4.029097918202325,
+          "source_charge_abs_pc": 2.6553765196718326
+        }
+      },
+      "reference_max_deviation_mv": 201.4548959101162,
+      "reference_source_peak_ma": 4.029097918202325,
+      "deck_sha256": "90440f2b4239fa550e5c94bf5183b847bd3f47c49c771cd2f386c8d17d0f375f",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "45a270575ed9eb57f221b532f7a7c7187275ce234740796cd612cfc407725424",
+      "bounded_pass": true
+    },
+    {
+      "name": "pfull_m2",
+      "point": "pfull",
+      "factor": 2,
+      "vdiff_v": 0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 241,
+      "expected_code": 241,
+      "code_pass": true,
+      "compare_max_error_mv": 0.43991346167526757,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.2005331723078374,
+          "cm_v": 0.4495598486723175
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.1424577330170762,
+          "cm_v": 0.4495527752487495
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.31259489817020425,
+          "cm_v": 0.44955137313385185
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 240,
+          "error_mv": 0.397490513758314,
+          "cm_v": 0.44955117060301475
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 248,
+          "error_mv": 0.43991346167526757,
+          "cm_v": 0.4495511919746101
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 244,
+          "error_mv": 0.41871419655525877,
+          "cm_v": 0.4495511700190736
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 242,
+          "error_mv": 0.40811314055810843,
+          "cm_v": 0.44955116643814763
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 241,
+          "error_mv": 0.40281473189307526,
+          "cm_v": 0.44955116624006475
+        }
+      ],
+      "acquisition_error_mv": 8.790663974522772e-06,
+      "stress": {
+        "all": {
+          "value_v": 1.0195819815136464,
+          "signed_v": 1.0195819815136464,
+          "time_ns": 103.1301689290869,
+          "instance": "XCDAC.XSN1.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 1.0195819815136464,
+          "signed_v": 1.0195819815136464,
+          "time_ns": 103.1301689290869,
+          "instance": "XCDAC.XSN1.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.956944669966426,
+          "signed_v": 0.956944669966426,
+          "time_ns": 47.630514615668034,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 1.0195819815136464,
+          "signed_v": 1.0195819815136464,
+          "time_ns": 103.1301689290869,
+          "instance": "XCDAC.XSN1.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": false,
+      "printed_cmi": 10,
+      "printed_cmi_types": [
+        "2754",
+        "2755"
+      ],
+      "logged_model_limits_mv": [
+        [
+          "vbd_max",
+          "990"
+        ],
+        [
+          "vgd_max",
+          "990"
+        ]
+      ],
+      "suppressed_warnings": 1961,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.3019624978164643,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.16420562380727247,
+        "n": 0.13775687400919182
+      },
+      "gate_peak": {
+        "abs_ma": 1.060568607077971,
+        "time_ns": 203.1300000500111,
+        "current": "xcdac.xsp6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 5.323841379212764,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 82.8886694467501,
+          "signed_deviation_mv": -82.8886694467501,
+          "deviation_time_ns": 203.1459754158109,
+          "source_peak_ma": 1.657773388935002,
+          "source_charge_abs_pc": 1.1430638950824394
+        },
+        "low": {
+          "max_deviation_mv": 83.24399252496958,
+          "signed_deviation_mv": 83.24399252496958,
+          "deviation_time_ns": 203.1464055105881,
+          "source_peak_ma": 1.664879850499392,
+          "source_charge_abs_pc": 1.2205357112404627
+        }
+      },
+      "reference_max_deviation_mv": 83.24399252496958,
+      "reference_source_peak_ma": 1.664879850499392,
+      "deck_sha256": "e7cad6309afb22b8ff19a2b7e44837d21523bc30f0f9dd516579df80f2f3879c",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "31984224e1224f039315ea555f5cdea435bd60bd6a0eb7d78784821e00d078af",
+      "bounded_pass": false
+    },
+    {
+      "name": "pfull_m3_fine",
+      "point": "pfull",
+      "factor": 3,
+      "vdiff_v": 0.8,
+      "maxstep_s": 1e-11,
+      "result_ok": true,
+      "code": 241,
+      "expected_code": 241,
+      "code_pass": true,
+      "compare_max_error_mv": 0.5210225578053396,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.20055781128336392,
+          "cm_v": 0.44955978691778603
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.18576331296171755,
+          "cm_v": 0.44955271244677514
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.37749200426845375,
+          "cm_v": 0.4495513112321309
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 240,
+          "error_mv": 0.47319357873593093,
+          "cm_v": 0.44955110875324367
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 248,
+          "error_mv": 0.5210225578053396,
+          "cm_v": 0.4495511300680465
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 244,
+          "error_mv": 0.4971298098264132,
+          "cm_v": 0.4495511078994394
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 242,
+          "error_mv": 0.4851708382072051,
+          "cm_v": 0.44955110449218166
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 241,
+          "error_mv": 0.47919316796740663,
+          "cm_v": 0.4495511043870974
+        }
+      ],
+      "acquisition_error_mv": 8.751585012234386e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.9827774304402128,
+          "signed_v": 0.9827774304402128,
+          "time_ns": 103.1286260084142,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9827774304402128,
+          "signed_v": 0.9827774304402128,
+          "time_ns": 103.1286260084142,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9429495572484049,
+          "signed_v": 0.9429495572484049,
+          "time_ns": 47.63016030553699,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.9827774304402128,
+          "signed_v": 0.9827774304402128,
+          "time_ns": 103.1286260084142,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.44896137662944424,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.24398376051821719,
+        "n": 0.20497761611122706
+      },
+      "gate_peak": {
+        "abs_ma": 1.79374681016829,
+        "time_ns": 203.1300000000006,
+        "current": "xcdac.xsp6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 8.269563538308482,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 87.41569485044221,
+          "signed_deviation_mv": -87.41569485044221,
+          "deviation_time_ns": 103.1408596432946,
+          "source_peak_ma": 1.7483138970088439,
+          "source_charge_abs_pc": 1.294645664493799
+        },
+        "low": {
+          "max_deviation_mv": 87.88527601617406,
+          "signed_deviation_mv": 87.88527601617406,
+          "deviation_time_ns": 203.14112532489068,
+          "source_peak_ma": 1.757705520323481,
+          "source_charge_abs_pc": 1.354885307279782
+        }
+      },
+      "reference_max_deviation_mv": 87.88527601617406,
+      "reference_source_peak_ma": 1.757705520323481,
+      "deck_sha256": "613ca45622129d18baf22c3c8aa786e1bc1338eaaabed7fe71fda57e7cf8c33c",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "82a13860eccc7c88a2075648cc30a89772697c316358f31dc748c6c9188fa3f8",
+      "bounded_pass": true
+    },
+    {
+      "name": "pfull_m3",
+      "point": "pfull",
+      "factor": 3,
+      "vdiff_v": 0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 241,
+      "expected_code": 241,
+      "code_pass": true,
+      "compare_max_error_mv": 0.5210216462264161,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.2005578585038137,
+          "cm_v": 0.4495597868831012
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.18572120091259192,
+          "cm_v": 0.4495527131948146
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.37747985879882373,
+          "cm_v": 0.44955131125818903
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 240,
+          "error_mv": 0.4731903632944623,
+          "cm_v": 0.4495511086276244
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 248,
+          "error_mv": 0.5210216462264161,
+          "cm_v": 0.44955112989768276
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 244,
+          "error_mv": 0.49711986629707994,
+          "cm_v": 0.4495511079046627
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 242,
+          "error_mv": 0.4851655043450753,
+          "cm_v": 0.44955110440316515
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 241,
+          "error_mv": 0.4791904594967922,
+          "cm_v": 0.4495511042455761
+        }
+      ],
+      "acquisition_error_mv": 8.70884919734749e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.982771296279224,
+          "signed_v": 0.982771296279224,
+          "time_ns": 103.1285998287481,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.982771296279224,
+          "signed_v": 0.982771296279224,
+          "time_ns": 103.1285998287481,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9429495673507173,
+          "signed_v": 0.9429495673507173,
+          "time_ns": 47.630160315217914,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.982771296279224,
+          "signed_v": 0.982771296279224,
+          "time_ns": 103.1285998287481,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.4489642663587913,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.24398527913510173,
+        "n": 0.2049789872236895
+      },
+      "gate_peak": {
+        "abs_ma": 1.793779994646991,
+        "time_ns": 203.1300000500111,
+        "current": "xcdac.xsp6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 8.269659973214903,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 87.41699372964862,
+          "signed_deviation_mv": -87.41699372964862,
+          "deviation_time_ns": 203.1410083013922,
+          "source_peak_ma": 1.7483398745929721,
+          "source_charge_abs_pc": 1.2937642087228671
+        },
+        "low": {
+          "max_deviation_mv": 87.88666614068654,
+          "signed_deviation_mv": 87.88666614068654,
+          "deviation_time_ns": 203.1410083013922,
+          "source_peak_ma": 1.757733322813731,
+          "source_charge_abs_pc": 1.3542247567361296
+        }
+      },
+      "reference_max_deviation_mv": 87.88666614068654,
+      "reference_source_peak_ma": 1.757733322813731,
+      "deck_sha256": "880db205a4d1068e10e615419851d0e922be1af70971fab06b9c149940b6615e",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "56036f1c3d6872cc6449241f861ded1f79d8ac5b0e5d8f5e083aec41971c3115",
+      "bounded_pass": true
+    },
+    {
+      "name": "pfull_m4_fine",
+      "point": "pfull",
+      "factor": 4,
+      "vdiff_v": 0.8,
+      "maxstep_s": 1e-11,
+      "result_ok": true,
+      "code": 241,
+      "expected_code": 241,
+      "code_pass": true,
+      "compare_max_error_mv": 0.6019003180817162,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.20056626607822814,
+          "cm_v": 0.4495597545260967
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.22893978600330156,
+          "cm_v": 0.44955267876439897
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.4422136893953432,
+          "cm_v": 0.44955127859507504
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 240,
+          "error_mv": 0.5486785468062361,
+          "cm_v": 0.4495510394734771
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 248,
+          "error_mv": 0.6019003180817162,
+          "cm_v": 0.4495510610315604
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 244,
+          "error_mv": 0.5752641698620331,
+          "cm_v": 0.44955103425346365
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 242,
+          "error_mv": 0.5619667538079853,
+          "cm_v": 0.4495510365301294
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 241,
+          "error_mv": 0.55611187658966,
+          "cm_v": 0.4495515237506764
+        }
+      ],
+      "acquisition_error_mv": 8.758239578021687e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.9599684034222606,
+          "signed_v": 0.9599684034222606,
+          "time_ns": 203.1276629889534,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9599684034222606,
+          "signed_v": 0.9599684034222606,
+          "time_ns": 203.1276629889534,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9403091778420128,
+          "signed_v": 0.9403091778420128,
+          "time_ns": 47.6151308320299,
+          "instance": "XCDAC.XSP6.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.9599684034222606,
+          "signed_v": 0.9599684034222606,
+          "time_ns": 203.1276629889534,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.5956594370430217,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.32354648092468086,
+        "n": 0.2721129561183409
+      },
+      "gate_peak": {
+        "abs_ma": 2.5801762425878207,
+        "time_ns": 203.1300000000006,
+        "current": "xcdac.xsp6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 11.344418616268152,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 91.02814385395752,
+          "signed_deviation_mv": -91.02814385395752,
+          "deviation_time_ns": 103.13822844866469,
+          "source_peak_ma": 1.82056287707915,
+          "source_charge_abs_pc": 1.4450473016762964
+        },
+        "low": {
+          "max_deviation_mv": 91.64239628350008,
+          "signed_deviation_mv": 91.64239628350008,
+          "deviation_time_ns": 203.1383560088534,
+          "source_peak_ma": 1.832847925670001,
+          "source_charge_abs_pc": 1.4924231682074298
+        }
+      },
+      "reference_max_deviation_mv": 91.64239628350008,
+      "reference_source_peak_ma": 1.832847925670001,
+      "deck_sha256": "d4a16c28ebd52a7add8b9694543882fbb0cef40bcc4cb29b66f8fbcefcf9bfc2",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "7f1f3d31f512cd31331d5b5ea122b932162490410726b7a28b3eedb3dfebe3a6",
+      "bounded_pass": true
+    },
+    {
+      "name": "pfull_m4",
+      "point": "pfull",
+      "factor": 4,
+      "vdiff_v": 0.8,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 241,
+      "expected_code": 241,
+      "code_pass": true,
+      "compare_max_error_mv": 0.6019126915793316,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.20056634045007016,
+          "cm_v": 0.4495597544754983
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.22888577910612495,
+          "cm_v": 0.4495526797271614
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 224,
+          "error_mv": 0.4421966270301003,
+          "cm_v": 0.4495512786353526
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 240,
+          "error_mv": 0.5486890796804755,
+          "cm_v": 0.4495510759858483
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 248,
+          "error_mv": 0.6019126915793316,
+          "cm_v": 0.44955109717988284
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 244,
+          "error_mv": 0.5753140144232338,
+          "cm_v": 0.44955107356021357
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 242,
+          "error_mv": 0.5620096515947526,
+          "cm_v": 0.44955107016527573
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 241,
+          "error_mv": 0.5553596755098478,
+          "cm_v": 0.4495510700604779
+        }
+      ],
+      "acquisition_error_mv": 8.674964080412906e-06,
+      "stress": {
+        "all": {
+          "value_v": 0.9599740246787551,
+          "signed_v": 0.9599740246787551,
+          "time_ns": 103.1276146378475,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9599740246787551,
+          "signed_v": 0.9599740246787551,
+          "time_ns": 103.1276146378475,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9403112298460629,
+          "signed_v": 0.9403112298460629,
+          "time_ns": 47.61520464697984,
+          "instance": "XCDAC.XSP6.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.9599740246787551,
+          "signed_v": 0.9599740246787551,
+          "time_ns": 103.1276146378475,
+          "instance": "XCDAC.XSN3.MP_HIGH",
+          "terminal": "vgd"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.5956578028187139,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.32354485461479165,
+        "n": 0.2721129482039223
+      },
+      "gate_peak": {
+        "abs_ma": 2.580216913616211,
+        "time_ns": 203.1300000500111,
+        "current": "xcdac.xsp6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 11.344330576393746,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 91.02713956575937,
+          "signed_deviation_mv": -91.02713956575937,
+          "deviation_time_ns": 203.13836725413498,
+          "source_peak_ma": 1.820542791315188,
+          "source_charge_abs_pc": 1.444124078584346
+        },
+        "low": {
+          "max_deviation_mv": 91.64226596910963,
+          "signed_deviation_mv": 91.64226596910963,
+          "deviation_time_ns": 203.13836725413498,
+          "source_peak_ma": 1.8328453193821919,
+          "source_charge_abs_pc": 1.4917022162622013
+        }
+      },
+      "reference_max_deviation_mv": 91.64226596910963,
+      "reference_source_peak_ma": 1.8328453193821919,
+      "deck_sha256": "6e3328da89f99e401860ef00aa45d3cf0258296a85d88ab011e9d08066a06d8b",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "0dc612162ee258e53bc438cc71cd53b23a246e806f392261365073089686d6a1",
+      "bounded_pass": true
+    },
+    {
+      "name": "phalf_m2",
+      "point": "phalf",
+      "factor": 2,
+      "vdiff_v": 0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 128,
+      "expected_code": 128,
+      "code_pass": true,
+      "compare_max_error_mv": 0.3390363975972477,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.0007903477401427494,
+          "cm_v": 0.4495620483503738
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.3390363975972477,
+          "cm_v": 0.44956466916308113
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 160,
+          "error_mv": 0.16904379094750954,
+          "cm_v": 0.44956268346358946
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 144,
+          "error_mv": 0.08408761298150935,
+          "cm_v": 0.4495622008844651
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 136,
+          "error_mv": 0.041642171735634115,
+          "cm_v": 0.44956208356540217
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 132,
+          "error_mv": 0.020426247078153548,
+          "cm_v": 0.4495620556690779
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 130,
+          "error_mv": 0.009819706773328551,
+          "cm_v": 0.44956204938624544
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 129,
+          "error_mv": 0.004516728269732262,
+          "cm_v": 0.449562048159707
+        }
+      ],
+      "acquisition_error_mv": -3.229359011105992e-08,
+      "stress": {
+        "all": {
+          "value_v": 0.9569394719233155,
+          "signed_v": 0.9569394719233155,
+          "time_ns": 47.630515079754666,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9569334225454117,
+          "signed_v": 0.9569334225454117,
+          "time_ns": 247.6305347144908,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9569394719233155,
+          "signed_v": 0.9569394719233155,
+          "time_ns": 47.630515079754666,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.8999255443508294,
+          "signed_v": -0.8999255443508294,
+          "time_ns": 2.927330429316728,
+          "instance": "XCDAC.XSP0.MP_HIGH",
+          "terminal": "vgs"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.29474115829696423,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.16046382241320667,
+        "n": 0.13427733588375756
+      },
+      "gate_peak": {
+        "abs_ma": 1.013048192373151,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 3.6282503440518306,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 74.35180273623409,
+          "signed_deviation_mv": -74.35180273623409,
+          "deviation_time_ns": 252.6516384909468,
+          "source_peak_ma": 1.487036054724682,
+          "source_charge_abs_pc": 1.1499173923344823
+        },
+        "low": {
+          "max_deviation_mv": 74.44622758005202,
+          "signed_deviation_mv": 74.44622758005202,
+          "deviation_time_ns": 252.6516384909468,
+          "source_peak_ma": 1.48892455160104,
+          "source_charge_abs_pc": 1.1451362993610659
+        }
+      },
+      "reference_max_deviation_mv": 74.44622758005202,
+      "reference_source_peak_ma": 1.48892455160104,
+      "deck_sha256": "c0545084e19ef7371b2d8dd1a4cedce77b603a107b8cc6e3ac8c6e4fa7c4ef0a",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "245948f9f036b774c56dcb1c755c1d72422697d891ad74ba458c882f691d300a",
+      "bounded_pass": true
+    },
+    {
+      "name": "phalf_m3",
+      "point": "phalf",
+      "factor": 3,
+      "vdiff_v": 0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 128,
+      "expected_code": 128,
+      "code_pass": true,
+      "compare_max_error_mv": 0.38232505459390165,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.0007904552392079545,
+          "cm_v": 0.44956199693579657
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.38232505459390165,
+          "cm_v": 0.44956461660367303
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 160,
+          "error_mv": 0.1907185155050617,
+          "cm_v": 0.4495626294728182
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 144,
+          "error_mv": 0.09491472195893857,
+          "cm_v": 0.44956214826344043
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 136,
+          "error_mv": 0.04705357413636868,
+          "cm_v": 0.44956203154985525
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 132,
+          "error_mv": 0.02313159388622754,
+          "cm_v": 0.44956200393062945
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 130,
+          "error_mv": 0.01117240494052929,
+          "cm_v": 0.4495619977923554
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 129,
+          "error_mv": 0.005193219014154593,
+          "cm_v": 0.4495619966323781
+        }
+      ],
+      "acquisition_error_mv": -3.230358211828155e-08,
+      "stress": {
+        "all": {
+          "value_v": 0.9429452955024544,
+          "signed_v": 0.9429452955024544,
+          "time_ns": 47.630160525865556,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "post_startup": {
+          "value_v": 0.9429372071861145,
+          "signed_v": 0.9429372071861145,
+          "time_ns": 247.6301655579864,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "sar": {
+          "value_v": 0.9429452955024544,
+          "signed_v": 0.9429452955024544,
+          "time_ns": 47.630160525865556,
+          "instance": "XCDAC.XSP7.MP_HIGH",
+          "terminal": "vgd"
+        },
+        "restore": {
+          "value_v": 0.8998823182424834,
+          "signed_v": -0.8998823182424834,
+          "time_ns": 2.927347868046304,
+          "instance": "XCDAC.XSP0.MP_HIGH",
+          "terminal": "vgs"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.4436492669298798,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.24163219306001332,
+        "n": 0.20201707386986648
+      },
+      "gate_peak": {
+        "abs_ma": 1.6560182943325341,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 6.060294979755096,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 78.48393584792535,
+          "signed_deviation_mv": -78.48393584792535,
+          "deviation_time_ns": 252.64486239424633,
+          "source_peak_ma": 1.569678716958506,
+          "source_charge_abs_pc": 1.302210803429811
+        },
+        "low": {
+          "max_deviation_mv": 78.6814428107711,
+          "signed_deviation_mv": 78.6814428107711,
+          "deviation_time_ns": 152.6448623584333,
+          "source_peak_ma": 1.573628856215422,
+          "source_charge_abs_pc": 1.2954723769472336
+        }
+      },
+      "reference_max_deviation_mv": 78.6814428107711,
+      "reference_source_peak_ma": 1.573628856215422,
+      "deck_sha256": "41ca104ba36d6d56796d9c1cb49e28d0516df2d4e3ff637e6c203b997cb329eb",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "e046c924dad3319103e7041789d5055b4d76e38f2c49a97dc7d48dc527439ab6",
+      "bounded_pass": true
+    },
+    {
+      "name": "phalf_m4",
+      "point": "phalf",
+      "factor": 4,
+      "vdiff_v": 0.003515625,
+      "maxstep_s": 1e-10,
+      "result_ok": true,
+      "code": 128,
+      "expected_code": 128,
+      "code_pass": true,
+      "compare_max_error_mv": 0.42549783622597426,
+      "residual_pass": true,
+      "comparisons": [
+        {
+          "time_ns": 245.9,
+          "active_code": 128,
+          "error_mv": -0.0007904959206106454,
+          "cm_v": 0.44956197316534996
+        },
+        {
+          "time_ns": 250.9,
+          "active_code": 192,
+          "error_mv": 0.42549783622597426,
+          "cm_v": 0.4495645911658158
+        },
+        {
+          "time_ns": 255.9,
+          "active_code": 160,
+          "error_mv": 0.21234196139174877,
+          "cm_v": 0.44956260170224627
+        },
+        {
+          "time_ns": 260.9,
+          "active_code": 144,
+          "error_mv": 0.10574049633288451,
+          "cm_v": 0.44956213520150456
+        },
+        {
+          "time_ns": 265.9,
+          "active_code": 136,
+          "error_mv": 0.05246889658166998,
+          "cm_v": 0.4495620160942485
+        },
+        {
+          "time_ns": 270.9,
+          "active_code": 132,
+          "error_mv": 0.025847836143455538,
+          "cm_v": 0.4495619889565367
+        },
+        {
+          "time_ns": 275.9,
+          "active_code": 130,
+          "error_mv": 0.012545021694454483,
+          "cm_v": 0.4495619856710536
+        },
+        {
+          "time_ns": 280.9,
+          "active_code": 129,
+          "error_mv": 0.00589167478998176,
+          "cm_v": 0.4495619846824189
+        }
+      ],
+      "acquisition_error_mv": -3.309533766829298e-08,
+      "stress": {
+        "all": {
+          "value_v": 0.9407392597069493,
+          "signed_v": 0.9407392597069493,
+          "time_ns": 152.6149214464568,
+          "instance": "XCDAC.XSN6.MN_LOW",
+          "terminal": "vds"
+        },
+        "post_startup": {
+          "value_v": 0.9407392597069493,
+          "signed_v": 0.9407392597069493,
+          "time_ns": 152.6149214464568,
+          "instance": "XCDAC.XSN6.MN_LOW",
+          "terminal": "vds"
+        },
+        "sar": {
+          "value_v": 0.9407392597069493,
+          "signed_v": 0.9407392597069493,
+          "time_ns": 152.6149214464568,
+          "instance": "XCDAC.XSN6.MN_LOW",
+          "terminal": "vds"
+        },
+        "restore": {
+          "value_v": 0.8998392489908875,
+          "signed_v": -0.8998392489908875,
+          "time_ns": 2.927353347291087,
+          "instance": "XCDAC.XSP0.MP_HIGH",
+          "terminal": "vgs"
+        }
+      },
+      "soa_screen_pass": true,
+      "printed_cmi": 0,
+      "printed_cmi_types": [],
+      "logged_model_limits_mv": [],
+      "suppressed_warnings": 0,
+      "lte_relaxations": 0,
+      "native_reference_mos_count": 32,
+      "ideal_gate_max_error_v": 1.1102230246251565e-16,
+      "gate_current_count": 32,
+      "drain_current_count": 12,
+      "gate_abs_charge_pc": 0.5940409225071623,
+      "gate_charge_by_polarity_pc": {
+        "p": 0.32358256697265025,
+        "n": 0.2704583555345121
+      },
+      "gate_peak": {
+        "abs_ma": 2.436016738650388,
+        "time_ns": 247.6300000500112,
+        "current": "xcdac.xsn6.mp_high:2"
+      },
+      "gate_sum_current_peak_ma": 8.747561894102489,
+      "gate_charge_interval_ns": [
+        200,
+        300
+      ],
+      "reference": {
+        "high": {
+          "max_deviation_mv": 81.6646915506346,
+          "signed_deviation_mv": -81.6646915506346,
+          "deviation_time_ns": 252.64131986974198,
+          "source_peak_ma": 1.633293831012693,
+          "source_charge_abs_pc": 1.4529539342609248
+        },
+        "low": {
+          "max_deviation_mv": 81.9819024705639,
+          "signed_deviation_mv": 81.9819024705639,
+          "deviation_time_ns": 252.6410558380181,
+          "source_peak_ma": 1.6396380494112779,
+          "source_charge_abs_pc": 1.4444913202265872
+        }
+      },
+      "reference_max_deviation_mv": 81.9819024705639,
+      "reference_source_peak_ma": 1.6396380494112779,
+      "deck_sha256": "dbaadff15462534c473cb3c73b85d078893bd493c6d4e9586e39c3635d96862a",
+      "source_deck_sha256": "aa39c88015563959c1bb9b6157d21e290b3c23eee184459a235658515f7af653",
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      },
+      "waveform_sha256": "53447794e75fe3d2520b745dacaf5f05b0bf8863759e93fb6d9d39b74faf8aef",
+      "bounded_pass": true
+    }
+  ],
+  "grouped": {
+    "2": {
+      "points": 5,
+      "bounded_passes": 3,
+      "worst_port_v": 1.0260901176390789,
+      "worst_case": "nfull_m2",
+      "max_error_mv": 0.43991346167526757,
+      "max_reference_deviation_mv": 180.2309110296654,
+      "max_gate_abs_charge_pc": 0.5607390223233873,
+      "max_reference_source_peak_ma": 3.6046182205933093
+    },
+    "3": {
+      "points": 5,
+      "bounded_passes": 5,
+      "worst_port_v": 0.982771296279224,
+      "worst_case": "pfull_m3",
+      "max_error_mv": 0.5216314219117155,
+      "max_reference_deviation_mv": 191.9864592979068,
+      "max_gate_abs_charge_pc": 0.8415976989720997,
+      "max_reference_source_peak_ma": 3.839729185958137
+    },
+    "4": {
+      "points": 5,
+      "bounded_passes": 5,
+      "worst_port_v": 0.9599740246787551,
+      "worst_case": "pfull_m4",
+      "max_error_mv": 0.6019166372550275,
+      "max_reference_deviation_mv": 201.4548959101162,
+      "max_gate_abs_charge_pc": 1.1252137821857566,
+      "max_reference_source_peak_ma": 4.029097918202325
+    }
+  },
+  "retained_replay_checks": {
+    "nhalf_m2": {
+      "port_delta_uv": -0.0015791293828115727
+    },
+    "control_m2": {
+      "port_delta_uv": -0.0006538757313379051
+    }
+  },
+  "fine_checks": {
+    "pfull_m3_fine": {
+      "port_delta_uv": 6.134160988824355,
+      "error_delta_uv": 0.000911578923457057,
+      "gate_charge_relative_delta": -6.436435065260149e-06
+    },
+    "pfull_m4_fine": {
+      "port_delta_uv": -5.621256494503513,
+      "error_delta_uv": -0.012373497615403295,
+      "gate_charge_relative_delta": 2.7435623273230902e-06
+    }
+  }
+}
