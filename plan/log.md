@@ -1610,3 +1610,32 @@ human-triggered note in `docs/experience/`.
   Curated verification/integration/join_r2_results.json, docs/sar8_join_r2.md;
   raw evidence output/sar8_join_r2/. Final diff-check and scoped local commit;
   no push. Unrelated untracked cdac10_dualrail work preserved.
+
+## 2026-10-20 - SAR8 earlier reference restoration, netlist-only
+
+- Two fresh native Spectre21.1 APS runs, restore_guard100ps/500ps versus exact
+  full-rate fingerprint-checked R2 nfull2ns baseline (reused, not rerun). Same
+  -800mV two-frame input, TT/.9V/27C,200ns/maxstep10ps/full solver output,
+  reference50ohm/4pF and input50ohm. Only16 per-instance timing parameters added;
+  native topology/sizes, source VA bytes and R2 sources/deck/wave unchanged.
+- Second-acquisition TOPNmax .867565/.954677/1.136126V and TOPPmin
+  +.020513/-.013663/-.148911V (100ps/500ps/2ns). Fresh cases remove .99V
+  comparator/reference six-pair violations:0CMI,0LTE/seven config warnings each.
+  500ps still crosses 0-0.9V supply rails slightly;100ps gentler at top/comparator,
+  but reference peak .971532V is slightly higher than500ps .968864V.
+- Actual restore new-on101.260/101.660/103.160ns,100ps BBM/no overlap, zero
+  changed-bank enable/disable skew at saved precision. R2 conversion200ps stable
+  commit unchanged. No ideal reference-source substitution or transistor resize.
+- Held differential sample errors .200475/.200482/.200639mV; first-precompare
+  .200486/.200495/.200696mV. All six comparison-evidence frames native14/14,
+  eight compares/writes/updates and mapping/decision checks pass; worst conversion
+  error .807895mV<1.7578125mV. Only four frames are fresh simulation evidence.
+- Four focused tests and Python compile pass. Fixed test UTF-8 source reading,
+  not curated fingerprints; verified only16 timing changes and unchanged R2.
+  Two PNGs visually checked; report docs/sar8_restore_guard.md, curated evidence
+  verification/integration/restore_guard_results.json; raw output/sar8_restore_guard/.
+  Final diff-check/review and scoped local commit, no push. No remote OA changes
+  or active-version/freeze updates. Unrelated cdac10_dualrail work preserved.
+- Single negative-full nominal case only;100ps is a candidate for subsequent
+  positive/reversing-input/previous-code checks, not broad PVT/MC/noise/lifetime
+  qualification. Entire-device/bootstrap-internal SOA not established by this scan.
