@@ -1,0 +1,83 @@
+baseline_id: SAR8_JOIN_R1_3X_IDEAL_GATE_NATIVE_ASYNC
+selection_record: config/sar8_join_r0.yaml
+selection_sources: verification/integration/join_r0_sources.json
+stage: native_joint_functional_baseline_SOA_failed
+frozen_circuit: true
+qualified: false
+profile: t28_io
+library: SAR_ADC_T28
+technology: tsmcN28
+top_cell: sar_adc8_join_r1
+testbench_cell: tb_sar_adc8_join_r1
+resolution_bits: 8
+sample_rate_hz: 10000000
+supply_v: 0.9
+common_mode_v: 0.45
+reference_v: {P: 0.9, N: 0.0}
+nominal: {MOS: tt, MOM: tt, temperature_c: 27}
+modules:
+  sampler: {cell: sar_bootstrap_canvas_flat_8b, copies: 2, unchanged: true}
+  cdac:
+    cell: sar8j_r1_cdac
+    type: flat_binary_differential_top_plate_sampling
+    capacitors: tsmcN28/cfmom_2t
+    weights: [128, 64, 32, 16, 8, 4, 2, 1]
+    dummy_weight: 1
+    dummy_rail: {P: VREFP, N: VREFN}
+    unit_capacitance_f: 4.004067804788831e-15
+    side_capacitance_f: 1.0250413580259408e-12
+    representation: nominal_m_grouped_not_independent_mismatch_units
+  reference_switch:
+    cells: sar8j_r1_sw_b0_through_b7
+    pass_MOS_per_bank: 2
+    total_pass_MOS_declarations: 32
+    PMOS: {device: pch_mac, w_nm: 175, l_nm: 30}
+    NMOS: {device: nch_mac, w_nm: 150, l_nm: 30}
+    multiplicity: 3_times_2_power_bit
+    six_MOS_native_gate_driver: absent
+  reference_gate_voltage:
+    cell: sar8j_r1_refgate
+    copies: 16
+    type: ideal_voltage_boundary_with_sampling_restore_and_BBM
+    observes: [SAMPLE, mapped_native_EH, mapped_native_EL]
+    never_observes: [VIN, TOPP, TOPN, comparator_outputs]
+    restore_guard_ns: 2
+    minimum_command_BBM_ps: 100
+    output_edge_ps: 20
+    raw_native_off_gap: credited_not_added_blindly
+  comparator: {cell: sar_strongarm_t28, unchanged: true, MOS: 11}
+  controller: {cell: sar_logic_8b_async_simple, unchanged: true, cells: 21}
+mapping:
+  request_source: {PH: BN_H, PL: BN_L, NH: BP_H, NL: BP_L}
+  gate_polarity: {PMOS: inverted_high_enable, NMOS: low_enable}
+  comparator: {VINP: TOPP, VINN: TOPN, OUTP: COMP_P, OUTN: COMP_N}
+  sample_high_midpoint_high_words: {P: 127, N: 128}
+timing:
+  external_SAMPLE: ideal_vpulse
+  sample_period_ns: 100
+  sample_delay_ns: 1
+  sample_width_ns: 39.9
+  sample_edge_ps: 100
+  acquisition_between_midpoints_ns: 40
+  CMP_CLK_write_update: unchanged_native_async
+  fixed_read_window_ns: [95, 99]
+boundaries:
+  input_resistance_ohm_per_side: 50
+  reference_resistance_ohm_per_rail: 50
+  reference_decap_f_per_rail: 4.0e-12
+  reference_gate_output_impedance: ideal_zero
+  native_bottom_select_extra_load_f: 10.0e-15
+  comparator_clock_extra_load_f: 10.0e-15
+  comparator_output_extra_load_f: 10.0e-15
+  word_bit_load_f: 5.0e-15
+  native_logic_delay_RC: unchanged_ideal_schematic_R_C
+  ideal_DAC_or_sign_comparator: absent
+  transistor_reference_buffer_or_clock_tree: not_implemented
+  PVT_mismatch_transient_noise: deferred
+verification:
+  exact_saved_schematic_export: true
+  old_native_cells_before_after_unchanged: true
+  result_record: verification/integration/join_r1_results.json
+  error_gate_mv: 1.7578125
+  reference_core_terminal_check_v: 0.99
+  complete_ADC_qualification: false

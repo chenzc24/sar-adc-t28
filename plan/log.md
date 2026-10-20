@@ -1,5 +1,35 @@
 # Maintenance Log
 
+## 2026-10-20 - Freeze and join SAR8 R1 native analog and async logic
+
+- User confirmed current clocks/Canvas Bootstrap/eight-bit line and authorized
+  freeze, top-level construction and joint simulation. Preserved R0 selection
+  and all old native modules. Built12 new SAR_ADC_T28 cells:8 two-pass-MOS3x
+  reference leaves, grouped native MOM array, ideal reference-gate VA, DUT
+  sar_adc8_join_r1 and tb_sar_adc8_join_r1. External SAMPLE ideal; compare/write/
+  update native; no ideal DAC/sign comparator. No EOC/new native control state.
+- Final11 schematic readbacks and VA hash match; zero final schematic markers;
+ 23 native dependencies unchanged before/after. Exported native bodies and
+  pass-MOS CDF geometry match frozen sources. Run wrappers preserve DUT bodies.
+  IC618 import-argument and literal-stack build issues repaired only in owned
+  automation/partial new cells; ignored diagnostic logs retain failed attempts.
+- 11 result.ok APS TT/.9V/27C runs:9 two-frame static/carry/full-reversal cases
+  plus2 maxstep10ps/full-rate repeats.22 functional frames,176 resolved native
+  compare/write events, correct stable read-window words, midpoint/mapping and
+  token order pass. Max pre-compare error .806368mV <1.7578125mV; final write
+  <=70.345641ns/frame, fixed read95--99ns. Raw/gate enables nonoverlapping at
+  half-supply, minimum opposite-rail gap~100ps; not proof of zero device current.
+- SOA FAIL: only control meets combined gates. Worst reference N7.MN_LOW VDB
+ 1.266776V at144.752751ns; comparator MNINN VGB1.250013V at144.753290ns.
+  Negative-half reference1.266744V confirms midscale exposure. Warnings and
+  suppressed-repeat notices retained; no model-limit changes/LTE warning.
+  Correct code is not qualification; PVT/MC/noise/FFT/full-code/power/layout deferred.
+- Frozen config/report/193kB metric-and-source manifest plus15 PNGs tracked;
+  generated exports/PDK paths/logs/PSF/VA readbacks ignored. One .gitattributes
+  line preserves tested gate-VA LF bytes. Seven focused tests, Python compile,
+  source hashes, link/figure inspection and diff checks pass. Local scoped
+  commit, no push; unrelated untracked cdac10 work and user windows preserved.
+
 ## 2026-10-20 - Prepare one 3x ideal-gate SAR8 integration candidate
 
 - User selected corrected P/N mapping, unified physical sampling/reference

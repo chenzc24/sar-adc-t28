@@ -1,0 +1,83 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Ideal reference gate-voltage boundary, NOT a SAR controller.
+// EH/EL are the mapped requests from the unchanged native controller.
+// No Vin, comparator or code prediction is available to this module.
+module sar8j_r1_refgate(SAMPLE, EH, EL, VDD, VSS, GP, GN);
+    input SAMPLE, EH, EL, VDD, VSS;
+    output GP, GN;
+    electrical SAMPLE, EH, EL, VDD, VSS, GP, GN;
+    parameter integer initial_high = 0 from [0:1];
+    parameter real restore_guard_s = 2n from (0:inf);
+    parameter real dead_time_s = 100p from (0:inf);
+    parameter real edge_s = 20p from (0:inf);
+
+    integer sampling, restored, overridden;
+    integer on_h, on_l, target_h, target_l, want_h, want_l;
+    integer raw_h, raw_l, sample_now;
+    real restore_at, turnon_at, off_at;
+
+    analog begin
+        @(initial_step) begin
+            sampling = 0; restored = 0; overridden = 1;
+            on_h = initial_high; on_l = 1-initial_high;
+            target_h = on_h; target_l = on_l;
+            restore_at = 1e30; turnon_at = 1e30; off_at = -1;
+        end
+
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS), 0) or
+          cross(V(EH,VSS)-0.5*V(VDD,VSS), 0) or
+          cross(V(EL,VSS)-0.5*V(VDD,VSS), 0) or
+          timer(restore_at) or timer(turnon_at)) begin
+            sample_now = V(SAMPLE,VSS) > 0.5*V(VDD,VSS);
+            raw_h = V(EH,VSS) > 0.5*V(VDD,VSS);
+            raw_l = V(EL,VSS) > 0.5*V(VDD,VSS);
+
+            if (sample_now && !sampling) begin
+                // Keep ACTUAL last gate choices and cancel any old turn-on.
+                sampling = 1; restored = 0; overridden = 1;
+                restore_at = $abstime + restore_guard_s;
+                turnon_at = 1e30;
+                target_h = on_h; target_l = on_l;
+            end else if (!sample_now && sampling) begin
+                sampling = 0; restore_at = 1e30;
+            end
+            if (sampling && $abstime >= restore_at-1e-18) begin
+                restored = 1; restore_at = 1e30;
+            end
+            // Release the sample override only at the valid midpoint word.
+            if (!sampling && overridden &&
+                raw_h == initial_high && raw_l == 1-initial_high)
+                overridden = 0;
+
+            if (sampling && !restored) begin
+                want_h = on_h; want_l = on_l;
+            end else if (sampling || overridden) begin
+                want_h = initial_high; want_l = 1-initial_high;
+            end else begin
+                // The illegal both-on request is made safe, not turned into
+                // a decision. Raw requests are saved and audited separately.
+                want_h = raw_h && !raw_l;
+                want_l = raw_l && !raw_h;
+            end
+
+            if (want_h != target_h || want_l != target_l) begin
+                if (on_h || on_l) off_at = $abstime;
+                on_h = 0; on_l = 0;
+                target_h = want_h; target_l = want_l;
+                turnon_at = 1e30;
+                if (target_h || target_l) begin
+                    // Credit the already-observed native off interval.
+                    turnon_at = max($abstime, off_at+dead_time_s);
+                end
+            end
+            if ($abstime >= turnon_at-1e-18) begin
+                on_h = target_h; on_l = target_l;
+                turnon_at = 1e30;
+            end
+        end
+        V(GP,VSS) <+ V(VDD,VSS)*(1-transition(on_h,0,edge_s,edge_s));
+        V(GN,VSS) <+ V(VDD,VSS)*transition(on_l,0,edge_s,edge_s);
+    end
+endmodule
