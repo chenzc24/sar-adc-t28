@@ -1,5 +1,21 @@
 # Active sampling architecture: top-plate
 
+## 2026-10-20: first PDK flat-CDAC implementation, not yet qualified
+
+`cdac8_device` is the new literal independent MOM/reference-MOS candidate;
+`cdac8_device_nominal` is the correlated deterministic parallel view.
+Cu=4.004 fF and Cside=1.025 pF supersede neither the historical results nor
+their comparison loads. See [the device report](cdac_flat_8b_device.md).
+
+Reference reset still violates core-device model stress limits in full
+switching trajectories. A second, separate limit is the unchanged 1-um native
+Bootstrap: SS/0.81 V/-40 C, -0.8 to +0.8 V step, first held error -27.4 mV.
+Replacing only that input path with a 150-ohm ideal relay reduces it to
+-0.00173 mV using the same native CDAC. Steady-input repeat results cannot
+clear this acquisition gate. The physical unit/matching results are useful,
+but the switch sizes are not frozen for layout and the native sampling chain
+has not passed full PVT. No bottom-plate architecture change was made.
+
 ## 2026-10-19: active converter is now 8-bit flat
 
 Top-plate polarity and the acquisition/hold mechanism are unchanged, but the

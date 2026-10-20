@@ -11,8 +11,15 @@ The migration covers the Python golden model/error allocation, clocked ideal
 and noisy Verilog-A, first-order settling/noise constraints, a complete
 closed-loop electrical macro in Virtuoso, and native T28 bootstrap testing
 on the new flat array. It does **not** mean a completed transistor ADC or
-PDK MOM/reference-switch array. See the
+fully qualified PDK MOM/reference-switch array. See the
 [migration report and evidence boundaries](docs/eight_bit_flat_migration.md).
+
+The first [PDK CDAC device implementation](docs/cdac_flat_8b_device.md) now
+exists separately: 512 independent T28 MOM units, 4.004 fF per unit, native
+reference switches/drive, full-code tests and capacitor-local mismatch.
+It is **not qualified**: reference-reset device-stress failures and a
+SS/0.81-V/cold full-swing Bootstrap acquisition failure remain explicit.
+The earlier electrical macro and all historical cells are preserved.
 
 Top-plate sampling is retained. Each CDAC side has weights
 `128:64:32:16:8:4:2:1` plus one dummy; no split bridge. Eight decisions use

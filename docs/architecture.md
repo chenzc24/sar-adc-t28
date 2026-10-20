@@ -12,8 +12,17 @@ StrongARM interface benches establish the present device-level boundary.
 
 Every CDAC side contains `[128,64,32,16,8,4,2,1]Cu + 1Cu dummy`.
 At the comparison value Cu=6.86047 fF, Cside=1.75628032 pF. There is no bridge
-capacitor or LSB subarray. Capacitors and reference switches remain electrical
-macros pending PDK implementation. Cu is not a physical unit selection.
+capacitor or LSB subarray. This remains the preserved electrical comparison,
+not a physical unit selection.
+
+The separate [device CDAC candidate](cdac_flat_8b_device.md) selects a measured
+4.004-fF MOM unit (1.025-pF/side) and implements native reference switches
+with real gate inverters. Its nominal transfer and capacitor-local matching
+are characterized, but reset transient stress is not closed. The existing
+native Bootstrap also fails the first full-swing sample at SS/0.81 V/-40 C;
+an ideal-input/native-CDAC A/B isolates that failure to the input sampling
+path. No qualified full-transistor ADC or layout is implied. The controller,
+comparison macro and finite-R reference sources remain explicit abstractions.
 
 Keep VDD=0.9 V, VCM=0.45 V, differential range +/-0.9 V, 10 MS/s, 40 ns
 acquisition, 60 ns conversion allocation, 5 ns per bit. The eight-bit VA

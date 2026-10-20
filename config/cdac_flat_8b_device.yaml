@@ -1,0 +1,41 @@
+stage: pdk_cdac_device_development
+candidate_qualified: false
+qualification_blockers: [reference_reset_device_stress, ss_low_supply_cold_first_full_swing_acquisition]
+library: SAR_ADC_T28
+resolution_bits: 8
+sample_rate_hz: 10000000
+supply_v: 0.9
+common_mode_v: 0.45
+unit_candidates:
+  a: {Wfinger: 50n, Sfinger: 50n, Lfinger: 2u, Nfinger: '8', StartMn: '1', StopMn: '3', mismatch: Model}
+  b: {Wfinger: 50n, Sfinger: 50n, Lfinger: 3u, Nfinger: '8', StartMn: '1', StopMn: '3', mismatch: Model}
+  c: {Wfinger: 50n, Sfinger: 50n, Lfinger: 3u, Nfinger: '16', StartMn: '1', StopMn: '3', mismatch: Model}
+selected_unit: a
+selected_unit_measured_ff: 4.004067804788831
+selected_unit_mismatch_cdf: '1'
+selected_side_capacitance_pf: 1.0250413580259408
+unit_selection_scope: nominal_bias_and_200_sample_independent_local_mismatch_pre_layout
+reference: {resistance_ohm: 50, decoupling_pf: 4}
+timing: {sample_ns: 40, handoff_guard_ns: 2, bit_ns: 5, compare_ns: 1.5, dead_time_ps: 100}
+reference_switch_candidate:
+  cell: cdac8_device
+  nominal_acceleration_cell: cdac8_device_nominal
+  retained_oa_tag: balanced
+  rail_high: {device: pch_mac, leaf_w_um: 0.175, l_nm: 30}
+  rail_low: {device: nch_mac, leaf_w_um: 0.15, l_nm: 30}
+  vcm_n: {device: nch_mac, leaf_w_um: 0.25, l_nm: 30}
+  vcm_p: {device: pch_mac, leaf_w_um: 0.30, l_nm: 30}
+  driver: {n_leaf_w_um: 0.25, p_leaf_w_um: 0.30, l_nm: 30}
+  multiplicity: bit_weight_times_design_multiplier
+  design_multipliers: {MULT_R: 1, MULT_S: 1, MULT_D: 1}
+  frozen_for_layout: false
+  vcm_reenable_edge_ps: 20
+  control: veriloga_with_native_gate_inverters_not_full_clock_tree
+bootstrap_dependency:
+  cell: sar_bootstrap_canvas_flat_8b
+  main_w_um: 1
+  main_l_nm: 150
+  modified_this_target: false
+  status: nominal_pass_but_ss_0p81v_minus40c_full_swing_step_fails
+targets: {settling_lsb: 0.25, static_internal_lsb: 0.5, static_system_lsb: 1.0, enob_bits: 7.0}
+scope: schematic_device_level_not_layout_or_signoff

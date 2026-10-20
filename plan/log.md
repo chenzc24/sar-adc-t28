@@ -1,5 +1,62 @@
 # Maintenance Log
 
+## 2026-10-20 - First device-level eight-bit flat CDAC, acceptance open
+
+- Target: `plan/2026-10-19-eight-bit-device-cdac/plan.md`; clean base
+  4ced90a on `exp/top-plate-gmain-t28`. Isolated work on
+  `exp/cdac-flat8-device`. No unrelated user edits were overwritten.
+- Implemented native MOM unit/banks/512-unit differential CDAC, native
+  reference switches and gate inverters, test/control VA, exact-OA runners,
+  PSF/ADC analysis, curated figures, config/report/tests and manifest updates.
+  Previous 8/10-bit circuits, Bootstrap and StrongARM remain read-only.
+- MOM selection: 4.004 fF, 1.025 pF/side. Default Model MC was inactive;
+  only verified mismatch=1 statistics count. Accepted 200 independent-array
+  MC runs have 512 random variables, worst weight-oracle DNL/INL
+  0.10243/0.06555 LSB. This is not switched MC, layout matching or yield.
+- Reference W/L experiment changed sqrt-weight scaling to proportional
+  multiplicity. Twenty-seven MOS DC cases and thirteen input/PVT transients
+  characterize the retained core-device candidate. Nominal 256-code DAC
+  DNL/raw INL 0.000741/0.093465 LSB; all 256 ADC code-center outputs agree.
+- Complete native APS 1024-point coherent run: 48.7595-dB SNDR,
+  7.8072-bit ENOB, 64.9367-dB SFDR, about 58 minutes, result.ok. Native sampler
+  and CDAC/reference MOS are real; comparator/controls/finite-R references
+  remain stated abstractions. No physical transient noise was enabled.
+- Candidate remains NOT qualified. Reference reset shows core terminal
+  stress (example bit-5 bottom 1.01151 V at 490.234 ns vs 0.99-V model
+  limit). Phase/slew/TG-multiplier experiments and real StrongARM interface
+  are not promoted by a correct final code. A 1.8-V MSB-only candidate fails
+  VCM Ron at SS/0.81 V/-40 C (4.54 Mohm), so no ref18 array was built.
+- Another independent failure: first SS/0.81-V/-40-C full-swing sample
+  -27.406 mV, later repeat -0.186 mV. Same literal native CDAC with only
+  input Bootstrap replaced by 150-ohm relay gives -0.001734 mV. Keep the
+  original Bootstrap unchanged; large-signal acquisition needs a new round.
+- Final OA audit: 35 new schematics zero markers, 2 semantic symbol/VA cells,
+  11 native export comparisons equal except generation date; six historical
+  dependencies equal; VA bytes equal. Parent extraction OSSHNL-109 was fixed
+  by owned hierarchy Check & Save, never by patching final DUT connectivity.
+- Handoff recheck on the morning of 2026-10-20 stopped at library read:
+  CIW/RAMIC endpoint 127.0.0.1:65490 refused connection. No OA mutation or
+  forced application restart followed. The audit above is the last saved
+  successful audit, not a claim of current bridge availability; reload the
+  bridge before further remote circuit work.
+- Original APS is the primary dynamic evidence. AX pilot is only a numerical
+  acceleration check; its preset overrides numerical options, not a valid
+  substitute for fine-step stress measurements. An optional extended AX
+  launcher did not leave a completed API result; final process readback
+  shows no such active Spectre jobs. It is not counted as accepted evidence.
+- Validation: Python syntax/focused contracts, YAML, evidence consistency,
+  generated-figure inspection and diff hygiene. Evidence audit explicitly
+  reports performance failures; a successful audit exit is not circuit pass.
+  Physical noise/MOS MC/ADC threshold DNL/buffer-clock implementation/layout
+  signoff remain open, recorded rather than fabricated.
+- Scoped .gitattributes to the two new VA files: LF preserves tested hashes
+  on Windows checkouts. The exact tested controller terminal blank line is
+  retained with a per-file EOF-whitespace exception; no global Git setting
+  or historical source normalization is changed.
+- Artifacts: `output/cdac8_device/`; durable
+  `docs/cdac_flat_8b_device.md` and `docs/figures/cdac8_device/`. Scoped local
+  commit under the target policy; no push, no merge, no experience extraction.
+
 ## 2026-10-19 - Eight-bit flat migration through native full-load sampling
 
 - Target: `plan/2026-10-19-eight-bit-flat-migration/plan.md`. Clean starting

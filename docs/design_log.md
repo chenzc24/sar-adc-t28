@@ -1,5 +1,35 @@
 # Design Log
 
+## 2026-10-20 - First native eight-bit flat CDAC candidate
+
+- Added an electrically selected 4.004-fF T28 MOM unit, 256 independent units
+  per side, and an explicit literal hierarchy. This is a pre-layout selection,
+  not DRC-qualified geometry. Preserve the earlier 6.86047-fF comparison load.
+- Verified active local mismatch before statistics: default Model produced
+  no actual C variation; CDF mismatch=1 did. The accepted 200-array sample
+  has 512 independent random variables and worst static weight-oracle
+  DNL/INL 0.1024/0.0656 LSB. No layout-gradient or yield claim.
+- Built native rail PMOS/NMOS plus VCM TG and real gate inverters. Changed
+  sqrt-weight sizing to constant leaf geometry with bit-weight multiplicity.
+  Correlated the deterministic parallel-cap view open/closed loop; retain
+  independent units for capacitor MC, never multiplier-based pseudo-randoms.
+- Native switched DAC is monotonic over 256 nominal codes, raw INL about
+  0.0935 LSB; all 256 ADC code-center outputs agree. Neither establishes
+  exact ADC transition DNL. Checked nominal stable held/decision residuals
+  pass their stated voltage gate, but full trajectories still violate
+  core model Vds/Vgd/Vbd limits on reset. Switch sizes are not frozen.
+- Bootstrap-before-reset, slower VCM re-enable and smaller effective TG
+  multiplier diagnostics do not clear all positive/negative stress gates.
+  Same-topology 1.8-V pass-device MSB has 4.54-Mohm VCM Ron at
+  SS/0.81 V/-40 C with unboosted controls; stop at that gate, no array claim.
+- Unchanged input Bootstrap fails the first full-swing cold/low-V sample:
+  -27.4 mV vs -0.00173 mV when only that path becomes a 150-ohm ideal relay
+  with the same native CDAC. A good later steady sample does not clear it.
+  Low-side large-signal discharge remains slow after gate boost establishes.
+- Preserve top-plate sampling and all old cells. Physical noise, native
+  reference buffer/clock tree, exact ADC transition statistics and layout
+  signoff remain separate gates. See the [candidate report](cdac_flat_8b_device.md).
+
 ## 2026-10-19 - Eight-bit flat mainline
 
 - User switched the target from 10-bit 5+5 to 8-bit flat. Retain 10 MS/s,

@@ -1,0 +1,147 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Test/control abstraction: native MOS and capacitors are never replaced here.
+// Top sampling ends first; HOLD_START follows the independent VCM release.
+module cdac8_controller (
+    input electrical COMP_P,
+    input electrical COMP_N,
+    input electrical CLK_SAMPLE,
+    input electrical PREPARE,
+    input electrical HOLD_START,
+    input electrical CLK_TRIAL,
+    input electrical CLK_LATCH,
+    input electrical CLK_COMPARE,
+    input electrical VDD,
+    input electrical VSS,
+    output electrical SEL0_7,
+    output electrical SEL0_6,
+    output electrical SEL0_5,
+    output electrical SEL0_4,
+    output electrical SEL0_3,
+    output electrical SEL0_2,
+    output electrical SEL0_1,
+    output electrical SEL0_0,
+    output electrical SEL1_7,
+    output electrical SEL1_6,
+    output electrical SEL1_5,
+    output electrical SEL1_4,
+    output electrical SEL1_3,
+    output electrical SEL1_2,
+    output electrical SEL1_1,
+    output electrical SEL1_0,
+    output electrical BASE,
+    output electrical D7,
+    output electrical D6,
+    output electrical D5,
+    output electrical D4,
+    output electrical D3,
+    output electrical D2,
+    output electrical D1,
+    output electrical D0,
+    output electrical BUSY,
+    output electrical VALID,
+    output electrical CMP_CLK,
+    output electrical CMP_RESET
+);
+    parameter real dead_time_s=100p from [0:inf);
+    parameter real edge_s=20p from (0:inf);
+    parameter integer open_loop=0;
+    parameter integer warmup_cycles=4;
+    parameter integer fixed_code=-1;
+    integer work_code, out_code, bit_index, trial_mask;
+    integer holding, busy_state, valid_state, trial_active, sample_index;
+    integer command0[0:8], command1[0:8], drive0[0:8], drive1[0:8];
+    real ready_time[0:8];
+    real threshold;
+    integer j, want0, want1, active_code;
+    genvar k;
+
+    analog begin
+        threshold=0.5*V(VDD,VSS);
+        @(initial_step) begin
+            work_code=0;out_code=0;bit_index=7;trial_mask=0;
+            holding=0;busy_state=0;valid_state=0;trial_active=0;
+            sample_index=-warmup_cycles-1;
+            for(j=0;j<9;j=j+1) begin
+                command0[j]=0;command1[j]=0;drive0[j]=0;drive1[j]=0;ready_time[j]=1e9;
+            end
+        end
+        @(cross(V(CLK_SAMPLE,VSS)-threshold,+1)) begin
+            sample_index=sample_index+1;
+            work_code=0;bit_index=7;trial_mask=0;
+            holding=0;busy_state=0;valid_state=0;trial_active=0;
+        end
+        // Use the post-conversion idle slot to release references BEFORE
+        // the next input bootstrap turns on. VALID/data remain available.
+        @(cross(V(PREPARE,VSS)-threshold,+1)) begin
+            holding=0;
+        end
+        @(cross(V(HOLD_START,VSS)-threshold,+1)) begin
+            holding=1;valid_state=0;
+            if(open_loop!=0) begin
+                work_code=fixed_code>=0 ? fixed_code : sample_index<0 ? 0 : sample_index%256;
+                out_code=work_code;trial_mask=0;trial_active=0;busy_state=0;valid_state=1;
+            end else begin
+                work_code=0;bit_index=7;trial_mask=128;trial_active=1;busy_state=1;
+            end
+        end
+        @(cross(V(CLK_TRIAL,VSS)-threshold,+1)) begin
+            if(open_loop==0 && busy_state!=0 && trial_active==0) begin
+                trial_mask=1<<bit_index;trial_active=1;
+            end
+        end
+        @(cross(V(CLK_LATCH,VSS)-threshold,+1)) begin
+            if(open_loop==0 && busy_state!=0 && trial_active!=0) begin
+                if(V(COMP_P,COMP_N)>=0.0) work_code=work_code+trial_mask;
+                trial_active=0;trial_mask=0;
+                if(bit_index==0) begin out_code=work_code;busy_state=0;valid_state=1;end
+                else bit_index=bit_index-1;
+            end
+        end
+        // Discrete command changes blank ONLY the changed reference bank.
+        // Timer breakpoints make delayed enables explicit to the analog solver.
+        active_code=work_code+trial_mask;
+        for(j=0;j<9;j=j+1) begin
+            want1=(holding!=0 && j<8 && (active_code & (1<<j))!=0) ? 1:0;
+            want0=(holding!=0 && (j==8 || want1==0)) ? 1:0;
+            if(want0!=command0[j] || want1!=command1[j]) begin
+                command0[j]=want0;command1[j]=want1;
+                drive0[j]=0;drive1[j]=0;ready_time[j]=$abstime+dead_time_s;
+            end
+        end
+        for(k=0;k<9;k=k+1) begin
+            @(timer(ready_time[k])) begin drive0[k]=command0[k];drive1[k]=command1[k];end
+        end
+        V(SEL0_7,VSS)<+transition(drive0[7]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_7,VSS)<+transition(drive1[7]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D7,VSS)<+transition((out_code & 128)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_6,VSS)<+transition(drive0[6]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_6,VSS)<+transition(drive1[6]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D6,VSS)<+transition((out_code & 64)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_5,VSS)<+transition(drive0[5]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_5,VSS)<+transition(drive1[5]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D5,VSS)<+transition((out_code & 32)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_4,VSS)<+transition(drive0[4]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_4,VSS)<+transition(drive1[4]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D4,VSS)<+transition((out_code & 16)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_3,VSS)<+transition(drive0[3]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_3,VSS)<+transition(drive1[3]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D3,VSS)<+transition((out_code & 8)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_2,VSS)<+transition(drive0[2]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_2,VSS)<+transition(drive1[2]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D2,VSS)<+transition((out_code & 4)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_1,VSS)<+transition(drive0[1]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_1,VSS)<+transition(drive1[1]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D1,VSS)<+transition((out_code & 2)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL0_0,VSS)<+transition(drive0[0]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(SEL1_0,VSS)<+transition(drive1[0]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(D0,VSS)<+transition((out_code & 1)!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(BASE,VSS)<+transition(drive0[8]!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(BUSY,VSS)<+transition(busy_state!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(VALID,VSS)<+transition(valid_state!=0?V(VDD,VSS):0.0,0,edge_s,edge_s);
+        V(CMP_CLK,VSS)<+V(CLK_COMPARE,VSS)*transition(busy_state!=0?1.0:0.0,0,edge_s,edge_s);
+        V(CMP_RESET,VSS)<+V(VDD,VSS)-V(CLK_COMPARE,VSS)*transition(busy_state!=0?1.0:0.0,0,edge_s,edge_s);
+    end
+endmodule
+

@@ -1,10 +1,53 @@
 library: SAR_ADC_T28
 remote_path: /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28
 technology_library: tsmcN28
-library_status: eight_bit_flat_macro_and_native_sampling_nominal_verified_historical_ten_bit_preserved
+library_status: eight_bit_device_cdac_candidate_characterized_stress_and_cold_step_open_baselines_preserved
 technology_binding_verified: true
 
 cells:
+  cdac8_unit_candidate_a: {role: mom_candidate_2um_8fingers, status: zero_markers_bias_ac_200_active_local_mc}
+  cdac8_unit_candidate_b: {role: mom_candidate_3um_8fingers, status: zero_markers_bias_ac_200_active_local_mc}
+  cdac8_unit_candidate_c: {role: mom_candidate_3um_16fingers, status: zero_markers_bias_ac_200_active_local_mc}
+  tb_cdac8_unit_char: {role: mom_unit_characterization, status: zero_markers_exact_oa_bias_ac_active_local_mc}
+  cdac8_unit: {role: selected_4p004ff_t28_mom_unit, status: zero_markers_schematic_not_layout}
+  cdac8_bank_1: {role: independent_1_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_2: {role: independent_2_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_4: {role: independent_4_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_8: {role: independent_8_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_16: {role: independent_16_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_32: {role: independent_32_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_64: {role: independent_64_unit_bank, status: zero_markers_literal_unit_instances}
+  cdac8_bank_128: {role: independent_128_unit_bank, status: zero_markers_literal_unit_instances}
+  tb_cdac8_caps: {role: literal_512_independent_cap_measurement, status: zero_markers_200_mc_512_randoms_actual_weight_oracle}
+  cdac8_caps_ideal_switch: {role: native_mom_ideal_reference_relay_isolation, status: zero_markers_exact_oa_256_code_nominal_verified}
+  cdac8_ref_switch_b0: {role: weight_1_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b1: {role: weight_2_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b2: {role: weight_4_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b3: {role: weight_8_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b4: {role: weight_16_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b5: {role: weight_32_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b6: {role: weight_64_native_reference_switch_and_drive, status: zero_markers_characterized_reset_soa_open}
+  cdac8_ref_switch_b7: {role: weight_128_native_reference_switch_and_drive, status: zero_markers_27_mos_dc_corners_characterized_reset_soa_open}
+  cdac8_device: {role: literal_512_mom_native_reference_cdac_candidate, status: zero_markers_nominal_characterized_not_qualified}
+  cdac8_device_nominal: {role: parallel_mom_nominal_acceleration_not_mc_array, status: zero_markers_correlated_open_and_closed_loop_stress_open}
+  cdac8_controller:
+    role: phase_separated_eight_bit_va_control_not_native_logic
+    views: [symbol, veriloga]
+    status: native_compiled_cdf_verified_no_dummy_schematic
+  cdac8_device_sequence:
+    role: test_input_step_sine_source_only
+    views: [symbol, veriloga]
+    status: native_compiled_no_dummy_schematic
+  tb_cdac8_switch_char: {role: native_msb_reference_ron_and_all_off_leak, status: zero_markers_27_mos_dc_corners_characterized}
+  tb_cdac8_device: {role: real_caps_ideal_relays_fixture, status: zero_markers_exact_oa_256_code_nominal_verified}
+  tb_cdac8_sampling: {role: literal_native_cdac_bootstrap_macro_comparator, status: zero_markers_correlated_nominal_not_qualified}
+  tb_cdac8_nominal: {role: parallel_native_cdac_bootstrap_macro_comparator, status: zero_markers_256_code_pvt_dynamic_characterization_stress_open}
+  tb_cdac8_sar: {role: literal_native_cdac_real_strongarm_loop_diagnostic, status: zero_markers_code_smoke_correct_device_stress_failed}
+  tb_cdac8_nominal_sar: {role: parallel_native_cdac_real_strongarm_diagnostic, status: zero_markers_code_smoke_correct_device_stress_failed}
+  tb_cdac8_safephase: {role: bootstrap_before_reference_reset_experiment, status: zero_markers_not_promoted_soa_failed}
+  cdac8_ref18_b7: {role: same_topology_1v8_pass_device_msb_candidate, status: zero_markers_ss_low_v_cold_vcm_headroom_failed}
+  tb_cdac8_ref18_char: {role: thick_oxide_reference_ron_screen, status: zero_markers_three_dc_endpoints_candidate_not_promoted}
+  tb_cdac8_ideal_input: {role: same_native_cdac_ideal_input_relay_isolation, status: zero_markers_ss_low_v_cold_first_step_pass_isolates_native_bootstrap_failure}
   sar_cdac_flat_8b:
     role: active_eight_bit_differential_flat_cdac_electrical_macro
     status: zero_markers_18_cap_groups_52_relays_no_bridge_exact_oa_spectre_verified
