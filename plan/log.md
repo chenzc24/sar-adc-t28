@@ -1740,3 +1740,38 @@ human-triggered note in `docs/experience/`.
   adopts a nominal development baseline, not full-code/FFT, PVT, noise,
   mismatch, actual timing-driver, complete Bootstrap SOA or layout/lifetime
   qualification.
+
+## 2026-10-20 - SAR8 R3 performance measurement setup and long-run start
+
+- IN PROGRESS, not measured full performance. Read-only fresh R3 OA export
+  matches b742ed4 R3 native subcircuits and explicit100ps/50ps gates; no OA,
+  size/topology/model/control/reference-network change. TT/.9V/27C, no physical
+  transient noise or mismatch. Unrelated untracked cdac10_dualrail preserved.
+- Single/four-thread APS2frame lean-save pilots result.ok, code241 at all
+ 90/95/98ns windows; settled-top delta<0.2nV vs R3 full-rate result. Same
+  conservative/10ps/reltol1e-5/vabstol1e-8/iabstol1e-13. Runtime312/171s,
+  so select4threads per job, max4 concurrent. Warned user day-scale runtime.
+- Testbench-only passive VA counts8CMP edges and checks90/98ns code stability,
+  clock low, rail validity. Output-feedback VA searches real ADC transitions,
+  not ideal ADC replacement. Static±.25LSB brackets with6 bisections ->1/128LSB
+  interval, all255 edges in4jobs; exclude saturated codes0/255 from width DNL.
+  Continuous1024-point k461/-1dBFS sine plus4warmup, direct FFT + toolbox check,
+  measured-SNDR ENOB primary. Internal W/U are not separately observed.
+- Corrected two strobe-delay input failures and two leading-dot VA compiler
+  failures; all raw failure evidence retained. Superseded2 single-thread v2
+  measurement jobs stopped by exact verified owned child PIDs only. v3
+  observer snapshot variables avoid delayed-strobe off-by-one messages.
+  Queued testbench files are content-addressed immutable snapshots.
+- v3 static9frame/two-edge and sine5frame measurement smokes result.ok,
+  measured counts/stability/rails and bracket/source checks pass. Static has
+  one LTE relaxation at666.991ns in native async reference control; disclosed,
+  retained, final report flags numerical warnings rather than numerical signoff.
+  This is functional measurement verification, not a DNL or SNDR result.
+- FULL batch started22:59:35local, one-shot flow session25763, max4workers.
+  Output/status/decks/logs/PSF/waves/provenance output/sar8_r3_performance/;
+  auto-analysis writes report.md/summary.json/figures there on genuine completion.
+  No periodic notification or auto-push. Keep local runner and SSH available.
+- Setup-only curated verification/integration/r3_performance_setup.json,
+  config, docs, scripts, VA, plan;3 focused math/identity tests and compile/diff
+  checks pass. Local checkpoint commit, no push. Final DNL/INL/SNDR/ENOB are
+  NOT available; target plan intentionally remains in progress for later review.

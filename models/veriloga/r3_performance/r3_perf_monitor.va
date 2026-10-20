@@ -1,0 +1,37 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench observer only. No voltage/current contribution to DUT nodes.
+module r3_perf_monitor(SAMPLE,CMP,VDD,D0,D1,D2,D3,D4,D5,D6,D7);
+    input SAMPLE,CMP,VDD,D0,D1,D2,D3,D4,D5,D6,D7;
+    electrical SAMPLE,CMP,VDD,D0,D1,D2,D3,D4,D5,D6,D7;
+    integer nc,code,early,frame,valid,report_frame;
+    real rail_error,vh;
+    analog begin
+        @(initial_step) begin nc=0;early=-1;frame=0; end
+        @(cross(V(SAMPLE)-0.5*V(VDD),+1)) nc=0;
+        @(cross(V(CMP)-0.5*V(VDD),+1)) nc=nc+1;
+        @(timer(90n,100n)) begin
+            vh=0.5*V(VDD);
+            early=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+        end
+        @(timer(98n,100n)) begin
+            vh=0.5*V(VDD);
+            code=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+            rail_error=max(min(abs(V(D0)),abs(V(D0)-V(VDD))),min(abs(V(D1)),abs(V(D1)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D2)),abs(V(D2)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D3)),abs(V(D3)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D4)),abs(V(D4)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D5)),abs(V(D5)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D6)),abs(V(D6)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D7)),abs(V(D7)-V(VDD))));
+            valid=(nc==8 && early==code && V(SAMPLE)<0.1*V(VDD)
+                   && V(CMP)<0.1*V(VDD) && rail_error<0.1*V(VDD));
+            report_frame=frame;
+            $strobe("R3MEAS,%d,%d,%d,%d,%d,%.12g",report_frame,code,nc,early,valid,rail_error);
+            frame=frame+1;
+        end
+    end
+endmodule

@@ -14,6 +14,11 @@
 这不是实际管级时钟／参考驱动实现，仍未完成PVT、失配、噪声或全器件签核。
 旧R2报告保留当时的2ns／20ps及过压结果，不代表R3现状。
 
+R3的[全码静态与相干正弦动态测量](sar8_r3_performance.md)已进入原生长任务：
+全部255个转换边界和1024点近奈奎斯特正弦，TT／0.9V／27°C，无失配／瞬态
+噪声。当前DNL、INL、SNDR、ENOB尚未生成；静态预检有LTE数值警告，后续
+报告会保留质量标记。真实状态及生成结果在 `output/sar8_r3_performance/`。
+
 **冻结R1完成了真实模拟链与原生异步控制器合龙，但未通过器件应力验收。**
 顶层 `sar_adc8_join_r1`，测试台 `tb_sar_adc8_join_r1`；参考采用3×pass MOS及
 理想栅压，保留真实Bootstrap/MOM/StrongARM/控制MOS。11次标称APS、22帧
