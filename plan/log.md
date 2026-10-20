@@ -1671,3 +1671,35 @@ human-triggered note in `docs/experience/`.
 - No remote OA mutation, active baseline update, transistor resize, noise/MC/
   PVT/layout/lifetime qualification. Candidate remains netlist-only100ps;
   reference-margin concern remains explicit. Unrelated cdac10_dualrail preserved.
+
+## 2026-10-20 - SAR8 reference slew sweep for restoration margin
+
+- Verified t28_io CIW/Spectre21.1. Eight fresh APS200ns/maxstep10ps/full-rate
+  TT/.9V/27C cases, edge_s50/100ps across -.8/-.8,+.8/+.8,-.8/+.8,+.8/-.8V.
+  Reused four fingerprint-checked20ps baselines. Only16 per-instance edge
+  parameters added; deleting them restores corresponding baseline text exactly.
+  All topology/sizes/VA/100ps restore+BBM/200ps commit/reference50ohm+4pF/
+  input50ohm/stimulus/model/save/tolerance context unchanged. Parameter affects
+  restoration AND conversion. No OA or active-baseline mutations.
+- All eight result.ok,0errors/0CMI/0LTE/seven existing config warnings. Initial
+  GminDC diagnostics and p_to_n Bad pivoting notices retained; no solver changes.
+  Sixteen fresh frames/128 comparisons+writes+updates pass native codes/mapping/
+  sign/token/read windows. Twenty-ps control adds eight reused evidence frames.
+- Pfull N3 VGD .987137->.933042->.912284V; bottom -87.137->-33.042->-12.284mV,
+  GP=GN=.9V unchanged. Worst whole-run reference across four inputs
+  .987137/.944611/.939290V (20/50/100ps), min margin2.863/45.389/50.710mV.
+  Positive worst moves to N0/N4 low-NMOS VDS;100ps overall worst n_to_p P7
+  low-NMOS VDS. Comparator .950686V dominates combined slow-ramp scan,
+  margin39.314mV. Not all node/input-relative overshoots improve monotonically.
+- Max held |diff| about.200475/.200474/.200474mV; first compare about.200486/
+  .200485/.200485mV. Worst later compare .807895/.808021/.808251mV versus
+  1.757813mV screen. Actual restore on101.260/101.275/101.300ns;50% BBM100ps,
+  no50%/1% gate overlap;1% gaps80.4/51/2ps. Not direct transistor-current proof.
+- Three PNGs visually checked; docs/sar8_reference_edge_slew.md; curated
+  verification/integration/reference_edge_slew_results.json. Raw decks/contexts/
+  PSF/logs/waves/snippets output/sar8_reference_edge_slew/. Three focused tests,
+  Python compile, baseline/source/wave fingerprints and diff review/check pass.
+  Local scoped commit only, no push. All unrelated cdac10_dualrail work untouched.
+- Recommend50ps subsequent candidate, not adopted/frozen;100ps lower reference
+  stress but little added combined margin and no full gate-endpoint pause. No
+  physical driver/PVT/MC/noise/layout/lifetime or all-Bootstrap-internal claim.
