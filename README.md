@@ -5,6 +5,15 @@ the TSMC 28 nm HPC+ ULL platform. Active specification:
 `config/design_spec.yaml`; preserved 10-bit 5+5 specification:
 `config/design_spec_10b.yaml`.
 
+## Project progress and file navigation
+
+Start with the [current progress and design-file map](docs/project_status.md).
+It separates the active eight-bit line, candidates, historical ten-bit work,
+local sources, generated results, and the actual remote Virtuoso cell/views.
+The [complete inventory](docs/inventory/2026-10-20/virtuoso_cells.md) includes
+actual-versus-manifest differences; a manifest entry alone is not proof that
+an OA cell exists or is qualified.
+
 ## Active 8-bit line (2026-10-19)
 
 The migration covers the Python golden model/error allocation, clocked ideal

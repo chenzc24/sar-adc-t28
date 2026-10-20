@@ -1,5 +1,29 @@
 # Maintenance Log
 
+## 2026-10-20 - Current progress and local Virtuoso design inventory
+
+- User requested a consolidated progress/file map. Added docs/project_status.md,
+  README entry, complete linked local/cell lists, CSV tables, generated-output
+  roots and a timestamped snapshot under docs/inventory/2026-10-20.
+- Read-only bridge status and exact library/technology verification succeeded;
+  DD listing found 170 cells with 159 schematic, 114 symbol, 11 veriloga views,
+  no layout/maestro. Manifest has 143 entries: 42 actual cells are unregistered,
+  15 planned/local-model entries are not remote OA cells. Manifest unchanged.
+- Eight schematic reads confirm two partial integration lines: native analog
+  chain with VA sequencing, versus native async controller/StrongARM with an
+  ideal sampled-DAC plant. Neither is relabelled as the final native async ADC.
+- Separated active eight-bit sources, historical 5+5/bottom-plate/GMAIN work,
+  reset/dual-rail candidates and ongoing ten-bit/two-cycle work. Preserved all
+  concurrent sources and reports. No OA save/category change, file relocation,
+  deletion, circuit rewrite, new simulation, connection repair or push.
+- Added scripts/maintenance/project_inventory.py for repeatable read-only
+  metadata capture, local source listing and bounded checks. Remote capture
+  freshness is separate from local refresh; raw readbacks remain ignored under
+  output/project_inventory/2026-10-20. No PDK/OA/model contents committed.
+- Validation: complete/unique CSV rows, actual/manifest/view/count consistency,
+  linked-file existence, Python compile and diff checks. Scoped local
+  documentation/tooling commit; no experience extraction.
+
 ## 2026-10-20 - Executable asynchronous SAR and native modular gate prototype
 
 - Added event-driven eight-bit reference, independent-noise/jitter sensitivity,
