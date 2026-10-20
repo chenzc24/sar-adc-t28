@@ -1,5 +1,24 @@
 # Maintenance Log
 
+## 2026-10-20 - Canvas-first eight-bit SAR logic proposal
+
+- User deferred the unavailable live CIW and requested Canvas topology first.
+  Connected the exact Analog Canvas HTTPS origin through callable MCP 0.17.75;
+  no credentials were stored. No OA mutations or baseline replacements.
+- Added eight review/electrical Cells, eight hierarchical bit slices, working
+  and output registers, one-hot sequence, reset-priority state, ready/fault
+  handling, latched clock gates and reference non-overlap topology.
+- Read the active eight-bit device phase contract; drew a 100-ns expected
+  frame with final result publication at commanded 82.5 ns. Figures are
+  explicitly expected, not measured T28 waveforms.
+- Six fresh electrical MCP verifies: zero structural errors; port display
+  stubs/visual clearance warnings remain. Actual exported ideal gate graph
+  passes 256-word, eight-fault-position and reset/retention/clock Boolean
+  checks (27 registers, 187 gates). No analog delay/PVT/BBM proof claimed.
+- Tracked timing config, report, two SVGs, ideal netlist and Boolean checker.
+  Ignored full Canvas/PNG exports remain in output/sar8_logic/. Native
+  implementation is deferred; scoped local commit, no push requested.
+
 ## 2026-10-20 - Unchanged T28 StrongARM baseline for the eight-bit ADC
 
 - Target: `plan/2026-10-20-strongarm8-baseline/plan.md`; preserved concurrent

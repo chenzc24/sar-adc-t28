@@ -1,5 +1,20 @@
 # Design Log
 
+## 2026-10-20 - Eight-bit SAR logic proposal for Canvas review
+
+- Retain the active flat-CDAC phase interface: 43-ns first trial, eight
+  5-ns decisions, commanded final capture at 82.5 ns, reference release at
+  90 ns. Phase generation remains an external block for the first logic pass.
+- Propose a one-hot MSB-to-LSB token, per-bit working and published output
+  registers, reset-priority HOLD/trial latches, and low-level-latched clock
+  gates. Publish the final mux input, including the just-decided LSB.
+- Add explicit comparator-ready/fault handling; a failed decision keeps the
+  old output and inhibits VALID. Logic-ready does not establish analog
+  metastability or noise performance. BBM timing remains to be characterized.
+- User deferred live CIW repair and requested Canvas topology first. The
+  eight-Cell Canvas proposal and actual ideal netlist pass Boolean checks;
+  no native OA implementation or T28 timing/power acceptance is claimed.
+
 ## 2026-10-20 - Reset timing and drive experiment, no promotion
 
 - Keep input Bootstrap/PHI, capacitor geometry/count, reference pass-device
