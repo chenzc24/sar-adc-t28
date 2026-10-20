@@ -1,0 +1,3557 @@
+{
+  "scope": "netlist-only TT nominal timing alignment, not a new freeze or SOA signoff",
+  "native_topology_and_sizes_unchanged": true,
+  "remote_OA_changed": false,
+  "ideal_timing_boundary_changed": true,
+  "source_hash_normalization": "UTF-8 text LF",
+  "sources": {
+    "models\\veriloga\\sar8j_aligned_refgate.va": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+    "scripts\\integration\\reference_alignment.py": "48213579b22f209b98b7cc62915b98741658d7f522d83749b0c0f997e05972ec",
+    "scripts\\integration\\reference_alignment_analyze.py": "52920e69790ee000674a72d792495d9332b0a615f989b399c84b43c8f095243e"
+  },
+  "cases": [
+    {
+      "name": "nfull_a200",
+      "baseline": {
+        "name": "nfull_fine",
+        "result_ok": true,
+        "frames": [
+          {
+            "frame": 1,
+            "hold_start_ns": 41.05,
+            "read_window_ns": [
+              95,
+              99
+            ],
+            "expected_code": 14,
+            "observed_codes_in_window": [
+              14
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 70.29922728740083,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -7.231499843385336e-07,
+            "post_off_held_error_mv": 0.20045203641039233,
+            "max_compare_error_mv": 0.8060493751744988,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 43.69860071393521,
+                "write_ns": 44.00795176546091,
+                "trial_code": 128,
+                "ideal_residual_mv": -800.0,
+                "actual_residual_mv": -799.7995389894827,
+                "error_mv": 0.20046101051729437,
+                "common_mode_v": 0.44955999787136347,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 1.2588859187532119e-05,
+                "outn_v": 0.9000016790924807,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 47.31106564468328,
+                "write_ns": 47.63756629419277,
+                "trial_code": 64,
+                "ideal_residual_mv": -350.00000000000006,
+                "actual_residual_mv": -350.34555734247783,
+                "error_mv": -0.3455573424778202,
+                "common_mode_v": 0.44956300307227903,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.0004478049987953418,
+                "outn_v": 0.8999998722792703,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 50.94241414293107,
+                "write_ns": 51.31541960491945,
+                "trial_code": 32,
+                "ideal_residual_mv": -125.00000000000003,
+                "actual_residual_mv": -125.60678694686001,
+                "error_mv": -0.6067869468599774,
+                "common_mode_v": 0.4495092837322322,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.0006304330983062171,
+                "outn_v": 0.8999828223599149,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 223,
+                  "n": 32
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 54.620285291904246,
+                "write_ns": 55.09725223239915,
+                "trial_code": 16,
+                "ideal_residual_mv": -12.500000000000025,
+                "actual_residual_mv": -13.23938086588361,
+                "error_mv": -0.7393808658835849,
+                "common_mode_v": 0.4494978981448601,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.012357792177527843,
+                "outn_v": 0.8997910436430748,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 239,
+                  "n": 16
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 58.4021889995302,
+                "write_ns": 58.830898241559474,
+                "trial_code": 8,
+                "ideal_residual_mv": 43.74999999999998,
+                "actual_residual_mv": 42.943950624825476,
+                "error_mv": -0.8060493751744988,
+                "common_mode_v": 0.4494977524680768,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999078403490115,
+                "outn_v": 0.004686081826881025,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 247,
+                  "n": 8
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 62.135742567554544,
+                "write_ns": 62.60887960549496,
+                "trial_code": 12,
+                "ideal_residual_mv": 15.624999999999972,
+                "actual_residual_mv": 14.852802391567554,
+                "error_mv": -0.7721976084324178,
+                "common_mode_v": 0.44949716867429224,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998049500623279,
+                "outn_v": 0.011467446032348306,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 243,
+                  "n": 12
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 65.913733475257,
+                "write_ns": 66.49053295970558,
+                "trial_code": 14,
+                "ideal_residual_mv": 1.5624999999999805,
+                "actual_residual_mv": 0.807198459119085,
+                "error_mv": -0.7553015408808955,
+                "common_mode_v": 0.44949703867374613,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8994989338539044,
+                "outn_v": 0.03359066826168809,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 241,
+                  "n": 14
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 69.79508693564922,
+                "write_ns": 70.29922728740083,
+                "trial_code": 15,
+                "ideal_residual_mv": -5.468750000000022,
+                "actual_residual_mv": -6.2156018969710125,
+                "error_mv": -0.7468518969709903,
+                "common_mode_v": 0.4494970468336203,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.017420513912153948,
+                "outn_v": 0.8997215113972462,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 240,
+                  "n": 15
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          },
+          {
+            "frame": 2,
+            "hold_start_ns": 141.04999999999993,
+            "read_window_ns": [
+              195,
+              199
+            ],
+            "expected_code": 14,
+            "observed_codes_in_window": [
+              14
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 170.2988373368867,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": 0.0001548455158539852,
+            "post_off_held_error_mv": 0.2006389256403729,
+            "max_compare_error_mv": 0.8055583805966702,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 143.698366034442,
+                "write_ns": 144.0075535253996,
+                "trial_code": 128,
+                "ideal_residual_mv": -800.0,
+                "actual_residual_mv": -799.7993045313194,
+                "error_mv": 0.20069546868062282,
+                "common_mode_v": 0.4495590949913235,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 1.264070668130246e-05,
+                "outn_v": 0.900001689823099,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 147.31066567842194,
+                "write_ns": 147.63716859420524,
+                "trial_code": 64,
+                "ideal_residual_mv": -350.00000000000006,
+                "actual_residual_mv": -350.3450667154813,
+                "error_mv": -0.3450667154812903,
+                "common_mode_v": 0.4495600222217552,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.000447792464229374,
+                "outn_v": 0.8999998723105312,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 150.94201933521,
+                "write_ns": 151.315029015123,
+                "trial_code": 32,
+                "ideal_residual_mv": -125.00000000000003,
+                "actual_residual_mv": -125.60629600515865,
+                "error_mv": -0.6062960051586297,
+                "common_mode_v": 0.4495062902478655,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.0006304798131956462,
+                "outn_v": 0.8999828213306523,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 223,
+                  "n": 32
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 154.61989571393138,
+                "write_ns": 155.0968670134541,
+                "trial_code": 16,
+                "ideal_residual_mv": -12.500000000000025,
+                "actual_residual_mv": -13.238889838886159,
+                "error_mv": -0.7388898388861337,
+                "common_mode_v": 0.44949489768322304,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.01235887298553284,
+                "outn_v": 0.8997910321031848,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 239,
+                  "n": 16
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 158.401805895106,
+                "write_ns": 158.83051181608946,
+                "trial_code": 8,
+                "ideal_residual_mv": 43.74999999999998,
+                "actual_residual_mv": 42.94444161940331,
+                "error_mv": -0.8055583805966702,
+                "common_mode_v": 0.4494947515193596,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999078191129958,
+                "outn_v": 0.0046872804512971345,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 247,
+                  "n": 8
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 162.13535718368882,
+                "write_ns": 162.60849736375653,
+                "trial_code": 12,
+                "ideal_residual_mv": 15.624999999999972,
+                "actual_residual_mv": 14.853293378403576,
+                "error_mv": -0.7717066215963964,
+                "common_mode_v": 0.4494941677035546,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998049284711311,
+                "outn_v": 0.01146905855558064,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 243,
+                  "n": 12
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 165.9133511078199,
+                "write_ns": 166.49013372510734,
+                "trial_code": 14,
+                "ideal_residual_mv": 1.5624999999999805,
+                "actual_residual_mv": 0.8076894678517577,
+                "error_mv": -0.7548105321482229,
+                "common_mode_v": 0.449494037777293,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.899498951052472,
+                "outn_v": 0.0335905330762346,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 241,
+                  "n": 14
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 169.79468875808735,
+                "write_ns": 170.2988373368867,
+                "trial_code": 15,
+                "ideal_residual_mv": -5.468750000000022,
+                "actual_residual_mv": -6.215110886547858,
+                "error_mv": -0.7463608865478366,
+                "common_mode_v": 0.44949404594109277,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.01742351749053602,
+                "outn_v": 0.8997214744672356,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 240,
+                  "n": 15
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          }
+        ],
+        "reference_stress": {
+          "value_v": 1.266776078347781,
+          "signed_v": 1.266776078347781,
+          "time_ns": 144.7527514692742,
+          "bank": "N7",
+          "device": "MN_LOW",
+          "terminal": "VDB"
+        },
+        "minimum_opposite_rail_deadtime_ps": 99.9999999999801,
+        "simultaneous_gate_enable_banks": [],
+        "raw_both_on_banks": [],
+        "CMI_warning_count": 25,
+        "CMI_warnings": [
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=991.848 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=991.848 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSN7.MN_LOW: Vbd(=-991.954 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSN7.MN_LOW: Vgd(=-991.954 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-991.833 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=995.029 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=995.029 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSN7.MN_LOW: Vds(=990.436 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSN7.MN_LOW: Vbd(=-994.755 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSN7.MN_LOW: Vgd(=-994.755 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-994.783 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=998.329 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=998.329 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSN7.MN_LOW: Vds(=992.979 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-997.842 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=990.457 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=996.127 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.00201 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.00811 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.01441 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2752): XDUT.XCOMP.MNINP: Vgs(=-992.973 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2752): XDUT.XCOMP.MNINP: Vgs(=-998.092 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2752): XDUT.XCOMP.MNINP: Vgs(=-1.00309 V) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2752): XDUT.XCOMP.MNINP: Vgs(=-1.00799 V) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2752): XDUT.XCOMP.MNINP: Vgs(=-1.0117 V) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        ],
+        "warning_codes": {
+          "CMI-2751": 5,
+          "CMI-2752": 5,
+          "CMI-2753": 5,
+          "CMI-2754": 5,
+          "CMI-2755": 5,
+          "SFE-1131": 4,
+          "SFE-2453": 2,
+          "VACOMP-2435": 1
+        },
+        "suppression_or_LTE_lines": [
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "    3365 warnings suppressed."
+        ],
+        "comparator_stress_from_saved_internal_nodes": {
+          "value_v": 1.250012679156684,
+          "signed_v": 1.250012679156684,
+          "time_ns": 144.7532896180098,
+          "instance": "MNINN",
+          "terminal": "VGB",
+          "sample_v": 0.0,
+          "cmp_clock_v": 0.000993777275954736
+        },
+        "top_node_ranges": {
+          "topp": {
+            "max_v": 0.4716198874196769,
+            "max_ns": 59.42436104264508,
+            "min_v": -0.3443904754296495,
+            "min_ns": 144.7524278219259,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 0.01739231345605842
+          },
+          "topn": {
+            "max_v": 1.250012679156684,
+            "max_ns": 144.7532896180098,
+            "min_v": 0.4275330971414494,
+            "min_ns": 159.42397407001388,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 0.000993777275954736
+          }
+        },
+        "bounded_join_pass": false,
+        "handoffs": [
+          {
+            "update_ns": 44.46774932188873,
+            "banks": [
+              "P6",
+              "P7",
+              "N6",
+              "N7"
+            ],
+            "on_ns": [
+              44.740036875567455,
+              44.75593912019083,
+              44.740036875567455,
+              44.75593912019083
+            ],
+            "off_ns": [
+              44.590071421192405,
+              44.5976738166913,
+              44.590071421192405,
+              44.5976738166913
+            ],
+            "on_spread_ps": 15.902244623376305,
+            "off_spread_ps": 7.602395498892633
+          },
+          {
+            "update_ns": 48.09865356074895,
+            "banks": [
+              "P5",
+              "P6",
+              "N5",
+              "N6"
+            ],
+            "on_ns": [
+              48.37122843798092,
+              48.382868474774284,
+              48.37122843798092,
+              48.382868474774284
+            ],
+            "off_ns": [
+              48.221262810045374,
+              48.22459969272937,
+              48.221262810045374,
+              48.22459969272937
+            ],
+            "on_spread_ps": 11.640036793366448,
+            "off_spread_ps": 3.336882683996123
+          },
+          {
+            "update_ns": 51.77650609504992,
+            "banks": [
+              "P4",
+              "P5",
+              "N4",
+              "N5"
+            ],
+            "on_ns": [
+              52.04910100577908,
+              52.06073492423743,
+              52.04910100577908,
+              52.06073492423743
+            ],
+            "off_ns": [
+              51.89913532711816,
+              51.9024660587049,
+              51.89913532711816,
+              51.9024660587049
+            ],
+            "on_spread_ps": 11.633918458350934,
+            "off_spread_ps": 3.3307315867432408
+          },
+          {
+            "update_ns": 55.55833874425032,
+            "banks": [
+              "P3",
+              "P4",
+              "N3",
+              "N4"
+            ],
+            "on_ns": [
+              55.83090859399423,
+              55.84258502905946,
+              55.83090859399423,
+              55.84258502905946
+            ],
+            "off_ns": [
+              55.68094293337878,
+              55.68431613746745,
+              55.68094293337878,
+              55.68431613746745
+            ],
+            "on_spread_ps": 11.676435065226087,
+            "off_spread_ps": 3.373204088667592
+          },
+          {
+            "update_ns": 59.29176626222468,
+            "banks": [
+              "P2",
+              "N2"
+            ],
+            "on_ns": [
+              59.564326526742946,
+              59.564326526742946
+            ],
+            "off_ns": [
+              59.41436104264508,
+              59.41436104264508
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 63.06969295799516,
+            "banks": [
+              "P1",
+              "N1"
+            ],
+            "on_ns": [
+              63.342227797595456,
+              63.342227797595456
+            ],
+            "off_ns": [
+              63.19226229847676,
+              63.19226229847676
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 66.95129721572826,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              67.22202770604585,
+              67.22202770604585
+            ],
+            "off_ns": [
+              67.07206235501518,
+              67.07206235501518
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 70.75963191318881,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              71.0412868575325,
+              71.0412868575325
+            ],
+            "off_ns": [
+              70.88301424806403,
+              70.88301424806403
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 144.4673481055012,
+            "banks": [
+              "P6",
+              "P7",
+              "N6",
+              "N7"
+            ],
+            "on_ns": [
+              144.7396209474387,
+              144.75554016640638,
+              144.7396209474387,
+              144.75554016640638
+            ],
+            "off_ns": [
+              144.5896476531982,
+              144.59727283437425,
+              144.5896476531982,
+              144.59727283437425
+            ],
+            "on_spread_ps": 15.919218967667348,
+            "off_spread_ps": 7.62518117605282
+          },
+          {
+            "update_ns": 148.09825624446526,
+            "banks": [
+              "P5",
+              "P6",
+              "N5",
+              "N6"
+            ],
+            "on_ns": [
+              148.3708163534841,
+              148.38247176679397,
+              148.3708163534841,
+              148.38247176679397
+            ],
+            "off_ns": [
+              148.22084295589855,
+              148.22420195523213,
+              148.22084295589855,
+              148.22420195523213
+            ],
+            "on_spread_ps": 11.655413309881624,
+            "off_spread_ps": 3.3589993335851887
+          },
+          {
+            "update_ns": 151.77611638782741,
+            "banks": [
+              "P4",
+              "P5",
+              "N4",
+              "N5"
+            ],
+            "on_ns": [
+              152.0486961393586,
+              152.06034567204898,
+              152.0486961393586,
+              152.06034567204898
+            ],
+            "off_ns": [
+              151.89872285385485,
+              151.90207576220658,
+              151.89872285385485,
+              151.90207576220658
+            ],
+            "on_spread_ps": 11.649532690370279,
+            "off_spread_ps": 3.352908351729411
+          },
+          {
+            "update_ns": 155.55795502380067,
+            "banks": [
+              "P3",
+              "P4",
+              "N3",
+              "N4"
+            ],
+            "on_ns": [
+              155.83051228982646,
+              155.8422018723777,
+              155.83051228982646,
+              155.8422018723777
+            ],
+            "off_ns": [
+              155.68053678554762,
+              155.68393197116026,
+              155.68053678554762,
+              155.68393197116026
+            ],
+            "on_spread_ps": 11.689582551241529,
+            "off_spread_ps": 3.395185612646401
+          },
+          {
+            "update_ns": 159.2913802182029,
+            "banks": [
+              "P2",
+              "N2"
+            ],
+            "on_ns": [
+              159.56394971444664,
+              159.56394971444664
+            ],
+            "off_ns": [
+              159.4139740700139,
+              159.4139740700139
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 163.06930975524165,
+            "banks": [
+              "P1",
+              "N1"
+            ],
+            "on_ns": [
+              163.34185512830788,
+              163.34185512830788
+            ],
+            "off_ns": [
+              163.19187962654343,
+              163.19187962654343
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 166.95089776001865,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              167.22163710090666,
+              167.22163710090666
+            ],
+            "off_ns": [
+              167.07166352110514,
+              167.07166352110514
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 170.75924196150703,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              171.04089690219672,
+              171.04089690219672
+            ],
+            "off_ns": [
+              170.88262429252504,
+              170.88262429252504
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          }
+        ],
+        "phase_stress": {
+          "conversion": {
+            "reference_max_v": 1.266776078347781,
+            "reference_max_ns": 144.7527514692742,
+            "comparator_max_v": 1.250012679156684,
+            "comparator_max_ns": 144.7532896180098,
+            "TOPN_max_v": 1.250012679156684,
+            "TOPP_min_v": -0.3443904754296495
+          },
+          "second_acquisition": {
+            "reference_max_v": 0.9749634276882249,
+            "reference_max_ns": 103.16701641563941,
+            "comparator_max_v": 1.136124185094066,
+            "comparator_max_ns": 103.17320371213131,
+            "TOPN_max_v": 1.136124185094066,
+            "TOPP_min_v": -0.1489164938861873
+          },
+          "first_MSB_handoff": {
+            "reference_max_v": 1.266776078347781,
+            "reference_max_ns": 144.7527514692742,
+            "comparator_max_v": 1.250012679156684,
+            "comparator_max_ns": 144.7532896180098,
+            "TOPN_max_v": 1.250012679156684,
+            "TOPP_min_v": -0.3443904754296495
+          }
+        }
+      },
+      "aligned": {
+        "name": "nfull_a200",
+        "result_ok": true,
+        "frames": [
+          {
+            "frame": 1,
+            "hold_start_ns": 41.05,
+            "read_window_ns": [
+              95,
+              99
+            ],
+            "expected_code": 14,
+            "observed_codes_in_window": [
+              14
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 70.29878640406982,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -7.231446552680154e-07,
+            "post_off_held_error_mv": 0.2004520364122797,
+            "max_compare_error_mv": 0.8078945771521004,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 43.69860107427461,
+                "write_ns": 44.007952128750695,
+                "trial_code": 128,
+                "ideal_residual_mv": -800.0,
+                "actual_residual_mv": -799.7995389896773,
+                "error_mv": 0.20046101032267227,
+                "common_mode_v": 0.44955999787269735,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 1.2588852857524593e-05,
+                "outn_v": 0.900001679093167,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 47.311065599699475,
+                "write_ns": 47.63705457194427,
+                "trial_code": 64,
+                "ideal_residual_mv": -350.00000000000006,
+                "actual_residual_mv": -350.3621659096159,
+                "error_mv": -0.3621659096158525,
+                "common_mode_v": 0.44953838303573945,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.00044789747996835304,
+                "outn_v": 0.8999998719613306,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 50.941904853748724,
+                "write_ns": 51.314918625029335,
+                "trial_code": 32,
+                "ideal_residual_mv": -125.00000000000003,
+                "actual_residual_mv": -125.61464727662897,
+                "error_mv": -0.6146472766289379,
+                "common_mode_v": 0.4495091855517898,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.0006303881190118114,
+                "outn_v": 0.8999828234250863,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 223,
+                  "n": 32
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 54.61978529737758,
+                "write_ns": 55.09676536084861,
+                "trial_code": 16,
+                "ideal_residual_mv": -12.500000000000025,
+                "actual_residual_mv": -13.242849893341957,
+                "error_mv": -0.742849893341932,
+                "common_mode_v": 0.44949809716950984,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.012357124654153723,
+                "outn_v": 0.8997910541178535,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 239,
+                  "n": 16
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 58.40170333601365,
+                "write_ns": 58.83041175315953,
+                "trial_code": 8,
+                "ideal_residual_mv": 43.74999999999998,
+                "actual_residual_mv": 42.942105422847874,
+                "error_mv": -0.8078945771521004,
+                "common_mode_v": 0.44949731800284576,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999078365812657,
+                "outn_v": 0.004686296926102039,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 247,
+                  "n": 8
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 62.135256989312005,
+                "write_ns": 62.60839951212821,
+                "trial_code": 12,
+                "ideal_residual_mv": 15.624999999999972,
+                "actual_residual_mv": 14.851669477867258,
+                "error_mv": -0.7733305221327147,
+                "common_mode_v": 0.4494969062837405,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998049417726628,
+                "outn_v": 0.011468028668558602,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 243,
+                  "n": 12
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 65.91325492241236,
+                "write_ns": 66.49009410842174,
+                "trial_code": 14,
+                "ideal_residual_mv": 1.5624999999999805,
+                "actual_residual_mv": 0.8062951924712181,
+                "error_mv": -0.7562048075287625,
+                "common_mode_v": 0.4494967144909997,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8994988214761217,
+                "outn_v": 0.03359909096641991,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 241,
+                  "n": 14
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 69.79464921997179,
+                "write_ns": 70.29878640406982,
+                "trial_code": 15,
+                "ideal_residual_mv": -5.468750000000022,
+                "actual_residual_mv": -6.216384449321321,
+                "error_mv": -0.7476344493212994,
+                "common_mode_v": 0.4494967125121332,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.017419858936932056,
+                "outn_v": 0.8997215212937288,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 240,
+                  "n": 15
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          },
+          {
+            "frame": 2,
+            "hold_start_ns": 141.04999999999993,
+            "read_window_ns": [
+              195,
+              199
+            ],
+            "expected_code": 14,
+            "observed_codes_in_window": [
+              14
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 170.2983990796882,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": 0.00015501733152678554,
+            "post_off_held_error_mv": 0.20063909084011566,
+            "max_compare_error_mv": 0.8074054967739595,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 143.6983677324423,
+                "write_ns": 144.0075552014021,
+                "trial_code": 128,
+                "ideal_residual_mv": -800.0,
+                "actual_residual_mv": -799.7993043673906,
+                "error_mv": 0.20069563260938228,
+                "common_mode_v": 0.44955909491034945,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 1.2640697428438085e-05,
+                "outn_v": 0.900001689824564,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 147.31066605846559,
+                "write_ns": 147.63665695327649,
+                "trial_code": 64,
+                "ideal_residual_mv": -350.00000000000006,
+                "actual_residual_mv": -350.3616767666463,
+                "error_mv": -0.36167676664627946,
+                "common_mode_v": 0.449535380739612,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.0004478844851675434,
+                "outn_v": 0.8999998719392531,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 150.94150957727092,
+                "write_ns": 151.31452697516525,
+                "trial_code": 32,
+                "ideal_residual_mv": -125.00000000000003,
+                "actual_residual_mv": -125.6141580933472,
+                "error_mv": -0.6141580933471669,
+                "common_mode_v": 0.4495061832988465,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.000630439907551954,
+                "outn_v": 0.8999828223697864,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 223,
+                  "n": 32
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 154.6193962406708,
+                "write_ns": 155.09638105008477,
+                "trial_code": 16,
+                "ideal_residual_mv": -12.500000000000025,
+                "actual_residual_mv": -13.242360780105821,
+                "error_mv": -0.7423607801057969,
+                "common_mode_v": 0.4494950949743488,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.012358091499993808,
+                "outn_v": 0.8997910445909846,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 239,
+                  "n": 16
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 158.40132043345744,
+                "write_ns": 158.8300254050336,
+                "trial_code": 8,
+                "ideal_residual_mv": 43.74999999999998,
+                "actual_residual_mv": 42.94259450322602,
+                "error_mv": -0.8074054967739595,
+                "common_mode_v": 0.4494943158879762,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999078154661085,
+                "outn_v": 0.004687497875650178,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 247,
+                  "n": 8
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 162.13487190909538,
+                "write_ns": 162.60801759909342,
+                "trial_code": 12,
+                "ideal_residual_mv": 15.624999999999972,
+                "actual_residual_mv": 14.85215855992761,
+                "error_mv": -0.7728414400723638,
+                "common_mode_v": 0.4494939041636951,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998049190706324,
+                "outn_v": 0.011469715463874703,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 243,
+                  "n": 12
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 165.91287442689583,
+                "write_ns": 166.48969699591427,
+                "trial_code": 14,
+                "ideal_residual_mv": 1.5624999999999805,
+                "actual_residual_mv": 0.806784299934471,
+                "error_mv": -0.7557157000655096,
+                "common_mode_v": 0.4494937123314394,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8994988387070936,
+                "outn_v": 0.03359884405763953,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 241,
+                  "n": 14
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 169.7942539779088,
+                "write_ns": 170.2983990796882,
+                "trial_code": 15,
+                "ideal_residual_mv": -5.468750000000022,
+                "actual_residual_mv": -6.215895326285414,
+                "error_mv": -0.7471453262853922,
+                "common_mode_v": 0.44949371037739555,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.01742292107347997,
+                "outn_v": 0.8997214834799844,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 240,
+                  "n": 15
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          }
+        ],
+        "reference_stress": {
+          "value_v": 0.9749747423048967,
+          "signed_v": -0.9749747423048967,
+          "time_ns": 103.1670986768393,
+          "bank": "P3",
+          "device": "MP_HIGH",
+          "terminal": "VDB"
+        },
+        "minimum_opposite_rail_deadtime_ps": 99.99999999993747,
+        "simultaneous_gate_enable_banks": [],
+        "raw_both_on_banks": [],
+        "CMI_warning_count": 10,
+        "CMI_warnings": [
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=993.54 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=998.726 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.00378 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.00871 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2753): XDUT.XCOMP.MNINN: Vgb(=1.01354 V) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCOMP.MNINP: Vgd(=-991.021 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCOMP.MNINP: Vgd(=-995.135 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCOMP.MNINP: Vgd(=-999.177 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCOMP.MNINP: Vgd(=-1.00316 V) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCOMP.MNINP: Vgd(=-1.00711 V) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        ],
+        "warning_codes": {
+          "CMI-2753": 5,
+          "CMI-2754": 5,
+          "SFE-1131": 4,
+          "SFE-2453": 2,
+          "VACOMP-2435": 1
+        },
+        "suppression_or_LTE_lines": [
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "    566 warnings suppressed."
+        ],
+        "comparator_stress_from_saved_internal_nodes": {
+          "value_v": 1.136126199981637,
+          "signed_v": 1.136126199981637,
+          "time_ns": 103.1732700186444,
+          "instance": "MNINN",
+          "terminal": "VGB",
+          "sample_v": 0.9,
+          "cmp_clock_v": 0.001003185405944583
+        },
+        "top_node_ranges": {
+          "topp": {
+            "max_v": 0.4716029509759187,
+            "max_ns": 59.77434032367152,
+            "min_v": -0.1489111673254538,
+            "min_ns": 103.17175876287119,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 1.679115336735999e-05
+          },
+          "topn": {
+            "max_v": 1.136126199981637,
+            "max_ns": 103.1732700186444,
+            "min_v": 0.427515147492337,
+            "min_ns": 159.8588582144255,
+            "sample_at_max_v": 0.9,
+            "cmp_clock_at_max_v": 0.001003185405944583
+          }
+        },
+        "bounded_join_pass": false
+      },
+      "handoffs": [
+        {
+          "update_ns": 44.467749684071556,
+          "banks": [
+            "P6",
+            "P7",
+            "N6",
+            "N7"
+          ],
+          "on_ns": [
+            45.056441531000516,
+            45.056441531000516,
+            45.056441531000516,
+            45.056441531000516
+          ],
+          "off_ns": [
+            44.956441531000515,
+            44.956441531000515,
+            44.956441531000515,
+            44.956441531000515
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 48.0981415306041,
+          "banks": [
+            "P5",
+            "P6",
+            "N5",
+            "N6"
+          ],
+          "on_ns": [
+            48.68285814294946,
+            48.68285814294946,
+            48.68285814294946,
+            48.68285814294946
+          ],
+          "off_ns": [
+            48.582858142949455,
+            48.582858142949455,
+            48.582858142949455,
+            48.582858142949455
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 51.77600518312033,
+          "banks": [
+            "P4",
+            "P5",
+            "N4",
+            "N5"
+          ],
+          "on_ns": [
+            52.36073535384175,
+            52.36073535384175,
+            52.36073535384175,
+            52.36073535384175
+          ],
+          "off_ns": [
+            52.260735353841746,
+            52.260735353841746,
+            52.260735353841746,
+            52.260735353841746
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 55.55785187273559,
+          "banks": [
+            "P3",
+            "P4",
+            "N3",
+            "N4"
+          ],
+          "on_ns": [
+            56.14259950841681,
+            56.14259950841681,
+            56.14259950841681,
+            56.14259950841681
+          ],
+          "off_ns": [
+            56.04259950841681,
+            56.04259950841681,
+            56.04259950841681,
+            56.04259950841681
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 59.291280413601946,
+          "banks": [
+            "P2",
+            "N2"
+          ],
+          "on_ns": [
+            59.86434032367151,
+            59.86434032367151
+          ],
+          "off_ns": [
+            59.76434032367152,
+            59.76434032367152
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 63.06921288941194,
+          "banks": [
+            "P1",
+            "N1"
+          ],
+          "on_ns": [
+            63.642247767508046,
+            63.642247767508046
+          ],
+          "off_ns": [
+            63.54224776750805,
+            63.54224776750805
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 66.9508578987093,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            67.52208839482341,
+            67.52208839482341
+          ],
+          "off_ns": [
+            67.42208839482343,
+            67.42208839482343
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 70.7591909885492,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            71.34134587023749,
+            71.34134587023749
+          ],
+          "off_ns": [
+            71.2413458702375,
+            71.2413458702375
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 144.4673497639489,
+          "banks": [
+            "P6",
+            "P7",
+            "N6",
+            "N7"
+          ],
+          "on_ns": [
+            145.056042471334,
+            145.056042471334,
+            145.056042471334,
+            145.056042471334
+          ],
+          "off_ns": [
+            144.95604247133406,
+            144.95604247133406,
+            144.95604247133406,
+            144.95604247133406
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 148.09774479266005,
+          "banks": [
+            "P5",
+            "P6",
+            "N5",
+            "N6"
+          ],
+          "on_ns": [
+            148.68246103298839,
+            148.68246103298839,
+            148.68246103298839,
+            148.68246103298839
+          ],
+          "off_ns": [
+            148.58246103298836,
+            148.58246103298836,
+            148.58246103298836,
+            148.58246103298836
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 151.77561411876914,
+          "banks": [
+            "P4",
+            "P5",
+            "N4",
+            "N5"
+          ],
+          "on_ns": [
+            152.36034415250458,
+            152.36034415250458,
+            152.36034415250458,
+            152.36034415250458
+          ],
+          "off_ns": [
+            152.2603441525046,
+            152.2603441525046,
+            152.2603441525046,
+            152.2603441525046
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 155.55746822447767,
+          "banks": [
+            "P3",
+            "P4",
+            "N3",
+            "N4"
+          ],
+          "on_ns": [
+            156.14221552592227,
+            156.14221552592227,
+            156.14221552592227,
+            156.14221552592227
+          ],
+          "off_ns": [
+            156.0422155259223,
+            156.0422155259223,
+            156.0422155259223,
+            156.0422155259223
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 159.29089380792635,
+          "banks": [
+            "P2",
+            "N2"
+          ],
+          "on_ns": [
+            159.863963306611,
+            159.863963306611
+          ],
+          "off_ns": [
+            159.763963306611,
+            159.763963306611
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 163.0688305235913,
+          "banks": [
+            "P1",
+            "N1"
+          ],
+          "on_ns": [
+            163.64187614714473,
+            163.64187614714473
+          ],
+          "off_ns": [
+            163.54187614714473,
+            163.54187614714473
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 166.95046133753098,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            167.52170066874658,
+            167.52170066874658
+          ],
+          "off_ns": [
+            167.4217006687466,
+            167.4217006687466
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 170.75880370447035,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            171.3409586446845,
+            171.3409586446845
+          ],
+          "off_ns": [
+            171.24095864468447,
+            171.24095864468447
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        }
+      ],
+      "context": {
+        "name": "nfull_a200",
+        "point": "nfull",
+        "export_tag": "primary",
+        "export_sha256": "6fb41d4cb1052f5f8da490f8b27a87d698321623c1bfe445178fba99d22e90b1",
+        "deck_sha256": "f1351537785f5e6b135da5be4c0b8e492c6eaf50c0c1de106f4ef07a6e8ca071",
+        "gate_va_sha256": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+        "stimulus_vdiff_by_frame": [
+          -0.8,
+          -0.8
+        ],
+        "supply_v": 0.9,
+        "temperature_c": 27,
+        "corner": "tt",
+        "MOM_corner": "tt",
+        "resolution_bits": 8,
+        "sample_rate_hz": 10000000.0,
+        "stop_ns": 200,
+        "maxstep_ps": 10,
+        "output_strobe_ps": 0,
+        "saved_signals": [
+          "SAMPLE",
+          "VINP_SRC",
+          "VINN_SRC",
+          "VINP",
+          "VINN",
+          "TOPP",
+          "TOPN",
+          "CMP_CLK",
+          "COMP_P",
+          "COMP_N",
+          "VREFP",
+          "VREFN",
+          "VDD!",
+          "VVDD:p",
+          "VREFHIGH:p",
+          "VREFLOW:p",
+          "D0",
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "XDUT.XCTRL.PHI_W",
+          "XDUT.XCTRL.PHI_U",
+          "XDUT.XCTRL.ACTIVE",
+          "XDUT.XCTRL.DATA",
+          "XDUT.XCTRL.CODE0",
+          "XDUT.XCTRL.CODE1",
+          "XDUT.XCTRL.CODE2",
+          "XDUT.XCTRL.CODE3",
+          "XDUT.XCTRL.CODE4",
+          "XDUT.XCTRL.CODE5",
+          "XDUT.XCTRL.CODE6",
+          "XDUT.XCTRL.CODE7",
+          "XDUT.XCTRL.T0",
+          "XDUT.XCTRL.T1",
+          "XDUT.XCTRL.T2",
+          "XDUT.XCTRL.T3",
+          "XDUT.XCTRL.T4",
+          "XDUT.XCTRL.T5",
+          "XDUT.XCTRL.T6",
+          "XDUT.XCTRL.T7",
+          "XDUT.BP_H0",
+          "XDUT.BP_H1",
+          "XDUT.BP_H2",
+          "XDUT.BP_H3",
+          "XDUT.BP_H4",
+          "XDUT.BP_H5",
+          "XDUT.BP_H6",
+          "XDUT.BP_H7",
+          "XDUT.BP_L0",
+          "XDUT.BP_L1",
+          "XDUT.BP_L2",
+          "XDUT.BP_L3",
+          "XDUT.BP_L4",
+          "XDUT.BP_L5",
+          "XDUT.BP_L6",
+          "XDUT.BP_L7",
+          "XDUT.BN_H0",
+          "XDUT.BN_H1",
+          "XDUT.BN_H2",
+          "XDUT.BN_H3",
+          "XDUT.BN_H4",
+          "XDUT.BN_H5",
+          "XDUT.BN_H6",
+          "XDUT.BN_H7",
+          "XDUT.BN_L0",
+          "XDUT.BN_L1",
+          "XDUT.BN_L2",
+          "XDUT.BN_L3",
+          "XDUT.BN_L4",
+          "XDUT.BN_L5",
+          "XDUT.BN_L6",
+          "XDUT.BN_L7",
+          "XDUT.GPP0",
+          "XDUT.GPP1",
+          "XDUT.GPP2",
+          "XDUT.GPP3",
+          "XDUT.GPP4",
+          "XDUT.GPP5",
+          "XDUT.GPP6",
+          "XDUT.GPP7",
+          "XDUT.GPN0",
+          "XDUT.GPN1",
+          "XDUT.GPN2",
+          "XDUT.GPN3",
+          "XDUT.GPN4",
+          "XDUT.GPN5",
+          "XDUT.GPN6",
+          "XDUT.GPN7",
+          "XDUT.GNP0",
+          "XDUT.GNP1",
+          "XDUT.GNP2",
+          "XDUT.GNP3",
+          "XDUT.GNP4",
+          "XDUT.GNP5",
+          "XDUT.GNP6",
+          "XDUT.GNP7",
+          "XDUT.GNN0",
+          "XDUT.GNN1",
+          "XDUT.GNN2",
+          "XDUT.GNN3",
+          "XDUT.GNN4",
+          "XDUT.GNN5",
+          "XDUT.GNN6",
+          "XDUT.GNN7",
+          "XDUT.XCDAC.BP0",
+          "XDUT.XCDAC.BP1",
+          "XDUT.XCDAC.BP2",
+          "XDUT.XCDAC.BP3",
+          "XDUT.XCDAC.BP4",
+          "XDUT.XCDAC.BP5",
+          "XDUT.XCDAC.BP6",
+          "XDUT.XCDAC.BP7",
+          "XDUT.XCDAC.BN0",
+          "XDUT.XCDAC.BN1",
+          "XDUT.XCDAC.BN2",
+          "XDUT.XCDAC.BN3",
+          "XDUT.XCDAC.BN4",
+          "XDUT.XCDAC.BN5",
+          "XDUT.XCDAC.BN6",
+          "XDUT.XCDAC.BN7",
+          "XDUT.XBOOTP.G",
+          "XDUT.XBOOTP.CLKSB",
+          "XDUT.XBOOTN.G",
+          "XDUT.XBOOTN.CLKSB",
+          "XDUT.XCOMP.X",
+          "XDUT.XCOMP.Y",
+          "XDUT.XCOMP.TAIL",
+          "XDUT.GCOMMIT"
+        ],
+        "native_controller": true,
+        "native_StrongARM": true,
+        "native_Bootstrap": true,
+        "native_MOM_and_3x_reference_pass_MOS": true,
+        "ideal_DAC_plant": false,
+        "physical_noise": false,
+        "mismatch": false,
+        "scope": "R1_native_circuit_with_shared_ideal_reference_timing_only",
+        "baseline_case": "nfull_fine",
+        "baseline_deck_sha256": "37d318e005af0c151dce61a68daaa51bb15261db69a6f7198c46600a950cc527",
+        "settle_ps": 200,
+        "gate_edge_ps": 20,
+        "minimum_BBM_ps": 100,
+        "native_subcircuits_unchanged": true,
+        "native_top_except_ideal_gates_unchanged": true
+      },
+      "waveform_sha256": "3a5941e76e82e04ad9461466f2cba4654b7850820f023255c404a6a63a788ffa",
+      "baseline_waveform_sha256": "fe1fa3e9908a9b4124b3e90e01252ca6e9bf89587d888663f201c8137f7b9513",
+      "gate_va_sha256": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+      "phase_stress": {
+        "conversion": {
+          "reference_max_v": 0.9510878543670245,
+          "reference_max_ns": 45.064254370728776,
+          "comparator_max_v": 0.950686253895437,
+          "comparator_max_ns": 43.71420690389439,
+          "TOPN_max_v": 0.8656078907490882,
+          "TOPP_min_v": 0.03816481776617776
+        },
+        "second_acquisition": {
+          "reference_max_v": 0.9749747423048967,
+          "reference_max_ns": 103.1670986768393,
+          "comparator_max_v": 1.136126199981637,
+          "comparator_max_ns": 103.1732700186444,
+          "TOPN_max_v": 1.136126199981637,
+          "TOPP_min_v": -0.1489111673254538
+        },
+        "first_MSB_handoff": {
+          "reference_max_v": 0.9510409075260884,
+          "reference_max_ns": 145.0639522205137,
+          "comparator_max_v": 0.9115740939186947,
+          "comparator_max_ns": 144.5320526140679,
+          "TOPN_max_v": 0.8655833689775669,
+          "TOPP_min_v": 0.03817891277527703
+        }
+      }
+    },
+    {
+      "name": "nhalf_a200",
+      "baseline": {
+        "name": "nhalf_fine",
+        "result_ok": true,
+        "frames": [
+          {
+            "frame": 1,
+            "hold_start_ns": 41.05,
+            "read_window_ns": [
+              95,
+              99
+            ],
+            "expected_code": 127,
+            "observed_codes_in_window": [
+              127
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 70.28442239262351,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -1.1941860824857264e-07,
+            "post_off_held_error_mv": 0.0007901719385806395,
+            "max_compare_error_mv": 0.5432284946750854,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 43.69859626465718,
+                "write_ns": 44.22268512996549,
+                "trial_code": 128,
+                "ideal_residual_mv": -3.515625000000022,
+                "actual_residual_mv": -3.514834830287361,
+                "error_mv": 0.000790169712661104,
+                "common_mode_v": 0.4495623224457809,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.021594050767292258,
+                "outn_v": 0.8996614972963134,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 47.52607414925494,
+                "write_ns": 47.84361852246179,
+                "trial_code": 64,
+                "ideal_residual_mv": 446.484375,
+                "actual_residual_mv": 445.9411465053249,
+                "error_mv": -0.5432284946750854,
+                "common_mode_v": 0.44957965313454107,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.9000012006154726,
+                "outn_v": 0.0002759097900140624,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 51.14836235650461,
+                "write_ns": 51.49333742809386,
+                "trial_code": 96,
+                "ideal_residual_mv": 221.48437499999994,
+                "actual_residual_mv": 221.21536256222342,
+                "error_mv": -0.26901243777655015,
+                "common_mode_v": 0.44956728989427336,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999958199247018,
+                "outn_v": 0.00013438595973109315,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 159,
+                  "n": 96
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 54.79810710955629,
+                "write_ns": 55.17905816627514,
+                "trial_code": 112,
+                "ideal_residual_mv": 108.98437500000003,
+                "actual_residual_mv": 108.85037794250185,
+                "error_mv": -0.1339970574981697,
+                "common_mode_v": 0.44955671085342475,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999786052958254,
+                "outn_v": 0.0008910937663919589,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 143,
+                  "n": 112
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 58.48382536078163,
+                "write_ns": 58.903619365963095,
+                "trial_code": 120,
+                "ideal_residual_mv": 52.734375,
+                "actual_residual_mv": 52.66780644089053,
+                "error_mv": -0.06656855910947002,
+                "common_mode_v": 0.4495530002182179,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999305029729501,
+                "outn_v": 0.003467212964639046,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 135,
+                  "n": 120
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 62.208390195965436,
+                "write_ns": 62.663345799592825,
+                "trial_code": 124,
+                "ideal_residual_mv": 24.609374999999932,
+                "actual_residual_mv": 24.576485809791603,
+                "error_mv": -0.03288919020832948,
+                "common_mode_v": 0.4495519094730632,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.89986086608095,
+                "outn_v": 0.007832387735705519,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 131,
+                  "n": 124
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 65.9681150824815,
+                "write_ns": 66.45500964160586,
+                "trial_code": 126,
+                "ideal_residual_mv": 10.546874999999956,
+                "actual_residual_mv": 10.530815062181064,
+                "error_mv": -0.016059937818890813,
+                "common_mode_v": 0.44955164069570874,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8997809003503054,
+                "outn_v": 0.013332636975532601,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 129,
+                  "n": 126
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 69.75943108813141,
+                "write_ns": 70.28442239262351,
+                "trial_code": 127,
+                "ideal_residual_mv": 3.515625000000022,
+                "actual_residual_mv": 3.5079768904372477,
+                "error_mv": -0.007648109562774508,
+                "common_mode_v": 0.44955158143323193,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8996725654261462,
+                "outn_v": 0.021071460523050624,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 128,
+                  "n": 127
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          },
+          {
+            "frame": 2,
+            "hold_start_ns": 141.04999999999993,
+            "read_window_ns": [
+              195,
+              199
+            ],
+            "expected_code": 127,
+            "observed_codes_in_window": [
+              127
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 170.28398045263054,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -1.651320183024274e-08,
+            "post_off_held_error_mv": 0.0007908803037804703,
+            "max_compare_error_mv": 0.54322636028592,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 143.69836136406298,
+                "write_ns": 144.2222441448177,
+                "trial_code": 128,
+                "ideal_residual_mv": -3.515625000000022,
+                "actual_residual_mv": -3.5148340884454954,
+                "error_mv": 0.0007909115545268186,
+                "common_mode_v": 0.44956219589329083,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.021687274945787843,
+                "outn_v": 0.8996601523193398,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 147.52563095235115,
+                "write_ns": 147.84316953954666,
+                "trial_code": 64,
+                "ideal_residual_mv": 446.484375,
+                "actual_residual_mv": 445.9411486397141,
+                "error_mv": -0.54322636028592,
+                "common_mode_v": 0.44957895385881097,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.9000012005239888,
+                "outn_v": 0.0002759130948872571,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 151.14791655484538,
+                "write_ns": 151.49289101894496,
+                "trial_code": 96,
+                "ideal_residual_mv": 221.48437499999994,
+                "actual_residual_mv": 221.21536386107488,
+                "error_mv": -0.26901113892507933,
+                "common_mode_v": 0.44956658828602686,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999958201207618,
+                "outn_v": 0.00013438843171781033,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 159,
+                  "n": 96
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 154.79766226894662,
+                "write_ns": 155.17861315155668,
+                "trial_code": 112,
+                "ideal_residual_mv": 108.98437500000003,
+                "actual_residual_mv": 108.85037928846924,
+                "error_mv": -0.1339957115307766,
+                "common_mode_v": 0.4495560091851749,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999786042668372,
+                "outn_v": 0.0008911357549107601,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 143,
+                  "n": 112
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 158.48338281009984,
+                "write_ns": 158.90317643371435,
+                "trial_code": 120,
+                "ideal_residual_mv": 52.734375,
+                "actual_residual_mv": 52.66780782021324,
+                "error_mv": -0.06656717978675841,
+                "common_mode_v": 0.449552298592532,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999304988327498,
+                "outn_v": 0.0034674302043285568,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 135,
+                  "n": 120
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 162.20794743778742,
+                "write_ns": 162.6629031331877,
+                "trial_code": 124,
+                "ideal_residual_mv": 24.609374999999932,
+                "actual_residual_mv": 24.576487205813514,
+                "error_mv": -0.032887794186420294,
+                "common_mode_v": 0.44955120782663144,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998608587103633,
+                "outn_v": 0.007832852592287536,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 131,
+                  "n": 124
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 165.9676728817199,
+                "write_ns": 166.45456751265547,
+                "trial_code": 126,
+                "ideal_residual_mv": 10.546874999999956,
+                "actual_residual_mv": 10.530816467022419,
+                "error_mv": -0.016058532977536455,
+                "common_mode_v": 0.44955093901219434,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8997808912060101,
+                "outn_v": 0.013333301001054872,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 129,
+                  "n": 126
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 169.7589887204434,
+                "write_ns": 170.28398045263054,
+                "trial_code": 127,
+                "ideal_residual_mv": 3.515625000000022,
+                "actual_residual_mv": 3.5079783010971144,
+                "error_mv": -0.007646698902907811,
+                "common_mode_v": 0.4495508798244958,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8996725505305928,
+                "outn_v": 0.021072631923508153,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 128,
+                  "n": 127
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          }
+        ],
+        "reference_stress": {
+          "value_v": 1.266743656592972,
+          "signed_v": 1.266743656592972,
+          "time_ns": 144.9673711722256,
+          "bank": "N7",
+          "device": "MN_LOW",
+          "terminal": "VDB"
+        },
+        "minimum_opposite_rail_deadtime_ps": 100.00000000003695,
+        "simultaneous_gate_enable_banks": [],
+        "raw_both_on_banks": [],
+        "CMI_warning_count": 15,
+        "CMI_warnings": [
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=991.972 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=991.972 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSN7.MN_LOW: Vbd(=-992.011 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSN7.MN_LOW: Vgd(=-992.011 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-991.946 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=995.158 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=995.158 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSN7.MN_LOW: Vds(=990.491 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSN7.MN_LOW: Vbd(=-994.815 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSN7.MN_LOW: Vgd(=-994.815 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-994.901 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2755): XDUT.XCDAC.XSP7.MP_HIGH: Vbd(=998.463 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2754): XDUT.XCDAC.XSP7.MP_HIGH: Vgd(=998.463 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSN7.MN_LOW: Vds(=993.037 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+          "WARNING (CMI-2751): XDUT.XCDAC.XSP7.MP_HIGH: Vds(=-997.965 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        ],
+        "warning_codes": {
+          "CMI-2751": 5,
+          "CMI-2754": 5,
+          "CMI-2755": 5,
+          "SFE-1131": 4,
+          "SFE-2453": 2,
+          "VACOMP-2435": 1
+        },
+        "suppression_or_LTE_lines": [
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "        Further occurrences of this warning will be suppressed.",
+          "    1570 warnings suppressed."
+        ],
+        "comparator_stress_from_saved_internal_nodes": {
+          "value_v": 0.9515063020136413,
+          "signed_v": 0.9515063020136413,
+          "time_ns": 147.5410459542676,
+          "instance": "MNLATP",
+          "terminal": "VSB",
+          "sample_v": 0.0,
+          "cmp_clock_v": 0.8091262813043972
+        },
+        "top_node_ranges": {
+          "topp": {
+            "max_v": 0.676865330064641,
+            "max_ns": 48.437061352387126,
+            "min_v": 0.0536756501355895,
+            "min_ns": 144.96704308776242,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 0.01745203356225794
+          },
+          "topn": {
+            "max_v": 0.851855224286154,
+            "max_ns": 144.9678880336513,
+            "min_v": 0.2230965405017237,
+            "min_ns": 148.571735420067,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 0.0009601307108523222
+          }
+        },
+        "bounded_join_pass": false,
+        "handoffs": [
+          {
+            "update_ns": 44.682482688418375,
+            "banks": [
+              "P6",
+              "P7",
+              "N6",
+              "N7"
+            ],
+            "on_ns": [
+              44.95477019678841,
+              44.970674307859255,
+              44.95477019678841,
+              44.970674307859255
+            ],
+            "off_ns": [
+              44.804804782573385,
+              44.812408972134364,
+              44.804804782573385,
+              44.812408972134364
+            ],
+            "on_spread_ps": 15.904111070845772,
+            "off_spread_ps": 7.60418956097908
+          },
+          {
+            "update_ns": 48.304486324974306,
+            "banks": [
+              "P5",
+              "N5"
+            ],
+            "on_ns": [
+              48.577026913535335,
+              48.577026913535335
+            ],
+            "off_ns": [
+              48.42706135238713,
+              48.42706135238713
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 51.95415055286375,
+            "banks": [
+              "P4",
+              "N4"
+            ],
+            "on_ns": [
+              52.226709148270075,
+              52.226709148270075
+            ],
+            "off_ns": [
+              52.07674361497968,
+              52.07674361497968
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 55.63981626747451,
+            "banks": [
+              "P3",
+              "N3"
+            ],
+            "on_ns": [
+              55.912349187930865,
+              55.912349187930865
+            ],
+            "off_ns": [
+              55.7623835776924,
+              55.7623835776924
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 59.364323904710005,
+            "banks": [
+              "P2",
+              "N2"
+            ],
+            "on_ns": [
+              59.636881326627616,
+              59.636881326627616
+            ],
+            "off_ns": [
+              59.48691579252951,
+              59.48691579252951
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 63.123998442473145,
+            "banks": [
+              "P1",
+              "N1"
+            ],
+            "on_ns": [
+              63.39653179919588,
+              63.39653179919588
+            ],
+            "off_ns": [
+              63.24656635076657,
+              63.24656635076657
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 66.91561724299203,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              67.18634651495071,
+              67.18634651495071
+            ],
+            "off_ns": [
+              67.03638113612418,
+              67.03638113612418
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 70.74445683528299,
+            "banks": [],
+            "on_ns": [],
+            "off_ns": [],
+            "on_spread_ps": null,
+            "off_spread_ps": null
+          },
+          {
+            "update_ns": 144.68203881663933,
+            "banks": [
+              "P6",
+              "P7",
+              "N6",
+              "N7"
+            ],
+            "on_ns": [
+              144.95431387293075,
+              144.97023266241345,
+              144.95431387293075,
+              144.97023266241345
+            ],
+            "off_ns": [
+              144.80433795070164,
+              144.81196532020388,
+              144.80433795070164,
+              144.81196532020388
+            ],
+            "on_spread_ps": 15.918789482697093,
+            "off_spread_ps": 7.627369502245074
+          },
+          {
+            "update_ns": 148.3040383658044,
+            "banks": [
+              "P5",
+              "N5"
+            ],
+            "on_ns": [
+              148.57658735408123,
+              148.57658735408123
+            ],
+            "off_ns": [
+              148.426610891598,
+              148.426610891598
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 151.95370327790127,
+            "banks": [
+              "P4",
+              "N4"
+            ],
+            "on_ns": [
+              152.2262715727393,
+              152.2262715727393
+            ],
+            "off_ns": [
+              152.07629549983446,
+              152.07629549983446
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 155.63937109112624,
+            "banks": [
+              "P3",
+              "N3"
+            ],
+            "on_ns": [
+              155.91191372442276,
+              155.91191372442276
+            ],
+            "off_ns": [
+              155.76193779007946,
+              155.76193779007946
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 159.36388117241802,
+            "banks": [
+              "P2",
+              "N2"
+            ],
+            "on_ns": [
+              159.63644861437447,
+              159.63644861437447
+            ],
+            "off_ns": [
+              159.48647300412654,
+              159.48647300412654
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 163.12355570641068,
+            "banks": [
+              "P1",
+              "N1"
+            ],
+            "on_ns": [
+              163.39609951717438,
+              163.39609951717438
+            ],
+            "off_ns": [
+              163.24612402762642,
+              163.24612402762642
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 166.9151744561768,
+            "banks": [
+              "P0",
+              "N0"
+            ],
+            "on_ns": [
+              167.18591409604264,
+              167.18591409604264
+            ],
+            "off_ns": [
+              167.03593917952173,
+              167.03593917952173
+            ],
+            "on_spread_ps": 0.0,
+            "off_spread_ps": 0.0
+          },
+          {
+            "update_ns": 170.74401382415377,
+            "banks": [],
+            "on_ns": [],
+            "off_ns": [],
+            "on_spread_ps": null,
+            "off_spread_ps": null
+          }
+        ],
+        "phase_stress": {
+          "conversion": {
+            "reference_max_v": 1.266743656592972,
+            "reference_max_ns": 144.9673711722256,
+            "comparator_max_v": 0.9515063020136413,
+            "comparator_max_ns": 147.5410459542676,
+            "TOPN_max_v": 0.851855224286154,
+            "TOPP_min_v": 0.0536756501355895
+          },
+          "second_acquisition": {
+            "reference_max_v": 0.944160131722444,
+            "reference_max_ns": 103.0700160559614,
+            "comparator_max_v": 0.9015709780980331,
+            "comparator_max_ns": 103.17599848162129,
+            "TOPN_max_v": 0.4610599106072279,
+            "TOPP_min_v": 0.3568992374221863
+          },
+          "first_MSB_handoff": {
+            "reference_max_v": 1.266743656592972,
+            "reference_max_ns": 144.9673711722256,
+            "comparator_max_v": 0.9115751528284481,
+            "comparator_max_ns": 144.74696254515612,
+            "TOPN_max_v": 0.851855224286154,
+            "TOPP_min_v": 0.0536756501355895
+          }
+        }
+      },
+      "aligned": {
+        "name": "nhalf_a200",
+        "result_ok": true,
+        "frames": [
+          {
+            "frame": 1,
+            "hold_start_ns": 41.05,
+            "read_window_ns": [
+              95,
+              99
+            ],
+            "expected_code": 127,
+            "observed_codes_in_window": [
+              127
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 70.28456172947172,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -1.0824060528089041e-07,
+            "post_off_held_error_mv": 0.0007901822852486064,
+            "max_compare_error_mv": 0.5607891683483968,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 43.6985966166916,
+                "write_ns": 44.22268548001256,
+                "trial_code": 128,
+                "ideal_residual_mv": -3.515625000000022,
+                "actual_residual_mv": -3.514834819942636,
+                "error_mv": 0.0007901800573861806,
+                "common_mode_v": 0.4495623224369969,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.02159405078297203,
+                "outn_v": 0.8996614972958679,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 47.526077270792335,
+                "write_ns": 47.843589368170676,
+                "trial_code": 64,
+                "ideal_residual_mv": 446.484375,
+                "actual_residual_mv": 445.92358583165156,
+                "error_mv": -0.5607891683483968,
+                "common_mode_v": 0.44957811243492923,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.9000012005746907,
+                "outn_v": 0.00027592387174674496,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 51.14833596272155,
+                "write_ns": 51.49340562093046,
+                "trial_code": 96,
+                "ideal_residual_mv": 221.48437499999994,
+                "actual_residual_mv": 221.21310310971737,
+                "error_mv": -0.27127189028258725,
+                "common_mode_v": 0.4495705039886607,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999958202706522,
+                "outn_v": 0.00013437996842916125,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 159,
+                  "n": 96
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 54.79817798251461,
+                "write_ns": 55.17917107737111,
+                "trial_code": 112,
+                "ideal_residual_mv": 108.98437500000003,
+                "actual_residual_mv": 108.84981713387232,
+                "error_mv": -0.1345578661277047,
+                "common_mode_v": 0.4495579551970855,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999786049693643,
+                "outn_v": 0.0008911082895391876,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 143,
+                  "n": 112
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 58.48394111725741,
+                "write_ns": 58.90374831375338,
+                "trial_code": 120,
+                "ideal_residual_mv": 52.734375,
+                "actual_residual_mv": 52.66766870448042,
+                "error_mv": -0.06670629551958074,
+                "common_mode_v": 0.44955337137407525,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999305020091627,
+                "outn_v": 0.0034672548667970663,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 135,
+                  "n": 120
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 62.208521065175994,
+                "write_ns": 62.66348009244065,
+                "trial_code": 124,
+                "ideal_residual_mv": 24.609374999999932,
+                "actual_residual_mv": 24.57645177739437,
+                "error_mv": -0.03292322260556313,
+                "common_mode_v": 0.44955200145380625,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998608656362719,
+                "outn_v": 0.007832410103406878,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 131,
+                  "n": 124
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 65.96825186489757,
+                "write_ns": 66.45514682175053,
+                "trial_code": 126,
+                "ideal_residual_mv": 10.546874999999956,
+                "actual_residual_mv": 10.530806576865059,
+                "error_mv": -0.016068423134896204,
+                "common_mode_v": 0.4495516598888767,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8997809016255048,
+                "outn_v": 0.013332555870011923,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 129,
+                  "n": 126
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 69.75957025120593,
+                "write_ns": 70.28456172947172,
+                "trial_code": 127,
+                "ideal_residual_mv": 3.515625000000022,
+                "actual_residual_mv": 3.507974740224462,
+                "error_mv": -0.007650259775560109,
+                "common_mode_v": 0.44955158410669127,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8996725653807843,
+                "outn_v": 0.021071464870788825,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 128,
+                  "n": 127
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          },
+          {
+            "frame": 2,
+            "hold_start_ns": 141.04999999999993,
+            "read_window_ns": [
+              195,
+              199
+            ],
+            "expected_code": 127,
+            "observed_codes_in_window": [
+              127
+            ],
+            "comparison_count": 8,
+            "write_count": 8,
+            "update_count": 8,
+            "last_write_ns": 170.2841197137963,
+            "high_words_before_hold": {
+              "p": 127,
+              "n": 128
+            },
+            "acquisition_error_before_off_mv": -1.599245172054231e-08,
+            "post_off_held_error_mv": 0.000790889575641527,
+            "max_compare_error_mv": 0.5607868031000662,
+            "comparisons": [
+              {
+                "bit": 7,
+                "compare_ns": 143.6983630074146,
+                "write_ns": 144.22224583326934,
+                "trial_code": 128,
+                "ideal_residual_mv": -3.515625000000022,
+                "actual_residual_mv": -3.5148340790766563,
+                "error_mv": 0.0007909209233658565,
+                "common_mode_v": 0.44956219563605126,
+                "resolved": true,
+                "decision_p": false,
+                "sign_agrees": true,
+                "outp_v": 0.021687254544439566,
+                "outn_v": 0.8996601526221949,
+                "token_at_write": 128,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 127,
+                  "n": 128
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 6,
+                "compare_ns": 147.52563393112283,
+                "write_ns": 147.84314024094107,
+                "trial_code": 64,
+                "ideal_residual_mv": 446.484375,
+                "actual_residual_mv": 445.9235881968999,
+                "error_mv": -0.5607868031000662,
+                "common_mode_v": 0.44957741061360124,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.9000012003593435,
+                "outn_v": 0.00027592646863046225,
+                "token_at_write": 64,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 191,
+                  "n": 64
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 5,
+                "compare_ns": 151.14788910553088,
+                "write_ns": 151.49295840640247,
+                "trial_code": 96,
+                "ideal_residual_mv": 221.48437499999994,
+                "actual_residual_mv": 221.21310419400797,
+                "error_mv": -0.2712708059919855,
+                "common_mode_v": 0.4495698021089025,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999958203492333,
+                "outn_v": 0.00013438507274283259,
+                "token_at_write": 32,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 159,
+                  "n": 96
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 4,
+                "compare_ns": 154.79773192485624,
+                "write_ns": 155.17872460713284,
+                "trial_code": 112,
+                "ideal_residual_mv": 108.98437500000003,
+                "actual_residual_mv": 108.84981834161029,
+                "error_mv": -0.13455665838973951,
+                "common_mode_v": 0.44955725335894836,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999786037145572,
+                "outn_v": 0.0008911574042021115,
+                "token_at_write": 16,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 143,
+                  "n": 112
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 3,
+                "compare_ns": 158.48349669276064,
+                "write_ns": 158.90330355380422,
+                "trial_code": 120,
+                "ideal_residual_mv": 52.734375,
+                "actual_residual_mv": 52.667669973134934,
+                "error_mv": -0.06670502686506596,
+                "common_mode_v": 0.44955266948726746,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8999304981097301,
+                "outn_v": 0.0034674666201506025,
+                "token_at_write": 8,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 135,
+                  "n": 120
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 2,
+                "compare_ns": 162.20807629405013,
+                "write_ns": 162.66303530210047,
+                "trial_code": 124,
+                "ideal_residual_mv": 24.609374999999932,
+                "actual_residual_mv": 24.576453075348613,
+                "error_mv": -0.032921924651319046,
+                "common_mode_v": 0.44955129959140694,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8998608582905732,
+                "outn_v": 0.007832882324731076,
+                "token_at_write": 4,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 131,
+                  "n": 124
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 1,
+                "compare_ns": 165.96780851629225,
+                "write_ns": 166.45470385454314,
+                "trial_code": 126,
+                "ideal_residual_mv": 10.546874999999956,
+                "actual_residual_mv": 10.530807891136417,
+                "error_mv": -0.016067108863537793,
+                "common_mode_v": 0.4495509579729742,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8997808910323549,
+                "outn_v": 0.013333312489374631,
+                "token_at_write": 2,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 129,
+                  "n": 126
+                },
+                "physical_mapping_ok": true
+              },
+              {
+                "bit": 0,
+                "compare_ns": 169.75912775235227,
+                "write_ns": 170.2841197137963,
+                "trial_code": 127,
+                "ideal_residual_mv": 3.515625000000022,
+                "actual_residual_mv": 3.507976062913254,
+                "error_mv": -0.0076489370867682815,
+                "common_mode_v": 0.4495508821689832,
+                "resolved": true,
+                "decision_p": true,
+                "sign_agrees": true,
+                "outp_v": 0.8996725504294555,
+                "outn_v": 0.021072637905916812,
+                "token_at_write": 1,
+                "token_order_ok": true,
+                "physical_high_words": {
+                  "p": 128,
+                  "n": 127
+                },
+                "physical_mapping_ok": true
+              }
+            ],
+            "frame_pass": true
+          }
+        ],
+        "reference_stress": {
+          "value_v": 0.9510793923660343,
+          "signed_v": 0.9510793923660343,
+          "time_ns": 45.278991799356675,
+          "bank": "N3",
+          "device": "MP_HIGH",
+          "terminal": "VGD"
+        },
+        "minimum_opposite_rail_deadtime_ps": 99.99999999992326,
+        "simultaneous_gate_enable_banks": [],
+        "raw_both_on_banks": [],
+        "CMI_warning_count": 0,
+        "CMI_warnings": [],
+        "warning_codes": {
+          "SFE-1131": 4,
+          "SFE-2453": 2,
+          "VACOMP-2435": 1
+        },
+        "suppression_or_LTE_lines": [],
+        "comparator_stress_from_saved_internal_nodes": {
+          "value_v": 0.9514725419487089,
+          "signed_v": 0.9514725419487089,
+          "time_ns": 47.54148020144561,
+          "instance": "MNLATP",
+          "terminal": "VSB",
+          "sample_v": 0.0,
+          "cmp_clock_v": 0.8090132246549354
+        },
+        "top_node_ranges": {
+          "topp": {
+            "max_v": 0.6768436606203306,
+            "max_ns": 48.78749838336648,
+            "min_v": 0.3568825252149801,
+            "min_ns": 103.17103432114409,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 1.772197165368183e-05
+          },
+          "topn": {
+            "max_v": 0.4674611331798942,
+            "max_ns": 45.26573742663117,
+            "min_v": 0.179867070708902,
+            "min_ns": 45.282463722693656,
+            "sample_at_max_v": 0.0,
+            "cmp_clock_at_max_v": 1.16967168684892e-05
+          }
+        },
+        "bounded_join_pass": true
+      },
+      "handoffs": [
+        {
+          "update_ns": 44.68248303876458,
+          "banks": [
+            "P6",
+            "P7",
+            "N6",
+            "N7"
+          ],
+          "on_ns": [
+            45.27117669034498,
+            45.27117669034498,
+            45.27117669034498,
+            45.27117669034498
+          ],
+          "off_ns": [
+            45.17117669034498,
+            45.17117669034498,
+            45.17117669034498,
+            45.17117669034498
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 48.304458024677245,
+          "banks": [
+            "P5",
+            "N5"
+          ],
+          "on_ns": [
+            48.87749838336648,
+            48.87749838336648
+          ],
+          "off_ns": [
+            48.777498383366485,
+            48.777498383366485
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 51.95421847292299,
+          "banks": [
+            "P4",
+            "N4"
+          ],
+          "on_ns": [
+            52.527277180479075,
+            52.527277180479075
+          ],
+          "off_ns": [
+            52.427277180479074,
+            52.427277180479074
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 55.63992918386497,
+          "banks": [
+            "P3",
+            "N3"
+          ],
+          "on_ns": [
+            56.212962101269135,
+            56.212962101269135
+          ],
+          "off_ns": [
+            56.112962101269126,
+            56.112962101269126
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 59.36445356172114,
+          "banks": [
+            "P2",
+            "N2"
+          ],
+          "on_ns": [
+            59.93751078954265,
+            59.93751078954265
+          ],
+          "off_ns": [
+            59.837510789542655,
+            59.837510789542655
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 63.12413350213463,
+          "banks": [
+            "P1",
+            "N1"
+          ],
+          "on_ns": [
+            63.697166847799835,
+            63.697166847799835
+          ],
+          "off_ns": [
+            63.59716684779984,
+            63.59716684779984
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 66.91575434847735,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            67.48698365469153,
+            67.48698365469153
+          ],
+          "off_ns": [
+            67.38698365469153,
+            67.38698365469153
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 70.74459547198722,
+          "banks": [],
+          "on_ns": [],
+          "off_ns": [],
+          "on_spread_ps": null,
+          "off_spread_ps": null
+        },
+        {
+          "update_ns": 144.6820405130667,
+          "banks": [
+            "P6",
+            "P7",
+            "N6",
+            "N7"
+          ],
+          "on_ns": [
+            145.27073502611015,
+            145.27073502611015,
+            145.27073502611015,
+            145.27073502611015
+          ],
+          "off_ns": [
+            145.17073502611015,
+            145.17073502611015,
+            145.17073502611015,
+            145.17073502611015
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 148.30400911812822,
+          "banks": [
+            "P5",
+            "N5"
+          ],
+          "on_ns": [
+            148.87705808603147,
+            148.87705808603147
+          ],
+          "off_ns": [
+            148.77705808603145,
+            148.77705808603145
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 151.95377099544825,
+          "banks": [
+            "P4",
+            "N4"
+          ],
+          "on_ns": [
+            152.5268393832319,
+            152.5268393832319
+          ],
+          "off_ns": [
+            152.42683938323194,
+            152.42683938323194
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 155.63948290335796,
+          "banks": [
+            "P3",
+            "N3"
+          ],
+          "on_ns": [
+            156.21252569336363,
+            156.21252569336363
+          ],
+          "off_ns": [
+            156.11252569336364,
+            156.11252569336364
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 159.36400830019622,
+          "banks": [
+            "P2",
+            "N2"
+          ],
+          "on_ns": [
+            159.93707574005506,
+            159.93707574005506
+          ],
+          "off_ns": [
+            159.8370757400551,
+            159.8370757400551
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 163.12368850228722,
+          "banks": [
+            "P1",
+            "N1"
+          ],
+          "on_ns": [
+            163.69673233316047,
+            163.69673233316047
+          ],
+          "off_ns": [
+            163.5967323331605,
+            163.5967323331605
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 166.9153107956242,
+          "banks": [
+            "P0",
+            "N0"
+          ],
+          "on_ns": [
+            167.48655043331016,
+            167.48655043331016
+          ],
+          "off_ns": [
+            167.38655043331016,
+            167.38655043331016
+          ],
+          "on_spread_ps": 0.0,
+          "off_spread_ps": 0.0
+        },
+        {
+          "update_ns": 170.74415370270947,
+          "banks": [],
+          "on_ns": [],
+          "off_ns": [],
+          "on_spread_ps": null,
+          "off_spread_ps": null
+        }
+      ],
+      "context": {
+        "name": "nhalf_a200",
+        "point": "nhalf",
+        "export_tag": "primary",
+        "export_sha256": "6fb41d4cb1052f5f8da490f8b27a87d698321623c1bfe445178fba99d22e90b1",
+        "deck_sha256": "f0aad273e7443351024bacfb830fbad7d67f9852b0a45850e6284aa1fbbbf729",
+        "gate_va_sha256": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+        "stimulus_vdiff_by_frame": [
+          -0.003515625,
+          -0.003515625
+        ],
+        "supply_v": 0.9,
+        "temperature_c": 27,
+        "corner": "tt",
+        "MOM_corner": "tt",
+        "resolution_bits": 8,
+        "sample_rate_hz": 10000000.0,
+        "stop_ns": 200,
+        "maxstep_ps": 10,
+        "output_strobe_ps": 0,
+        "saved_signals": [
+          "SAMPLE",
+          "VINP_SRC",
+          "VINN_SRC",
+          "VINP",
+          "VINN",
+          "TOPP",
+          "TOPN",
+          "CMP_CLK",
+          "COMP_P",
+          "COMP_N",
+          "VREFP",
+          "VREFN",
+          "VDD!",
+          "VVDD:p",
+          "VREFHIGH:p",
+          "VREFLOW:p",
+          "D0",
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "XDUT.XCTRL.PHI_W",
+          "XDUT.XCTRL.PHI_U",
+          "XDUT.XCTRL.ACTIVE",
+          "XDUT.XCTRL.DATA",
+          "XDUT.XCTRL.CODE0",
+          "XDUT.XCTRL.CODE1",
+          "XDUT.XCTRL.CODE2",
+          "XDUT.XCTRL.CODE3",
+          "XDUT.XCTRL.CODE4",
+          "XDUT.XCTRL.CODE5",
+          "XDUT.XCTRL.CODE6",
+          "XDUT.XCTRL.CODE7",
+          "XDUT.XCTRL.T0",
+          "XDUT.XCTRL.T1",
+          "XDUT.XCTRL.T2",
+          "XDUT.XCTRL.T3",
+          "XDUT.XCTRL.T4",
+          "XDUT.XCTRL.T5",
+          "XDUT.XCTRL.T6",
+          "XDUT.XCTRL.T7",
+          "XDUT.BP_H0",
+          "XDUT.BP_H1",
+          "XDUT.BP_H2",
+          "XDUT.BP_H3",
+          "XDUT.BP_H4",
+          "XDUT.BP_H5",
+          "XDUT.BP_H6",
+          "XDUT.BP_H7",
+          "XDUT.BP_L0",
+          "XDUT.BP_L1",
+          "XDUT.BP_L2",
+          "XDUT.BP_L3",
+          "XDUT.BP_L4",
+          "XDUT.BP_L5",
+          "XDUT.BP_L6",
+          "XDUT.BP_L7",
+          "XDUT.BN_H0",
+          "XDUT.BN_H1",
+          "XDUT.BN_H2",
+          "XDUT.BN_H3",
+          "XDUT.BN_H4",
+          "XDUT.BN_H5",
+          "XDUT.BN_H6",
+          "XDUT.BN_H7",
+          "XDUT.BN_L0",
+          "XDUT.BN_L1",
+          "XDUT.BN_L2",
+          "XDUT.BN_L3",
+          "XDUT.BN_L4",
+          "XDUT.BN_L5",
+          "XDUT.BN_L6",
+          "XDUT.BN_L7",
+          "XDUT.GPP0",
+          "XDUT.GPP1",
+          "XDUT.GPP2",
+          "XDUT.GPP3",
+          "XDUT.GPP4",
+          "XDUT.GPP5",
+          "XDUT.GPP6",
+          "XDUT.GPP7",
+          "XDUT.GPN0",
+          "XDUT.GPN1",
+          "XDUT.GPN2",
+          "XDUT.GPN3",
+          "XDUT.GPN4",
+          "XDUT.GPN5",
+          "XDUT.GPN6",
+          "XDUT.GPN7",
+          "XDUT.GNP0",
+          "XDUT.GNP1",
+          "XDUT.GNP2",
+          "XDUT.GNP3",
+          "XDUT.GNP4",
+          "XDUT.GNP5",
+          "XDUT.GNP6",
+          "XDUT.GNP7",
+          "XDUT.GNN0",
+          "XDUT.GNN1",
+          "XDUT.GNN2",
+          "XDUT.GNN3",
+          "XDUT.GNN4",
+          "XDUT.GNN5",
+          "XDUT.GNN6",
+          "XDUT.GNN7",
+          "XDUT.XCDAC.BP0",
+          "XDUT.XCDAC.BP1",
+          "XDUT.XCDAC.BP2",
+          "XDUT.XCDAC.BP3",
+          "XDUT.XCDAC.BP4",
+          "XDUT.XCDAC.BP5",
+          "XDUT.XCDAC.BP6",
+          "XDUT.XCDAC.BP7",
+          "XDUT.XCDAC.BN0",
+          "XDUT.XCDAC.BN1",
+          "XDUT.XCDAC.BN2",
+          "XDUT.XCDAC.BN3",
+          "XDUT.XCDAC.BN4",
+          "XDUT.XCDAC.BN5",
+          "XDUT.XCDAC.BN6",
+          "XDUT.XCDAC.BN7",
+          "XDUT.XBOOTP.G",
+          "XDUT.XBOOTP.CLKSB",
+          "XDUT.XBOOTN.G",
+          "XDUT.XBOOTN.CLKSB",
+          "XDUT.XCOMP.X",
+          "XDUT.XCOMP.Y",
+          "XDUT.XCOMP.TAIL",
+          "XDUT.GCOMMIT"
+        ],
+        "native_controller": true,
+        "native_StrongARM": true,
+        "native_Bootstrap": true,
+        "native_MOM_and_3x_reference_pass_MOS": true,
+        "ideal_DAC_plant": false,
+        "physical_noise": false,
+        "mismatch": false,
+        "scope": "R1_native_circuit_with_shared_ideal_reference_timing_only",
+        "baseline_case": "nhalf_fine",
+        "baseline_deck_sha256": "88875609c360dab0da1e92ddfb18a83cf4a9645e262b493407b7fd66b24e9b5d",
+        "settle_ps": 200,
+        "gate_edge_ps": 20,
+        "minimum_BBM_ps": 100,
+        "native_subcircuits_unchanged": true,
+        "native_top_except_ideal_gates_unchanged": true
+      },
+      "waveform_sha256": "25a7f5d39fb56d449cc5dbf9d706f063ecf558ab03a31ec7d568a077d97dba47",
+      "baseline_waveform_sha256": "b34e763c8ea5cbd60d617d1459c654bc30e38204e06b57236a2c08ca6274de34",
+      "gate_va_sha256": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+      "phase_stress": {
+        "conversion": {
+          "reference_max_v": 0.9510793923660343,
+          "reference_max_ns": 45.278991799356675,
+          "comparator_max_v": 0.9514725419487089,
+          "comparator_max_ns": 47.54148020144561,
+          "TOPN_max_v": 0.4674611331798942,
+          "TOPP_min_v": 0.4363003596527341
+        },
+        "second_acquisition": {
+          "reference_max_v": 0.944162893595269,
+          "reference_max_ns": 103.0700157337054,
+          "comparator_max_v": 0.9015709292817156,
+          "comparator_max_ns": 103.1761662752838,
+          "TOPN_max_v": 0.4610611202736278,
+          "TOPP_min_v": 0.3568825252149801
+        },
+        "first_MSB_handoff": {
+          "reference_max_v": 0.9510470932530131,
+          "reference_max_ns": 145.2785711309127,
+          "comparator_max_v": 0.9115754946554795,
+          "comparator_max_ns": 144.7469630355788,
+          "TOPN_max_v": 0.4674378166837282,
+          "TOPP_min_v": 0.4363135053911414
+        }
+      }
+    }
+  ]
+}

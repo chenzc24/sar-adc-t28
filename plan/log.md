@@ -1551,3 +1551,31 @@ human-triggered note in `docs/experience/`.
   raw output/cdac8_uniform_scale/. Concurrent bitwise/simple-Canvas and historical
   cdac10 work untouched. Scoped local commit, no push. No actual-driver,
   noise/MC/StrongARM/Bootstrap-internal/layout/lifetime qualification claimed.
+
+## 2026-10-20 - SAR8 ideal reference handoff alignment versus frozen R1
+
+- Netlist-only two-case native Spectre21.1 APS experiment, TT/.9V/27C/200ns,
+  maxstep10ps/full solver output. Shared ideal commit after native request word
+  stable200ps; changed banks simultaneous off,100ps later on,20ps gate edges.
+  Unchanged banks stay on. All native subckt bodies and top connections outside
+  the16 ideal gate statements identical to R1. All OA/PDK/R1 sources read-only.
+- Both result.ok; four functional/error frames,32 compares/writes/updates,
+  correct14/14 and127/127 codes, expected mapping and token order. Worst errors
+  .807895/.560789mV below1.7578125mV; not an error improvement. Gate threshold
+  on/off spreads zero at saved precision, minBBM100ps/no overlap.
+- Conversion reference stress1.266776->.951088V (-.8V),1.266744->.951079V
+  (-halfLSB); negative-full comparator1.250013->.950686V, TOPPmin
+  -.344390->+.038165V. Original conversion spike removed in these two cases.
+  Alignment also masks transient all-off raw requests and fixes actualBBM100ps;
+  no orthogonal attribution of skew versus blanking/absolute delay attempted.
+- Negative-full sampling restore still fails: comparator/TOPN1.136126V at
+  103.173270ns versus R1 1.136124V. Pre-existing separate issue, not repaired.
+  Whole-run reference max.974975V; no reference CMI. Ten printed comparator
+  CMI and suppressed repeats retained. Negative-half0CMI. Seven unchanged
+  config warnings each;0LTE. No adoption, new freeze or nominal signoff claim.
+- Report docs/sar8_reference_alignment.md; two visually reviewed PNGs;
+  exact contexts/decks/logs/PSF/waves in output/sar8_reference_alignment/;
+  curated hashes/frames/phase stress in verification/integration/.
+  Four focused tests, Python compile, frozen R1 source/hash/native-graph
+  checks and diff-check. Scoped local commit only, no push. Unrelated
+  cdac10_dualrail untracked work preserved. No remote OA mutation.
