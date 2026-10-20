@@ -1,0 +1,16 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench termination only: preserve parent stop-dependent solver defaults.
+// No electrical contribution or event before stop_s.
+module r3_replay_stop(SAMPLE);
+    input SAMPLE;
+    electrical SAMPLE;
+    parameter real stop_s=1200n from (0:inf);
+    analog begin
+        @(timer(stop_s)) begin
+            $display("R3REPLAY_STOP,%.12g",$abstime);
+            $cds_finish_current_analysis(0);
+        end
+    end
+endmodule

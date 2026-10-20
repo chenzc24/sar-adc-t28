@@ -1775,3 +1775,39 @@ human-triggered note in `docs/experience/`.
   config, docs, scripts, VA, plan;3 focused math/identity tests and compile/diff
   checks pass. Local checkpoint commit, no push. Final DNL/INL/SNDR/ENOB are
   NOT available; target plan intentionally remains in progress for later review.
+
+## 2026-10-20 - R3 original-history 12 frame anomaly diagnosis
+
+- Completed diagnosis, NOT repair/signoff. No remote OA, topology, sizes, timing,
+  native subcircuits, PDK, R3 gate VA or long-performance-campaign source change.
+  Existing4long jobs left running. Unrelated untracked cdac10_dualrail preserved.
+- Parent static_065_128 exact deck/include hashes and partial native log/PSF
+  retained. A shortened1.2us comparison attempts parent defaults but APS still
+  reports step1.2ns, unlike parent51.6ns; codes/history diverge and LTE appears.
+  Retained as numerical-sensitivity comparison, not successful reproduction.
+- Primary keeps parent51.6us stop and exact stimulus/monitor snapshots, adds
+  passive VA timer invoking documented Cadence $cds_finish_current_analysis(0)
+  at1200ns. All reported solver params match parent except outputstart. APS4,
+  maxstep10ps/conservative/effective reltol1e-6, TT/.9V/27C, no noise/mismatch.
+  result.ok,0errors/12warnings/7notices,5printedCMI-2754 + suppression, no LTE.
+- All12inputs/searches/codes/counts match parent:64,64,64,64,64,65,64,65,1,65,
+  65,65. Visible4frames each8compares/writes/updates. Native662464accepted steps,
+  compute1148.8s/transfer32.7s/parse77.7s;66signals217838points800-1200ns.
+- Confirmed frame8 acquisition midpoint miss: observed bit7/6 physical gates
+  stay in previous-state pattern throughout801.05-841.05ns. Old PMOS off50%
+  841.075ns/newon841.175ns after sampling ends. Held offset-442.8505mV(-62.983LSB)
+  consistent with inferred65->128 late restore(-442.96875mV), not all-bank direct
+  measurement. Nextframe midpoint correct. MNINP VGD-.99914984V at841.193394ns
+  comes from TOPP-.099607V,Y.899543V while comparator clocklow. First compare
+  843.698ns. bit6 residual-435.9496mV vs ideal+7.4707mV; DATA/write847.628557ns
+  correctly record0. No D6 rising/falling loss. Lastbit0write870.186903ns; read1
+  at898ns. Wrong held charge precedes conversion; R3_circuit_pass=false.
+- Suspect shared ideal gate VA bidirectional-cross/instant-level SAMPLE phase
+  inference; internal flags not saved, exact software branch remains unproven.
+  No event-handler fix, clock/sizing sweep or PVT expansion attempted.
+- Added replay/analysis scripts, passive stop VA,2focused tests, Chinese report,
+  four inspected timing figures and concise provenance/metrics JSON. Output
+  binding corrected before curating independent analyses; all raw data preserved
+  under output/r3_anomaly_replay/, primary original_stop/. Shared full-batch
+  analysis untouched; any resulting metrics remain fault diagnostics until fix.
+- Syntax/targeted tests/diff review/check; scoped local commit only, no push.
