@@ -1,5 +1,24 @@
 # Design Log
 
+## 2026-10-20 - Asynchronous SAR supersedes the synchronous logic proposal
+
+- Keep eight-bit flat CDAC and 10-MHz external sampling; replace the proposed
+  fixed 200-MHz per-bit phase inputs with a local self-timed handshake.
+  Existing executable synchronous fixtures are not relabelled as async.
+- Use conservative bundled-data phases: trial/BBM/DAC guard, evaluation,
+  fresh qualified completion, capture, reset acknowledgement and only then
+  token advance. Working and published output banks remain separate.
+- StrongARM's reset pair is 11. Raw XOR is only rail classification, never
+  directly the register clock. Receiver/loading, armed/consumed state,
+  reset minimum time and post-valid/setup/hold margins must be implemented.
+- Propose an independent 88-ns conversion cutoff ahead of 90-ns PREPARE.
+  Deadline wins over late completion; failed conversions retain old DOUT and
+  never publish a fabricated bit. Delay-chain tails must not enter a new frame.
+- Initial conservative budget ends at 86.9 ns if all allocated delays hold;
+  this is not a comparator maximum-time bound or PVT qualification. New
+  Canvas diagrams are architecture/cell contracts only. Native OA remains
+  unchanged, and existing analog stress/offset/acquisition findings remain.
+
 ## 2026-10-20 - Eight-bit SAR logic proposal for Canvas review
 
 - Retain the active flat-CDAC phase interface: 43-ns first trial, eight

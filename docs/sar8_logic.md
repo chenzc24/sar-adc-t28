@@ -1,5 +1,10 @@
 # Eight-bit SAR logic: phase and register contract
 
+> Historical synchronous proposal, superseded on 2026-10-20 by the
+> [asynchronous SAR architecture](sar8_async_logic.md). The exported gate
+> netlist and Boolean checks below apply only to this preserved proposal;
+> they do not validate the new asynchronous controller.
+
 The active converter is eight-bit, 10 MS/s, fully differential, flat CDAC.
 This note records the expected logic design and the user-directed Canvas-first
 proposal. Native SAR logic has not yet been created or measured: the t28_io

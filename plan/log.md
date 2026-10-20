@@ -1,5 +1,26 @@
 # Maintenance Log
 
+## 2026-10-20 - Asynchronous SAR architecture selected
+
+- User replaced the fixed-bit synchronous proposal with asynchronous SAR.
+  Added config/sar8_async_timing.yaml and docs/sar8_async_logic.md; selected
+  asynchronous control in the active eight-bit spec. Existing clocked
+  fixtures and unrelated untracked dual-rail work remain unchanged.
+- Defined frame-independent deadline, comparator fresh-result/reset handshake,
+  separate capture and token advance, stable output bank, fault/abort policy
+  and nine module cell contracts. No new executable gate/VA/OA implementation.
+- Callable MCP reconnected with a fresh private Claim. Added SAR8A_REVIEW,
+  SAR8A_HANDSHAKE, SAR8A_CELLS and SAR8A_TIMING; changed project top to the
+  async review, preserved prior eight documents and renamed old review entry.
+  Four exported PNGs visually inspected; canonical project readback confirms
+  document identities/top and unchanged drawing/electrical content in all
+  eight old documents. SVGs tracked; full backup in output/sar8_async/.
+- YAML and budget arithmetic pass: 86.9-ns reference completion, 88-ns planned
+  cutoff; constructed example 79.77 ns, not measured waveforms. Existing
+  active/history spec test passed. No gate, analog, PVT or OA validation claim.
+- YAML/SVG syntax and diff checks passed. Remote OA unchanged; user continues
+  to defer Virtuoso work. Scoped local commit; no push requested.
+
 ## 2026-10-20 - Canvas-first eight-bit SAR logic proposal
 
 - User deferred the unavailable live CIW and requested Canvas topology first.

@@ -27,8 +27,12 @@ clears the original nominal test point, but cross-input stress still fails;
 no baseline replacement or PVT qualification is claimed. Bootstrap is unchanged.
 
 Top-plate sampling is retained. Each CDAC side has weights
-`128:64:32:16:8:4:2:1` plus one dummy; no split bridge. Eight decisions use
-the existing 200 MHz bit clock. LSB is 7.03125 mV; the deterministic 0.25-LSB
+`128:64:32:16:8:4:2:1` plus one dummy; no split bridge. The selected control
+is now [asynchronous SAR](docs/sar8_async_logic.md): external 10-MHz sampling,
+internal comparator-completion handshake, CDAC/reset guards to characterize,
+and independent conversion deadline. This is a revised architecture proposal;
+existing 200-MHz clocked models/OA benches remain comparison fixtures and
+have not been converted or requalified. LSB is 7.03125 mV; the deterministic 0.25-LSB
 gate is 1.7578125 mV. ENOB >=7 is the provisional design target, not a
 transistor-level performance claim.
 

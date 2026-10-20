@@ -1,0 +1,51 @@
+stage: asynchronous_architecture_proposal
+resolution_bits: 8
+supply_v: 0.9
+sample_rate_hz: 10000000
+frame_ns: 100.0
+control: external_frame_internal_self_timed_bundled_data
+native_implemented: false
+frame_commands_ns:
+  sample_rise: 1.0
+  sample_fall: 41.0
+  cdac_vcm_release: 42.0
+  hold_start: 43.0
+  conversion_deadline: 88.0
+  prepare: 90.0
+  cdac_vcm_reconnect: 90.22
+  next_sample_rise: 101.0
+frame_status:
+  sample_reference_edges: inherited_commands_not_requalified
+  conversion_deadline: new_independent_frame_phase_to_implement
+  deadline_to_prepare_guard_ns: 2.0
+illustrative_budgets_ns:
+  initial_reset_guard: 0.5
+  # From trial launch: includes BBM, driver propagation and analog settling.
+  trial_to_eval_guard: 3.0
+  # Reference allocation, not a bounded maximum regeneration time.
+  comparator_eval: 1.5
+  ready_to_capture: 0.10
+  capture_high: 0.15
+  # After CAPTURE falls: wait BOTH guard expiry and fresh reset acknowledgement.
+  comparator_reset_guard: 0.5
+  advance_control: 0.15
+  publish_guard: 0.2
+reference_nonoverlap_target_ns: 0.1
+example_comparator_delays_ns: [0.22, 0.35, 0.55, 1.10, 0.25, 0.70, 1.30, 0.40]
+comparator_rail_contract:
+  clk_low: reset_precharge
+  clk_high: evaluate
+  reset_pair: [1, 1]
+  positive_pair: [1, 0]
+  negative_pair: [0, 1]
+  illegal_pair: [0, 0]
+  receiver_required: full_swing_validated_input_thresholds
+inputs: [RST_N, CLK_SAMPLE, HOLD_START, PREPARE, CONV_DEADLINE, COMP_P, COMP_N]
+removed_external_bit_phases: [CLK_TRIAL, CLK_COMPARE, CLK_LATCH]
+internal_controls: [TRIAL_LAUNCH, DAC_OK, EVAL_REQ, DEC_VALID, CAPTURE, CAP_DONE, RESET_OK, ADVANCE, PUBLISH]
+outputs: [D7_to_0, SEL0_7_to_0, SEL1_7_to_0, BASE, BUSY, VALID, FAULT, CMP_CLK, CMP_RESET]
+timeout_policy: abort_without_publication_retain_previous_output
+status:
+  timing: illustrative_budgets_not_characterized_T28_bounds
+  oa: user_deferred
+  previous_sync_models: preserved_not_async_evidence

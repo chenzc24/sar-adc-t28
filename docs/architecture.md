@@ -25,7 +25,13 @@ path. No qualified full-transistor ADC or layout is implied. The controller,
 comparison macro and finite-R reference sources remain explicit abstractions.
 
 Keep VDD=0.9 V, VCM=0.45 V, differential range +/-0.9 V, 10 MS/s, 40 ns
-acquisition, 60 ns conversion allocation, 5 ns per bit. The eight-bit VA
+acquisition and the broad 60 ns conversion allocation. On 2026-10-20 the user
+selected [asynchronous control](sar8_async_logic.md), replacing the proposed
+fixed 5-ns bit cycle with comparator completion, guarded data capture,
+reset acknowledgement and CDAC settling delay. External frame timing remains
+periodic. The native logic and new handshake remain to be implemented.
+
+The preserved synchronous eight-bit VA
 contract converts in 37.5 ns; the electrical macro, including its distinct
 compare/latch phase, in about 39.52 ns. Do not compare those clocks as
 identical phases.

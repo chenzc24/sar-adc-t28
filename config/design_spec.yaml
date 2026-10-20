@@ -12,10 +12,14 @@ converter:
   architecture: fully_differential_sar
   resolution_bits: 8
   sample_rate_hz: 10000000
+  # Preserved executable synchronous fixtures only; not the selected bit loop.
   internal_sar_clock_hz: 200000000
+  internal_sar_clock_role: legacy_synchronous_fixture_only
   cdac_partition: flat_binary
   comparator: strongarm_dynamic
-  control: synchronous
+  control: asynchronous
+  control_contract: config/sar8_async_timing.yaml
+  control_implementation: architecture_proposal_not_yet_native
 
 supplies:
   vdd_v: 0.9
@@ -32,6 +36,7 @@ input:
 timing_budget:
   sample_ns: 40.0
   conversion_ns: 60.0
+  # Historical fixed-bit fixture; async delays are separately budgeted.
   bit_cycle_ns: 5.0
 
 targets:
