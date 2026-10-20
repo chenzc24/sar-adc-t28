@@ -1639,3 +1639,35 @@ human-triggered note in `docs/experience/`.
 - Single negative-full nominal case only;100ps is a candidate for subsequent
   positive/reversing-input/previous-code checks, not broad PVT/MC/noise/lifetime
   qualification. Entire-device/bootstrap-internal SOA not established by this scan.
+
+## 2026-10-20 - SAR8 100ps restore candidate across input polarity and frame history
+
+- t28_io CIW/Spectre healthy. Three fresh native Spectre21.1 APS200ns/maxstep10ps
+  full-rate TT/.9V/27C runs: +.8/+.8,-.8/+.8,+.8/-.8V. Cross-frame PWL input
+  ramp100.8..100.9ns, before second SAMPLE101.05ns;40ns acquisition retained.
+  Only VDIFF/two input-source statements differ from exact100ps candidate;
+  topology/sizes/MOM/3x reference devices/50ohm+4pF reference/50ohm input,
+  VA bytes,100ps BBM/20ps edges/200ps conversion commit unchanged.
+- All result.ok,0errors/7 unchanged config warnings/0CMI/0LTE. Correct241/241,
+  14/241,241/14, six frames/48 compares+writes+updates; native mapping/token/
+  decision/read-window gates pass. Full PWL source waveforms verified. Actual
+  restore off/on101.16/101.26ns,100ps minBBM/no overlap/zero threshold skew.
+  Initial-DC GminDC diagnostics retained for all cases; extra Bad pivoting notice
+  in p_to_n (5/5/6 total notices). No transient convergence failure; solver
+  settings untouched. Initial-DC/startup reliability not qualified by frame checks.
+- Whole-run reference peaks .987137/.966629/.986687V, comparator .950686V each.
+  Both top nodes stay0-0.9V in second acquisition; input-edge window adds no
+  overlimit. Reference tight cases are N3 MP_HIGH VGD near101.2687/101.2686ns,
+  only2.863/3.313mV below.99V. Bounded nominal pass, not robust SOA signoff.
+- Held differential error maxima .200474/.200461/.200462mV; first compare
+  .200485/.200469/.200470mV. Preoff<.001mV; worst later comparison residual
+  .806456/.807895/.807889mV<1.7578125mV. Signed held residual follows input
+  polarity; no frame-history error degradation at full40ns acquisition.
+- Six PNGs visually reviewed; docs/sar8_restore_cross_input.md, curated
+  verification/integration/restore_cross_input_results.json; raw contexts/decks/
+  logs/PSF/waves output/sar8_restore_cross_input/. Prior negative-full evidence
+  reused only as context. Four focused tests, Python compile, immutable R2/prior
+  fingerprints and diff-check/review pass. Scoped local commit; no push.
+- No remote OA mutation, active baseline update, transistor resize, noise/MC/
+  PVT/layout/lifetime qualification. Candidate remains netlist-only100ps;
+  reference-margin concern remains explicit. Unrelated cdac10_dualrail preserved.
