@@ -1,0 +1,142 @@
+baseline_id: SAR8_JOIN_R0_3X_IDEAL_GATE
+stage: selection_and_interface_prepared_not_integrated
+qualified: false
+physical_integration_implemented: false
+interface_adapter_implemented: false
+profile: t28_io
+library: SAR_ADC_T28
+technology: tsmcN28
+resolution_bits: 8
+sample_rate_hz: 10000000
+supply_v: 0.9
+vrefp_v: 0.9
+vrefn_v: 0.0
+common_mode_v: 0.45
+input_differential_range_v: [-0.9, 0.9]
+nominal: {mos_corner: tt, mom_corner: tt, temperature_c: 27}
+
+modules:
+  sampler:
+    cell: sar_bootstrap_canvas_flat_8b
+    source: output/cdac8_uniform_scale/decks/control_m3.scs
+    instances: 2
+    main_device: nch_18_mac
+    main_w_um: 1.0
+    main_l_nm: 150
+    cboot_f: 1.0e-12
+    separate_cs: false
+    preserve_native_pump_and_inverter: true
+  cdac:
+    source_subckt: cdac8_dr_nominal
+    source: output/cdac8_uniform_scale/decks/control_m3.scs
+    capacitor: tsmcN28/cfmom_2t
+    weights: [128, 64, 32, 16, 8, 4, 2, 1]
+    dummy_weight: 1
+    dummy_bottom: {P: VREFP, N: VREFN}
+    unit_capacitance_f: 4.004067804788831e-15
+    side_capacitance_f: 1.0250413580259408e-12
+    realization: nominal_parallel_MOM_not_independent_MC_array
+  reference_switch:
+    realization: netlist_only_two_pass_MOS_variant_not_existing_OA_driver_cell
+    source: output/cdac8_uniform_scale/decks/control_m3.scs
+    leaf_subckts: cdac8_dr_sw_b0_through_b7
+    declared_MOS_instances: 32
+    p_device: pch_mac
+    n_device: nch_mac
+    p_leaf_w_um: 0.175
+    n_leaf_w_um: 0.15
+    l_nm: 30
+    p_ratio: 3
+    n_ratio: 3
+    multiplicity: 3_times_2_power_bit
+    native_six_MOS_leaf_driver: excluded
+  comparator:
+    cell: sar_strongarm_t28
+    source: output/sar8_simple/exports/tb_sar8s_strongarm/simple_v2/input.scs
+    resize: false
+    native_MOS_instances: 11
+  controller:
+    cell: sar_logic_8b_async_simple
+    export_tag: simple_v2
+    source: output/sar8_simple/exports/tb_sar8s_strongarm/simple_v2/input.scs
+    resize_or_state_change: false
+    native_cell_definitions: 21
+    added_EOC_or_status_or_output_bank: false
+
+mapping:
+  convention: positive_TOPP_minus_TOPN_keeps_trial_bit
+  code: stored_OR_token
+  conversion_active_high_requests:
+    PH: BN_H
+    PL: BN_L
+    NH: BP_H
+    NL: BP_L
+  comparator: {VINP: TOPP, VINN: TOPN, OUTP: COMP_P, OUTN: COMP_N, CLK: CMP_CLK}
+  sampler: {positive_VOUT: TOPP, negative_VOUT: TOPN, CLKS: SAMPLE}
+  physical_high_word_equations: {P: 255_minus_CODE, N: CODE}
+  ideal_differential_equation: VINDIFF_plus_0p9_minus_CODE_times_1p8_over_256
+  gate_voltage_equations: {PMOS: VDD_minus_EH, NMOS: EL}
+  global_power_binding: {"VDD!": 0.9, "gnd!": 0.0, VDD: 0.9, VSS: 0.0}
+
+sampling_reference_contract:
+  initial_code: 128
+  initial_high_words: {P: 127, N: 128}
+  initial_low_words: {P: 128, N: 127}
+  require_one_complete_acquisition: true
+  sample_rise: hold_current_physical_selects_cancel_stale_conversion_events
+  restore_guard_from_sample_rise_ns: 2.0
+  restore: select_midpoint_inside_sample_after_guard_with_BBM
+  sample_high_after_restore: hold_midpoint_not_all_reference_paths_off
+  sample_fall: retain_midpoint_through_raw_logic_all_off_initialization_gap
+  conversion_entry: release_sampling_override_only_when_mapped_initial_word_is_valid
+  conversion: mapped_native_selects_with_BBM_no_Vin_based_code_or_ideal_DAC_plant
+  interrupt: new_SAMPLE_cancels_pending_old_reference_events
+  adapter_scope: explicit_ideal_gate_testbench_boundary_not_added_native_SAR_state
+
+timing:
+  sample_period_ns: 100
+  sample_delay_ns: 1
+  sample_width_ns: 39.9
+  sample_acquisition_between_midpoints_ns: 40
+  sample_edge_ps: 100
+  sample_edge_basis: preserve_analog_chain_PHI_edge_new_controller_was_tested_at_20ps_recheck_jointly
+  reference_gate_edge_ps: 20
+  changed_bank_BBM_ps: 100
+  native_controller_BBM: retained_and_measured_separately_not_assumed_equal_to_100ps
+  gate_deadtime_rule: honor_native_all_off_and_at_least_100ps_actual_gate_command_gap_not_blindly_additive
+  gate_override_must_not_bypass_BBM: true
+  fixed_read_window_ns: [95, 99]
+  comparison_clock: unchanged_native_local_CMP_CLK_no_200MHz_external_bit_clock
+  guard_RC: unchanged_sar8s_delay_seeds_pending_loaded_settling_verification
+
+external_boundaries:
+  input_source_resistance_ohm_per_side: 50
+  reference_source_resistance_ohm_per_rail: 50
+  reference_decap_f_per_rail: 4.0e-12
+  reference_gate_driver: ideal_zero_output_impedance
+  controller_bottom_select_load_f_per_pin: 10.0e-15
+  comparator_clock_extra_load_f: 10.0e-15
+  comparator_output_extra_load_f_per_pin: 10.0e-15
+  output_word_load_f_per_bit: 5.0e-15
+  external_sampling_clock: ideal_source
+  reference_buffer_transistor_design: deferred
+  gate_driver_power_qualification: false
+
+excluded_from_join:
+  - sar8a_plant_ideal_TOPP_TOPN_voltage_contributions
+  - cdac8_dualrail_controller_fixed_5ns_VA_bit_sequencer
+  - cdac8_dualrail_comparator_ideal_sign_comparator
+  - original_six_MOS_reference_driver_and_4x_or_2x_variants
+  - old_sar_logic_8b_async_handshake_controller
+  - ten_bit_5plus5_or_cdac10_dualrail_candidates
+  - physical_transient_noise_and_mismatch_this_round
+
+release_gates_remaining:
+  - implement_declared_reference_interface_adapter_and_unique_joint_top
+  - exact_saved_schematic_export_matches_joint_deck
+  - native_MOM_sampler_StrongARM_controller_closed_loop_two_frames
+  - nominal_cross_input_and_major_carry_sampling_restore_cases
+  - actual_compare_before_error_below_1p7578125mV
+  - each_read_window_has_eight_resolved_decisions_and_stable_correct_word
+  - reference_BBM_and_model_terminal_stress_checked_under_joint_waveforms
+  - no_qualification_claim_from_old_3x_ideal_comparator_or_native_ideal_DAC_results

@@ -1,5 +1,31 @@
 # Maintenance Log
 
+## 2026-10-20 - Prepare one 3x ideal-gate SAR8 integration candidate
+
+- User selected corrected P/N mapping, unified physical sampling/reference
+  initialization, and 3x pass switches with ideal gate voltages. Prepared
+  SAR8_JOIN_R0_3X_IDEAL_GATE contract/report/source lock, not a new circuit run.
+- Live read-only t28_io capture matches prior connectivity, geometry and ports
+  for 21 simple_v2 native control cells plus Bootstrap/StrongARM. No OA saves,
+  exports, new cell/top, driver replacement or simulation; historical and
+  unrelated untracked cdac10_dualrail work preserved.
+- Locked 15 source files, native subckt digests and all 6 existing 3x result/deck
+  references. 3x means P/N integer multiplicity 3*2^bit, not resizing Bootstrap
+  or comparator. 3x two-MOS reference leaves remain netlist-only; old OA driver
+  cells are not mislabelled as the chosen ideal-gate version.
+- Contract crosses native P/N selection banks to physical reference requests,
+  defines PMOS-gate inversion, and restores midpoint after 2 ns inside SAMPLE
+  with BBM. Retains midpoint over sample-fall/init gap. Shared 100-ps SAMPLE and
+  39.9-ns pulse width preserve 40 ns between midpoint crossings; native controller
+  old 20-ps fixture results do not qualify the changed joined boundary.
+- Four focused contract checks cover 256 code mappings/charge/code centers,
+  gate disable/forbidden overlap, exact3x/native selection and sample/midpoint
+  consistency. Python compile, YAML/JSON/source-hash/link/diff checks pass.
+- Added config/sar8_join_r0.yaml, docs/sar8_join_r0.md, repeatable read-only
+  capture/pin checker and small source manifest. Adapter/top explicitly still
+  unimplemented; not a claimed integration or device qualification. Scoped
+  local preparation commit; no push or experience extraction.
+
 ## 2026-10-20 - Implement the user-approved minimal asynchronous SAR timing
 
 - New target SAR_ADC_T28/sar_logic_8b_async_simple:21 native schematic/symbol
