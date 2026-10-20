@@ -1253,3 +1253,22 @@ human-triggered note in `docs/experience/`.
 - Report docs/cdac8_dualrail.md, five inspected figures and small metrics
   summary; raw evidence output/cdac8_dualrail/. Eight focused tests pass;
   Python compile/YAML parse/diff checks. Bounded local commit, no push.
+
+## 2026-10-20 - Normal versus half-LSB reference-restore timing figures
+
+- Replotted completed final_nominal / clean_va_input_-3516 only, no simulation,
+  circuit, OA or Canvas changes. Same native DUT/VA/context except static input.
+  Extended shared-scale overview from 100 to 245 ns and added 202.94..203.50-ns
+  zoom with controls/native gate, same BN5 bottom, rails and MN_LOW port stress.
+- Saved selects/DOUT verify 192->128 changes one bit, 127->128 changes eight.
+  Marked BN5 (N-side bit5, 32Cu), XCDAC.XSN5.MN_LOW drain, at 1.399620 V and
+  203.128786 ns. It occurs inside next sampling (201.05..241.05 ns), after
+  restore command 203.01 ns/new-rail logic edge start 203.11 ns, not SAR compare.
+  At peak PHI=.9 V and BUSY=VALID=0; |Vbd|=1.399620 V, |Vds|=1.396209 V.
+  Normal same MOS max |Vbd|=.077786 V in zoom is not the normal global worst.
+- Added compare_restore.py, two PNGs, small source/wave-hash/context/peak JSON,
+  and bounded report/plan updates. Original raw results and figures untouched.
+  Native terminal mapping, deck/VA/source equality, finite complete waveforms,
+  word/phase/retained-peak assertions, Python compile and diff checks pass.
+  Both figures visually inspected; removed overlapping legends/annotations.
+  Scoped local commit only, no push; unrelated history/concurrent work excluded.

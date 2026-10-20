@@ -98,6 +98,38 @@ PVT/MC。三个纯理想 oracle 测试全通过，只说明算法/理想电荷�
 精确小型汇总及 case/source/deck/VA hashes：
 [metrics.json](figures/cdac8_dualrail/metrics.json)。
 
+### 正常输入与 −0.5 LSB：同一时间轴对照
+
+下面两图直接重画已完成的 `final_nominal` 与 `clean_va_input_-3516`，没有
+修改电路或重新仿真。两组为同一原生 OA DUT、相同 VA hashes/PVT/时序，
+只有静态输入不同；均是原生 T28 Bootstrap/参考 MOS/MOM + 理想比较器，
+不是另外的 StrongARM 或异步控制器结果。
+
+原时序图截止 195 ns；新增总览延伸到 245 ns，覆盖下一次采样与参考恢复。
+左列正常输入 +453.515625 mV，恢复 `192→128`，只变 bit6；右列
+−3.515625 mV（−0.5 LSB），恢复 `127→128`，8 bit 全部翻转。
+两列使用相同坐标尺度，保留原始采样点，不平滑掉尖峰。
+
+![正常与异常输入总览](figures/cdac8_dualrail/restore_compare_overview.png)
+
+![同一节点与器件的恢复窗口放大](figures/cdac8_dualrail/restore_compare_zoom.png)
+
+重点是右列 203.128786 ns：**BN5 = 1.399620 V**。BN5 是 N 侧 bit5
+（32Cu）电容组底板，也是 `XCDAC.XSN5.MN_LOW` 的漏极；其 bulk 接 0 V，
+因此该刻 `Vbd = −1.399620 V`、`|Vbd| = 1.399620 V`，不是 1.4 V 差分
+采样误差。`|Vds|` 同时约 1.396209 V，并非只有命名/符号造成超限。
+
+阶段定位：上一周期约 182.53 ns 码已有效；201.05 ns 新采样相开始，
+203.01 ns 发恢复命令，变化 bank 在 100 ps 逻辑间隔后，于 203.11 ns
+开始新轨使能边沿；尖峰发生在其后约 18.8 ps。灰带只表示变化 bank 的
+逻辑 blanking，不表示所有原生 MOS 已完全关断或下一开关已完全导通。
+尖峰处 PHI=0.9 V、BUSY=VALID=0：属于**下一次采样内的参考恢复**，
+不是 SAR 比较阶段。正常列 BN5 的 bit5 选择保持不变，不能把该器件的
+小应力值误当成正常输入下“所有参考 MOS 的最大值”。
+
+逐点/来源核对记录：[restore_compare_metrics.json](figures/cdac8_dualrail/restore_compare_metrics.json)。
+复现：`.venv/Scripts/python.exe scripts/cdac8_dualrail/compare_restore.py`。
+
 ## 电气结构与初态
 
 - VDD/VREFP=0.9 V，VREFN=0 V；输入共模=0.45 V；10 MS/s。
