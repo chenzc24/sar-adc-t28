@@ -1811,3 +1811,52 @@ human-triggered note in `docs/experience/`.
   under output/r3_anomaly_replay/, primary original_stop/. Shared full-batch
   analysis untouched; any resulting metrics remain fault diagnostics until fix.
 - Syntax/targeted tests/diff review/check; scoped local commit only, no push.
+
+## 2026-10-21 - R3 reference timer callback repair B
+
+- Completed bounded12frame native repair validation, not full ADC signoff.
+  Native SAR/Bootstrap/comparator/CDAC/reference switches, topology and W/L,
+  R3 clock waveforms,100ps restore/BBM and50ps gate edges unchanged. No remote
+  OA, shared original VA or running full-characterization source/job changes.
+  Unrelated untracked cdac10_dualrail files preserved and excluded.
+- Original input bisection follows actual ADC outputs; freeze its original
+ 12frame input-history branching in a testbench-only VA snapshot for fair A/B.
+  Actual native comparator/SAR decisions and logs remain real, not forced codes.
+  Retain original51600ns declaredstop and passive1200nsfinish, APS4/conservative/
+ 10ps; all native reported solver parameters match the original replay.
+- Passive original A reproduces all12codes including frame8code1,217838point
+  time grid and49common saved waveforms exactly, maximum difference0. Native
+  result.ok,0errors/12warnings/7notices; CMI retained. Direct state evidence:
+  sampling enters801.050000250055ns, restore books801.150000250056ns; valid
+  callback801.150000090759ns is0.159297fs early. Redundant >=deadline-1e-18
+  rejects it for all16banks; restored stays0, no retry until sampling ends.
+  This supersedes the earlier unverified SAMPLE-cross level hypothesis.
+- Phase-only candidate b stillfails: frame8code2, held-442.320735mV, CMI.
+  An intermediate event-owned b2 unit exposes omitted sample-fall interlock
+  release;48/96 conversion-request checks fail, no full ADC b2 run. All failed
+  variants/raws preserved; final b3 restores the interlock and uses explicit
+  SAMPLE directions, COMMIT notifications and event-owned restore/turnon with
+  pending flags, never re-rejecting a timer by absolute floating-point time.
+  Read installed Cadence21.1 timer docs via SSH, no blocking CIW help process.
+- Four native small units result.ok. A/final b3 pass96acquisition and96conversion
+  checks, no command overlap,96rise/96fall; their saved waveforms are identical.
+  Final B=b3 native12frames result.ok,0errors/7warnings/6notices, no CMI/LTE.
+  Codes64,64,64,64,64,65,64,65,65,65,65,65; all12frames8compares and observed
+ 4frames8write/8update. Complete384phase/192restore events;32early callbacks
+  correctly handled. No gross outlier; all16bank midpoint gates and bottoms
+  correct before hold. Real source history and native DUT statements unchanged.
+- Frame8 held error-442.850497mV ->+.101355mV(.014415LSB), handoff MNINP maximum
+  |VGD|.999150V ->.671722V,898ns output1->65. Frames8..11 held+.101302..+.101355mV,
+  all below.25LSB=1.7578125mV. Saved comparator input-pair VGS/VGD/VDS max.886745V
+  below.99V screen; not whole-chip lifetime qualification. Remaining7warnings
+  are original AHDL/global-terminal/PDKscalefactor messages, explicitly retained.
+- Added isolated model snapshots, preparation/run/analysis,3focused tests,
+  provenance/metrics verification/integration/r3_refgate_events_results.json,
+  docs/r3_refgate_events.md and3inspected timing figures with expected baselines.
+  Raw logs/PSF/decks/pickles output/r3_refgate_events/ ignored. B trace85signals/
+ 218631points800-1200ns;0-800ns fully solved. Final compute1154s,transfer27.5s,
+  parse95.2s. Earlier original full static/sine results remain fault diagnostics,
+  cannot be relabelled repaired performance; no automatic long-batch restart.
+- Syntax,3focused identity/history/event parsing contracts, curated source/figure
+  hash checks, diff-check and scoped review. Local commit only, no push. B remains
+  a separate netlist/VA candidate, not silently adopted into frozen R3 OA.

@@ -1,0 +1,100 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// A target change opens the old rail and books ONE pending turn-on event.
+// The only absolute-time comparison chooses immediate vs future scheduling;
+// no timer callback is rejected by comparing floating-point times again.
+`define R3_EVENT_SET_TARGET \
+    if (want_h!=target_h || want_l!=target_l) begin \
+        if (on_h || on_l) off_at=$abstime; \
+        on_h=0; on_l=0; target_h=want_h; target_l=want_l; \
+        turnon_at=1e30; turnon_pending=0; \
+        if (target_h || target_l) begin \
+            if ($abstime>=off_at+dead_time_s) begin \
+                on_h=target_h; on_l=target_l; \
+            end else begin \
+                turnon_at=off_at+dead_time_s; turnon_pending=1; \
+            end \
+        end \
+    end
+
+module sar8j_aligned_refgate(SAMPLE,EH,EL,VDD,VSS,GP,GN,COMMIT);
+    input SAMPLE,EH,EL,VDD,VSS,COMMIT;
+    output GP,GN;
+    electrical SAMPLE,EH,EL,VDD,VSS,GP,GN,COMMIT;
+    parameter integer initial_high=0 from [0:1];
+    parameter real restore_guard_s=2n from (0:inf);
+    parameter real dead_time_s=100p from (0:inf);
+    parameter real edge_s=20p from (0:inf);
+    integer sampling,restored,overridden,restore_pending,turnon_pending;
+    integer on_h,on_l,target_h,target_l,want_h,want_l,raw_h,raw_l;
+    real restore_at,turnon_at,off_at,restore_fired_deadline,turnon_fired_deadline;
+    analog begin
+        @(initial_step) begin
+            sampling=0; restored=0; overridden=1;
+            restore_pending=0; turnon_pending=0;
+            on_h=initial_high; on_l=1-initial_high;
+            target_h=on_h; target_l=on_l;
+            restore_at=1e30; turnon_at=1e30; off_at=-1;
+        end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),+1)) begin
+            sampling=1; restored=0; overridden=1; restore_pending=1;
+            restore_at=$abstime+restore_guard_s;
+            turnon_at=1e30; turnon_pending=0;
+            target_h=on_h; target_l=on_l;
+            $strobe("R3PHASE,%m,%.15g,1,%d,%d,%.15g",
+                $abstime,sampling,restored,restore_at);
+        end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            sampling=0; restore_at=1e30; restore_pending=0;
+            $strobe("R3PHASE,%m,%.15g,0,%d,%d,%.15g",
+                $abstime,sampling,restored,restore_at);
+        end
+        // Raw requests may release the initial-word interlock; only COMMIT
+        // applies a conversion word. Neither SAMPLE nor raw crossings drive it.
+        @(cross(V(EH,VSS)-0.5*V(VDD,VSS),0) or
+          cross(V(EL,VSS)-0.5*V(VDD,VSS),0)) begin
+            raw_h=V(EH,VSS)>0.5*V(VDD,VSS);
+            raw_l=V(EL,VSS)>0.5*V(VDD,VSS);
+            if (!sampling && overridden && raw_h==initial_high && raw_l==1-initial_high)
+                overridden=0;
+        end
+        @(cross(V(COMMIT,VSS)-0.5*V(VDD,VSS),0)) begin
+            // Both toggle directions are notifications; never re-classify a
+            // crossing by the instantaneous COMMIT voltage at its threshold.
+            raw_h=V(EH,VSS)>0.5*V(VDD,VSS);
+            raw_l=V(EL,VSS)>0.5*V(VDD,VSS);
+            if (!sampling && overridden && raw_h==initial_high && raw_l==1-initial_high)
+                overridden=0;
+            if (!sampling && !overridden) begin
+                want_h=raw_h && !raw_l; want_l=raw_l && !raw_h;
+                `R3_EVENT_SET_TARGET
+            end
+            $strobe("R3BSTATE,%m,%.15g,%d,%d,%d,%d,%d,%d,%d,%.15g,%.15g",
+                $abstime,sampling,restored,overridden,on_h,on_l,target_h,target_l,
+                restore_at,turnon_at);
+        end
+        @(timer(restore_at)) begin
+            if (sampling && restore_pending) begin
+                restore_fired_deadline=restore_at;
+                restore_at=1e30; restore_pending=0; restored=1;
+                want_h=initial_high; want_l=1-initial_high;
+                `R3_EVENT_SET_TARGET
+                $strobe("R3RESTORE,%m,%.15g,%.15g,%d,%d,%d,%d",
+                    $abstime,restore_fired_deadline,sampling,restored,on_h,on_l);
+            end
+        end
+        @(timer(turnon_at)) begin
+            if (turnon_pending) begin
+                turnon_fired_deadline=turnon_at;
+                on_h=target_h; on_l=target_l;
+                turnon_at=1e30; turnon_pending=0;
+                $strobe("R3TURNON,%m,%.15g,%.15g,%d,%d",
+                    $abstime,turnon_fired_deadline,on_h,on_l);
+            end
+        end
+        V(GP,VSS)<+V(VDD,VSS)*(1-transition(on_h,0,edge_s,edge_s));
+        V(GN,VSS)<+V(VDD,VSS)*transition(on_l,0,edge_s,edge_s);
+    end
+endmodule
+`undef R3_EVENT_SET_TARGET

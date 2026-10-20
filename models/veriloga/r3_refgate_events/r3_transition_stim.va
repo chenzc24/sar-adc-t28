@@ -1,0 +1,77 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// ADC-output-driven testbench bisection, not an ideal ADC or a DUT replacement.
+module r3_transition_stim(VP,VN,D0,D1,D2,D3,D4,D5,D6,D7);
+    output VP,VN;
+    input D0,D1,D2,D3,D4,D5,D6,D7;
+    electrical VP,VN,D0,D1,D2,D3,D4,D5,D6,D7;
+    parameter integer first_k=1 from [1:255];
+    parameter integer last_k=255 from [1:255];
+    parameter integer warmup=4 from [0:inf);
+    parameter integer refine=6 from [1:20];
+    parameter real half_span_lsb=0.25 from (0:inf);
+    integer k,phase,frame,code,status,finished;
+    integer history_code;
+    integer report_frame,report_k,report_phase,edge_k,edge_status;
+    real lo,hi,trial,pending,lsb;
+    real report_trial,edge_lo,edge_hi;
+    analog begin
+        @(initial_step) begin
+            lsb=1.8/256;k=first_k;phase=0;frame=0;status=0;finished=0;
+            lo=max(-0.9,-0.9+k*lsb-half_span_lsb*lsb);
+            hi=min(0.9,-0.9+k*lsb+half_span_lsb*lsb);
+            trial=lo;pending=lo;
+        end
+        @(timer(98n,100n)) begin
+            code=(V(D0)>0.45)+2*(V(D1)>0.45)+4*(V(D2)>0.45)+8*(V(D3)>0.45)+
+                16*(V(D4)>0.45)+32*(V(D5)>0.45)+64*(V(D6)>0.45)+128*(V(D7)>0.45);
+            case (frame)
+                0: history_code=64;
+                1: history_code=64;
+                2: history_code=64;
+                3: history_code=64;
+                4: history_code=64;
+                5: history_code=65;
+                6: history_code=64;
+                7: history_code=65;
+                8: history_code=1;
+                9: history_code=65;
+                10: history_code=65;
+                11: history_code=65;
+                default: history_code=65;
+            endcase
+            if (frame>=warmup && !finished) begin
+                report_frame=frame;report_k=k;report_phase=phase;report_trial=trial;
+                $strobe("R3SEARCH,%d,%d,%d,%.12g,%d",report_frame,report_k,report_phase,report_trial,code);
+                if (phase==0) begin
+                    if(history_code!=k-1) status=status+1;
+                    pending=hi;phase=1;
+                end else if (phase==1) begin
+                    if(history_code!=k) status=status+2;
+                    pending=(lo+hi)/2;phase=2;
+                end else begin
+                    if (history_code>=k) hi=trial; else lo=trial;
+                    if (phase==refine+1) begin
+                        edge_k=k;edge_lo=lo;edge_hi=hi;edge_status=status;
+                        $strobe("R3THR,%d,%.12g,%.12g,%d",edge_k,edge_lo,edge_hi,edge_status);
+                        if (k==last_k) begin
+                            finished=1;
+                            $strobe("R3STATIC_DONE,%d,%d",first_k,last_k);
+                        end else begin
+                            k=k+1;phase=0;status=0;
+                            lo=max(-0.9,-0.9+k*lsb-half_span_lsb*lsb);
+                            hi=min(0.9,-0.9+k*lsb+half_span_lsb*lsb);
+                            pending=lo;
+                        end
+                    end else begin phase=phase+1;pending=(lo+hi)/2; end
+                end
+            end
+            frame=frame+1;
+        end
+        // Change only while the input is disconnected, before the next SAMPLE.
+        @(timer(100.8n,100n)) trial=pending;
+        V(VP) <+ transition(0.45+trial/2,0,100p,100p);
+        V(VN) <+ transition(0.45-trial/2,0,100p,100p);
+    end
+endmodule
