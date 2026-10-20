@@ -1,0 +1,89 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Behavioral binary SAR control, not a transistor digital controller.
+// Complementary P/N bottom selection holds ideal TOP common-mode constant.
+// High-select sample words: PH=01111111, NH=10000000; PL/NL are complements.
+module cdac8_dualrail_controller(COMP_P, COMP_N, PHI, PREPARE, HOLD_START,
+    CLK_LATCH, CLK_COMPARE, VDD, VSS, PH, PL, NH, NL, DOUT,
+    BUSY, VALID, CMP_CLK, CMP_RESET);
+    input COMP_P, COMP_N, PHI, PREPARE, HOLD_START, CLK_LATCH, CLK_COMPARE, VDD, VSS;
+    output [7:0] PH, PL, NH, NL, DOUT;
+    output BUSY, VALID, CMP_CLK, CMP_RESET;
+    electrical COMP_P, COMP_N, PHI, PREPARE, HOLD_START, CLK_LATCH, CLK_COMPARE, VDD, VSS;
+    electrical [7:0] PH, PL, NH, NL, DOUT;
+    electrical BUSY, VALID, CMP_CLK, CMP_RESET;
+    parameter real dead_time_s=100p from (0:inf);
+    parameter real edge_s=20p from (0:inf);
+    integer low_command[0:15], high_drive[0:15], low_drive[0:15];
+    real ready_time[0:15];
+    integer bit_index,work_code,trial_mask,active_code,out_code,busy_state,valid_state;
+    integer j,want_low,code_bit;
+    real threshold;
+    genvar k;
+    analog begin
+        threshold=0.5*V(VDD,VSS);
+        @(initial_step) begin
+            bit_index=7;work_code=0;trial_mask=128;active_code=128;
+            out_code=0;busy_state=0;valid_state=0;
+            for(j=0;j<16;j=j+1) begin
+                code_bit=(active_code & (1<<(j%8)))!=0?1:0;
+                low_command[j]=j<8?code_bit:1-code_bit;
+                high_drive[j]=1-low_command[j];low_drive[j]=low_command[j];ready_time[j]=1e9;
+            end
+        end
+        @(cross(V(PHI,VSS)-threshold,+1)) begin
+            work_code=0;bit_index=7;trial_mask=128;busy_state=0;valid_state=0;
+        end
+        @(cross(V(PREPARE,VSS)-threshold,+1)) begin
+            active_code=128;busy_state=0;
+            for(j=0;j<16;j=j+1) begin
+                code_bit=(active_code & (1<<(j%8)))!=0?1:0;
+                want_low=j<8?code_bit:1-code_bit;
+                if(want_low!=low_command[j]) begin
+                    low_command[j]=want_low;high_drive[j]=0;low_drive[j]=0;
+                    ready_time[j]=$abstime+dead_time_s;
+                end
+            end
+        end
+        @(cross(V(HOLD_START,VSS)-threshold,+1)) begin
+            bit_index=7;work_code=0;trial_mask=128;active_code=128;busy_state=1;valid_state=0;
+        end
+        @(cross(V(CLK_LATCH,VSS)-threshold,+1)) begin
+            if(busy_state!=0) begin
+                if(V(COMP_P,COMP_N)>=0.0) work_code=work_code+trial_mask;
+                if(bit_index==0) begin
+                    out_code=work_code;active_code=work_code;busy_state=0;valid_state=1;
+                end else begin
+                    bit_index=bit_index-1;trial_mask=1<<bit_index;
+                    active_code=work_code+trial_mask;
+                end
+                // Commit the next tentative code in one update; no extra trial pulse.
+                for(j=0;j<16;j=j+1) begin
+                    code_bit=(active_code & (1<<(j%8)))!=0?1:0;
+                    want_low=j<8?code_bit:1-code_bit;
+                    if(want_low!=low_command[j]) begin
+                        low_command[j]=want_low;high_drive[j]=0;low_drive[j]=0;
+                        ready_time[j]=$abstime+dead_time_s;
+                    end
+                end
+            end
+        end
+        for(k=0;k<16;k=k+1) begin
+            @(timer(ready_time[k])) begin
+                high_drive[k]=1-low_command[k];low_drive[k]=low_command[k];
+            end
+        end
+        for(k=0;k<8;k=k+1) begin
+            V(PH[k],VSS)<+V(VDD,VSS)*transition(high_drive[k]!=0?1.0:0.0,0,edge_s,edge_s);
+            V(PL[k],VSS)<+V(VDD,VSS)*transition(low_drive[k]!=0?1.0:0.0,0,edge_s,edge_s);
+            V(NH[k],VSS)<+V(VDD,VSS)*transition(high_drive[k+8]!=0?1.0:0.0,0,edge_s,edge_s);
+            V(NL[k],VSS)<+V(VDD,VSS)*transition(low_drive[k+8]!=0?1.0:0.0,0,edge_s,edge_s);
+            V(DOUT[k],VSS)<+V(VDD,VSS)*transition((out_code & (1<<k))!=0?1.0:0.0,0,edge_s,edge_s);
+        end
+        V(BUSY,VSS)<+V(VDD,VSS)*transition(busy_state!=0?1.0:0.0,0,edge_s,edge_s);
+        V(VALID,VSS)<+V(VDD,VSS)*transition(valid_state!=0?1.0:0.0,0,edge_s,edge_s);
+        V(CMP_CLK,VSS)<+V(CLK_COMPARE,VSS)*transition(busy_state!=0?1.0:0.0,0,edge_s,edge_s);
+        V(CMP_RESET,VSS)<+V(VDD,VSS)-V(CMP_CLK,VSS);
+    end
+endmodule

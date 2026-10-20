@@ -1,0 +1,2008 @@
+{
+  "candidate_only": true,
+  "baseline_promoted": false,
+  "validation_status": "failed_native_TT_reference_core_stress; long scans intentionally interrupted",
+  "completed_final_runs": 13,
+  "interrupted_final_runs": [
+    "clean_va_dynamic_256",
+    "clean_va_static_all_codes"
+  ],
+  "completed_all_versions": 18,
+  "final_cases": [
+    {
+      "metrics": {
+        "name": "clean_va_dynamic_256",
+        "ok": false,
+        "errors": [
+          "Error found by spectre at time = 7.95263 us during transient analysis `tran'.",
+          "ERROR (SPECTRE-25): The simulation is stopped either by the user or the",
+          "spectre completes with 1 error, 286383 warnings, and 7 notices.",
+          "spectre terminated prematurely due to fatal error."
+        ]
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 2,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "990f5011be2e6eb1ca0c6a237d94a4861e9a0587272ea471f153b1c969e1efa9",
+        "stop_ns": 26020,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": true,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": false,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_+0",
+        "ok": true,
+        "printed_cmi": 10,
+        "suppressed_warnings": 243,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 128,
+        "expected_code": 128,
+        "code_error": 0,
+        "vin_v": 0.0,
+        "compare_raw_max_mv": 0.2964354775976119,
+        "first_hold_error_mv": 9.15429398951062e-08,
+        "switching_delta_max_mv": 0.296435386054672,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 9.15429398951062e-11,
+            "ideal_v": 0.0,
+            "error_mv": 9.15429398951062e-08,
+            "cm_v": 0.449562210913528,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": -0.44970356452240245,
+            "ideal_v": -0.45000000000000007,
+            "error_mv": 0.2964354775976119,
+            "cm_v": 0.44956487480821167,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.2248518814847263,
+            "ideal_v": -0.22499999999999998,
+            "error_mv": 0.14811851527368747,
+            "cm_v": 0.4495628681050571,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.11242597601088355,
+            "ideal_v": -0.11249999999999993,
+            "error_mv": 0.07402398911637853,
+            "cm_v": 0.4495623742881803,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05621299341541042,
+            "ideal_v": -0.05625000000000002,
+            "error_mv": 0.03700658458960504,
+            "cm_v": 0.4495622513787553,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.028106496242530143,
+            "ideal_v": -0.028124999999999956,
+            "error_mv": 0.018503757469812143,
+            "cm_v": 0.4495622207049964,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.01405324652699802,
+            "ideal_v": -0.014062499999999978,
+            "error_mv": 0.00925347300195778,
+            "cm_v": 0.4495622130489855,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.007026621429182589,
+            "ideal_v": -0.007031250000000044,
+            "error_mv": 0.00462857081745538,
+            "cm_v": 0.4495622111379636,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.4495622111379636,
+        "acquisition_error_mv": 5.750955267558311e-11,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.008874864366677,
+            "signed_v": -1.008874864366677,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 52.628529728391726
+          },
+          "post_startup": {
+            "value_v": 1.008868865542406,
+            "signed_v": -1.008868865542406,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 152.62852380029122
+          },
+          "reset": {
+            "value_v": 0.9,
+            "signed_v": -0.9,
+            "instance": "XCDAC.XSN0.MP_IH",
+            "terminal": "vgs",
+            "time_ns": 2.939515146636284
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038097929813130094
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "c8aa9470521a64dc2d56e8e47f15e7177bd839dee5e60d81cb12bf19f0d27366",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_+3516",
+        "ok": true,
+        "printed_cmi": 10,
+        "suppressed_warnings": 243,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 128,
+        "expected_code": 128,
+        "code_error": 0,
+        "vin_v": 0.003515625000000022,
+        "compare_raw_max_mv": 0.29563308433333546,
+        "first_hold_error_mv": -0.0007900005207783778,
+        "switching_delta_max_mv": 0.29642308485411384,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.003514834999479244,
+            "ideal_v": 0.003515625000000022,
+            "error_mv": -0.0007900005207783778,
+            "cm_v": 0.449562210572533,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": -0.4461887419156667,
+            "ideal_v": -0.44648437500000004,
+            "error_mv": 0.29563308433333546,
+            "cm_v": 0.4495648321909713,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.22133704958211586,
+            "ideal_v": -0.22148437499999996,
+            "error_mv": 0.14732541788409215,
+            "cm_v": 0.4495628471056341,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.10891114182787653,
+            "ideal_v": -0.10898437499999991,
+            "error_mv": 0.07323317212337699,
+            "cm_v": 0.44956236368066793,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05269815867150052,
+            "ideal_v": -0.052734375,
+            "error_mv": 0.0362163284994832,
+            "cm_v": 0.4495622459122003,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.024591661361666906,
+            "ideal_v": -0.024609374999999933,
+            "error_mv": 0.01771363833302786,
+            "cm_v": 0.4495622178020623,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.010538411613460585,
+            "ideal_v": -0.010546874999999956,
+            "error_mv": 0.008463386539370177,
+            "cm_v": 0.4495622114270283,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0035117865082577304,
+            "ideal_v": -0.003515625000000022,
+            "error_mv": 0.003838491742291783,
+            "cm_v": 0.44956221015639153,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44956221015639153,
+        "acquisition_error_mv": -3.256811487162281e-08,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.008874954437626,
+            "signed_v": -1.008874954437626,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 52.62852972814155
+          },
+          "post_startup": {
+            "value_v": 1.008868956378126,
+            "signed_v": -1.008868956378126,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 152.628523799171
+          },
+          "reset": {
+            "value_v": 0.9,
+            "signed_v": -0.9,
+            "instance": "XCDAC.XSN0.MP_IH",
+            "terminal": "vgs",
+            "time_ns": 2.9273117826066013
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038097929802027863
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.003515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "64a2aca2ebc292e4f0f9154bca25c834893f1b0cc43627dd649000c3181dc1f0",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_+400000",
+        "ok": true,
+        "printed_cmi": 10,
+        "suppressed_warnings": 243,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 184,
+        "expected_code": 184,
+        "code_error": 0,
+        "vin_v": 0.4,
+        "compare_raw_max_mv": 0.2053643822509943,
+        "first_hold_error_mv": -0.09115298140882633,
+        "switching_delta_max_mv": 0.2965173636598206,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.3999088470185912,
+            "ideal_v": 0.4,
+            "error_mv": -0.09115298140882633,
+            "cm_v": 0.449558735433372,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": -0.04979463561774905,
+            "ideal_v": -0.050000000000000044,
+            "error_mv": 0.2053643822509943,
+            "cm_v": 0.4495566667474066,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": 0.17505735905450592,
+            "ideal_v": 0.17500000000000004,
+            "error_mv": 0.05735905450587886,
+            "cm_v": 0.44955703247915024,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": 0.06263135141310477,
+            "ideal_v": 0.0625,
+            "error_mv": 0.13135141310477438,
+            "cm_v": 0.4495566855459644,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": 0.006418353599029036,
+            "ideal_v": 0.006250000000000089,
+            "error_mv": 0.16835359902894753,
+            "cm_v": 0.4495566351550202,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.02168814750149145,
+            "ideal_v": -0.02187500000000009,
+            "error_mv": 0.1868524985086384,
+            "cm_v": 0.44955664068308465,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.007634891527329157,
+            "ideal_v": -0.0078125,
+            "error_mv": 0.17760847267084268,
+            "cm_v": 0.4495566353236341,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0006082664559420303,
+            "ideal_v": -0.0007812499999999556,
+            "error_mv": 0.17298354405792526,
+            "cm_v": 0.44955663458587264,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44955663458587264,
+        "acquisition_error_mv": 3.565961970153353e-07,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.008883567541463,
+            "signed_v": -1.008883567541463,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 52.62852971072758
+          },
+          "post_startup": {
+            "value_v": 1.008877656935763,
+            "signed_v": -1.008877656935763,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 152.62852367768892
+          },
+          "reset": {
+            "value_v": 0.9651888643900035,
+            "signed_v": 0.9651888643900035,
+            "instance": "XCDAC.XSN6.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1330673862515
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.003809863415193959
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.4,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "28337cebbd885ca7a74943ae8b593d3e50136968e62da24a5c7b64077be15dfb",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_+50000",
+        "ok": true,
+        "printed_cmi": 10,
+        "suppressed_warnings": 243,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 135,
+        "expected_code": 135,
+        "code_error": 0,
+        "vin_v": 0.04999999999999999,
+        "compare_raw_max_mv": 0.2850422156955301,
+        "first_hold_error_mv": -0.01124006781783038,
+        "switching_delta_max_mv": 0.2962822835133605,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.04998875993218216,
+            "ideal_v": 0.04999999999999999,
+            "error_mv": -0.01124006781783038,
+            "cm_v": 0.44956213295935143,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": -0.39971495778430455,
+            "ideal_v": -0.4000000000000001,
+            "error_mv": 0.2850422156955301,
+            "cm_v": 0.4495641981509924,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.17486315360310867,
+            "ideal_v": -0.175,
+            "error_mv": 0.1368463968913214,
+            "cm_v": 0.449562496972263,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.06243722112035155,
+            "ideal_v": -0.062499999999999944,
+            "error_mv": 0.06277887964839524,
+            "cm_v": 0.44956215045117154,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.006224233230767817,
+            "ideal_v": -0.006250000000000033,
+            "error_mv": 0.025766769232216102,
+            "cm_v": 0.4495621005456566,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": 0.021882264551692343,
+            "ideal_v": 0.021875000000000033,
+            "error_mv": 0.007264551692309773,
+            "cm_v": 0.44956210631177795,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": 0.007829013534016993,
+            "ideal_v": 0.0078124999999999445,
+            "error_mv": 0.01651353401704858,
+            "cm_v": 0.44956210095126525,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": 0.0008023884319428021,
+            "ideal_v": 0.0007812500000000111,
+            "error_mv": 0.02113843194279097,
+            "cm_v": 0.44956210016266274,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44956210016266274,
+        "acquisition_error_mv": -2.339328730727175e-08,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.008876120190866,
+            "signed_v": -1.008876120190866,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 52.62852972499081
+          },
+          "post_startup": {
+            "value_v": 1.008870126972657,
+            "signed_v": -1.008870126972657,
+            "instance": "XCDAC.XSP5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 152.6285237934471
+          },
+          "reset": {
+            "value_v": 0.9401023418407985,
+            "signed_v": -0.9401023418407985,
+            "instance": "XCDAC.XSN2.MN_LOW",
+            "terminal": "vgd",
+            "time_ns": 103.1246850887661
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038097829290206775
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.05,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "50f4cf578ac8932581db6e9dbb8cca8074163786afc7ef2b565638369e378ddb",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_+800000",
+        "ok": true,
+        "printed_cmi": 15,
+        "suppressed_warnings": 5346,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 241,
+        "expected_code": 241,
+        "code_error": 0,
+        "vin_v": 0.8,
+        "compare_raw_max_mv": 0.35864306508837096,
+        "first_hold_error_mv": -0.20044284688158776,
+        "switching_delta_max_mv": 0.5590859119699587,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.7997995571531185,
+            "ideal_v": 0.8,
+            "error_mv": -0.20044284688158776,
+            "cm_v": 0.4495600271225426,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.350099144700656,
+            "ideal_v": 0.35,
+            "error_mv": 0.09914470065602865,
+            "cm_v": 0.4495529536715438,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": 0.12524759504612915,
+            "ideal_v": 0.1250000000000001,
+            "error_mv": 0.24759504612903438,
+            "cm_v": 0.449551551473402,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": 0.012821644033195578,
+            "ideal_v": 0.012500000000000067,
+            "error_mv": 0.3216440331955672,
+            "cm_v": 0.4495513490706763,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.043391356934911696,
+            "ideal_v": -0.04375000000000007,
+            "error_mv": 0.35864306508837096,
+            "cm_v": 0.44955137053319,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.015284845130937308,
+            "ideal_v": -0.015624999999999889,
+            "error_mv": 0.3401548690625811,
+            "cm_v": 0.4495513485152184,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.0012315895852124115,
+            "ideal_v": -0.0015625000000000222,
+            "error_mv": 0.33091041478761074,
+            "cm_v": 0.44955134488043225,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": 0.005795040338695934,
+            "ideal_v": 0.005468750000000022,
+            "error_mv": 0.3262903386959115,
+            "cm_v": 0.4495513446578513,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.4495513446578513,
+        "acquisition_error_mv": 8.936276940652021e-06,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.101294634351299,
+            "signed_v": 1.101294634351299,
+            "instance": "XCDAC.XSN3.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1336833766039
+          },
+          "post_startup": {
+            "value_v": 1.101294634351299,
+            "signed_v": 1.101294634351299,
+            "instance": "XCDAC.XSN3.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1336833766039
+          },
+          "reset": {
+            "value_v": 1.101294634351299,
+            "signed_v": 1.101294634351299,
+            "instance": "XCDAC.XSN3.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1336833766039
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038104901318725126
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.8,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "371846aa2d05eec1ce15d431666a8847a66cacaa6a71e16dd3b5526f0dfa5132",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_-3516",
+        "ok": true,
+        "printed_cmi": 15,
+        "suppressed_warnings": 19945,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 127,
+        "expected_code": 127,
+        "code_error": 0,
+        "vin_v": -0.003515625000000022,
+        "compare_raw_max_mv": 0.29573693358669884,
+        "first_hold_error_mv": 0.0007911981826369541,
+        "switching_delta_max_mv": 0.2965281317693358,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": -0.0035148338018173853,
+            "ideal_v": -0.003515625000000022,
+            "error_mv": 0.0007911981826369541,
+            "cm_v": 0.4495622107332051,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.4461886380664133,
+            "ideal_v": 0.446484375,
+            "error_mv": -0.29573693358669884,
+            "cm_v": 0.4495648317290626,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": 0.22133709826541803,
+            "ideal_v": 0.22148437499999996,
+            "error_mv": -0.1472767345819248,
+            "cm_v": 0.4495628477763866,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": 0.10891115550269737,
+            "ideal_v": 0.10898437500000002,
+            "error_mv": -0.07321949730265676,
+            "cm_v": 0.44956236415463346,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": 0.052698162707220664,
+            "ideal_v": 0.052734375,
+            "error_mv": -0.03621229277933624,
+            "cm_v": 0.4495622462833754,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": 0.024591663123938123,
+            "ideal_v": 0.024609374999999933,
+            "error_mv": -0.017711876061810017,
+            "cm_v": 0.44956221812801517,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": 0.010538412826612276,
+            "ideal_v": 0.010546874999999956,
+            "error_mv": -0.008462173387679961,
+            "cm_v": 0.44956221173060573,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": 0.0035117875881522376,
+            "ideal_v": 0.003515625000000022,
+            "error_mv": -0.003837411847784633,
+            "cm_v": 0.44956221044981337,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44956221044981337,
+        "acquisition_error_mv": -2.4491519923230953e-09,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.399620349964588,
+            "signed_v": -1.399620349964588,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1287861931276
+          },
+          "post_startup": {
+            "value_v": 1.399620349964588,
+            "signed_v": -1.399620349964588,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1287861931276
+          },
+          "reset": {
+            "value_v": 1.399620349964588,
+            "signed_v": -1.399620349964588,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1287861931276
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038097970466166586
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": -0.003515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "e0481d3cdbbc28d24edeff40729845344685f663b3a7484a28552d10bd7fb92b",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_-400000",
+        "ok": true,
+        "printed_cmi": 15,
+        "suppressed_warnings": 19588,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 71,
+        "expected_code": 71,
+        "code_error": 0,
+        "vin_v": -0.4,
+        "compare_raw_max_mv": 0.2054702387522811,
+        "first_hold_error_mv": 0.09115409812465725,
+        "switching_delta_max_mv": 0.29662433687693834,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": -0.39990884590187536,
+            "ideal_v": -0.4,
+            "error_mv": 0.09115409812465725,
+            "cm_v": 0.44955873550525083,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.04979452976124771,
+            "ideal_v": 0.04999999999999999,
+            "error_mv": -0.2054702387522811,
+            "cm_v": 0.44955666619824974,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.17505731109486022,
+            "ideal_v": -0.17500000000000004,
+            "error_mv": -0.0573110948601796,
+            "cm_v": 0.44955703305851863,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.06263137485226089,
+            "ideal_v": -0.0625,
+            "error_mv": -0.1313748522608904,
+            "cm_v": 0.44955668547361105,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.0064183639170898865,
+            "ideal_v": -0.006249999999999978,
+            "error_mv": -0.16836391708990872,
+            "cm_v": 0.44955663516397737,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": 0.02168814310245426,
+            "ideal_v": 0.021874999999999978,
+            "error_mv": -0.18685689754571744,
+            "cm_v": 0.4495566407221487,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": 0.007634894803713821,
+            "ideal_v": 0.0078125,
+            "error_mv": -0.1776051962861791,
+            "cm_v": 0.4495566354172359,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": 0.0006082683406267719,
+            "ideal_v": 0.0007812500000000111,
+            "error_mv": -0.17298165937323917,
+            "cm_v": 0.44955663467268914,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44955663467268914,
+        "acquisition_error_mv": -4.945369669329125e-07,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.298571807543501,
+            "signed_v": -1.298571807543501,
+            "instance": "XCDAC.XSN6.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1290224153733
+          },
+          "post_startup": {
+            "value_v": 1.298571807543501,
+            "signed_v": -1.298571807543501,
+            "instance": "XCDAC.XSN6.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1290224153733
+          },
+          "reset": {
+            "value_v": 1.298571807543501,
+            "signed_v": -1.298571807543501,
+            "instance": "XCDAC.XSN6.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 203.1290224153733
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.003809860462111736
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": -0.4,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "8487709cb39b917bfb31bcb73887ba18454363884889699fe76cadfafcf2bbfd",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_-50000",
+        "ok": true,
+        "printed_cmi": 15,
+        "suppressed_warnings": 21178,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 120,
+        "expected_code": 120,
+        "code_error": 0,
+        "vin_v": -0.04999999999999999,
+        "compare_raw_max_mv": 0.2851452151651501,
+        "first_hold_error_mv": 0.011240574401161219,
+        "switching_delta_max_mv": 0.29638578956631134,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": -0.04998875942559883,
+            "ideal_v": -0.04999999999999999,
+            "error_mv": 0.011240574401161219,
+            "cm_v": 0.44956213263124734,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.39971485478483487,
+            "ideal_v": 0.4,
+            "error_mv": -0.2851452151651501,
+            "cm_v": 0.44956419721332963,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": 0.17486320145891954,
+            "ideal_v": 0.175,
+            "error_mv": -0.13679854108045175,
+            "cm_v": 0.4495624971548944,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": 0.06243723407108254,
+            "ideal_v": 0.06250000000000006,
+            "error_mv": -0.06276592891751864,
+            "cm_v": 0.4495621504370829,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": 0.006224236561125862,
+            "ideal_v": 0.006250000000000033,
+            "error_mv": -0.025763438874171207,
+            "cm_v": 0.44956210042880784,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.021882263482083053,
+            "ideal_v": -0.021875000000000033,
+            "error_mv": -0.0072634820830197455,
+            "cm_v": 0.4495621061493904,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.007829013645935301,
+            "ideal_v": -0.0078124999999999445,
+            "error_mv": -0.016513645935356536,
+            "cm_v": 0.44956210071096836,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0008023883396345299,
+            "ideal_v": -0.0007812500000000111,
+            "error_mv": -0.021138339634518832,
+            "cm_v": 0.44956209993136403,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44956209993136403,
+        "acquisition_error_mv": -6.625651138847388e-07,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.389319081771578,
+            "signed_v": -1.389319081771578,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 103.1288131604711
+          },
+          "post_startup": {
+            "value_v": 1.389319081771578,
+            "signed_v": -1.389319081771578,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 103.1288131604711
+          },
+          "reset": {
+            "value_v": 1.389319081771578,
+            "signed_v": -1.389319081771578,
+            "instance": "XCDAC.XSN5.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 103.1288131604711
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.00380979393510561
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": -0.05,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "6682284e2055f3c506d6309c1f58bd943927e5c954bc9ff8ddc9daf3f5a8fe89",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_input_-800000",
+        "ok": true,
+        "printed_cmi": 15,
+        "suppressed_warnings": 18425,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 14,
+        "expected_code": 14,
+        "code_error": 0,
+        "vin_v": -0.8,
+        "compare_raw_max_mv": 0.35864464048751543,
+        "first_hold_error_mv": 0.2004435846072461,
+        "switching_delta_max_mv": 0.5590882250947615,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": -0.7997995564153928,
+            "ideal_v": -0.8,
+            "error_mv": 0.2004435846072461,
+            "cm_v": 0.4495600272349394,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": -0.35009925271909753,
+            "ideal_v": -0.35000000000000003,
+            "error_mv": -0.09925271909749789,
+            "cm_v": 0.4495529531580642,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.12524761899529668,
+            "ideal_v": -0.125,
+            "error_mv": -0.2476189952966834,
+            "cm_v": 0.4495515514296087,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.01282164920636164,
+            "ideal_v": -0.012500000000000067,
+            "error_mv": -0.3216492063615739,
+            "cm_v": 0.449551349115293,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": 0.043391355359512496,
+            "ideal_v": 0.043749999999999956,
+            "error_mv": -0.35864464048751543,
+            "cm_v": 0.4495513705917078,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": 0.015284845692948856,
+            "ideal_v": 0.015625,
+            "error_mv": -0.3401543070511437,
+            "cm_v": 0.44955134860895474,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": 0.0012315896871588627,
+            "ideal_v": 0.0015625000000000222,
+            "error_mv": -0.33091031284115946,
+            "cm_v": 0.4495513449735679,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0057950404851142,
+            "ideal_v": -0.005468750000000022,
+            "error_mv": -0.3262904851141224,
+            "cm_v": 0.4495513447505447,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.4495513447505447,
+        "acquisition_error_mv": -9.484792395930697e-06,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 1.231041409864742,
+            "signed_v": -1.231041409864742,
+            "instance": "XCDAC.XSP6.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 47.62892679707041
+          },
+          "post_startup": {
+            "value_v": 1.23099573702506,
+            "signed_v": -1.23099573702506,
+            "instance": "XCDAC.XSP6.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 247.6289080811475
+          },
+          "reset": {
+            "value_v": 1.204601728257431,
+            "signed_v": -1.204601728257431,
+            "instance": "XCDAC.XSN3.MN_LOW",
+            "terminal": "vbd",
+            "time_ns": 103.129744502582
+          }
+        },
+        "reference_core_screen_pass": false,
+        "reset_bottom_error_mv": 0.0038104895011548123
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": -0.8,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "f68f38c4630505b4450609b90579fe80fe680aa09be9a37661f6bd297e879948",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "clean_va_static_all_codes",
+        "ok": false,
+        "errors": [
+          "Error found by spectre at time = 8.08253 us during transient analysis `tran'.",
+          "ERROR (SPECTRE-25): The simulation is stopped either by the user or the",
+          "spectre completes with 1 error, 466791 warnings, and 7 notices.",
+          "spectre terminated prematurely due to fatal error."
+        ]
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 1,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "916b56d240e2f6ce137c4bf1d73b806b11e1d13d8c37be3cf6dda57cc3eb1b79",
+        "stop_ns": 26020,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": true,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": false,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "final_ideal_sample",
+        "ok": true,
+        "printed_cmi": 0,
+        "suppressed_warnings": 0,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 192,
+        "expected_code": 192,
+        "code_error": 0,
+        "vin_v": 0.453515625,
+        "compare_raw_max_mv": 0.07199582054751019,
+        "first_hold_error_mv": 1.4988010832439613e-12,
+        "switching_delta_max_mv": 0.07199582054601139,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.4535156250000015,
+            "ideal_v": 0.453515625,
+            "error_mv": 1.4988010832439613e-12,
+            "cm_v": 0.44999999999999996,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.003563741854834601,
+            "ideal_v": 0.003515624999999911,
+            "error_mv": 0.04811685483468997,
+            "cm_v": 0.4499999998479751,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.22141237917945245,
+            "ideal_v": -0.22148437499999996,
+            "error_mv": 0.07199582054751019,
+            "cm_v": 0.44999999995185236,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.1089242666173229,
+            "ideal_v": -0.10898437500000013,
+            "error_mv": 0.0601083826772264,
+            "cm_v": 0.44999999972126037,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05268026219275834,
+            "ideal_v": -0.052734375,
+            "error_mv": 0.05411280724165746,
+            "cm_v": 0.44999999979306937,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.024558264207220515,
+            "ideal_v": -0.024609375000000044,
+            "error_mv": 0.05111079277952957,
+            "cm_v": 0.44999999983201694,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.010497265335204509,
+            "ideal_v": -0.010546874999999956,
+            "error_mv": 0.04960966479544693,
+            "cm_v": 0.449999999852727,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0034667648713704313,
+            "ideal_v": -0.0035156250000001332,
+            "error_mv": 0.048860128629701904,
+            "cm_v": 0.44999999986222955,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44999999986222955,
+        "acquisition_error_mv": -1.1102230246251565e-13,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 0.9754747907626271,
+            "signed_v": 0.9754747907626271,
+            "instance": "XCDAC.XSP7.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 47.63311753931252
+          },
+          "post_startup": {
+            "value_v": 0.9754747869217212,
+            "signed_v": 0.9754747869217212,
+            "instance": "XCDAC.XSP7.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 247.6331159615083
+          },
+          "reset": {
+            "value_v": 0.9736362751348825,
+            "signed_v": 0.9736362751348825,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1328713114853
+          }
+        },
+        "reference_core_screen_pass": true,
+        "reset_bottom_error_mv": 0.0038098061813096606
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_ideal_sample",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "e0d62bae877ddafed0b2785f481a0b5d0f1ce3d522b0bca23aa8077eb73e5b19",
+        "deck_sha256": "4c6b84c261361f1748f52a07b856818fe74735ae58ca04471c18d956a68aef6b",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "final_literal",
+        "ok": true,
+        "printed_cmi": 0,
+        "suppressed_warnings": 0,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 192,
+        "expected_code": 192,
+        "code_error": 0,
+        "vin_v": 0.453515625,
+        "compare_raw_max_mv": 0.34065199716060146,
+        "first_hold_error_mv": -0.10405469314217486,
+        "switching_delta_max_mv": 0.4447066903027763,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.4534115703068578,
+            "ideal_v": 0.453515625,
+            "error_mv": -0.10405469314217486,
+            "cm_v": 0.4495581445465284,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.0037083257378769385,
+            "ideal_v": 0.003515624999999911,
+            "error_mv": 0.19270073787702735,
+            "cm_v": 0.4495554348233644,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.2211437230028393,
+            "ideal_v": -0.22148437499999996,
+            "error_mv": 0.34065199716060146,
+            "cm_v": 0.44955607090182703,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.10871767497638918,
+            "ideal_v": -0.10898437500000013,
+            "error_mv": 0.26670002361095513,
+            "cm_v": 0.44955558765016357,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05250467775154072,
+            "ideal_v": -0.052734375,
+            "error_mv": 0.22969724845933737,
+            "cm_v": 0.4495554701576614,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.02439818046144121,
+            "ideal_v": -0.024609375000000044,
+            "error_mv": 0.2111945385588343,
+            "cm_v": 0.44955544219741606,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.010344931544004121,
+            "ideal_v": -0.010546874999999956,
+            "error_mv": 0.2019434559958344,
+            "cm_v": 0.4495554358994257,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0033183060287548805,
+            "ideal_v": -0.0035156250000001332,
+            "error_mv": 0.19731897124525277,
+            "cm_v": 0.4495554346669718,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.4495554346669718,
+        "acquisition_error_mv": 8.690365094210506e-07,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 0.9777873824280092,
+            "signed_v": 0.9777873824280092,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          },
+          "post_startup": {
+            "value_v": 0.9777873824280092,
+            "signed_v": 0.9777873824280092,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          },
+          "reset": {
+            "value_v": 0.9777873824280092,
+            "signed_v": 0.9777873824280092,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          }
+        },
+        "reference_core_screen_pass": true,
+        "reset_bottom_error_mv": 0.003810063604947622
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_literal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "2a15f5bba3e745071eaa5c99ed8c76247cf199556f8ce889a6419efee0c30de7",
+        "deck_sha256": "f2283508954b0afb36124011d8693a235534c059d740e6c05662eb7ba7aad21c",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "final_nominal",
+        "ok": true,
+        "printed_cmi": 0,
+        "suppressed_warnings": 0,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 192,
+        "expected_code": 192,
+        "code_error": 0,
+        "vin_v": 0.453515625,
+        "compare_raw_max_mv": 0.3406519971542732,
+        "first_hold_error_mv": -0.1040546931438957,
+        "switching_delta_max_mv": 0.4447066902981689,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.4534115703068561,
+            "ideal_v": 0.453515625,
+            "error_mv": -0.1040546931438957,
+            "cm_v": 0.44955814454652737,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.0037083257378753842,
+            "ideal_v": 0.003515624999999911,
+            "error_mv": 0.19270073787547304,
+            "cm_v": 0.44955543482336074,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.22114372300284568,
+            "ideal_v": -0.22148437499999996,
+            "error_mv": 0.3406519971542732,
+            "cm_v": 0.4495560709018258,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.10871767497639462,
+            "ideal_v": -0.10898437500000013,
+            "error_mv": 0.26670002360551504,
+            "cm_v": 0.44955558765016584,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05250467775154766,
+            "ideal_v": -0.052734375,
+            "error_mv": 0.22969724845234296,
+            "cm_v": 0.4495554701576634,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.02439818046144704,
+            "ideal_v": -0.024609375000000044,
+            "error_mv": 0.21119453855300563,
+            "cm_v": 0.4495554421974206,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.010344931544007063,
+            "ideal_v": -0.010546874999999956,
+            "error_mv": 0.20194345599289232,
+            "cm_v": 0.4495554358994313,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.0033183060287612087,
+            "ideal_v": -0.0035156250000001332,
+            "error_mv": 0.1973189712389245,
+            "cm_v": 0.44955543466697767,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.44955543466697767,
+        "acquisition_error_mv": 8.690360653318407e-07,
+        "min_latch_differential_v": 0.9,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 0.9777873824280074,
+            "signed_v": 0.9777873824280074,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          },
+          "post_startup": {
+            "value_v": 0.9777873824280074,
+            "signed_v": 0.9777873824280074,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          },
+          "reset": {
+            "value_v": 0.9777873824280074,
+            "signed_v": 0.9777873824280074,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 103.13304081733881
+          }
+        },
+        "reference_core_screen_pass": true,
+        "reset_bottom_error_mv": 0.0038100636050586445
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_nominal",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "0299c4d5bd1a5561a799e06fdaa30bd15dfe5565babb9cef8a704297c376485e",
+        "deck_sha256": "b2e756f6c1f824f428729481f54375f5209f5359a432fdccb8f7cb3a756960f3",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    },
+    {
+      "metrics": {
+        "name": "final_strongarm",
+        "ok": true,
+        "printed_cmi": 0,
+        "suppressed_warnings": 0,
+        "lte_relaxations": 0,
+        "supply_v": 0.9,
+        "corner": "tt",
+        "temperature_c": 27,
+        "code": 192,
+        "expected_code": 192,
+        "code_error": 0,
+        "vin_v": 0.453515625,
+        "compare_raw_max_mv": 0.570837946372138,
+        "first_hold_error_mv": -0.10405583726802448,
+        "switching_delta_max_mv": 0.6748937836401625,
+        "comparisons": [
+          {
+            "time_ns": 245.9,
+            "actual_v": 0.45341156916273195,
+            "ideal_v": 0.453515625,
+            "error_mv": -0.10405583726802448,
+            "cm_v": 0.4495580641193186,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 250.9,
+            "actual_v": 0.003861131995529621,
+            "ideal_v": 0.003515624999999911,
+            "error_mv": 0.34550699552970965,
+            "cm_v": 0.44952771088323284,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 255.9,
+            "actual_v": -0.22091353705362782,
+            "ideal_v": -0.22148437499999996,
+            "error_mv": 0.570837946372138,
+            "cm_v": 0.44953242058689463,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 260.9,
+            "actual_v": -0.10852604587975134,
+            "ideal_v": -0.10898437500000013,
+            "error_mv": 0.45832912024879047,
+            "cm_v": 0.44952487840925864,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 265.9,
+            "actual_v": -0.05233243079434041,
+            "ideal_v": -0.052734375,
+            "error_mv": 0.4019442056596434,
+            "cm_v": 0.4495217431370204,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 270.9,
+            "actual_v": -0.024235644110952637,
+            "ideal_v": -0.024609375000000044,
+            "error_mv": 0.3737308890474078,
+            "cm_v": 0.4495208226636467,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 275.9,
+            "actual_v": -0.010187252999808605,
+            "ideal_v": -0.010546874999999956,
+            "error_mv": 0.3596220001913508,
+            "cm_v": 0.44952060009757333,
+            "ideal_cm_v": 0.45
+          },
+          {
+            "time_ns": 280.9,
+            "actual_v": -0.003163056984068935,
+            "ideal_v": -0.0035156250000001332,
+            "error_mv": 0.35256801593119835,
+            "cm_v": 0.4495205543818198,
+            "ideal_cm_v": 0.45
+          }
+        ],
+        "final_compare_cm_v": 0.4495205543818198,
+        "acquisition_error_mv": -1.8926603229107997e-05,
+        "min_latch_differential_v": 0.8999261597251746,
+        "unresolved_latches": 0,
+        "reference_driver_mos_count": 128,
+        "stress": {
+          "all": {
+            "value_v": 0.9777360273721079,
+            "signed_v": 0.9777360273721079,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1330647445051
+          },
+          "post_startup": {
+            "value_v": 0.9777360273721079,
+            "signed_v": 0.9777360273721079,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1330647445051
+          },
+          "reset": {
+            "value_v": 0.9777360273721079,
+            "signed_v": 0.9777360273721079,
+            "instance": "XCDAC.XSN5.MP_HIGH",
+            "terminal": "vbd",
+            "time_ns": 203.1330647445051
+          }
+        },
+        "reference_core_screen_pass": true,
+        "reset_bottom_error_mv": 0.0038100113611827524
+      },
+      "case": {
+        "cell": "tb_cdac8_dr_strongarm",
+        "parameters": {
+          "MULT_D": 1,
+          "MULT_R": 1,
+          "DEAD_TIME": 1e-10,
+          "STIM_MODE": 0,
+          "VDIFF": 0.453515625,
+          "FIN": 4492187.5,
+          "RREF": 50,
+          "CDECAP": 4e-12,
+          "SUP": 0.9
+        },
+        "source_sha256": "1e2256c734e86c0a9dcd1c3e77b7b8ca19e94be09938b3cb9b92fb5a363e0903",
+        "deck_sha256": "1c3e32a93acc8f4beb535d0748460b704cabe00b4cc3c57f9157772036c5aa91",
+        "stop_ns": 300,
+        "corner": "tt",
+        "temperature_c": 27,
+        "strobe": false,
+        "oa_tag": "clean_va",
+        "scope": "exact_OA_DUT_with_bench_analysis_wrapper"
+      },
+      "result_ok": true,
+      "va_sha256": {
+        "cdac8_dualrail_comparator.va": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+        "cdac8_dualrail_controller.va": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+        "cdac8_dualrail_input.va": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+      }
+    }
+  ],
+  "dependency_readbacks_equal": {
+    "cdac8_bank_1": true,
+    "cdac8_bank_128": true,
+    "cdac8_bank_16": true,
+    "cdac8_bank_2": true,
+    "cdac8_bank_32": true,
+    "cdac8_bank_4": true,
+    "cdac8_bank_64": true,
+    "cdac8_bank_8": true,
+    "cdac8_device_nominal": true,
+    "cdac8_unit": true,
+    "sar_bootstrap_canvas_flat_8b": true,
+    "sar_strongarm_t28": true
+  },
+  "final_OA_exports_equal": {
+    "tb_cdac8_dr_nominal": true,
+    "tb_cdac8_dr_literal": true,
+    "tb_cdac8_dr_strongarm": true,
+    "tb_cdac8_dr_ideal_sample": true
+  },
+  "va_remote_hashes": {
+    "cdac8_dualrail_comparator.va": {
+      "local_sha256": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+      "remote_sha256": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c"
+    },
+    "cdac8_dualrail_controller.va": {
+      "local_sha256": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+      "remote_sha256": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a"
+    },
+    "cdac8_dualrail_input.va": {
+      "local_sha256": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1",
+      "remote_sha256": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1"
+    }
+  },
+  "canvas": {
+    "top": {
+      "document_name": "CDAC8_DR_Review",
+      "revision": 24,
+      "errors": 0,
+      "warnings": 0,
+      "topology": "equal"
+    },
+    "leaf": {
+      "document_name": "CDAC8_DR_REF_Topology",
+      "revision": 27,
+      "errors": 0,
+      "warnings": 0,
+      "topology": "equal"
+    }
+  },
+  "original_canvas_revision": 266,
+  "limits": [
+    "no complete native static or FFT acceptance",
+    "no PVT/noise/mismatch/layout qualification",
+    "fixed-period controller is only a characterization fixture, not the selected asynchronous SAR implementation"
+  ]
+}

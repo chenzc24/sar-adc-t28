@@ -1,0 +1,23 @@
+candidate_only: true
+resolution_bits: 8
+sample_rate_hz: 10000000
+switching: complementary_binary_sar_common_mode_preserving
+strictly_monotonic: false
+sampling: unchanged_top_plate_bootstrap
+references: {vrefp_v: 0.9, vrefn_v: 0.0}
+vdd_v: 0.9
+input_common_mode_v: 0.45
+weights: [128, 64, 32, 16, 8, 4, 2, 1]
+dummy_weight: 1
+dummy_bottom: {p: VREFP, n: VREFN}
+unit_capacitance_ff: 4.004067804788831
+side_capacitance_pf: 1.0250413580259408
+sample_high_words: {p: '01111111', n: '10000000'}
+sample_active_code: 128
+lsb_v: 0.00703125
+deterministic_limit_v: 0.0017578125
+core_port_screen_v: 0.99
+reference_resistance_ohm: 50
+reference_decap_f: 4.0e-12
+timing_ns: {sample_start: 1.05, sample_end: 41.05, hold_start: 43.01, first_compare: 46.01, first_latch: 47.51, bit_period: 5, final_latch: 82.51, reference_reset_inside_next_sample: 3.01, reference_dead_time: 0.1}
+canvas_reference: {project_name: CDAC, document_id: document-e7893585-daed-4fed-9e1b-85f215459cd1, revision: 266}

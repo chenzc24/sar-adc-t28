@@ -1,0 +1,33 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench stimulus only; it never decides the ADC output code.
+module cdac8_dualrail_input(VDD,VSS,VINP_SRC,VINN_SRC);
+    input VDD,VSS;
+    output VINP_SRC,VINN_SRC;
+    electrical VDD,VSS,VINP_SRC,VINN_SRC;
+    parameter integer stimulus_mode=0;
+    parameter integer warmup_cycles=4;
+    parameter real differential_v=0;
+    parameter real frequency_hz=4.4921875e6;
+    parameter real amplitude_fraction=0.8912509381337456;
+    parameter real period_s=100n;
+    parameter real edge_s=50p;
+    integer sample_index,code_index;
+    real held_input,analog_input;
+    analog begin
+        @(initial_step) begin sample_index=-warmup_cycles-1;held_input=differential_v;end
+        @(timer(0,period_s)) begin
+            sample_index=sample_index+1;
+            code_index=sample_index<0?0:sample_index>255?255:sample_index;
+            if(stimulus_mode==1)
+                held_input=-V(VDD,VSS)+(code_index+0.5)*2*V(VDD,VSS)/256;
+            else if(stimulus_mode==3)
+                held_input=sample_index<0?-differential_v:differential_v;
+            else held_input=differential_v;
+        end
+        analog_input=V(VDD,VSS)*amplitude_fraction*sin(2*`M_PI*frequency_hz*$abstime);
+        V(VINP_SRC,VSS)<+0.5*V(VDD,VSS)+0.5*(stimulus_mode==2?analog_input:transition(held_input,0,edge_s,edge_s));
+        V(VINN_SRC,VSS)<+0.5*V(VDD,VSS)-0.5*(stimulus_mode==2?analog_input:transition(held_input,0,edge_s,edge_s));
+    end
+endmodule

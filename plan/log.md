@@ -1184,3 +1184,40 @@ human-triggered note in `docs/experience/`.
   `virtuoso/cell_manifest.yaml`. Validation: native OA readback,
   seventeen result.ok transients, fresh-export equivalence, rendered figure
   inspection, Python compile and diff checks. Scoped local commit; no push.
+
+## 2026-10-20 - Independent eight-bit dual-rail CDAC candidate and hard-failure audit
+
+- User clarified eight bits; Canvas is only a topology reference. Built a
+  complementary binary SAR characterization fixture, not strict one-sided
+  monotonic switching and not a replacement of the selected asynchronous
+  controller. Preserve all old baselines, original Canvas and concurrent async
+  sources; no Bootstrap/StrongARM/MOM dependency edits.
+- New native SAR_ADC_T28 OA: cdac8_dr_sw_b0..b7, cdac8_dr_nominal/literal,
+  four tb_cdac8_dr_* schematics, three cdac8_dualrail_* VA/symbol views. The
+  array has 512 independent MOM units in literal form, 128 native reference/
+  driver MOS, two references, no VCM branch; sample high words P=01111111,
+  N=10000000. Restore active code128 inside the next sampling phase.
+- Eighteen result.ok APS transients total: five initial smoke/quick and thirteen
+  final-source checks. Nine held-input codes correct; worst final comparison
+  residual .358645 mV. Nominal/literal/ideal-sampler/StrongARM main-input
+  residuals .340652/.340652/.071996/.570838 mV respectively. Actual StrongARM
+  outputs resolve at that one input; no full-ADC qualification is inferred.
+- All nine cross-input core screens FAIL despite correct codes. Worst is
+  1.399620 V |Vbd| at XCDAC.XSN5.MN_LOW, 203.128786 ns, -0.5-LSB input during
+  127->128 restore. Separate -0.8-V SAR switch spike is 1.231041 V at
+  47.628927 ns. Real CMI and suppressed warning counts retained. Stop only two
+  exact owner/PID/command-verified long runs on this TT hard gate; static/sine
+  are interrupted at 8.08253/7.95263 us, not complete or accepted. No native
+  full static/FFT/PVT/noise/MC/layout acceptance or baseline replacement.
+- Fourteen saved OA schematics have zero markers. Final fresh exports match
+  simulated hierarchies; three VA remote/local SHA256 values equal; twelve
+  read-only dependencies unchanged. Native blocks in analysis wrappers are
+  byte-identical to OA exports. Initial VA transition-warning fix is versioned
+  separately, with original sources/results retained.
+- Canvas CDAC8_DR_Review rev24 and CDAC8_DR_REF_Topology rev27 are fully wired
+  review abstractions with native leaf model names/sizes, zero diagnostics and
+  equal expected logical topology. Original dut remains revision266. No PDK
+  model bodies uploaded; Canvas is review, Spectre is native simulation.
+- Report docs/cdac8_dualrail.md, five inspected figures and small metrics
+  summary; raw evidence output/cdac8_dualrail/. Eight focused tests pass;
+  Python compile/YAML parse/diff checks. Bounded local commit, no push.
