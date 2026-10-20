@@ -1,0 +1,54 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench-only stimulus/measurement. The comparator stays transistor-level.
+module strongarm8_offset_search(VIP, VIN, OP, ON, LO, HI, DONE, BAD, VSS);
+    output VIP, VIN, LO, HI, DONE, BAD;
+    input OP, ON, VSS;
+    electrical VIP, VIN, OP, ON, LO, HI, DONE, BAD, VSS;
+    parameter real common_mode_v=0.45;
+    parameter real range_v=0.032 from (0:inf);
+    parameter integer steps=8 from [1:20];
+    parameter real first_sample_s=6.51n;
+    parameter real first_update_s=7.8n;
+    parameter real period_s=5n;
+    parameter real output_threshold_v=0.45;
+    parameter real edge_s=20p from (0:inf);
+    real lower, upper, probe, pending, out_diff;
+    integer sample_index, done_state, bad_state, polarity;
+    analog begin
+        @(initial_step) begin
+            lower=-range_v; upper=range_v; probe=-range_v;
+            pending=probe; sample_index=0; done_state=0; bad_state=0;
+        end
+        @(timer(first_sample_s,period_s)) begin
+            if(done_state==0) begin
+                out_diff=V(OP,ON);
+                polarity=out_diff>=output_threshold_v ? 1 : out_diff<=-output_threshold_v ? -1 : 0;
+                if(polarity==0) bad_state=1;
+                if(sample_index==0) begin
+                    if(polarity!=-1) bad_state=1;
+                    pending=range_v;
+                end else if(sample_index==1) begin
+                    if(polarity!=1) bad_state=1;
+                    pending=(lower+upper)/2;
+                end else begin
+                    if(polarity==1) upper=probe;
+                    else if(polarity==-1) lower=probe;
+                    pending=(lower+upper)/2;
+                    if(sample_index>=steps+1) done_state=1;
+                end
+                sample_index=sample_index+1;
+            end
+        end
+        @(timer(first_update_s,period_s)) begin
+            if(done_state==0) probe=pending;
+        end
+        V(VIP,VSS)<+common_mode_v+transition(probe,0,edge_s,edge_s)/2;
+        V(VIN,VSS)<+common_mode_v-transition(probe,0,edge_s,edge_s)/2;
+        V(LO,VSS)<+transition(lower,0,edge_s,edge_s);
+        V(HI,VSS)<+transition(upper,0,edge_s,edge_s);
+        V(DONE,VSS)<+transition(done_state,0,edge_s,edge_s);
+        V(BAD,VSS)<+transition(bad_state,0,edge_s,edge_s);
+    end
+endmodule

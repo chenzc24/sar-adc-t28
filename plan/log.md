@@ -1,5 +1,34 @@
 # Maintenance Log
 
+## 2026-10-20 - Unchanged T28 StrongARM baseline for the eight-bit ADC
+
+- Target: `plan/2026-10-20-strongarm8-baseline/plan.md`; preserved concurrent
+  CDAC-reset and native-logic work. Added bounded comparator config, runners,
+  analysis, testbench-only binary-search VA, tests, report and five figures.
+- Fresh read-only OA exports/readbacks identify the same 11-MOS T28 comparator
+  in standalone and current CDAC fixtures; no OA edits, rewiring or resizing.
+  All 125 accepted job DUT/deck hashes match. Native Spectre 21.1 APS, not EVAS
+  or the Canvas display/default SKY130 models, solved the transistor circuit.
+- Completed 94 deterministic, 19 physical-noise, three mismatch, three held-C
+  and six CDAC A/B tasks. Nominal delay 191 ps; PVT timing 46/54 pass, four
+  failing PVT points. All 18 high-supply PVT runs retain CMI stress warnings.
+- Local-MC 128 uncensored threshold brackets: 0.25-mV resolution, approximate
+  sigma 12.730 mV, mean -1.945 mV, 16/128 fully within +/-1.758-mV comparison
+  guard; not an approved yield criterion. Dense/binary/full first-four brackets
+  and saved random-parameter records match. Full binary history not measured.
+- Nominal noise CDF estimates 0.652 mV at 10 GHz and 0.745 mV at 30 GHz;
+  both below allocation, bandwidth/PVT/joint-statistical qualification open.
+  Current fixed-code native CDAC differential disturbance about 0.039 mV at
+  decision and 0.120 mV peak, not complete SAR-code/FFT acceptance.
+- Rejected early strobe setups and the interrupted dense 128-draw attempt
+  remain raw evidence, excluded from accepted results. A CIW-help query hung;
+  only exact owned helper processes were ended, never Virtuoso. User deferred
+  display/reconnection repair; final live CIW readback deferred explicitly.
+- Five focused tests, compile/YAML checks, complete/finite waveforms, 125-deck
+  audit, tighter numerical controls and visual inspection passed. Report:
+  `docs/strongarm8_baseline.md`; ignored evidence: `output/strongarm8_baseline/`.
+  Circuit qualified=false. Scoped local commit; no push or experience entry.
+
 ## 2026-10-20 - CDAC reset timing and native gate drive, bounded experiment
 
 - Target: `plan/2026-10-20-cdac-reset-timing-drive/plan.md`; clean 665594d on
