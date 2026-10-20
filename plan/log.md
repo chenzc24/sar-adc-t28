@@ -1703,3 +1703,40 @@ human-triggered note in `docs/experience/`.
 - Recommend50ps subsequent candidate, not adopted/frozen;100ps lower reference
   stress but little added combined margin and no full gate-endpoint pause. No
   physical driver/PVT/MC/noise/layout/lifetime or all-Bootstrap-internal claim.
+
+## 2026-10-20 - SAR8 R3 saved-OA timing adoption and fresh confirmation
+
+- Restored the existing t28_io tunnel; verified live CIW/library/technology and
+  Spectre21.1 without restarting Virtuoso. Created only
+  SAR_ADC_T28/sar_adc8_join_r3 schematic+symbol and tb_sar_adc8_join_r3 schematic.
+  Top112/TB26 instances, zero final markers.16 ideal gates explicitly100ps
+  restore_guard_s/50ps edge_s; unchanged100ps BBM/200ps commit. Shared gate
+  base CDF exposes two params with original2ns/20ps defaults; existing CDF
+  parameter and both VA byte hashes unchanged. R2 gates read back2ns/20ps.
+- Native topology, sizes, all other instance params/connectivity/placement,
+  MOM/3x switches/Bootstrap/StrongARM/native async logic and ref50ohm+4pF/
+  input50ohm unchanged.36 historical native/R1/R2 surface checks pass before,
+  after creation and after simulation. Two independent saved-OA exports audit
+  identically to tested50ps candidate after top-name normalization. Raw exports
+  retained; wrappers change only stimulus/analysis/includes, not DUT.
+- Four FRESH APS TT/.9V/27C200ns/maxstep10ps/full-rate runs, all result.ok and
+  finite/complete; -.8/-.8,+.8/+.8,-.8/+.8,+.8/-.8V. Codes14/14,241/241,
+  14/241,241/14;8frames/64 native compares+writes+updates. Native sign/token/
+  physical mapping/midpoint/read-window gates and sample-error checks pass.
+  Compared key errors/stresses against prior50ps candidate: all deltas zero.
+- Reference32MOS/StrongARM11MOS six-pair scans peak.944611/.950686V<.99V,
+  margins45.389/39.314mV. Held diff error max.200474mV, first compare.200485mV,
+  worst all compares.808021mV<1.7578125mV. Pfull N3 VGD.933042V/bottom
+  -33.042mV. Restore50% off/on101.175/101.275ns,100ps BBM; no1%/50% overlap,
+  1% gate gap51ps, not direct branch-current proof.
+- All0errors/0CMI/0LTE,7 unchanged configuration warnings each. GminDC initial
+  notices retained, p_to_n also Bad pivoting notice (6total vs5others); solver
+  unchanged. Raw OA/readbacks/exports/decks/logs/PSF/waves output/sar8_join_r3/;
+  tracked config, results manifest, report and one visually checked overlay.
+  Three focused tests, Python compile, diff-check/review pass. R3 opened in
+  Virtuoso, existing user windows preserved; current project entry updated.
+- Local scoped commit only; no push requested. R1/R2 sources/evidence remain
+  immutable. Unrelated untracked cdac10_dualrail work untouched/excluded. This
+  adopts a nominal development baseline, not full-code/FFT, PVT, noise,
+  mismatch, actual timing-driver, complete Bootstrap SOA or layout/lifetime
+  qualification.
