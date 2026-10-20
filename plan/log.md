@@ -1579,3 +1579,34 @@ human-triggered note in `docs/experience/`.
   Four focused tests, Python compile, frozen R1 source/hash/native-graph
   checks and diff-check. Scoped local commit only, no push. Unrelated
   cdac10_dualrail untracked work preserved. No remote OA mutation.
+
+## 2026-10-20 - Adopt aligned reference timing in saved SAR8 R2 OA
+
+- Restored t28_io tunnel; correct thu-wei CIW cwd/user and Spectre21.1 healthy.
+  Created only SAR_ADC_T28/sar8j_refcommit and sar8j_aligned_refgate symbol/VA,
+  sar_adc8_join_r2 schematic/symbol and tb_sar_adc8_join_r2 schematic. Model
+  bodies exactly split from tested alignment VA, no semantic edits. Top112/TB26
+  instances, declared connectivity/params, zero check markers and remote VA
+  byte readback pass. No floating-pin placeholder schematics. New R2 window17
+  opened; previous16 windows left open. Existing34 frozen OA fingerprints match
+  before/after; R1/native cells unchanged. No transistor/CDF dimension changes.
+- Fresh saved-OA export: all32 native subckt bodies match R1, new top112
+  electrical statements match prior tested aligned top. Kept raw export intact;
+  simulation wrapper changes only variables/analysis/save/include locations.
+  Real reference50ohm/4pF retained; shared ideal commit stable200ps,100ps BBM,
+  20ps gate edges. Adopt R2 as active development baseline, not new qualified
+  freeze or physical timing synchronizer. Config and project-status pointer set.
+- Two native APS result.ok/200ns/maxstep10ps/full-rate TT/.9V/27C runs;
+  four frames, correct14/127 outputs,8 comparisons/writes/updates each,
+  mapping/token/decision/error gates pass. Conversion reference maxima
+  .951087854/.951079392V, comparator.950686254/.951472542V, max compare
+  errors.807894577/.560789168mV. Numerical metric differences from prior
+  netlist-only aligned experiment are zero.100ps BBM, no overlap/threshold skew.
+- Negative-full acquisition failure retained: TOPN/comparator1.136126200V at
+  103.173270ns;10 printed CMI and suppressed repeats. Half-LSB0CMI; each has7
+  configuration warnings;0LTE. No PVT/noise/MC/FFT or transistor-clock claim.
+- Five focused tests (including frozen R1 sources), Python compile, graph/RC,
+  VA split/byte/readback/export and full-rate functional/stress checks pass.
+  Curated verification/integration/join_r2_results.json, docs/sar8_join_r2.md;
+  raw evidence output/sar8_join_r2/. Final diff-check and scoped local commit;
+  no push. Unrelated untracked cdac10_dualrail work preserved.
