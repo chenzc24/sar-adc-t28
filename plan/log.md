@@ -1351,3 +1351,33 @@ human-triggered note in `docs/experience/`.
   Added two scripts, bounded plan/report, two inspected phase comparison
   figures and small metrics; raw output/cdac8_no_driver/. Python compile,
   focused assertions and diff checks pass. Scoped local commit; no push.
+
+## 2026-10-20 - Independent reference PMOS/NMOS multiplicity factorial
+
+- Nine result.ok native APS runs: P/N (1,1)/(2,1)/(1,2)/(2,2) at -0.5LSB
+  and +453.515625mV, plus negative P2N2 maxstep10ps. Same TT/.9V/27C/300ns,
+  native Bootstrap/MOM/R50ohm-C4pF references, ideal gates/sign comparator,
+  100ps blanking/20ps edges. Only integer P/N multi factors and current saves
+  change; unit W/L remains P175/30nm,N150/30nm. No OA/Canvas/VA/PDK or baseline
+  changes; separate asynchronous implementation is not replaced or qualified.
+- Negative P1N1/P2N1/P1N2/P2N2 BN5 minima -140.452/-17.866/-140.340/-83.908mV.
+  Only-P improves this local symptom ~87%, but SAR worst is1.083153V on P-side
+  XSP6.MN_LOW and restore1.126315V on XSN6.MN_LOW. Only-N SAR/restore worsens
+  to1.141965/1.218550V. P2N2 alone clears current SOA checks at both inputs,
+  with negative .983908V and positive .956943V; no full-input/PVT qualification.
+- All nine codes127/192 correct; maximum pre-compare residual .405704mV below
+  .25LSB1.7578125mV. Native terminal-current saves succeed on12 selected pass
+  drains; current includes displacement. Only-P/only-N change actual bottom
+  response, not ideal gate timing. No sole-Ron or universal ratio conclusion.
+- All32 reference MOS/five port pairs checked in SAR/restore/global windows.
+  Negative P1N1/P2N1/P1N2 CMI15 each, suppressed6780/5666/8465; P2N2 and
+  positives zero, all LTE0. Native logged v*_max990mV confirms model SOA basis,
+  not breakdown/lifetime qualification. Fine P2N2 .983907740V differs-.493uV,
+  residual+.112uV. Fresh old-control replay peak deltas below1.46uV.
+- Source reversibility, unchanged other native blocks, pinned deck/VA/wave
+  hashes, finite complete data,16 ideal gate pairs,12 current channels, code/
+  budget/SOA and fine-step assertions pass; Python compile and diff checks.
+  Three timing figures visually inspected. Report docs/cdac8_pn_ratio.md;
+  curated figures/metrics docs/figures/cdac8_pn_ratio/; raw output/cdac8_pn_ratio/.
+  Unrelated historical cdac10/simple-async paths untouched. Scoped local commit,
+  no push; no size freeze or baseline promotion.
