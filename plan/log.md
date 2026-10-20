@@ -1414,3 +1414,24 @@ human-triggered note in `docs/experience/`.
   curated figures/metrics docs/figures/cdac8_pn_ratio/; raw output/cdac8_pn_ratio/.
   Unrelated historical cdac10/simple-async paths untouched. Scoped local commit,
   no push; no size freeze or baseline promotion.
+
+## 2026-10-20 - Expand all SAR8 token/stored bits and observed approximation
+
+- Offline-only postprocessing of pinned two_cycles_simple_v2_aps: native TT/
+  .9V/27C controller with ideal sampling/DAC and variable-delay comparator.
+  Wave SHA0064220c...046e unchanged. No OA/Canvas/VA/PDK mutations or new runs;
+  raw waves, old plots and unrelated concurrent CDAC10 files preserved.
+- New bitwise.py derives16 write decisions from actual token, CODE, DATA,
+  stored word and P/N control waves. Eight writes per frame, ordered one-hot
+  selections, pre/post-capture bits, comparator sign, final145/85 and DAC
+  arithmetic within1e-8V pass. Trials128/192/160/144/152/148/146/145 and128/64/
+  96/80/88/84/86/85; final residues+3.46875/+2.34375mV at1LSB7.03125mV.
+- Detail two-column and full-two-period figures show4 phase lanes plus all8
+  token and8 stored bits, DAC and residual; raw digital excursions retained.
+  Reference-disconnected/inconsistent ideal-plant intervals shown as gaps,
+  not physical capacitor settling. Both PNGs visually inspected for labels,
+  overlaps and clipping. Added doc reading guide and provenance/decision JSON.
+- Python compile, focused execution, JSON/SVG parses and scoped diff checks
+  pass. Artifacts docs/figures/sar8_simple/bitwise_*.{png,svg} and
+  verification/sar8_simple/bitwise_approximation.json. Scoped local commit;
+  no push. No additional physical ADC/PVT/SOA qualification claimed.

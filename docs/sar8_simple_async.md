@@ -75,6 +75,43 @@ SAR单元是边沿触发，不是整个PHI_W高电平透明的锁存器。
 理想采样差分输入+0.123V、-0.300V分别得到145、85。正常帧恰好8次比较、
 8次写入和8次移位，没有第9次启动。
 
+### 8位展开与逐次逼近
+
+![逐位时序及逼近细节](figures/sar8_simple/bitwise_approximation.png)
+
+[可放大SVG](figures/sar8_simple/bitwise_approximation.svg)；
+[两个完整采样周期逐位总览](figures/sar8_simple/bitwise_two_cycles.png)
+（[SVG](figures/sar8_simple/bitwise_two_cycles.svg)）。
+
+从上到下分别是4条局部时钟、T7..T0、D7..D0、实际试探DAC电压、比较器
+输入残差。两列分别放大两个转换窗口，时间均为原生仿真的绝对时间。
+数字曲线是逐行偏置的原始V/VDD，保留换位尖峰，不是重新生成的理想方波。
+竖虚线标出PHI_W写入沿；模拟点的数值读取该沿前20ps的稳定波形。
+
+- **Token**标明当前正在判定哪一位，每个PHI_U后向低位推进。
+  T0也写完并移空后，不再启动第9次比较，不需要独立EOC。
+- **SAR word**只保存已判决结果。判1时该位写入1，判0时保持0；
+  这8条线本身不是DAC当前试探码。实际试探码为`CODE = D OR T`。
+- **DAC轨迹**标注“试探码 / 写入位”：圆点为判1，叉为判0。
+  第一帧试探128→192→160→144→152→148→146→145，最终10010001；
+  第二帧试探128→64→96→80→88→84→86→85，最终01010101。
+- **残差**取保存的`TOPP-TOPN`，`VDAC = held VIN - residual`。
+  正残差判1，负残差判0。最后两帧残差分别约+3.47mV、+2.34mV；
+  此8位/1.8V跨度模型的1LSB为7.03125mV，输出采用码区间下边界电压，
+  不能将这些残差直接套成码中心定义的±0.5LSB量化误差。
+
+这里“实际”指读取已有原生控制器仿真的实际控制字与理想测试台节点，
+**不是实物CDAC的模拟建立波形**。采样及参考非重叠切换期间，代数DAC模型
+不描述电荷保持；图中以空档表示所有P/N参考选择未同时满足互补10/90%电平
+的时段，不将断开时的代数输出解释为物理电压。没有新增仿真或修改电路。
+
+16次判决的控制字、写前/写后码字、残差和来源哈希保存在
+`verification/sar8_simple/bitwise_approximation.json`，离线复现：
+
+```powershell
+E:\bridge-Agent-T28\.venv\Scripts\python.exe scripts/sar8_simple/bitwise.py
+```
+
 ![一位局部时序](figures/sar8_simple/one_bit.png)
 
 本次TT双帧测得写入到更新约0.460ns、写入到比较器时钟下降约0.544ns，
