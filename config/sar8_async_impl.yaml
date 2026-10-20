@@ -1,0 +1,65 @@
+stage: native_prototype_bounded_simulation_not_qualified
+resolution_bits: 8
+sample_rate_hz: 10000000
+profile: t28_io
+library: SAR_ADC_T28
+top_cell: sar_logic_8b_async
+testbenches: [tb_sar8a_gates, tb_sar8a_logic, tb_sar8a_strongarm]
+logic_technology: tsmcN28_nch_mac_pch_mac
+supply_v: 0.9
+frame_ns: 100.0
+acquisition_commands_ns: [1.0, 41.0]
+hold_start_command_ns: 43.0
+commit_deadline_command_ns: 89.0
+deadline_revision: 88ns_original_proposal_rebalanced_from_measured_native_delay
+reference_release_command_ns: 90.0
+publication:
+  output_bank_clock: qualified_COMMIT_not_raw_completion
+  busy_fall: COMMIT_or_FAULT
+  valid_rise: delayed_COMMIT_after_output_settles
+  failed_uncommitted_frame: retain_previous_output
+  fault_clear: WORK_RST_during_acquisition_before_ACCEPT
+  deadline_arbitration: native_guard_required_no_zero_margin_metastability_claim
+reference_model:
+  source: models/behavioral/sar_async.py
+  nonidealities_default: disabled
+  controls: [sampling_noise, comparator_noise, comparator_offset, reference_noise, weight_error, dac_settling]
+  clock_jitter: perturb_sampled_input_in_stimulus_not_bit_loop_noise
+native_delay_seeds:
+  resistor_per_section_ohm: 10000
+  sections: 2
+  capacitor_per_section_ff: {dac: 200, valid: 5, capture: 8, reset: 33, advance: 8, publish: 12, bbm: 5}
+  fast_reset: native_MOS_clamps
+  nand_internal_cap_ff: 10
+  sr_complement_node_cap_ff: 5
+  dff: static_24_MOS_transmission_gate_master_slave_async_reset
+  dff_storage_node_cap_ff: 5
+  optimized_for_area_or_power: false
+loads_ff:
+  primitive_fixture_output: 5
+  output_word_bit: 5
+  reference_select_SEL0_SEL1: 10
+  comparator_clock: 10
+  comparator_rail_external: 10
+  busy_valid_fault: 5
+  BASE: 0 # Only 1-Tohm monitor resistor; not an interface-load qualification.
+verification:
+  model_static_samples: 2048
+  model_fft_samples: 4096
+  model_coherent_bin: 1843
+  seed: 271828
+  actual_netlist_functional_patterns: 256
+  functional_abstraction_not_transistor_simulation: true
+  native_full_256_spectre_completed: false
+  intended_screens: [tt_0p9_27, ff_0p99_m40, ss_0p81_125]
+  primary_mode: aps
+  screening_maxstep_s: 2.0e-10
+  tight_control_maxstep_s: 5.0e-12
+qualified: false
+open_gates:
+  - SS_0p81V_125C_10MSps_deadline_miss
+  - multi_frame_native_controller_overshoot
+  - FF_0p99V_device_SOA
+  - negative_residue_StrongARM_SOA
+  - ideal_RC_requires_PDK_mapping_tolerance_and_layout
+  - full_physical_ADC_noise_mismatch_and_power

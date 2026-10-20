@@ -5,6 +5,36 @@ library_status: eight_bit_device_cdac_candidate_characterized_stress_and_cold_st
 technology_binding_verified: true
 
 cells:
+  sar_logic_8b_async: {role: native_eight_bit_async_controller, views: [schematic, symbol], status: zero_markers_TT_representative_pass_SS_timing_and_SOA_open}
+  sar8a_frame: {role: external_frame_commands_and_reference_ownership, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_cmp_if: {role: fresh_rail_qualification_and_reset_ack, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_seq: {role: trial_eval_capture_reset_advance_handshake, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_token8: {role: one_hot_MSB_to_LSB_token, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_bit: {role: working_bit_and_trial_mux, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_out8: {role: independent_COMMIT_clocked_output_bank, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_status: {role: busy_valid_fault_commit_and_acquisition_recovery, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_bbm: {role: break_before_make_reference_select, views: [schematic, symbol], status: zero_markers_native_RC_prototype}
+  sar8a_inv: {role: native_CMOS_inverter, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_nand2: {role: native_CMOS_NAND_with_explicit_stack_node_cap, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_nor2: {role: DeMorgan_static_CMOS_NOR, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_and2: {role: static_CMOS_AND, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_or2: {role: DeMorgan_static_CMOS_OR, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_xor2: {role: NAND_composed_XOR_classifier_not_clock, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_buf: {role: native_CMOS_two_inverter_buffer, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_mux2: {role: static_CMOS_data_mux, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_sr: {role: reset_priority_static_SR_with_explicit_QB_cap, views: [schematic, symbol], status: zero_markers_native_prototype}
+  sar8a_dffr: {role: 24_MOS_static_TG_master_slave_async_reset_DFF, views: [schematic, symbol], status: zero_markers_native_reset_unit_pass_not_SOA_qualified}
+  sar8a_delay_dac: {role: native_MOS_ideal_RC_DAC_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_valid: {role: native_MOS_ideal_RC_rail_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_capture: {role: native_MOS_ideal_RC_capture_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_reset: {role: native_MOS_ideal_RC_reset_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_advance: {role: native_MOS_ideal_RC_advance_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_publish: {role: native_MOS_ideal_RC_output_settle_guard, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_delay_bbm: {role: native_MOS_ideal_RC_reference_BBM, views: [schematic, symbol], status: zero_markers_loaded_characterization_not_PDK_RC}
+  sar8a_plant: {role: explicit_testbench_ideal_sampled_DAC_and_variable_delay_rails, views: [veriloga, symbol], status: native_compiled_not_controller_or_physical_ADC}
+  tb_sar8a_gates: {role: loaded_native_primitive_delay_and_DFF_fixture, views: [schematic], status: zero_markers_TT_and_selected_MOS_corners_tested}
+  tb_sar8a_logic: {role: native_controller_behavioral_ADC_plant_fixture, views: [schematic], status: zero_markers_bounded_native_scenarios_not_qualified}
+  tb_sar8a_strongarm: {role: native_controller_unchanged_StrongARM_ideal_sampled_DAC, views: [schematic], status: zero_markers_representative_codes_correct_negative_input_stress_open}
   cdac8_reset_sw_b0: {role: weight_1_reset_drive_experiment, status: zero_markers_not_frozen}
   cdac8_reset_sw_b1: {role: weight_2_reset_drive_experiment, status: zero_markers_not_frozen}
   cdac8_reset_sw_b2: {role: weight_4_reset_drive_experiment, status: zero_markers_not_frozen}

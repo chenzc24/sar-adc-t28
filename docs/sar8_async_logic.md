@@ -4,8 +4,12 @@
 [同步控制提案](sar8_logic.md)。仍按当前 **8 bit、10 MS/s、全差分 flat CDAC**
 讨论，不是历史 10 bit 5+5，也不涉及另一个未提交的 dual-rail CDAC 实验。
 
-这是架构与接口方案，尚未实现异步门级电路、Verilog-A 控制器或 Virtuoso
-原理图。旧同步模型、Canvas 门级图及其 256 码测试保留，不能作为异步验证。
+以下保留最初的架构与接口提案。后续已完成事件模型、26-cell 原生门级
+Virtuoso 原型和有界 Spectre 测试，详见[实施与失败边界](sar8_async_implementation.md)。
+当前实施合同是 `config/sar8_async_impl.yaml`：截止时间由原提案 88 ns
+调整到 89 ns，并区分 PUBLISH 请求、COMMIT 输出锁存和延迟 VALID。
+本页旧预算不代表实测结果。旧同步模型、Canvas 图及其 256 码测试保留，
+不能作为新异步实现的验证；新实现也尚未通过全角/器件安全签核。
 
 ## 1. 哪部分同步，哪部分异步？
 

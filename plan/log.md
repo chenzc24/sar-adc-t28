@@ -1,5 +1,37 @@
 # Maintenance Log
 
+## 2026-10-20 - Executable asynchronous SAR and native modular gate prototype
+
+- Added event-driven eight-bit reference, independent-noise/jitter sensitivity,
+  five focused tests, actual-export functional interpreter, OA builders and
+  Spectre harness under sar8_async. No external high-speed bit clock.
+- New SAR_ADC_T28: 26 native schematic/symbol cells, three bench schematics,
+  plant VA/symbol. Top sar_logic_8b_async has1742 native MOS plus explicit ideal
+  R/C. Exact connections/parameters and29 schematic zero-marker checks pass;
+  fresh saved exports match simulation, unchanged comparator and VA SHA verified.
+- Distinguish PUBLISH request, qualified COMMIT and delayed VALID. Move native
+  cutoff88->89ns based on measured delay, retain100ns frames/90ns PREPARE.
+  Fix a native fault-recovery race by clearing old FAULT during acquisition.
+  Preserve all failing versions and analog/historical/concurrent dependencies.
+- Ideal2048 ramp: no missing codes, DNL/INL0; coherent4096/bin1843 gives48.7529dB
+  SNDR/7.8061ENOB. Allocated noise plus20ps sampling jitter gives45.9121dB/7.3342.
+  All256 patterns +16 fault positions pass the exported-netlist event abstraction,
+  not transistor simulation. User chose no hours-scale full256 native sweep.
+- Final17 integrated native runs plus4 unchanged-unit runs execute successfully
+  with complete finite traces. TT APS5ps: code145, eight ordered events,
+  VALID87.349ns, no select overlap, <=17.611ps APS/AX difference. Real unchanged
+  StrongARM gives145/14/241; nominal VALID86.419ns. Fault retention/recovery,
+  reset, duplicate start and timeout protections work; DFF reset controls pass.
+- NOT QUALIFIED: SS0.81V125C deadline miss (AX/APS), multiframe CAPTURE -0.111V
+  undershoot/CMI (APS confirmed), FF0.99V and large-negative StrongARM SOA.
+  Correct codes do not waive device failures. Delay R/C still ideal; no physical
+  CDAC integration, power/noise/MC/layout/PEX sign-off or full ADC qualification.
+- Evidence output/sar8_async_impl; report docs/sar8_async_implementation.md,
+  three inspected figures and verification/sar8_async/summary.json. Top/seq/DFF
+  review windows remain open; unrelated GUI/windows and ten-bit dirty files
+  preserved. Focused tests, Python compile, YAML/readback/export/diff checks;
+  bounded local implementation commit, no push.
+
 ## 2026-10-20 - Asynchronous SAR architecture selected
 
 - User replaced the fixed-bit synchronous proposal with asynchronous SAR.

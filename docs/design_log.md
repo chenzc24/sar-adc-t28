@@ -1,5 +1,25 @@
 # Design Log
 
+## 2026-10-20 - Native asynchronous controller prototype, not PVT/SOA qualified
+
+- Implement the local comparator handshake as26 native modular cells, retaining
+  external10MHz frame commands. No fixed bit clock; static TG master/slave DFF,
+  reset-priority SR, native MOS with explicitly ideal RC/clamp delay guards.
+- Separate final PUBLISH request, qualified COMMIT output-bank clock and delayed
+  VALID; retain successful DOUT on uncommitted faults and hold reference until
+  PREPARE. Clear prior FAULT in acquisition, avoiding the observed ACCEPT/HOLD
+  reset race. System reset clears output; acquisition does not.
+- Rebalance the implemented cutoff from initial88ns to89ns based on native
+  delay, without changing100ns sampling or90ns PREPARE. TT APS5ps measured
+  VALID87.349ns (ideal plant) and86.419ns (unchanged real StrongARM) at code145.
+  This is not proof of a comparator maximum-time bound or all-input timing.
+- Keep qualification false: SS0.81V125C misses cutoff; multiframe CAPTURE
+  undershoot, FF0.99V and negative-input StrongARM have SOA failures. Neither
+  functional recovery nor ideal-model7.806ENOB promotes this to a full ADC.
+  Next work is driver/overshoot and slow-corner timing, physical delay/passive
+  mapping, then actual CDAC interface integration. See native implementation
+  report for run provenance, all-code functional-only coverage and limits.
+
 ## 2026-10-20 - Asynchronous SAR supersedes the synchronous logic proposal
 
 - Keep eight-bit flat CDAC and 10-MHz external sampling; replace the proposed
