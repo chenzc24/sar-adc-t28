@@ -1323,3 +1323,31 @@ human-triggered note in `docs/experience/`.
   word/phase/retained-peak assertions, Python compile and diff checks pass.
   Both figures visually inspected; removed overlapping legends/annotations.
   Scoped local commit only, no push; unrelated history/concurrent work excluded.
+
+## 2026-10-20 - Remove reference-switch driver MOS as a controlled diagnostic
+
+- Six completed result.ok APS transients, exact retained Bootstrap/MOM/VA
+  source bodies, TT/.9V/27C, 300ns, no physical transient noise. Netlist-only:
+  remove six driver MOS per leaf; retain PMOS-high/NMOS-low unchanged at 1x;
+  ideal VCVS supplies correct gate polarities. Reference/driver count128->32,
+  original100ps logical blanking/20ps command edges and 127->128 preserved.
+  No OA/Canvas/installed VA/PDK or baseline changes.
+- Fresh native replay exactly reproduces 1.399620V. Same-size direct gates
+  reduce BN5 restore peak to .918698V, restore worst port .925287V, but SAR
+  worst MP_HIGH Vgd remains1.040451V (BN5=-.140451V, gate=.9V). Half/double
+  pass multiplicity give global peaks1.079517/.983908V respectively; cannot
+  conclude that weaker conduction is the remedy. Multiplicity also changes
+  parasitics, and fractional .5x is only sensitivity analysis.
+- Native gate50% skew4.097ps becomes0 under ideal gates; removing drivers also
+  changes output impedance/parasitic interactions, so no single-cause delay
+  claim. 2x fine maxstep10ps gives .983907774V (delta-.511uV), residual-error
+  delta+.129uV; about6.09mV screen margin only at this TT input. All six codes
+  correct. Native/half/direct1 CMI/suppressed warnings preserved; double/fine/
+  positive-input control have zero CMI/suppressed warnings; all have zero LTE
+  relaxations. No cross-input/PVT/noise/MC/layout/full-ADC qualification.
+- Native leaf-edit invariants, source/staged-VA/deck hashes, complete finite
+  waves,128/32-MOS reconstruction and ideal gate equations verified. Fixed a
+  preparation-only OA-common-VA-filename staging guard before native runs.
+  Added two scripts, bounded plan/report, two inspected phase comparison
+  figures and small metrics; raw output/cdac8_no_driver/. Python compile,
+  focused assertions and diff checks pass. Scoped local commit; no push.
