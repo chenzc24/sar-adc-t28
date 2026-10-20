@@ -1,5 +1,32 @@
 # Maintenance Log
 
+## 2026-10-20 - Two complete asynchronous sampling periods and key-node diagrams
+
+- User requested two complete sampling periods and all key timing nodes after
+  the undershoot discussion. Added one nominal APS observation run with the
+  unchanged recovery hierarchy, ideal sampled ADC/comparator plant, 202-ns stop
+  and 88 explicit voltage saves. Only VIN stimulus/save list/stop changed;
+  no OA, PDK, circuit, control-contract or existing-evidence mutation.
+- Actual SAMPLE edges 1.01/101.01/201.01 ns delimit two 100-ns periods. Input
+  .123 V then -.3 V differential gives145 then85, eight decisions/captures/
+  advances each. VALID87.349605/187.373284 ns; old DOUT retained in acquisition.
+  Full saved traces finite, exact simulated/native subcircuit equality checked.
+- Preserve failures: first reset-boundary CAPTURE -86.541 mV at101.125 ns,
+  closing context after period2 -111.316 mV at201.126 ns; CMI starts201.114 ns,
+  25 printed/15565 suppressed warnings. Correct words do not waive SOA;
+  no root-cause isolation, circuit repair or qualification is inferred.
+- Added18 inspected PNG diagrams, seven scalable SVGs and an indexed guide
+  docs/sar8_async_two_cycles.md. Includes raw state/control groups, all bit
+  banks/reference selections, single-bit detail, both boundary zooms and the
+  old fault scenario explicitly labelled as a separate run. Measured voltages
+  and threshold-decoded buses are distinguished; no invented internal waveform.
+- Reproducible source scripts/sar8_async/two_cycles.py, small provenance JSON
+  verification/sar8_async/two_cycle_summary.json, raw output/sar8_async_impl/.
+  Checked peak-preserving display reduction,88-node coverage, labels/bounds,
+  Python compile, JSON/SVG/links and scoped diff. Concurrent inventory/reset
+  commits and all unrelated ten-bit sources/windows preserved. Local bounded
+  documentation commit, no push.
+
 ## 2026-10-20 - Current progress and local Virtuoso design inventory
 
 - User requested a consolidated progress/file map. Added docs/project_status.md,

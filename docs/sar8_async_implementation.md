@@ -169,6 +169,8 @@ APS 与 AX 典型角 CMP_CLK/CAPTURE/ADVANCE/VALID 的最大边沿差为 17.611 
 远端/本地 SHA256 一致，真实 StrongARM 前后读回相同。
 
 小型可跟踪结果：[summary.json](../verification/sar8_async/summary.json)。
+新增[两个完整采样周期与 88 个关键节点时序](sar8_async_two_cycles.md)，
+包含两次正常转换、位级展开及跨帧下冲放大；不改变本页的未通过项。
 原始网表、PSF、告警、各版本与 GUI 截图在 `output/sar8_async_impl/`，不入 Git。
 原生 unit 结果取 tgdff 版本；recovery 只改 status，已审计 unit 定义未改变。
 
