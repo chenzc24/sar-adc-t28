@@ -2364,6 +2364,16 @@ human-triggered note in `docs/experience/`.
   diff check excludes the user's existing section1 trailing whitespace.
   Local scoped documentation commit only; no simulation, OA/GUI change or push.
 
+### 2026-10-21 Refocus wrap-up section5 on early detection
+
+- User requests the broader lesson of AI-assisted short tests and monitoring,
+  with timer only as an example. Rewrote section5 in two concise paragraphs,
+  explicitly locating the defect in the ideal reference-control VA model and
+  stating that this control logic has not been implemented at transistor level.
+- Retained the existing actual-waveform figure and shortened its caption.
+  Other sections/user edits unchanged; UTF8/YAML, link and scoped diff checks.
+  Local section-only commit; no circuit, simulation, image, GUI or push action.
+
 ### 2026-10-21 Launch B1x coherent512 dynamic capture
 
 - User authorized one4warm+512observed capture at10MS/s,near4.5MHz,-1dBFS,

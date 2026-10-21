@@ -77,3 +77,22 @@ General claims about LLM research/design habits remain personal observations.
 Commit policy: only section 5 staged from the report; all other user edits stay
 in the working tree. New script/figure/provenance/plan and this target's log
 entry included. No push.
+
+## Follow-up: focus on early problem detection
+
+User requests a concise section 5 about AI-assisted short tests and monitoring,
+with timer only as an example. Explicitly identify the ideal reference-gate
+model's code fault and the absence of transistor-level implementation for that
+control logic. Preserve the user's newly shortened section and existing figure;
+all other report sections and the figure sources stay read-only.
+
+Current branch ahead16, with user edits in the report and unrelated note/cdac10
+work. Same ownership: section5, this plan and one log append. Replace only the
+section body/title; validate exact preservation outside it, the image link,
+UTF-8/YAML and a section-scoped staged diff. Local commit only, no push.
+
+Follow-up completed: two short paragraphs emphasize early detection and use
+the VA timer fault only as an example. Explicitly distinguish the unimplemented
+native reference-control logic from existing transistor circuits. Existing
+figure retained with a concise code1-to65 caption. Outside-section text and
+all other user edits preserved; only this section staged from the report.
