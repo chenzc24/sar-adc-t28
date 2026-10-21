@@ -1947,3 +1947,30 @@ human-triggered note in `docs/experience/`.
   verification receipt added; current-status entry updated. Scoped source,
   syntax,hash/count/precision checks and diff review; local result commit only.
   Read back monitor id b; pause after final delivery, no unrelated automation.
+
+### 2026-10-21 Decompose existing B sine error without simulation
+
+- User authorized existing-waveform-only delay/gain/remainder and turnoff
+  analysis. Plan2026-10-21-b-sine-error-decomposition; parent61dcdb4. No
+  simulator/remote call, OA/model/clock/WL/precision edits, new experiments,
+  heartbeat change or push. Unrelated cdac10_dualrail work preserved.
+- New independent NumPy offline script verifies original B provenance, SHA,
+  result.ok,44signals/1326793points and20observedframes. Fits DC+sin/cos,
+  obtains heldgain.99974184572(-.02581543%),equivalentlag1.781261225ns.
+  Rawpeak4.464649mV remains failed originalbudget. AfterDC/fundamental fit,
+  held remainderpeak8.259512uV/RMS5.604440uV,H3projection7.892781uV.
+- Uniform preedge localcubic extrapolation5ns..-.15ns versusheld+.6ns gives
+  turnoff-related incrementpeak327.692875uV; its DC/fundamental-removed
+  remainderpeak6.009549uV/RMS4.421882uV. Pretracking remainderpeak2.789366uV,
+  equivalentlag1.890314730ns,gain-15.872503ppm;109.05ps lagreduction is not
+  unique aperture. Commonmode increment-.447..-.464mV; savedMSBgatesconstant,
+  bottomnodes~.10mVperturbation. Not a pure channelcharge-injection extraction.
+- 3/5/8ns quadratic/cubic extrapolation sensitivitymax.122205uV; cubic<.001uV,
+  5/20psuniformresampling robust. Quietprecompare+.6..2ns holds to.014624uV,
+  near numericprecision, not longtermleakage. Exact decomposition reconstruction,
+  synthetic delay/gain/DC/H2/H3 recovery and source-before/after SHA checks pass.
+- Added independent report/metrics/two figures and narrow projectstatus entry.
+  Keep fixed-frequency/amplitude/history/alias/numerical ambiguity with claims;
+  signal-linear injection can remain in fitted phase/gain. No ADC SNDR/ENOB
+  claim or corrected-budget pass. Focused syntax/result/figure checks and scoped
+  local commit only; original B run data/report/acceptance conclusions intact.
