@@ -1974,3 +1974,30 @@ human-triggered note in `docs/experience/`.
   signal-linear injection can remain in fitted phase/gain. No ADC SNDR/ENOB
   claim or corrected-budget pass. Focused syntax/result/figure checks and scoped
   local commit only; original B run data/report/acceptance conclusions intact.
+
+### 2026-10-21 Launch main-W-only B short sine comparison
+
+- User authorized1x/2x/3x mainW only, unchanged topology,L,CDAC,timing and
+  precision; no fullcode. Plan2026-10-21-b-sine-main-w,parent00f25a6.
+  Existing1x completed24frame native sine/decomposition reused, no duplicate
+  run; source/deck/include hashes validated. Unrelated cdac10_dualrail preserved.
+- Healthy0.8.0/t28_io,thu-wei/llm_IO/userchenzc_intern25,Spectre21.1. Current
+  B top/TB and36dependency surfaces match snapshots. Read-only, no OA writes.
+  Prior PDK-generated320nm/500nm/1um/2um geometry validates AD/AS=W*155nm,
+  PD/PS=2*(W+155nm),all other model/spacing/stress parameters constant.
+  Independent2/3um decks change only Mmain W and4width-derived quantities;
+  both P/N physical main instances share that subcircuit. No stale parasitics.
+- Same500kHz/.8Vpeak/.45VCM/10MS/s,4warmup+20observed,24frames/2.4us;
+  declared51.6us stop andpassivefinish preserved,44continuous saves, sameVA,
+  MOS/CDAC/StrongARM/nativeSAR and50ohm input/50ohm+4pFreference networks.
+  APS4/conservative/10ps/reltol/vabstol/iabstol/gear2only unchanged.
+- Hidden coordinator10:22:11local,actualPID44712; two native jobs,at most2
+  concurrent compute, serial localPSFparse to avoid two~14GBparser peaks.
+  Inspected pinned0.8.0 remote-run/result-assembly helpers, native command
+  same as public adapter, no bridge package edit. W2a400dc73/PID137806,
+  W336fde9f4/PID137807. At10:26both2/24,8compares/stable,noCMI/LTEyet.
+- Added config/prepare/check/run/status and comparable analysis;1x baseline
+  extraction exactly reproduces committed delay/gain/remainder. Python compile,
+  bounded geometry/input/source/precision contracts pass. Full results/plots
+  pending, no qualified candidate or automatic OA replacement claimed.
+  Scoped launch commit only, no push or new automation; old heartbeat untouched.
