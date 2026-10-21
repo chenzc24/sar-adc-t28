@@ -94,7 +94,9 @@ maxstep10ps等精度不变；全部136路连续波形无损压缩、逐帧解析
 用户最新要求远端分析、只回传指标和图，已禁用本地PSF/gzip/pickle回传，
 远端状态指标解析已验证；完整远端动态分析尚未执行，等待是否允许重新启动。
 监控b保持PAUSED，不伪装仍在运行或自动重跑。上述时间均为北京时间。
-历史占用和可清理候选见[本地存储清单](storage_cleanup_candidates.md)，未删除数据。
+历史占用与[本地清理记录](storage_cleanup_candidates.md)：用户确认后已永久移除
+202个旧波形／缓存，共39.933GiB；保留B／1×基准、短验收、异常与B512失败证据、
+R4新实验，以及源码／网表／日志／指标／图。未清理远端或追加仿真。
 本轮入口`config/b_dynamic_512.yaml`、`output/b_dynamic_512/flow.json`、
 `plan/2026-10-21-b-dynamic-512/plan.md`；以精确PID/log与完成帧计进度。
 

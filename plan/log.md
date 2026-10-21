@@ -2532,3 +2532,23 @@ human-triggered note in `docs/experience/`.
   User Obsidian/cdac10 work preserved; existing wrap-up trailing space left
   untouched. Failed raw evidence retained in ignored output. Local scoped
   commit; no push.
+
+### 2026-10-21 Delete explicitly approved local historical waveforms
+
+- User confirmed permanent removal of the proposed 39.93 GiB historical batch.
+  Bounded plan preceded changes. Frozen 202 files / 42,877,383,874 bytes under 19
+  literal historical output roots; no tracked targets, reparse points, active
+  referencing local processes, recursive deletion, recycle-bin or backup copy.
+- Removed only approved large PSF/waveform JSON/CSV/pickle from old 10-bit models,
+  early Bootstrap, obsolete 26-cell handshake, R1/R2 timing sweeps and W2/W3.
+  All 202 absent; 8,281 retained files' content+metadata aggregate SHA identical
+  before/after; 8 explicit baseline/evidence hashes pass. Kept source/netlists,
+  logs/metrics/figures, B/W1 short tests, anomaly and B512 failure records,
+  selected controller, R3 and new R4/cdac10 work. No remote access or simulation.
+- E free 53.943497->93.875572 GiB; net 39.932076 GiB versus 39.932676 GiB file
+  contents (filesystem/concurrent changes). Receipt in
+  `verification/storage/2026-10-21-history-cleanup.json`; cleanup report and
+  status note identify irreversible waveform loss and historical reanalysis
+  dependencies. No verified backup; new detailed analysis may need rerunning.
+- PowerShell syntax/dry-run and focused completion/absence/receipt validation;
+  scoped diff review/local commit only, no push. Unrelated dirty work retained.
