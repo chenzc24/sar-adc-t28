@@ -2174,3 +2174,16 @@ human-triggered note in `docs/experience/`.
 - SVG serialization whitespace normalized after diff-check, with identical
   PNG hashes and valid XML. Staged check passes; global unstaged check reports
   only pre-existing user Wrap-up line13 trailing space, preserved as-is.
+
+### 2026-10-21 Shorten Bootstrap wrap-up to core results
+
+- Followed the user's manual reduction: paired topology figures, one old and
+  one new statement, one500kHz width-result table and adoption/tradeoff line.
+  Corrected0.126mV attribution to eight-bit flat/1um rather than split/0.5um.
+- Plan2026-10-21-wrapup-bootstrap-concise, starting HEAD653e509. Owned only
+  section2 of the report and plan/log. Text outside section2 and both image
+  embeds match the user's starting version; source values checked.
+- Staged a section-only patch; other user report changes, note moves/drafts,
+  HF-width work and cdac10_dualrail remain unstaged. Scoped diff-check passes;
+  existing section1 whitespace is preserved. Local commit, no push, GUI,
+  simulation, image or OA change.
