@@ -2068,3 +2068,20 @@ human-triggered note in `docs/experience/`.
   declarations; correctedthisreportdescriptiononly. NoPVT/mismatch/noise/full
   ADC qualification or pureinjectionclaim. Scopedlocalcommit,no push or new
   automation; unrelatedObsidian/cdac10_dualrail work preserved.
+
+### 2026-10-21 Polish illustrated Obsidian wrap-up report
+
+- Preserved the user's five sections and six images in Report/Wrap-up &
+  Experience.md. Condensed prose, paired reference/topology figures and kept
+  dense SAR timing plots vertically stacked at full width. Explicitly retained
+  the plots' ideal analog testbench boundary; no new circuit results.
+- Plan2026-10-21-obsidian-report-layout, starting HEAD640bd51. Included only
+  this report's move, its six unchanged PNG dependencies and plan/log. Other
+  Rvision moves/Spec edits, Report20261021 stub and cdac10_dualrail work remain
+  untouched and unstaged. No OA, simulator, image, theme or plugin changes.
+- Strict UTF-8/YAML, six embed targets, five sections, protected facts and six
+  original SHA256 hashes pass. Unslop preservation5/5 passes; English-only
+  scan/diff advisories were reviewed against Chinese prose and layout markup.
+  Inspected the full Obsidian reading-mode rendering for alignment, overflow,
+  timing-figure size and section spacing. Scoped diff-check/review before local
+  documentation commit; no push requested this turn.
