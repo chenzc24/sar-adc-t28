@@ -2232,3 +2232,28 @@ human-triggered note in `docs/experience/`.
 - Only sections3–5 and this log append are staged with the plan. Existing user
   report edits, concurrent HF log/status/results and other work remain outside
   the commit. No GUI, simulation, OA, image changes or push.
+
+### 2026-10-21 Redraw focused one-period SAR comparison
+
+- User requested smaller matched old/new timing figures with only necessary
+  real transfer nodes. Added offline sar_logic_compare.py and two PNG/SVGs
+  plus provenance. Each plots one100ns SAMPLE-rise-to-rise period atTT/.9V/
+  27C,+.123V; shared xscale/fonts/voltage normalization/decimal bus notation.
+- Old seven lanes: SAMPLE,CMP_CLK,CAPTURE,ADVANCE,W[7:0],COMMIT,D[7:0].
+  New five: SAMPLE,CMP_CLK,PHI_W,PHI_U,D[7:0]. All from saved native voltage
+  nodes; no token/trial/status/analog observer lanes or invented new output
+  bank. Replaced only two report embeds and their brief scope/key caption.
+- Both original results ok; LF-normalized deck hashes match runner records
+  (local downloads areCRLF), waveform/provenance hashes retained.8compare/
+  write/update per period, old1COMMIT after last update, physical register
+  writes128/128/128/144/144/144/144/145 and final145 verified. Input assertion
+  covers acquisition: source begins next-frame transition just before next
+  SAMPLE midpoint, so whole-period constant-input assertion was inappropriate.
+- Old/new maxsteps200/50ps disclosed in provenance; this is transfer-flow
+  illustration, no new speed/SOA qualification. Actual min/max display samples
+  and transient bus intervals retained, no ideal square-wave reconstruction.
+  FinalPNG dimensions1680x772/1680x600, report width640; images visually checked.
+- Compile, finite/monotonic traces, text bounds, PNG/SVG/hashes, UTF-8/YAML/
+  embeds and exact unowned-report text pass. Scoped diff-check/review and local
+  commit only. No simulation, OA, image editing, GUI or push; old figures and
+  user note edits elsewhere preserved.

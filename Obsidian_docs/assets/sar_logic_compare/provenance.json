@@ -1,0 +1,329 @@
+{
+  "scope": "Existing native T28 control with ideal analog plant; one period each",
+  "supply_v": 0.9,
+  "temperature_c": 27,
+  "corner": "tt",
+  "input_v": 0.123,
+  "voltage_display": "Raw actual samples, each lane 0 to0.9V; no ideal square-wave reconstruction",
+  "bus_display": "Decimal from actual register pins at0.45V; short transient intervals remain unlabeled",
+  "origin": "Each first observed SAMPLE rising midpoint; no warp or per-bit alignment",
+  "source_solver_maxstep_s": {
+    "old": 2e-10,
+    "new": 5e-11
+  },
+  "comparison_limit": "Different original solver settings; descriptive transfer-flow comparison, no new timing/PVT/SOA qualification",
+  "sources": {
+    "output/sar8_async_impl/results/two_cycles_keynodes_aps_01.json": "34f9b8baa36b38d3683106733644af502b315ff3bb2089b1497d8e5a00bb608a",
+    "output/sar8_async_impl/decks/two_cycles_keynodes_aps_01.scs": "49705570378e1c10b76744339b148120046f06908e5425fc2b4514693fa8469f",
+    "output/sar8_async_impl/waves/two_cycles_keynodes_aps_01.json": "4b0da0bfd94ca46dc9e86b6ee55a18c903f6eaa028a94785d0d61fd27404e525",
+    "output/sar8_simple/results/two_cycles_simple_v2_aps.json": "4860189a277605d40d713291265ae6f8081c2bcce684f6f9b50cc46bc716b564",
+    "output/sar8_simple/decks/two_cycles_simple_v2_aps.scs": "99e14fd717ce74dd73bf4d91eb0cda3f6fc65ef3724807930ee6e58a79f475f3",
+    "output/sar8_simple/waves/two_cycles_simple_v2_aps.json": "0064220ccc8506c6081b007c24e625589788a3977f2cffc976560dad30cd046e",
+    "scripts/sar8_async/circuit.py": "1bb3e85d52d469f4a351ecfce1950cfc33052cdd9c1466cbcad4d031226a81e9",
+    "scripts/sar8_simple/circuit.py": "8f9990b8fb127176007a02d166e0dea56015309ce403cd728ba2d23175bfdcab",
+    "verification/sar8_async/two_cycle_summary.json": "b3c6512a97d7e73415fd02cab9903185f213a5d0929d3c397621a6bc900aa77f",
+    "verification/sar8_simple/summary.json": "811ac5dd8c508f0b7a66daa4e4d2883117a3e83c667b46189ca79b3a448997c2",
+    "scripts/reporting/sar_logic_compare.py": "3faa38ed9cde0524a81c56ad31c75e7181c36a8ab40e35454674119fb4c08364"
+  },
+  "plots": [
+    {
+      "kind": "old",
+      "source_origin_ns": 1.01,
+      "source_end_ns": 101.00999999999999,
+      "duration_ns": 100,
+      "input_differential_v": 0.123,
+      "final_read_code": 145,
+      "plotted_nodes": [
+        {
+          "label": "SAMPLE",
+          "prefix_or_node": "sample",
+          "representation": "voltage"
+        },
+        {
+          "label": "CMP_CLK",
+          "prefix_or_node": "cmp_clk",
+          "representation": "voltage"
+        },
+        {
+          "label": "CAPTURE",
+          "prefix_or_node": "capture",
+          "representation": "voltage"
+        },
+        {
+          "label": "ADVANCE",
+          "prefix_or_node": "advance",
+          "representation": "voltage"
+        },
+        {
+          "label": "W[7:0]",
+          "prefix_or_node": "xctrl.w",
+          "representation": "bus"
+        },
+        {
+          "label": "COMMIT",
+          "prefix_or_node": "xctrl.commit",
+          "representation": "voltage"
+        },
+        {
+          "label": "D[7:0]",
+          "prefix_or_node": "d",
+          "representation": "bus"
+        }
+      ],
+      "events_ns": {
+        "compare": [
+          45.558670876513524,
+          50.98863969900187,
+          56.38658630899611,
+          61.82537245595246,
+          67.34349409042652,
+          72.81130970208092,
+          78.31256804085754,
+          83.87009225895977
+        ],
+        "write": [
+          46.10605258265341,
+          51.50093862316593,
+          56.939737666290185,
+          62.458732560865045,
+          67.92597312770043,
+          73.42723435673905,
+          78.98451914725713,
+          84.54404982578954
+        ],
+        "update": [
+          47.274478518437725,
+          52.67129779017626,
+          58.1100928412082,
+          63.62821520359606,
+          69.09602398911967,
+          74.59728323133342,
+          80.15457615312955,
+          85.71183160011394
+        ],
+        "commit": [
+          86.02220409625887
+        ]
+      },
+      "captured_working_codes": [
+        128,
+        128,
+        128,
+        144,
+        144,
+        144,
+        144,
+        145
+      ],
+      "register_intervals": {
+        "xctrl.w": [
+          {
+            "start_ns": 0.0,
+            "end_ns": 46.15996776010499,
+            "value": 0
+          },
+          {
+            "start_ns": 46.15996776010499,
+            "end_ns": 62.51272796913506,
+            "value": 128
+          },
+          {
+            "start_ns": 62.51272796913506,
+            "end_ns": 84.59792760077134,
+            "value": 144
+          },
+          {
+            "start_ns": 84.59792760077134,
+            "end_ns": 100.0,
+            "value": 145
+          }
+        ],
+        "d": [
+          {
+            "start_ns": 0.0,
+            "end_ns": 86.07069649965409,
+            "value": 0
+          },
+          {
+            "start_ns": 86.07069649965409,
+            "end_ns": 100.0,
+            "value": 145
+          }
+        ]
+      },
+      "actual_voltage_extrema": {
+        "sample": [
+          0.0,
+          0.9
+        ],
+        "cmp_clk": [
+          -0.0122959414543374,
+          0.919347418971378
+        ],
+        "capture": [
+          -0.01442858693107644,
+          0.8997903073444152
+        ],
+        "advance": [
+          -0.003410890645971942,
+          0.9023617900951187
+        ],
+        "xctrl.commit": [
+          -0.005983994175944501,
+          0.9085716741078039
+        ]
+      },
+      "png_dimensions": [
+        1680,
+        772
+      ],
+      "files": [
+        {
+          "file": "old_one_cycle.png",
+          "sha256": "bda131179f5f93d9697d13a1ff906099bda11508d27cd8557a53b56ad7cca0c3"
+        },
+        {
+          "file": "old_one_cycle.svg",
+          "sha256": "d86ec923e452998c8f2d6495a99f532c25024d0b3f2de5633866e0da750ee850"
+        }
+      ],
+      "source_scope": "unchanged_native_async_logic_two_period_observation_ideal_ADC_plant",
+      "validated_deck_lf_sha256": "3e2f82ba50842bdffb98ae3891ef9c84e4f3c67812100da3a788d95b97f0d8bb"
+    },
+    {
+      "kind": "new",
+      "source_origin_ns": 1.01,
+      "source_end_ns": 101.00999999999999,
+      "duration_ns": 100,
+      "input_differential_v": 0.123,
+      "final_read_code": 145,
+      "plotted_nodes": [
+        {
+          "label": "SAMPLE",
+          "prefix_or_node": "sample",
+          "representation": "voltage"
+        },
+        {
+          "label": "CMP_CLK",
+          "prefix_or_node": "cmp_clk",
+          "representation": "voltage"
+        },
+        {
+          "label": "PHI_W",
+          "prefix_or_node": "xctrl.phi_w",
+          "representation": "voltage"
+        },
+        {
+          "label": "PHI_U",
+          "prefix_or_node": "xctrl.phi_u",
+          "representation": "voltage"
+        },
+        {
+          "label": "D[7:0]",
+          "prefix_or_node": "d",
+          "representation": "bus"
+        }
+      ],
+      "events_ns": {
+        "compare": [
+          42.65644291111786,
+          46.46500617122035,
+          50.239929500361704,
+          54.05565711925056,
+          57.950628110959435,
+          61.79483023127915,
+          65.67244463878806,
+          69.60571750991546
+        ],
+        "write": [
+          43.167036814939514,
+          46.94036218918984,
+          50.75606780877886,
+          54.65105201767011,
+          58.495242443888316,
+          62.3728362788333,
+          66.3064197596315,
+          70.24029765340593
+        ],
+        "update": [
+          43.62661474023278,
+          47.40139336580744,
+          51.21709811623616,
+          55.11186419675152,
+          58.95621870862552,
+          62.83381268271692,
+          66.7674017932091,
+          70.7005383782149
+        ]
+      },
+      "captured_working_codes": [
+        128,
+        128,
+        128,
+        144,
+        144,
+        144,
+        144,
+        145
+      ],
+      "register_intervals": {
+        "d": [
+          {
+            "start_ns": 0.0,
+            "end_ns": 43.207026257864456,
+            "value": 0
+          },
+          {
+            "start_ns": 43.207026257864456,
+            "end_ns": 54.69095312589988,
+            "value": 128
+          },
+          {
+            "start_ns": 54.69095312589988,
+            "end_ns": 70.28016457792285,
+            "value": 144
+          },
+          {
+            "start_ns": 70.28016457792285,
+            "end_ns": 100.0,
+            "value": 145
+          }
+        ]
+      },
+      "actual_voltage_extrema": {
+        "sample": [
+          0.0,
+          0.9
+        ],
+        "cmp_clk": [
+          -0.009029706730017165,
+          0.912797995189613
+        ],
+        "xctrl.phi_w": [
+          -0.009838197996858308,
+          0.9127773056027522
+        ],
+        "xctrl.phi_u": [
+          -0.02108712517349201,
+          0.906326995556426
+        ]
+      },
+      "png_dimensions": [
+        1680,
+        600
+      ],
+      "files": [
+        {
+          "file": "new_one_cycle.png",
+          "sha256": "e1b4308c238af62d5c6bf700485d18d3cafd77f0e79f7d9af2d8a3714b38df8e"
+        },
+        {
+          "file": "new_one_cycle.svg",
+          "sha256": "1a02b8eeed838cf926b03b3433c2628b5d63ac0404a2e574ad8dd8e15834dd15"
+        }
+      ],
+      "source_scope": "native_sar8s_controller_ideal_DAC_behavioral_variable_delay",
+      "validated_deck_lf_sha256": "ab1c776bfc29ee16eb17e2727bd95c42f2b003cad7044baddb0989270c293d38"
+    }
+  ]
+}
