@@ -1860,3 +1860,31 @@ human-triggered note in `docs/experience/`.
 - Syntax,3focused identity/history/event parsing contracts, curated source/figure
   hash checks, diff-check and scoped review. Local commit only, no push. B remains
   a separate netlist/VA candidate, not silently adopted into frozen R3 OA.
+
+### 2026-10-21 Adopt verified B reference events into current R3 OA
+
+- User authorized B synchronization, unchanged native topology/sizes/precision,
+  and discussion of shorter fault-finding tests rather than full campaigns.
+  Plan: plan/2026-10-21-r3-b-oa-adoption/plan.md. Unrelated cdac10_dualrail work
+  preserved; no process cancellation, Virtuoso restart, forced unlock or push.
+- Recovered stale local post-reboot tunnel via normal warm; healthy t28_io,
+  matching thu-wei/llm_IO CIW and native Spectre21.1. Read-only cached dependency
+  locks recorded and retained. Writable top schematic unlocked and GUI-closed.
+- Added SAR_ADC_T28/sar8j_aligned_refgate_b symbol/veriloga/CDF; exact verified
+  b3 body, module name only changed. Copied symbol pins/geometry and exposed
+  CDF equal old gate. Old shared gate and R1/R2 historical meanings preserved.
+- Changed exactly16 ideal gate master bindings in sar_adc8_join_r3/schematic.
+  API readback: all other fields/parameters/connectivity/positions equal; TB
+  unchanged,36 native/historical dependency surfaces unchanged, zero markers.
+  Fresh OA netlists: every native subcircuit text equal, top named electrical
+  statements equal after only gate-name normalization. Header replacement
+  reorders top gate statements; no full-ADC time-grid equivalence claimed.
+- Native import unit uses OA-downloaded VA, same APS4/conservative/10ps settings.
+  result.ok,0errors/1oldAHDLwarning/6notices.20saved waveforms/121443timepoints
+  exactly equal previous verified B unit, including96acquisition+96conversion
+  checks. Compute11.63s,total27.50s. No new whole-ADC replay or full campaign.
+- Added source/import automation, concise verification receipt and adoption/
+  short-test discussion docs; corrected current project-status entry. Raw
+  exports/logs/unit waveforms under ignored output/r3_b_oa/. No PDK/OA binaries
+  committed. Source/receipt check,syntax,diff-check and scoped review performed.
+  Local commit policy: fix: adopt verified reference gate B in Virtuoso; no push.
