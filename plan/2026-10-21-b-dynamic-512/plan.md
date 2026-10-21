@@ -131,3 +131,10 @@ tolerance only at EOF), with close-boundary/roundoff synthetic regressions.
 Native job, deck, raw data, solver and launch receipt unchanged; no data has
 yet been consumed by the reducer. Preserve launch's original analysis hashes;
 final reduced.json records the actually used reducer SHA. No native rerun.
+
+At7/516frames native reported oneSPECTRE16780 at566.964ns,
+XDUT.XCTRL.XBPP.XB0.X005.N. Counts/stability valid, noCMI or grosscode alarm.
+Single LTE is retained and makes numerical-clean qualification unavailable;
+not an automatic restart or a raw-held-error failure. Existing fixed policy
+interrupts on cumulative>=3LTE or other clear errors. User informed once;
+later monitors should not repeat an unchanged single notice.

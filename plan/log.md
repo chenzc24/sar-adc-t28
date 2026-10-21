@@ -2413,3 +2413,8 @@ human-triggered note in `docs/experience/`.
   power/held equivalence pass. Full native data are untouched, still running;
   preserve initial launch hash and record actually used reducer hash later.
   No topology/timing/precision/input/native restart or other task changes.
+
+- Initial7/516frames show oneSPECTRE16780 at566.964ns on nativeSAR internal
+  XDUT.XCTRL.XBPP.XB0.X005.N; legal8compares/stablecodes/noCMI/grossalarm.
+  Retain and disclose this precision notice, continue unchanged under the
+  frozen cumulative>=3LTE stop rule; no clean-precision qualification claim.
