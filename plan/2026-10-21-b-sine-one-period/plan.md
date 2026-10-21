@@ -60,7 +60,9 @@ user chenzc_intern25. Do not cancel or relaunch old campaigns or any other job.
 
 ## Status
 
-Preparing. Bridge0.8.0, CIW thu-wei/llm_IO and native Spectre21.1 healthy.
+Completed bounded test and visual review; sampling/hold budget FAIL, not a
+qualified ADC. Bridge0.8.0, CIW thu-wei/llm_IO and native Spectre21.1 healthy
+at launch.
 Only CIW window open. Current B adopt receipt f115f7f is the baseline; old R3
 performance scripts/hash expectations are historical and are not reused as B.
 
@@ -97,3 +99,41 @@ without calling the20measured frames failed or applying an aperture correction.
 Complete waveform needed to separate startup/dynamic tracking/aperture timing.
 Native log reported reltol1e-6,10ps,10nV/100fA,gear2only and all other prior
 solver values identical. Only outputstart0vs800ns differs (save startup now).
+
+## Final result and visual review
+
+One run only; native result.ok,0errors/7warnings/7notices, actualstop2400ns.
+All24R3MEAS/BSINE records complete,8compares/write/update in every frame,
+90/98ns codes stable. All24passive probes agree with continuous-waveform
+source/held/error within0.1uV. Native solver parameters unchanged except the
+declared output saving-start difference above. No CMI-2754 or LTE relaxation.
+Original7warning lines retained (1AHDL,2global/subckt,4PDKscalefactor).
+
+Twenty observed frames4..23: maximumcodeerror1, no >1code outlier; raw held
+error-4.464648904..+4.464647226mV,14/20above1.7578125mV budget, FAIL.
+Comparator inputpair VGS/VGD/VDS peak0.898006456V below0.99V screen; not
+all-device/lifetime qualification. No FFT/DNL/INL/ENOB/PVT/noise/mismatch claim.
+
+At worstframe4,440.05ns (1ns before SAMPLEfall), SAMPLE=.9V, mainG-input
+P/N=.892809/.892946V; source100.391258mV,pin100.262587mV,TOP95.673304mV.
+InputR contributes-.128672mV differential error, TOP-pin=-4.589283mV,
+TOP-source=-4.717954mV already during tracking. Held441.65ns=98.419517mV
+vs sampledsource441.05ns=102.884166mV. Main observed error predates turnoff;
+one-frequency slope-equivalentlag1.780792ns, residualpeak.225487mV is
+diagnostic only, no shift/correction of acceptance reference or ideal codes.
+
+Native solver elapsed1603s (bridge execution1605.85s),download76.39s,
+parse211.58s,bridge total1899.17s.44continuous signals/1326793points,
+0..2400ns waveform SHA1daabea5ad11f117d9a877e0d1f52c3a2e842ea9f73f9ae7c113d6c2acdc58ef.
+Raw2.01GBASCII retained unchanged in output. No duplicate jobs or OA writes.
+
+Analysis-only refinements: actual-read-time step traces instead of misleading
+linear interpolation, extend displayed final decoded hold, budget panel,
+acquisition/fall legend, source/pin/TOP tracking diagnostics, passive-log crosscheck,
+and reproducible --curate for small verification JSON/figure copies. Both final
+figures visually inspected with ideal baselines, sampling/readout separation,
+legends and worst-error frame (one-based5). Raw data/deck/includes not modified.
+Report docs/b_sine_period.md; tracked metrics verification/integration/
+b_sine_period_results.json; two reviewed figures docs/figures/b_sine_period/.
+Focused syntax/source identity/hash/count/precision/figure checks and local
+result commit; no push. Heartbeat b to be paused on delivery, no follow-on run.

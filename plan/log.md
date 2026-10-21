@@ -1917,3 +1917,33 @@ human-triggered note in `docs/experience/`.
   finding disclosed; do not hide with aperture alignment or infer20-frame pass.
   Native precision readback matches prior B except intentional outputstart0
   (vs800ns) to retain startup. Actual sample-aperture timing remains to inspect.
+
+### 2026-10-21 Complete B one-period sine transient
+
+- Completed the sole authorized500kHz/.8Vpeak/.45VCM/10MS/s native case,
+  4startup+20observedframes,2.4us. Same adopted B OA export, native topology,
+  W/L,50ohm inputs/50ohm+4pF references and APS4/conservative/10ps precision.
+  No OA writes, duplicate launch, new campaign, PVT/noise/mismatch or push.
+- result.ok,0errors/7warnings/7notices. All24frames have8compare/write/update,
+  stable90/98ns output;24passive probes match saved source/held/error within
+  .1uV.20observedpoints show maxcodeerror1,no >1code outlier. Held error
+  maximum4.464648904mV(.635LSB);14/20exceed1.7578125mVbudget, FAIL.
+  Comparator inputpair terminalmax.898006456V<.99Vscreen,noCMI/LTErelaxation;
+  retain original7warninglines, not whole-chip signoff or ENOB qualification.
+- Existing continuous waveform locates large error before turnoff. Worst
+  frame4 at440.05ns,SAMPLEhigh,mainG-input~.893V: source100.391258mV,
+  pin100.262587mV,TOP95.673304mV;TOP-source-4.717954mV,TOP-pin-4.589283mV.
+  Source50ohm accounts-.128672mV only. Held441.65ns differs-4.464649mV from
+  nominal441.05ns source. Slope-equivalentlag1.780792ns is diagnostic only;
+  no source-phase correction, budget relaxation or automatic circuit changes.
+- Native solver26m43s;bridge execution1605.85s,download76.39s,parse211.58s,
+  bridge total1899.17s.44signals/1326793points,2.01GBrawASCII and waveform
+  hashes preserved under ignored output/b_sine_period/. Solver readback same
+  as prior B except intentional startup-saving outputstart0 instead of800ns.
+- Refined only planned analysis/plots: step-aligned actual/ideal readouts,
+  ±.25LSBheld budget, phase legend, tracking diagnostics, log-wave crosscheck,
+  reproducible curated JSON/figure copy. Both final timing figures visually
+  checked with real baselines and no hidden delay fitting. Report and small
+  verification receipt added; current-status entry updated. Scoped source,
+  syntax,hash/count/precision checks and diff review; local result commit only.
+  Read back monitor id b; pause after final delivery, no unrelated automation.
