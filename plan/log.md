@@ -2504,3 +2504,31 @@ human-triggered note in `docs/experience/`.
   dependencies and unique-evidence risks. No files moved/deleted or bulk copy.
 - Document skill separates verified status from full-analysis readiness,
   and cleanup candidates from authorization. Local focused commit/no push.
+
+### 2026-10-21 Implement SAR8 R4 native reference control and integration
+
+- Bounded transistor/device candidate in35 new SAR_ADC_T28 cells; old R3,
+  Bootstrap, CDAC, comparator and controller full readbacks remain identical.
+  Added eight native reference DFFs, real nonoverlap/buffers/PDK gate resistors,
+  and physical MOM/resistor replacements; no internal behavioral control.
+- Preserved failed iterations: fast-driver stress; narrow UPDATE filtered by
+  the capture RC; clocked startup initialization; floating-top simultaneous
+  opposite rail handoff. Legal five-Series-segment CDF replaces a rejected
+  overlong resistor request. Final single-SR two-phase control captures actual
+  D before next CODE; no ideal timer, input oracle, or ADC topology change.
+- Unit208ps:18/18 words and16 phase pairs correct. Final full4-frame TT0.9V27C
+  codes145/14/241/14,8 compare/write/update each,64 reference captures correct,
+  stable valid outputs; conversion29.951..29.995ns, held max0.202295mV,
+  precompare0.147335LSB. All67 analog six-pair voltage screens pass; reference/
+  comparator/IO peaks0.962484/0.950655/1.751582V. Native0errors/7existing
+  PDK-global warnings/5notices; noCMI/LTE, no precision relaxation.
+- Zero markers/exact owned OA readbacks, full-CDF run/curated DUT identical
+  to native OA export. Report/config,320KiB curated results, two final figures,
+  reusable DUT/TB/run netlists and scoped scripts saved. R4 opened for review;
+  R3 remains baseline. Full-code/FFT/PVT/noise/mismatch/area/layout and system
+  supply/reference-buffer/IO qualification not claimed. Source-power windows
+  are recorded, not an overall1mW signoff.
+- Five focused tests, Python compile, YAML parse and scoped diff checks pass.
+  User Obsidian/cdac10 work preserved; existing wrap-up trailing space left
+  untouched. Failed raw evidence retained in ignored output. Local scoped
+  commit; no push.

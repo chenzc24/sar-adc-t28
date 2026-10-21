@@ -1,0 +1,22 @@
+// OA-derived full-parameter nominal test. Foundry models are not distributed.
+simulator lang=spectre
+global 0 VDD!
+parameters SUP=0.9 VDIFF=0.123
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=pre_simu
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=noise_worst
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=ttmacro_mos_moscap
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_res_bip_dio_disres
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_mom
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_ind_jvar
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_r_metal
+
+include "dut.scs"
+include "tb.scs"
+simulatorOptions options psfversion="1.4.0" method=gear2only reltol=1e-6 vabstol=1e-8 \
+    iabstol=1e-13 temp=27 tnom=27 scalem=1.0 scale=1.0 gmin=1e-12 rforce=1 \
+    maxnotes=5 maxwarns=5 digits=5 cols=80 pivrel=1e-3 \
+    sensfile="../psf/sens.output" checklimitdest=psf
+saveOptions options save=selected
+
+tran_physical tran stop=400n maxstep=10p errpreset=conservative lteratio=10
+save SAMPLE XDUT.SAMPLE_INT XDUT.TOPP XDUT.TOPN VINP_SRC VINN_SRC VINP VINN XDUT.CMP_CLK XDUT.COMP_P XDUT.COMP_N XDUT.XCTRL.PHI_W XDUT.PHI_U XDUT.XREF.CAP_CLK D0 D1 D2 D3 D4 D5 D6 D7 XDUT.XCTRL.T0 XDUT.XCTRL.T1 XDUT.XCTRL.T2 XDUT.XCTRL.T3 XDUT.XCTRL.T4 XDUT.XCTRL.T5 XDUT.XCTRL.T6 XDUT.XCTRL.T7 XDUT.CODE0 XDUT.CODE1 XDUT.CODE2 XDUT.CODE3 XDUT.CODE4 XDUT.CODE5 XDUT.CODE6 XDUT.CODE7 XDUT.XREF.Q0 XDUT.XREF.Q1 XDUT.XREF.Q2 XDUT.XREF.Q3 XDUT.XREF.Q4 XDUT.XREF.Q5 XDUT.XREF.Q6 XDUT.XREF.Q7 XDUT.GPP0 XDUT.GPP1 XDUT.GPP2 XDUT.GPP3 XDUT.GPP4 XDUT.GPP5 XDUT.GPP6 XDUT.GPP7 XDUT.GPN0 XDUT.GPN1 XDUT.GPN2 XDUT.GPN3 XDUT.GPN4 XDUT.GPN5 XDUT.GPN6 XDUT.GPN7 XDUT.GNP0 XDUT.GNP1 XDUT.GNP2 XDUT.GNP3 XDUT.GNP4 XDUT.GNP5 XDUT.GNP6 XDUT.GNP7 XDUT.GNN0 XDUT.GNN1 XDUT.GNN2 XDUT.GNN3 XDUT.GNN4 XDUT.GNN5 XDUT.GNN6 XDUT.GNN7 XDUT.XCDAC.BP0 XDUT.XCDAC.BP1 XDUT.XCDAC.BP2 XDUT.XCDAC.BP3 XDUT.XCDAC.BP4 XDUT.XCDAC.BP5 XDUT.XCDAC.BP6 XDUT.XCDAC.BP7 XDUT.XCDAC.BN0 XDUT.XCDAC.BN1 XDUT.XCDAC.BN2 XDUT.XCDAC.BN3 XDUT.XCDAC.BN4 XDUT.XCDAC.BN5 XDUT.XCDAC.BN6 XDUT.XCDAC.BN7 VDD! VREFP VREFN XDUT.XCOMP.X XDUT.XCOMP.Y XDUT.XCOMP.TAIL XDUT.XBOOTP.G XDUT.XBOOTP.BBOT XDUT.XBOOTP.BTOP XDUT.XBOOTP.GRESET XDUT.XBOOTP.CTRL XDUT.XBOOTP.CLKSB XDUT.XBOOTN.G XDUT.XBOOTN.BBOT XDUT.XBOOTN.BTOP XDUT.XBOOTN.GRESET XDUT.XBOOTN.CTRL XDUT.XBOOTN.CLKSB VVDD:p VREFHIGH:p VREFLOW:p VSAMPLE:p VVINP:p VVINN:p XDUT.XREF.REQ_Q XDUT.XREF.LATE_CLK XDUT.XREF.ACK XDUT.XREF.FIRST2

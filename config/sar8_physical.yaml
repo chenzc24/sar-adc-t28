@@ -1,0 +1,72 @@
+candidate: SAR8_R4_TRANSISTOR_CLOSURE
+parent: R3_B_MAIN_1UM_REF_3X
+library: SAR_ADC_T28
+dut: sar_adc8_join_r4
+testbench: tb_sar_adc8_join_r4
+role: independent_candidate_not_adopted
+qualified: false
+nominal_bounded_pass: true
+target_scope: nominal_transistor_device_implementation_no_internal_behavioral_control
+external_interfaces:
+  ideal_testbench_sources: [VDD, VREFP_source, VREFN_source, VINP_source, VINN_source, SAMPLE]
+  input_source_ohm_per_side: 50
+  reference_source_ohm_per_rail: 50
+  external_reference_decoupling_f_per_rail: 4.0e-12
+  output_load_f_per_bit: 5.0e-15
+internal_implementation:
+  logic_MOS: [tsmcN28/nch_mac, tsmcN28/pch_mac]
+  bootstrap_MOS: [tsmcN28/nch_18_mac, tsmcN28/pch_18_mac]
+  capacitors: tsmcN28/cfmom_2t
+  delay_and_gate_resistors: tsmcN28/rupolym
+  reference_pass_MOS: original_3x_P_N_bank
+  comparator: original_11_MOS_StrongARM
+  SAR: native_token_register_loop_cloned_without_unused_request_banks
+  reference_word: eight_CMOS_DFFs_with_SAMPLE_async_reset_and_two_phase_D_then_CODE_capture
+  reference_capture_order: commit_actual_decision_then_next_trial_one_bit_per_phase
+  request_stretch: one_native_SR_with_PDK_RC_late_capture_and_delayed_clear
+  reference_nonoverlap: per_bit_native_MOS_and_PDK_RC
+  internal_VerilogA_control: false
+passive_unit:
+  capacitor_nominal_f: 5.0e-15
+  capacitor_CDF_f: 4.97494e-15
+  capacitor_AC_f: 4.975724647859161e-15
+  capacitor_geometry: {Wfinger: 50n, Sfinger: 50n, Lfinger: 2.5u, Nfinger: 8, StartMn: 1, StopMn: 3}
+  resistor_geometry: {w: 1u, l: 17.13u}
+  resistor_AC_ohm: 9993.903718731573
+  Cboot_parallel_units: 200
+current_iteration:
+  first_driver: logic_pass_reference_stress_fail
+  candidate_gate_series_resistors: two_groups_each_five_legal_series_segments_parallel_2_power_bit
+  gate_resistor_CDF_ohm_per_group_before_parallel_scaling: 49912.6
+  initialization: SAMPLE_initially_high_then_full_high_low_cycle_before_valid_frames
+  selected_control: two_phase_decision_then_next_trial
+  final_unit_run: unit_word06_two_phase
+  final_integrated_run: nominal06_two_phase
+  export_tag: two_phase
+simulation:
+  mode: Spectre21_1_APS
+  threads: 4
+  temperature_C: 27
+  corner: TT
+  VDD_V: 0.9
+  requested_reltol: 1.0e-6
+  vabstol: 1.0e-8
+  iabstol: 1.0e-13
+  maxstep_s: 1.0e-11
+  method: gear2only
+nominal_results:
+  frames: 4
+  source_differential_v: [0.123, -0.8, 0.8, -0.8]
+  final_codes: [145, 14, 241, 14]
+  max_constant_input_held_error_mv: 0.2022954624
+  max_precompare_error_lsb: 0.1473354512
+  max_reference_terminal_v: 0.9624841554
+  max_comparator_terminal_v: 0.9506550735
+  max_bootstrap_IO_terminal_v: 1.7515819210
+  native_errors: 0
+  native_warnings: 7
+  native_notices: 5
+  CMI: false
+  LTE_relaxations: 0
+  report: verification/sar8_physical/results.json
+remaining_qualification: [full_code, FFT, PVT, noise, mismatch, power_up, all_logic_stress, system_power, area_optimization, layout]
