@@ -2121,3 +2121,29 @@ human-triggered note in `docs/experience/`.
   scanner/large-diff advisories manually checked against Chinese prose and
   requested restructure. Full scoped review/diff-check before local commit;
   no push. Other user relocations/drafts and cdac10_dualrail remain unstaged.
+
+### 2026-10-21 Launch B high-frequency main width comparison
+
+- User authorized4.5MHz,-1dBFS,mainW1/2/3um only,unchanged topology,L,CDAC,
+  external timing andprecision; no fullcode orautomaticOAadoption. Independent
+  plan2026-10-21-b-hf-main-w preserves all500kHzsources/results andusernote/
+  cdac10_dualrail dirtywork. No newautomation orpush.
+- Initial bridge tunnel down;one scoped0.8.0/t28_iostart restoreddaemon/CIW/
+  Spectre21.1. Read-onlyBtop/TB and36dependencies matchbaseline,libtsmcN28 and
+  CIWthu-wei/llm_IO verified. NoOAwrite. Exactnewsourcepeak.9*10**(-1/20),
+  perleg.401062922V,phases-72/108 unchanged;20samples cover9cycles/2us.
+- Three newnative24frame/2.4usjobs,APS4/conservative/10ps andsame44continuous
+  saves/declared51.6usfinishdefaults/5VAobservers. Only sources andMmainW-derived
+  AD/AS/PD/PS change. Geometry,inputs/include/sourceSHA,frequency-aware synthetic
+  lag/gain/DC/H2/H3 andprior500kHzmath equivalence pass. Phase-only diagnostic
+  retainsgain; rawbudget remains unchanged. Cubicpreedge extrapolation includes
+  highfrequencywindow/degree sensitivity,not a purecharge-injection claim.
+- Atmost2compute/download workers,1localparser; thirdcompute may overlapparse.
+  Scopedtransport bounds avoid prioroptionalSFTP indefinitewait; sameinspected
+  bridge nativeCLI/result.ok implementation, no packageedit or solver/savetrade.
+  Fake-runner transfer-isolation/required-data-retention check passes.
+- Launched13:20:04local,launcher31348/coordinator13112. W1b4ed7f44/Spectre322222,
+  W27ca28707/Spectre322218;W3queued. At13:20:34bothnativeactive0/24. Results/
+  recommendation pending. Addedsource/config/status andlaunchplan; scopedlocal
+  commit only. Globaldiffcheck saw unrelatedusernote trailingwhitespace, left
+  untouched; owned-path check clean.
