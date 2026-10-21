@@ -1888,3 +1888,32 @@ human-triggered note in `docs/experience/`.
   exports/logs/unit waveforms under ignored output/r3_b_oa/. No PDK/OA binaries
   committed. Source/receipt check,syntax,diff-check and scoped review performed.
   Local commit policy: fix: adopt verified reference gate B in Virtuoso; no push.
+
+### 2026-10-21 Launch B one-period sine transient and monitor
+
+- User approved500kHz sine,10MS/s,4startup+20observed frames,24total/2.4us;
+  requested progress attention. Plan2026-10-21-b-sine-one-period. No FFT,
+  full-code,PVT,mismatch,noise,topology/WL/precision edits or OA mutation.
+- Read current B top/TB and36native/historical surfaces, matched adoption;
+  fresh OA netlist and remote B/commit VA hashes verified. Independent config,
+  immutable input snapshots/deck,44continuous saved signals and passive probe.
+  Native SAR/StrongARM/Bootstrap/MOM/3xreference switches and rail impedances
+  unchanged. Preserve prior51.6us declared stop-dependent defaults; existing
+  observer ends normally at2.4us. All24frames including startup are solved/saved.
+- Hidden local runner started08:58:59local, worker34600. Native solver281826,
+  exact scratch00a444e1; bind actual solver by unique deck path, not launcher
+  PID receipt. At09:02:24,2/24frames complete,8compares and stable final readouts,
+  no CMI/LTE at that snapshot. First startup hold probe-1.71836mV retained,
+  not extrapolated to all measured inputs or performance pass.
+- Added time-domain analysis/plot pipeline (not yet executed on final data),
+  code-vs-sampled-input and real conversion timing, parameter/stress/hold checks.
+  Progress artifacts output/b_sine_period/. Current-status entry updated.
+- Created and read back heartbeat `b`, current thread, every5minutes; meaningful
+  milestones/errors/completion only, pause when finished, no duplicate runs or
+  automatic circuit changes. Full result, figures and final local result commit
+  pending; this commit records validated setup and launch only. No push.
+- Subsequent first3startup frames24/44/72 all8compares/valid. Raw held probes
+  -1.71836,-2.92038,-3.83207mV; latter two above original.25LSB budget. Early
+  finding disclosed; do not hide with aperture alignment or infer20-frame pass.
+  Native precision readback matches prior B except intentional outputstart0
+  (vs800ns) to retain startup. Actual sample-aperture timing remains to inspect.

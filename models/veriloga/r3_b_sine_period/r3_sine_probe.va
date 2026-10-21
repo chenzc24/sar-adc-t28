@@ -1,0 +1,26 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench observer only: no voltage/current contribution to the ADC.
+// SAMPLE command 50% fall is nominally 41.05ns in each 100ns frame.
+module r3_sine_probe(VP,VN,TP,TN);
+    input VP,VN,TP,TN;
+    electrical VP,VN,TP,TN;
+    real sampled_source,held,held_error;
+    integer frame,report_frame;
+    analog begin
+        @(initial_step) begin
+            frame=0; sampled_source=0; held=0; held_error=0;
+        end
+        @(timer(41.05n,100n)) sampled_source=V(VP,VN);
+        @(timer(41.65n,100n)) begin
+            held=V(TP,TN); held_error=held-sampled_source;
+        end
+        @(timer(98n,100n)) begin
+            report_frame=frame;
+            $strobe("BSINE,%d,%.12g,%.12g,%.12g",report_frame,
+                    sampled_source,held,held_error);
+            frame=frame+1;
+        end
+    end
+endmodule
