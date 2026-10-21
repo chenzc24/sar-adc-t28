@@ -2187,3 +2187,32 @@ human-triggered note in `docs/experience/`.
   HF-width work and cdac10_dualrail remain unstaged. Scoped diff-check passes;
   existing section1 whitespace is preserved. Local commit, no push, GUI,
   simulation, image or OA change.
+
+### 2026-10-21 Complete B 4.5MHz main width comparison
+
+- Completed approved1/2/3ummain sweep at4.5MHz,-1dBFS,.8021258443Vdiffpeak,
+  .45VCM/10MS/s,4+20frames/9observedcycles,TT/.9V/27C. Onlysourcefreq/amplitude
+  andW-derivedAD/AS/PD/PS differ fromprotectedBtemplate. NoOA/spec/push changes.
+- Allthree nativezeroerrors/7existingwarningseach,result.ok true,24frames
+  each8compare/write/update andstable90/98codes,noCMI-2754/LTErelaxation.
+  Reportedsolverparams identical toB.44continuoussignals,~1.327Mpointseach;
+  sameAPS4/conservative/10ps/gear2only. Threecomputejobs,atmost2parallel,
+  serializedparse325.57/328.06/294.34s. Sixmissingoptional.ic/.fc skipped,
+  fullraw/log saved,all3ownscratchcleanup rc0; no manualprocesskill/rerun.
+- Heldlag1.783592/.882235/.574250ns,gain-.153617/-.082646/-.085977%; residual
+  peak158.561/54.505/40.619uV,RMS110.741/38.200/29.250uV. Phase-onlyamplitude
+  peak.195338/.100217/.102888LSB retainsgain. Originalraw40.091849/19.834526/
+  12.889723mV,all20/20failold.25LSBgate. Keep thisfailure distinct fromdiagnosis.
+- Recommend2x engineeringcandidate: roughlyhalfphase-alignedamplitudeerrorvs1x;
+  3xgain worse andonly.001975LSBfurtherresidualpeak improvement.1xnominal
+  residual still has8bitmargin; not proved incapable, not auniquerequiredsize.
+  No2xOAadoption ornewacceptancecriterion. NoENOB/SNDR/DNL/INL/PVT/powerclaim.
+- Highfreqtrackingresidual156.309/42.335/20.205uV versus turnoff17.095/18.399/
+  22.942uV explainschangedattribution from500kHz. Cubicpreedgewindow<1.34uV,
+  quadratic~90uV sensitivityretained,primaryheldfit unaffected. Nativecodeerror
+  vsnominal6/3/2,vsheld1/1/1; do not labelallnominalcodeerror logicfailure.
+- Frequency-aware synthetic/500kHz equivalence,inputs/SHA/geometry,sourceanalytic
+  samples/acrosswidthhistories,24probes/events,fitorthogonality/reconstruction
+  and4visuallyreviewedfigures pass. Heldmarkers useactual+.6nsread; actualand
+  idealcode readat+98ns. Curatedmetrics/report/figures/status andlocalcommit
+  only, olddata andotherusernote/plan edits preserved, no newautomation.

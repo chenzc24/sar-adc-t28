@@ -79,6 +79,10 @@ localbounded commits only. No PDKmodel contents,license data,rawOA orPSF inGit.
 
 ## Status
 
+Complete: allthree nativecases parsed,metrics/4figures visuallyreviewed and
+curated. Recommend2x asengineeringcandidate only, noOAadoption/specchange;
+allthreefail theoriginaluncorrectedrawgate. See finalrecord below.
+
 Launched2026-10-21 13:20:04Asia/Shanghai,local launcher31348/coordinator13112.
 W1nativeworker42016,remote b4ed7f44/Spectre322222(parent322164).
 W2nativeworker57580,remote7ca28707/Spectre322218(parent322160).
@@ -93,3 +97,48 @@ Transport-only fake-runner test verifies optional timeout isolation, requiredraw
 log retention andunchanged14400snative timeout. Localfree~13GB/32GBRAM,Efree92GB;
 parsing serialized. Scoped diffcheck clean; unrelated Obsidian trailingwhitespace
 was observed by globaldiffcheck andleft untouched. Complete results pending.
+
+At13:50local W1/W2 native logs both zeroerrors/7warnings,24valid8compareframes,
+solverparameterdifferences{},noCMI/LTE. Full~2GBraw andlogs downloaded; optional
+missing.ic/.fc are skipped with bounded transport receipts, no manualkill/rerun.
+W1serialparse began13:50:47 whileW3 nativeworker56028 started. W3 exactroot
+b27ac040,Spectre226693,parent226636. W2waitingfor serialparse. Native log-probe
+preliminary20point fit givesW1lag1.783593ns,gain-.153617%,remainingpeak158.561uV;
+W2lag.882236ns,gain-.082646%,remainingpeak54.505uV. These stillawaitcontinuous
+waveform cross-check; no widthdecision beforeW3. Analysisfigure labeling and
+old500kHz-amplitude-condition metadata refined without changing immutableinputs.
+
+By14:04local W1/W2bothparsed,result.ok true,parse325.57/328.06s. Independent
+continuous-wave extraction cross-checks logprobes,actualSAMPLE/sourcehistory,
+reportedsolverparams and24frameeventcounts. Held residualpeak158.560743/
+54.504658uV,RMS110.740937/38.199917uV. Trackingresidualpeak156.309/42.335uV,
+turnoffresidual17.095/18.399uV; highfrequencydiffers from500kHz attribution.
+Nativecode error vsnominalsource max6/3codes,vsactualheld max1/1; inputpair
+terminalpeaks.897741/.899580V. Do not interpret nominalsource codeerror asSAR
+logicfailure. Preedgequadraticwindow sensitivity~90uV,cubic3/5/8ns~1.34uV;
+primaryheld-fit metrics do not depend onthisextrapolation. W3now12/24normal,
+noCMI/LTE; still no finalWrecommendation orOAchange.
+
+Final at14:27local: allthree result.ok,24frames each/8compare-write-update,
+stable90/98codes,zeroerrors/7existingwarningseach,noCMI-2754 orLTErelaxation,
+reportedsolverparameterdiffs{}. Points1325663/1327374/1326635; sourceanalytic
+samples andacrossW identicalhistory/times,hashes/probes andexactreconstruction
+pass. Parse325.57/328.06/294.34s,oneparser only. Allrequiredraw/logs saved;
+sixabsentoptional.ic/.fc skips,no timeouts/manualkills/native rerun;allthree
+scopedremotecleanup returncodes0. Original500kHz inputs/results untouched.
+
+Lag1.783592/.882235/.574250ns,gain-.153617/-.082646/-.085977%; nonfundpeak
+158.561/54.505/40.619uV,RMS110.741/38.200/29.250uV. Phase-onlyerrorpeak
+.195338/.100217/.102888LSB. Rawpeaks40.091849/19.834526/12.889723mV,
+all20/20outside1.7578125mVgate. Do not declare originalacceptancepassed.
+Trackingremaining156.309/42.335/20.205uV,turnoffremaining17.095/18.399/22.942uV;
+quadraticpreedge sensitivity~90uV,cubicwindow<1.34uV,primaryheldfit independent.
+Nativecode errorvsnominal6/3/2,vsheld1/1/1; inputpairterminalmax.897741/
+.899580/.900352V <.99screen,not all-devicesignoff.
+
+W2recommended engineeringknee: significantamplitude/residual improvementvsW1;
+W3worsegain/phase-onlyamplitude andonly.001975LSBfurther nonfundpeak reduction.
+W1nominalresidual also below8bitbudget;recommendation is not a uniquelyrequired
+size orproof1xcan'tmeetENOB7. OAremains1x; noPVT/fullcode/FFT/noise/mismatch/
+powerqualification. Report/metrics/4figs andnarrowstatus/log,focusedvalidation
+andlocalresultcommit only. Non-overlapping usernotes/newplans preserved.

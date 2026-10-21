@@ -176,6 +176,9 @@ def extract(w):
         held_transfer=tr,held_fit=hi,raw_held_error=stats(held-source),phase_only_error=stats(phase_only),
         held_remainder=stats(remaining),held_remainder_peak_lsb=float(np.max(abs(remaining))/Q),
         held_remainder_rms_lsb=float(np.sqrt(np.mean(remaining**2))/Q),tracking_transfer=model.transfer(ti,si),
+        phase_only_peak_lsb=float(np.max(abs(phase_only))/Q),
+        gain_term_at_fullscale_endpoint_lsb=128*abs(tr["gain"]-1),
+        nonfund_rms_fraction_of_015LSB_budget=float(np.sqrt(np.mean(remaining**2))/(.15*Q)),
         tracking_remainder=stats(track_remaining),turnoff_increment=stats(off),turnoff_remainder=stats(off_remaining),
         turnoff_fit=oi,turnoff_common_mode_increment=stats(common),preedge_window_sensitivity=sensitivity,
         measured_held_within_original_budget=bool(np.all(abs(held-source)<Q*.25)),
@@ -200,7 +203,8 @@ def extract(w):
     code_times = 100*np.arange(4,10)+98
     view = dict(time_ns=view_t.tolist(),input_v=diff("vinp_src","vinn_src",view_t).tolist(),
         sample_ns=ns[:6].tolist(),source_v=source[:6].tolist(),held_v=held[:6].tolist(),
-        read_ns=code_times.tolist(),decoded_v=[-.9+(records[f]["code"]+.5)*Q for f in range(4,10)])
+        read_ns=code_times.tolist(),decoded_v=[-.9+(records[f]["code"]+.5)*Q for f in range(4,10)],
+        ideal_decoded_v=[-.9+(int(np.clip(np.floor((s+.9)/Q),0,255))+.5)*Q for s in source[:6]])
     run.dump(case/"analysis.json",summary);run.dump(case/"edge.json",edge);run.dump(case/"view.json",view)
     print("EXTRACTED_HF",w,tr,stats(remaining),flush=True)
     return summary,edge,view
@@ -243,11 +247,15 @@ def plot(results,edge_data,views):
     for r,v,a in zip(results,views,ax):
         a.plot(np.array(v["time_ns"])-400,v["input_v"],color="#888888",label="Continuous source")
         a.plot(np.array(v["sample_ns"])-400,v["source_v"],"kx",label="Ideal nominal samples")
-        a.plot(np.array(v["sample_ns"])-400,v["held_v"],"o",ms=4,label="Held at SAMPLE fall +0.6 ns")
+        a.plot(np.array(v["sample_ns"])+.6-400,v["held_v"],"o",ms=4,label="Held read at SAMPLE fall +0.6 ns")
         a.step(np.array(v["read_ns"])-400,v["decoded_v"],where="post",label="Decoded code; read at frame +98 ns")
-        a.set_ylabel(f"{r['width_multiplier']}x differential (V)");a.grid(alpha=.22);a.legend(fontsize=7,ncol=2)
+        a.step(np.array(v["read_ns"])-400,v["ideal_decoded_v"],where="post",color="#333333",ls="--",
+               label="Ideal nominal code; same read times")
+        a.set_ylabel(f"{r['width_multiplier']}x differential (V)");a.grid(alpha=.22)
+    handles,labels=ax[0].get_legend_handles_labels()
+    fig.legend(handles,labels,loc="upper center",ncol=2,fontsize=8)
     ax[-1].set_xlabel("Time from 400 ns (ns)")
-    fig.tight_layout();fig.savefig(target/"short_waveforms.png",dpi=170);plt.close(fig)
+    fig.tight_layout(rect=[0,0,1,.90]);fig.savefig(target/"short_waveforms.png",dpi=170);plt.close(fig)
     fig,ax = plt.subplots(3,1,figsize=(11.5,8),sharex=True)
     for r,e in zip(results,edge_data):
         for a,key in zip(ax,("gate_minus_input","tracking_increment_uv","raw_error_mv")):
@@ -257,8 +265,12 @@ def plot(results,edge_data,views):
     for a in ax:
         a.axvspan(-.05,.05,color="#dddddd",alpha=.4);a.axvline(0,color="#777777",ls=":")
         a.axvline(.6,color="#777777",ls=":");a.grid(alpha=.22);a.legend(fontsize=8)
-    ax[1].axhline(0,color="#777777",ls="--");ax[2].axhline(0,color="#777777",ls="--")
-    ax[2].axhspan(-Q*.25*1000,Q*.25*1000,color="#e1eee3")
+    ax[1].axhline(0,color="#777777",ls="--",label="Pre-edge prediction at sample")
+    ax[2].axhline(0,color="#777777",ls="--",label="Ideal nominal sample")
+    ax[2].axhspan(-Q*.25*1000,Q*.25*1000,color="#e1eee3",label="Original raw budget")
+    ax[1].legend(fontsize=8);ax[2].legend(fontsize=8)
+    ax[0].text(0,.98,"SAMPLE 50% fall",transform=ax[0].get_xaxis_transform(),ha="left",va="top",fontsize=8)
+    ax[0].text(.6,.98,"Held read",transform=ax[0].get_xaxis_transform(),ha="left",va="top",fontsize=8)
     fig.tight_layout();fig.savefig(target/"turnoff_edges.png",dpi=170);plt.close(fig)
 
 
@@ -277,6 +289,9 @@ def analyze():
         input_context_sha256=run.sha(OUT/"context.json"),all_native_runs_new=True,no_OA_adoption=True,
         qualified_full_ADC=False,selected_width=None,
         limits="20 samples/9 cycles, single TT amplitude; phase/gain separation is diagnostic, not a new raw acceptance gate or ENOB.",
+        low_frequency_conditions=dict(input_frequency_hz=500000,input_differential_peak_v=.8,
+            input_level_dbfs=float(20*np.log10(.8/.9)),
+            result_sha256=run.sha(ROOT/"verification/integration/b_sine_main_w_results.json")),
         low_frequency_comparison=[dict(width_multiplier=c["width_multiplier"],held_transfer=c["held_transfer"],
             held_remainder=c["held_remainder"],raw_held_error=c["raw_held_error"]) for c in low["cases"]],
         analysis_source_LF_sha256=hashlib.sha256(Path(__file__).read_text(encoding="utf-8").encode()).hexdigest(),
@@ -285,7 +300,7 @@ def analyze():
     run.dump(OUT/"comparison.json",comparison)
 
 
-def curate():
+def curate(recommend_width=None):
     r = run.read(OUT/"comparison.json")
     run.check()
     assert run.read(OUT/"flow.json")["stage"]=="awaiting_visual_review"
@@ -296,10 +311,13 @@ def curate():
         assert run.sha(OUT/"figures"/name)==digest
         shutil.copyfile(OUT/"figures"/name,target/name)
     r["figures_visually_reviewed_by_agent"] = True
+    r["recommended_width_multiplier"] = recommend_width
+    r["recommendation_is_not_OA_adoption_or_raw_budget_pass"] = True
     run.dump(ROOT/"verification/integration/b_hf_main_w_results.json",r)
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser();p.add_argument("--self-check",action="store_true");p.add_argument("--curate",action="store_true")
+    p.add_argument("--recommend-width",type=int,choices=[1,2,3])
     a=p.parse_args()
-    self_check() if a.self_check else (curate() if a.curate else analyze())
+    self_check() if a.self_check else (curate(a.recommend_width) if a.curate else analyze())
