@@ -2085,3 +2085,21 @@ human-triggered note in `docs/experience/`.
   Inspected the full Obsidian reading-mode rendering for alignment, overflow,
   timing-figure size and section spacing. Scoped diff-check/review before local
   documentation commit; no push requested this turn.
+
+### 2026-10-21 Explain illustrated wrap-up iterations
+
+- User requested repository-backed explanations for report sections2–5, not
+  captions alone. Plan2026-10-21-wrapup-evidence, starting HEAD5fcf073.
+- Explained historical Bootstrap sizing/stress/current-path/isolation work,
+  native Canvas replacement and separate eight-bit load/dynamic width results.
+  Explained SAR handshake protections, timing/recovery costs, simplification
+  and removed guarantees. Added dated file-inventory discrepancy, R3+B entry,
+  twelve-frame timer fix and inactive capacitor mismatch lesson.
+- Retained section1, all six image embeds and five-section layout. Added14
+  folded repository evidence links; no new simulation claims, image changes,
+  GUI actions, OA operations or other note edits. Historical/ideal and native
+  boundaries, unadopted3um candidate and remaining FF stress are explicit.
+- UTF-8/YAML, preserved section1/embeds, all14 source paths, preservation6/6
+  and diff-check pass. English scanner advisories reviewed manually against
+  Chinese prose and requested expansion. Scoped local documentation commit;
+  no push. Unrelated user note moves/drafts and cdac10_dualrail remain excluded.
