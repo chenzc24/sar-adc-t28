@@ -2103,3 +2103,21 @@ human-triggered note in `docs/experience/`.
   and diff-check pass. English scanner advisories reviewed manually against
   Chinese prose and requested expansion. Scoped local documentation commit;
   no push. Unrelated user note moves/drafts and cdac10_dualrail remain excluded.
+
+### 2026-10-21 Add waveforms and concise eight-bit Result
+
+- User requested figures/data and simplification. Plan2026-10-21-result-figures,
+  starting HEAD4bee1fb. Edited only relocated Rvision/Result.md, its old-path
+  deletion, new assets/result8 dependencies and plan/log; other notes unchanged.
+- Retained six heading anchors and core data, shortened repeated prose, added
+  nine original waveform/measurement PNGs with captions and two folded
+  diagnostics. Manifests preserve sources/reports/hashes; two formerly ignored
+  migration PNGs are now durable vault assets. All copies byte-identical.
+- Replaced pending width status with completed1/2/3um comparison; retained1um
+  OA adoption, raw budget failure, fitted-residual boundary,2um LTE caveat and
+  incomplete whole-ADC qualification. No reruns, OA, GUI, theme or image edits.
+- UTF-8/YAML, six anchors, embed/wiki/source targets, nine SHA256 pairs and
+  strict preservation107/107 pass. All figures visually reviewed. English
+  scanner/large-diff advisories manually checked against Chinese prose and
+  requested restructure. Full scoped review/diff-check before local commit;
+  no push. Other user relocations/drafts and cdac10_dualrail remain unstaged.
