@@ -1,0 +1,335 @@
+{
+  "policy_path": "config/sampling_acceptance.yaml",
+  "policy_sha256": "a46d1d279c442caaaabb23d998fa3b6f748e15ad0f0e2487af29a6f7a25a7fa0",
+  "system_spec_sha256": "2669774613b18df5a96f3b7c0ca765195a71ba57fdfc94ebbf9ffc8e5ca1baaf",
+  "system_spec": {
+    "project": {
+      "name": "SAR_ADC_T28",
+      "maturity": "electrical_macro_and_native_sampling_nominal_baseline"
+    },
+    "process": {
+      "foundry": "TSMC",
+      "node_nm": 28,
+      "platform": "CRN28HPC+ULL",
+      "technology_library": "tsmcN28"
+    },
+    "converter": {
+      "architecture": "fully_differential_sar",
+      "resolution_bits": 8,
+      "sample_rate_hz": 10000000,
+      "internal_sar_clock_hz": 200000000,
+      "internal_sar_clock_role": "legacy_synchronous_fixture_only",
+      "cdac_partition": "flat_binary",
+      "comparator": "strongarm_dynamic",
+      "control": "asynchronous",
+      "control_contract": "config/sar8_simple.yaml",
+      "control_implementation": "native_simple_async_bounded_verified_SOA_and_integration_open"
+    },
+    "supplies": {
+      "vdd_v": 0.9,
+      "vss_v": 0.0,
+      "vrefp_v": 0.9,
+      "vrefn_v": 0.0,
+      "input_common_mode_v": 0.45
+    },
+    "input": {
+      "mode": "differential",
+      "differential_range_v": [
+        -0.9,
+        0.9
+      ],
+      "dynamic_test_level_dbfs": -1.0
+    },
+    "timing_budget": {
+      "sample_ns": 40.0,
+      "conversion_ns": 60.0,
+      "bit_cycle_ns": 5.0
+    },
+    "targets": {
+      "enob_min_bits": 7.0,
+      "dnl_abs_max_lsb": 1.0,
+      "inl_abs_max_lsb": 1.0,
+      "power_max_mw": 1.0,
+      "missing_codes_allowed": 0
+    },
+    "behavioral_baseline": {
+      "fft_samples": 16384,
+      "coherent_bin": 7373,
+      "ramp_samples_per_code": 8
+    },
+    "error_budget": {
+      "sampling_noise_rms_lsb": 0.18,
+      "comparator_noise_rms_lsb": 0.18,
+      "reference_switching_noise_rms_lsb": 0.12,
+      "distortion_unmodeled_rms_lsb": 0.15,
+      "clock_jitter_rms_ps": 20.0,
+      "jitter_budget_input_hz": 4500000,
+      "cdac_settling_abs_max_lsb": 0.25,
+      "comparator_offset_abs_max_lsb": 0.25
+    }
+  },
+  "source_sha256": {
+    "verification/integration/b_sine_main_w_results.json": "58ec264b0765f09234aecf3c00e01ca721b12d311cfe625b08f661c37d35b6d7",
+    "verification/integration/b_hf_main_w_results.json": "1e43751f6470d4322ad57cbbd768a7e87352f15b652748f2232bd36b665976b4"
+  },
+  "analysis_source_LF_sha256": "05ae96397a8c501d41f114308bc6bff8addf4caf0c40336cc7c9ff693c3b8a5a",
+  "LSB_v": 0.00703125,
+  "cases": [
+    {
+      "equivalent_lag_ns": 1.781261224570439,
+      "gain": 0.9997418457200923,
+      "gain_error_percent": -0.025815427990771855,
+      "offset_uv": 0.0005928383039618419,
+      "gain_endpoint_error_lsb": 0.033043747828187975,
+      "nonfundamental": {
+        "peak_lsb": 0.001174686181681434,
+        "rms_lsb": 0.0007970759343252304
+      },
+      "raw": {
+        "peak_lsb": 0.6349722885587994,
+        "rms_lsb": 0.45063584796419437
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.030323762330400288,
+        "rms_lsb": 0.020784585453725406
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.030323762330400288,
+        "rms_lsb": 0.020784585453725406
+      },
+      "input_frequency_hz": 500000,
+      "input_differential_peak_v": 0.8,
+      "width_multiplier": 1,
+      "common_lag_ns": 1.781261224570439,
+      "common_vs_fitted_lag_difference_ps": 0.0,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.005313839562168203,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": false,
+      "historical_raw_gate_exceedance_count": 14,
+      "turnoff_nonfundamental_peak_uv": 6.009549320533521,
+      "turnoff_total_peak_uv": 327.692874945662,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": false,
+      "numerical_warning_events": []
+    },
+    {
+      "equivalent_lag_ns": 0.8819945197130391,
+      "gain": 0.9995293767830473,
+      "gain_error_percent": -0.04706232169526814,
+      "offset_uv": 0.0027593818686817064,
+      "gain_endpoint_error_lsb": 0.06023977176994322,
+      "nonfundamental": {
+        "peak_lsb": 0.0019676746002990817,
+        "rms_lsb": 0.0013961479803217844
+      },
+      "raw": {
+        "peak_lsb": 0.3187929692092932,
+        "rms_lsb": 0.22606982875551782
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.0550887416940466,
+        "rms_lsb": 0.0378887994246089
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.0550887416940466,
+        "rms_lsb": 0.0378887994246089
+      },
+      "input_frequency_hz": 500000,
+      "input_differential_peak_v": 0.8,
+      "width_multiplier": 2,
+      "common_lag_ns": 0.8819945197130391,
+      "common_vs_fitted_lag_difference_ps": 0.0,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.00930765320214523,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": false,
+      "historical_raw_gate_exceedance_count": 10,
+      "turnoff_nonfundamental_peak_uv": 13.087509106877917,
+      "turnoff_total_peak_uv": 460.3352382227532,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": true,
+      "numerical_warning_events": [
+        {
+          "code": "SPECTRE-16780",
+          "reported_time_ns": 1759.4099999999999,
+          "frame": 17,
+          "after_held_read_ns": 17.760000000000446,
+          "phase": "conversion_after_held_measurement",
+          "message": "LTE tolerance was temporarily relaxed to step over a discontinuity in the signal: XDUT.XCTRL.XBPN.XB2.XD_ON1.AB. Check the design or use '+diagnose' to get more information."
+        }
+      ]
+    },
+    {
+      "equivalent_lag_ns": 0.574213199444128,
+      "gain": 0.9993138667243205,
+      "gain_error_percent": -0.06861332756794569,
+      "offset_uv": 0.006767360629483014,
+      "gain_endpoint_error_lsb": 0.08782505928697049,
+      "nonfundamental": {
+        "peak_lsb": 0.00304785516607669,
+        "rms_lsb": 0.0021954867153800924
+      },
+      "raw": {
+        "peak_lsb": 0.21603402989435316,
+        "rms_lsb": 0.15524525830965327
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.0804851151880036,
+        "rms_lsb": 0.05524514910053062
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.0804851151880036,
+        "rms_lsb": 0.05524514910053062
+      },
+      "input_frequency_hz": 500000,
+      "input_differential_peak_v": 0.8,
+      "width_multiplier": 3,
+      "common_lag_ns": 0.574213199444128,
+      "common_vs_fitted_lag_difference_ps": 0.0,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.014636578102533949,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": true,
+      "historical_raw_gate_exceedance_count": 0,
+      "turnoff_nonfundamental_peak_uv": 21.048129847043132,
+      "turnoff_total_peak_uv": 624.2873419572969,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": false,
+      "numerical_warning_events": []
+    },
+    {
+      "equivalent_lag_ns": 1.7835923587062052,
+      "gain": 0.9984638285214684,
+      "gain_error_percent": -0.15361714785315783,
+      "offset_uv": 0.002650077131359007,
+      "gain_endpoint_error_lsb": 0.19662994925204202,
+      "nonfundamental": {
+        "peak_lsb": 0.022550861285045205,
+        "rms_lsb": 0.015749822084962135
+      },
+      "raw": {
+        "peak_lsb": 5.701951919957872,
+        "rms_lsb": 4.0663814212508935
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.19533753129877596,
+        "rms_lsb": 0.1249149590202747
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.19408182682037514,
+        "rms_lsb": 0.1250278868187001
+      },
+      "input_frequency_hz": 4500000,
+      "input_differential_peak_v": 0.802125844320371,
+      "width_multiplier": 1,
+      "common_lag_ns": 1.781261224570439,
+      "common_vs_fitted_lag_difference_ps": 2.331134135766355,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.10499881389974756,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": false,
+      "historical_raw_gate_exceedance_count": 20,
+      "turnoff_nonfundamental_peak_uv": 17.095363179793054,
+      "turnoff_total_peak_uv": 2485.2269696358094,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": false,
+      "numerical_warning_events": []
+    },
+    {
+      "equivalent_lag_ns": 0.88223532635335,
+      "gain": 0.9991735435438837,
+      "gain_error_percent": -0.08264564561163423,
+      "offset_uv": 0.0033906978756536427,
+      "gain_endpoint_error_lsb": 0.10578642638289182,
+      "nonfundamental": {
+        "peak_lsb": 0.0077517735965513005,
+        "rms_lsb": 0.0054328770676264895
+      },
+      "raw": {
+        "peak_lsb": 2.8209103967032925,
+        "rms_lsb": 2.0124311273044904
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.10021688283324516,
+        "rms_lsb": 0.06688862124093409
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.10031057405154481,
+        "rms_lsb": 0.06689087425032399
+      },
+      "input_frequency_hz": 4500000,
+      "input_differential_peak_v": 0.802125844320371,
+      "width_multiplier": 2,
+      "common_lag_ns": 0.8819945197130391,
+      "common_vs_fitted_lag_difference_ps": 0.2408066403108977,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.03621918045084326,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": false,
+      "historical_raw_gate_exceedance_count": 20,
+      "turnoff_nonfundamental_peak_uv": 18.398505322134596,
+      "turnoff_total_peak_uv": 2590.9058203724135,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": false,
+      "numerical_warning_events": []
+    },
+    {
+      "equivalent_lag_ns": 0.5742503281345598,
+      "gain": 0.9991402255390349,
+      "gain_error_percent": -0.08597744609650793,
+      "offset_uv": 0.006993470947981153,
+      "gain_endpoint_error_lsb": 0.11005113100353014,
+      "nonfundamental": {
+        "peak_lsb": 0.0057769321860076965,
+        "rms_lsb": 0.004160010880486529
+      },
+      "raw": {
+        "peak_lsb": 1.8332049953953502,
+        "rms_lsb": 1.3110154624922772
+      },
+      "per_frequency_phase_only": {
+        "peak_lsb": 0.10288843096952228,
+        "rms_lsb": 0.06947992643857744
+      },
+      "common_delay_phase_only": {
+        "peak_lsb": 0.10290184126200566,
+        "rms_lsb": 0.06947997800069967
+      },
+      "input_frequency_hz": 4500000,
+      "input_differential_peak_v": 0.802125844320371,
+      "width_multiplier": 3,
+      "common_lag_ns": 0.574213199444128,
+      "common_vs_fitted_lag_difference_ps": 0.03712869043182021,
+      "gain_screen_pass": true,
+      "joint_voltage_screen_pass": true,
+      "nonfundamental_rms_fraction_of_shared_budget": 0.02773340586991019,
+      "independent_sampling_nonlinearity_allocation_pass": null,
+      "historical_raw_gate_pass": false,
+      "historical_raw_gate_exceedance_count": 20,
+      "turnoff_nonfundamental_peak_uv": 22.941938840231803,
+      "turnoff_total_peak_uv": 2690.0475602226747,
+      "native_event_timing_pass": true,
+      "has_LTE_relaxation": false,
+      "numerical_warning_events": []
+    }
+  ],
+  "nominal_screen_eligible_widths": [
+    1,
+    2,
+    3
+  ],
+  "recommended_nominal_width_multiplier": 1,
+  "two_x_required_by_existing_nominal_evidence": false,
+  "no_new_simulation": true,
+  "no_OA_change": true,
+  "no_gain_or_DC_calibration": true,
+  "broadband_constant_delay_proven": false,
+  "qualified_full_ADC": false,
+  "qualification_scope": "Two nominal sine points only; shared distortion reserve is not a sampling-only budget."
+}

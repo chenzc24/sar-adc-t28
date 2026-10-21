@@ -51,6 +51,9 @@ behavioral_baseline:
   coherent_bin: 7373
   ramp_samples_per_code: 8
 
+# Sampling transfer acceptance is separated in config/sampling_acceptance.yaml.
+# Fixed phase delay is not added to random-noise RSS; numerical budgets below
+# are unchanged. CDAC settling and comparator offset retain their own guards.
 error_budget:
   sampling_noise_rms_lsb: 0.18
   comparator_noise_rms_lsb: 0.18

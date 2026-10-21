@@ -2257,3 +2257,30 @@ human-triggered note in `docs/experience/`.
   embeds and exact unowned-report text pass. Scoped diff-check/review and local
   commit only. No simulation, OA, image editing, GUI or push; old figures and
   user note edits elsewhere preserved.
+
+### 2026-10-21 Separate sampling acceptance and retain nominal1x
+
+- User authorized revised acceptance and a saved-data1/2/3x review, explicitly
+  no new simulation. Added config/sampling_acceptance.yaml and a standalone
+  analysis script/result, report and narrow status/budget/history notice.
+  design_spec receives only a policy comment; parsed values are unchanged.
+- Fixed equivalent delay is characterized separately from jitter, gain/DC and
+  nonfundamental remainder. Provisional gain endpoint allowance is .25LSB;
+  .15LSB RMS remains a shared system reserve, not an exclusive sampling budget.
+  Joint .25LSB peak screen retains gain/DC and uses one500kHz-derived delay per
+  width unchanged at both measured frequencies. No per-frame time warping or
+  physical gain/clock calibration. CDAC/comparator and full-ADC gates unchanged.
+- At4.5MHz1/2/3x gain endpoint errors .196630/.105786/.110051LSB, common-delay
+  joint peaks .194082/.100311/.102902LSB and nonfundamental RMS .015750/
+  .005433/.004160LSB. At500kHz joint peaks .030324/.055089/.080485LSB.
+  Retain1x nominal baseline;2x improves margin but is not required by current
+  nominal evidence. Supersedes prior2x recommendation, preserves its raw data.
+- Source SHA and original metrics unchanged, all6 saved records24frames/8/8/8
+  and stablecodes. Oldraw exceedances14/10/0 and20/20/20, lowfrequency2x LTE
+  warning retained. Synthetic delay/gain/DC/H2/H3 recovery, failing gain/DC
+  cases, exact reconstruction, repeatable JSON, compile, UTF8/YAML/links and
+  unchanged system values pass. No PVT/noise/mismatch/fullcode/FFT/power claim.
+- Followed write-page clarity guidance for local engineering prose; did not
+  create a cloud Page. Unrelated note/code changes and the independently
+  committed SAR timing comparison remain outside this target. Scoped local
+  commit only, no push, automation or OA change.

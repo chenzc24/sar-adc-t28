@@ -36,6 +36,21 @@ Executable sources: `config/design_spec.yaml`, `config/eight_bit_flat.yaml`,
 The [migration report](eight_bit_flat_migration.md) separates physical
 measurements from allocations.
 
+### Sampling transfer acceptance
+
+The [sampling acceptance policy](sampling_acceptance.md) separates equivalent
+fixed delay, gain/DC, and nonfundamental remainder. A nominal short-sine screen
+uses one low-frequency-derived delay per width at both measured frequencies
+and retains gain and DC in the remaining 0.25-LSB peak voltage error. The
+gain-only endpoint allowance of 0.25 LSB is a provisional engineering
+allocation, not an industry requirement. The existing 0.15-LSB RMS distortion
+reserve is shared by the entire ADC, not an exclusive sampling allowance.
+Raw source-at-clock differences remain recorded but are not a standalone
+dynamic accuracy veto when dominated by a fixed phase shift. This does not
+relax the CDAC settling or comparator offset gates, remove time-varying
+sampling errors, or replace output-code SNDR/ENOB verification. All numerical
+system targets and error allocations above remain unchanged.
+
 ## Preserved 10-bit allocation
 
 This is the stage-1 allocation for the default 10-bit, 10 MS/s fully
