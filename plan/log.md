@@ -2552,3 +2552,22 @@ human-triggered note in `docs/experience/`.
   dependencies. No verified backup; new detailed analysis may need rerunning.
 - PowerShell syntax/dry-run and focused completion/absence/receipt validation;
   scoped diff review/local commit only, no push. Unrelated dirty work retained.
+
+### 2026-10-21 Second approved local waveform cleanup
+
+- User explicitly confirmed the second 395-file historical batch; bounded
+  plan preceded changes. Reused first cleanup guards with a new receipt,
+  26 literal roots, >=5 MiB waveform-only names and exact byte/count gate.
+- Permanently removed 33,847,727,848 B / 31.523153 GiB from old CDAC sweeps,
+  initial CDAC transient/PVT, pre-B R3/edge timing, old sampling and macros.
+  All 395 absent; 13,781 retained files' content/metadata digest and eight
+  protected baseline/evidence hashes pass. Kept netlists/logs/metrics/figures,
+  current B/W1 and short tests, anomaly/B512 evidence, R4 and active R4
+  performance, selected controller and unrelated cdac10/user work.
+- E free93.828037->125.351818 GiB, net31.523781 GiB. No remote connection,
+  download, backup copy, simulation or process stop. New detailed historical
+  analysis may need re-simulation; no verified raw backup or Git restoration.
+- Second receipt: `verification/storage/2026-10-21-history-cleanup-2.json`;
+  cumulative report: 597 files / 71.455829 GiB. Focused syntax/dry-run and
+  receipt/absence/retention checks pass. Local scoped commit only, no push;
+  existing uncommitted R4 log entry preserved and excluded from this commit.
