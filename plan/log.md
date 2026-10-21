@@ -2019,3 +2019,25 @@ human-triggered note in `docs/experience/`.
   pass. Initial Windows stdin encoding mismatch resolved by python -X utf8,
   no content change. Diff-check and bounded staged review performed; local
   documentation commit only, no push. Open the new folder manually as a vault.
+
+### 2026-10-21 Fill five eight-bit Obsidian notes
+
+- User established Head/Spec/Result/Revision/Wrap-up & Experience and requested
+  clear, concise eight-bit-only content. Plan2026-10-21-obsidian-eight-bit,
+  starting HEADe9e92ad. Preserved filenames and the user's original-note moves;
+  old broad history stays recoverable in Git and unchanged engineering reports.
+- Filled overall architecture/current ideal boundaries, eight-bit budget and
+  verification flow, condition-bound results, seven iteration decisions and
+  six linked lessons. Corrected README vault entry. No new figures or hierarchy.
+- Kept behavior/macro/native joint performance separate. R3-before-B and B
+  history/sine data are explicitly distinct. Raw4.464649mV sampling failure is
+  retained; fitted residual is not a substituted pass. Main-W2/3 remain pending
+  reviewed evidence, not adopted sizes or newly monitored jobs.
+- Inspected saved B export to resolve an evidence-description inconsistency:
+  joint MOM uses18 multi groups, not512 independent declarations. Independent
+  units belong to the separate capacitor mismatch fixture. Notes use the export
+  evidence; source reports are outside scope and unchanged.
+- Full note readback, UTF-8/YAML,31wiki links/heading anchors,19source paths,
+  budget arithmetic, eight-bit scope and diff-check pass. Scoped staged review
+  and local documentation commit; no push, OA, simulator, PDK, GUI or settings
+  changes. Concurrent main-W plan/run/analyzer and cdac10_dualrail stay excluded.

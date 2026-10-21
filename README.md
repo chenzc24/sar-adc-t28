@@ -8,7 +8,7 @@ the TSMC 28 nm HPC+ ULL platform. Active specification:
 ## Project progress and file navigation
 
 For collaboratively edited, reader-facing Chinese notes, open
-[`Obsidian_docs/首页.md`](Obsidian_docs/首页.md). The `Obsidian_docs/` folder
+[`Obsidian_docs/Head.md`](Obsidian_docs/Head.md). The `Obsidian_docs/` folder
 can be opened as a separate Obsidian vault. It keeps curated explanations
 apart from the engineering reports below; existing reports are not moved.
 
