@@ -2147,3 +2147,30 @@ human-triggered note in `docs/experience/`.
   recommendation pending. Addedsource/config/status andlaunchplan; scopedlocal
   commit only. Globaldiffcheck saw unrelatedusernote trailingwhitespace, left
   untouched; owned-path check clean.
+
+### 2026-10-21 Present final result figures and bench context
+
+- User requested top-plate CM/DM, separate minimal timing rows, final-design
+  figures without iteration clutter, and environment/module status on every
+  figure. Plan2026-10-21-result-final-figures, starting HEAD53722d8.
+- Replotted seven saved-data results to PNG/SVG with provenance: electrical
+  macro, selected1um sampling, selected MOM local-MC, adopted initial StrongARM,
+  simple_v2 SAR, current R3+B conversion and1um continuous input. CM=(P+N)/2,
+  DM=P-N; original analog clocks retained. Normal CM scale avoids magnifying
+  numerical noise. All headers state conditions, native/ideal/macro/disconnected
+  modules and random-effects status. No reference-error panel or old versions.
+- Result keeps six anchors and user comparator-table formatting; removed prior
+  nine embeds and iteration tables/candidate curves, retaining source reports
+  and archived assets. Concise note now about3900 characters versus5458. Raw
+  4.464649mV/14-of-20 failure remains; code correctness is a separate result.
+- Plot execution/compile, CM/DM algebra,8/8/8 edges,192/145/142 codes, displayed
+  191.3676ps cycle, MOM statistics, input/image/generator hashes and Markdown/
+  YAML/embeds pass. Seven final images visually reviewed after refinements.
+  Selected-only Bootstrap error differs from paired original by3.62nV and
+  rounds to the same-.1264mV; this source distinction is recorded.
+- Only Result,new reporting script/assets and plan/log staged for local commit.
+  No simulation, OA, GUI, image editing or push; dirty Wrap-up, pending HF source/
+  report, user note moves and cdac10_dualrail remain excluded.
+- SVG serialization whitespace normalized after diff-check, with identical
+  PNG hashes and valid XML. Staged check passes; global unstaged check reports
+  only pre-existing user Wrap-up line13 trailing space, preserved as-is.
