@@ -1,6 +1,6 @@
 {
-  "status": "running_native_recovered",
-  "snapshot_utc": "2026-10-21T11:08:29.541915+00:00",
+  "status": "native_exited_incomplete",
+  "snapshot_unix_s": 1792581633.932897,
   "plan": "plan/2026-10-21-b-dynamic-512/plan.md",
   "frozen_source_commit": "7875a3aaea30ce9f23222cf063c65287aa85aaac",
   "result_ok": null,
@@ -9,14 +9,17 @@
   "requested_frames": 516,
   "warmup_frames": 4,
   "requested_observed_points": 512,
-  "completed_frames_at_snapshot": 90,
-  "observed_frames_at_snapshot": 86,
+  "completed_frames_at_snapshot": 95,
+  "observed_frames_at_snapshot": 91,
   "sample_rate_hz": 10000000,
   "input_frequency_hz": 4511718.75,
   "input_level_dbfs": -1,
   "input_common_mode_v": 0.45,
   "native_pid": 4639,
-  "native_still_running_at_snapshot": true,
+  "native_still_running_at_snapshot": false,
+  "raw_last_time_s": 9.556070993902292e-6,
+  "remote_raw_bytes": 25599275008,
+  "native_exit_cause": "unknown",
   "native_completion_footer": null,
   "exact_scratch": "/tmp/virtuoso_bridge_chenzc_intern25/90590/virtuoso_bridge_spectre/cf76d807",
   "collection_failure": {
@@ -35,8 +38,8 @@
     "invalid_conversion_records": [],
     "CMI": false,
     "fatal_lines": [],
-    "LTE_count": 1,
-    "LTE_note": "Previously disclosed SPECTRE-16780 at566.964ns; unchanged at this snapshot. No clean-numerical qualification.",
+    "LTE_count": 2,
+    "LTE_note": "Previously disclosed566.964ns SAR internal node; second on XBPN.XB3.XD_ON1.AB near9.5557us. No clean-numerical qualification; no evidence this caused exit.",
     "full_waveform_stress_and_power_review_complete": false
   },
   "dynamic_metrics": {
@@ -52,7 +55,7 @@
   "monitor": {
     "automation_id": "b",
     "target_thread_id": "01a15885-71ef-7233-97d6-2d8e2d2a023c",
-    "status": "ACTIVE",
+    "status": "PAUSED",
     "readback_confirmed": true,
     "other_automations_changed": false
   },
@@ -70,7 +73,18 @@
     "do_not_fabricate_result_ok": true,
     "whole_run_collection_completed": false
   },
+  "remote_only_mode": {
+    "policy": "config/b_dynamic_512_data_policy.yaml",
+    "analysis_location": "remote",
+    "complete_waveform_download_disabled": true,
+    "status_metrics_executed_remotely": true,
+    "full_dynamic_analysis_ready_or_complete": false,
+    "assets_allowed": ["metrics_json", "figure_png"],
+    "native_rerun_authorized": false,
+    "local_or_remote_data_deleted": false
+  },
   "evidence": [
+    "output/b_dynamic_512/remote_only_status.json",
     "output/b_dynamic_512/recovery_launch.json",
     "output/b_dynamic_512/recovery_identity.json",
     "output/b_dynamic_512/recovery_fixture.json",
@@ -81,5 +95,5 @@
     "output/b_dynamic_512/coordinator_error.log",
     "output/b_dynamic_512/monitor_query_error.json"
   ],
-  "qualification": "No whole-capture performance conclusion. No transient noise, PVT, mismatch, full-code or physical-total-power qualification."
+  "qualification": "Incomplete native capture, no normal footer or recoverable OS exit status. No whole-capture FFT/performance conclusion. No noise/PVT/mismatch/full-code/physical-total-power qualification."
 }

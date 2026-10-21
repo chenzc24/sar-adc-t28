@@ -99,6 +99,7 @@ def complete_gate(progress, log):
 
 def download_ranges(remote_path, target, size, digest, fetch, chunk_bytes=RANGE_BYTES):
     """Checkpoint accepted byte ranges; a disconnect never appends partial data."""
+    if remote_path == PACKED: flow.require_local_waveform_permission()
     target = Path(target)
     assert target.resolve().is_relative_to(flow.OUT.resolve())
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -157,6 +158,7 @@ def download_ranges(remote_path, target, size, digest, fetch, chunk_bytes=RANGE_
 
 def fetch_range(remote_path, offset, length, target):
     assert remote_path in (PACKED, CONTROL + '/fixture.bin') and offset % BLOCK == 0
+    if remote_path == PACKED: flow.require_local_waveform_permission()
     ssh = client()
     try:
         runner = ssh.spectre_runner
@@ -173,6 +175,7 @@ def fetch_range(remote_path, offset, length, target):
 
 
 def pack_and_collect(progress):
+    flow.require_local_waveform_permission()
     log = query('cat ' + REMOTE + '/spectre.out')
     complete_gate(progress, log)
     # Raw must be stable and enough headroom must remain even for incompressible gzip.
@@ -232,6 +235,7 @@ def pack_and_collect(progress):
 
 
 def watch():
+    flow.require_local_waveform_permission()
     assert not (flow.OUT / 'interruption.json').exists()
     assert flow.read(flow.OUT / 'flow.json')['stage'] == 'failed', 'Explicit recovery only'
     os.close(os.open(flow.OUT / 'recovery_watch.lock', os.O_CREAT | os.O_EXCL | os.O_WRONLY))

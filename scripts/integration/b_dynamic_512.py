@@ -52,6 +52,16 @@ def dump(path, data):
             time.sleep(min(.02 * 2**attempt, .2))
 
 
+def data_policy():
+    path = ROOT / 'config/b_dynamic_512_data_policy.yaml'
+    return yaml.safe_load(path.read_text(encoding='utf-8')) if path.exists() else {}
+
+
+def require_local_waveform_permission():
+    if data_policy().get('download_complete_waveform') is not True:
+        raise RuntimeError('Complete local waveform transfers are disabled; analyze remotely and return metrics/figures only')
+
+
 def stage(name, **details):
     dump(OUT / 'flow.json', dict(stage=name, updated_utc=datetime.now(timezone.utc).isoformat(), **details))
 
@@ -156,6 +166,8 @@ class LosslessTransfers:
     def __getattr__(self, key): return getattr(self.runner, key)
 
     def download(self, remote_path, local_path, recursive=False, timeout=None):
+        if recursive or remote_path.endswith(('.gz', '.pickle', '.tran.tran')):
+            require_local_waveform_permission()
         from virtuoso_bridge.transport.ssh import CommandResult
         if not recursive:
             return self.runner.download(remote_path, local_path, timeout=60)

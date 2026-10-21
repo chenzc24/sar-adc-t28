@@ -218,3 +218,58 @@ tested1e53989 collector, no coordinator/native restart; its single writer and
 fresh heartbeat unique writer do not share pending files. Future offline
 subprocesses load the corrected pure gate.90->92->93 real frames confirm
 ongoing progress and empty recovery error log. All frozen source checks pass.
+
+## Remote analysis only and storage review
+
+User now explicitly requires remote analysis, metrics/figures only returned
+to PC, progress attention restored if the original run remains alive, and a
+local historical cleanup-candidate list with NO deletion. This supersedes
+all earlier full-gzip download/cleanup permissions. No complete waveform,
+waveform pickle or raw archive may be downloaded, and no historical/local/
+remote data may be deleted during this target.
+
+Extend ownership to config/b_dynamic_512_data_policy.yaml,
+scripts/integration/b_dynamic_512_remote.py,
+scripts/integration/b_dynamic_512_remote_status.py,
+verification/integration/test_b_dynamic_512_remote_policy.py,
+docs/storage_cleanup_candidates.md and generated output/storage_audit/.
+Only exact scratchcf76d807/remote_analysis_v1 helper files may be created
+remotely; OA and shared bridge/PDK remain read-only. Existing Obsidian/cdac10/
+other-plans dirty work atHEAD1dd1c6c is unrelated and preserved, index empty.
+
+First independently verify original process and terminal log: local flow has
+since failed at11:14:58UTC with incomplete frame history, so do not falsely
+reactivate a completed/failed run or silently restart Spectre. Implement
+fail-closed local bulk-transfer guards and a standard-library remote status
+reducer, returning only bounded JSON metrics, not the native log or raw.
+Check remote runtime capability before claiming full analysis readiness.
+If native is alive, resume only b with remote-only status/analysis rules; if
+it exited incomplete, preserve data, keep b paused, report the blocker and
+request native rerun authorization. No full512 FFT from partial data.
+
+Inventory only this project's generated output metadata for cleanup review;
+distinguish derived caches with a same-run PSF from unique raw evidence that
+requires a rerun to recover. Do not call a directory expendable solely
+because Git ignores it. List exact paths/sizes/evidence constraints, not
+delete commands. Validate raw-transfer refusal, small-result allowlist/size
+cap, remote metric/schema/current exactidentity and audit sums; focused local
+commit/no push. No new simulation or unapproved dependency installation.
+
+Implemented and verified remote standard-library status extraction on the
+existingPython2.7.5; only~2KiB JSON returned. Original4639 and all matching
+native commands absent;95/516 completed records/91observed, rawlast9.556070994us,
+rawbytes25,599,275,008, no normal footer,2LTE/noCMI/fatal/invalid/gross records.
+No interruption receipt or exit status establishes the cause. Flow now
+native_exited_incomplete; b must remainPAUSED, not falsely restored as live.
+Full remote dynamic reducer/plot environment has not been implemented or
+validated because the original capture cannot meet516-frame completeness.
+Explicit rerun authority is required before another native launch.
+
+New policy hard-blocks original bulk downloader, range fetch and legacy
+watch/packing entries; only boundedJSON/PNG results permitted. Two focused
+policy/asset-size tests pass; exact remote deck hash still frozen. Local
+metadata audit finds106.947GiB output,236files>100MiB totaling81.332GiB.
+One814,368,482byte JSON duplicate pair has equalSHA;10derivedpickle candidates
+with a same-case PSF total5.611GiB, including a current self-check fixture.
+docs/storage_cleanup_candidates.md distinguishes these from57.007GiB of
+large unique/nativePSF requiring backup decisions. No data deleted or moved.

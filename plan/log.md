@@ -2481,3 +2481,26 @@ human-triggered note in `docs/experience/`.
   focused cases and three offline-environment cases pass after that fix.
   Loaded collector remains1e53989, no process restart; future reducer imports
   corrected guard. Native progress90->92->93 with no new alarms/error output.
+
+### 2026-10-21 Enforce remote-only results and audit historical storage
+
+- User prohibited full waveform downloads and explicitly requested remote
+  analysis/metrics+figures only, progress attention and a no-delete cleanup
+  list. Plan updated first; unrelated dirty work preserved. New data policy
+  disables PSF/gzip/pickle transfer and old local collector/packing entry;
+  boundedJSON1MiB/PNG4MiB/batch20MiB limits, no native rerun or cleanup.
+- Read-only remote status helper executes on existingPython2.7.5, returns
+  ~2KiB metrics only. Original4639/all matching native absent;95/516frames,
+  rawlast9.556070994us/25,599,275,008bytes, no completionfooter.2LTE, no
+  invalid/gross/CMI/fatal record; cause/OSexitstatus unknown and no automatic
+  interruption receipt. No raw/log download, remote dependency installation,
+  circuit/solver/OA write, native restart or deletion. Full remote dynamic
+  analysis unavailable for incomplete capture; ask rerun direction, keepb
+  paused instead of claiming resumed progress. Exact frozen deck hash passes.
+- Two focused policy/size/legacy-collector refusal tests pass. Metadata-only
+  local audit:output106.947GiB;236files>100MiB total81.332GiB. SHA-identical
+  JSON pair814,368,482bytes each;10same-case-PSF pickle candidates5.611GiB;
+  raw57.007GiB is not expendable cache. Checklist includes regression/cache
+  dependencies and unique-evidence risks. No files moved/deleted or bulk copy.
+- Document skill separates verified status from full-analysis readiness,
+  and cleanup candidates from authorization. Local focused commit/no push.
