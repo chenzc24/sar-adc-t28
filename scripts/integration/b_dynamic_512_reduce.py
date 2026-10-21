@@ -196,8 +196,15 @@ def reduce():
     ctx = flow.read(flow.OUT / 'context.json')
     result = flow.read(flow.OUT / 'result.json')
     receipt = flow.read(flow.OUT / 'raw_receipt.json')
-    assert result['ok'] and flow.sha(receipt['local_gzip']) == receipt['gzip_sha256']
     log = (flow.OUT / 'spectre/spectre.out').read_text(errors='replace')
+    if not result['ok']:
+        # Preserve failed execution status; only a complete recovered dataset
+        # is eligible for conditional analysis, never a partial gzip.
+        from b_dynamic_512_recover import complete_gate
+        assert result.get('recovery_capture_complete') and result['metadata']['original_transport_failed']
+        assert result['metadata']['native_os_exit_status'] is None
+        complete_gate(dict(native_processes=[], clear_anomaly_reasons=[]), log)
+    assert flow.sha(receipt['local_gzip']) == receipt['gzip_sha256']
     measurements = monitor(log)
     probes = re.findall(r'BSINE,(\d+),([^\s,]+),([^\s,]+),([^\s,]+)', log)
     assert len(measurements) == len(probes) == 516
@@ -263,7 +270,7 @@ def reduce():
         power_summary[group] = dict(frames=rows, startup_first_frame=rows[0], warmup=aggregate(rows[:4]), observed=aggregate(rows[4:]))
     for value in currents.values(): value['observed_mean_a'] = value.pop('observed_integral_a_ns') / 51200
     flow.dump(flow.OUT / 'reduced.json', dict(frames=frames, stress=list(stress.values()), power=power_summary,
-        current_stats=currents, native_result_ok=result['ok'], reported_solver_parameters=params,
+        current_stats=currents, native_result_ok=result['ok'], execution_provenance=result.get('metadata', {}), reported_solver_parameters=params,
         native_warnings=[s.strip() for s in log.splitlines() if 'WARNING (' in s],
         initial_DC_notices=[s.strip() for s in log.splitlines() if any(k in s for k in ('GminDC =', 'dV(TOP', 'Bad pivoting'))],
         phase_events=len(state_rows(log, 'R3PHASE')), restore_events=len(state_rows(log, 'R3RESTORE')),

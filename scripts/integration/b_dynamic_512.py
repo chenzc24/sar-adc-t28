@@ -27,6 +27,14 @@ os.environ.setdefault('VB_DISABLE_CONTROL_MASTER', '1')
 os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
 
 
+def sha(path):
+    """Bound memory for the full compressed capture as well as small inputs."""
+    digest = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for block in iter(lambda: stream.read(2**20), b''): digest.update(block)
+    return digest.hexdigest()
+
+
 def stage(name, **details):
     dump(OUT / 'flow.json', dict(stage=name, updated_utc=datetime.now(timezone.utc).isoformat(), **details))
 
@@ -135,6 +143,14 @@ class LosslessTransfers:
         if not recursive:
             return self.runner.download(remote_path, local_path, timeout=60)
         assert re.fullmatch(re.escape(short.hf.REMOTE_BASE) + r'/[0-9a-f]{8}/' + NAME + r'\.raw', remote_path)
+        # A broken execution SSH connection may return while native Spectre
+        # is still alive. Never start compression from a download callback alone.
+        root = remote_path.rsplit('/', 1)[0]
+        gate = self.runner.run_command(f'cat {shlex.quote(root + "/spectre.out")}; '
+            f'ps -u chenzc_intern25 -ww -o comm,args', timeout=30)
+        assert gate.returncode == 0 and 'spectre completes with 0 errors' in gate.stdout, 'Native completion not verified'
+        assert not any(line.split(None, 1)[0] == 'spectre' and root + '/' + NAME + '.scs' in line
+            for line in gate.stdout.splitlines() if line.strip()), 'Native still running; preserve raw'
         stage('compressing_native', total_frames=516)
         raw = remote_path + '/tran_b_sine.tran.tran'
         packed = raw + '.gz'
@@ -200,6 +216,7 @@ def status():
                 assert result.returncode == 0
                 log = result.stdout
                 ps = ssh.spectre_runner.run_command('ps -u chenzc_intern25 -ww -o pid,ppid,etime,pcpu,comm,args; df -Pk /tmp', timeout=25)
+                assert ps.returncode == 0, ps.stderr
                 for line in ps.stdout.splitlines():
                     parts = line.split(None, 5)
                     if len(parts) == 6 and parts[0].isdigit() and folder + '/' + NAME + '.scs' in parts[5]:

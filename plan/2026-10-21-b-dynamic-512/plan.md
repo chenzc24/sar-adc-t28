@@ -153,3 +153,50 @@ collector without user direction. Record the failed collection chain and
 pause only heartbeatb after confirming its exact identity; ask whether to
 reattach monitoring/collection to the still-running original job. No final
 FFT or qualification is possible from this incomplete local capture.
+
+## Authorized collection repair
+
+User replied "修复" after the failure report, authorizing reattachment of
+monitoring and collection to original4639/cf76d807, not another simulation.
+At repair start HEAD4603dfe, index empty; existing Obsidian/cdac10 and other
+plans are unrelated. Add owned scripts/integration/b_dynamic_512_recover.py,
+scripts/integration/b_dynamic_512_pack.sh and focused
+verification/integration/test_b_dynamic_512_recovery.py. Existing runner,
+reducer/analyzer and factual reports remain owned. Shared bridge stays read
+only. Remote OA none; scratch mutations limited to a separate recovery
+packing control directory and a new lossless gzip, preserving old partial
+gzip/raw/log/deck. Original launch receipt and failure snapshots remain intact.
+
+Repair steps: bind exact host/profile/PID/process-start/deck/include hashes;
+use short fresh SSH status queries with bounded reconnects, not a live SSH
+session as the native lifetime. Require absent native process, explicit
+normal zero-error footer, complete consecutive516 measurement/probe frames,
+no fatal and stable raw before packing. Detach only a uniquely locked gzip/
+hash worker (never Spectre); poll its atomic completion/failure marker, never
+relaunch an uncertain worker. Download immutable compressed bytes in resumable
+bounded ranges with per-range checkpoint hashes and final full-gzip SHA.
+Original remote raw and gzip are retained until full decompressed SHA review.
+Do not invent the lost original OS exit status: preserve result.ok=false if
+unrecoverable; a separately identified complete recovered capture may be
+analyzed from its explicit footer/frame/hash evidence, with this execution
+provenance carried through metrics and no clean execution qualification.
+
+Validate completion/active/wrongPID/fatal/partial gzip gates and simulated
+interrupted-range resume offline; one small transfer fixture in the exact
+owned scratch is allowed, not a circuit test. Verify frozen DUT/solver hashes,
+launch one hidden local reattachment coordinator only, then read back growing
+original progress and reactivate only heartbeatb with updated repair rules.
+Keep previous alarm thresholds, quiet progress, no circuit changes or native
+restart; finish whole-capture review under the original plan when available.
+Focused local repair commit, no push.
+
+Repair validation: five focused offline tests pass for terminal completeness/
+active/fatal/duplicate history, wrong host/source/PID, disconnected execution
+classification, interrupted range retries/resume, crash-tail reconciliation
+and corrupt prefix rejection. One1,560,000byte fixture roundtrip in the exact
+scratch matchesSHA7bfbc968e1e2f7ffbc2b93a9e1afbbc48bfb59a3e433aebbd603d4b6e259ba89;
+remote sh-n validates the packing worker. Existing native-frame reducer and
+FFT/ADCToolbox self-checks still pass. New stream SHA avoids reading the full
+~34GiB gzip into RAM. Remote exact deck/5includes match frozen hashes; native
+PID4639/startticks1449028686 still live. No native launch, termination, OA/
+circuit/solver write or original scratch cleanup occurred during repair.

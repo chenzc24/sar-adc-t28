@@ -2440,3 +2440,27 @@ human-triggered note in `docs/experience/`.
 - Document skill keeps collection failure separate from circuit performance.
   Local scoped report/plan/results commit only, no push; unrelated dirty
   Obsidian/cdac10 work preserved. Focused JSON/identity/readback/diff checks.
+
+### 2026-10-21 Repair B512 monitoring and collection without native restart
+
+- User explicitly authorized repair. Existing target plan expanded before
+  edits; exact4639/cf76d807 only, shared bridge/PDK/OA and unrelated work
+  remain read-only. Add a reattachment coordinator with no native launch path,
+  a uniquely locked detached gzip/hash worker, short bounded SSH queries,
+  resumable64MiB download checkpoints and per-range/final SHA checks.
+- Refuse compression while native lives or without complete516 measurement/
+  probe history and normal zero-error footer. Preserve early partialgzip;
+  use a separate recovery_v1/full.tran.tran.gz. Stream SHA in1MiB blocks
+  instead of the inherited read_bytes hashing of an estimated34GiB file.
+- Preserve lost original OS exit status asunknown/result.ok=false; only a
+  complete separately gated recovered capture may proceed to conditional
+  offline reduction. Propagate execution provenance and a failed execution
+  qualification, never fabricate native rc0 or remove the known LTE notice.
+- Five focused offline tests, Python compile, old native-frame reducer and
+  FFT/ADCToolbox self-checks pass.1,560,000byte exactscratch fixture download
+  matches expected SHA, remote worker sh-n passes, remote deck/5include hashes
+  match immutable inputs and originalPID/startticks1449028686 remain active.
+  No new circuit test, native kill/restart, OA write or data cleanup.
+- Preparation source commit only, no push. Hidden local watch launch and
+  sameheartbeatb reactivation follow verified preparation; launch readback
+  will be recorded separately, not inferred from test success.

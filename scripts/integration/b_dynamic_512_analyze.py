@@ -157,7 +157,8 @@ def analyze(curate=False):
     output_fit = fit_transfer(actual, ts, cfg, peak)
     common = peak * np.sin(2 * np.pi * cfg['input_frequency_hz'] * (ts - cfg['sampling_common_delay_ns']) * 1e-9 - .4 * np.pi)
     joint = np.array([r['held_v'] for r in rows]) - common
-    failures = dict(functional_frames=[r['frame'] for r in reduced['frames'] if not r['functional_pass']],
+    failures = dict(execution_contract=not reduced['native_result_ok'],
+        functional_frames=[r['frame'] for r in reduced['frames'] if not r['functional_pass']],
         gross_code_vs_held_frames=[r['frame'] for r in rows if abs(r['code_minus_held_ideal']) > 1],
         cdac_settling_frames=[r['frame'] for r in rows if r['precompare_settling_vs_held_peak_lsb'] > .25],
         terminal_devices=[r['path'] for r in reduced['stress'] if not r['screen_pass']],
@@ -175,7 +176,7 @@ def analyze(curate=False):
         nominal_deterministic_dynamic_target_pass=performance_pass,
         qualified_full_ADC=False, physical_total_power_qualified=False,
         report_scope='one_TT_coherent_512_point_capture_no_noise_mismatch_PVT_fullcode',
-        native_result_ok=reduced['native_result_ok'], native_footer=reduced['native_footer'],
+        native_result_ok=reduced['native_result_ok'], execution_provenance=reduced.get('execution_provenance', {}), native_footer=reduced['native_footer'],
         native_warnings=reduced['native_warnings'], initial_DC_notices=reduced['initial_DC_notices'],
         frames=reduced['frames'], power=reduced['power'], stress=reduced['stress'], current_stats=reduced['current_stats'],
         phase_events=reduced['phase_events'], restore_events=reduced['restore_events'], points=reduced['points'],
