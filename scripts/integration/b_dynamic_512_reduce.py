@@ -54,14 +54,19 @@ def frame_stream(stream, frame_ns=100):
         previous = current
         buffers[0].append(current)
         for dest, value in zip(buffers[1:], values): dest.append(value)
-    def chunk_ready(): return buffers[0] and buffers[0][-1] * 1e9 >= (frame + 1) * frame_ns - 1e-6
+    def chunk_ready(eof=False):
+        if not buffers[0]: return False
+        delta_ns = buffers[0][-1] * 1e9 - (frame + 1) * frame_ns
+        # Never flush before a boundary during streaming: sub-fs native points
+        # can exist just before stop. Only EOF may tolerate roundoff at stop.
+        return delta_ns >= 0 or (eof and abs(delta_ns) < 1e-5)
     ended = False
     for line in stream:
         s = line.strip()
         if not s: continue
         if s == 'END':
             append_point(); ended = True
-            if chunk_ready():
+            if chunk_ready(eof=True):
                 yield frame, {k: np.asarray(v) for k, v in zip(keys, buffers)}
                 frame += 1
             break
@@ -319,6 +324,14 @@ def self_check():
     synthetic = 'SWEEP\n"time" "sweep"\nTRACE\n"v" "V"\nVALUE\n"time" 0\n"v" 1\n"time" 99e-9\n"v" 2\n"time" 101e-9\n"v" 3\n"time" 200e-9\n"v" 4\nEND\n'
     parts = list(frame_stream(io.StringIO(synthetic)))
     assert [i for i, _ in parts] == [0, 1]
+    close_boundary = synthetic.replace('99e-9', '99.9999999e-9').replace('101e-9', '100e-9')
+    close_boundary = close_boundary.replace('"time" 200e-9', '"time" 199.9999999e-9\n"v" 3.5\n"time" 200e-9')
+    parts = list(frame_stream(io.StringIO(close_boundary)))
+    unique_times = np.unique(np.concatenate([w['time'] for _, w in parts]))
+    assert len(parts) == 2 and len(unique_times) == 5 and abs(unique_times[-1] * 1e9 - 200) < 1e-8
+    roundoff_end = close_boundary.replace('"time" 200e-9', '"time" 199.99999999e-9')
+    parts = list(frame_stream(io.StringIO(roundoff_end)))
+    assert len(parts) == 2 and len(np.unique(np.concatenate([w['time'] for _, w in parts]))) == 5
     packed = gzip.compress(synthetic.encode())
     hashed = HashedRaw(gzip.GzipFile(fileobj=io.BytesIO(packed)))
     with io.TextIOWrapper(io.BufferedReader(hashed)) as src: list(frame_stream(src))

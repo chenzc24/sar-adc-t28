@@ -2407,3 +2407,9 @@ human-triggered note in `docs/experience/`.
 - Scoped source and launch documentation commits only, no push. Existing
   Obsidian/cdac10 edits and independently committed timer-review report remain
   outside this target; current design/oldresults/PDK all preserved.
+
+- Post-launch local-only parser audit corrected premature1fs-tolerance frame
+  flush near stop; close-boundary/EOF-roundoff synthetic checks and native
+  power/held equivalence pass. Full native data are untouched, still running;
+  preserve initial launch hash and record actually used reducer hash later.
+  No topology/timing/precision/input/native restart or other task changes.

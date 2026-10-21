@@ -123,3 +123,11 @@ Normal state/progress remains silent, only clear failure/action/completion
 notifies. Keep desktop awake/networked for the local coordinator/SSH/result
 collection. After whole batch, report actual performance including failures,
 then pause b only. No other automation, oldR3 or external task changed.
+
+After launch, offline reducer boundary review found that an intermediate
+1fs-tolerance flush could omit a last point just before stop. Corrected only
+the new local reducer to require reaching a boundary until EOF (roundoff
+tolerance only at EOF), with close-boundary/roundoff synthetic regressions.
+Native job, deck, raw data, solver and launch receipt unchanged; no data has
+yet been consumed by the reducer. Preserve launch's original analysis hashes;
+final reduced.json records the actually used reducer SHA. No native rerun.
