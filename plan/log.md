@@ -2464,3 +2464,20 @@ human-triggered note in `docs/experience/`.
 - Preparation source commit only, no push. Hidden local watch launch and
   sameheartbeatb reactivation follow verified preparation; launch readback
   will be recorded separately, not inferred from test success.
+
+- Preparation committed1e53989; one hidden reattachment at19:08:29local,
+  launcher40508/actualwatch37044. Flowrunning_native_recovered; original
+  Spectre4639/startticks1449028686 retained,90/516frames/86observed, same1LTE,
+  noCMI/invalid/grossalarm and recovery error log empty. Reused onlyheartbeatb
+  with repair provenance and conditional analysis rules, tool+TOML ACTIVE
+  readback confirmed. Docs/results now distinguish live recovery from old
+  collection failure; original launch/failure snapshots retained. No push.
+
+- Offline runtime compatibility follow-up made complete_gate pure standard
+  library for projectPython (no bridge installed), without changing any
+  completion criterion. Isolated atomic pending names prevent concurrent
+  status writers colliding; a focused Windows test exposed transient replace
+  sharing errors, now covered by bounded<1s PermissionError retries. Six
+  focused cases and three offline-environment cases pass after that fix.
+  Loaded collector remains1e53989, no process restart; future reducer imports
+  corrected guard. Native progress90->92->93 with no new alarms/error output.

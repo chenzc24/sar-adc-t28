@@ -78,7 +78,6 @@ def identity():
 
 def complete_gate(progress, log):
     """No compression while live, incomplete, duplicated or explicitly failed."""
-    from virtuoso_bridge.spectre.runner import _has_convergence_failure, _has_fatal_spectre_error
     assert not any(p['command'] == 'spectre' for p in progress['native_processes']), 'Native still running'
     rows = re.findall(r'R3MEAS,(\d+),(\d+),(\d+),(\d+),(\d+),([^\s,]+)', log)
     probes = re.findall(r'BSINE,(\d+),([^\s,]+),([^\s,]+),([^\s,]+)', log)
@@ -87,7 +86,13 @@ def complete_gate(progress, log):
     assert all(r[2] == '8' and r[4] == '1' and r[1] == r[3] for r in rows)
     assert all(math.isfinite(float(v)) for r in probes for v in r[1:])
     assert re.search(r'(?m)^spectre completes with 0 errors,', log), 'No normal native footer'
-    assert not _has_convergence_failure(log) and not _has_fatal_spectre_error(log)
+    # Also used by the offline reducer's NumPy environment, which deliberately
+    # does not install the bridge. Match the bridge's fatal/convergence gates
+    # without importing a simulator runtime into offline analysis.
+    lower = log.lower()
+    assert not any(s in lower for s in ('spcrtrf-15044', 'failed to converge',
+        'convergence failed', 'convergence failure', 'fatal error'))
+    assert not re.search(r'(?im)^\s*error\s*\(', log)
     assert not progress['clear_anomaly_reasons']
     return True
 

@@ -4,6 +4,7 @@ import argparse
 import dataclasses
 from datetime import datetime, timezone
 import hashlib
+import json
 import math
 import os
 from pathlib import Path
@@ -13,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import time
+import uuid
 import yaml
 
 import b_short_acceptance as short
@@ -33,6 +35,21 @@ def sha(path):
     with Path(path).open('rb') as stream:
         for block in iter(lambda: stream.read(2**20), b''): digest.update(block)
     return digest.hexdigest()
+
+
+def dump(path, data):
+    """Independent atomic writes for heartbeat and coordinator status readers."""
+    path = OUT / path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pending = path.with_name(path.name + '.' + uuid.uuid4().hex + '.pending')
+    pending.write_text(json.dumps(data, indent=2, default=str, allow_nan=False) + '\n', encoding='utf-8')
+    for attempt in range(8):
+        try:
+            pending.replace(path)
+            return
+        except PermissionError:
+            if attempt == 7: raise
+            time.sleep(min(.02 * 2**attempt, .2))
 
 
 def stage(name, **details):

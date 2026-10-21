@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import sys
 import tempfile
+from concurrent.futures import ThreadPoolExecutor
 import unittest
 from unittest.mock import patch
 
@@ -17,6 +18,14 @@ def full_log():
 
 
 class RecoveryTests(unittest.TestCase):
+    def test_status_writes_do_not_share_a_pending_filename(self):
+        with tempfile.TemporaryDirectory(prefix='recovery_test_', dir=flow.OUT) as directory:
+            target = Path(directory) / 'status.json'
+            with ThreadPoolExecutor(max_workers=4) as pool:
+                list(pool.map(lambda n: flow.dump(target, dict(n=n)), range(32)))
+            self.assertIn(flow.read(target)['n'], range(32))
+            self.assertEqual(list(Path(directory).glob('*.pending')), [])
+
     def test_missing_exit_status_is_not_upgraded_to_success(self):
         from virtuoso_bridge.spectre.runner import _SpectreRunResult, _build_simulation_result
         result = _build_simulation_result(_SpectreRunResult(False, None, -1, full_log(), '',

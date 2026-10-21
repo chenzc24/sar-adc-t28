@@ -200,3 +200,21 @@ FFT/ADCToolbox self-checks still pass. New stream SHA avoids reading the full
 ~34GiB gzip into RAM. Remote exact deck/5includes match frozen hashes; native
 PID4639/startticks1449028686 still live. No native launch, termination, OA/
 circuit/solver write or original scratch cleanup occurred during repair.
+
+Repair committed1e53989. Exactly one hidden local reattachment launched at
+2026-10-21 19:08:29Asia/Shanghai; Windows launcher40508, actualwatch37044.
+recovery_launch.json preserves original receipt and exact original native
+identity. Flowrunning_native_recovered, first90/516frames/86observed legal,
+same1LTE/noCMI/clearalarms, error log empty. Reused onlyb with updated repair/
+lost-exit qualification rules, ACTIVE tool/TOML identity readback confirmed.
+No native restart and no claim that whole-run collection has yet completed.
+
+Post-launch local-only validation also removed the completion gate's bridge
+import from the offline NumPy environment and made status writes use unique
+atomic pending files with bounded Windows sharing retries. Six focused tests
+now pass, including concurrent writers; three relevant cases separately pass
+in projectPython without the bridge installed. Loaded watch remains the
+tested1e53989 collector, no coordinator/native restart; its single writer and
+fresh heartbeat unique writer do not share pending files. Future offline
+subprocesses load the corrected pure gate.90->92->93 real frames confirm
+ongoing progress and empty recovery error log. All frozen source checks pass.

@@ -1,6 +1,6 @@
 {
-  "status": "collection_failed_native_still_running",
-  "snapshot_utc": "2026-10-21T10:56:11.394134+00:00",
+  "status": "running_native_recovered",
+  "snapshot_utc": "2026-10-21T11:08:29.541915+00:00",
   "plan": "plan/2026-10-21-b-dynamic-512/plan.md",
   "frozen_source_commit": "7875a3aaea30ce9f23222cf063c65287aa85aaac",
   "result_ok": null,
@@ -9,8 +9,8 @@
   "requested_frames": 516,
   "warmup_frames": 4,
   "requested_observed_points": 512,
-  "completed_frames_at_snapshot": 78,
-  "observed_frames_at_snapshot": 74,
+  "completed_frames_at_snapshot": 90,
+  "observed_frames_at_snapshot": 86,
   "sample_rate_hz": 10000000,
   "input_frequency_hz": 4511718.75,
   "input_level_dbfs": -1,
@@ -28,7 +28,8 @@
     "full_raw_sha_verified": false,
     "raw_receipt_available": false,
     "automatic_retry": false,
-    "reattachment_requires_user_direction": true
+    "reattachment_requires_user_direction": false,
+    "user_authorized_repair": true
   },
   "native_checks_at_snapshot": {
     "invalid_conversion_records": [],
@@ -51,11 +52,28 @@
   "monitor": {
     "automation_id": "b",
     "target_thread_id": "01a15885-71ef-7233-97d6-2d8e2d2a023c",
-    "status": "PAUSED",
+    "status": "ACTIVE",
     "readback_confirmed": true,
     "other_automations_changed": false
   },
+  "recovery": {
+    "source_commit": "1e53989",
+    "local_pid": 37044,
+    "native_process_start_ticks": 1449028686,
+    "same_original_native_job": true,
+    "frozen_remote_hashes_match": true,
+    "offline_tests_passed": 6,
+    "offline_analysis_environment_checks_passed": 3,
+    "small_transfer_fixture_sha256": "7bfbc968e1e2f7ffbc2b93a9e1afbbc48bfb59a3e433aebbd603d4b6e259ba89",
+    "worker_shell_syntax_pass": true,
+    "original_exit_status_unavailable": true,
+    "do_not_fabricate_result_ok": true,
+    "whole_run_collection_completed": false
+  },
   "evidence": [
+    "output/b_dynamic_512/recovery_launch.json",
+    "output/b_dynamic_512/recovery_identity.json",
+    "output/b_dynamic_512/recovery_fixture.json",
     "output/b_dynamic_512/flow.json",
     "output/b_dynamic_512/transport_failure.json",
     "output/b_dynamic_512/transport_failure_native.log",
