@@ -93,9 +93,17 @@ T28 `cfmom_2t`，Cu≈4.004 fF，每侧 1.025 pF；512 独立单元用于局部�
 
 TT／0.9 V／27°C，500 kHz 差分正弦、峰值 ±0.8 V，10 MS/s；4 帧启动＋20 帧观察。主采样管保持已采用的 1 µm。
 
-![[assets/result8_final/07_dynamic_current.png|900]]
+![[assets/result8_staircase/sine_staircase.png|900]]
 
-*图 7｜一个完整正弦周期：源输入与保持样点、对应最终码、原始保持误差。最终码按对应采样点对齐显示，实际在帧内 98 ns 读取；误差仍使用原采样基准。*
+*图 7｜经典正弦／码字阶梯图：灰线为原始差分输入，阶梯由实测最终码按码中心重建，左轴为电压、右轴为码字。上图按采样时刻对齐；下图按帧内 98 ns 的实际读码时刻显示，保留 56.95 ns 读码延迟。*
+
+阶梯的零阶保持用于显示连续读码结果；内部 SAR 工作寄存器仍按原逻辑初始化和逐位更新，没有新增输出保持银行。
+
+> [!example]- 原始保持误差与离散码字
+>
+> ![[assets/result8_final/07_dynamic_current.png|900]]
+>
+> *图 8｜保持样点、对应最终码、原始保持误差。误差仍使用原采样基准，未因阶梯显示而调整。*
 
 | 检查项 | 当前结果 |
 | --- | --- |
@@ -110,5 +118,7 @@ TT／0.9 V／27°C，500 kHz 差分正弦、峰值 ±0.8 V，10 MS/s；4 帧启�
 > [!info]- 数据来源与复现
 >
 > 图由保存的仿真数值重新绘制。[[assets/result8_final/sources|配图来源]]记录原始文件、测量窗口和生成方式；同目录 `manifest.json` 保存数据及图片 SHA256，SVG 可放大。
+>
+> [[assets/result8_staircase/sources|阶梯图定义与来源]]另列码中心映射、采样／读码对齐和显示保持方式。
 >
 > 模型：`docs/eight_bit_flat_migration.md`；MOM：`docs/cdac_flat_8b_device.md`；参考：`docs/cdac8_uniform_scale.md`；比较器：`docs/strongarm8_baseline.md`；控制：`docs/sar8_simple_async.md`；当前整机：`docs/r3_b_oa_adoption.md`、`docs/b_sine_period.md`。

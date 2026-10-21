@@ -2284,3 +2284,20 @@ human-triggered note in `docs/experience/`.
   create a cloud Page. Unrelated note/code changes and the independently
   committed SAR timing comparison remain outside this target. Scoped local
   commit only, no push, automation or OA change.
+
+### 2026-10-21 Add classical sine/code staircase to Result
+
+- User wanted a more intuitive relationship between original sine and codes.
+  Plan2026-10-21-result-staircase, starting HEAD1fe7174. Added standalone saved-
+  data plotting script, PNG/SVG/provenance and Result section6 embed; old raw
+  error plot is folded, prior data/figures/generators unchanged.
+- Reconstructed bin-center voltage from actual final codes with dual voltage/
+  unsigned-code axes. Upper panel uses sampling-time alignment, lower panel
+  actual98ns read timing with56.95ns delay. Both explicitly display ZOH read
+  samples, not the internal SAR register or a new output bank/DAC. Frame3
+  supplies the pre-first-update interval; all20 observed codes remain visible.
+- Compile/run,24 actual D-pin code reads, inverse mapping,100ns spacing,
+  56.95ns delays, source/output SHA256, SVG/XML, UTF8/YAML/links and scoped
+  diff-check pass; PNG visually inspected. Original4.464649mV/14-of-20 raw
+  measurements preserved. No simulation/OA/GUI operation, performance update,
+  push or unrelated note/code edits. Scoped local documentation commit only.
