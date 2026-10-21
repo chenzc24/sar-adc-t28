@@ -75,6 +75,16 @@ warnings，无CMI/LTE。预热后VDD约0.080mW、参考0.014–0.021mW，理想�
 `verification/integration/b_short_acceptance_results.json`；未跑全码、FFT、PVT、
 失配或噪声，不重开旧R3长任务。原理图和选定1×基准保持不变。
 
+2026-10-21本地17:32:12已按用户批准启动[B／1×512点动态验收](b_dynamic_512.md)：
+4帧预热＋512有效点，共516帧／51.6µs，10MS/s、相干频点4.51171875MHz、
+差分−1dBFS、共模0.45V。冻结源7875a3a，DUT、时序、APS4/conservative/
+maxstep10ps等精度不变；全部136路连续波形无损压缩、逐帧解析。
+原生Spectre PID4639、scratchcf76d807，本地协调器62600；启动有效求解参数
+和保存信号均已读回核对，当前仍在计算，尚无SNDR/ENOB结果。监控b已ACTIVE，
+仅异常／需操作／完成通知；不自动重跑或扩展PVT、失配、噪声和全码。
+本轮入口`config/b_dynamic_512.yaml`、`output/b_dynamic_512/flow.json`、
+`plan/2026-10-21-b-dynamic-512/plan.md`；以精确PID/log与完成帧计进度。
+
 以下四组合龙数字为事件修复前R3的历史短测试结果，R1/R2也保留作历史对照。
 顶层 `sar_adc8_join_r3`，测试台 `tb_sar_adc8_join_r3`，均在 `SAR_ADC_T28`。
 16组理想参考栅控显式设置新时序，保留共享整字提交和100 ps非交叠；

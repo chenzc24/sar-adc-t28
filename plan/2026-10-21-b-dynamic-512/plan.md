@@ -87,7 +87,7 @@ statements must match immutable B; old artifacts never overwritten.
 
 ## Status
 
-Prepared; no native job launched yet. Current B top/TB/36dependencies and
+Running native. Preparation verified current B top/TB/36dependencies and
 current VA byte hash match. Bridge0.8/t28_io/exactllm_IO CIW and Spectre21.1
 healthy. No pre-existing native bridge jobs. Remote scratch has~409GiBfree,
 localE~65GiBfree. Full136signal save is selected; old raw scales to~130GiB,
@@ -106,3 +106,20 @@ roundtrip passes (small temporary data only, no extra simulation). FFT512
 cross-check with local ADCToolbox, analytic DC/gain/delay/H2 alias and Nyquist
 weight tests pass. Compile and frozen config/hash checks pass. One exclusive
 native launch will follow a scoped preparation commit; no automatic rerun.
+
+Preparation committed7875a3a; exactly one launch at2026-10-21 17:32:12 local.
+Windows hidden launcher48804, actual coordinator62600 (launch.json), native
+Spectre4639 (csh4280), exactscratchcf76d807. Live native startup verifiedAPS4,
+all effective solver parameters equal B,136real finite traces match save list.
+First2/516 completed frames have8compares/stablevalid output, noCMI/LTE or
+grossfixed-delay code alarm. This is progress, not final performance evidence.
+Small startup-query helper initially importedNumPy in the bridge-only venv;
+fixed only that generated read-only helper to parse the known log format;
+native job/deck/source/parameters unchanged and never restarted.
+
+Reused only heartbeat id=b, renamed toB1x512monitor, ACTIVE readback confirms
+15minute schedule on this thread; local coordinator also checks every120s.
+Normal state/progress remains silent, only clear failure/action/completion
+notifies. Keep desktop awake/networked for the local coordinator/SSH/result
+collection. After whole batch, report actual performance including failures,
+then pause b only. No other automation, oldR3 or external task changed.

@@ -2363,3 +2363,37 @@ human-triggered note in `docs/experience/`.
   UTF8/YAML, new links and outside-section preservation pass. Scoped staged
   diff check excludes the user's existing section1 trailing whitespace.
   Local scoped documentation commit only; no simulation, OA/GUI change or push.
+
+### 2026-10-21 Launch B1x coherent512 dynamic capture
+
+- User authorized one4warm+512observed capture at10MS/s,near4.5MHz,-1dBFS,
+  no PVT/mismatch or circuit/precision changes; whole-batch analysis and
+  anomaly-only interruption. Plan2026-10-21-b-dynamic-512, frozen7875a3a.
+  N512/k231 yields4511718.75Hz, actual/declared51.6us, source phases retained.
+- Spectre/Virtuoso skills keep nativeAPS4 and supported read-only OA checks;
+  top/TB/36dependencies/currentBVA verified unchanged, healthy0.8/t28_io.
+  No old native bridge job; no OA write, no DUT replacement, no VA edit.
+  EVAS is not used because it cannot solve this PDK MOS/subckt hierarchy.
+- Full136continuous signals retained, notstrobeonly. Remote~409GiBfree;
+  local~65GiBfree. Estimated native~130GiB, gzip1.5ratio.2591 predicts~34GiB.
+  Exact remote gzip/SCP/gzip/SHA fixture passes (not a simulation), frame
+  stream/PROP/boundary/native0/4/8/15energy+held equivalence, FFT/ADCToolbox/
+  gain/delay/alias/Nyquist math self-checks, compile/source hashes pass.
+  Whole-run arrays/uncompressed files are not expanded on local E:.
+- Exactly one hidden launch at17:32:12local: coordinator62600, Spectre4639,
+  scratchcf76d807; initial2/516frames8compares/valid/noCMI/LTE/grossalarm.
+  Actual APS4/effective solver parameters and all136finite saved traces read
+  back from live log/PSF. Startup-query helper dependency corrected locally
+  only; native unchanged and not restarted. Local watch checks120s, exact
+  owned-process TERM only for stated clear anomalies; expectedfixedlag not
+  a raw-held-voltage abort. No automatic native retry or extra experiment.
+- Reused heartbeatb only, new512scope/15min/ACTIVE verified from tool andTOML;
+  quiet normal progress, notify clearfailure/action/finalcompletion. Other
+  automations untouched; no archive. Whole-batch reducer/analyzer run after
+  native completion, then human-visible figure/metric review and curation.
+  Current status is running, not qualified or completed. Real driver/buffer
+  power and thermal noise/PVT/fullcode remain outside this capture. Report
+  follows document-skill separation of measured metrics and model limits.
+- Scoped source and launch documentation commits only, no push. Existing
+  Obsidian/cdac10 edits and independently committed timer-review report remain
+  outside this target; current design/oldresults/PDK all preserved.
