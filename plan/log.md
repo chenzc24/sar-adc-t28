@@ -2345,3 +2345,21 @@ human-triggered note in `docs/experience/`.
   plus narrow status/log; local scoped results commit only, no push. Pages
   skill improved measured-vs-model-limit wording in the local report; no cloud
   Page or new automation, no old R3 long-task restart, no experience extraction.
+
+### 2026-10-21 Review wrap-up and illustrate reference timer failure
+
+- User requested review of their edits and a concise illustrated explanation
+  of section5. Plan2026-10-21-wrapup-timer-review. Read the latest note and
+  historical/selected circuit evidence; preserve all user text outside section5.
+- Verilog-A skill/events reference guided the distinction between a scheduled
+  callback and the model's redundant absolute-time guard. Explained0.159fs
+  early callback rejection, missed40ns acquisition, late reference restoration
+  and held-charge disturbance; unchanged native devices and nominal timing.
+- Added a saved-data-only reporting script, Chinese PNG/SVG and provenance.
+  Hash-verified A/b3 waveforms reproduce frame9errors-442.8504966/+0.1013553mV
+  at841.65ns and actual codes1/65 at898ns. N7 target is VREFP, not all platesVCM.
+  Full acquisition and handoff zoom share actual saved signals and baselines.
+- Waveform/receipt/curated hashes, AST/execution, image visual review, SVG,
+  UTF8/YAML, new links and outside-section preservation pass. Scoped staged
+  diff check excludes the user's existing section1 trailing whitespace.
+  Local scoped documentation commit only; no simulation, OA/GUI change or push.
