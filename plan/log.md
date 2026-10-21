@@ -2001,3 +2001,21 @@ human-triggered note in `docs/experience/`.
   bounded geometry/input/source/precision contracts pass. Full results/plots
   pending, no qualified candidate or automatic OA replacement claimed.
   Scoped launch commit only, no push or new automation; old heartbeat untouched.
+
+### 2026-10-21 Establish reader-facing Obsidian notes
+
+- User requested a separate `Obsidian_docs/`, not bulk migration of technical
+  reports. Plan2026-10-21-obsidian-curated-notes, starting HEAD4958ad1. Preserved
+  existing docs, untracked cdac10_dualrail work and concurrent main-W testing;
+  later untracked docs/b_sine_main_w.md is also outside ownership.
+- Added 首页, 设计流程复盘 and 当前设计 Markdown notes. Separate curated narrative
+  from engineering evidence; retain failures/ideal boundaries and explicitly
+  date the R3+B snapshot. Main-W2/3 are recorded as launched, not qualified or
+  adopted. Source paths are repository-relative, not misleading vault links.
+- Added one README entry and scoped ignores for this vault's .obsidian/ and
+  .trash/ only. No report moves/copies, image duplication, plugins, personal
+  vault/settings/registry, OA, model, simulator or automation changes.
+- Strict UTF-8/YAML checks, all wiki links, source existence and ignore behavior
+  pass. Initial Windows stdin encoding mismatch resolved by python -X utf8,
+  no content change. Diff-check and bounded staged review performed; local
+  documentation commit only, no push. Open the new folder manually as a vault.

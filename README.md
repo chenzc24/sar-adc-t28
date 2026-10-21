@@ -7,6 +7,11 @@ the TSMC 28 nm HPC+ ULL platform. Active specification:
 
 ## Project progress and file navigation
 
+For collaboratively edited, reader-facing Chinese notes, open
+[`Obsidian_docs/首页.md`](Obsidian_docs/首页.md). The `Obsidian_docs/` folder
+can be opened as a separate Obsidian vault. It keeps curated explanations
+apart from the engineering reports below; existing reports are not moved.
+
 Start with the [current progress and design-file map](docs/project_status.md).
 It separates the active eight-bit line, candidates, historical ten-bit work,
 local sources, generated results, and the actual remote Virtuoso cell/views.
