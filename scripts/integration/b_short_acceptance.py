@@ -34,7 +34,7 @@ Q = 1.8 / 256
 def stream_psf(stream):
     """Real transient PSF ASCII, preserving carry-forward values at each time."""
     traces, groups = [], {}
-    section, group, sweep = None, None, None
+    section, group, sweep, property_depth = None, None, None, 0
     for line in stream:
         line = line.strip()
         if line in ("HEADER", "TYPE", "SWEEP", "TRACE", "VALUE"):
@@ -47,6 +47,9 @@ def stream_psf(stream):
             if m:
                 sweep = m[1]
         elif section == "TRACE":
+            if property_depth:
+                property_depth += line.count("(") - line.count(")")
+                continue
             m = re.match(r'"([^"]+)"\s+(.*)', line)
             if not m:
                 continue
@@ -57,6 +60,8 @@ def stream_psf(stream):
                 if group is not None:
                     groups[group] = m[1]
                 group = None
+            if "PROP(" in line:
+                property_depth = line.count("(") - line.count(")")
     assert section == "VALUE" and sweep == "time" and traces
     assert len(traces) == len(set(traces))
     positions = {n: i for i, n in enumerate(traces)}
@@ -103,6 +108,10 @@ def parser_check():
         assert streaming.keys() == bundled.keys()
         for k in streaming:
             assert list(streaming[k]) == bundled[k]
+    prop_synthetic = synthetic.replace('"ISRC:p" "I"\n', '"ISRC:p" "I" PROP(\n"units" "A"\n)\n')
+    parsed = stream_psf(io.StringIO(prop_synthetic))
+    assert list(parsed["ISRC:p"]) == [-.001, -.001, -.002] and "units" not in parsed
+    assert parsed.keys() == stream_psf(io.StringIO(synthetic)).keys()
     # Bounded real PSF prefix, including all original signal types and events.
     raw = next((BASE / "spectre").rglob("*.tran.tran"))
     prefix, count = [], 0
@@ -352,7 +361,9 @@ def parse(name):
     with (case / "waveform.pickle").open("wb") as stream:
         pickle.dump(wave, stream, protocol=5)
     dump(case / "waveform_receipt.json", dict(sha256=sha(case / "waveform.pickle"), points=len(wave["time"]),
-        signal_keys=sorted(wave), start_s=wave["time"][0], stop_s=wave["time"][-1]))
+        signal_keys=sorted(wave), start_s=wave["time"][0], stop_s=wave["time"][-1],
+        parser_LF_sha256=hashlib.sha256(Path(__file__).read_text(encoding="utf-8").encode()).hexdigest(),
+        terminal_current_PROP_metadata_excluded=True))
     dump(case / "result.json", dict(ok=r.ok, errors=r.errors, warnings=r.warnings,
         metadata=r.metadata, parse_seconds=time.monotonic() - start, streaming_waveform_validation=True))
     stage(case, "parsed")

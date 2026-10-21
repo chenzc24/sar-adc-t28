@@ -2301,3 +2301,47 @@ human-triggered note in `docs/experience/`.
   diff-check pass; PNG visually inspected. Original4.464649mV/14-of-20 raw
   measurements preserved. No simulation/OA/GUI operation, performance update,
   push or unrelated note/code edits. Scoped local documentation commit only.
+
+### 2026-10-21 B1x short integration steps0/1
+
+- User authorized only read-only baseline audit and bounded short checks,
+  preserving all original12 anomaly frames fromt0; no long campaign, PVT,
+  mismatch or circuit/precision changes. Plan2026-10-21-b-short-acceptance;
+  prepared sources committed1fe7174. Unrelated notes/cdac10 work preserved.
+- Spectre/Virtuoso skills select native APS and supported read-only OA APIs;
+  EVAS cannot replace this PDK hierarchy. One scoped tunnel start restored
+  healthy0.8.0/t28_io. ExactCIW/tech/top/TB/36dependencies/currentBVA verified;
+  native blocks, W1um/L150nm, ideal clocks, CDAC/3xrefs/50ohm/4pF and all
+  reported solver parameters match B. No OA write or schematic/netlist drift.
+- Three cases12/16/16frames, at most2APS4 and1localparser, exactscratch/PID/log
+  receipts; fullnative0..1200/1600/1600ns, all result.ok. Complete original
+  history output64,64,64,64,64,65,64,65,65,65,65,65; frame9 no longer oldcode1.
+  Boundary-exact frame7 remains adjacent64/65 ambiguity, not a gross jump.
+  Both directed sets match all ideal codes, covering signed large transitions,
+  0/255 centers,127/128 alternation and±.25LSB aroundk1/32/64/128/192/255.
+- 44frames,352compare/write/update each, MSBfirst and compare<write<update<
+  nextcompare, stable90/98ns codes/rails;1408phase/704restore events handled.
+  Completion29.460006..29.928026ns, maxrawheld.234215mV and precompare.118632LSB.
+  All67analogMOS/6terminalpairs fulltime pass separatecore.99V/IO1.98V
+  engineering screens; reference/comparator/IO peaks.947124/.952012/1.790505V.
+  Not all logic-terminal or foundry-lifetime coverage. Native0errors/7known
+  warnings each; noCMI/LTE/convergence failure, warnings retained/explained.
+  InitialDC gmin notices and directedDC bad-pivot notices retained (oldB had
+  both); footer5/6/6notices, not all5. No solver adjustment or native rerun,
+  no physical power-on qualification.
+- All38targetcurrents saved. WarmVDD.079727/.080071/.080004mW and reference
+  .020743/.014247/.016287mW. Signedenergy separates startup/warm/observed and
+  acquisition/conversion-accounting/other; idealdriver delivery/recovery and
+  externalinput separated. Realclock/refdriver/refbuffer overhead missing,
+  so no realwholeADC<=1mW qualification. No FFT/DNL/INL/ENOB claim.
+- Native136-signalASCII exceeds safe whole-file parser RAM. Local bounded
+  float64 streaming preserves2434483points/delta values and rawfiles. Fixed
+  TRACE current PROP metadata parsing before consumption; bundled/synthetic/
+  real2048point/schema checks pass, actual parser/source/wave hashes recorded.
+  No solver, rawdata, saves or precision relaxation and no native rerun.
+- Power sign/unit/window self-check, source/history/native/solver assertions,
+  code/timing/stress/energy analysis,5figure visual review/provenance, compile,
+  UTF8/YAML/JSON/links and focused diff review. Curated results/report/figures
+  plus narrow status/log; local scoped results commit only, no push. Pages
+  skill improved measured-vs-model-limit wording in the local report; no cloud
+  Page or new automation, no old R3 long-task restart, no experience extraction.

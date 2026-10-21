@@ -85,9 +85,9 @@ raw-data change. This is a local parsing memory bound, not relaxed simulation.
 
 ## Status
 
-Prepared. Spectre and Virtuoso skills select supported native simulation and
+Completed. Spectre and Virtuoso skills select supported native simulation and
 read-only OA readers; document skill separates measured results and ideal
-power/model limits. No simulation launched yet.
+power/model limits.
 
 One tunnel start restored healthy0.8.0/t28_io, exactthu-wei/chenzc_intern25/
 llm_IO CIW and Spectre21.1. Only CIW window present. Supported APIs verified
@@ -98,3 +98,51 @@ statement and solver precision match immutableB. History stimulus is exactly
 the prior frozen12-frame source. Streaming parser matches bundled parser on
 delta/current synthetic data and2048real baseline points. Local~15GBfreeRAM
 requires bounded float64 storage; no solver/saves/raw weakening for speed.
+
+Launch2026-10-21 16:10:26 local, committed inputs1fe7174, coordinator57916.
+Native history12 Spectre94720 binds scratch6d2a1520; directedA94834 binds
+a26c416f. DirectedB queued automatically after history12 native/download,
+Spectre215458 binds ee5f6303. No duplicate, restart or OA write.
+
+History12 finished normally (871s native elapsed; downloaded full0..1200ns),
+663230 points/136signals, result.ok true. Local streaming parser was adjusted
+before parsing to skip native current TRACE PROP metadata, validated on a
+synthetic attribute case and the actual schema; no input/raw/solver change.
+Its actual LF SHA is recorded with waveform SHA. All12 history codes equal
+prior B, including human-frame9 code65 rather than old R3 code1. Initial
+offline checks pass: 8/8/8 counts, MSB-first, midpoint restore, held/error,
+selected67-device terminal screens; native0errors/7knownwarnings, noCMI/LTE.
+Power currents all38 present. Analysis also explicitly checks per-bit
+compare<write<update<nextcompare and both90/98ns output rail levels.
+DirectedA16 also finished, all16codes equal ideal nominal and all screens
+pass; raw held peak.234215mV, precompare peak.118364LSB, maxcore.952012V,
+IO1.790505V. Its streaming parse took~210s with~1GB bounded storage; all raw
+data retained. DirectedB16 completed native/download/parse by16:51:50 local,
+all16codes ideal and all declared screens pass. Three cases total44frames,
+2434483points with136signals each; all result.ok true,352compare/write/update
+events each,1408phase/704restore events, noCMI/LTE/convergence failure.
+Each case retains7knownwarnings (1VACOMP2435,2SFE2453,4SFE1131).
+Native notice counts5/6/6 retain initialDC gmin effects and two directedDC
+bad-pivot notices, also seen in priorB baseline; no solver change/rerun.
+Initial ad-hoc footer check over-specified5notices for allcases; corrected
+offline validation to exact case counts, not a native/circuit failure.
+
+Observed rawheld peak.234215mV, precompare settling peak.118632LSB;
+allframe conversion29.460006..29.928026ns vs60ns budget. Global selected
+analog terminal peaks reference.947124V, comparator.952012V, bootstrapIO
+1.790505V, within separately declared engineering lines. Not all logic
+terminal or foundry reliability qualification. Original history frame7 is
+exactly an ideal boundary and differs by1adjacentcode; no gross jump.
+
+All38currents saved in eachcase. Warm net VDD.079727/.080071/.080004mW,
+reference.020743/.014247/.016287mW. Ideal clock/ref-output positive/recovered
+energy and external source energy kept apart. No physical driver/buffer
+overhead or complete realADC<=1mW claim. Figures show ideal baselines, actual
+sampling/read times, held-to-firstcompare shade and signedpower. Visual
+review covers all5figures; regenerated hashes match the exact reviewed PNGs.
+Source/native/precision checks, power sign/unit/window identities, all44frames,
+2434483points, all38currents,5figure hashes, UTF8/YAML/JSON/links and compile
+pass. Exact remote-root process check confirms all3native runs exited; local
+coordinator/parsers also exited. Index was empty before scoped staging.
+Report/JSON/status/log and scoped local results commit only, no push. User
+note moves/images and unrelated cdac10 files remain untouched/uncommitted.
