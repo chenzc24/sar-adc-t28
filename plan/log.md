@@ -2041,3 +2041,30 @@ human-triggered note in `docs/experience/`.
   budget arithmetic, eight-bit scope and diff-check pass. Scoped staged review
   and local documentation commit; no push, OA, simulator, PDK, GUI or settings
   changes. Concurrent main-W plan/run/analyzer and cdac10_dualrail stay excluded.
+
+### 2026-10-21 Complete main-W-only B short sine comparison
+
+- Completed planned1/2/3ummain sweep, L150nm,nf1; only W-derived AD/AS/PD/PS
+  change.1x reused;2x/3x nativeAPS4/conservative/10ps andsame reported solver
+  parameters,500kHz/.8V/.45VCM/10MS/s,4+20frames. No OA adoption or newfullcode.
+- Both newruns zeroerrors,result.ok true,24frames each with8compare/write/
+  update andstablefinalcode. Localparse sequential315.60/240.98s. Fullraw/log
+  complete; optionalW2.ic/W3.fc/W3.ic SFTP andtwo post-download cleanup sessions
+  stalled. Verified exactparents/paths andstopped onlythose localchildsessions,
+  no Spectre/coordinator kill or rerun. Optionalfiles incomplete/scratchcleanup
+  unconfirmed, originalraw retained. Statuslocal-log fallback fixescleanup race.
+- Heldlag1.781261/.881995/.574213ns,gain-.025815/-.047062/-.068613%; rawpeak
+  4.464649/2.241513/1.518989mV,14/10/0observedpoints outsideoriginalbudget.
+  3xbest raw in thiscase, not adopted. Heldnonfundpeak8.260/13.835/21.430uV;
+  turnofftotalpeak.327693/.460335/.624287mV andnonfund6.010/13.088/21.048uV.
+  Trackingnonfund2.789/.907/.487uV improves, indicatingturnoff-related tradeoff.
+- W2oneSPECTRE-16780LTErelaxation at1759.41ns,nativeSARXD_ON1.AB,17.76ns
+  afterframe17heldread; laterinfluence not ruled out. NoCMI-2754, W1/W3noLTE.
+  Configunchanged != no localnumericalrelaxation.8/7nativewarnings retained.
+- Addedreport,curatedmetrics/3visuallyreviewedfigures andnarrowprojectstatus.
+  Reproduced1x,hash/source/geometry,sourcehistory/sampletimes,24probe/readback,
+  mathreconstruction/orthogonality/synthetic andwindowsensitivity<=.123uV pass.
+  Saveddeck confirms18MOMmultigroups/512equivalentunits, not512independent
+  declarations; correctedthisreportdescriptiononly. NoPVT/mismatch/noise/full
+  ADC qualification or pureinjectionclaim. Scopedlocalcommit,no push or new
+  automation; unrelatedObsidian/cdac10_dualrail work preserved.

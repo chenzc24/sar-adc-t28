@@ -1,6 +1,7 @@
 """Comparable extraction for the three main-width B native sine cases."""
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import pickle
@@ -42,6 +43,16 @@ def extract(width):
     log = log_path.read_text(errors="replace")
     records = monitor(log)
     assert len(records) == 24 and [r["frame"] for r in records] == list(range(24))
+    numerical_events = []
+    for value, unit, message in re.findall(
+            r"Warning from spectre at time = ([\d.eE+-]+) (\w+) [^\n]*\n\s*WARNING \(SPECTRE-16780\): ([^\n]+)", log):
+        event_ns = float(value)*dict(s=1e9,ms=1e6,us=1e3,ns=1,ps=1e-3)[unit]
+        frame = int(event_ns//100)
+        after_read = float(event_ns-(ns_all[frame]+.6)) if 0 <= frame < 24 else None
+        numerical_events.append(dict(code="SPECTRE-16780",reported_time_ns=event_ns,frame=frame,
+            after_held_read_ns=after_read,
+            phase="conversion_after_held_measurement" if after_read is not None and after_read > 0 and event_ns < 100*frame+98 else "other",
+            message=message))
     probes = re.findall(r"BSINE,(\d+),([^\s,]+),([^\s,]+),([^\s,]+)", log)
     assert len(probes) == 24
     for i, values in enumerate(probes):
@@ -123,6 +134,9 @@ def extract(width):
             pre_gate_minus_input_p_v=float(pre_p[i]),pre_gate_minus_input_n_v=float(pre_n[i]),
             output_code=code,ideal_code=ideal,code_error=code-ideal,gate_timing=gate_times))
     summary = dict(width_multiplier=width,main_width_um=width,reused_native_run=width == 1,
+        input_deck_sha256=run.read(OUT/"context.json")["cases"][str(width)]["deck_sha256"],
+        result_source=str((location/"result.json").relative_to(ROOT)).replace("\\","/"),
+        native_timings_s=result["metadata"].get("timings"),parse_seconds=result.get("parse_seconds"),
         native_result_ok=True,waveform=receipt,solver_parameters=parameters,solver_parameter_differences=changes,
         complete_frames=24,all24_8compare_write_update=all(v==[8]*24 for v in counts.values()),
         all24_final_codes_stable=all(r["valid"] for r in records),event_counts=counts,
@@ -138,6 +152,8 @@ def extract(width):
         comparator_input_pair_terminal_peaks=comparator_stress,
         comparator_input_pair_within_099V_screen=all(r["max_abs_v"]<=.99 for r in comparator_stress),
         has_CMI="CMI-2754" in log,has_LTE_relaxation="SPECTRE-16780" in log,
+        numerical_warning_events=numerical_events,
+        opposite_phase_held_sum_peak_uv=float(np.max(abs(held[:10]+held[10:]))*1e6),
         warnings=[line.strip() for line in log.splitlines() if "WARNING (" in line],
         native_log_sha256=run.sha(log_path),frames=rows)
     if width == 1:
@@ -172,12 +188,15 @@ def analyze(baseline_only=False):
         return
     plot(results,edge_data)
     comparison = dict(config=run.read(OUT/"context.json")["config"],cases=results,
+        fixed_original_configuration=run.read(BASE/"context.json")["config"],
+        input_context_sha256=run.sha(OUT/"context.json"),
+        shared_include_sha256={Path(k).name:v for k,v in run.read(OUT/"context.json")["include_sha256"].items()},
         sole_independent_change="Mmain W; consistent width-derived AD/AS/PD/PS",
         baseline_native_run_reused=True,no_OA_adoption=True,qualified_full_ADC=False,
         limits="Single frequency/amplitude/TT; corrected residual is not raw acceptance or pure charge injection.",
-        runner_source_LF_sha256=mathref.hashlib.sha256(Path(run.__file__).read_text().encode()).hexdigest(),
-        analysis_source_LF_sha256=mathref.hashlib.sha256(Path(__file__).read_text().encode()).hexdigest(),
-        math_reference_source_LF_sha256=mathref.hashlib.sha256(Path(mathref.__file__).read_text().encode()).hexdigest(),
+        runner_source_LF_sha256=hashlib.sha256(Path(run.__file__).read_text(encoding="utf-8").encode()).hexdigest(),
+        analysis_source_LF_sha256=hashlib.sha256(Path(__file__).read_text(encoding="utf-8").encode()).hexdigest(),
+        math_reference_source_LF_sha256=hashlib.sha256(Path(mathref.__file__).read_text(encoding="utf-8").encode()).hexdigest(),
         figure_sha256={p.name:run.sha(p) for p in sorted((OUT/"figures").glob("*.png"))})
     run.dump(OUT/"comparison.json",comparison)
 
@@ -229,16 +248,25 @@ def plot(results,edge_data):
     ax[0].set_ylabel("Mean main gate - input (V)")
     ax[1].set_ylabel("CDAC - nominal tracking (uV)")
     ax[2].set_ylabel("CDAC - sampled source (mV)")
+    ax[1].axhline(0,color="#555555",lw=.8,ls="--",label="Pre-edge prediction at sample")
+    ax[2].axhline(0,color="#555555",lw=.8,ls="--",label="Ideal sampled source")
     ax[2].axhspan(-1.7578125,1.7578125,color="#e1eee3",label="Original budget")
     ax[2].set_xlabel("Time from SAMPLE 50% fall, frame 5 (ns)")
     for a in ax:
         a.axvspan(-.05,.05,color="#dddddd",alpha=.4);a.axvline(0,color="#777777",ls=":")
         a.axvline(.6,color="#777777",ls=":");a.grid(alpha=.22);a.legend(fontsize=9)
+    ax[0].text(0,.98,"SAMPLE 50% fall",transform=ax[0].get_xaxis_transform(),
+               ha="left",va="top",fontsize=8)
+    ax[0].text(.6,.98,"Held read",transform=ax[0].get_xaxis_transform(),
+               ha="left",va="top",fontsize=8)
     fig.tight_layout();fig.savefig(target/"turnoff_edges.png",dpi=170);plt.close(fig)
 
 
 def curate():
     result=run.read(OUT/"comparison.json")
+    run.check()
+    assert hashlib.sha256(Path(__file__).read_text(encoding="utf-8").encode()).hexdigest()==result["analysis_source_LF_sha256"]
+    assert run.sha(OUT/"context.json")==result["input_context_sha256"]
     assert run.read(OUT/"flow.json")["stage"] == "awaiting_visual_review"
     target=ROOT/"docs/figures/b_sine_main_w"
     target.mkdir(parents=True,exist_ok=True)

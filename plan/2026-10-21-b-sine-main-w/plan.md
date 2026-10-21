@@ -65,7 +65,7 @@ Do not mark successful merely because execution or gain/phase correction passes.
 
 ## Status
 
-Launched two native cases; complete results pending. Current B top/TB and36
+Completed all three comparable cases; W1 reused, W2/W3 native. Current B top/TB and36
 native/historical dependency surfaces unchanged by read-only preflight, library
 technologytsmcN28 and CIWthu-wei/llm_IO verified. W1deck byte-identical to old
 deck; W2/W3 change only W,AD,AS,PD,PS in Mmain. Single-finger geometry rule
@@ -84,3 +84,52 @@ syntax and geometry/inputidentity checks pass. Parallel remote compute/download
 and sequential local assembly/parse split uses inspected bridge0.8.0 helpers,
 no bridge source or native CLI/precision changes. Analysis/status may be
 refined within scope while immutable inputs/jobs remain unchanged.
+
+At10:57 local both native logs contain24/24 valid8-compare frames and zero-error
+completion. Native reported solver parameters match baseline. W2 has one
+SPECTRE-16780 event at1759.41ns in nativeSAR XD_ON1.AB, after frame17 held
+measurement; W3 has none. Retain this numerical caveat, no rerun or retuning.
+Local download/serial parse and final analysis remain pending. Status readback
+now falls back to completed local logs across remote-cleanup races; this does
+not change any simulation input or active native worker.
+
+Concurrent Obsidian_docs edits/deletions/new files and its eight-bit plan were
+observed during this run; preserve as unrelated user work, alongside the
+original cdac10_dualrail files. Narrow shared log/status edits only; do not stage
+or amend the other task's files or commits.
+
+Recovery boundary: full~2GB raw and zero-error native logs are downloaded,
+but localSFTP sessions for optional W2spectre.ic/W3spectre.fc stalled since
+10:57:30 with no payload. Bridge inherits a4h timeout for these optional files.
+Permit stopping only the verified SFTP child sessions for those exact paths,
+not coordinator/native workers/Spectre or any other task. Existing helper skips
+nonzero optional transfer failures; continue same download/serial parse flow.
+No new simulation, changed precision or changed raw data. Record skipped files.
+Same bounded recovery includes the following optionalW3.ic transfer and
+post-download scratch-cleanup SSH if stalled. Verify parent/native worker and
+exact command each time; stopping cleanup cannot affect already finished
+Spectre or the downloaded raw/log, and a scratch retention is reported rather
+than expanding to other directories. No generic SSH/process kill.
+
+Final result: nativeW2/W3 zero errors,8/7warnings, result.ok true; all24frames
+8compare/write/update andstable90/98nscodes; observedcodeerrors<=1. Same
+sourcehistory andsampletimes, solverparameterdiffs{}, 44continuous signals,
+1326793/1326603/1326646points. W2/W3parse315.60/240.98s serially. Completed
+log/raw saved; scoped interruption skipped W2.ic/W3.fc/W3.ic optional transfers
+and two scratch-cleanup sessions only, no native termination/rerun/raw change.
+
+Held lag1.781261/.881995/.574213ns,gain-.025815/-.047062/-.068613%; raw
+heldpeak4.464649/2.241513/1.518989mV,14/10/0of20outside1.7578125mVbudget.
+Heldnonfundpeak8.260/13.835/21.430uV,RMS5.604/9.817/15.437uV. Turnofftotal
+peak.327693/.460335/.624287mV,nonfundpeak6.010/13.088/21.048uV. Tracking
+remaining improves2.789/.907/.487uV while heldremaining worsens: supports
+turnoff-related cost, not pure charge-injection attribution. 3x is candidate
+only, not adopted or fully qualified; W2LTE numerical caveat retained.
+
+Baseline reproduction, input/geometry/include/source hashes,24log/waveform
+measurements, mathsynthetic/reconstruction/orthogonality andwindow sensitivity
+<=.123uV pass. Reviewed3plots with originalsample/zero/budget baselines; curated
+metrics andfigures. Corrected this report's CDAC description from actual saved
+deck:18multi groups,512equivalent units, not512independent declarations.
+Scoped final validation andlocalresultcommit; no OA writes,push,newautomation,
+fullcode,PVT,mismatch/noise or expandedexperiment. Unrelated user work preserved.

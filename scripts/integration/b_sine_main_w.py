@@ -292,6 +292,13 @@ def status():
                     p = line.split(None, 5)
                     if len(p) == 6 and p[0].isdigit() and folder+f"/b_sine_w{width}.scs" in p[5]:
                         process.append(dict(pid=int(p[0]), parent=int(p[1]), elapsed=p[2], cpu=p[3], command=p[4]))
+                # Download/remote cleanup can finish between the first local read
+                # and this query. Prefer the completed local log in that race.
+                if local.exists():
+                    downloaded_log = local.read_text(errors="replace")
+                    if "spectre completes with" in downloaded_log:
+                        log = downloaded_log
+                state = read(case/"flow.json")
         records = re.findall(r"R3MEAS,(\d+),(\d+),(\d+),(\d+),(\d+),([^\s,]+)", log)
         probes = re.findall(r"BSINE,(\d+),([^\s,]+),([^\s,]+),([^\s,]+)", log)
         parameters = {}
@@ -304,7 +311,7 @@ def status():
         reports[str(width)] = dict(local=state, completed_frames=len(records), total_frames=24,
             last_records=records[-2:], remote_log=remote, native_processes=process,
             last_hold_probes=probes[-2:], solver_parameter_differences=differences,
-            completed_records_all_8compare_and_stable=all(r[2] == "8" and r[4] == "1" for r in records),
+            completed_records_all_8compare_and_stable=bool(records) and all(r[2] == "8" and r[4] == "1" for r in records),
             native_success="spectre completes with 0 errors" in log,
             has_CMI="CMI-2754" in log, has_LTE_relaxation="SPECTRE-16780" in log,
             warning_lines=[line.strip() for line in log.splitlines() if "WARNING (" in line])
