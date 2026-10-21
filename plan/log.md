@@ -2418,3 +2418,25 @@ human-triggered note in `docs/experience/`.
   XDUT.XCTRL.XBPP.XB0.X005.N; legal8compares/stablecodes/noCMI/grossalarm.
   Retain and disclose this precision notice, continue unchanged under the
   frozen cumulative>=3LTE stop rule; no clean-precision qualification claim.
+
+### 2026-10-21 B512 collection failed while original Spectre remained active
+
+- At10:55:21UTC coordinator62600 exited and flow=failed. Original SSH
+  execution disconnected, then the compression command asserted on another
+  connection reset. Bridge download was attempted after nonzero execution
+  return without this wrapper verifying native completion; compressing_native
+  was premature, not evidence of finished516frames. Status-query timeout
+  errors also retained. No transport source or live circuit repair attempted.
+- Independent fresh read10:56:11UTC binds original4639 to exactcf76d807/deck:
+  still running,78/516frames/74observed, valid8comparisons/stablecodes, noCMI
+  orfatal, same1LTE. Native raw~21.15GB growing; earlygzip~3.69GB is partial,
+  not accepted or analyzed. No result.ok/completion/SHA/FFT claim. Snapshot
+  and full failure logs retained inoutput/b_dynamic_512, factual incomplete
+  result curated inverification/integration/b_dynamic_512_results.json.
+- No kill, restart, new simulation, solver/circuit/OA edit or remote cleanup.
+  Paused only heartbeatb through app tool; exactid/thread/status read back.
+  User direction requested before reattaching monitoring/collection to the
+  same original job. Native process not declared failed and data preserved.
+- Document skill keeps collection failure separate from circuit performance.
+  Local scoped report/plan/results commit only, no push; unrelated dirty
+  Obsidian/cdac10 work preserved. Focused JSON/identity/readback/diff checks.

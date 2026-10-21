@@ -138,3 +138,18 @@ Single LTE is retained and makes numerical-clean qualification unavailable;
 not an automatic restart or a raw-held-error failure. Existing fixed policy
 interrupts on cumulative>=3LTE or other clear errors. User informed once;
 later monitors should not repeat an unchanged single notice.
+
+At2026-10-21 10:55:21UTC the local coordinator marked flow=failed after
+SSH connection reset and the subsequent compression-command assertion.
+This is a transport/orchestration failure, not a confirmed native circuit
+failure: an independent fresh SSH read still finds original Spectre4639
+running and its raw file growing past20GB, with no normal completion footer.
+The earlier compressing_native stage was premature; its existing gzip is
+partial and must never be used as the complete capture. No interruption
+receipt exists. Preserve native/raw/partial gzip and collect read-only
+failure evidence under this plan's output and results JSON. Do not restart,
+kill, alter or repair the native job, change transport source, or start a new
+collector without user direction. Record the failed collection chain and
+pause only heartbeatb after confirming its exact identity; ask whether to
+reattach monitoring/collection to the still-running original job. No final
+FFT or qualification is possible from this incomplete local capture.

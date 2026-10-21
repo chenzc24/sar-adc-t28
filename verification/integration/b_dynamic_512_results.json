@@ -1,0 +1,67 @@
+{
+  "status": "collection_failed_native_still_running",
+  "snapshot_utc": "2026-10-21T10:56:11.394134+00:00",
+  "plan": "plan/2026-10-21-b-dynamic-512/plan.md",
+  "frozen_source_commit": "7875a3aaea30ce9f23222cf063c65287aa85aaac",
+  "result_ok": null,
+  "result_ok_note": "Native result contract unavailable: collector raised before assembling result.json. This does not assert native failure or success.",
+  "capture_complete": false,
+  "requested_frames": 516,
+  "warmup_frames": 4,
+  "requested_observed_points": 512,
+  "completed_frames_at_snapshot": 78,
+  "observed_frames_at_snapshot": 74,
+  "sample_rate_hz": 10000000,
+  "input_frequency_hz": 4511718.75,
+  "input_level_dbfs": -1,
+  "input_common_mode_v": 0.45,
+  "native_pid": 4639,
+  "native_still_running_at_snapshot": true,
+  "native_completion_footer": null,
+  "exact_scratch": "/tmp/virtuoso_bridge_chenzc_intern25/90590/virtuoso_bridge_spectre/cf76d807",
+  "collection_failure": {
+    "coordinator_pid": 62600,
+    "flow_failed_utc": "2026-10-21T10:55:21.782974+00:00",
+    "error": "SSH execution connection reset; subsequent compression connection reset; coordinator assertion on unsuccessful child exit.",
+    "premature_compression_stage": true,
+    "partial_gzip_not_accepted": true,
+    "full_raw_sha_verified": false,
+    "raw_receipt_available": false,
+    "automatic_retry": false,
+    "reattachment_requires_user_direction": true
+  },
+  "native_checks_at_snapshot": {
+    "invalid_conversion_records": [],
+    "CMI": false,
+    "fatal_lines": [],
+    "LTE_count": 1,
+    "LTE_note": "Previously disclosed SPECTRE-16780 at566.964ns; unchanged at this snapshot. No clean-numerical qualification.",
+    "full_waveform_stress_and_power_review_complete": false
+  },
+  "dynamic_metrics": {
+    "SNDR_db": null,
+    "ENOB_bits": null,
+    "SFDR_db": null,
+    "reason": "Incomplete uncollected capture; no 512-point coherent FFT was performed."
+  },
+  "native_restarted": false,
+  "native_terminated": false,
+  "circuit_timing_or_precision_changed": false,
+  "remote_cleanup_performed": false,
+  "monitor": {
+    "automation_id": "b",
+    "target_thread_id": "01a15885-71ef-7233-97d6-2d8e2d2a023c",
+    "status": "PAUSED",
+    "readback_confirmed": true,
+    "other_automations_changed": false
+  },
+  "evidence": [
+    "output/b_dynamic_512/flow.json",
+    "output/b_dynamic_512/transport_failure.json",
+    "output/b_dynamic_512/transport_failure_native.log",
+    "output/b_dynamic_512/runner.log",
+    "output/b_dynamic_512/coordinator_error.log",
+    "output/b_dynamic_512/monitor_query_error.json"
+  ],
+  "qualification": "No whole-capture performance conclusion. No transient noise, PVT, mismatch, full-code or physical-total-power qualification."
+}
