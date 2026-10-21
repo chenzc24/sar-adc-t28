@@ -2216,3 +2216,19 @@ human-triggered note in `docs/experience/`.
   and4visuallyreviewedfigures pass. Heldmarkers useactual+.6nsread; actualand
   idealcode readat+98ns. Curatedmetrics/report/figures/status andlocalcommit
   only, olddata andotherusernote/plan edits preserved, no newautomation.
+
+### 2026-10-21 Condense SAR logic and workflow wrap-up
+
+- User requested sections3–5 in the concise Bootstrap style. Retained old/new
+  SAR statements, both timing figures,26/21cell and1742/1476MOS comparison,
+  thirteen-case functional result and FF/partial-code limits.
+- Reduced project structure to the dated15/42inventory discrepancy and local/
+  remote/current-entry table. Timer fix retains12-frame history and frame9
+  code1→65/error-442.850→+.101mV; kept inactive mismatch and short-run lesson.
+- Plan2026-10-21-wrapup-sections345, starting HEAD52feb04. Sections1–2, source
+  list and all six embed strings match starting text; owned section text1295
+  to1025characters after line-ending normalization. UTF-8/YAML, headings,
+  image targets, source data and scoped diff-check pass.
+- Only sections3–5 and this log append are staged with the plan. Existing user
+  report edits, concurrent HF log/status/results and other work remain outside
+  the commit. No GUI, simulation, OA, image changes or push.
