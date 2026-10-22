@@ -2768,3 +2768,30 @@ human-triggered note in `docs/experience/`.
   Three final native-wave figures inspected, source/port/unchanged-leaf checks,
   focused compile/execution and scoped diff review pass. This entry accompanies
   the scoped local commit; no push, no unrelated changes staged.
+
+## 2026-10-22 — Idle-tail full-code/sine characterization launched
+
+- User requested full nominal static and 1024-point sine comparison against R4,
+  using the idle-tail-reset candidate from 027b951. Candidate DUT hash retained;
+  no sizing/topology change, PVT, mismatch, noise or PEX. Remote OA:none.
+- New isolated scripts/verification/output namespace `sar8_idle_performance`,
+  target plan `2026-10-22-idle-performance`. R4 results/sources, prior idle
+  experiments, PDK, Obsidian and 10-bit user changes remain untouched.
+- Native t28_io/Spectre preflight passed. Static boundary-128 smoke:15 valid
+  frames, centers127/128 correct, valid [-54.931640625uV,0V] bracket; native
+  exit0/PASS/END, zero errors/no CMI, no transient numerical diagnostic.
+  DC Gmin/pivot notes preserved. PSF/deck hashes verified after collection.
+- Focused syntax/fixture/scheduler checks pass: all9 new decks reduce exactly
+  to original R4 deck text when swapping only the DUT back. Measurement
+  contexts and VA model hashes match; candidate has49 subcircuits.
+- Full immutable batch dispatched at23:32CST: one1028-frame sine plus eight
+  static segments,3618frames total, four native lanes x four CX threads.
+  Initial status confirms four running/five queued. No case restarted.
+- One-shot hidden local collector started23:33CST; no new app automation.
+  It only collects existing jobs and runs same-method FFT/ADCToolbox analysis
+  after complete. Native jobs survive SSH/client loss. Raw and status files
+  remain under output/sar8_idle_performance; local collector is bounded24h.
+- Full metrics, CMI review and three final plot inspections are PENDING.
+  Launch checkpoint committed separately; no final qualification claim,
+  no R4/OA promotion and no push. Next turn must inspect existing launch and
+  collector receipts, not run setup/full again.
