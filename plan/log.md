@@ -2658,3 +2658,19 @@ human-triggered note in `docs/experience/`.
   Obsidian whitespace and10bit work preserved. No OA/PDK/baseline changes.
 - Local scoped commit only, no push. Final delivery ends this monitoring
   purpose; remove only automation r4, preserving unrelated automations.
+
+### 2026-10-22 R4 ADCToolbox diagnostic panel — complete
+
+- Analyzed existing verified 1024 sine codes with ADCToolbox 0.9.1 using its
+  12-tool dashboard structure, explicit rectangular/coherent FFT and 1.8-V
+  full-scale normalization. No rerun, calibration, circuit or OA modification.
+- Added reproducible toolbox_panel.py, curated metrics/source hash JSON,
+  inspected 12-panel figure and Chinese per-panel/metric explanation.
+- SNDR48.728620dB / ENOB7.802096bit / SFDR65.592698dB match prior FFT.
+  H2–H5-excluded SNR48.799143dB, THD-66.658370dBc; residual RMS0.295170LSB.
+- Compile/execution and six numeric consistency checks pass (prior metrics,
+  direct SNR, Parseval, LSB scaling, harmonic reconstruction). Final image
+  inspected. Scoped diff reviewed; user Obsidian/10-bit changes preserved.
+- Distinguish fitted residuals from aperture error, static INL and physical
+  noise/jitter. Reference CMI failures and original sine-run evidence limits
+  retained. Local scoped commit only; no push or baseline replacement.

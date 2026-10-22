@@ -1,0 +1,78 @@
+{
+  "source": "verification\\sar8_r4_performance\\results.json",
+  "source_sha256": "553b9acbb130d62269f93bb7a4f1df6066fb2af7b42da91032821329f4994a96",
+  "toolbox_version": "0.9.1",
+  "toolbox_module": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\.venv\\Lib\\site-packages\\adctoolbox\\__init__.py",
+  "settings": {
+    "samples": 1024,
+    "fs_hz": 10000000.0,
+    "fin_hz": 4501953.125,
+    "bin": 461,
+    "full_scale_vpp": 1.8,
+    "lsb_v": 0.00703125,
+    "window": "rectangular",
+    "side_bin": 0,
+    "max_harmonic": 5,
+    "nf_method": 3,
+    "fit_frequency_fixed": true,
+    "value_phase_bins": 32,
+    "panel12_fit": "Library automatic frequency refinement, 3 iterations"
+  },
+  "spectrum": {
+    "enob": 7.802096376095507,
+    "sndr_dbc": 48.72862018409495,
+    "sfdr_dbc": 65.59269773675125,
+    "snr_dbc": 48.79914317645712,
+    "sig_pwr_dbfs": -1.003835013716742,
+    "noise_floor_dbfs": -49.80297819017386,
+    "nsd_dbfs_hz": -116.79267823353405,
+    "thd_dbc": -66.65836976143935,
+    "harmonics_dbc": [
+      -148.99616498628325,
+      -67.446707100916,
+      -148.99616498628325,
+      -74.4572997036919
+    ]
+  },
+  "residual": {
+    "rms_mv": 2.075414046419509,
+    "rms_lsb": 0.29516999771299685,
+    "peak_lsb": 0.5156176077959331,
+    "ideal_quantization_rms_mv": 2.029747040119778,
+    "harmonic_h2_h5_rms_mv": 0.26340091110342595,
+    "remaining_rms_mv": 2.0586314444564997,
+    "pdf_sample_std_lsb": 0.29531422933543905,
+    "pdf_kl_gaussian": 0.07902708682527798,
+    "rising_falling_fit_gap_mv": 0.0269491300389925,
+    "acf_max_abs_nonzero_lag": 0.12465948415181302
+  },
+  "spur": {
+    "bin": 193,
+    "frequency_hz": 1884765.625,
+    "dbc": -65.59269773675132
+  },
+  "phase_bins": {
+    "count": 32,
+    "am_pm_model_r2_binned": 0.14549205669558063
+  },
+  "phase_plane": {
+    "lag": 5,
+    "outliers": []
+  },
+  "validation": {
+    "prior_sndr_abs_difference_db": 7.105427357601002e-15,
+    "prior_sfdr_abs_difference_db": 7.105427357601002e-14,
+    "parseval_residual_power_abs_difference_v2": 2.6927177393214208e-18,
+    "snr_direct_abs_difference_db": 7.105427357601002e-15,
+    "pdf_lsb_max_difference": 0.0,
+    "decomposition_max_difference_v": 3.469446951953614e-18
+  },
+  "limits": [
+    "No thermal-noise or jitter measurement: deterministic transient only.",
+    "Value-binned residual is not static INL/DNL.",
+    "Near-Nyquist delayed-sample geometry is not analog phase portrait.",
+    "Panel12 trend is diagnostic only, not proof of circuit memory.",
+    "Reference-switch CMI overvoltage remains unresolved.",
+    "Sine transient PASS and full data verified; whole-process exit summary unavailable."
+  ]
+}
