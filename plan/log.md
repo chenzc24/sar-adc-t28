@@ -2735,3 +2735,36 @@ human-triggered note in `docs/experience/`.
   focused execution/compile checks and scoped diff review pass. No PVT/MC,
   noise/PEX/new full-code/FFT qualification, no baseline/OA promotion.
   User Obsidian and10bit changes preserved. Scoped local commit only; no push.
+
+## 2026-10-22 — R4 reference initialization moved into preceding idle
+
+- User requested restoring acquisition time while preserving its closing phase.
+  Cloned native controller port/reference-reset logic; ACTIVE-low plus native RC
+  guard starts MSB-first reset after final capture. SAR output stores still reset
+  on original SAMPLE; no new ideal clock/behavioral drive or analog sizing change.
+- Owned scripts/netlist/verification/docs/figures under sar8_r4_idle and target
+  plan. Remote OA:none. Frozen R4, PDK, original sine deck and prior candidates
+  unchanged. User Obsidian/10bit edits remain untouched; no baseline promotion.
+- Native600ns/6frames,4600ns/46frames and honored200ns/2frames complete with
+  exit0, logStatus PASS, zero errors and no CMI. Long741399points, strict324663;
+  every saved point retained. Exact native file SHA256s verified after transfer
+  for long9.72GB and strict4.25GB; no rerun or transfer recovery was required.
+- Long46independent frames pass8/8/8/16clock checks and idle data retention;
+  reference128 at startup/acquisition,45post-startup window checks pass. Reset
+  occurs~76.1–80.7ns, at least3.815ns after last reference capture. Acquisition
+  minimum38.262366ns versus33.848142ns; closing control moves at most11.094ps
+  earlier, not mathematical equality or a physical-aperture equivalence proof.
+- All445selectedMOS six-terminal-pair screens pass; other internals rely on CMI.
+  Long reference0.955795153V at3976.416832ns (P5PMOSVgb), margin34.204847mV.
+  Strict short reference0.945141089V; strict driver0.979259945V leaves10.740mV.
+  The long-worst3976ns event has NOT been strictly replayed. No PVT/MC/noise/PEX
+  or full-code/FFT qualification; existing R4 performance labels are not reused.
+- Relative to old staged: frames16/32 each+1code, others identical. Fixed41.8ns
+  held-differential changes+0.182895/+0.217379mV; no unique causal attribution.
+  Relative A changes13/26; relative frozen R4 also9/36. Native/independent decode
+  agree. Analog CDAC residue after idle reset is intentionally no longer valid
+  for the completed conversion; digital data remains valid until next SAMPLE.
+- Ordinary CX actualmaxstep6/46ns,1e-4/1uV/1pA; strict10ps/1e-7/10nV/100fA.
+  Three final native-wave figures inspected, source/port/unchanged-leaf checks,
+  focused compile/execution and scoped diff review pass. This entry accompanies
+  the scoped local commit; no push, no unrelated changes staged.
