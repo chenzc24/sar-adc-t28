@@ -2553,6 +2553,28 @@ human-triggered note in `docs/experience/`.
 - PowerShell syntax/dry-run and focused completion/absence/receipt validation;
   scoped diff review/local commit only, no push. Unrelated dirty work retained.
 
+### 2026-10-21 R4 full-code and coherent-sine characterization — running
+
+- Live OA export matches the frozen R4 DUT; no schematic/device changes.
+  Added isolated external stimulus/observer, immutable cases, analysis and
+  report automation under sar8_r4_performance. Existing Obsidian/cdac10 work
+  and concurrent cleanup commit3577987 remain untouched.
+- Four-frame APS/CX/AX comparisons and static/dynamic measurement smokes
+  completed. CX4 took101.186s versus APS1407.687s; same145/14/241/14 codes,
+  max held difference2.16251microvolts. Effective settings differ, so this is
+  not an equal-tolerance speedup claim. Three independent metric/source tests
+  pass; direct FFT agrees with ADCToolbox on the32-point smoke.
+- Continuous-sine smoke has CMI2751/2753/2755 reference-switch warnings around
+  acquisition initialization despite valid frame counts; preserve as an
+  electrical failure. Do not promote the short-record metrics to final results.
+- Production started23:21CST: eight static ranges cover255transitions and
+  all256code centers; one continuous1024-point sine at4.501953125MHz/-1dBFS.
+  Four native CX jobs concurrently, four threads each, no transient noise/MC.
+  flow_status.json is the exact state; setup.json is the small tracked checkpoint.
+- Full metrics/figures are pending. Current-thread heartbeat r4 checks every
+  30minutes and will review results/plots and finish the scoped log/commit.
+  No full-run pass claim, baseline adoption, local commit or push at this stage.
+
 ### 2026-10-21 Second approved local waveform cleanup
 
 - User explicitly confirmed the second 395-file historical batch; bounded
@@ -2572,6 +2594,32 @@ human-triggered note in `docs/experience/`.
   receipt/absence/retention checks pass. Local scoped commit only, no push;
   existing uncommitted R4 log entry preserved and excluded from this commit.
 
+### 2026-10-22 R4 performance SSH-loss recovery — running
+
+- First batch lost SSH transport: four result downloads failed, four later
+  uploads failed. Read-only audit found no remaining Spectre process. Preserved
+  all failed transport receipts, original netlists and remote native output.
+- Recovered original sine1028frames and static001_032: native logStatus PASS,
+  complete PSF END/time range, exact DUT identity, independent output decoding.
+  Sine lacks the whole-process final zero-error summary/exit code; this remains
+  explicit in a separate recovered_result receipt, not a rewritten original.
+  Static001_032 has native zero-error completion; all32brackets valid.
+- Full1024-point sine: SNDR48.728620dB, ENOB7.802096bit, SFDR65.592698dB;
+  direct FFT agrees with ADCToolbox within7.11e-15dB. Frame checks pass and
+  no transient numerical diagnostics. CMI2751/2753/2755 persist: not qualified.
+- Added owned recover.py and analysis/status provenance support. Six fresh
+  static cases use byte-identical decks:033_064,097_128,129_160,161_192,
+  193_224,225_255. First `_r1` wrappers (PID120522) failed input lookup:
+  Cadence csh startup resets cwd; CMI2011/exit2, no ADC transient executed.
+  Kept r1 receipts. Fixed post-source cwd/absolute paths in fresh `_r2`
+  wrappers, detached batch PID142976, first4 then remaining2, fourthreads/job.
+  Remote stdout/exit files survive client disconnection. Recovery manifest
+  is output/sar8_r4_performance/recovery_20261022_r2.json.
+- Use recover.py collect at future heartbeats, never restart old flow or
+  initialize again. Full static metrics/figures/review/commit remain pending.
+  Focused3tests and source compile checks pass. No circuit/PDK/OA mutation,
+  baseline change, commit or push; unrelated edits and cleanup preserved.
+
 ### 2026-10-22 R4 reference-switch stress diagnosis
 
 - Independent450ns CX1 replay of unchanged R4 and continuous-sine history;
@@ -2587,3 +2635,26 @@ human-triggered note in `docs/experience/`.
   or whole-record worst-case claim. Later gate-overvoltage still unresolved.
 - Scoped compile, offline execution and diff checks; unrelated Obsidian
   trailing whitespace retained. Local scoped commit only, no push.
+
+### 2026-10-22 R4 full-code and spectrum characterization — complete
+
+- Collected all6 fresh recovery cases: exit0/native0errors/full PSF and exact
+  frozen DUT. Original sine recovery qualification remains explicit; no
+  whole-process exit code was invented. Original failures/r1 attempts retained.
+- Nine final cases,3618frames:255 valid ordered transition brackets,256codes
+  and256matching center probes; full1024-point sine. Independent output decode,
+  measured-frame edge counts8/8/8/16 and90–98ns stability pass.
+- DNL±0.0234375LSB, raw transition error max0.12109375LSB, endpoint INL
+  max0.02102768LSB, search bracket0.0078125LSB; gain error-0.0953494%.
+  SNDR48.728620dB/ENOB7.802096bit/SFDR65.592698dB; FFT/ADCToolbox agree.
+- Performance targets pass but electrical qualification fails: CMI in three
+  static segments plus sine. Initial DC relaxation in161_192 retained;
+  no transient LTE/convergence diagnostics. EffectiveCX tolerances recorded,
+  no equal-accuracy speedup claim; no PVT/MC/noise/layout qualification.
+- Report docs/sar8_r4_performance.md, three inspected figures, results.json
+  and setup.json. Clarified SAMPLE50% time marker vs physical aperture;
+  static transfer now uses measured transition brackets. Three focused tests,
+  compile and all-case frozen-DUT audit pass. Scoped diff reviewed; unrelated
+  Obsidian whitespace and10bit work preserved. No OA/PDK/baseline changes.
+- Local scoped commit only, no push. Final delivery ends this monitoring
+  purpose; remove only automation r4, preserving unrelated automations.

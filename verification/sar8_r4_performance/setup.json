@@ -1,0 +1,1518 @@
+{
+  "status": "characterization_complete_stress_not_qualified",
+  "DUT": "sar_adc8_join_r4",
+  "preflight": {
+    "source": {
+      "source_run": "nominal06_two_phase",
+      "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+      "DUT_unchanged": true,
+      "MOS_CDF_tails_preserved": true,
+      "DUT_identical_to_OA_export": true,
+      "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+      "files": {
+        "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+        "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+        "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+      }
+    },
+    "remote_OA_mutations": false,
+    "simulator": {
+      "ok": true,
+      "spectre_path": "/home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre",
+      "version": "@(#)$CDS: spectre  version 21.1.0 64bit 09/24/2022 08:00 (csvcm36c-4) $"
+    },
+    "library": {
+      "name": "SAR_ADC_T28",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28",
+      "technology_library": "tsmcN28"
+    },
+    "live_OA_DUT_matches": true,
+    "live_export_sha256": "f75206a7fc5075f021dac6eae4ca4cc91862880dc86bb58af825727c9a4e3181"
+  },
+  "pilot_comparison": [
+    {
+      "name": "pilot_aps",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 0.0,
+      "max_final_residual_delta_v": 0.0,
+      "elapsed_wall_s": 1407.6874192999967,
+      "timing": {
+        "upload_total": 1.8064230999952997,
+        "remote_exec": 1397.6082683999994,
+        "download_total": 6.545391700004984,
+        "parse_results": 0.06204219999926863,
+        "total": 1407.6866484999991
+      },
+      "effective_settings": {
+        "maxstep": "10 ps, default 4 ns (conservative)",
+        "reltol": "100e-09, default 100e-06 (conservative)",
+        "abstol(V)": "10 nV, default 1 uV",
+        "abstol(I)": "100 fA, default 1 pA",
+        "method": "gear2only",
+        "errpreset": "conservative, default moderate",
+        "lteratio": "10",
+        "relref": "alllocal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    },
+    {
+      "name": "pilot_cx",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 2.1625100000699504e-06,
+      "max_final_residual_delta_v": 2.0025022349999793e-06,
+      "elapsed_wall_s": 101.18591700000252,
+      "timing": {
+        "upload_total": 1.682495499997458,
+        "remote_exec": 91.18829239999468,
+        "download_total": 6.434219099988695,
+        "parse_results": 0.049344200000632554,
+        "total": 101.18530479999754
+      },
+      "effective_settings": {
+        "maxstep": "4 ns",
+        "reltol": "100e-06",
+        "abstol(V)": "1 uV",
+        "abstol(I)": "1 pA",
+        "method": "gear2only",
+        "errpreset": "conservative_sigglobal, default moderate",
+        "lteratio": "10",
+        "relref": "sigglobal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-592",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    },
+    {
+      "name": "pilot_ax",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 1.2926810000202238e-06,
+      "max_final_residual_delta_v": 4.89306729999691e-07,
+      "elapsed_wall_s": 75.9099825000012,
+      "timing": {
+        "upload_total": 1.8119404000026407,
+        "remote_exec": 65.71884800000407,
+        "download_total": 6.509857800003374,
+        "parse_results": 0.04495169999427162,
+        "total": 75.90947560000495
+      },
+      "effective_settings": {
+        "maxstep": "8 ns",
+        "reltol": "1e-03",
+        "abstol(V)": "1 uV",
+        "abstol(I)": "1 pA",
+        "method": "trap",
+        "errpreset": "moderate",
+        "lteratio": "3.5",
+        "relref": "sigglobal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-592",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    },
+    {
+      "name": "pilot_ax_strict",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 7.658000011900867e-09,
+      "max_final_residual_delta_v": 7.120363000059048e-09,
+      "elapsed_wall_s": 440.99893590000283,
+      "timing": {
+        "upload_total": 1.455947099995683,
+        "remote_exec": 431.0145293000023,
+        "download_total": 6.567943299996841,
+        "parse_results": 0.06960139999864623,
+        "total": 440.9972213999936
+      },
+      "effective_settings": {
+        "maxstep": "10 ps, default 8 ns",
+        "reltol": "1e-06, default 1e-03",
+        "abstol(V)": "10 nV, default 1 uV",
+        "abstol(I)": "100 fA, default 1 pA",
+        "method": "trap",
+        "errpreset": "moderate",
+        "lteratio": "10",
+        "relref": "sigglobal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-17191",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    },
+    {
+      "name": "pilot_cx_mt1",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 1.195836499999492e-05,
+      "max_final_residual_delta_v": 1.1970245919999678e-05,
+      "elapsed_wall_s": 205.44830470000306,
+      "timing": {
+        "upload_total": 1.4861977999971714,
+        "remote_exec": 195.55733239999972,
+        "download_total": 6.554655499996443,
+        "parse_results": 0.06298070000048028,
+        "total": 205.44770190000418
+      },
+      "effective_settings": {
+        "maxstep": "4 ns",
+        "reltol": "100e-06",
+        "abstol(V)": "1 uV",
+        "abstol(I)": "1 pA",
+        "method": "gear2only",
+        "errpreset": "conservative_sigglobal, default moderate",
+        "lteratio": "10",
+        "relref": "sigglobal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-17191",
+        "SPECTRE-592",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    },
+    {
+      "name": "pilot_cx_precision",
+      "codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "expected_codes": [
+        145,
+        14,
+        241,
+        14
+      ],
+      "output_codes_match": true,
+      "frame_integrity_pass": true,
+      "max_held_delta_v": 1.969999718909321e-10,
+      "max_final_residual_delta_v": 2.6933000014245367e-10,
+      "elapsed_wall_s": 1254.9504163999954,
+      "timing": {
+        "upload_total": 1.7050207000065711,
+        "remote_exec": 1244.3942769999994,
+        "download_total": 6.84848349999811,
+        "parse_results": 0.06110900000203401,
+        "total": 1254.949780899995
+      },
+      "effective_settings": {
+        "maxstep": "4 ns",
+        "reltol": "100e-09, default 100e-06 (conservative)",
+        "abstol(V)": "10 nV, default 1 uV",
+        "abstol(I)": "100 fA, default 1 pA",
+        "method": "gear2only",
+        "errpreset": "conservative_sigglobal, default moderate",
+        "lteratio": "10",
+        "relref": "sigglobal"
+      },
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3284",
+        "SPECTRE-17191",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": []
+    }
+  ],
+  "smoke_summary": [
+    {
+      "name": "smoke_static_cx",
+      "invalid_frames": [],
+      "frame_integrity_pass": true,
+      "warnings": [
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-592",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": [],
+      "initial_DC_diagnostics": [
+        "Bad pivoting is found during DC analysis. Option dc_pivot_check=yes is recommended for possible improvement of convergence."
+      ],
+      "SOA_warning_examples": [],
+      "all_brackets_pass": true
+    },
+    {
+      "name": "smoke_sine_cx",
+      "invalid_frames": [],
+      "frame_integrity_pass": true,
+      "warnings": [
+        "CMI-2751",
+        "CMI-2753",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-592",
+        "VACOMP-2435"
+      ],
+      "numerical_diagnostics": [],
+      "initial_DC_diagnostics": [],
+      "SOA_warning_examples": [
+        {
+          "time": "401.358 ns",
+          "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=995.718 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "401.36 ns",
+          "message": "WARNING (CMI-2755): XDUT.XCDAC.XSN6.MN_LOW: Vbd(=-990.963 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "401.36 ns",
+          "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=1.00082 V) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "401.361 ns",
+          "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=1.00276 V) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "401.363 ns",
+          "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=1.00149 V) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "601.354 ns",
+          "message": "WARNING (CMI-2751): XDUT.XCDAC.XSN6.MN_LOW: Vds(=991.573 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "601.355 ns",
+          "message": "WARNING (CMI-2751): XDUT.XCDAC.XSN5.MN_LOW: Vds(=991.796 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "601.355 ns",
+          "message": "WARNING (CMI-2751): XDUT.XCDAC.XSN6.MN_LOW: Vds(=995.337 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "601.355 ns",
+          "message": "WARNING (CMI-2751): XDUT.XCDAC.XSP6.MP_HIGH: Vds(=-993.573 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "601.356 ns",
+          "message": "WARNING (CMI-2751): XDUT.XCDAC.XSN5.MN_LOW: Vds(=992.477 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "701.393 ns",
+          "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN1.MN_LOW: Vgb(=990.633 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "701.396 ns",
+          "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN1.MN_LOW: Vgb(=993.649 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "701.399 ns",
+          "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN1.MN_LOW: Vgb(=995.459 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "701.402 ns",
+          "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN1.MN_LOW: Vgb(=995.952 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        },
+        {
+          "time": "701.404 ns",
+          "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN1.MN_LOW: Vgb(=994.996 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "scripts/sar8_r4_performance/analyze.py": "ba9d1a4a6f8d7186a51860de5081e408fb4fb023bece4221f29df6bad65e79d2",
+    "scripts/sar8_r4_performance/checkpoint.py": "9c692341c00c05dcf6a81bf53b5c803e515aa846e8b8fe3979090f902ad5464f",
+    "scripts/sar8_r4_performance/common.py": "2721c7c7fa911bca4bf0f5815c053e47fb348b6d431d317fa331a28df0ae7891",
+    "scripts/sar8_r4_performance/flow.py": "e650abc502edd7b378ee5e2bc68d037946848949b99c68adc4b96632e33a95ee",
+    "scripts/sar8_r4_performance/preflight.py": "ae7bc3c484cd3d80b27575f9b8744dde33347becaf457f9f3c3e7576a21390d7",
+    "scripts/sar8_r4_performance/recover.py": "d8b055d7612482aef3f807c630bbbf09621e854929b791de419944508166bd5d",
+    "scripts/sar8_r4_performance/report.py": "a608e7e45a1382d9977268175b3371393de141bb9b2e7cf10a49bd1550374be6",
+    "scripts/sar8_r4_performance/run.py": "f81ca46213eb1c40a4f7e697b20b3e6022b717b3424ba07723f5f3784a0d109d",
+    "scripts/sar8_r4_performance/solver_help.py": "7758e9afc7db522cd33da11cb44fc0dc3ef23a73740a8ead06540ca868ffe9a6",
+    "scripts/sar8_r4_performance/status.py": "fabb0878bc52ed25c8f6a54d35c423f2696dd96d1e16c714f25accb7254455ac",
+    "models/veriloga/sar8_r4_performance/r4_perf_monitor.va": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+    "models/veriloga/sar8_r4_performance/r4_transition_stim.va": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a",
+    "config/sar8_r4_performance.yaml": "fbd150e8abcf026a346a0327874ed1680b4aa8d5b0f7971532a868295e88d6ce",
+    "verification/sar8_r4_performance/test_metrics.py": "ad12702173e559b45cd52cdb5173dcf0ab0bb40b3a8ec333f0ffda2a90218efc"
+  },
+  "production_cases": {
+    "sine_cx_1024_k461": {
+      "name": "sine_cx_1024_k461",
+      "kind": "sine",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 1028,
+      "stop_ns": 102800,
+      "first": 1,
+      "last": 255,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "d6dbb6a10cbf5f3cbf9dd0ebdd75e737227f03c5d268790d1e878240f2df902d",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\sine_cx_1024_k461\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_001_032": {
+      "name": "static_cx_001_032",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 1,
+      "last": 32,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "1565d4901ffeb9c1cf80f065d6ecd41772c53fb316c7d6b7efe4f053a2650016",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_001_032\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_001_032\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_033_064": {
+      "name": "static_cx_033_064",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 33,
+      "last": 64,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "81cd2cadaf3f71ad3630365da268fe9266e906e62a4766119a6bdaecbb42836e",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_033_064_r1": {
+      "name": "static_cx_033_064_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 33,
+      "last": 64,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "81cd2cadaf3f71ad3630365da268fe9266e906e62a4766119a6bdaecbb42836e",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_033_064_r2": {
+      "name": "static_cx_033_064_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 33,
+      "last": 64,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "81cd2cadaf3f71ad3630365da268fe9266e906e62a4766119a6bdaecbb42836e",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_033_064_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_065_096": {
+      "name": "static_cx_065_096",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 65,
+      "last": 96,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "6eb4c3c45de713ecd9785c7405372f21cc6499313ae44ea068f3fb3b70a7b2aa",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_065_096\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_065_096\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_097_128": {
+      "name": "static_cx_097_128",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 97,
+      "last": 128,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "964d0387eb7d005b89fdabb4ed44248e1bab676002bf7bc4bf29ddcfae5a1468",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_097_128_r1": {
+      "name": "static_cx_097_128_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 97,
+      "last": 128,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "964d0387eb7d005b89fdabb4ed44248e1bab676002bf7bc4bf29ddcfae5a1468",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_097_128_r2": {
+      "name": "static_cx_097_128_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 97,
+      "last": 128,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "964d0387eb7d005b89fdabb4ed44248e1bab676002bf7bc4bf29ddcfae5a1468",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_097_128_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_129_160": {
+      "name": "static_cx_129_160",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 129,
+      "last": 160,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "a1e6afbd23f2be795cba6c7d3aa00efa62d1e399332e6bdc4aee2d36bf9b190a",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_129_160_r1": {
+      "name": "static_cx_129_160_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 129,
+      "last": 160,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "a1e6afbd23f2be795cba6c7d3aa00efa62d1e399332e6bdc4aee2d36bf9b190a",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_129_160_r2": {
+      "name": "static_cx_129_160_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 129,
+      "last": 160,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "a1e6afbd23f2be795cba6c7d3aa00efa62d1e399332e6bdc4aee2d36bf9b190a",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_129_160_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_161_192": {
+      "name": "static_cx_161_192",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 161,
+      "last": 192,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "eadc56aaca4c6027ebfbfc6f0442c5547e44b06c18b961dac43b9104832afccc",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_161_192_r1": {
+      "name": "static_cx_161_192_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 161,
+      "last": 192,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "eadc56aaca4c6027ebfbfc6f0442c5547e44b06c18b961dac43b9104832afccc",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_161_192_r2": {
+      "name": "static_cx_161_192_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 161,
+      "last": 192,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "eadc56aaca4c6027ebfbfc6f0442c5547e44b06c18b961dac43b9104832afccc",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_161_192_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_193_224": {
+      "name": "static_cx_193_224",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 193,
+      "last": 224,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "700d6f3c0ba063725cfe5ab9bd214d2342ff44705d40b38693ccc85ec51049be",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_193_224_r1": {
+      "name": "static_cx_193_224_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 193,
+      "last": 224,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "700d6f3c0ba063725cfe5ab9bd214d2342ff44705d40b38693ccc85ec51049be",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_193_224_r2": {
+      "name": "static_cx_193_224_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 325,
+      "stop_ns": 32500,
+      "first": 193,
+      "last": 224,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "700d6f3c0ba063725cfe5ab9bd214d2342ff44705d40b38693ccc85ec51049be",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_193_224_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_225_255": {
+      "name": "static_cx_225_255",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 315,
+      "stop_ns": 31500,
+      "first": 225,
+      "last": 255,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "f3dd19609a7c57317efdc7b5d87abc590970b501623e4f026726b9b26ba6e640",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_225_255_r1": {
+      "name": "static_cx_225_255_r1",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 315,
+      "stop_ns": 31500,
+      "first": 225,
+      "last": 255,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "f3dd19609a7c57317efdc7b5d87abc590970b501623e4f026726b9b26ba6e640",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255_r1\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255_r1\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    },
+    "static_cx_225_255_r2": {
+      "name": "static_cx_225_255_r2",
+      "kind": "static",
+      "mode": "cx",
+      "honor_options": false,
+      "precision_options": false,
+      "threads": 4,
+      "frames": 315,
+      "stop_ns": 31500,
+      "first": 225,
+      "last": 255,
+      "samples": 1024,
+      "coherent_bin": 461,
+      "warmup": 4,
+      "half_span_lsb": 0.5,
+      "refine": 7,
+      "frequency_hz": 4501953.125,
+      "source": {
+        "source_run": "nominal06_two_phase",
+        "source_sha256": "02f4fb628807fd6e47a490890a036c81b9a8f51fc03075deb06b6cd5e206bba8",
+        "DUT_unchanged": true,
+        "MOS_CDF_tails_preserved": true,
+        "DUT_identical_to_OA_export": true,
+        "OA_export_sha256": "6e494dac6dc70792ae9c3941eda8107aec70067f4880fbc33209fd39679b1e6b",
+        "files": {
+          "dut.scs": "2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062",
+          "tb.scs": "bfb952e1823c59f12ba17c46ab11e14f73802fba64f47d0f3bc29b41ff36df07",
+          "tt_nominal.scs": "aa6237509136e395bf9225e338911d59e546f6abaecf352209d8806e62696467"
+        }
+      },
+      "DUT_unchanged": true,
+      "deck_sha256": "f3dd19609a7c57317efdc7b5d87abc590970b501623e4f026726b9b26ba6e640",
+      "includes": [
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255_r2\\r4_transition_stim.va",
+          "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+        },
+        {
+          "path": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\sar8_r4_performance\\cases\\static_cx_225_255_r2\\r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+        }
+      ],
+      "corner": "TT",
+      "VDD": 0.9,
+      "temperature_C": 27,
+      "transient_noise": false,
+      "mismatch": false,
+      "maxstep_ps": 10,
+      "requested_reltol": 1e-06,
+      "strobe_period_ns": 1,
+      "output_read_ns": 98
+    }
+  },
+  "status_path": "output/sar8_r4_performance/flow_status.json",
+  "selected_solver": "Spectre X CX 4 threads; default preset effective tolerances, compared against tighter APS/X",
+  "qualification_note": "CMI retained in static and continuous-sine tests; performance is not device-stress qualification or baseline adoption.",
+  "results_path": "verification/sar8_r4_performance/results.json",
+  "results_sha256": "553b9acbb130d62269f93bb7a4f1df6066fb2af7b42da91032821329f4994a96",
+  "recovery_mapping": {
+    "sine_cx_1024_k461": "sine_cx_1024_k461",
+    "static_cx_001_032": "static_cx_001_032",
+    "static_cx_033_064": "static_cx_033_064_r2",
+    "static_cx_097_128": "static_cx_097_128_r2",
+    "static_cx_129_160": "static_cx_129_160_r2",
+    "static_cx_161_192": "static_cx_161_192_r2",
+    "static_cx_193_224": "static_cx_193_224_r2",
+    "static_cx_225_255": "static_cx_225_255_r2",
+    "static_cx_065_096": "static_cx_065_096"
+  }
+}

@@ -1,0 +1,48 @@
+candidate: SAR8_R4_TRANSISTOR_CLOSURE
+dut: SAR_ADC_T28/sar_adc8_join_r4/schematic
+frozen_source: netlist/sar8_physical/dut.scs
+corner: TT
+supply_v: 0.9
+temperature_c: 27
+sample_rate_hz: 10000000
+transient_noise: false
+mismatch: false
+solver:
+  production_candidate: Spectre_X_CX
+  threads_per_job: 4
+  concurrent_jobs: 4
+  selection_requires_APS_and_tighter_X_pilot_comparison: true
+  presets_override_requested_netlist_controls: true
+  effective_settings_must_be_read_from_each_log: true
+  output_strobe_period_ns: 1
+  continuous_event_monitor: true
+static:
+  method: actual_output_transition_bisection_and_code_centers
+  transitions: [1, 255]
+  ranges: [[1, 32], [33, 64], [65, 96], [97, 128], [129, 160], [161, 192], [193, 224], [225, 255]]
+  warmup_frames: 4
+  half_bracket_lsb: 0.5
+  refinements: 7
+  bracket_width_lsb: 0.0078125
+  saturated_endpoint_widths_excluded: [0, 255]
+dynamic:
+  continuous_sine: true
+  warmup_frames: 4
+  fft_samples: 1024
+  coherent_bin: 461
+  frequency_hz: 4501953.125
+  level_dbfs: -1
+  common_mode_v: 0.45
+  window: rectangular
+  enob: (SNDR_dB-1.76)/6.02
+  gain_phase_INL_correction: false
+measurement:
+  expected_compares_writes_updates_captures: [8, 8, 8, 16]
+  stability_window_ns: [90, 98]
+  final_read_ns: 98
+  maximum_conversion_ns: 60
+output:
+  raw: output/sar8_r4_performance
+  status: output/sar8_r4_performance/flow_status.json
+  report: docs/sar8_r4_performance.md
+  results: verification/sar8_r4_performance/results.json
