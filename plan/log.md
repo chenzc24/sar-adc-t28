@@ -2674,3 +2674,30 @@ human-triggered note in `docs/experience/`.
 - Distinguish fitted residuals from aperture error, static INL and physical
   noise/jitter. Reference CMI failures and original sine-run evidence limits
   retained. Local scoped commit only; no push or baseline replacement.
+
+### 2026-10-22 R4 reference reset and sampling sequencing — experiment complete
+
+- Compared frozen R4 with native T28 RC/MOS reset-first A and sample-first B.
+  Only top-level sampling/reset routing and cloned sequencing cells changed;
+  original analog sizes,3x reference banks, R4/PDK/OA remain unchanged.
+- Three500ns CX cases:reference max1.011292/0.989420/1.022525V; five-frame
+  codes identical, independent8/8/8/16 edge and output-stability checks pass.
+  A delays Bootstrap rising control1.732ns and falling control~25ps; not an
+  identical-aperture replacement. B rejected; A margin only0.580mV.
+- Honored-options A500ns:actual10ps/reltol1e-7/10nV/100fA; reference max
+  0.989263V, five-frame timing passes, no observed selected-device violations.
+  Native zero-error/PASS/complete PSF; stopped owned LOCAL postprocessing only
+  for3.916GB memory pressure. Task-local streaming reader exactly matches all
+  129baseline vectors, retains731726precise points; recovery evidence explicit.
+  No installed-tool changes, rerun or invented native exit status.
+- A4.6us:46native-valid frames; saved24–45independently checked. First CMI
+  501.359ns; saved2.398–4.6us worst P6 PMOS Vbd0.991464V, N3 NMOS Vgb
+  0.990910V. N3 driver0.902865V with unchanged low Q3 establishes post-R gate
+  overshoot. Code indices9/36 differ from old sine by+1/-1; no new FFT claim.
+- Results remain electrical failures, not a fixed baseline. Proposed next
+  target staged reference initialization / gate holding tests; not implemented.
+  No current-path integral, full-logic stress/PVT/MC/PEX qualification claimed.
+- Added concise report, three inspected figures, native fragments/provenance,
+  analysis and recovery scripts and result summaries. Frozen hashes, script
+  compilation/execution and scoped diff checked. User Obsidian/10bit work
+  preserved; local scoped commit only, no push and no OA modification.

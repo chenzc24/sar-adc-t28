@@ -1,0 +1,296 @@
+[
+  {
+    "name": "reset_first_c20_precise500",
+    "kind": "reset_first",
+    "all_frame_timing_pass": true,
+    "all_saved_stress_pass": true,
+    "observed_electrical_pass": true,
+    "baseline_code_differences": [],
+    "groups": {
+      "reference": {
+        "peak_v": 0.9892625490039201,
+        "time_ns": 401.3589849775522
+      },
+      "comparator": {
+        "peak_v": 0.9517193523975599,
+        "time_ns": 143.7263701630608
+      },
+      "bootstrap": {
+        "peak_v": 1.702006470741049,
+        "time_ns": 403.6300426296922
+      },
+      "sequencer": {
+        "peak_v": 0.9333354822185348,
+        "time_ns": 441.10141589476814
+      }
+    },
+    "failing_terminals": [],
+    "effective_settings": {
+      "maxstep": "10 ps",
+      "reltol": "100e-09",
+      "abstol(V)": "10 nV",
+      "abstol(I)": "100 fA",
+      "method": "gear2only",
+      "relref": "sigglobal"
+    },
+    "native_CMI": [],
+    "native_CMI_events": [],
+    "points": 731726,
+    "saved_window_ns": [
+      0.0,
+      499.9999999999125
+    ],
+    "DUT_sha256": "81c728197de0057737c7ab5eed928f54cba4db73deb8e673eaaac4b53c7745a6",
+    "wave_sha256": "7dced4056e33e8c6f2177dc8eb77606505bf7189194e030886a82a6b3f02b708",
+    "log_sha256": "f0f1271663ae209c60c79e605dfd1a13e2a41cfccfa92a5e842ae5b38632341d",
+    "limits": [
+      "Nominal bounded replay only, not PVT or complete logic stress qualification.",
+      "Peaks are from saved adaptive samples, not an independent convergence proof.",
+      "Native CMI in an unsaved interval still fails electrical qualification.",
+      "Original full-sine code comparison is diagnostic: aperture and solver settings may differ.",
+      "Monitor SAMPLE refers to original internal control, not modified acquisition gate."
+    ],
+    "status": "verified",
+    "frame_count": 5,
+    "independently_checked_frames": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "codes": [
+      133,
+      46,
+      181,
+      108,
+      112
+    ],
+    "command_options": [
+      "+preset=cx",
+      "+mt=4",
+      "+lqtimeout",
+      "60",
+      "-preset_override"
+    ],
+    "outputstart_ns": 0,
+    "recovery": {
+      "reason": "Stopped owned local postprocessing PID38252 after native completion to limit memory use.",
+      "original_runner_exit_code": null,
+      "native_process_exit_code": null,
+      "native_zero_error_summary": true,
+      "native_analysis_PASS": true,
+      "parser": "task-local streaming scalar PSF; exact baseline vector comparison passed",
+      "psf_sha256": "951865b15269a6c4fc5762688ef27a4d82f1959c3f12d442616cd2ee1159da98",
+      "native_log_sha256": "f0f1271663ae209c60c79e605dfd1a13e2a41cfccfa92a5e842ae5b38632341d",
+      "basis": "Native zero-error summary, logStatus PASS, all frames, PSF END, exact signal set and complete finite waveform"
+    }
+  },
+  {
+    "name": "reset_first_c20_late4600",
+    "kind": "reset_first",
+    "all_frame_timing_pass": true,
+    "all_saved_stress_pass": false,
+    "observed_electrical_pass": false,
+    "baseline_code_differences": [
+      {
+        "frame": 9,
+        "baseline": 240,
+        "candidate": 241
+      },
+      {
+        "frame": 36,
+        "baseline": 204,
+        "candidate": 203
+      }
+    ],
+    "groups": {
+      "reference": {
+        "peak_v": 0.9914643957134383,
+        "time_ns": 4401.359311651011
+      },
+      "comparator": {
+        "peak_v": 0.9520485568515691,
+        "time_ns": 3643.728798829634
+      },
+      "bootstrap": {
+        "peak_v": 1.751922626273545,
+        "time_ns": 3941.1450933944975
+      },
+      "sequencer": {
+        "peak_v": 0.9328864852366313,
+        "time_ns": 4441.101440200665
+      }
+    },
+    "failing_terminals": [
+      {
+        "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+        "terminal": "gb",
+        "model": "nch_mac",
+        "group": "reference",
+        "peak_v": 0.9909103095076846,
+        "time_ns": 4501.400120535429,
+        "limit_v": 0.99,
+        "exceed": true,
+        "first_saved_exceed_ns": 4501.400120535429,
+        "last_saved_exceed_ns": 4501.402939827466
+      },
+      {
+        "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+        "terminal": "bd",
+        "model": "pch_mac",
+        "group": "reference",
+        "peak_v": 0.9914643957134383,
+        "time_ns": 4401.359311651011,
+        "limit_v": 0.99,
+        "exceed": true,
+        "first_saved_exceed_ns": 2401.3591303392523,
+        "last_saved_exceed_ns": 4401.359311651011
+      }
+    ],
+    "effective_settings": {
+      "maxstep": "46 ns",
+      "reltol": "100e-06",
+      "abstol(V)": "1 uV",
+      "abstol(I)": "1 pA",
+      "method": "gear2only",
+      "relref": "sigglobal"
+    },
+    "native_CMI": [
+      "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=991.063 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.101 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.787 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.198 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=991.464 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2753): XDUT.XCDAC.XSN3.MN_LOW: Vgb(=990.91 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+      "WARNING (CMI-2753): XDUT.XCDAC.XSN3.MN_LOW: Vgb(=990.865 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+    ],
+    "native_CMI_events": [
+      {
+        "reported_time": "501.359 ns",
+        "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=991.063 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "1.30136 us",
+        "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.101 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "2.40136 us",
+        "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.787 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "3.30136 us",
+        "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=990.198 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "4.40136 us",
+        "message": "WARNING (CMI-2755): XDUT.XCDAC.XSP6.MP_HIGH: Vbd(=991.464 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "4.5014 us",
+        "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN3.MN_LOW: Vgb(=990.91 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      },
+      {
+        "reported_time": "4.5014 us",
+        "message": "WARNING (CMI-2753): XDUT.XCDAC.XSN3.MN_LOW: Vgb(=990.865 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+      }
+    ],
+    "points": 311790,
+    "saved_window_ns": [
+      2398.0,
+      4599.999999999932
+    ],
+    "DUT_sha256": "81c728197de0057737c7ab5eed928f54cba4db73deb8e673eaaac4b53c7745a6",
+    "wave_sha256": "59aac07c9435cca46732b1edf57beadf8e219a8b5d3bdc8bbb03029c45f3c44a",
+    "log_sha256": "9e7bffb8f5559f5564cd51c36512b9cf99aa8552f8f170618f65fb317ee2757d",
+    "limits": [
+      "Nominal bounded replay only, not PVT or complete logic stress qualification.",
+      "Peaks are from saved adaptive samples, not an independent convergence proof.",
+      "Native CMI in an unsaved interval still fails electrical qualification.",
+      "Original full-sine code comparison is diagnostic: aperture and solver settings may differ.",
+      "Monitor SAMPLE refers to original internal control, not modified acquisition gate."
+    ],
+    "status": "verified",
+    "frame_count": 46,
+    "independently_checked_frames": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "codes": [
+      133,
+      46,
+      181,
+      108,
+      112,
+      177,
+      48,
+      228,
+      15,
+      241,
+      25,
+      210,
+      73,
+      148,
+      142,
+      79,
+      206,
+      28,
+      239,
+      14,
+      231,
+      44,
+      183,
+      105,
+      114,
+      175,
+      50,
+      227,
+      16,
+      241,
+      23,
+      212,
+      71,
+      151,
+      139,
+      81,
+      203,
+      29,
+      239,
+      14,
+      232,
+      42,
+      186,
+      102,
+      117,
+      172
+    ],
+    "command_options": [
+      "+preset=cx",
+      "+mt=4",
+      "+lqtimeout",
+      "60"
+    ],
+    "outputstart_ns": 2398.0,
+    "recovery": null
+  }
+]

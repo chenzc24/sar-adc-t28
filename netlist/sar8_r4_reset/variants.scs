@@ -1,0 +1,49 @@
+// Experimental native cells only; not exported to Virtuoso OA.
+// Include ../sar8_physical/dut.scs before this file; PDK includes remain external.
+subckt sar8r_delay A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8r_delay
+subckt sar8r_edge A VDD VSS Y
+    XD (A VDD VSS AD) sar8r_delay
+    XA (A AD VDD VSS QUAL) sar8p_and2
+    XB (QUAL VDD VSS Y) sar8p_clkbuf
+ends sar8r_edge
+
+subckt sar8r_reset_first D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VREFP 0
+    XSEQ (SAMPLE_INT VDD! 0 SEQ_SAMPLE) sar8r_edge
+    XSAMPLE (SAMPLE VDD! 0 SAMPLE_INT) sar8p_clkbuf
+    XBOOTN (SEQ_SAMPLE TOPN VINN) sar_bootstrap_flat_8b_p
+    XBOOTP (SEQ_SAMPLE TOPP VINP) sar_bootstrap_flat_8b_p
+    XCDAC (GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2 GNP3  GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7 GPP0  GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
+    XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE_INT VDD! 0)  sar_logic_8b_physical
+    XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 D2 D3 D4  D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2  GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7  GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE_INT VDD! 0)  sar8p_refword
+    XCOMP (CMP_CLK COMP_N COMP_P VDD! TOPN TOPP 0) sar_strongarm_t28
+    CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_COMP_P (COMP_P 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_CMP_CLK (CMP_CLK 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+ends sar8r_reset_first
+
+
+subckt sar8r_sample_first D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VREFP 0
+    XSEQ (SAMPLE_INT VDD! 0 SEQ_SAMPLE) sar8r_edge
+    XSAMPLE (SAMPLE VDD! 0 SAMPLE_INT) sar8p_clkbuf
+    XBOOTN (SAMPLE_INT TOPN VINN) sar_bootstrap_flat_8b_p
+    XBOOTP (SAMPLE_INT TOPP VINP) sar_bootstrap_flat_8b_p
+    XCDAC (GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2 GNP3  GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7 GPP0  GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
+    XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE_INT VDD! 0)  sar_logic_8b_physical
+    XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 D2 D3 D4  D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2  GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7  GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SEQ_SAMPLE VDD! 0)  sar8p_refword
+    XCOMP (CMP_CLK COMP_N COMP_P VDD! TOPN TOPP 0) sar_strongarm_t28
+    CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_COMP_P (COMP_P 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_CMP_CLK (CMP_CLK 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+ends sar8r_sample_first
