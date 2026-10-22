@@ -2571,3 +2571,19 @@ human-triggered note in `docs/experience/`.
   cumulative report: 597 files / 71.455829 GiB. Focused syntax/dry-run and
   receipt/absence/retention checks pass. Local scoped commit only, no push;
   existing uncommitted R4 log entry preserved and excluded from this commit.
+
+### 2026-10-22 R4 reference-switch stress diagnosis
+
+- Independent450ns CX1 replay of unchanged R4 and continuous-sine history;
+  no OA/PDK/circuit edits or interference with the active static batch.
+- Native0errors/18warnings, CMI reproduced, first4codes match long run.
+  DUT/deck/wave hashes checked;4004 adaptive samples saved from398ns.
+- Acquisition/ref-reset handoff near401.358ns: BN6=1.006685V and
+  BP6=-0.111292V, with PMOS body-drain stress1.011292V vs0.99V limit.
+  CMP_CLK inactive. Coupling paths not yet separated by intervention.
+- Report docs/sar8_r4_reference_stress.md, two inspected waveform figures,
+  verification/sar8_r4_refstress/results.json and bounded scripts/plan.
+  Effective maxstep4.5ns; local saved gap near peak<=3.248ps; no convergence
+  or whole-record worst-case claim. Later gate-overvoltage still unresolved.
+- Scoped compile, offline execution and diff checks; unrelated Obsidian
+  trailing whitespace retained. Local scoped commit only, no push.
