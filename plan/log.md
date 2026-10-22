@@ -2701,3 +2701,37 @@ human-triggered note in `docs/experience/`.
   analysis and recovery scripts and result summaries. Frozen hashes, script
   compilation/execution and scoped diff checked. User Obsidian/10bit work
   preserved; local scoped commit only, no push and no OA modification.
+
+### 2026-10-22 R4 staged reference reset and gate holding — experiment complete
+
+- Kept frozen R4, PDK, previous A/B cases and all OA unchanged. Added native
+  per-bit reset sequencing; compared MSB-first/LSB-first with A, gate R/2,
+  and final-driver2x. No ideal internal drive or new behavioral ADC logic.
+- Five600ns screens completed: reference peaks0.991063/0.961044/0.945182/
+  1.056698/0.995498V respectively. All six-frame codes/timing checks pass;
+  A and the two drive-only variants still fail electrical screening.
+- Selected MSB-first:4.6us,724408points,46independently verified frames,
+  45restart checks, no CMI and no six-pair violation among417selectedMOS.
+  Reference worst P5 PMOS Vgb0.955838V at4001.388523ns,34.162mV margin.
+- Strict300ns:467168points,3frames,10ps/1e-7/10nV/100fA, no CMI;
+  reference0.945142V versus ordinary CX0.945182V at the short201ns event.
+  Does not strictly recheck the long4001ns worst. Tightest selected core
+  margin observed across these tests is10.741mV in reference drivers.
+- Acquisition command width drops~38.29to33.85ns; falling edge shifts~27ps.
+  Four +/-1 code changes versus A, six versus R4; no reused SNDR/ENOB claim.
+  RST_DONE is a fixed-delay command marker, not analog completion feedback.
+- Four gate-resistor current saves verified natively. At the501ns event,
+  A GNN3=0.988165V versus pre-R driver0.902781V, +6.839uA leaves gate
+  into resistor. MSB-first gate peak0.936066V and corresponding+2.797uA.
+  Evidence supports coupling/finite gate holding, not a full parasitic-charge
+  decomposition. R/2 improves that gate but worsens BN6 to1.056698V.
+- Native exit0/zero errors/PASS, PSF END/exact signals/finite monotonic full
+  duration and hashes checked. Long SCP timed out during anomalous elapsed
+  wait; recovered the SAME9.01GB record via11hashed chunks, no native rerun.
+  Strict5.81GB record also matches remote native SHA256. No installed bridge
+  changes, unrelated process stops, raw overwrite or destructive cleanup.
+- Added concise report, four visually inspected figures, native candidate
+  fragments/provenance, scripts and curated numeric results. Frozen hashes,
+  focused execution/compile checks and scoped diff review pass. No PVT/MC,
+  noise/PEX/new full-code/FFT qualification, no baseline/OA promotion.
+  User Obsidian and10bit changes preserved. Scoped local commit only; no push.
