@@ -2795,3 +2795,19 @@ human-triggered note in `docs/experience/`.
   Launch checkpoint committed separately; no final qualification claim,
   no R4/OA promotion and no push. Next turn must inspect existing launch and
   collector receipts, not run setup/full again.
+
+## 2026-10-23 — Idle-tail result collection blocked by connectivity
+
+- User requested collection of the completed nine-case batch. Earlier live
+  inspection confirmed all native exit codes 0, 3618 total frame records,
+  eight static completion markers and no CMI warning lines. No new run needed.
+- Original local collector is absent; no completion receipt and no full-case
+  partial downloads exist. Its termination cause is not established.
+- Two bounded supported-bridge collection attempts failed while querying the
+  first remote status, before downloading files. Independent TCP check to the
+  configured jump host port22 also timed out after5s. Network/VPN/server root
+  cause not determined; do not mislabel this as a Spectre/circuit failure.
+- Native cases, PDK, OA, R4 baseline and user edits untouched. Exact nine-case
+  preparation/source checks still pass. Final analysis/images remain pending;
+  resume existing collect after access is restored, never relaunch.
+- Scoped documentation checkpoint only; no push or baseline promotion.

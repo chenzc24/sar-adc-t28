@@ -1,6 +1,6 @@
 # Idle-tail candidate: full nominal performance versus R4
 
-Status: full batch running; smoke and preparation checks passed. No final metrics yet.
+Status: native batch previously confirmed complete; collection blocked by SSH jump-host connectivity (2026-10-23).
 
 ## Goal and boundaries
 
@@ -98,3 +98,22 @@ Outputs: `verification/sar8_idle_performance/{setup,results}.json`,
 - Remaining: all full-result validation, visual inspection, final log and
   result commit. This checkpoint is NOT completed characterization. Commit
   launch/test scaffolding and evidence separately, without push or adoption.
+
+## Collection resumption (2026-10-23)
+
+User explicitly requested collection. Nine remote jobs have exit 0 and complete
+frame counts; all eight static completion markers exist. The original local
+collector stopped without a completion receipt, and its cause is not established.
+No full case had been downloaded or partly collected. Resume the existing
+`collect` command, never launch or recreate cases. Original collector log and
+launch receipt are retained. Dirty user files remain unchanged; branch ahead 7
+at resumption. Complete analysis/figures and scoped local commit; no push.
+
+Collection attempt outcome: two bounded `flow.py collect` attempts timed out
+before any case download began. Independent TCP probe to the configured SSH
+jump host port 22 also timed out after 5 seconds. No active original collector
+was found. This establishes a current connectivity blocker, not a simulation
+failure; the precise network/VPN/server cause is not established. No full raw
+case was overwritten, deleted or restarted. Preparation/source checks still
+pass. User must restore the usual SSH/network access before resuming `collect`;
+do not run `setup`, `smoke`, or `full` again. Final metrics/reports remain pending.
