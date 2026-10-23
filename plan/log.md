@@ -2828,3 +2828,16 @@ human-triggered note in `docs/experience/`.
   reliability sign-off. Three final figures visually reviewed.
 - Generated scoped report/results, updated plan/status; owned diff checked
   for local result commit, no push. User Obsidian/10bit work untouched.
+
+## 2026-10-23 — Idle candidate ADCToolbox and time fit
+
+- Generated candidate 12-panel, chronological fit/readout/residual plot and
+  phase-fold plot from unchanged 1024-code results. No simulation or OA work.
+- Reused ADCToolbox 0.9.1; FFT checks, independent sine reconstruction,
+  source-at-clock-edge validation and Python compile pass. All three PNGs
+  visually inspected. Residual 2.067754 mV RMS, 0.294081 LSB.
+- Clock-edge difference 28.402045 mV RMS is separated from fitted residual;
+  equivalent phase lag 1.766137 ns is not identified as physical aperture delay.
+- Added concise report and numeric provenance. Scoped diff checked for local
+  commit, no push. Existing user Obsidian whitespace warning left untouched;
+  unrelated Obsidian and 10-bit changes preserved.

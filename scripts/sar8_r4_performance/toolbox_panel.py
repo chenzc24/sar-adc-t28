@@ -64,8 +64,13 @@ def polar(ax, phase, level, labels=None):
             ax.annotate(label, (ph, lev - floor), xytext=(5, 4), textcoords="offset points", fontsize=9)
 
 
-def main():
+def main(source_path=SOURCE, figure_path=FIGURE, result_path=RESULT,
+         source_key=None, label="R4 SAR ADC", warning=None):
+    SOURCE, FIGURE, RESULT = source_path, figure_path, result_path
     source = json.loads(SOURCE.read_text(encoding="utf-8"))
+    if source_key is not None:
+        source = source[source_key]
+    warning = warning or "CMI device-overvoltage warnings remain unresolved."
     codes = np.asarray([f["code"] for f in source["dynamic_frames"]])
     assert codes.shape == (N,) and np.all((codes >= 0) & (codes <= 255))
     assert np.all(codes == np.round(codes))
@@ -179,16 +184,17 @@ def main():
     for i, a in enumerate(axes):
         a.set_title(titles[i], pad=18 if i in [1, 5] else 10)
         a.grid(alpha=.18)
-    fig.suptitle("R4 SAR ADC  |  ADCToolbox 12-panel analysis", fontsize=21, y=.987)
+    fig.suptitle(label + "  |  ADCToolbox 12-panel analysis", fontsize=21, y=.987)
     fig.text(.5, .954, "8 bit · TT · 0.9 V · 27°C  |  Fs = 10 MS/s  |  Fin = 4.501953125 MHz  |  N = 1024, k = 461  |  Input = −1 dBFS", ha="center", fontsize=11)
     fig.text(.5, .026, "Native T28 ADC core · ideal external supply/reference/SAMPLE sources · no transient noise / mismatch / PVT sweep", ha="center", fontsize=11)
-    fig.text(.5, .008, "Residual = decoded output − fitted sine; not clock-edge input error.  CMI device-overvoltage warnings remain unresolved.", ha="center", fontsize=11, color="#9c392c")
+    fig.text(.5, .008, "Residual = decoded output − fitted sine; not clock-edge input error.  " + warning, ha="center", fontsize=11, color="#9c392c")
     fig.subplots_adjust(left=.055, right=.98, top=.902, bottom=.085, hspace=.52, wspace=.39)
     FIGURE.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(FIGURE, dpi=170, facecolor="white")
     plt.close(fig)
     result = {
         "source": str(SOURCE.relative_to(ROOT)),
+        "source_key": source_key,
         "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
         "toolbox_version": importlib.metadata.version("adctoolbox"),
         "toolbox_module": str(Path(adctoolbox.__file__)),
@@ -215,8 +221,8 @@ def main():
                    "Value-binned residual is not static INL/DNL.",
                    "Near-Nyquist delayed-sample geometry is not analog phase portrait.",
                    "Panel12 trend is diagnostic only, not proof of circuit memory.",
-                   "Reference-switch CMI overvoltage remains unresolved.",
-                   "Sine transient PASS and full data verified; whole-process exit summary unavailable."],
+                   warning,
+                   "Refer to source results for native process completion evidence."],
     }
     RESULT.write_text(json.dumps(serial(result), indent=2, ensure_ascii=False, allow_nan=False)+"\n", encoding="utf-8")
     print(json.dumps(serial({"spectrum": metrics, "residual": result["residual"], "checks": checks}), indent=2))
