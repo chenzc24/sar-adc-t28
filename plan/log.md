@@ -2841,3 +2841,15 @@ human-triggered note in `docs/experience/`.
 - Added concise report and numeric provenance. Scoped diff checked for local
   commit, no push. Existing user Obsidian whitespace warning left untouched;
   unrelated Obsidian and 10-bit changes preserved.
+
+## 2026-10-23 — Obsidian performance curation
+
+- Added Rvision/8bit性能与ADCToolbox.md with nominal R4 comparison, twelve-panel
+  reading guide, raw versus harmonic-relative phase and timing-fit explanation.
+  Added Result navigation; preserved old R3 history and user's wrap-up edits.
+- Copied five reviewed PNGs into vault assets; hashes identical and all local
+  image/source links resolve. Readback and scoped diff check performed; no
+  native Obsidian UI rendering check. No simulation, OA or circuit changes.
+- User explicitly authorizes commit/push of these results; publication on the
+  current branch includes ten existing analysis/experiment commits. Unrelated
+  dirty files are excluded. Remote push outcome reported in the conversation.
