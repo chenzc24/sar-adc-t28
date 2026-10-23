@@ -1,6 +1,6 @@
 # Idle-tail candidate: full nominal performance versus R4
 
-Status: native batch previously confirmed complete; collection blocked by SSH jump-host connectivity (2026-10-23).
+Status: complete; all nine cases collected, analyzed and figures visually reviewed (2026-10-23).
 
 ## Goal and boundaries
 
@@ -56,14 +56,14 @@ TOPP-TOPN at 98 ns is NOT a conversion residue or a comparison metric.
       valid brackets, centers and continuous-event counts before full batch.
 - [x] Launch one full sine and eight static segments exactly once, detached from SSH.
       Persist launch manifest before dispatch; resume status/collection only.
-- [ ] Verify native exit/PASS/END, full time coverage, remote/local deck and wave
+- [x] Verify native exit/PASS/END, full time coverage, remote/local deck and wave
       hashes, independently decoded codes versus monitor, all frame event counts,
       255 disjoint transition brackets, 256 observed codes and 1024 FFT codes.
-- [ ] Read effective solver settings and CMI/numerical diagnostics for every run;
+- [x] Read effective solver settings and CMI/numerical diagnostics for every run;
       retain failures and initial-DC notes. Compare same-method metrics to R4.
-- [ ] Generate and visually inspect static, spectrum and code-comparison figures;
+- [x] Generate and visually inspect static, spectrum and code-comparison figures;
       clearly state nominal-only scope and stress evidence limits.
-- [ ] Update log/plan, scoped diff review, commit owned sources/results/report only.
+- [x] Update log/plan, scoped diff review, commit owned sources/results/report only.
 
 Performance screening: all timing/center/bracket gates, |DNL|<=1 LSB,
 endpoint |INL|<=1 LSB, ENOB>=7. Electrical warning status is separate;
@@ -117,3 +117,20 @@ failure; the precise network/VPN/server cause is not established. No full raw
 case was overwritten, deleted or restarted. Preparation/source checks still
 pass. User must restore the usual SSH/network access before resuming `collect`;
 do not run `setup`, `smoke`, or `full` again. Final metrics/reports remain pending.
+
+## Final recovery and results
+
+After user restored network, all nine existing cases were collected without
+rerunning. Native exit0/PASS/END, remote/local PSF and deck hashes pass; all
+3618 frames independently decoded, timing valid; 255 ordered valid brackets,
+256 correct centers and full code coverage; 1024 measured sine samples.
+DNL +/-0.0234375 LSB, endpoint INL max0.02102768 LSB. SNDR48.7598847dB,
+ENOB7.8072898bit, SFDR65.1537745dB. Relative R4: +0.0312645dB SNDR,
++0.00519345bit ENOB, -0.4389233dB SFDR; 56 codes differ by at most1.
+All matched-case effective solver settings identical. No CMI or transient
+numerical diagnostics; initial DC tolerance relaxation retained for static
+001_032,097_128,161_192. Direct FFT agrees with ADCToolbox within6e-14dB.
+Three final figures inspected. Nominal performance passes; no all-node stress,
+PVT/mismatch/noise/PEX qualification claimed. Early analysis attempt before
+last receipt finished safely refused missing data; rerun after collection
+completed succeeded. No simulation rerun, baseline/OA change or push.

@@ -2811,3 +2811,20 @@ human-triggered note in `docs/experience/`.
   preparation/source checks still pass. Final analysis/images remain pending;
   resume existing collect after access is restored, never relaunch.
 - Scoped documentation checkpoint only; no push or baseline promotion.
+
+## 2026-10-23 — Idle-tail full characterization recovered and reviewed
+
+- Network restored; collected all9 existing cases, no native reruns. Exit0,
+  PASS/END, full duration and remote/local PSF/deck hashes verified. Preserved
+  stopped collector log and original cases. No OA/PDK/baseline changes.
+- All3618 frames valid with independent output decode;255 valid ordered
+  boundaries,256 centers correct/full code coverage;1024 measured sine codes.
+- DNL +/-0.0234375LSB, max endpoint INL0.02102768LSB; SNDR48.759885dB,
+  ENOB7.807290bit, SFDR65.153774dB. Versus R4:SNDR+0.031265dB,
+  ENOB+0.005193bit, SFDR-0.438923dB;56/1024 codes differ by at most1.
+- No CMI cases (R4:4), no transient numerical diagnostics; DC relaxation
+  retained for static001_032,097_128,161_192. Effective settings match R4.
+  FFT/ADCToolbox agree within6e-14dB. Nominal-only performance passes, not
+  reliability sign-off. Three final figures visually reviewed.
+- Generated scoped report/results, updated plan/status; owned diff checked
+  for local result commit, no push. User Obsidian/10bit work untouched.
