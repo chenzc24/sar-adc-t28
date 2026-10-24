@@ -2987,3 +2987,30 @@ human-triggered note in `docs/experience/`.
   branch-current localization; no causal claim tying CMI directly to code10.
   Two native waveform figures visually checked; Python/measurement checks
   and scoped local commit only, no push. User Obsidian/10-bit changes preserved.
+
+## 2026-10-24 — FF hot reference-versus-wait causal controls
+
+- User-authorized two immutable FF/.99V/125C six-frame native controls on the
+  selected2um DUT: only RREFP/N50->1ohm; separately only quiet-delay C0/C1
+  multi30->60. No other circuit, stimulus, sampling clock, model or OA edits.
+  EVAS skill compatibility check excludes transistor simulation; native Spectre
+  used. Original model/config hashes and license preflight passed.
+- Frame1(-.81V) reference spans original/R1/quiet2:884.575/899.629/884.575mV;
+  bit2 residuals -9.410/+4.139/-9.426mV; codes10/12/10. Actual bit2 update-to-
+  compare intervals2.804866/2.804874/5.254101ns. Conversion28.545/28.543/48.137ns.
+  This closes the requested causal comparison in favor of reference compression,
+  not insufficient compare waiting, for this observed large-signal code error.
+- Reference source current remains ~185.6uA per rail at1ohm versus154.2uA at50ohm;
+  specific load/leakage branch still unmeasured. Sampling-close and held errors
+  remain essentially unchanged. R1 codes[243,12,127,128,127,145] all accepted;
+  quiet2 matches baseline[245,10,127,128,127,145]. Both native runs complete6frames,
+  timing/idle checks pass. Quiet2 consumes19.592ns idle margin without benefit.
+- CMI and saved core stress failures remain; no whole-ADC or full-PVT clearance.
+  This is an ideal source impedance diagnostic, not an implemented reference
+  buffer or replacement baseline. Raw PSF preserved; recovered native timing
+  samples and hashes, no decimation of retained timing nodes, no deletion.
+- Exact inverse source checks and remote deck hashes pass; same effective CX
+  tolerances as baseline (reltol1e-4,maxstep6ns,gear2only). Focused Python checks
+  and final figure inspection passed. Results in verification/sar8_ff_counterfactual/,
+  figure in docs/figures/sar8_ff_counterfactual/. Scoped local commit only,
+  no push; user Obsidian and10-bit work untouched.
