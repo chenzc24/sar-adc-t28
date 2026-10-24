@@ -1,13 +1,16 @@
 {
-  "state": "remote_status_unavailable",
-  "latest_status_attempt": "Login-shell status and direct Python status timed out after 90 seconds; direct /bin/cat exit_code also timed out after 90 seconds",
+  "state": "one_successful_snapshot_followed_by_blocked_collection",
+  "latest_status_attempt": "Direct status timeout 90s then detailed status timeout 180s; reduction prerequisite read timeout 90s; SFTP spectre.out read timeout 90s",
   "jump_host_command_works": true,
   "target_authentication_succeeds": true,
   "target_hostname_succeeded_session_seconds": 23.3,
-  "target_result_read_works": false,
+  "target_result_read_works": "Intermittent: snapshot 20261024T134424Z succeeded, subsequent reads did not",
   "jump_host_same_result_path": "ENOENT; not an available shared-results path",
-  "root_cause": "Unresolved target session/startup/resource/filesystem response; not proven network outage or simulation failure",
-  "last_confirmed_native_progress": "rg1_strict200_ff_m40 reached 41.0583 ns with CMI warnings",
+  "root_cause": "Authentication succeeds; noninteractive command and SFTP stall after channel request. Interactive login returns banner but no prompt/command result. Cause unresolved; not proof of server failure",
+  "last_confirmed_native_progress": "Snapshot: rg4 cold exit0, 0 errors/58 warnings; rg1 cold post-transient summary and two R4MEAS rows but no exit marker; both hot logs empty",
+  "last_successful_snapshot": "verification/sar8_stress_closure/recovery_status.json",
+  "cold_waveforms_collected": false,
+  "reduction_submitted": false,
   "status_json_is_stale": true,
   "batch_pid": 133523,
   "cases_submitted_once": 4,
@@ -16,5 +19,5 @@
   "local_bridge_start_client_stopped": true,
   "OA_modified": false,
   "repair_complete": false,
-  "next_action": "Check commands/filesystem from an existing thu-wei terminal or with server administrator; then inspect existing launch.json cases, never duplicate submissions"
+  "next_action": "User existing thu-wei terminal hostname and rg4 cold exit_code read; compare existing-session access against new-session blockage. Resume existing cases only; no duplicate submissions"
 }

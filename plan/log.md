@@ -3224,3 +3224,20 @@ human-triggered note in `docs/experience/`.
   circuit changes, waveform overwrites, OA edits or repair qualification.
 - Updated access evidence and incomplete plan; scripts compile, scoped diff
   checks pass. Task-only local diagnostic checkpoint, no push. User dirt intact.
+
+## 2026-10-24 — Partial cold logs recovered; waveform retrieval blocked
+
+- Successful direct snapshot confirmed rg4 cold native exit0,0errors/58warnings;
+  rg1 cold post-transient summary and two measurement rows without exit marker;
+  hot logs/exit markers absent. Current hot process state remains unknown.
+- Subsequent90/180s direct queries,90s reducer prerequisite and90s SFTP log read
+  timed out. Authentication works. Interactive SSH gave login banner but no
+  shell-command result; closed only that probe. No raw writes, reducers launched,
+  simulation restarts/termination or OA edits. Requested existing-terminal check.
+- Log-only baseline codes243/12 agree with ideal +/-0.81V; held errors at
+  41.8/141.8ns are-1.695/+0.577mV; conversion26.683/26.644ns is NOT settling time.
+  Both cold tails show effective reltol1e-7,maxstep10ps,V/I abstol10nV/100fA.
+  Enhanced stress/codes/settling comparison and all hot results still missing.
+- Preserved snapshot, partial metrics and bounded file-backed recovery probes.
+  Scoped script/JSON/diff validation; task-only checkpoint commit, no push.
+  No circuit changes, baseline promotion or completion claim; user dirt preserved.

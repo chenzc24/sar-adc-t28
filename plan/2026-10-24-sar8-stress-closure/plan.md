@@ -1,6 +1,6 @@
 # Native SAR8 stress repair and verification
 
-Status: recovery blocked by target command/file-read nonresponse. Repair incomplete.
+Status: partial remote access recovered; collecting existing cold cases. Repair incomplete.
 
 ## Scope
 
@@ -111,3 +111,28 @@ Diagnostics retained in output/sar8_stress_closure/direct_status_*.json/.stderr;
 updated access_state.json distinguishes connectivity from data access.
 Compile and scoped diff checks passed; task-only diagnostic checkpoint commit,
 not repair completion, no push. Existing Obsidian/10-bit changes preserved.
+
+## Cold-result recovery request
+
+User requests collection and cold baseline/Rgate-quarter comparison of stress,
+settling and codes, plus exact hot-case status. Direct read at20261024T134424Z
+confirmed rg4 cold exit0; rg1 cold reached post-transient summary without an
+exit marker; hot logs absent at that snapshot. No simulation failure inferred.
+Preserve raw cases and timing. Use bounded connection attempts and improve only
+task-owned recovery/analysis scripts as necessary. If extraction is too large,
+retain all native samples for stress and required comparison signals while
+preserving original PSF. No repeated launches, no OA changes or baseline promotion.
+Starting HEAD cef1ce8; unrelated Obsidian/10-bit dirty state remains protected.
+
+Recovery outcome: later direct90s and detailed180s queries timed out, as did
+the existing reducer's90s prerequisite exit read and independent90s SFTP log
+read. No reducer uploaded/launched; no native job restarted or terminated.
+New interactive SSH returned login banner, but neither hostname nor echo
+returned; disconnected only that probe session. Asked user to compare from an
+already-open thu-wei terminal. Cause unresolved, not diagnosed as server failure.
+Preserved the successful snapshot and extracted log-only baseline codes243/12,
+held errors-1.695/+0.577mV and conversion26.683/26.644ns. Enhanced case native
+exit0/58warnings confirmed, but its codes/stress/settling unavailable. Both logs
+show actual reltol1e-7/maxstep10ps, not requested1e-6. No waveform comparison,
+hot-state confirmation or repair closure claimed. Partial metrics distinguish
+conversion duration from analog settling time. Task-only checkpoint, no push.
