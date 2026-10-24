@@ -2968,3 +2968,22 @@ human-triggered note in `docs/experience/`.
   Raw PSF retained in isolated remote scratch (not durable project archive);
   new local data ~.87 GiB, remote ~16.83 GiB. No deletion or refined rerun.
   Scoped diff review and task-only local commit; no push or baseline replacement.
+
+## 2026-10-24 — FF hot error-code timing diagnosis
+
+- Read-only analysis of frozen 2u native TT/FF-cold/FF-hot static frame 1.
+  Original reduced-wave hashes checked; independent 100-180ns caches retained.
+  No remote operation, new simulation, DUT/PDK/OA change or baseline promotion.
+- First divergent bit is bit2 at reference word12. TT/FF-cold/FF-hot TOP
+  residuals +4.592/+4.984/-9.410mV. All 24 writes match comparator polarity;
+  final codes12/12/10. FF-hot last100ps drift1.972uV; comparator 90/10 rails
+  reached144.93ps before write. Not formal setup/hold or timing signoff.
+- FF-hot reference already flat through120-140ns at .892289/.007714V;
+  span .884575V predicts ideal code10 at -.81V. 50-ohm source drops imply
+  ~154.2uA persistent rail current versus TT~2.6uA, not a measured individual
+  MOS leakage. Evidence favors steady reference compression over short wait.
+- Specific load branch and counterfactual tests remain unperformed. Proposed
+  fixed-timing lower-Rref and fixed-reference longer-delay diagnostics, then
+  branch-current localization; no causal claim tying CMI directly to code10.
+  Two native waveform figures visually checked; Python/measurement checks
+  and scoped local commit only, no push. User Obsidian/10-bit changes preserved.
