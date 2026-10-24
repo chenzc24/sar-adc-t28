@@ -3261,3 +3261,30 @@ human-triggered note in `docs/experience/`.
   new simulation. RAM/SWAP issue not resolved by this disk cleanup.
 - Compiled maintenance script and validated manifest/scoped diff. Task-only local
   cleanup commit, no push, no OA/PDK/process/user-file modifications.
+
+## 2026-10-25 — Sequential low-memory four-case recovery and comparison
+
+- Recovered existing cold baseline/Rgate-quarter before hot pair. No Spectre
+  launches, raw deletions, baseline promotion or OA/PDK edits. All native exit0
+  and tran PASS; four capped512MiB workers ran one at a time. C++ parser peakRSS
+  7540KiB each; all94.87GB source PSF preserved,0.755GB selected compressed waves
+  transferred. Local memory-mapped analysis retains original time resolution.
+- Validated sparse/GROUP1 fixture,1,200,097 samples/END/200ns/accepted-step counts,
+  source deck hashes/raw stat identity, transfer SHA256, all10998 MOS terminal
+  pairs and192 reference-pair waveform crosschecks per case. Independent native
+  DUT diff confirms only320 PDK-resistor multiplier lines per pair changed.
+- Cold reference peak1.05094→1.06561V and bottom-56.94→-75.61mV; hot1.05503→1.07207V
+  and-45.03→-82.07mV. New hot hotspot BP3 follows RST7, VREFN positive26.40mV at
+  the negative bottom peak. Rgate/4 improves max nominal-bottom settling by~50ps
+  but worsens peak stress; do not promote it as a repair. Other-block stress persists.
+- Each case14/14 updates settles inside1.7578mV before next compare; codes243/12,
+  timing/idle checks pass, sampling edges/windows unchanged within0.001ps. Cold
+  startup preclose error~1.978mV separately retained;200ns/two inputs is not full
+  PVT/static/FFT/SOA closure. Actual CX reltol1e-7/maxstep10ps matches across pairs.
+- Original lowercased save list invalidated requested MOS currents. Required
+  voltages survived via allpub; current/charge attribution remains unavailable.
+  No new simulation to fill this gap during recovery. Updated access_state and
+  incomplete repair plan, report, four visually checked plots and compact metrics.
+- Scripts compile, parser/pulse/settling fixtures and scoped diff checks pass.
+  Protected Obsidian/10-bit/new management registry dirt unchanged; pre-existing
+  Obsidian whitespace excluded. Task-only local commit; no push.

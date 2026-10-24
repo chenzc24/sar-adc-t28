@@ -1,6 +1,6 @@
 # Native SAR8 stress repair and verification
 
-Status: partial remote access recovered; collecting existing cold cases. Repair incomplete.
+Status: four-case streaming recovery/comparison complete; physical stress repair unresolved.
 
 ## Scope
 
@@ -136,3 +136,59 @@ exit0/58warnings confirmed, but its codes/stress/settling unavailable. Both logs
 show actual reltol1e-7/maxstep10ps, not requested1e-6. No waveform comparison,
 hot-state confirmation or repair closure claimed. Partial metrics distinguish
 conversion duration from analog settling time. Task-only checkpoint, no push.
+
+## Sequential streaming recovery
+
+User requests cold pair first, then hot pair, with controlled memory. Starting
+HEAD f2862f8; all protected/user dirty paths unchanged. Cleanup independently
+confirmed four native exit0 and94.87GB total raw data, which remains immutable.
+Do not invoke the old all-series Python/JSON reducer. Add task-owned streaming
+C++ parser (compiler already present) and orchestration/analysis scripts. Single
+worker only, nice/ionice, <=512MiB virtual-memory resource limit; no simulation
+launch. Parse one sample at a time, evaluate all10998 terminal pairs at every
+native sample, retain peaks/times and selected full-resolution binary columns.
+No analog decimation in stress or settling analysis; compact outputs only are
+transferred, local arrays memory-mapped. Native raw files never deleted/rewritten.
+Own new derived remote stream_v1 directory under each of the four existing case
+paths plus shared task-specific stream_v1_tools directory. Preserve native context,
+deck, log and PSF; verify hashes/settings, END and duration/native sample count.
+
+Validate sparse-update/group-name parsing on a synthetic exact fixture and
+cross-check reference stress against saved columns. Required comparisons:
+per-group peak and affected devices, reference/bottom excursions, settling to
+explicit0.25LSB bands and next comparison deadline, code/timing correctness,
+unchanged sampling control edges. Two-frame200ns comparison is not full repair
+qualification or PVT/static/FFT signoff. Inspect cold then hot scientific plots.
+Record measured reducer peakRSS, input/output sizes and immutable-source checks.
+
+## Streaming recovery outcome — 2026-10-25
+
+All four exit0/PASS native cases recovered sequentially, cold pair analyzed before
+hot pair. One512MiB-capped worker, measured C++ peakRSS7540KiB for each case;
+94,869,661,741bytes original PSF retained unchanged. Selected112 voltage columns
+plus time keep1,200,097 native points; compressed transfer754,657,809bytes.
+Sparse/GROUP1 fixture, END/200ns/accepted-step count, deck and transfer hashes,
+192 reference-pair crosschecks per case, independent output-code and timing/idle
+checks pass. Exactly320 resistor multiplier lines differ in each cold/hot pair;
+both sampling-control edge differences <0.001ps. No simulator/OA/PDK mutation.
+
+Rgate/4 is NOT a successful overvoltage repair: cold reference peak1.05094→1.06561V,
+minimum bottom-56.94→-75.61mV; hot1.05503→1.07207V,-45.03→-82.07mV. New hot worst
+is BP3 after RST7, not conversion BP7. Maximum nominal-bottom settling improves
+2.217→2.166ns cold and2.379→2.329ns hot;14/14 update windows meet the explicit
+1.7578mV band in each case; codes243/12 and timing/idle checks pass. Cold startup
+pre-close tracking error~1.978mV remains distinct from held error~1.695mV.
+Comparator/reference-driver/digital stress remains above project screen; no SOA
+qualification or baseline promotion. MOS terminal currents are absent: original
+lowercased save requests were invalid in native Spectre. Allpub preserves needed
+voltages; no branch-current attribution or pure-channel charge claim allowed.
+
+Four final plots visually reviewed; concise report docs/sar8_stress_closure.md,
+per-case stream_analysis/receipt and stream_summary JSON record evidence. Recovery
+and analysis scripts compile; parser and pulse/settling fixtures and scoped diff
+checks pass. User Obsidian/10-bit and newly appeared management registry work
+remain outside scope and untouched. Full-tree diff check finds pre-existing
+whitespace in user Obsidian; do not edit it.
+This completes the user's bounded recovery/comparison, not the larger repair plan.
+Next physical experiment requires valid probes and separate holding/edge shaping;
+do not launch new runs as part of this recovery. Local task-only commit, no push.

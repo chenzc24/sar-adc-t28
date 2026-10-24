@@ -1,0 +1,782 @@
+{
+  "name": "rg1_strict200_ff_125",
+  "corner": "ff",
+  "temperature_c": 125,
+  "vdd": 0.99,
+  "gate_resistor_parallel_factor": 1,
+  "native_pass": true,
+  "points": 282775,
+  "accepted_tran_steps": 282774,
+  "source": {
+    "path": "/home/chenzc_intern25/TSMC28/llm_IO/sar8_stress_closure_20261024/rg1_strict200_ff_125/test.raw/tran_perf.tran.tran",
+    "unchanged": true,
+    "bytes": 22335483578,
+    "inode": 261634025,
+    "mtime": 1792850450.179476
+  },
+  "effective_settings": {
+    "maxstep": "10 ps, default 2 ns (conservative)",
+    "reltol": "100e-09, default 100e-06 (conservative)",
+    "abstol(V)": "10 nV, default 1 uV",
+    "abstol(I)": "100 fA, default 1 pA",
+    "method": "gear2only",
+    "temp": "125 C"
+  },
+  "groups": {
+    "bootstrap": {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "group": "bootstrap",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "xdut.xbootn.g"
+      ],
+      "limit_v": 1.98,
+      "pair_index": 94,
+      "peak_v": 1.846441063557571,
+      "time_ns": 141.12713469534222,
+      "exceed": false
+    },
+    "comparator": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "group": "comparator",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xdut.xcomp.y"
+      ],
+      "limit_v": 0.99,
+      "pair_index": 3419,
+      "peak_v": 1.023335286195704,
+      "time_ns": 143.6896336289036,
+      "exceed": true
+    },
+    "digital_control": {
+      "instance": "XDUT.XCTRL.XTIM.X016.MP",
+      "group": "digital_control",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "vdd!",
+        "xdut.xctrl.phi_w"
+      ],
+      "limit_v": 0.99,
+      "pair_index": 316,
+      "peak_v": 1.0685738932877815,
+      "time_ns": 101.1397586795033,
+      "exceed": true
+    },
+    "reference": {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "group": "reference",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "xdut.gnn4"
+      ],
+      "limit_v": 0.99,
+      "pair_index": 238,
+      "peak_v": 1.055034614332965,
+      "time_ns": 175.0458754471657,
+      "exceed": true
+    },
+    "reference_driver": {
+      "instance": "XDUT.XREF.XDRV0.GPNCN",
+      "group": "reference_driver",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "0",
+        "xdut.xref.xdrv0.gpndrv"
+      ],
+      "limit_v": 0.99,
+      "pair_index": 3093,
+      "peak_v": 1.034090479221854,
+      "time_ns": 79.13550784149957,
+      "exceed": true
+    }
+  },
+  "stress_pair_count": 10998,
+  "failing_pairs": 8102,
+  "failing_MOS": 1780,
+  "reference_crosschecks": 192,
+  "CMI": true,
+  "native_suppressed_warnings": 40668156,
+  "frames": [
+    {
+      "frame": 0,
+      "code": 243,
+      "ideal_code": 243,
+      "code_pass": true,
+      "monitor_valid": true,
+      "counts": [
+        8,
+        8,
+        8,
+        16
+      ],
+      "sample_start_ns": 0,
+      "sample_close_ns": 41.10585128545193,
+      "sample_window_ns": 41.10585128545193,
+      "acquisition": {
+        "start_ns": 0.0,
+        "deadline_ns": 40.905851285451924,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 0.0,
+        "settle_after_start_ns": 0.0,
+        "residual_at_deadline_mv": 0.004017641469361077,
+        "settled_by_deadline": true
+      },
+      "sample_signal": "xdut.seq_sample",
+      "sample_start_is_initialization": true,
+      "preclose_error_mv": -0.004017641469400424,
+      "held_error_mv": 0.48080650722104323,
+      "held_time_ns": 41.8,
+      "held_before_first_compare": true,
+      "conversion_ns": 28.5284920065,
+      "first_compare_ns": 43.67659678288563,
+      "reset_order_pass": true,
+      "reset_after_capture": true,
+      "held_code_stable": true,
+      "acquisition_reference_word": 128,
+      "HL_overlap_samples": 0,
+      "top_delta_last100ps_before_compare_mv": [
+        0.0006876326870131066,
+        -0.06054662470383887,
+        -0.026634348200466063,
+        -0.011201856296546436,
+        -0.005440359566684372,
+        -0.003881114534773876,
+        -0.0024608410339101855,
+        -0.0015988333927933682
+      ]
+    },
+    {
+      "frame": 1,
+      "code": 12,
+      "ideal_code": 12,
+      "code_pass": true,
+      "monitor_valid": true,
+      "counts": [
+        8,
+        8,
+        8,
+        16
+      ],
+      "sample_start_ns": 102.83664052766024,
+      "sample_close_ns": 141.10587405577473,
+      "sample_window_ns": 38.2692335281145,
+      "acquisition": {
+        "start_ns": 102.83664052766024,
+        "deadline_ns": 140.90587405577475,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 108.19393057058491,
+        "settle_after_start_ns": 5.357290042924674,
+        "residual_at_deadline_mv": 0.0003814473516633489,
+        "settled_by_deadline": true
+      },
+      "sample_signal": "xdut.seq_sample",
+      "sample_start_is_initialization": false,
+      "preclose_error_mv": 0.0003814473517049777,
+      "held_error_mv": 0.5156277476169313,
+      "held_time_ns": 141.8,
+      "held_before_first_compare": true,
+      "conversion_ns": 28.5293528331,
+      "first_compare_ns": 143.6765971809997,
+      "reset_order_pass": true,
+      "reset_after_capture": true,
+      "held_code_stable": true,
+      "acquisition_reference_word": 128,
+      "HL_overlap_samples": 0,
+      "top_delta_last100ps_before_compare_mv": [
+        -0.0006997855557244748,
+        0.13455635835879498,
+        0.09411587342278427,
+        0.05031235834784126,
+        0.02581814829762802,
+        0.01325731676896525,
+        0.007080954813947979,
+        0.004080798896279481
+      ]
+    }
+  ],
+  "all_codes_pass": true,
+  "sample_edges_ns": {
+    "xdut.seq_sample": {
+      "rise": [
+        102.83664052766024
+      ],
+      "fall": [
+        41.10585128545193,
+        141.10587405577473
+      ]
+    },
+    "xdut.sample_int": {
+      "rise": [
+        101.07726381917993
+      ],
+      "fall": [
+        41.07176002574517,
+        141.0717600574793
+      ]
+    }
+  },
+  "all_timing_pass": true,
+  "all_idle_pass": true,
+  "settling": [
+    {
+      "frame": 0,
+      "update": 0,
+      "start_ns": 44.40392731490013,
+      "next_compare_ns": 47.2065686686159,
+      "nominal": {
+        "start_ns": 44.40392731490013,
+        "deadline_ns": 47.1965686686159,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 46.565769263763066,
+        "settle_after_start_ns": 2.1618419488629357,
+        "residual_at_deadline_mv": 0.4264275875536186,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 44.40392731490013,
+        "deadline_ns": 47.1965686686159,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 45.839507335886324,
+        "settle_after_start_ns": 1.435580020986194,
+        "residual_at_deadline_mv": 0.034320513779004094,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 1,
+      "start_ns": 47.94502138157372,
+      "next_compare_ns": 50.748259680612975,
+      "nominal": {
+        "start_ns": 47.94502138157372,
+        "deadline_ns": 50.73825968061298,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 49.80407872089372,
+        "settle_after_start_ns": 1.8590573393200032,
+        "residual_at_deadline_mv": 0.31899404701233397,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 47.94502138157372,
+        "deadline_ns": 50.73825968061298,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 49.37037176749122,
+        "settle_after_start_ns": 1.425350385917504,
+        "residual_at_deadline_mv": 0.03022400552271118,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 2,
+      "start_ns": 51.50735797819075,
+      "next_compare_ns": 54.310850063329234,
+      "nominal": {
+        "start_ns": 51.50735797819075,
+        "deadline_ns": 54.300850063329236,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 53.13896145195178,
+        "settle_after_start_ns": 1.6316034737610323,
+        "residual_at_deadline_mv": 0.29185324835957915,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 51.50735797819075,
+        "deadline_ns": 54.300850063329236,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 52.93136885992138,
+        "settle_after_start_ns": 1.4240108817306307,
+        "residual_at_deadline_mv": 0.028992015306349476,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 3,
+      "start_ns": 55.105789245392984,
+      "next_compare_ns": 57.90956021074521,
+      "nominal": {
+        "start_ns": 55.105789245392984,
+        "deadline_ns": 57.899560210745214,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 56.6146822495964,
+        "settle_after_start_ns": 1.508893004203415,
+        "residual_at_deadline_mv": 0.2837360165427206,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 55.105789245392984,
+        "deadline_ns": 57.899560210745214,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 56.52971960927414,
+        "settle_after_start_ns": 1.423930363881155,
+        "residual_at_deadline_mv": 0.028602989589613746,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 4,
+      "start_ns": 58.70150864501014,
+      "next_compare_ns": 61.50514366785032,
+      "nominal": {
+        "start_ns": 58.70150864501014,
+        "deadline_ns": 61.49514366785032,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 60.18015995012594,
+        "settle_after_start_ns": 1.4786513051157968,
+        "residual_at_deadline_mv": 0.28204136422575926,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 58.70150864501014,
+        "deadline_ns": 61.49514366785032,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 60.123523115174144,
+        "settle_after_start_ns": 1.422014470164001,
+        "residual_at_deadline_mv": 0.028479230868262033,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 5,
+      "start_ns": 62.34406211814018,
+      "next_compare_ns": 65.14771359267831,
+      "nominal": {
+        "start_ns": 62.34406211814018,
+        "deadline_ns": 65.13771359267831,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 63.79654137616661,
+        "settle_after_start_ns": 1.452479258026429,
+        "residual_at_deadline_mv": 0.2803292521883971,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 62.34406211814018,
+        "deadline_ns": 65.13771359267831,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 63.765021807713445,
+        "settle_after_start_ns": 1.420959689573266,
+        "residual_at_deadline_mv": 0.0283701634309334,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 0,
+      "update": 6,
+      "start_ns": 65.96006978396193,
+      "next_compare_ns": 68.76359283576106,
+      "nominal": {
+        "start_ns": 65.96006978396193,
+        "deadline_ns": 68.75359283576105,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 67.39866319285542,
+        "settle_after_start_ns": 1.438593408893496,
+        "residual_at_deadline_mv": 0.2792038714223644,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 65.96006978396193,
+        "deadline_ns": 68.75359283576105,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 67.38089236103283,
+        "settle_after_start_ns": 1.4208225770709078,
+        "residual_at_deadline_mv": 0.02831333695301181,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 0,
+      "start_ns": 144.40551443681815,
+      "next_compare_ns": 147.2078016457046,
+      "nominal": {
+        "start_ns": 144.40551443681815,
+        "deadline_ns": 147.1978016457046,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 146.78456881557577,
+        "settle_after_start_ns": 2.3790543787576155,
+        "residual_at_deadline_mv": 0.605644672005059,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 144.40551443681815,
+        "deadline_ns": 147.1978016457046,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 145.96532386565053,
+        "settle_after_start_ns": 1.5598094288323807,
+        "residual_at_deadline_mv": 0.042021089571544865,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 1,
+      "start_ns": 147.9475649773578,
+      "next_compare_ns": 150.7501469925457,
+      "nominal": {
+        "start_ns": 147.9475649773578,
+        "deadline_ns": 150.7401469925457,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 150.13642703870352,
+        "settle_after_start_ns": 2.188862061345702,
+        "residual_at_deadline_mv": 0.4220972121386739,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 147.9475649773578,
+        "deadline_ns": 150.7401469925457,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 149.46342202942392,
+        "settle_after_start_ns": 1.51585705206611,
+        "residual_at_deadline_mv": 0.03553703469809081,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 2,
+      "start_ns": 151.51038878213944,
+      "next_compare_ns": 154.31296177571684,
+      "nominal": {
+        "start_ns": 151.51038878213944,
+        "deadline_ns": 154.30296177571685,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 153.5163992170086,
+        "settle_after_start_ns": 2.006010434869154,
+        "residual_at_deadline_mv": 0.3412421349885797,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 151.51038878213944,
+        "deadline_ns": 154.30296177571685,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 152.98521245760213,
+        "settle_after_start_ns": 1.4748236754626873,
+        "residual_at_deadline_mv": 0.03179574660904075,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 3,
+      "start_ns": 155.1093665343256,
+      "next_compare_ns": 157.91195440760134,
+      "nominal": {
+        "start_ns": 155.1093665343256,
+        "deadline_ns": 157.90195440760135,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 156.94665010485323,
+        "settle_after_start_ns": 1.8372835705276316,
+        "residual_at_deadline_mv": 0.3072767925261404,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 155.1093665343256,
+        "deadline_ns": 157.90195440760135,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 156.558493313306,
+        "settle_after_start_ns": 1.4491267789803999,
+        "residual_at_deadline_mv": 0.030007669578103257,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 4,
+      "start_ns": 158.70072177953392,
+      "next_compare_ns": 161.50370129237692,
+      "nominal": {
+        "start_ns": 158.70072177953392,
+        "deadline_ns": 161.49370129237693,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 160.38157815446132,
+        "settle_after_start_ns": 1.6808563749274015,
+        "residual_at_deadline_mv": 0.29333661601273014,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 158.70072177953392,
+        "deadline_ns": 161.49370129237693,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 160.1332630808883,
+        "settle_after_start_ns": 1.4325413013543766,
+        "residual_at_deadline_mv": 0.029137623250699258,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 5,
+      "start_ns": 162.33481128346273,
+      "next_compare_ns": 165.1380672646338,
+      "nominal": {
+        "start_ns": 162.33481128346273,
+        "deadline_ns": 165.1280672646338,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 163.8944639496476,
+        "settle_after_start_ns": 1.55965266618486,
+        "residual_at_deadline_mv": 0.2860286695526903,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 162.33481128346273,
+        "deadline_ns": 165.1280672646338,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 163.7606919990784,
+        "settle_after_start_ns": 1.4258807156156763,
+        "residual_at_deadline_mv": 0.02869911506787506,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "update": 6,
+      "start_ns": 165.95347411403654,
+      "next_compare_ns": 168.7560749241984,
+      "nominal": {
+        "start_ns": 165.95347411403654,
+        "deadline_ns": 168.7460749241984,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 167.44416080139914,
+        "settle_after_start_ns": 1.4906866873625972,
+        "residual_at_deadline_mv": 0.28224675436789043,
+        "settled_by_deadline": true
+      },
+      "local_rail": {
+        "start_ns": 165.95347411403654,
+        "deadline_ns": 168.7460749241984,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 167.3762743803346,
+        "settle_after_start_ns": 1.4228002662980543,
+        "residual_at_deadline_mv": 0.02849077547727052,
+        "settled_by_deadline": true
+      }
+    }
+  ],
+  "reset_settling": [
+    {
+      "frame": 0,
+      "after_last_reset": {
+        "start_ns": 79.0762158970528,
+        "deadline_ns": 99.9,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 79.55448584404341,
+        "settle_after_start_ns": 0.47826994699060776,
+        "residual_at_deadline_mv": 0.2826487672936695,
+        "settled_by_deadline": true
+      }
+    },
+    {
+      "frame": 1,
+      "after_last_reset": {
+        "start_ns": 179.07646402581068,
+        "deadline_ns": 199.9,
+        "band_mv": 1.7578125,
+        "settle_at_ns": 179.07646402581068,
+        "settle_after_start_ns": 0.0,
+        "residual_at_deadline_mv": 0.282648676297792,
+        "settled_by_deadline": true
+      }
+    }
+  ],
+  "bottom_min": [
+    -45.02766719212648,
+    "xdut.xcdac.bp7",
+    144.6978999380963
+  ],
+  "gate_high_excursion_mv": [
+    65.03461433296498,
+    "xdut.gnn4"
+  ],
+  "gate_low_excursion_mv": [
+    -62.77880381818734,
+    "xdut.gpp4"
+  ],
+  "reference_peak_preceding_event": {
+    "time_ns": 174.74526426103745,
+    "signal": "xdut.xref.rst7"
+  },
+  "bottom_min_preceding_event": {
+    "time_ns": 144.40551443681815,
+    "signal": "xdut.phi_u"
+  },
+  "bottom_pulse_below_minus1mv": {
+    "level_v": -0.001,
+    "start_ns": 144.5228326539315,
+    "end_ns": 144.71465367767743,
+    "width_ps": 191.82102374594479,
+    "peak_ns": 144.6978999380963,
+    "peak_v": -0.04502766719212648,
+    "truncated": false
+  },
+  "bottom_min_snapshot": {
+    "vrefp": 0.904568441522909,
+    "vrefn": -0.005248454330276703,
+    "vdd!": 0.99,
+    "xdut.xcdac.bp7": -0.04502766719212648,
+    "xdut.gpn7": 0.07099454651895876,
+    "xdut.gpp7": 0.6244831600276975
+  },
+  "high_gate_pulse_above_vdd_plus1mv": {
+    "level_v": 0.991,
+    "start_ns": 174.98795283699104,
+    "end_ns": 175.18547015472657,
+    "width_ps": 197.5173177355316,
+    "peak_ns": 175.0458754471657,
+    "peak_v": 1.055034614332965,
+    "truncated": false
+  },
+  "missing_requested_current_signals": [
+    "vrefhigh:1",
+    "vreflow:1",
+    "xdut.xcdac.xsn0.mn_low:1",
+    "xdut.xcdac.xsn0.mn_low:2",
+    "xdut.xcdac.xsn0.mn_low:3",
+    "xdut.xcdac.xsn0.mn_low:4",
+    "xdut.xcdac.xsn0.mp_high:1",
+    "xdut.xcdac.xsn0.mp_high:2",
+    "xdut.xcdac.xsn0.mp_high:3",
+    "xdut.xcdac.xsn0.mp_high:4",
+    "xdut.xcdac.xsn1.mn_low:1",
+    "xdut.xcdac.xsn1.mn_low:2",
+    "xdut.xcdac.xsn1.mn_low:3",
+    "xdut.xcdac.xsn1.mn_low:4",
+    "xdut.xcdac.xsn1.mp_high:1",
+    "xdut.xcdac.xsn1.mp_high:2",
+    "xdut.xcdac.xsn1.mp_high:3",
+    "xdut.xcdac.xsn1.mp_high:4",
+    "xdut.xcdac.xsn2.mn_low:1",
+    "xdut.xcdac.xsn2.mn_low:2",
+    "xdut.xcdac.xsn2.mn_low:3",
+    "xdut.xcdac.xsn2.mn_low:4",
+    "xdut.xcdac.xsn2.mp_high:1",
+    "xdut.xcdac.xsn2.mp_high:2",
+    "xdut.xcdac.xsn2.mp_high:3",
+    "xdut.xcdac.xsn2.mp_high:4",
+    "xdut.xcdac.xsn3.mn_low:1",
+    "xdut.xcdac.xsn3.mn_low:2",
+    "xdut.xcdac.xsn3.mn_low:3",
+    "xdut.xcdac.xsn3.mn_low:4",
+    "xdut.xcdac.xsn3.mp_high:1",
+    "xdut.xcdac.xsn3.mp_high:2",
+    "xdut.xcdac.xsn3.mp_high:3",
+    "xdut.xcdac.xsn3.mp_high:4",
+    "xdut.xcdac.xsn4.mn_low:1",
+    "xdut.xcdac.xsn4.mn_low:2",
+    "xdut.xcdac.xsn4.mn_low:3",
+    "xdut.xcdac.xsn4.mn_low:4",
+    "xdut.xcdac.xsn4.mp_high:1",
+    "xdut.xcdac.xsn4.mp_high:2",
+    "xdut.xcdac.xsn4.mp_high:3",
+    "xdut.xcdac.xsn4.mp_high:4",
+    "xdut.xcdac.xsn5.mn_low:1",
+    "xdut.xcdac.xsn5.mn_low:2",
+    "xdut.xcdac.xsn5.mn_low:3",
+    "xdut.xcdac.xsn5.mn_low:4",
+    "xdut.xcdac.xsn5.mp_high:1",
+    "xdut.xcdac.xsn5.mp_high:2",
+    "xdut.xcdac.xsn5.mp_high:3",
+    "xdut.xcdac.xsn5.mp_high:4",
+    "xdut.xcdac.xsn6.mn_low:1",
+    "xdut.xcdac.xsn6.mn_low:2",
+    "xdut.xcdac.xsn6.mn_low:3",
+    "xdut.xcdac.xsn6.mn_low:4",
+    "xdut.xcdac.xsn6.mp_high:1",
+    "xdut.xcdac.xsn6.mp_high:2",
+    "xdut.xcdac.xsn6.mp_high:3",
+    "xdut.xcdac.xsn6.mp_high:4",
+    "xdut.xcdac.xsn7.mn_low:1",
+    "xdut.xcdac.xsn7.mn_low:2",
+    "xdut.xcdac.xsn7.mn_low:3",
+    "xdut.xcdac.xsn7.mn_low:4",
+    "xdut.xcdac.xsn7.mp_high:1",
+    "xdut.xcdac.xsn7.mp_high:2",
+    "xdut.xcdac.xsn7.mp_high:3",
+    "xdut.xcdac.xsn7.mp_high:4",
+    "xdut.xcdac.xsp0.mn_low:1",
+    "xdut.xcdac.xsp0.mn_low:2",
+    "xdut.xcdac.xsp0.mn_low:3",
+    "xdut.xcdac.xsp0.mn_low:4",
+    "xdut.xcdac.xsp0.mp_high:1",
+    "xdut.xcdac.xsp0.mp_high:2",
+    "xdut.xcdac.xsp0.mp_high:3",
+    "xdut.xcdac.xsp0.mp_high:4",
+    "xdut.xcdac.xsp1.mn_low:1",
+    "xdut.xcdac.xsp1.mn_low:2",
+    "xdut.xcdac.xsp1.mn_low:3",
+    "xdut.xcdac.xsp1.mn_low:4",
+    "xdut.xcdac.xsp1.mp_high:1",
+    "xdut.xcdac.xsp1.mp_high:2",
+    "xdut.xcdac.xsp1.mp_high:3",
+    "xdut.xcdac.xsp1.mp_high:4",
+    "xdut.xcdac.xsp2.mn_low:1",
+    "xdut.xcdac.xsp2.mn_low:2",
+    "xdut.xcdac.xsp2.mn_low:3",
+    "xdut.xcdac.xsp2.mn_low:4",
+    "xdut.xcdac.xsp2.mp_high:1",
+    "xdut.xcdac.xsp2.mp_high:2",
+    "xdut.xcdac.xsp2.mp_high:3",
+    "xdut.xcdac.xsp2.mp_high:4",
+    "xdut.xcdac.xsp3.mn_low:1",
+    "xdut.xcdac.xsp3.mn_low:2",
+    "xdut.xcdac.xsp3.mn_low:3",
+    "xdut.xcdac.xsp3.mn_low:4",
+    "xdut.xcdac.xsp3.mp_high:1",
+    "xdut.xcdac.xsp3.mp_high:2",
+    "xdut.xcdac.xsp3.mp_high:3",
+    "xdut.xcdac.xsp3.mp_high:4",
+    "xdut.xcdac.xsp4.mn_low:1",
+    "xdut.xcdac.xsp4.mn_low:2",
+    "xdut.xcdac.xsp4.mn_low:3",
+    "xdut.xcdac.xsp4.mn_low:4",
+    "xdut.xcdac.xsp4.mp_high:1",
+    "xdut.xcdac.xsp4.mp_high:2",
+    "xdut.xcdac.xsp4.mp_high:3",
+    "xdut.xcdac.xsp4.mp_high:4",
+    "xdut.xcdac.xsp5.mn_low:1",
+    "xdut.xcdac.xsp5.mn_low:2",
+    "xdut.xcdac.xsp5.mn_low:3",
+    "xdut.xcdac.xsp5.mn_low:4",
+    "xdut.xcdac.xsp5.mp_high:1",
+    "xdut.xcdac.xsp5.mp_high:2",
+    "xdut.xcdac.xsp5.mp_high:3",
+    "xdut.xcdac.xsp5.mp_high:4",
+    "xdut.xcdac.xsp6.mn_low:1",
+    "xdut.xcdac.xsp6.mn_low:2",
+    "xdut.xcdac.xsp6.mn_low:3",
+    "xdut.xcdac.xsp6.mn_low:4",
+    "xdut.xcdac.xsp6.mp_high:1",
+    "xdut.xcdac.xsp6.mp_high:2",
+    "xdut.xcdac.xsp6.mp_high:3",
+    "xdut.xcdac.xsp6.mp_high:4",
+    "xdut.xcdac.xsp7.mn_low:1",
+    "xdut.xcdac.xsp7.mn_low:2",
+    "xdut.xcdac.xsp7.mn_low:3",
+    "xdut.xcdac.xsp7.mn_low:4",
+    "xdut.xcdac.xsp7.mp_high:1",
+    "xdut.xcdac.xsp7.mp_high:2",
+    "xdut.xcdac.xsp7.mp_high:3",
+    "xdut.xcdac.xsp7.mp_high:4",
+    "xdut.xref.xdrv3.rgnn0:1",
+    "xdut.xref.xdrv3.rgnn1_5__dmy0:2",
+    "xdut.xref.xdrv6.rgpp0:1",
+    "xdut.xref.xdrv6.rgpp1_5__dmy0:2"
+  ],
+  "native_trace_count": 1614,
+  "reducer_peak_rss_kib": 7540,
+  "binary_bytes": 255628600,
+  "compressed_bytes": 173286638,
+  "settling_definition": "All16 bottom nodes within +/-0.25LSB of endpoint-selected nominal or instantaneous reference, sustained until next compare minus10ps. Conservative node-level diagnostic, not weighted ADC INL.",
+  "qualification": "Two static frames,200ns. Not full PVT,FFT,mismatch or SOA signoff; missing MOS currents prevent branch-current attribution"
+}
