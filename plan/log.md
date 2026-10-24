@@ -3014,3 +3014,30 @@ human-triggered note in `docs/experience/`.
   and final figure inspection passed. Results in verification/sar8_ff_counterfactual/,
   figure in docs/figures/sar8_ff_counterfactual/. Scoped local commit only,
   no push; user Obsidian and10-bit work untouched.
+
+## 2026-10-24 — Localize reference load to OFF-state channel leakage
+
+- Five bounded native diagnoses on unchanged selected2um ADC: hot/cold FF.99V
+  current-probed180ns runs, exact bit7 pair21-point DC controls, hot native OP.
+  All exit0/PASS; model/source/remote deck hashes verified. No OA/PDK/production
+  fix, baseline replacement or push. User Obsidian/10-bit changes preserved.
+- At130ns, 32 MOS four-terminal probes close both reference-rail and bottom-node
+  KCL (<1nA). Source154.219uA comprises135.281uA NMOS-OFF paths (87.72%) and
+  18.938uA PMOS-OFF paths. Largest XSN7.MN_LOW path67.906uA; next XSP6 33.953uA.
+  This is the weighted3x L30nm core switch array, not Bootstrap Mmain.
+- XSN7 NMOS gate.501mV, externalVGS-7.213mV. Ideal0V gate only lowers pair load
+  67.906->67.259uA(.952%). PMOS idealOFF improves.251%. Same hot bias at-40C
+  gives.102849uA NMOS path; integrated cold reference load.2994uA is a distinct
+  whole-array measurement with naturally different rail/gate biases.
+- Native OP: NMOS intrinsicVGS-7.221mV,Vth140.268mV,ids67.896uA,ibd9.143nA,
+  igidl~1e-14A. Below-threshold channel current dominates, not inadequate gate
+  drive, persistent overlap, diode conduction or GIDL. isub is impact ionization
+  in this model, not a subthreshold-current field. No claim of silicon validation.
+- Proposed (not implemented) reference-switch L/low-leakage device selection,
+  followed by W/Ron/dynamic tradeoff and actual reference drive budget; retain
+  existing sample/bit timing. Existing CMI still open; longer L is not SOA repair.
+- Probe-only inverse checks, remote receipts, independent scalar-DC parser
+  crosscheck, Python compilation, KCL/gate checks and final figure inspection
+  passed. Short-run CX maxstep1.8ns differs from baseline6ns; no equal-setting
+  claim. All raw data retained, ~292MiB local/~253MiB remote. Evidence in
+  verification/sar8_ref_load/, figure docs/figures/sar8_ref_load/; scoped commit.
