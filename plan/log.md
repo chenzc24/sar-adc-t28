@@ -3241,3 +3241,23 @@ human-triggered note in `docs/experience/`.
 - Preserved snapshot, partial metrics and bounded file-backed recovery probes.
   Scoped script/JSON/diff validation; task-only checkpoint commit, no push.
   No circuit changes, baseline promotion or completion claim; user dirt preserved.
+
+## 2026-10-24 — Reclaim verified remote historical waveforms
+
+- User explicitly requested old remote waveform cleanup after memory pressure.
+  Connection recovered. Read-only snapshot: home is NFS98% used, not tmpfs;
+  available RAM~21GiB, SwapFree~87MiB, no user Spectre processes. No claim that
+  stored waveforms explain the server's anonymous-memory use.
+- New bounded cleanup plan owns14 exact historical raw files:10 reference-gate
+  control scans and4 symmetric-hold cases. Checked local retained-result hashes,
+  native completion/reduction markers, remote deck hashes, size/uid/inode/path,
+  and active use; no candidate references. sshd/zombie exclusions recorded.
+- Permanently removed only14 tran_perf.tran.tran files (16.272GiB allocated).
+  Immediate shared-filesystem available space increased16.262GiB. Verified all
+  absent and sources/logs/reduced outputs preserved. Full raw restoration requires
+  rerun for unretained signals; final baselines and current experiments untouched.
+- Protected four stress_closure cases now all exit0 and retain94,869,661,741bytes
+  raw waveforms. No analysis/overvoltage pass inferred; no bulk load/download or
+  new simulation. RAM/SWAP issue not resolved by this disk cleanup.
+- Compiled maintenance script and validated manifest/scoped diff. Task-only local
+  cleanup commit, no push, no OA/PDK/process/user-file modifications.
