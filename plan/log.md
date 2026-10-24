@@ -3106,3 +3106,36 @@ human-triggered note in `docs/experience/`.
 - Python compile, JSON/hash/phase/terminal checks and scoped diff reviewed.
   Results: plan/2026-10-24-sar8-ff-overvoltage/plan.md,
   verification/sar8_ff_overvoltage/, docs/figures/sar8_ff_overvoltage/.
+
+## 2026-10-24 — Independent reference high-hold and idle bit7 slew controls
+
+- Owned sar8_ref_gate_controls scripts/verification/output/figures and plan.
+  Preserved unrelated Obsidian/10-bit edits. No OA/PDK/baseline changes, no push.
+- 10native CX six-frame cases: null, high-hold100/25ohm at bit4 (scaled by bit
+  weight), bit7 idle-only extra100/300ohm, each FF0.99V/-40C and125C. Helpers
+  are ideal diagnostic conductances, NOT completed transistor keeper logic.
+  All1833 native MOS pins/parameters and sampling source remain unchanged.
+- All native runs exit0/PASS; remote source/helper/reducer/log/data hashes match.
+  Effective CX reltol1e-4/maxstep6ns, not requested10ps deck limit. Null vs old
+  peak difference<0.000315mV, held difference<0.000660mV, sample-edge<0.075ps.
+- 60/60codes correct [243,12,127,128,127,145]; all timing/idle logic checks pass.
+  All variants vs null sample-open delta<0.000037ps, close<0.000000009ps;
+  helpers are off during established sample-high. No sampling-window tradeoff.
+- Hot GNN4 bit7-event peak1.055147->0.992886/0.990733V with high holds. Global
+  reference worst instead becomes PMOS |Vgb|~1.05310V (gate~-63.1mV). Cold
+  GNN4 goes1.051037->0.992989/0.990758V; global~1.04723V. Later post-release
+  GNN4 peak retained separately from original bit7 event; not silently omitted.
+- Hot bit7 extra300ohm: GNP7 fall240.24->327.74ps, BN7 rise59.13->70.87ps,
+  global reference peak1.055147->1.047886V. Cold214.65->298.58ps,56.38->68.73ps,
+  global1.051037->1.046710V. Improvement but all retain CMI/overvoltage.
+- All-bottom final settling ~3.539ns hot/~3.198ns cold; margin to next sample
+  ~24.536/~27.068ns. Post-startup held error~0.517154/~0.576491mV unchanged.
+- Exact real-switch overlap current not measured; logic H/L non-overlap is not
+  zero-shoot-through proof. No full-code/FFT/noise/mismatch/PEX qualification;
+  existing stress inventory445/1833MOS,2670pairs. Recommend complementary
+  stable high/low holding then real asymmetric-driver implementation, not
+  promotion of either present diagnostic variant.
+- Inspected two final figures; compiled scripts, verified sources/receipts,
+  60frame/code/timing checks, measurement-window refinement and scoped diff.
+  Results and limitations in plan/2026-10-24-sar8-ref-gate-controls/plan.md and
+  verification/sar8_ref_gate_controls/comparison.json. Task-only local commit.

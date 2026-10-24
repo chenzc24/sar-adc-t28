@@ -1,0 +1,176 @@
+{
+  "name": "hold100_ff_125",
+  "variant": "hold100",
+  "temperature_c": 125,
+  "codes": [
+    243,
+    12,
+    127,
+    128,
+    127,
+    145
+  ],
+  "all_codes_pass": true,
+  "post_startup_codes_pass": true,
+  "timing_pass": true,
+  "idle_pass": true,
+  "CMI": true,
+  "reference_peak": {
+    "time_ns": 175.0432521419547,
+    "exceed": true,
+    "group": "reference",
+    "terminal": "gb",
+    "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+    "peak_v": 1.0530985536976196,
+    "limit_v": 0.99,
+    "nodes": [
+      "xdut.gpp4",
+      "vdd!"
+    ],
+    "model": "pch_mac"
+  },
+  "all_groups": {
+    "sequencer": {
+      "time_ns": 55.17712522304176,
+      "exceed": true,
+      "group": "sequencer",
+      "terminal": "gs",
+      "instance": "XDUT.XIDLE.XN.MN",
+      "peak_v": 1.049404586760666,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.active",
+        "0"
+      ],
+      "model": "nch_mac"
+    },
+    "bootstrap": {
+      "time_ns": 141.1269106091186,
+      "exceed": false,
+      "group": "bootstrap",
+      "terminal": "gb",
+      "instance": "XDUT.XBOOTN.Mmain",
+      "peak_v": 1.84643868833638,
+      "limit_v": 1.98,
+      "nodes": [
+        "xdut.xbootn.g",
+        "0"
+      ],
+      "model": "nch_18_mac"
+    },
+    "comparator": {
+      "time_ns": 143.69162695691531,
+      "exceed": true,
+      "group": "comparator",
+      "terminal": "bs",
+      "instance": "XDUT.XCOMP.MNLATN",
+      "peak_v": 1.02328532577489,
+      "limit_v": 0.99,
+      "nodes": [
+        "0",
+        "xdut.xcomp.y"
+      ],
+      "model": "nch_mac"
+    },
+    "reference_driver": {
+      "time_ns": 79.15340756889323,
+      "exceed": true,
+      "group": "reference_driver",
+      "terminal": "ds",
+      "instance": "XDUT.XREF.XDRV0.GPNCN",
+      "peak_v": 1.033649673066033,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.xref.xdrv0.gpndrv",
+        "0"
+      ],
+      "model": "nch_mac"
+    },
+    "reference": {
+      "time_ns": 175.0432521419547,
+      "exceed": true,
+      "group": "reference",
+      "terminal": "gb",
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "peak_v": 1.0530985536976196,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.gpp4",
+        "vdd!"
+      ],
+      "model": "pch_mac"
+    }
+  },
+  "same_event_gnn4_peak_v": 0.9928855143491766,
+  "same_event_gnn4_peak_time_ns": 175.03355546881,
+  "rst7_ns": 174.76208767127122,
+  "next_sample_open_ns": 202.8372110706964,
+  "bn7_10to90_ps": 59.03429037789465,
+  "bn7_settled_ns": 177.55228438331466,
+  "all_bottoms_settled_ns": 178.30141805329828,
+  "all_bottoms_settle_after_rst7_ns": 3.5393303820270603,
+  "reset_margin_to_sample_ns": 24.535793017398134,
+  "max_bottom_error_before_sample_mv": 0.03222908577016348,
+  "sample_rises_ns": [
+    102.83724016884257,
+    202.8372110706964,
+    302.8372131359277,
+    402.8372018407169,
+    502.8372169060079
+  ],
+  "sample_falls_ns": [
+    41.105848763436256,
+    141.1058903372525,
+    241.1058774187529,
+    341.10587750259793,
+    441.10587738365666,
+    541.1058787370096
+  ],
+  "acquisition_ns": [
+    null,
+    38.268650168409934,
+    38.268666348056485,
+    38.26866436667024,
+    38.268675542939775,
+    38.26866183100168
+  ],
+  "preclose_errors_mv": [
+    -0.004512313074744867,
+    0.0021648787722483576,
+    -0.0002467042596731712,
+    0.0030005099036804414,
+    0.0003648672275125518,
+    -0.0011317416049316797
+  ],
+  "held_errors_mv": [
+    0.48031874299991895,
+    0.5171536410000233,
+    -0.0009429119650629999,
+    0.0014881783200000522,
+    0.0012198709800001484,
+    -0.06596209999999714
+  ],
+  "precompare_last100ps_max_movement_mv": 0.12366201540864319,
+  "reference_p_idle_max_source_current_ua": 1490.2101775032172,
+  "reference_n_idle_max_source_current_ua": 1490.18831029883,
+  "max_helper_branch_current_ua": 115.42048624102019,
+  "max_hold_enable_when_sample_high": 0.0,
+  "effective_settings": {
+    "maxstep": "6 ns",
+    "reltol": "100e-06",
+    "abstol(V)": "1 uV",
+    "abstol(I)": "1 pA",
+    "method": "gear2only",
+    "temp": "125 C",
+    "tnom": "27 C"
+  },
+  "cache_sha256": "77a53bf08f125a05baf4e05d667fa800e5cd2b7869e0849fb45b23d01e62830e",
+  "native_psf_sha256": "175d6391c8a4d6d16986022ab0fc9a3b0f68a6d33adb35a1933db61160b0a4b8",
+  "settling_definition": "Frame1 idle: all16 bottoms within0.25LSB of actual assigned VREF rail and remain until next sample minus20ps; bit7 N->high/P->low, other bits opposite. Not just RST_DONE.",
+  "coverage": "2670 pairs on445 selected MOS; other blocks and unsaved MOS not fully qualified; helper has ideal supplies/control.",
+  "current_definition": "50ohm reference-source current includes decap charging; helper branch current computed from verified VA conductance equation.",
+  "idle_gnn4_peak_v": 0.9936311073406832,
+  "idle_gnn4_peak_time_ns": 177.5735871664912,
+  "same_event_end_before_rst4_ns": 176.60909001641812,
+  "bit7_gnp_fall90to10_ps": 240.1685047675528
+}

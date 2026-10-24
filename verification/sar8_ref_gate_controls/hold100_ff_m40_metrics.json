@@ -1,0 +1,176 @@
+{
+  "name": "hold100_ff_m40",
+  "variant": "hold100",
+  "temperature_c": -40,
+  "codes": [
+    243,
+    12,
+    127,
+    128,
+    127,
+    145
+  ],
+  "all_codes_pass": true,
+  "post_startup_codes_pass": true,
+  "timing_pass": true,
+  "idle_pass": true,
+  "CMI": true,
+  "reference_peak": {
+    "time_ns": 172.68916077350988,
+    "exceed": true,
+    "group": "reference",
+    "terminal": "gb",
+    "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+    "peak_v": 1.0472234056979455,
+    "limit_v": 0.99,
+    "nodes": [
+      "xdut.gpp5",
+      "vdd!"
+    ],
+    "model": "pch_mac"
+  },
+  "all_groups": {
+    "comparator": {
+      "time_ns": 446.9388819836394,
+      "exceed": true,
+      "group": "comparator",
+      "terminal": "bs",
+      "instance": "XDUT.XCOMP.MNLATP",
+      "peak_v": 1.045313240079564,
+      "limit_v": 0.99,
+      "nodes": [
+        "0",
+        "xdut.xcomp.x"
+      ],
+      "model": "nch_mac"
+    },
+    "reference_driver": {
+      "time_ns": 65.2562997392879,
+      "exceed": true,
+      "group": "reference_driver",
+      "terminal": "ds",
+      "instance": "XDUT.XREF.XDRV0.GNNCN",
+      "peak_v": 1.057551814582143,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.xref.xdrv0.gnndrv",
+        "0"
+      ],
+      "model": "nch_mac"
+    },
+    "reference": {
+      "time_ns": 172.68916077350988,
+      "exceed": true,
+      "group": "reference",
+      "terminal": "gb",
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "peak_v": 1.0472234056979455,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.gpp5",
+        "vdd!"
+      ],
+      "model": "pch_mac"
+    },
+    "bootstrap": {
+      "time_ns": 141.1246660001495,
+      "exceed": false,
+      "group": "bootstrap",
+      "terminal": "gb",
+      "instance": "XDUT.XBOOTN.Mmain",
+      "peak_v": 1.85242171588917,
+      "limit_v": 1.98,
+      "nodes": [
+        "xdut.xbootn.g",
+        "0"
+      ],
+      "model": "nch_18_mac"
+    },
+    "sequencer": {
+      "time_ns": 54.13851005001973,
+      "exceed": true,
+      "group": "sequencer",
+      "terminal": "gs",
+      "instance": "XDUT.XIDLE.XN.MN",
+      "peak_v": 1.057115070195483,
+      "limit_v": 0.99,
+      "nodes": [
+        "xdut.active",
+        "0"
+      ],
+      "model": "nch_mac"
+    }
+  },
+  "same_event_gnn4_peak_v": 0.9929886858094135,
+  "same_event_gnn4_peak_time_ns": 172.6800335584233,
+  "same_event_end_before_rst4_ns": 174.10539604227282,
+  "idle_gnn4_peak_v": 0.9936630913565104,
+  "idle_gnn4_peak_time_ns": 174.979619598544,
+  "rst7_ns": 172.42658363963395,
+  "next_sample_open_ns": 202.69319888445287,
+  "bn7_10to90_ps": 56.4061260341191,
+  "bn7_settled_ns": 174.9598429781895,
+  "all_bottoms_settled_ns": 175.62467898487316,
+  "all_bottoms_settle_after_rst7_ns": 3.19809534523921,
+  "reset_margin_to_sample_ns": 27.068519899579712,
+  "max_bottom_error_before_sample_mv": 5.202283988532883e-05,
+  "sample_rises_ns": [
+    102.69315583228244,
+    202.69319888445287,
+    302.69319887680444,
+    402.6932808770099,
+    502.6932076217728
+  ],
+  "sample_falls_ns": [
+    41.103054179338194,
+    141.10308797626502,
+    241.1029589824054,
+    341.10296029482106,
+    441.10295870095445,
+    541.1029670463031
+  ],
+  "acquisition_ns": [
+    null,
+    38.40993214398257,
+    38.40976009795253,
+    38.409761418016615,
+    38.40967782394455,
+    38.40975942453031
+  ],
+  "preclose_errors_mv": [
+    -1.9800137757578495,
+    -0.0006323340815406198,
+    0.0007000527841098106,
+    0.002304369421789014,
+    -0.0007972847479627027,
+    -4.508898103494641e-05
+  ],
+  "held_errors_mv": [
+    -1.6967086540000675,
+    0.5764907880000392,
+    -0.000182934240922,
+    0.0008666177199999087,
+    0.00027785916000000466,
+    -0.06196469399999405
+  ],
+  "precompare_last100ps_max_movement_mv": 0.1971108734790672,
+  "reference_p_idle_max_source_current_ua": 1478.7359138537593,
+  "reference_n_idle_max_source_current_ua": 1476.9549772765258,
+  "max_helper_branch_current_ua": 119.54742594736167,
+  "max_hold_enable_when_sample_high": 0.0,
+  "effective_settings": {
+    "maxstep": "6 ns",
+    "reltol": "100e-06",
+    "abstol(V)": "1 uV",
+    "abstol(I)": "1 pA",
+    "method": "gear2only",
+    "temp": "-40 C",
+    "tnom": "27 C"
+  },
+  "cache_sha256": "eaa6071d549e1840b243b9cb9540bfb763493fa7edecededc40adf130b0ae0e5",
+  "native_psf_sha256": "3cd46f111867f106a6b25d3d2ee9254c834babbe9385ee8266f1bc58b5c0dbb7",
+  "settling_definition": "Frame1 idle: all16 bottoms within0.25LSB of actual assigned VREF rail and remain until next sample minus20ps; bit7 N->high/P->low, other bits opposite. Not just RST_DONE.",
+  "coverage": "2670 pairs on445 selected MOS; other blocks and unsaved MOS not fully qualified; helper has ideal supplies/control.",
+  "current_definition": "50ohm reference-source current includes decap charging; helper branch current computed from verified VA conductance equation.",
+  "bit7_gnp_fall90to10_ps": 214.7184473943753
+}
