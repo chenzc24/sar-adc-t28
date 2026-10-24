@@ -2940,3 +2940,31 @@ human-triggered note in `docs/experience/`.
   scalar parser before analysis. Python compile, source hash and scoped checks;
   no OA/PDK changes, no original data deletion. User dirty files preserved.
   Local task-only commit, no push; broader PVT/mismatch remains unqualified.
+
+## 2026-10-24 — Mmain width sweep and selected five-point PVT
+
+- Authorized isolated 2/3/4-um total-width experiment, retaining the original
+  1-um control. Explicit identical 1u/150n MOS units in parallel on both sides;
+  no other DUT, external timing, source, model or OA changes. Each candidate
+  inverse-replaces to the frozen original DUT. No baseline promotion or push.
+- Four SS/.81/-40 native six-frame bidirectional cases completed. Frames 1-5
+  maximum absolute preclose/held errors (mV): 1u 82.263/76.559,
+  2u .146/.298, 3u .006/.307, 4u .003/.360. Net turn-off changes are not
+  isolated channel injection. Selected smallest eligible width 2u; all four
+  timing/stress checks pass, only 1u fails post-startup static codes.
+- Selected 2u original five-point static/sine regression submitted once, two
+  native jobs at a time, four threads each. All 10 cases/60 frames completed
+  and recovered. Post-startup held maxima TT/SS-cold/SS-hot/FF-cold/FF-hot:
+  .405/.298/.289/.577/.518 mV, all below 1.758 mV; preclose max .1461 mV.
+  Timing/idle checks pass; maximum conversion 41.044 ns. FF CMI remains,
+  with selected core peaks 1.057558/1.049466 V against .99 V. FF hot still
+  gives code 10 for -.81 V despite established sampling. Overall PVT gate
+  fails; startup deviations retained separately, no new FFT/INL/DNL/MC claim.
+- Two native-waveform/error figures inspected; ideal baselines, measurement
+  times and model scope labelled. User Obsidian/10-bit changes untouched.
+- Python compilation, focused analysis, all 14 remote/local deck hashes,
+  exact original-stimulus restoration for PVT, unchanged original/model hashes
+  and same effective solver settings verified. All 84 native frames complete.
+  Raw PSF retained in isolated remote scratch (not durable project archive);
+  new local data ~.87 GiB, remote ~16.83 GiB. No deletion or refined rerun.
+  Scoped diff review and task-only local commit; no push or baseline replacement.
