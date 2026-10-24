@@ -2869,3 +2869,14 @@ human-triggered note in `docs/experience/`.
   Fixed PickleBuffer hash handling before deletion; resumed audit checkpoints.
   Caches can be restored offline to original hashes; no recycle-bin copy.
   Syntax/scoped diff checks pass. Local maintenance commit only, no push.
+
+## 2026-10-24 — PVT and mismatch plan only
+
+- Drafted bounded pre-layout plan for frozen idle-reset candidate, with source
+  identity/statistical activation, 27-point PVT short screens, comparator-first
+  mismatch and conditional integrated characterization. No jobs launched.
+- Explicitly distinguishes fixed references from ratiometric diagnostics,
+  systematic offset budget from random-offset yield, and nominal MOM merging
+  from independent-unit mismatch. Includes storage caps after cache cleanup.
+- Read current specification, candidate timing/stress and old comparator/CDAC
+  evidence. Only new plan and this log changed; local commit, no push.
