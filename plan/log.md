@@ -2853,3 +2853,19 @@ human-triggered note in `docs/experience/`.
 - User explicitly authorizes commit/push of these results; publication on the
   current branch includes ten existing analysis/experiment commits. Unrelated
   dirty files are excluded. Remote push outcome reported in the conversation.
+
+## 2026-10-24 — Verified duplicate and cache cleanup
+
+- User authorized first-stage cleanup only. Removed four gzip transfer copies
+  after decompressed SHA256 matched retained PSF; removed 17 pickle caches
+  after full native-data reconstruction and exact serialized-hash comparison.
+- Removed 15,204,425,361 bytes; observed E free-space gain 15,204,466,688 bytes,
+  free afterwards 95,974,932,480 bytes. Exact paths and hashes in verification/
+  cache_cleanup_20261024{,_deleted}.json. 424 protected files hash-unchanged.
+- Retained all PSF/NPZ, receipts/logs, final metrics/plots, user Obsidian and
+  10-bit work. Kept seven unresolved refgate caches, passive AC cache and
+  transport fixture. No recursive deletion, simulation or remote mutation.
+- Added audit/recovery helper and exact-path PowerShell deletion guard.
+  Fixed PickleBuffer hash handling before deletion; resumed audit checkpoints.
+  Caches can be restored offline to original hashes; no recycle-bin copy.
+  Syntax/scoped diff checks pass. Local maintenance commit only, no push.
