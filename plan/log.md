@@ -3189,3 +3189,23 @@ human-triggered note in `docs/experience/`.
   after current probes, preserving sampling edges and checking shoot-through.
   All are proposals only. Scoped diff reviewed for task-only local commit;
   unrelated Obsidian and10-bit changes preserved.
+
+## 2026-10-24 — Start full native stress repair; remote access interrupted
+
+- User authorized current stress repair plus digital-source clarification.
+  New sar8_stress_closure target isolated from historical runs and user work.
+  PDK/model hashes and native Spectre21.1 license passed via SSH; bridge tunnel
+  initially down. No OA/PDK mutations or baseline promotion.
+- Four200ns strict CX cases submitted once, cold/hot null vs native Rgate/4
+  using parallel existing PDK resistors. No MOS geometry or source timing edits,
+  no ideal keeper.1833MOS/10998terminal pairs/1073signals plus all32 reference
+  switch four-terminal currents. Two concurrent jobs, four threads/job.
+- Native cold baseline reached41.0583ns with CMI warnings, then independent
+  SSH status timed out. Completion status unknown; no native jobs killed or
+  duplicate submissions. Bridge startup did not confirm CIW connectivity.
+- Digital audit confirms project-defined CMOS hierarchy using nch/pch_mac,
+  rupolym and cfmom_2t, not standard digital cells. Native physical RC delay.
+- Hash/invariant/probe coverage audits and compile/import checks passed.
+  New waveform/current extraction, repair benefit, all-device SOA, full PVT,
+  full-code/FFT and OA synchronization remain unverified. Plan stays incomplete.
+- Scoped checkpoint commit only, no push. Preserve all Obsidian/10-bit dirt.
