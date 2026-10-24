@@ -3167,3 +3167,25 @@ human-triggered note in `docs/experience/`.
   445MOS/2670pair coverage, not all1833. Residuals need accuracy convergence.
 - Report docs/sar8_ref_symmetric_hold.md; comparison and validation under
   verification/sar8_ref_symmetric_hold/. Task-only local commit, no push.
+
+## 2026-10-24 — Locate bottom undershoot without changing the circuit
+
+- Owned sar8_bottom_undershoot analysis/plots/verification/report and target
+  plan. Read four frozen native FF null/symmetric-hold runs from0e495c0;
+  no new simulation, OA/PDK/netlist edits, baseline promotion or push.
+- Identified idle XSN7 BN7 and conversion XSP7 BP7 low-to-high handoffs:
+  low-N gate falls first, then high-P gate falls before bottom recovers. Cold
+  idle BN7 -31.68mV before P-fall -> -56.68mV at472.660ns; actual VREFN at
+  peak -3.67mV. Hot idle -41.70mV / -5.96mV. Cold/hot conversion BP7 minima
+  -56.74/-44.95mV. Null controls show essentially same mechanism.
+- Direct two-MOS mappings verified; no later-bit full gate transition or
+  active sampling edge in measured windows. Not only reference-rail droop,
+  not a persistent50mV hold error. Native switch currents absent: coupling,
+  channel charge and complementary-array contribution not quantitatively split.
+- Eight native event windows/cache hashes/voltage identities/gate order and
+  terminal mapping passed; compiled scripts and inspected2final figures.
+  Effective CX accuracy limitation retained; no new convergence/SOA closure.
+- Report proposes separate low-N slew, high-P timing and reference-R tests
+  after current probes, preserving sampling edges and checking shoot-through.
+  All are proposals only. Scoped diff reviewed for task-only local commit;
+  unrelated Obsidian and10-bit changes preserved.
