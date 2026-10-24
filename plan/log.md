@@ -3139,3 +3139,31 @@ human-triggered note in `docs/experience/`.
   60frame/code/timing checks, measurement-window refinement and scoped diff.
   Results and limitations in plan/2026-10-24-sar8-ref-gate-controls/plan.md and
   verification/sar8_ref_gate_controls/comparison.json. Task-only local commit.
+
+## 2026-10-24 — Symmetric reference holding through all idle reset stages
+
+- Owned sar8_ref_symmetric_hold scripts/verification/output/report/figures and
+  target plan. Obsidian and10-bit work preserved; no OA/PDK/baseline changes.
+- Four immutable CX cases, FF0.99V/-40C and125C, null vs finite symmetric
+  400/2^bit-ohm ideal holds on all32 reference gates. Native1833 MOS unchanged.
+  Release on native final-inverter command change, rearm at settled rail;
+  no per-bit RST release, covers all subsequent bit resets. Not real keeper.
+- All24 frames correct, native exit0/PASS and remote receipts match. Actual
+  sampling sources identical, open/close differences<0.001ps vs null. No
+  complementary hold overlap/command conflict or sampling/conversion holding.
+- Idle gate excursions cold+61.031/-57.103->+1.010/-0.849mV; hot+65.136/
+  -62.943->+0.963/-0.913mV. Old high-only history included in waveform comparison.
+- Global reference peaks cold1.051031->1.046743V (XSP7.MP_HIGH Vbd, conversion),
+  hot1.055136->1.035509V (XSN3.MN_LOW Vgb, conversion). Idle body-drain peaks
+  remain1.046679/1.031700V from BN7 negative voltage. All retain CMI/SOA failure.
+- All-bottom settling cold3.198->3.337ns, hot3.539->3.674ns; actual next-sample
+  margin26.930/24.401ns. Held error~0.5764/0.5171mV unchanged. Max ideal helper
+  current2.346mA, not real-keeper supply power. No full-code/FFT/PVT expansion.
+- Corrected measurement-only hold window: release at SAMPLE_INT request precedes
+  actual Bootstrap SEQ_SAMPLE opening; no circuit rerun/overwrite. Null vs
+  original peak difference11.29uV, held5.79uV, timing<0.096ps; recorded explicitly.
+- Inspected3final figures; compile, source/hash/24frame/timing/continuity checks
+  and scoped diff reviewed. Effective CX reltol1e-4/maxstep6ns unchanged;
+  445MOS/2670pair coverage, not all1833. Residuals need accuracy convergence.
+- Report docs/sar8_ref_symmetric_hold.md; comparison and validation under
+  verification/sar8_ref_symmetric_hold/. Task-only local commit, no push.

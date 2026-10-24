@@ -1,0 +1,44 @@
+`include "disciplines.vams"
+
+// Diagnostic only: finite rail holds, ideal settled-state detection/control.
+// cmd_b is the ORIGINAL final inverter input, NOT a command inferred from gate.
+module ref_symmetric_diag(gate,vdd,vss,cmd_b,preset,sample,en_hi,en_lo);
+  inout gate,vdd,vss;
+  input cmd_b,preset,sample;
+  output en_hi,en_lo;
+  electrical gate,vdd,vss,cmd_b,preset,sample,en_hi,en_lo;
+  parameter real conductance=0 from [0:inf);
+  integer hi,lo;
+  real gh,gl;
+  analog begin
+    @(initial_step) begin hi=0;lo=0;end
+    @(initial_step
+      or cross(V(preset,vss)-0.9*V(vdd,vss),0)
+      or cross(V(preset,vss)-0.85*V(vdd,vss),0)
+      or cross(V(sample,vss)-0.1*V(vdd,vss),0)
+      or cross(V(cmd_b,vss)-0.1*V(vdd,vss),0)
+      or cross(V(cmd_b,vss)-0.15*V(vdd,vss),0)
+      or cross(V(cmd_b,vss)-0.85*V(vdd,vss),0)
+      or cross(V(cmd_b,vss)-0.9*V(vdd,vss),0)
+      or cross(V(gate,vss)-0.05*V(vdd,vss),0)
+      or cross(V(gate,vss)-0.95*V(vdd,vss),0)) begin
+      // Tiny comparison tolerances avoid ambiguous equality at cross events.
+      if (V(preset,vss)<0.8999*V(vdd,vss)
+          || V(sample,vss)>0.0999*V(vdd,vss)) begin hi=0;lo=0;end
+      else begin
+        if (V(cmd_b,vss)>=0.1499*V(vdd,vss)) hi=0;
+        if (V(cmd_b,vss)<=0.8501*V(vdd,vss)) lo=0;
+        if (V(cmd_b,vss)<=0.1001*V(vdd,vss)
+            && V(gate,vss)>=0.9499*V(vdd,vss)) begin hi=1;lo=0;end
+        if (V(cmd_b,vss)>=0.8999*V(vdd,vss)
+            && V(gate,vss)<=0.0501*V(vdd,vss)) begin lo=1;hi=0;end
+      end
+    end
+    gh=transition(hi,0,5p,5p);
+    gl=transition(lo,0,5p,5p);
+    I(gate,vdd) <+ conductance*gh*V(gate,vdd);
+    I(gate,vss) <+ conductance*gl*V(gate,vss);
+    V(en_hi,vss) <+ gh;
+    V(en_lo,vss) <+ gl;
+  end
+endmodule
