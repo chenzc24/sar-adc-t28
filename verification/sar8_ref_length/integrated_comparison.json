@@ -1,0 +1,2228 @@
+{
+  "points": [
+    {
+      "baseline": {
+        "codes": [
+          242,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 242,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.004277781697575823,
+        "post_startup_max_held_error_mv": 0.4045911380000655,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -9.699441157237864,
+          0.0005457619023374605,
+          0.0004989455582082955,
+          0.004277781697575823,
+          -0.0005817389496392579,
+          -0.001965626149666444
+        ],
+        "held_errors_mv": [
+          -9.44699119000003,
+          0.4045911380000655,
+          -8.38813211668e-05,
+          0.0027019406300000243,
+          0.00030293736999996435,
+          -0.05634755399999691
+        ],
+        "net_turnoff_deltas_mv": [
+          0.2524499672378333,
+          0.40404537609772806,
+          -0.0005828268793750956,
+          -0.0015758410675757988,
+          0.0008846763196392222,
+          -0.05438192785033047
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.7394692016736,
+        "reference_p_130ns_v": 0.8998698861663612,
+        "reference_n_130ns_v": 0.0001304169646876461,
+        "source_p_130ns_ua": 2.602276672776238,
+        "source_n_130ns_ua": 2.608339293752922,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 1.1078915562734437e-05,
+        "reference_n_120to140ns_drift_uv": 8.318913510526119e-06,
+        "sample_close_ns": 141.12322868099685,
+        "acquisition_ns": 38.26259191185221,
+        "max_conversion_ns": 30.3518617446,
+        "max_precompare_last100ps_movement_mv": 0.08414467362322098,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 71.26118178118465,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.9785562263132277,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "sequencer": {
+            "time_ns": 155.75231274389918,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 0.9595321793575119,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 176.4219857451475,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+            "peak_v": 0.9565254887735551,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gpp5",
+              "vdd!"
+            ],
+            "model": "pch_mac"
+          },
+          "comparator": {
+            "time_ns": 248.0306590318522,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATP",
+            "peak_v": 0.9520625220165692,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.x"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.16114137091702,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.75145361078839,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "27 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.70836024365374,
+            "update_ns": 144.49138083454147,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.5959042671664,
+            "span_before_mv": 899.7394322508521
+          },
+          {
+            "bit": 6,
+            "compare_ns": 147.35804394899424,
+            "update_ns": 148.1584527295269,
+            "wait_since_last_update_ns": 2.866663114452763,
+            "trial_word": 64,
+            "top_before_mv": -360.56290012093405,
+            "span_before_mv": 899.3826722474124
+          },
+          {
+            "bit": 5,
+            "compare_ns": 151.02540568845527,
+            "update_ns": 151.86970441777146,
+            "wait_since_last_update_ns": 2.8669529589283513,
+            "trial_word": 32,
+            "top_before_mv": -135.88147523461726,
+            "span_before_mv": 899.5986305012765
+          },
+          {
+            "bit": 4,
+            "compare_ns": 154.73674348410074,
+            "update_ns": 155.6676339966358,
+            "wait_since_last_update_ns": 2.8670390663292835,
+            "trial_word": 16,
+            "top_before_mv": -23.521898863347047,
+            "span_before_mv": 899.6825405154144
+          },
+          {
+            "bit": 3,
+            "compare_ns": 158.53470317628359,
+            "update_ns": 159.451482054219,
+            "wait_since_last_update_ns": 2.8670691796477854,
+            "trial_word": 8,
+            "top_before_mv": 32.655918945922565,
+            "span_before_mv": 899.714053486969
+          },
+          {
+            "bit": 2,
+            "compare_ns": 162.31892054729224,
+            "update_ns": 163.30755210068864,
+            "wait_since_last_update_ns": 2.867438493073223,
+            "trial_word": 12,
+            "top_before_mv": 4.591718833116543,
+            "span_before_mv": 899.7261056158424
+          },
+          {
+            "bit": 1,
+            "compare_ns": 166.17508817058228,
+            "update_ns": 167.13974225013166,
+            "wait_since_last_update_ns": 2.867536069893646,
+            "trial_word": 14,
+            "top_before_mv": -9.440251494432616,
+            "span_before_mv": 899.7325918719383
+          },
+          {
+            "bit": 0,
+            "compare_ns": 170.00674458698649,
+            "update_ns": 171.01653688920825,
+            "wait_since_last_update_ns": 2.8670023368548243,
+            "trial_word": 13,
+            "top_before_mv": -2.4182163491403563,
+            "span_before_mv": 899.7360611358943
+          }
+        ],
+        "native_psf_sha256": "7c85c2c057e43140187c797c06ed380eecb572f84e235adcd1e882d6acf9fb10",
+        "case": "w2_tt_090_27_static",
+        "cache_sha256": "e053146cf41c38dc211f804d99e1639a77f6ea2a3e62ce9576205f239aed4a8f"
+      },
+      "candidate": {
+        "codes": [
+          242,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 242,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.0042708330961467676,
+        "post_startup_max_held_error_mv": 0.404377058000005,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -9.699440644156176,
+          0.0005946556641545087,
+          0.0005047941732989531,
+          0.0042708330961467676,
+          -0.0005812403154586542,
+          -0.0019963484860080483
+        ],
+        "held_errors_mv": [
+          -9.447122610000026,
+          0.404377058000005,
+          -0.000128634466745,
+          0.0026973144800000563,
+          0.0003019260000000634,
+          -0.05634976599999675
+        ],
+        "net_turnoff_deltas_mv": [
+          0.2523180341561515,
+          0.4037824023358505,
+          -0.0006334286400439532,
+          -0.0015735186161467112,
+          0.0008831663154587176,
+          -0.0543534175139887
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.9963215015407,
+        "reference_p_130ns_v": 0.8999984461278628,
+        "reference_n_130ns_v": 2.124626322108137e-06,
+        "source_p_130ns_ua": 0.03107744274366553,
+        "source_n_130ns_ua": 0.04249252644216273,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": -0.00027138202796095356,
+        "reference_n_120to140ns_drift_uv": -0.00027597089355421256,
+        "sample_close_ns": 141.12322867623175,
+        "acquisition_ns": 38.26259186385917,
+        "max_conversion_ns": 30.3359869038,
+        "max_precompare_last100ps_movement_mv": 0.12682330320484825,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 71.29620089134528,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.9785454693836673,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 176.4688155024365,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+            "peak_v": 0.9632936276808667,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gnn4",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 248.01548061902002,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATP",
+            "peak_v": 0.9520926161292326,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.x"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.16114136883382,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.751453620351471,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 155.7521264945379,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 0.9595317497290851,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "27 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.70836011228437,
+            "update_ns": 144.49138121928536,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.5963066002369,
+            "span_before_mv": 899.9962318853529
+          },
+          {
+            "bit": 6,
+            "compare_ns": 147.35787171131258,
+            "update_ns": 148.15830186010987,
+            "wait_since_last_update_ns": 2.866490492027225,
+            "trial_word": 64,
+            "top_before_mv": -360.5408901436686,
+            "span_before_mv": 899.4223544844697
+          },
+          {
+            "bit": 5,
+            "compare_ns": 151.02514521891737,
+            "update_ns": 151.86952530630109,
+            "wait_since_last_update_ns": 2.8668433588075004,
+            "trial_word": 32,
+            "top_before_mv": -135.75958731611243,
+            "span_before_mv": 899.7550400767234
+          },
+          {
+            "bit": 4,
+            "compare_ns": 154.73622057695457,
+            "update_ns": 155.66744645218895,
+            "wait_since_last_update_ns": 2.86669527065348,
+            "trial_word": 16,
+            "top_before_mv": -23.33194759718943,
+            "span_before_mv": 899.8927880665574
+          },
+          {
+            "bit": 3,
+            "compare_ns": 158.53418315896036,
+            "update_ns": 159.45062926215525,
+            "wait_since_last_update_ns": 2.8667367067714054,
+            "trial_word": 8,
+            "top_before_mv": 32.88237224492963,
+            "span_before_mv": 899.9484527422746
+          },
+          {
+            "bit": 2,
+            "compare_ns": 162.31787313475013,
+            "update_ns": 163.3048146624842,
+            "wait_since_last_update_ns": 2.8672438725948837,
+            "trial_word": 12,
+            "top_before_mv": 4.821034036651128,
+            "span_before_mv": 899.9718539696272
+          },
+          {
+            "bit": 1,
+            "compare_ns": 166.17218202960163,
+            "update_ns": 167.13763140255446,
+            "wait_since_last_update_ns": 2.8673673671174242,
+            "trial_word": 14,
+            "top_before_mv": -9.2099298746533,
+            "span_before_mv": 899.9838564221316
+          },
+          {
+            "bit": 0,
+            "compare_ns": 170.00439163140507,
+            "update_ns": 171.01767496380594,
+            "wait_since_last_update_ns": 2.866760228850609,
+            "trial_word": 13,
+            "top_before_mv": -2.1833345073284938,
+            "span_before_mv": 899.9901066827457
+          }
+        ],
+        "native_psf_sha256": "4e334e497fa41354d5021108c1508927490d7ac3966bdd1330b7c30240e8f0e1",
+        "case": "l90_tt_090_27_static",
+        "cache_sha256": "0262a228a07455e8eb143cf3ac2c8b5090f3f0df23eddfd393cc2b277c62c034"
+      },
+      "sample_close_change_ps": -4.765098537973245e-06,
+      "acquisition_change_ps": -4.799304065272736e-05
+    },
+    {
+      "baseline": {
+        "codes": [
+          241,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 241,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.14608157974983663,
+        "post_startup_max_held_error_mv": 0.2983901360000818,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -12.87451862094413,
+          0.059353173017306915,
+          -0.14608157974983663,
+          0.005252019050741097,
+          -0.0004395383980805405,
+          -0.004325497362747677
+        ],
+        "held_errors_mv": [
+          -12.807295921000051,
+          0.2983901360000818,
+          -0.125959835905,
+          0.00428311971000005,
+          0.00011182718999999501,
+          -0.04007361900000561
+        ],
+        "net_turnoff_deltas_mv": [
+          0.06722269994408059,
+          0.23903696298277488,
+          0.020121743844836615,
+          -0.000968899340741047,
+          0.0005513655880805355,
+          -0.035748121637257935
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.9944295904785,
+        "reference_p_130ns_v": 0.8999267073147251,
+        "reference_n_130ns_v": -6.772227575341075e-05,
+        "source_p_130ns_ua": 1.4658537054978993,
+        "source_n_130ns_ua": -1.3544455150682149,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 760.5072050700379,
+        "reference_n_120to140ns_drift_uv": 760.5685208560188,
+        "sample_close_ns": 141.16242483938493,
+        "acquisition_ns": 37.84031351246544,
+        "max_conversion_ns": 41.0141151152,
+        "max_precompare_last100ps_movement_mv": 0.028821039928128567,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "comparator": {
+            "time_ns": 248.48368768021,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "gb",
+            "instance": "XDUT.XCOMP.MNINP",
+            "peak_v": 0.9063874936551463,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.topp",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.1549129292227,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.658721344068904,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "reference": {
+            "time_ns": 188.30211368899708,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "gd",
+            "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+            "peak_v": 0.9397881500638746,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gpn7",
+              "xdut.xcdac.bp7"
+            ],
+            "model": "nch_mac"
+          },
+          "sequencer": {
+            "time_ns": 41.18110991499282,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XRDONE.X001.MN",
+            "peak_v": 0.9190036044378533,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.rst_done",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference_driver": {
+            "time_ns": 94.38554255955242,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.932415199259076,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "-40 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 144.35754384845868,
+            "update_ns": 145.3985855854352,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.6697276484265,
+            "span_before_mv": 899.9945234367594
+          },
+          {
+            "bit": 6,
+            "compare_ns": 149.0203155290605,
+            "update_ns": 150.09750358597793,
+            "wait_since_last_update_ns": 3.621729943625297,
+            "trial_word": 64,
+            "top_before_mv": -360.3813086810498,
+            "span_before_mv": 899.872875771089
+          },
+          {
+            "bit": 5,
+            "compare_ns": 153.7198149187253,
+            "update_ns": 154.94068221411743,
+            "wait_since_last_update_ns": 3.6223113327473584,
+            "trial_word": 32,
+            "top_before_mv": -135.67658786092045,
+            "span_before_mv": 899.9502031955968
+          },
+          {
+            "bit": 4,
+            "compare_ns": 158.563045248316,
+            "update_ns": 160.15110520734697,
+            "wait_since_last_update_ns": 3.622363034198571,
+            "trial_word": 16,
+            "top_before_mv": -23.320315772461132,
+            "span_before_mv": 899.9773319939908
+          },
+          {
+            "bit": 3,
+            "compare_ns": 163.77379037262315,
+            "update_ns": 165.29315216053377,
+            "wait_since_last_update_ns": 3.622685165276181,
+            "trial_word": 8,
+            "top_before_mv": 32.8572049834262,
+            "span_before_mv": 899.9875435609584
+          },
+          {
+            "bit": 2,
+            "compare_ns": 168.91612918025376,
+            "update_ns": 170.769334102869,
+            "wait_since_last_update_ns": 3.622977019719997,
+            "trial_word": 12,
+            "top_before_mv": 4.775754465748793,
+            "span_before_mv": 899.9906867502076
+          },
+          {
+            "bit": 1,
+            "compare_ns": 174.3926450394208,
+            "update_ns": 176.14048744099597,
+            "wait_since_last_update_ns": 3.6233109365518033,
+            "trial_word": 14,
+            "top_before_mv": -9.264877000148608,
+            "span_before_mv": 899.9924446433895
+          },
+          {
+            "bit": 0,
+            "compare_ns": 179.7630360883489,
+            "update_ns": 181.73104221822666,
+            "wait_since_last_update_ns": 3.622548647352943,
+            "trial_word": 13,
+            "top_before_mv": -2.2428061277122158,
+            "span_before_mv": 899.993504249072
+          }
+        ],
+        "native_psf_sha256": "22e473de04955062eaba6e301bb9500d1480aaeb996788be3415de670e4d2b3a",
+        "case": "w2_ss_081_m40_static",
+        "cache_sha256": "05d29eb546b4277f0c7763c671cb02ab35bb9199b70757c3e6c6c8ffa3ee8daf"
+      },
+      "candidate": {
+        "codes": [
+          241,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 241,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.14665257790822783,
+        "post_startup_max_held_error_mv": 0.299844512000047,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -12.874518732357455,
+          0.05965667184326673,
+          -0.14665257790822783,
+          0.00525939266630515,
+          -0.0005965862779765303,
+          -0.004348840370121954
+        ],
+        "held_errors_mv": [
+          -12.80726462900006,
+          0.299844512000047,
+          -0.126503524489,
+          0.004289702590000053,
+          -2.7186909999947148e-05,
+          -0.04027005300000219
+        ],
+        "net_turnoff_deltas_mv": [
+          0.06725410335739479,
+          0.2401878401567803,
+          0.020149053419227823,
+          -0.0009696900763050964,
+          0.0005693993679765832,
+          -0.03592121262988024
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.999594134768,
+        "reference_p_130ns_v": 0.899929123482602,
+        "reference_n_130ns_v": -7.047065216605393e-05,
+        "source_p_130ns_ua": 1.4175303479602164,
+        "source_n_130ns_ua": -1.4094130433210785,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 760.8146109707725,
+        "reference_n_120to140ns_drift_uv": 760.6745298753394,
+        "sample_close_ns": 141.16242483908607,
+        "acquisition_ns": 37.840296591796815,
+        "max_conversion_ns": 41.0124421997,
+        "max_precompare_last100ps_movement_mv": 0.046134948681275656,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 94.38388268656614,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.9322065271310918,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 188.321208162009,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "ds",
+            "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+            "peak_v": 0.9547874482879001,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xcdac.bp7",
+              "vrefn"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 248.4892139922999,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "gb",
+            "instance": "XDUT.XCOMP.MNINP",
+            "peak_v": 0.9105520700925173,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.topp",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.1549129269215,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.658727673096384,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 41.181109929638076,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XRDONE.X001.MN",
+            "peak_v": 0.9190036117617673,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.rst_done",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "-40 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 144.3575441910661,
+            "update_ns": 145.3985810745962,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.6694260239682,
+            "span_before_mv": 899.9996881929419
+          },
+          {
+            "bit": 6,
+            "compare_ns": 149.02011498966098,
+            "update_ns": 150.09731467214354,
+            "wait_since_last_update_ns": 3.621533915064788,
+            "trial_word": 64,
+            "top_before_mv": -360.42053103655803,
+            "span_before_mv": 899.7940879777235
+          },
+          {
+            "bit": 5,
+            "compare_ns": 153.71926102607802,
+            "update_ns": 154.9401494065124,
+            "wait_since_last_update_ns": 3.621946353934476,
+            "trial_word": 32,
+            "top_before_mv": -135.7006935519109,
+            "span_before_mv": 899.9172772333043
+          },
+          {
+            "bit": 4,
+            "compare_ns": 158.56217940907337,
+            "update_ns": 160.15021309045784,
+            "wait_since_last_update_ns": 3.6220300025609617,
+            "trial_word": 16,
+            "top_before_mv": -23.32903131132874,
+            "span_before_mv": 899.9664109596928
+          },
+          {
+            "bit": 3,
+            "compare_ns": 163.77255234080803,
+            "update_ns": 165.29192648547217,
+            "wait_since_last_update_ns": 3.622339250350194,
+            "trial_word": 8,
+            "top_before_mv": 32.85599731568911,
+            "span_before_mv": 899.9852278679823
+          },
+          {
+            "bit": 2,
+            "compare_ns": 168.91436212738213,
+            "update_ns": 170.7673463152199,
+            "wait_since_last_update_ns": 3.6224356419099593,
+            "trial_word": 12,
+            "top_before_mv": 4.777879211291635,
+            "span_before_mv": 899.991928506647
+          },
+          {
+            "bit": 1,
+            "compare_ns": 174.3904458144854,
+            "update_ns": 176.1383218775444,
+            "wait_since_last_update_ns": 3.623099499265493,
+            "trial_word": 14,
+            "top_before_mv": -9.26095271702665,
+            "span_before_mv": 899.9957363251295
+          },
+          {
+            "bit": 0,
+            "compare_ns": 179.76058363452975,
+            "update_ns": 181.72895763225108,
+            "wait_since_last_update_ns": 3.6222617569853526,
+            "trial_word": 13,
+            "top_before_mv": -2.2380127140475548,
+            "span_before_mv": 899.9977333195958
+          }
+        ],
+        "native_psf_sha256": "9c44a1ab9441915201297c2d3302814ee820e465774949d65e79ed2739c6dcec",
+        "case": "l90_ss_081_m40_static",
+        "cache_sha256": "bfcbff40b3dc0ae47cb1efd38c3b6bb61ebcf7448ab0c368356f28092695d386"
+      },
+      "sample_close_change_ps": -2.9885427466069814e-07,
+      "acquisition_change_ps": -0.016920668628017665
+    },
+    {
+      "baseline": {
+        "codes": [
+          242,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 242,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.0041106323394053245,
+        "post_startup_max_held_error_mv": 0.28885252000010464,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -13.717860868615928,
+          0.002408055435609846,
+          -0.0005344457869604515,
+          0.0041106323394053245,
+          -9.476646070064217e-05,
+          0.002114142056003354
+        ],
+        "held_errors_mv": [
+          -13.491205605000056,
+          0.28885252000010464,
+          -0.0008980919384280001,
+          0.0030212649699999043,
+          0.0005172372199999456,
+          -0.040626587999997854
+        ],
+        "net_turnoff_deltas_mv": [
+          0.2266552636158714,
+          0.2864444645644948,
+          -0.00036364615146754854,
+          -0.0010893673694054203,
+          0.0006120036807005878,
+          -0.04274073005600121
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 895.1354430798168,
+        "reference_p_130ns_v": 0.8975679763002904,
+        "reference_n_130ns_v": 0.002432533220473556,
+        "source_p_130ns_ua": 48.640473994192575,
+        "source_n_130ns_ua": 48.65066440947111,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 45.073226973557645,
+        "reference_n_120to140ns_drift_uv": 47.88431800890674,
+        "sample_close_ns": 141.15308004600197,
+        "acquisition_ns": 38.036813756100585,
+        "max_conversion_ns": 35.407043116299995,
+        "max_precompare_last100ps_movement_mv": 0.02684175743999928,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "reference": {
+            "time_ns": 482.19956290891275,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "bd",
+            "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+            "peak_v": 0.9270414132363336,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcdac.bn3"
+            ],
+            "model": "nch_mac"
+          },
+          "sequencer": {
+            "time_ns": 41.16647815194633,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XRDONE.X001.MN",
+            "peak_v": 0.8629804210372534,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.rst_done",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference_driver": {
+            "time_ns": 287.5825376900686,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.8812734154669402,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.14388827547668,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.658273683089085,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "comparator": {
+            "time_ns": 247.1964347530757,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "gb",
+            "instance": "XDUT.XCOMP.MNINP",
+            "peak_v": 0.9023569716292754,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.topp",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "125 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 144.07426266823947,
+            "update_ns": 145.03564315414513,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.7116536013312,
+            "span_before_mv": 895.1354723629547
+          },
+          {
+            "bit": 6,
+            "compare_ns": 148.36587734193216,
+            "update_ns": 149.34451186922246,
+            "wait_since_last_update_ns": 3.3302341877870276,
+            "trial_word": 64,
+            "top_before_mv": -362.96217709883143,
+            "span_before_mv": 895.0298311598071
+          },
+          {
+            "bit": 5,
+            "compare_ns": 152.67513485743152,
+            "update_ns": 153.69210527461192,
+            "wait_since_last_update_ns": 3.3306229882090577,
+            "trial_word": 32,
+            "top_before_mv": -139.53241798449895,
+            "span_before_mv": 895.098755944901
+          },
+          {
+            "bit": 4,
+            "compare_ns": 157.02260836409062,
+            "update_ns": 158.11877988611477,
+            "wait_since_last_update_ns": 3.3305030894786967,
+            "trial_word": 16,
+            "top_before_mv": -27.814393989027465,
+            "span_before_mv": 895.1223167329546
+          },
+          {
+            "bit": 3,
+            "compare_ns": 161.44981194424506,
+            "update_ns": 162.5448694370511,
+            "wait_since_last_update_ns": 3.3310320581302904,
+            "trial_word": 8,
+            "top_before_mv": 28.043123757527542,
+            "span_before_mv": 895.1302634775271
+          },
+          {
+            "bit": 2,
+            "compare_ns": 165.87580514892954,
+            "update_ns": 167.17963666825406,
+            "wait_since_last_update_ns": 3.3309357118784533,
+            "trial_word": 12,
+            "top_before_mv": 0.119603166989668,
+            "span_before_mv": 895.1325234208209
+          },
+          {
+            "bit": 1,
+            "compare_ns": 170.51096240399553,
+            "update_ns": 171.63824287417864,
+            "wait_since_last_update_ns": 3.3313257357414727,
+            "trial_word": 14,
+            "top_before_mv": -13.842197699151626,
+            "span_before_mv": 895.1337670839184
+          },
+          {
+            "bit": 0,
+            "compare_ns": 174.96837301713717,
+            "update_ns": 176.12361255521873,
+            "wait_since_last_update_ns": 3.3301301429585237,
+            "trial_word": 13,
+            "top_before_mv": -6.860196787131068,
+            "span_before_mv": 895.1346697345814
+          }
+        ],
+        "native_psf_sha256": "49118867d63bea6966fcdd41d3dcc35c461ee084e65789907bdcf0c5a829db9b",
+        "case": "w2_ss_081_125_static",
+        "cache_sha256": "9e3b299defbd1612ecd09378b86e32b68c8b9e09c67ed05ce516c334af12e8a2"
+      },
+      "candidate": {
+        "codes": [
+          241,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": true,
+        "startup_code": 241,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.004110543595370417,
+        "post_startup_max_held_error_mv": 0.2892515380000793,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -13.717853428650951,
+          0.0024603784605226053,
+          -0.0005598158982959507,
+          0.004110543595370417,
+          -9.476694378253263e-05,
+          0.002131515689618446
+        ],
+        "held_errors_mv": [
+          -13.49128993500004,
+          0.2892515380000793,
+          -0.000733110391449,
+          0.0030263319099998586,
+          0.0005173445099999636,
+          -0.040604134000005176
+        ],
+        "net_turnoff_deltas_mv": [
+          0.22656349365091089,
+          0.2867911595395567,
+          -0.00017329449315304924,
+          -0.0010842116853705588,
+          0.0006121114537824962,
+          -0.04273564968962362
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.82737343211,
+        "reference_p_130ns_v": 0.8999138177208699,
+        "reference_n_130ns_v": 8.644428875988571e-05,
+        "source_p_130ns_ua": 1.7236455826030728,
+        "source_n_130ns_ua": 1.7288857751977142,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 46.956851747492756,
+        "reference_n_120to140ns_drift_uv": 46.86926806387623,
+        "sample_close_ns": 141.15308006074736,
+        "acquisition_ns": 38.03686123719763,
+        "max_conversion_ns": 35.415744679700005,
+        "max_precompare_last100ps_movement_mv": 0.05934044196154176,
+        "CMI": false,
+        "stress_failure_count": 0,
+        "stress_failing_MOS_count": 0,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 376.2590244528833,
+            "exceed": false,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 0.8812564656616172,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 182.16016268165802,
+            "exceed": false,
+            "group": "reference",
+            "terminal": "ds",
+            "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+            "peak_v": 0.9502127447399563,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xcdac.bp7",
+              "vrefn"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 247.2964589535821,
+            "exceed": false,
+            "group": "comparator",
+            "terminal": "gb",
+            "instance": "XDUT.XCOMP.MNINP",
+            "peak_v": 0.9101122642897232,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.topp",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.1438881911565,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.658274801947821,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 41.166478151343796,
+            "exceed": false,
+            "group": "sequencer",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XRDONE.X001.MN",
+            "peak_v": 0.862980420513902,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.rst_done",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "125 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 144.07450589776107,
+            "update_ns": 145.0358838804423,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.7113956988929,
+            "span_before_mv": 899.8272755090674
+          },
+          {
+            "bit": 6,
+            "compare_ns": 148.36589994746188,
+            "update_ns": 149.34471973845345,
+            "wait_since_last_update_ns": 3.330016067019585,
+            "trial_word": 64,
+            "top_before_mv": -360.6028725175941,
+            "span_before_mv": 899.5625512660436
+          },
+          {
+            "bit": 5,
+            "compare_ns": 152.6749227201389,
+            "update_ns": 153.69317311433767,
+            "wait_since_last_update_ns": 3.33020298168546,
+            "trial_word": 32,
+            "top_before_mv": -135.92629901561298,
+            "span_before_mv": 899.7199317916386
+          },
+          {
+            "bit": 4,
+            "compare_ns": 157.02296201391843,
+            "update_ns": 158.12651324540988,
+            "wait_since_last_update_ns": 3.3297888995807625,
+            "trial_word": 16,
+            "top_before_mv": -23.57149168267536,
+            "span_before_mv": 899.7838674020127
+          },
+          {
+            "bit": 3,
+            "compare_ns": 161.45691644962557,
+            "update_ns": 162.54512029049906,
+            "wait_since_last_update_ns": 3.330403204215685,
+            "trial_word": 8,
+            "top_before_mv": 32.60492402322851,
+            "span_before_mv": 899.8084963467452
+          },
+          {
+            "bit": 2,
+            "compare_ns": 165.87531417130947,
+            "update_ns": 167.04707490049452,
+            "wait_since_last_update_ns": 3.3301938808104126,
+            "trial_word": 12,
+            "top_before_mv": 4.535199763581299,
+            "span_before_mv": 899.817117936637
+          },
+          {
+            "bit": 1,
+            "compare_ns": 170.378239934526,
+            "update_ns": 171.52098996994576,
+            "wait_since_last_update_ns": 3.3311650340314714,
+            "trial_word": 14,
+            "top_before_mv": -9.499308682420383,
+            "span_before_mv": 899.8221606515827
+          },
+          {
+            "bit": 0,
+            "compare_ns": 174.85108552298868,
+            "update_ns": 176.04613716091112,
+            "wait_since_last_update_ns": 3.3300955530429235,
+            "trial_word": 13,
+            "top_before_mv": -2.477633088858233,
+            "span_before_mv": 899.8247960748748
+          }
+        ],
+        "native_psf_sha256": "feac5a0dc9cbe04f5deec56794a0e1ffc352fbd55adc91a0b47c230f6ed56231",
+        "case": "l90_ss_081_125_static",
+        "cache_sha256": "6c281b0f82a94d3e1919dad8e4cb77890f7c469deb0cfbbd8141d17ef420ef87"
+      },
+      "sample_close_change_ps": 1.4745381804459612e-05,
+      "acquisition_change_ps": 0.04748109704166836
+    },
+    {
+      "baseline": {
+        "codes": [
+          243,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": true,
+        "post_startup_static_code_pass": true,
+        "startup_code": 243,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.004544995440055677,
+        "post_startup_max_held_error_mv": 0.5771762000000846,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -1.9792890027707788,
+          -0.0006165232212529403,
+          0.0006933483195385527,
+          0.0023160353683272274,
+          -0.004544995440055677,
+          -4.418876213552192e-05
+        ],
+        "held_errors_mv": [
+          -1.695789921000057,
+          0.5771762000000846,
+          -0.000258694905386,
+          0.0008760318600000132,
+          -0.0025050981999998664,
+          -0.061997095000002056
+        ],
+        "net_turnoff_deltas_mv": [
+          0.2834990817707217,
+          0.5777927232213376,
+          -0.0009520432249245527,
+          -0.0014400035083272141,
+          0.002039897240055811,
+          -0.061952906237866534
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.9695193169797,
+        "reference_p_130ns_v": 0.899985029488027,
+        "reference_n_130ns_v": 1.551017104740691e-05,
+        "source_p_130ns_ua": 0.2994102394593412,
+        "source_n_130ns_ua": 0.3102034209481382,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": -0.0001824932427396675,
+        "reference_n_120to140ns_drift_uv": -0.00018231475391059047,
+        "sample_close_ns": 141.10310604968046,
+        "acquisition_ns": 38.40987579868079,
+        "max_conversion_ns": 26.9413410292,
+        "max_precompare_last100ps_movement_mv": 0.13781105456650566,
+        "CMI": true,
+        "stress_failure_count": 2008,
+        "stress_failing_MOS_count": 421,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 65.25691806455957,
+            "exceed": true,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GNNCN",
+            "peak_v": 1.05755784922778,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gnndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.1246392350792,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.852416506680798,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 54.138557965418016,
+            "exceed": true,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 1.057115381056791,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 172.66896574545711,
+            "exceed": true,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+            "peak_v": 1.047244279533301,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gnn6",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 446.9387118400886,
+            "exceed": true,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATP",
+            "peak_v": 1.045312745872149,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.x"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "-40 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.46865852109622,
+            "update_ns": 144.1375873375311,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.4230816561745,
+            "span_before_mv": 899.9695067884796
+          },
+          {
+            "bit": 6,
+            "compare_ns": 146.71099151219812,
+            "update_ns": 147.39641750076075,
+            "wait_since_last_update_ns": 2.5734041746670187,
+            "trial_word": 64,
+            "top_before_mv": -360.3737250049483,
+            "span_before_mv": 899.391023234394
+          },
+          {
+            "bit": 5,
+            "compare_ns": 149.97008871143723,
+            "update_ns": 150.69463021012254,
+            "wait_since_last_update_ns": 2.57367121067648,
+            "trial_word": 32,
+            "top_before_mv": -135.59299410075954,
+            "span_before_mv": 899.7294238315721
+          },
+          {
+            "bit": 4,
+            "compare_ns": 153.26828188085676,
+            "update_ns": 154.07287539477193,
+            "wait_since_last_update_ns": 2.573651670734222,
+            "trial_word": 16,
+            "top_before_mv": -23.166383028734916,
+            "span_before_mv": 899.8683736385793
+          },
+          {
+            "bit": 3,
+            "compare_ns": 156.64644471341197,
+            "update_ns": 157.43671927521527,
+            "wait_since_last_update_ns": 2.5735693186400397,
+            "trial_word": 8,
+            "top_before_mv": 33.04749392404344,
+            "span_before_mv": 899.924618681102
+          },
+          {
+            "bit": 2,
+            "compare_ns": 160.01040007076264,
+            "update_ns": 160.8628882369198,
+            "wait_since_last_update_ns": 2.573680795547375,
+            "trial_word": 12,
+            "top_before_mv": 4.984345748574592,
+            "span_before_mv": 899.9457827218679
+          },
+          {
+            "bit": 1,
+            "compare_ns": 163.4369533244715,
+            "update_ns": 164.27242251960098,
+            "wait_since_last_update_ns": 2.574065087551702,
+            "trial_word": 14,
+            "top_before_mv": -9.046801327561305,
+            "span_before_mv": 899.9574042665153
+          },
+          {
+            "bit": 0,
+            "compare_ns": 166.84596199758926,
+            "update_ns": 167.72526907850693,
+            "wait_since_last_update_ns": 2.5735394779882768,
+            "trial_word": 13,
+            "top_before_mv": -2.020492823217368,
+            "span_before_mv": 899.9634872944221
+          }
+        ],
+        "native_psf_sha256": "264681ffffb558de11e9d2d6e6c95c4c0764de9faff05715880bcdcbe271a00d",
+        "case": "w2_ff_099_m40_static",
+        "cache_sha256": "4b4b4bf4e26bd53166be531486513353064606ed80e789968c257f6be925c027"
+      },
+      "candidate": {
+        "codes": [
+          243,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": true,
+        "post_startup_static_code_pass": true,
+        "startup_code": 243,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.002303846892270445,
+        "post_startup_max_held_error_mv": 0.5763988330000913,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -1.9807494154792105,
+          -0.000632049798832135,
+          0.0007000680567235023,
+          0.002303846892270445,
+          -0.0007957057580423345,
+          -4.509212178649413e-05
+        ],
+        "held_errors_mv": [
+          -1.6973685840000474,
+          0.5763988330000913,
+          -0.000182982598462,
+          0.0008665077299999449,
+          0.0002786816599999707,
+          -0.06195497199999733
+        ],
+        "net_turnoff_deltas_mv": [
+          0.28338083147916304,
+          0.5770308827989235,
+          -0.0008830506551855023,
+          -0.0014373391622705001,
+          0.0010743874180423052,
+          -0.06190987987821084
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.9981192332986,
+        "reference_p_130ns_v": 0.8999997950346451,
+        "reference_n_130ns_v": 1.675801346541615e-06,
+        "source_p_130ns_ua": 0.004099307098215377,
+        "source_n_130ns_ua": 0.033516026930832304,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": -0.00018629198184072493,
+        "reference_n_120to140ns_drift_uv": -0.00018596442989900013,
+        "sample_close_ns": 141.1031060432397,
+        "acquisition_ns": 38.40987579226403,
+        "max_conversion_ns": 26.9511205222,
+        "max_precompare_last100ps_movement_mv": 0.19707972971638732,
+        "CMI": true,
+        "stress_failure_count": 2008,
+        "stress_failing_MOS_count": 421,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 65.25596873300195,
+            "exceed": true,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GNNCN",
+            "peak_v": 1.057552597795003,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gnndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 172.7058350217391,
+            "exceed": true,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+            "peak_v": 1.051036748052788,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gnn4",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 446.9388815099371,
+            "exceed": true,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATP",
+            "peak_v": 1.045313200040252,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.x"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.12463923213,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.852417512724479,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 54.13831441561681,
+            "exceed": true,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 1.057117459476195,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "-40 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.46865852205144,
+            "update_ns": 144.13758774672817,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.4239445020218,
+            "span_before_mv": 899.9980904141643
+          },
+          {
+            "bit": 6,
+            "compare_ns": 146.71098993231172,
+            "update_ns": 147.3964284287642,
+            "wait_since_last_update_ns": 2.5734021855835465,
+            "trial_word": 64,
+            "top_before_mv": -360.51403187097446,
+            "span_before_mv": 899.1138843699185
+          },
+          {
+            "bit": 5,
+            "compare_ns": 149.96973428228566,
+            "update_ns": 150.6942632079809,
+            "wait_since_last_update_ns": 2.573305853521447,
+            "trial_word": 32,
+            "top_before_mv": -135.6852389354925,
+            "span_before_mv": 899.6078150308401
+          },
+          {
+            "bit": 4,
+            "compare_ns": 153.26790142625802,
+            "update_ns": 154.07243080246545,
+            "wait_since_last_update_ns": 2.573638218277125,
+            "trial_word": 16,
+            "top_before_mv": -23.201710734597146,
+            "span_before_mv": 899.8284719069528
+          },
+          {
+            "bit": 3,
+            "compare_ns": 156.64586281992578,
+            "update_ns": 157.43613104207793,
+            "wait_since_last_update_ns": 2.573432017460334,
+            "trial_word": 8,
+            "top_before_mv": 33.043064805353794,
+            "span_before_mv": 899.9199709655629
+          },
+          {
+            "bit": 2,
+            "compare_ns": 160.009767149907,
+            "update_ns": 160.8621727777898,
+            "wait_since_last_update_ns": 2.57363610782906,
+            "trial_word": 12,
+            "top_before_mv": 4.995177648761839,
+            "span_before_mv": 899.9576848060717
+          },
+          {
+            "bit": 1,
+            "compare_ns": 163.4361034950139,
+            "update_ns": 164.27164337524678,
+            "wait_since_last_update_ns": 2.5739307172241013,
+            "trial_word": 14,
+            "top_before_mv": -9.028975898186964,
+            "span_before_mv": 899.977315684405
+          },
+          {
+            "bit": 0,
+            "compare_ns": 166.844989490065,
+            "update_ns": 167.72462254723524,
+            "wait_since_last_update_ns": 2.5733461148182073,
+            "trial_word": 13,
+            "top_before_mv": -1.9985137793038232,
+            "span_before_mv": 899.9877994123442
+          }
+        ],
+        "native_psf_sha256": "8a4d8180e293ec002605403823eaaef0cdd56950b8341375015f1da8fac2cc47",
+        "case": "l90_ff_099_m40_static",
+        "cache_sha256": "48878e05668fd32cc9949a06915a6874bd04498799d3308512d3165a83b61c0c"
+      },
+      "sample_close_change_ps": -6.440757260861574e-06,
+      "acquisition_change_ps": -6.4167551272475976e-06
+    },
+    {
+      "baseline": {
+        "codes": [
+          245,
+          10,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": false,
+        "post_startup_static_code_pass": false,
+        "startup_code": 245,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.0021354091819247856,
+        "post_startup_max_held_error_mv": 0.5176820330000664,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -0.004354283807073145,
+          0.0021354091819247856,
+          0.00012704427128774348,
+          0.001699703867993809,
+          0.0004661220213693189,
+          -0.0012246012335986878
+        ],
+        "held_errors_mv": [
+          0.4812678239999313,
+          0.5176820330000664,
+          -0.000780476432927,
+          0.0005479969799999061,
+          0.0013078014200001119,
+          -0.06607366300000195
+        ],
+        "net_turnoff_deltas_mv": [
+          0.48562210780700443,
+          0.5155466238181416,
+          -0.0009075207042147436,
+          -0.001151706887993903,
+          0.000841679398630793,
+          -0.06484906176640326
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 884.5751691393319,
+        "reference_p_130ns_v": 0.8922890630214154,
+        "reference_n_130ns_v": 0.007713893882083434,
+        "source_p_130ns_ua": 154.21873957169208,
+        "source_n_130ns_ua": 154.27787764166868,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 0.00014095036249273107,
+        "reference_n_120to140ns_drift_uv": 8.264960851128711e-05,
+        "sample_close_ns": 141.10589849887532,
+        "acquisition_ns": 38.26864748678142,
+        "max_conversion_ns": 28.7562974335,
+        "max_precompare_last100ps_movement_mv": 0.034410590730393764,
+        "CMI": true,
+        "stress_failure_count": 1727,
+        "stress_failing_MOS_count": 400,
+        "stress_groups": {
+          "reference": {
+            "time_ns": 175.0259523515806,
+            "exceed": true,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+            "peak_v": 1.048658115714022,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gnn4",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.1271114448402,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.846439344894869,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 55.167012976153174,
+            "exceed": true,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 1.049405039970377,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference_driver": {
+            "time_ns": 79.15849818291241,
+            "exceed": true,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 1.033547022149023,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 143.6916243453241,
+            "exceed": true,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATN",
+            "peak_v": 1.023282460046083,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.y"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "125 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.678568320944,
+            "update_ns": 144.4075732942658,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.4827395558622,
+            "span_before_mv": 884.5751506887495
+          },
+          {
+            "bit": 6,
+            "compare_ns": 147.21202070961237,
+            "update_ns": 147.9514865410022,
+            "wait_since_last_update_ns": 2.804447415346573,
+            "trial_word": 64,
+            "top_before_mv": -368.10972024465,
+            "span_before_mv": 884.4615140718533
+          },
+          {
+            "bit": 5,
+            "compare_ns": 150.75606870385386,
+            "update_ns": 151.51457084243555,
+            "wait_since_last_update_ns": 2.804582162851659,
+            "trial_word": 32,
+            "top_before_mv": -147.36889060210058,
+            "span_before_mv": 884.5355503989911
+          },
+          {
+            "bit": 4,
+            "compare_ns": 154.31929383770841,
+            "update_ns": 155.10704929142975,
+            "wait_since_last_update_ns": 2.8047229952728685,
+            "trial_word": 16,
+            "top_before_mv": -36.99831722744851,
+            "span_before_mv": 884.5604109132015
+          },
+          {
+            "bit": 3,
+            "compare_ns": 157.91159414975345,
+            "update_ns": 158.71183652266564,
+            "wait_since_last_update_ns": 2.804544858323709,
+            "trial_word": 8,
+            "top_before_mv": 18.18285302543915,
+            "span_before_mv": 884.5692374161296
+          },
+          {
+            "bit": 2,
+            "compare_ns": 161.51670236435194,
+            "update_ns": 162.33197424715274,
+            "wait_since_last_update_ns": 2.8048658416863077,
+            "trial_word": 12,
+            "top_before_mv": -9.410466846710374,
+            "span_before_mv": 884.5716215452776
+          },
+          {
+            "bit": 1,
+            "compare_ns": 165.1367516675822,
+            "update_ns": 165.96761412076765,
+            "wait_since_last_update_ns": 2.8047774204294456,
+            "trial_word": 10,
+            "top_before_mv": 4.380342718955987,
+            "span_before_mv": 884.5735557703342
+          },
+          {
+            "bit": 0,
+            "compare_ns": 168.77234011621638,
+            "update_ns": 169.6171876211779,
+            "wait_since_last_update_ns": 2.8047259954487345,
+            "trial_word": 11,
+            "top_before_mv": -2.522276052294159,
+            "span_before_mv": 884.5743018072919
+          }
+        ],
+        "native_psf_sha256": "7ba484bf3a679defeb7ed7a1dc080a991223b129ad827d6a65087c6eb1a4cc33",
+        "case": "w2_ff_099_125_static",
+        "cache_sha256": "706f9c8741f8f9e8705522c8648690223f425bcd748689514cdb8a3ec73816ae"
+      },
+      "candidate": {
+        "codes": [
+          243,
+          12,
+          127,
+          128,
+          127,
+          145
+        ],
+        "static_code_pass": true,
+        "post_startup_static_code_pass": true,
+        "startup_code": 243,
+        "startup_ideal": [
+          243
+        ],
+        "post_startup_max_preclose_error_mv": 0.002997331121686953,
+        "post_startup_max_held_error_mv": 0.5171184340000412,
+        "timing_pass": true,
+        "idle_pass": true,
+        "preclose_errors_mv": [
+          -0.004017641664577631,
+          0.0021646024990218393,
+          -0.0002466954941472634,
+          0.002997331121686953,
+          0.0003648592974659585,
+          -0.0011318079276290138
+        ],
+        "held_errors_mv": [
+          0.4808352709999575,
+          0.5171184340000412,
+          -0.0009430186750369999,
+          0.0017950838899999464,
+          0.0012197145799999927,
+          -0.06595488999999732
+        ],
+        "net_turnoff_deltas_mv": [
+          0.4848529126645351,
+          0.5149538315010194,
+          -0.0006963231808897366,
+          -0.0012022472316870064,
+          0.0008548552825340342,
+          -0.06482308207236831
+        ],
+        "turnoff_scope": "Held at frame+41.8ns minus sample-enable50%-0.2ns; includes settling/feedthrough/coupling, not isolated charge injection.",
+        "reference_span_130ns_mv": 899.4943116578991,
+        "reference_p_130ns_v": 0.8997495927271929,
+        "reference_n_130ns_v": 0.0002552810692938122,
+        "source_p_130ns_ua": 5.0081454561423655,
+        "source_n_130ns_ua": 5.105621385876244,
+        "source_scope": "Series-50ohm source current at130ns, not separate transistor probes. FF hot platform is steady; other PVT points can include decap charging/common-mode drift (see120to140ns drift fields).",
+        "reference_p_120to140ns_drift_uv": 0.00016536061409055947,
+        "reference_n_120to140ns_drift_uv": 0.00015557055356397662,
+        "sample_close_ns": 141.10589849201259,
+        "acquisition_ns": 38.26864747784748,
+        "max_conversion_ns": 28.748632306199998,
+        "max_precompare_last100ps_movement_mv": 0.12374326057307261,
+        "CMI": true,
+        "stress_failure_count": 1740,
+        "stress_failing_MOS_count": 400,
+        "stress_groups": {
+          "reference_driver": {
+            "time_ns": 79.1535671549212,
+            "exceed": true,
+            "group": "reference_driver",
+            "terminal": "ds",
+            "instance": "XDUT.XREF.XDRV0.GPNCN",
+            "peak_v": 1.033524874995406,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.xref.xdrv0.gpndrv",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "reference": {
+            "time_ns": 175.0630752333261,
+            "exceed": true,
+            "group": "reference",
+            "terminal": "gb",
+            "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+            "peak_v": 1.055147159280854,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.gnn4",
+              "0"
+            ],
+            "model": "nch_mac"
+          },
+          "comparator": {
+            "time_ns": 143.691624346817,
+            "exceed": true,
+            "group": "comparator",
+            "terminal": "bs",
+            "instance": "XDUT.XCOMP.MNLATN",
+            "peak_v": 1.023285326090156,
+            "limit_v": 0.99,
+            "nodes": [
+              "0",
+              "xdut.xcomp.y"
+            ],
+            "model": "nch_mac"
+          },
+          "bootstrap": {
+            "time_ns": 141.127111446209,
+            "exceed": false,
+            "group": "bootstrap",
+            "terminal": "gb",
+            "instance": "XDUT.XBOOTN.Mmain",
+            "peak_v": 1.846440060408072,
+            "limit_v": 1.98,
+            "nodes": [
+              "xdut.xbootn.g",
+              "0"
+            ],
+            "model": "nch_18_mac"
+          },
+          "sequencer": {
+            "time_ns": 55.17722464903737,
+            "exceed": true,
+            "group": "sequencer",
+            "terminal": "gs",
+            "instance": "XDUT.XIDLE.XN.MN",
+            "peak_v": 1.049404522972877,
+            "limit_v": 0.99,
+            "nodes": [
+              "xdut.active",
+              "0"
+            ],
+            "model": "nch_mac"
+          }
+        },
+        "effective_settings": {
+          "maxstep": "6 ns",
+          "reltol": "100e-06",
+          "abstol(V)": "1 uV",
+          "abstol(I)": "1 pA",
+          "method": "gear2only",
+          "temp": "125 C",
+          "tnom": "27 C"
+        },
+        "bits": [
+          {
+            "bit": 7,
+            "compare_ns": 143.6785683242471,
+            "update_ns": 144.40757684390096,
+            "wait_since_last_update_ns": null,
+            "trial_word": 128,
+            "top_before_mv": -809.4835152954852,
+            "span_before_mv": 899.4942032759911
+          },
+          {
+            "bit": 6,
+            "compare_ns": 147.21187467223987,
+            "update_ns": 147.95172769831353,
+            "wait_since_last_update_ns": 2.8042978283389175,
+            "trial_word": 64,
+            "top_before_mv": -360.6887859861562,
+            "span_before_mv": 898.9512982295676
+          },
+          {
+            "bit": 5,
+            "compare_ns": 150.75624193068953,
+            "update_ns": 151.51659090127094,
+            "wait_since_last_update_ns": 2.8045142323759933,
+            "trial_word": 32,
+            "top_before_mv": -136.056418117476,
+            "span_before_mv": 899.2645964106822
+          },
+          {
+            "bit": 4,
+            "compare_ns": 154.32110886629556,
+            "update_ns": 155.11747424378055,
+            "wait_since_last_update_ns": 2.8045179650246155,
+            "trial_word": 16,
+            "top_before_mv": -23.707403613124455,
+            "span_before_mv": 899.3949110994898
+          },
+          {
+            "bit": 3,
+            "compare_ns": 157.92167867332253,
+            "update_ns": 158.7105454042912,
+            "wait_since_last_update_ns": 2.804204429541983,
+            "trial_word": 8,
+            "top_before_mv": 32.46694668724815,
+            "span_before_mv": 899.4501470952156
+          },
+          {
+            "bit": 2,
+            "compare_ns": 161.51542587890535,
+            "update_ns": 162.34605710231403,
+            "wait_since_last_update_ns": 2.8048804746141514,
+            "trial_word": 12,
+            "top_before_mv": 4.414254368868054,
+            "span_before_mv": 899.4709488391901
+          },
+          {
+            "bit": 1,
+            "compare_ns": 165.15134613247002,
+            "update_ns": 165.96647007305384,
+            "wait_since_last_update_ns": 2.80528903015599,
+            "trial_word": 14,
+            "top_before_mv": -9.614419715709532,
+            "span_before_mv": 899.4825635091213
+          },
+          {
+            "bit": 0,
+            "compare_ns": 168.7709967058166,
+            "update_ns": 169.61505109272227,
+            "wait_since_last_update_ns": 2.8045266327627587,
+            "trial_word": 13,
+            "top_before_mv": -2.5982433859565446,
+            "span_before_mv": 899.4883793184874
+          }
+        ],
+        "native_psf_sha256": "d8600d384edfe5ac824aa3c40e958ea35a27dab95ee780269fa37e0cce706e80",
+        "case": "l90_ff_099_125_static",
+        "cache_sha256": "35b8e4717d3ae40458d9081f7f21c52c6534be58b2bfa17b4a684fe820038bab"
+      },
+      "sample_close_change_ps": -6.862734380774782e-06,
+      "acquisition_change_ps": -8.933938033806044e-06
+    }
+  ],
+  "complete": true,
+  "sampling_budget_mv": 1.7578125,
+  "scope": "Five static six-input PVT screens, selected2um Bootstrap; only reference-switch L30->90. No noise/mismatch/PEX/full-code/FFT. No OA update.",
+  "ideal_codes": [
+    [
+      243
+    ],
+    [
+      12
+    ],
+    [
+      127,
+      128
+    ],
+    [
+      128
+    ],
+    [
+      127
+    ],
+    [
+      145
+    ]
+  ]
+}

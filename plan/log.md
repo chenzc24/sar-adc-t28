@@ -3041,3 +3041,39 @@ human-triggered note in `docs/experience/`.
   passed. Short-run CX maxstep1.8ns differs from baseline6ns; no equal-setting
   claim. All raw data retained, ~292MiB local/~253MiB remote. Evidence in
   verification/sar8_ref_load/, figure docs/figures/sar8_ref_load/; scoped commit.
+
+## 2026-10-24 — Reference-switch L sweep and selected integrated PVT check
+
+- Owned plan2026-10-24-sar8-ref-length, scripts/verification/output sar8_ref_length,
+  and docs/figures/sar8_ref_length. Kept all user Obsidian/10-bit changes. No
+  remote OA or PDK changes, no baseline replacement, no push; task-only commit.
+- PDK read-only length-selector and W/L-bin audit confirms30/60/90nm for existing
+  nch_mac/pch_mac W150/175nm. factor0.9 geometric scaling recorded with source
+  hash. This is model-domain validity, not PCell/DRC signoff. Fixed OA-derived
+  diffusion/LDE values for single-variable comparison; reconcile callbacks
+  before any OA/layout promotion.
+- Three first DC decks failed SFE-874 due truncated multiline MOS extraction;
+  retained them, fixed parser and checked exact full-parameter Ron copies in
+  immutable v2 decks. All3DC+5integrated final native runs exit0/PASS. Remote
+  source, monitor, log, reduced artifacts and reducer hashes match local copies.
+- FF/.99V/125C fixed-bias array load estimates L30/60/90 =154.219/11.000/4.052uA;
+  bit7 Ron N/P=5.197/5.311,6.875/9.100,8.585/13.143ohm. W/nf/multi unchanged.
+  Selected L90 by provisional10uA/rail target, not claimed globally optimal.
+- Exact16-L-field substitution in8cells; inverse recovers original whole DUT
+  and deck. Five PVT integrated cases retain2um Bootstrap, reference50ohm/4pF,
+  sampling/compare/reset timing, models and native CX settings. No noise/mismatch.
+- Integrated FF hot current154.219->5.008uA, span884.575->899.494mV; bit2 residual
+  -9.410->+4.414mV, code10->12; positive code245->243. SS cold frame1 acquisition
+  error+.0594->+.0600mV, negligible change. All30 timing/idle checks pass;
+  post-startup preclose<=.146653mV, held<=.576399mV, maximum conversion41.012ns.
+- Post-startup25/25 codes pass; overall27/30. Startup failures remain TT242,
+  SS cold241, SS hot241(expected243). SS hot startup worsens242->241 while
+  sampled error remains~-13.718mV; not evidence of new sampling degradation.
+- FF native CMI remains. Cold stress failing pairs2008->2008, hot1727->1740
+  (2670-pair .99V core guard); hot reference gate-body peak1.05515V at175.063ns.
+  Leakage fix is NOT SOA fix; no complete-ADC acceptance or OA promotion.
+- Inspected two final figures, compiled scripts, checked source hashes/inverse,
+  native logs/frames/stress and scoped diff. Existing user Obsidian whitespace
+  fails whole-tree diff-check but is outside scope and untouched. Kept raw
+  outputs; ~.366GiB local generated data. Detailed results and limits in plan
+  and verification/sar8_ref_length/integrated_comparison.json.
