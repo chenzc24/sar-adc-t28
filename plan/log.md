@@ -3209,3 +3209,18 @@ human-triggered note in `docs/experience/`.
   New waveform/current extraction, repair benefit, all-device SOA, full PVT,
   full-code/FFT and OA synchronization remain unverified. Plan stays incomplete.
 - Scoped checkpoint commit only, no push. Preserve all Obsidian/10-bit dirt.
+
+## 2026-10-24 — Network-restored recovery attempt; target reads still blocked
+
+- Resumed exact four sar8_stress_closure jobs without resubmission. Jump SSH
+  hostname succeeds; target authentication and delayed hostname succeed.
+  Inherited30s status failed; isolated90s status deadline also expired.
+- Added read-only direct SSH inspector with file-backed output and bounded90s
+  deadline, avoiding login-shell and captured-pipe ambiguity. Both Python status
+  and plain /bin/cat first exit_code timed out. SCP/SFTP returned no data;
+  stopped only this attempt's local probe wrappers, no remote simulation.
+- Jump-host same result path returned ENOENT, not a usable shared mount.
+  Target session/resource/filesystem cause unconfirmed; no new native results,
+  circuit changes, waveform overwrites, OA edits or repair qualification.
+- Updated access evidence and incomplete plan; scripts compile, scoped diff
+  checks pass. Task-only local diagnostic checkpoint, no push. User dirt intact.

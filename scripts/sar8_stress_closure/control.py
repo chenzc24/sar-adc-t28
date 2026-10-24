@@ -17,6 +17,12 @@ wf = transport.wf
 wf.OUT = wf.base.OUT = OUT
 wf.VERIFY = VERIFY
 wf.REMOTE = wf.base.REMOTE = REMOTE
+# Target login currently incurs ~23s latency. Keep retries bounded but do not
+# confuse the inherited30s status deadline with failed native simulation.
+_original_command = wf.base.command
+def command(ssh, cmd, timeout=90):
+    return _original_command(ssh, cmd, timeout=max(timeout, 90))
+wf.base.command = command
 
 if __name__ == '__main__':
     if sys.argv[1] == 'preflight':

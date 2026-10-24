@@ -1,6 +1,6 @@
 # Native SAR8 stress repair and verification
 
-Status: awaiting remote access/results. Repair not complete or validated.
+Status: recovery blocked by target command/file-read nonresponse. Repair incomplete.
 
 ## Scope
 
@@ -86,3 +86,28 @@ plan complete: experiment: prepare native SAR8 full-stress repair screen.
 Resume with control.py status, then reduce/collect/analyze completed cases;
 verify currents/settings before choosing physical repairs. PVT/full-code/FFT/OA
 closure remain outstanding. No baseline changes or push.
+
+## Network-restored recovery
+
+User requested recovery and continuation. Starting commit4c03943, unrelated
+Obsidian/10-bit dirty state unchanged. Jump host responds and target public-key
+authentication succeeds. Direct target hostname eventually succeeded after
+23.3s session time; old30s command deadline can expire during slow startup.
+Use bounded90s command deadlines in this isolated task process, not global SSH
+settings. Inspect existing cases only, preserve raw data and avoid resubmission.
+
+Recovery outcome: inherited status timed out at30s and90s. Direct target SSH
+Python status bypassing login shell timed out at90s; a separate /bin/cat of
+the first native exit_code also timed out at90s. Target authenticated and its
+hostname returned, so network reachability is not equivalent to working result
+access. SCP/SFTP exit-code probe did not return data; stopped only verified
+local probe wrappers30168/38684. No remote process or file was changed.
+Jump-host same-path alternative returned ENOENT immediately, so it cannot be
+assumed a shared results mount. Exact root cause (session startup, resource
+pressure or filesystem) is not established. Need existing target terminal or
+administrator check before reliable recovery. All four native case completion
+states remain UNKNOWN. No new simulations or circuit edits this turn.
+Diagnostics retained in output/sar8_stress_closure/direct_status_*.json/.stderr;
+updated access_state.json distinguishes connectivity from data access.
+Compile and scoped diff checks passed; task-only diagnostic checkpoint commit,
+not repair completion, no push. Existing Obsidian/10-bit changes preserved.
