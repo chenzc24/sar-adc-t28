@@ -3077,3 +3077,32 @@ human-triggered note in `docs/experience/`.
   fails whole-tree diff-check but is outside scope and untouched. Kept raw
   outputs; ~.366GiB local generated data. Detailed results and limits in plan
   and verification/sar8_ref_length/integrated_comparison.json.
+
+## 2026-10-24 — FF overvoltage location and proposed fixes
+
+- Diagnosis only on frozen e94e802 L90 candidate, FF0.99V/-40C and125C. No new
+  simulation, PDK/circuit/OA changes, baseline replacement or push. Preserved
+  all user Obsidian and10-bit edits. Task-only local commit per repository policy.
+- Read existing native full-resolution windows, validated receipts/source/native
+  hashes and completed logs. Terminal mapping5340/5340 matches frozen netlist.
+  Stress coverage is445 selected of1833 MOS, NOT full-ADC coverage.
+- Reference XCDAC.XSN4.MN_LOW Vgb1.0510/1.0551V occurs during bit7 idle reset,
+  before its own bit4 reset; driver-side gate remains~0.9915/0.9918V. Waveforms
+  support cross-bit CDAC/drain-gate coupling plus weak fast gate holding.
+- Driver XREF.XDRV0.GNNCN/GPNCN Vds1.0576/1.0335V spikes before output falls;
+  ACTIVE receiver XIDLE.XN.MN Vgs1.0571/1.0494V at bit4-to-bit3 handoff;
+  comparator MNLATP/MNLATN abs(Vbs)1.0453/1.0233V at evaluate clock rise.
+  Negative Vbs represents positive X/Y overshoot, not negative X/Y voltage.
+- All event VDD traces exactly0.99V, equal model core limit; no overshoot
+  headroom. Inspected Bootstrap terminals stay below1.98V guard. Neither
+  microscopic crossings nor codes passing justify ignoring native CMI.
+- Exact ACTIVE injection branch and capacitance/current contributions remain
+  unproven without added probes.3-4ps driver peaks have~0.17ps native steps
+  but still require tighter-accuracy convergence before implementation decisions.
+- Produced and viewed4 waveform figures. Saved peak inventory/events/provenance
+  and focused validation. Plan separates measured facts from causal inference
+  and proposes single-variable hold/slew/driver/comparator tests plus supply
+  contract review, without silently lowering required FF acceptance voltage.
+- Python compile, JSON/hash/phase/terminal checks and scoped diff reviewed.
+  Results: plan/2026-10-24-sar8-ff-overvoltage/plan.md,
+  verification/sar8_ff_overvoltage/, docs/figures/sar8_ff_overvoltage/.
