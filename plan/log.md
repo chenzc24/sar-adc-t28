@@ -2914,3 +2914,29 @@ human-triggered note in `docs/experience/`.
   scoped diff checks passed. Pre-existing Obsidian trailing whitespace is not
   changed. User Obsidian/10-bit work preserved. First-batch result gate failed;
   remaining PVT/MC stages remain open. Scoped local result commit only, no push.
+
+## 2026-10-24 — SS cold Bootstrap acquisition diagnosis
+
+- User requested TT comparison, cause localization and proposed changes only.
+  Reused TT/.90/27, SS/.81/-40 and SS/.81/125 original native PSF, extracting
+  all samples in 85–145 ns; complete source hashes match prior PVT evidence.
+  New extraction files in separate scratch; no original file overwritten.
+- Pump transfer is established by ~105 ns; cold P-side VGS ~.797 V, BTOP-G
+  and BBOT-VIN only tens of uV at 110 ns. P TOP still .136221 V at 140 ns
+  against .045 V target. Held error 76.559 mV versus TT .207 mV. Window
+  difference ~.42 ns and pump-start difference ~.90 ns do not explain the
+  sustained slow discharge. About 11 mV precharge deficit remains secondary.
+- Three native DC diagnostics copied frozen Mmain W/L=1u/150n and all geometry.
+  VS=.045, VB=0, VDS=.1/.4/.75; 31 VGS points .75–1.05 V, no ADC changes.
+  Exit 0/PASS; actual reltol=1e-6. At VDS=.4, TT/.893-V VGS gives 101.22 uA,
+  SS cold/.797 gives 20.19 uA. DC interpolated 110/120-ns current agrees with
+  original net input return within ~.05 uA; not a direct Mmain transient-current
+  probe or Vth extraction. Primary limit is large-signal main-switch drive.
+- Proposed symmetric Mmain 2/3/4-u total-width sweep at fixed L, timing and CDAC,
+  followed by pump resizing only if gate loading requires it; verify injection
+  and stress across five points. No proposed redesign was implemented.
+- Added report, three visually inspected figures, reproducible extraction/DC
+  scripts and metrics/provenance. Fixed local import-name collision and PSF DC
+  scalar parser before analysis. Python compile, source hash and scoped checks;
+  no OA/PDK changes, no original data deletion. User dirty files preserved.
+  Local task-only commit, no push; broader PVT/mismatch remains unqualified.
