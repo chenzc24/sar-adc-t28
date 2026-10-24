@@ -1,6 +1,6 @@
 # 8-bit 空闲段复位候选 PVT 与失配验证计划
 
-状态：计划已拟定；未启动仿真，未修改电路、模型、OA 或指标。
+状态：2026-10-24 版本/模型前置核对及首批五个 PVT 风险点完成（10 项、60 帧），两项 80 ns 应力精度复核完成。时序通过，精度/应力存在失败；暂停其余矩阵与整机失配扩展，待问题定位与修正。电路、模型、OA 和指标保持冻结；本计划后续阶段未完成。
 
 ## 目标与边界
 
@@ -12,13 +12,15 @@
 基准：verification/sar8_idle_performance/{setup,results}.json；原 R4 只读保留。
 本轮验证不自动授权尺寸、拓扑、校准逻辑或额外输出银行的修改。
 
-当前分支 exp/cdac-flat8-device，比远端多清理记录提交 a1b69bb。
+执行起点为分支 exp/cdac-flat8-device 的 58b38d2，比远端多清理和计划两个提交。
 用户 Obsidian 改动／目录移动和 cdac10_dualrail 工作均不重叠，全部保留。
 
-本次仅拥有：本计划、plan/log.md 的追加记录。后续执行前更新所有权，拟使用
+本次拥有：本计划、plan/log.md 的追加记录，以及
 scripts/sar8_pvt_mismatch/、verification/sar8_pvt_mismatch/、
 output/sar8_pvt_mismatch/、docs/sar8_pvt_mismatch.md 及对应配图目录；
-不得提前创建或覆盖实验案例。远端 OA 所有权为 none，PDK 全程只读。
+实验案例只可新建，不覆盖已有案例。远端仅拥有新建任务 scratch
+`/tmp/virtuoso_bridge_chenzc_intern25/90590/sar8_pvt_mismatch_20261024`；
+远端 OA 所有权为 none，PDK 全程只读。
 未来 OA 同步另立明确 library/cell/view 清单和计划，不混入本验证任务。
 提交策略：本地计划提交，不 push；执行结果也单独提交。
 
@@ -61,6 +63,34 @@ MOM 全局 corner 映射先核实；MOS 三角不称为完整无源角覆盖。P
 先跑 TT/0.9/27、SS/0.81/−40、SS/0.81/125、FF/0.99/−40、FF/0.99/125
 五个风险点，再补齐矩阵。明显系统性失败时暂停同类重复长作业；保留已完成
 数据，继续必要的互补短测，不自动优化电路。
+
+执行配置（2026-10-24）：400 ns pilot 的原始 PSF 约 957 MiB。首批五角
+各 6 帧静态/翻转与 6 帧连续正弦，固定相同激励；总计 10 个 600 ns 作业。
+静态差分输入为 +0.81、−0.81、0、+0.25 LSB、−0.25 LSB、0.123046875 V。
+阶跃在每帧 0.2–0.3 ns 完成，早于 SAMPLE/Bootstrap 获取；零点不规定唯一码。
+此轮覆盖单次满幅反转，尚未覆盖全部双向历史；正弦不计算最终 ENOB。
+所有启动帧仍检查时序和应力，启动获取精度单列，不混入稳态结论。
+远端保留完整 315 路原生 PSF；逐原生样本计算 445 个选定 MOS 的六对端压，
+仅下载无抽点时序与各组峰值窗口。以 pilot 估计总原始数据约 17 GiB，
+若实际超过 20 GiB 则暂停后续派发，不删除原始数据。
+
+首批 FF 两角出现 CMI 后，各增加同一静态激励前 200 ns 的精度复核：
+`ff_099_m40_strict200`、`ff_099_125_strict200`，使用 `-preset_override`，
+请求 reltol=1e-7/maxstep=10 ps；仍以原生日志生效值为准。
+不改 DUT/源波形，不扩展到其他 PVT 点；在首批十作业全部结束后才提交。
+
+复核资源纠偏：200 ns/reltol=1e-7 全节点记录增长超出预估，约 50–60 ns
+已占约 2 GiB/例，预计无法维持任务 20 GiB 上限。核对两项精确 PID、用户及
+网表路径后用 SIGTERM 停止，保留原始部分记录；不计作完整 PASS。
+替代案例 `ff_099_m40_refine80`、`ff_099_125_refine80` 只复核前 80 ns
+内各组代表峰值的 5 个 MOS，reltol=1e-6、maxstep=10 ps、preset_override。
+原 200 ns 案例不覆盖、不删除；新案例不用于完整码字/时序验收。
+
+执行结果：两个 80 ns 案例均原生正常结束。虽然全局请求 reltol=1e-6，
+conservative 瞬态实际采用 1e-7；maxstep=10 ps、vabstol=10 nV、iabstol=100 fA。
+冷/热角代表端压分别为 1.057992/1.049920 V，原生 CMI 仍存在。
+首批结果、启动精度和未覆盖项目见 `docs/sar8_pvt_mismatch.md`，
+数值见 `verification/sar8_pvt_mismatch/results.json`。未进行尺寸优化、OA 同步或清理。
 
 ## C 比较器失配与 CDAC 分项
 

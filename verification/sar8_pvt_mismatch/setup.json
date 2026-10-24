@@ -1,0 +1,77 @@
+{
+  "points": [
+    [
+      "tt_090_27",
+      "tt",
+      0.9,
+      27
+    ],
+    [
+      "ss_081_m40",
+      "ss",
+      0.81,
+      -40
+    ],
+    [
+      "ss_081_125",
+      "ss",
+      0.81,
+      125
+    ],
+    [
+      "ff_099_m40",
+      "ff",
+      0.99,
+      -40
+    ],
+    [
+      "ff_099_125",
+      "ff",
+      0.99,
+      125
+    ]
+  ],
+  "cases": [
+    "tt_090_27_static",
+    "tt_090_27_sine",
+    "ss_081_m40_static",
+    "ss_081_m40_sine",
+    "ss_081_125_static",
+    "ss_081_125_sine",
+    "ff_099_m40_static",
+    "ff_099_m40_sine",
+    "ff_099_125_static",
+    "ff_099_125_sine"
+  ],
+  "candidate_DUT_sha256": "ef0fc74a3df306a366261bd5ce6bbe01f6b4386007c0b86c3150e09c28f976ea",
+  "fixed_reference_v": [
+    0,
+    0.9
+  ],
+  "fixed_input_cm_v": 0.45,
+  "MOM_corner": "tt_mom",
+  "resistor_corner": "tt_res_bip_dio_disres",
+  "frames_per_stimulus": 6,
+  "reason": "400 ns pilot produced 957 MiB native PSF; bounded first batch to retain all-time-step stress within 20 GiB remote budget",
+  "concurrency": 2,
+  "threads_per_case": 4,
+  "static_input_diff_v": [
+    0.81,
+    -0.81,
+    0,
+    0.0017578125,
+    -0.0017578125,
+    0.123046875
+  ],
+  "sine_hz": 4501953.125,
+  "sine_dbfs": -1,
+  "external_ideal": [
+    "VDD",
+    "reference sources with 50 ohm/4 pF rails",
+    "input through 50 ohm per side",
+    "10 MHz SAMPLE"
+  ],
+  "no_mismatch": true,
+  "no_transient_noise": true,
+  "no_PEX": true
+}

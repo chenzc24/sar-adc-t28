@@ -2880,3 +2880,37 @@ human-triggered note in `docs/experience/`.
   from independent-unit mismatch. Includes storage caps after cache cleanup.
 - Read current specification, candidate timing/stress and old comparator/CDAC
   evidence. Only new plan and this log changed; local commit, no push.
+
+## 2026-10-24 — Frozen SAR8 first five PVT risk points
+
+- Executed the authorized version/model audit and five MOS PVT points on idle
+  candidate 027b951 (DUT ef0fc74a3df306a366261bd5ce6bbe01f6b4386007c0b86c3150e09c28f976ea).
+  Verified comparator topology/sizes, device inventory, actual model hashes,
+  and fourteen remote/local deck identities. PDK read-only, remote OA none;
+  CIW connection was unavailable, native t28_io SSH/Spectre was usable.
+- Four native nMOS/MOM mismatch seeds showed physical current/capacitance
+  variation; repeated seed matched exactly. Independent 512-unit CDAC nominal
+  regression matched four historical codes, held difference <=17.2 uV.
+  This is representative model activation, not integrated mismatch signoff.
+- Ten 600 ns cases completed with exit 0, native PASS/PSF END and 60 frames.
+  All frame counts, conversion deadlines, reference acquisition word, reset
+  ordering, H/L nonoverlap and observed output-hold checks passed. SS/.81/-40
+  had 76.6 mV held error after full reversal and code 23 instead of 12.
+  FF/.99/125 had code 10 instead of 12 despite acquisition being established.
+  Startup deviations were retained separately; no six-point FFT/INL/DNL claim.
+- Both FF/.99 corners showed native CMI and selected core terminal overstress.
+  Main CX actual reltol=1e-4/maxstep=6 ns. Two extra full-node 200 ns strict
+  diagnostics were stopped after exact process checks to respect storage cap;
+  exit 2, raw prefixes retained. Replacement selected-node 80 ns checks both
+  completed: actual transient reltol=1e-7/maxstep=10 ps, representative peaks
+  1.057992 V (cold) and 1.049920 V (hot); CMI persists. Not complete-frame or
+  all-device refined verification. No circuit changes or additional matrix.
+- Added isolated scripts, setup/audit/provenance/results, concise report and
+  two inspected waveform figures under sar8_pvt_mismatch paths. All native
+  samples used for selected-device stress, compact waveforms not decimated.
+  Native PSF retained in task-only remote scratch, not long-term archive.
+  New remote data 18,018,554,892 bytes (~16.78 GiB); local ~0.69 GiB. No deletion.
+- Python compilation, focused native execution/analysis, source readback and
+  scoped diff checks passed. Pre-existing Obsidian trailing whitespace is not
+  changed. User Obsidian/10-bit work preserved. First-batch result gate failed;
+  remaining PVT/MC stages remain open. Scoped local result commit only, no push.
