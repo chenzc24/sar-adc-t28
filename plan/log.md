@@ -3400,3 +3400,26 @@ human-triggered note in `docs/experience/`.
 - Report and three-panel comparison reviewed, broader supply decision requested;
   no further simulation queued. User Obsidian/independent10-bit work preserved.
   Targeted validation and scoped diff check; task-only checkpoint commit, no push.
+
+## 2026-10-25 — Historical data cleanup proposal for human review
+
+- Created management/cleanup/2026-10-25/review.md and exact JSON evidence, with
+  separate local/server tables, experiment labels, observed sizes, retained
+  copies and approval-pending file targets. Added a management navigation link.
+- Read-only bounded census: local128 generated roots/files99.715GiB; server102
+  present non-overlapping roots205.948GiB and72 missing registered roots. Added
+  exact project-cell matches in known ADE simulation parents; unknown projects,
+  OA/PDK, environments, Git and user source/Obsidian data excluded. No raw reads.
+- Proposed local transmission parts2.639GiB and optional staged/idle native
+  mirrors32.435GiB; server transmission gzip/parts10.913GiB.36 literal targets,
+  five proposals, all pending. Matching size/case and historical receipts are
+  not fresh SHA verification; full hashes and usage checks required after approval.
+- Keep the90.075GiB stress comparison,11.926GiB current-probe evidence and new
+  physical-repair/corner probes, including observed live natscreen-sscold job.
+  Server natives backing optional local removal are required retained paths;
+  preserved reduced.json.gz is not treated as a disposable generic gzip cache.
+- Five focused tests, arithmetic/containment/no-last-copy-conflict checks,
+  JSON/links, compile and scoped diff passed. No deletion/move/compression,
+  simulation, remote writes, process kills or OA mutations. Independent active
+  physical-repair and user10-bit/Obsidian edits remain outside this commit.
+  Scoped local review commit, no push; user remains responsible for next approval.
