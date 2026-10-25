@@ -3313,3 +3313,34 @@ human-triggered note in `docs/experience/`.
   checks and scoped diff passed. Policy defaults are declared; legacy submitter
   enforcement, SSD allocation and WORK-library creation remain subsequent work.
   Scoped registration commit only, no push.
+
+## 2026-10-25 — Unified SSD execution, collection and resource admission
+
+- Added project.py register/submit/run-status/gate/analyze/collect and read-only
+  legacy-collect; immutable input manifests, idempotent launch locks, fresh
+  host+cgroup/swap/quota/load/disk admission and detached queue workers.
+- Verified /server_local_ssd/chenzc_intern25/sar-adc-t28: uid596,0700,XFS,
+  retained write/read probe, mapped local block device ROTA0. Raw remains SSD
+  scratch: no administrator retention/backup guarantee established. OA/PDK and
+  historical data untouched; no WORK-library creation or old-process kill.
+- Implemented one heavy job at a time,<=4 Spectre threads, nice/idle I/O,
+  per-process AS/file limits and group-RSS/time/output/disk watchdogs. Stop only
+  verified new children; preserve failed partial output and unknown connection
+  outcomes. Not host-wide sandboxing. Disabled staged/idle new batch launch;
+  preserve historical recovery and already-uploaded jobs.
+- Native RC smoke queued behind existing independent Spectre, then completed.
+  Final double-client launch starts one worker only; repeat submission retains
+  child identity. Exit0/PASS, no warnings,159 points/10ns, Vout0.9998787915V;
+  native peak75.59MiB, streaming summary5.93MiB. +mt4 requested but Spectre
+  disables threading for the tiny circuit. This validates workflow, not ADC.
+- Two collections matched15561bytes with SHA256; impossible1TiB gate-only request
+  refused. Historical rg4 cold small evidence copied read-only60862bytes to a new
+  ignored local directory, no raw download.15 focused fixtures, compile,
+  registry/link/input-hash and scoped diff checks pass. Later worker PID-group
+  and exception-cleanup hardening covered by fixtures/Python2 loading; native
+  smoke agent revision separately recorded, not silently relabeled.
+- Fixed csh multiline RPC encoding, Python2 UTF8 probe decoding, and bounded
+  Windows atomic-snapshot rename contention found in tests. Updated usage,
+  source/server/run inventory and status. User Obsidian,10-bit and independent
+  current-probe changes remain outside this commit. No deletion or push;
+  scoped local commit under plan/2026-10-25-managed-execution.

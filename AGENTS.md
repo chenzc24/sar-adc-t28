@@ -44,8 +44,13 @@ resource policy; `designs.yaml`, `cells.yaml` and `runs/index.yaml` link evidenc
 Check observation timestamps before treating a record as current. Update the
 relevant registry when a task changes design adoption, OA objects, run locations
 or data retention. Inventory observations never imply circuit qualification.
-The legacy launchers do not yet enforce the declared resource defaults; do not
-claim an implemented submit/resource gate until that separate work is verified.
+All new simulations and heavy remote analyses must use the managed
+register/submit/run-status/analyze/collect commands in
+`scripts/management/project.py`; see `management/README.md`. Freeze inputs,
+declare memory/time/output budgets and use the verified project SSD root.
+Do not bypass a refused/queued gate, rerun an uncertain submission under a new
+ID, or invoke old launchers for new work. Historical tools remain for bounded
+read-only recovery; this is not an OS-wide sandbox of arbitrary SSH commands.
 
 Before starting a target:
 

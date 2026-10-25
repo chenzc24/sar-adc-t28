@@ -1,7 +1,6 @@
-"""Read-only source/server/OA inventory; generated registries are local only.
+"""Project entry: read-only inventory plus explicitly requested managed execution.
 
-No run submission, waveform parsing, source edits, OA writes or data deletion.
-Local Python supports local/check/status; workspace bridge Python supports OA.
+No deletion or OA mutation. Local Python handles execution; bridge Python reads OA.
 """
 from __future__ import annotations
 import argparse
@@ -20,6 +19,7 @@ import shlex
 import subprocess
 import sys
 import time
+import uuid
 
 import yaml
 
@@ -29,7 +29,8 @@ INV=REG/'inventory'
 OUT=ROOT/'output/project_management'
 RUN_INDEX=REG/'runs/index.yaml'
 CELL_INDEX=REG/'cells.yaml'
-REMOTE_PREFIXES=('/home/chenzc_intern25/TSMC28/llm_IO/','/tmp/virtuoso_bridge_chenzc_intern25/90590/')
+REMOTE_PREFIXES=('/home/chenzc_intern25/TSMC28/llm_IO/','/tmp/virtuoso_bridge_chenzc_intern25/90590/',
+    '/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/')
 META_NAMES={'launch.json','context.json','result.json','recovered_result.json','reduced_receipt.json','reduction.json','run.json','remote.json','analysis.json'}
 
 def now():return datetime.now(timezone.utc).isoformat(timespec='seconds')
@@ -40,7 +41,18 @@ def save(p,data):
     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True)
     if p.suffix=='.json':text=json.dumps(data,ensure_ascii=False,indent=2)+'\n'
     else:text=yaml.safe_dump(data,allow_unicode=True,sort_keys=False,width=120)
-    p.write_text(text,encoding='utf-8',newline='\n')
+    temporary=p.with_name(p.name+'.tmp-'+uuid.uuid4().hex)
+    try:
+        with temporary.open('x',encoding='utf-8',newline='\n') as f:
+            f.write(text);f.flush();os.fsync(f.fileno())
+        for attempt in range(8):
+            try:os.replace(temporary,p);break
+            except PermissionError:
+                # Windows may briefly deny replacement during another rename.
+                if os.name!='nt' or attempt==7:raise
+                time.sleep(.025*(attempt+1))
+    finally:
+        if temporary.exists():temporary.unlink()
 def digest(p):
     with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def csvsave(p,rows,fields):
@@ -114,7 +126,7 @@ def local_inventory():
     csvsave(INV/'local_files.csv',rows,list(rows[0]))
     output_rows=[];metadata=[];skipped=[]
     for group in sorted((ROOT/'output').iterdir()):
-        if not group.is_dir() or group.is_symlink() or group.name=='project_management':continue
+        if not group.is_dir() or group.is_symlink() or group.name in {'project_management','managed_execution'}:continue
         count=total=0
         for parent,dirs,files in os.walk(group,followlinks=False):
             dirs[:]=sorted(d for d in dirs if not (Path(parent)/d).is_symlink() and d not in {'.venv','node_modules','__pycache__'})
@@ -189,7 +201,8 @@ import os,sys,json,stat,time,resource,subprocess
 os.nice(10)
 resource.setrlimit(resource.RLIMIT_AS,(256*1024**2,256*1024**2))
 cfg=json.load(sys.stdin);start=time.time();deadline=start+110
-prefixes=('/home/chenzc_intern25/TSMC28/llm_IO/','/tmp/virtuoso_bridge_chenzc_intern25/90590/')
+prefixes=('/home/chenzc_intern25/TSMC28/llm_IO/','/tmp/virtuoso_bridge_chenzc_intern25/90590/',
+ '/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/')
 def valid(p):return p.startswith(prefixes) and '..' not in p.split('/') and '\x00' not in p
 def tiny(p):
  try:
@@ -247,6 +260,7 @@ print(json.dumps(dict(host=subprocess.check_output(['hostname']).decode().strip(
 
 def server_inventory():
     index=load(RUN_INDEX);paths=sorted({p for r in index['runs'] for p in r['remote_paths'] if safe_remote(p)})
+    paths=sorted(set(paths)|{m['remote_path'] for m in managed_records()})
     # Scan overlapping trees only once. Exact descendants remain explicitly
     # registered and are queried separately when they are individual run paths.
     OUT.mkdir(parents=True,exist_ok=True);stamp=str(int(time.time()))
@@ -266,6 +280,7 @@ def server_inventory():
     refs=collections.defaultdict(list)
     for r in index['runs']:
         for p in r['remote_paths']:refs[p].append(r['run_id'])
+    for m in managed_records():refs[m['remote_path']].append(m['recipe']['run_id'])
     rows=[]
     for r in data['directories']:
         rows.append(dict(path=r['path'],exists=r.get('exists'),bytes=r.get('bytes'),raw_bytes=r.get('raw_bytes'),
@@ -473,8 +488,9 @@ def issues_and_status(refresh=True):
     else:issues.append(dict(kind='server_capture_pending'))
     if RUN_INDEX.exists():
         for item in load(RUN_INDEX).get('metadata_errors',[]):issues.append(dict(kind='metadata_registration_error',**item))
-    issues.append(dict(kind='resource_policy_not_enforced_by_legacy_launchers',action='unified_submit_layer_next_phase'))
-    issues.append(dict(kind='new_SSD_run_root_not_allocated',action='verify_storage_ownership_before_new_runs'))
+    cfg=load(REG/'project.yaml')
+    issues.append(dict(kind='historical_launchers_not_host_sandboxed',action='new_submissions_must_use_managed_entry'))
+    if not cfg['roots'].get('new_run_root'):issues.append(dict(kind='new_SSD_run_root_not_allocated',action='verify_storage_ownership_before_new_runs'))
     if refresh:
         save(INV/'issues.yaml',dict(observed_at_utc=now(),issues=issues))
         render_status(s,issues)
@@ -502,7 +518,8 @@ def render_status(snapshot,issues):
     labels={'missing_local_tracked_file':'本地已删除的受控文件', 'OA_unregistered_in_legacy':'旧 manifest 漏登的实际 cell',
         'legacy_cell_not_observed':'旧登记存在但当前库未找到', 'recorded_remote_path_missing':'当前未找到的历史远端路径',
         'remote_root_unmapped':'尚未关联实验的浅层目录', 'resource_policy_not_enforced_by_legacy_launchers':'旧提交器尚未执行统一资源策略',
-        'new_SSD_run_root_not_allocated':'新 SSD 运行根目录待配置', 'live_OA_capture_pending':'当前 CIW 读回待完成'}
+        'new_SSD_run_root_not_allocated':'新 SSD 运行根目录待配置', 'live_OA_capture_pending':'当前 CIW 读回待完成',
+        'historical_launchers_not_host_sandboxed':'历史入口非系统级隔离；新任务必须走统一入口'}
     for kind,n in sorted(collections.Counter(x['kind'] for x in issues).items()):lines.append(f'| {labels.get(kind,kind)} | {n} |')
     lines += ['', '历史远端路径未找到不等于仿真失败；用户已删除或重组的笔记原样保留。',
         '浅层发现的未关联目录先登记，不自动认领或清理。远端路径可能互相包含，体积不可直接相加。','',
@@ -514,7 +531,16 @@ def render_status(snapshot,issues):
         '- [单元表格](inventory/oa_cells.csv)、[R3/R4依赖](inventory/dependencies.yaml)。',
         '- [实验索引](runs/index.yaml)：本地案例与远端路径的关联；当前四组另有输入清单。',
         '- [完整差异](inventory/issues.yaml)、[资源与权责](project.yaml)、[使用说明](README.md)。','',
-        '当前实现覆盖盘点、登记和检查。统一提交/收集执行器与 SSD 运行根目录配置仍待后续落实。','']
+        '## 统一执行入口','',
+        '新任务使用 `scripts/management/project.py` 的 register / submit / run-status / analyze / collect。',
+        '服务器 SSD 根目录与资源策略见 [执行说明](README.md#统一仿真与回收)。历史数据不迁移、不清理。','',
+        '| Managed run | 本地最后观察 | 远端目录 |','| --- | --- | --- |']
+    for item in managed_records():
+        rid=item['recipe']['run_id'];p=ROOT/'output/managed_execution/runs'/rid/'status.json'
+        obs=load(p) if p.exists() else {}
+        label=' / '.join(obs.get(k,{}).get('status','未查询') for k in ['simulation','analysis'])
+        lines.append(f"| `{rid}` | {label} | `{item['remote_path']}` |")
+    lines+=['','本地最后观察不保证实时；`run-status RUN_ID` 才会查询服务器。','']
     (REG/'STATUS.md').write_text('\n'.join(lines),encoding='utf-8')
 
 def check():
@@ -526,7 +552,10 @@ def check():
         assert all(safe_remote(p) for p in r['remote_paths'])
         assert all((ROOT/p).is_file() for p in r['metadata'])
         assert r['verdict']=='not_inferred'
-    cfg=load(REG/'project.yaml');assert cfg['roots']['new_run_root'] is None
+    cfg=load(REG/'project.yaml')
+    if cfg['roots']['new_run_root']:
+        verified=load(ROOT/'verification/managed_execution/storage.json')
+        assert verified['probe_readback'] and cfg['roots']['new_run_root']==verified['root']+'/runs'
     assert cfg['resource_policy']['concurrent_simulations']==1
     for d in load(REG/'designs.yaml')['designs']:
         for p in d.get('evidence',[]):assert (ROOT/p).exists(),p
@@ -537,6 +566,10 @@ def check():
         if c['observation']=='live_bridge_DD_metadata':assert c['library']['technology_library']=='tsmcN28'
     for p in sorted((REG/'runs').glob('legacy-*.yaml')):
         recipe=load(p);assert digest(ROOT/recipe['source_of_inputs'])==recipe['context_sha256'],str(p)
+    for item in managed_records():
+        from execution import recipe_hash
+        assert recipe_hash(item['recipe'])==item['recipe_hash']
+        assert safe_remote(item['remote_path'])
     if (INV/'dependencies.yaml').exists():
         d=load(INV/'dependencies.yaml');assert d['oa_mutations']==[]
         assert d['completeness']=='complete_for_selected_schematic_roots' and not d['errors']
@@ -548,8 +581,19 @@ def check():
             if target and '://' not in target:assert (path.parent/target).exists(),(str(path),target)
     print('REGISTRY CHECK PASS',len(local),'local files,',len(runs),'run records')
 
+def managed_records():
+    records=[]
+    for p in sorted((REG/'runs').glob('*.yaml')):
+        d=load(p)
+        if isinstance(d,dict) and d.get('managed'):records.append(d)
+    return records
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('action',choices=['inventory','status','cells','check'])
+    if len(sys.argv)>1 and sys.argv[1] in {'storage','register','submit','run-status','analyze','collect','gate','legacy-collect'}:
+        from execution import main as execute
+        return execute(sys.argv[1:])
+    p=argparse.ArgumentParser(epilog='Execution: storage | register RECIPE | submit RUN_ID [--queue] | run-status RUN_ID | analyze RUN_ID [--queue] | collect RUN_ID | gate RUN_ID | legacy-collect ID [--remote-index N]. See management/README.md.')
+    p.add_argument('action',choices=['inventory','status','cells','check'])
     p.add_argument('--scope',choices=['local','server','oa','display','dependencies'],default='local')
     a=p.parse_args()
     if a.action=='inventory':

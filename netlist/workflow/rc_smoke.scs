@@ -1,0 +1,10 @@
+// Project management transport smoke; no ADC, PDK or OA changes.
+simulator lang=spectre
+global 0
+VIN (in 0) vsource type=pulse val0=0 val1=1 delay=1n rise=10p fall=10p width=20n period=40n
+R1 (in out) resistor r=1000
+C1 (out 0) capacitor c=1p
+simulatorOptions options temp=27 tnom=27 reltol=1e-5 vabstol=1e-7 iabstol=1e-12
+tran_smoke tran stop=10n maxstep=100p errpreset=conservative
+saveOptions options save=selected
+save in out

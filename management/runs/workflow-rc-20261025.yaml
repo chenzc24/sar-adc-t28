@@ -1,0 +1,42 @@
+managed: true
+recipe_hash: ad18880a025f437181a9b89bebf8a0ef5d0f196f9c706f572245b76a6f8ea0ce
+recipe:
+  schema_version: 1
+  run_id: workflow-rc-20261025
+  design_id: workflow_transport_validation
+  entry: rc_smoke.scs
+  analyzer: native_summary.py
+  files:
+  - name: rc_smoke.scs
+    source: netlist/workflow/rc_smoke.scs
+    bytes: 431
+    sha256: c0e3097e7ffd3532e7a076e4351667ee84c6f65dec953fa885e14adb4de0cf0c
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 512
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 128
+    analysis_virtual_mib: 512
+    max_output_mib: 16
+    simulation_wall_seconds: 120
+    analysis_wall_seconds: 60
+    queue_timeout_seconds: 3600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - in
+  - out
+  expected_stop_s: 1.0e-08
+  qualification_scope: RC infrastructure smoke only; no ADC performance or reliability claim
+  source_commit: 657f5b63e76f8567423ae2fbb98227c59f6f2298
+  oa: null
+  oa_parity: not_claimed
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/workflow-rc-20261025

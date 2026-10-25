@@ -164,30 +164,10 @@ def prepare(a):
 
 
 def launch(names):
-    ssh=client();jobs=[]
-    for name in names:
-        folder=OUT/name;ctx=read(folder/'context.json');remote=REMOTE+'/'+name
-        assert sha(folder/'test.scs')==ctx['deck_sha256']
-        assert not (folder/'launch.json').exists(),'Already submitted; use status/collect'
-        command(ssh,'test ! -e '+shlex.quote(remote)+' && mkdir -p '+shlex.quote(remote))
-        for fn in ['test.scs','r4_perf_monitor.va']:
-            r=ssh.upload(folder/fn,remote+'/'+fn,timeout=60);assert r.returncode==0,r.stderr
-        invocation=f'source /home/cshrc/.cshrc.cadence.IC618SP201; cd {remote}; /home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre -64 {remote}/test.scs +escchars +log {remote}/spectre.out -format psfascii -raw {remote}/test.raw '+shlex.join(ctx['spectre_args'])+' -maxw 5 -maxn 5 +logstatus'
-        wrapper=f'#!/bin/sh\ncd {shlex.quote(remote)} || exit 98\nHOSTNAME=$(hostname); export HOSTNAME\nLD_LIBRARY_PATH=${{LD_LIBRARY_PATH:-}}; export LD_LIBRARY_PATH\ncsh -c {shlex.quote(invocation)} > console.log 2>&1\nstaged_rc=$?\nprintf "%s\\n" "$staged_rc" > exit_code\nexit "$staged_rc"\n'
-        r=ssh.upload_text(wrapper,remote+'/run.sh',timeout=30);assert r.returncode==0
-        dump(folder/'launch.json',dict(remote=remote,submitted_epoch=time.time(),state='prepared_for_batch'))
-        jobs.append(remote)
-    batch='#!/bin/sh\n'
-    for i,job in enumerate(jobs):
-        batch+='sh '+shlex.quote(job+'/run.sh')+' &\n'
-        if i%2==1:batch+='wait\n'
-    batch+='wait\n'
-    batchpath=REMOTE+'/batch_'+str(int(time.time()))+'.sh'
-    r=ssh.upload_text(batch,batchpath,timeout=30);assert r.returncode==0
-    pid=command(ssh,'nohup sh '+shlex.quote(batchpath)+' > '+shlex.quote(batchpath+'.log')+' 2>&1 < /dev/null & echo $!')
-    for name in names:
-        p=OUT/name/'launch.json';d=read(p);d.update(batch=batchpath,batch_pid=pid.strip(),state='submitted');dump(p,d)
-    print('BATCH_SUBMITTED',names,pid.strip())
+    raise RuntimeError(
+        'Legacy batch launch disabled for new work. Freeze the prepared deck into '
+        'management/recipes/<run>.yaml, then use scripts/management/project.py '
+        'register / submit. Existing remote batches and legacy status/collect are unchanged.')
 
 
 def status(names):
