@@ -3344,3 +3344,35 @@ human-triggered note in `docs/experience/`.
   source/server/run inventory and status. User Obsidian,10-bit and independent
   current-probe changes remain outside this commit. No deletion or push;
   scoped local commit under plan/2026-10-25-managed-execution.
+
+## 2026-10-25 — Measure baseline reference currents without changing the circuit
+
+- Scope: original Rgate/Mmain2um/refL90 FF cold/hot baselines only; no OA, PDK,
+  DUT, timing, supply or monitor changes. Source hashes and reversible save-only
+  deck transform checked. Existing raw and user Obsidian/10-bit work preserved.
+- Diagnosed invalid lowercase save names and native automatic allpub fallback.
+  One0.2ns smoke validates228 terminal saves; full200ns cases save232 currents
+  plus130 voltages, subcktiprobes/useprobes=no. Extended task-owned PSF parser
+  for current TRACE PROP units; sparse fixture and sign/KCL checks pass.
+- Both native runs exit0/PASS,319432/282775 points; same1609 nodes/1833 MOS.
+  Sequential4-thread native peaks321/318MiB; bounded streaming parser~6.5MiB.
+  New raw9.67GB retained, hashes/stat identities checked, no cleanup or rerun.
+- GNN4 peaks1.050940/1.055035V: MOS gate returns9.717/9.850uA through Rgate to
+  driver while its command remains unchanged. CDAC/source network coupling,
+  not a logic command to drive above VDD, is supported by terminal currents.
+- BP7 minimum-56.939/-45.028mV forms in two stages. High-PMOS GP fall removes
+  additional5.142/3.556fC while low NMOS replenishes0.500/0.159fC in that interval.
+  Corrects the earlier low-side-only hypothesis. Idle BP3-27.090/-35.803mV is
+  instead CDAC coupling during bit7 reset, with low-side replenishment.
+- KCL residual including reference rails<90pA; common-voltage interpolation
+  differences79.13uV cold/0.000832uV hot, critical peaks within1uV and sampling
+  edges within0.001ps of original. Codes243/12, event counts8/8/8/16,14/14
+  settling windows pass; max settling2.217/2.379ns. No overvoltage repair,
+  internal channel/overlap-charge decomposition or reliability signoff claimed.
+- Report, six visually reviewed layered plots, manifests, receipts, metrics
+  and additive run registry added. Shared commits657f5b6/b6da655 preserved.
+  On review of new managed policy, jobs/reductions were already complete;
+  disabled task-specific launch/reduce for future jobs, kept bounded read-only
+  recovery. New jobs must use managed SSD execution.
+- Compile, frozen-input checks, parser fixture, complete-case validation and
+  scoped diff checks passed. Task-only local commit; no push.
