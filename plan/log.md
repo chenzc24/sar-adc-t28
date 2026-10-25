@@ -3528,6 +3528,31 @@ human-triggered note in `docs/experience/`.
   Concurrent loaded-block reports, experiments and user notes/10-bit work
   preserved. Task-only local completion commit, no push.
 
+## 2026-10-25 Home top-level inactive-file archive
+
+- User authorized archival, not deletion, of inactive top-level home logs and
+  historical simulation artifacts. Two-observation metadata and own-process
+  FD/maps/cwd/command audit,1h inactivity, sidecar/type/owner/link guards and
+  streaming SHA256 selected12 files: seven stopped logs and five *.scs.*.srf,
+  total2,506,077 bytes. Six active logs and all locks/configs/engineering dirs,
+  hidden data and nine preserved caches left in place.
+- Archived to /home/chenzc_intern25/archive/home-top-2026-10-25/{logs,simulation}
+  on the same filesystem; archive manifest records exact original/recovery
+  paths, hashes and identities. Exclusive own maintenance lock, no-overwrite
+  link then verified source-name removal; at least one verified copy always
+  present. No overwrite, compression, file-data deletion or space-release claim.
+- All12 archived hashes/identities/nlink1 and source absence verified. Protected
+  metadata changes empty; final visible-name set exactly original minus12 plus
+  archive. Ordinary ls51 to40 entries, hidden75 unchanged, total126 to115.
+  Added complete remaining.txt plus JSON/audit/operation/readback evidence and
+  management navigation/retention registration. Logs with unknown experiment
+  provenance remain tool-level archives, not relabelled as qualified SAR results.
+- Seven focused guard/collision/new-use/idempotence/exact-move tests, Python
+  compile, JSON/arithmetic/name-set/metadata/hash and scoped diff checks passed.
+  No new simulation/heavy analysis, queue bypass, process kills or OA mutation.
+  User Obsidian/independent10-bit and concurrent loaded-block repair changes
+  preserved. Task-only local completion commit; no push.
+
 ## 2026-10-25 Tolerant reference and comparator real-load checkpoint
 
 - Preserved external0.81–0.99V contract, original input/reference50ohm networks,

@@ -4,6 +4,8 @@
 
 历史数据见 [删减审核快照](cleanup/2026-10-25/review.md)与[实际执行和 home 检查](cleanup/2026-10-25/execution.md)：五项批准的重复副本已清理，本地35.074 GiB、服务器10.913 GiB；服务器原始波形保留，其余历史数据未删。
 
+home 顶层已另行归档12个停用日志和历史仿真文件，未删除数据；见[归档登记](cleanup/2026-10-25/home_archive.json)与[完整剩余清单](../verification/storage/2026-10-25-home-top-archive/remaining.txt)。活动日志、锁、配置和原有工程目录保持原位。
+
 ## 各端职责
 
 | 范围 | 真源与用途 | 维护方式 |
