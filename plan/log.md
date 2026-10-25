@@ -3503,3 +3503,27 @@ human-triggered note in `docs/experience/`.
   journal/status is authoritative. Permanent cache removal is regenerable
   from retained sources, not restoration from a recycle bin. No cache-policy
   or global startup/environment changes in this task.
+
+## 2026-10-25 Home cache cleanup completion readback
+
+- Recovered the existing worker, no relaunch or new deletion:308 exact cache
+  directories/3340 files deleted_verified, nine deliberately retained, no
+  partial failure or additional skipped candidate. Worker completed in23.168s
+  after normal workload-lock admission. Final helper readback verifies all308
+  absent and all nine retained paths present.
+- Fresh own-home read-only census:434 to126 top-level entries (64 directories,
+  62 ordinary files). Exactly nine .ahdlSimDB remain,3,770,798 bytes3.596MiB:
+  six generic-name caches and passive_ac01/pilot_aps/sar_aps_probe kept because
+  recent at the frozen audit. No second-round deletion inferred from this
+  status request. Original sources, waveforms, logs, OA/PDK and current caches
+  outside the removal scope.
+- Deleted logical bytes122,560,920 (116.883MiB), allocated blocks129,019,904
+  (123.043MiB). Whole-home-filesystem free change during deletion was
+  -100,663,296 bytes (-96MiB), NOT a positive net gain. Concurrent filesystem
+  activity/accounting prevents equating that net delta with file removal;
+  both measures preserved in receipts and home_remaining.json.
+- Collected complete status/receipt/fresh verification; updated summary and
+  completed the cleanup plan. JSON/arithmetic/retained names/per-file status
+  and scoped diff checks passed. No circuit/simulation/process changes.
+  Concurrent loaded-block reports, experiments and user notes/10-bit work
+  preserved. Task-only local completion commit, no push.

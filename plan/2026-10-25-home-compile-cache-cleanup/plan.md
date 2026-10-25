@@ -1,7 +1,8 @@
 # Remove unused historical home compilation caches
 
-Status: queued behind the active loaded-reference simulation; deletion not
-yet verified. One background maintenance worker, PID25034 at submission.
+Status: complete. Collected completed worker journal and verified308 cache
+directories/3340 files removed, nine retained; fresh own-home census confirms
+the same nine and126 total top-level entries. No new deletion on review.
 
 User authorized removing old unused compilation artifacts after the project
 management review. Scope only immediate child *.ahdlSimDB directories of
@@ -75,3 +76,15 @@ Later recovery: project .venv Python scripts/management/home_cache_cleanup.py
 collect fetches status; only after remote completion does it fetch the deletion
 receipt and final absence/preservation readback. Queue timeout2h is a failed/
 rejected cleanup, never reported as successful. Scoped checkpoint, no push.
+
+Completion review2026-10-25: native maintenance took23.168s after lock release,
+no partial failures or extra skips. Deleted122,560,920 logical bytes116.883MiB;
+allocated blocks129,019,904 bytes123.043MiB. Home-filesystem free delta during
+the operation was NEGATIVE100,663,296 bytes (-96MiB); concurrent activity or
+filesystem accounting means this is not an isolated cleanup-space measure.
+Do not claim net free space grew by123MiB. Fresh retained caches3,770,798 bytes
+(3.596MiB);64 dirs+62 regular files=126 home entries, down from434. Sources,
+raw/logs/OA/PDK and current run caches remain outside deletion scope. User
+Obsidian/10-bit and expanded loaded-block work still protected. Added read-only
+home_remaining.json, completion receipts and factual log; JSON/arithmetic/
+retention/readback/scoped diff checks. Task-only completion commit, no push.
