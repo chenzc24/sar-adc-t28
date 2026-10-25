@@ -3376,3 +3376,27 @@ human-triggered note in `docs/experience/`.
   recovery. New jobs must use managed SSD execution.
 - Compile, frozen-input checks, parser fixture, complete-case validation and
   scoped diff checks passed. Task-only local commit; no push.
+
+### 2026-10-25 Physical gate charge buffer candidate
+
+- User requested complete repair. Opened bounded physical-stress repair plan;
+  first candidate only, overall repair remains incomplete pending supply-contract
+  choice. No OA or adopted baseline changes, no PDK changes or limit relaxation.
+- Managed SSD run sar8fix-c1r4-ffcold: original1833 MOS unchanged, gate resistor
+  parallel count x4 plus32 PDK MOM instances/1020 units (~4.084pF). Same FF0.99V,
+  -40C, 200ns, finite reference network and external sample window.
+- Native exit0/PASS and managed analysis complete;318574 native samples,
+  all10998 MOS pairs screened. Codes243/12, counts8/8/8/16. GNN4 peak0.999016V,
+  BP7 min-40.632mV, reference worst1.030632V: improvement, NOT closure.
+  Driver/comparator/digital stress remains; candidate not promoted.
+- Compact10ps-minimum export used only for plots and timing estimates, not exact
+  timing signoff. All native points used for stress; narrow-spike parser fixture
+  proves unexported peaks retained. Frozen inputs,14 collected files and native
+  step count checked. Native DC tolerance-relaxation warning retained.
+- Simulation/analysis733/147s; process-group peak323/110MiB, parser7.2MiB.
+  New raw retained remotely;20.11MB collected, no skipped files. Early live
+  collection checksum conflict resolved by collection-only retry after completion;
+  receipt hashes select versioned logs instead of the earlier START snapshot.
+- Report and three-panel comparison reviewed, broader supply decision requested;
+  no further simulation queued. User Obsidian/independent10-bit work preserved.
+  Targeted validation and scoped diff check; task-only checkpoint commit, no push.
