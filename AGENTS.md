@@ -38,6 +38,15 @@ or raw OA databases.
 
 ## Operating Discipline
 
+Use `management/README.md` and `management/STATUS.md` as the cross-domain
+inventory entry point. `management/project.yaml` declares paths, ownership and
+resource policy; `designs.yaml`, `cells.yaml` and `runs/index.yaml` link evidence.
+Check observation timestamps before treating a record as current. Update the
+relevant registry when a task changes design adoption, OA objects, run locations
+or data retention. Inventory observations never imply circuit qualification.
+The legacy launchers do not yet enforce the declared resource defaults; do not
+claim an implemented submit/resource gate until that separate work is verified.
+
 Before starting a target:
 
 1. Run `git status --short --branch` at repository root.

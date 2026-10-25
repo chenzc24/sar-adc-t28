@@ -1,0 +1,32 @@
+schema_version: 1
+run_id: legacy-65475213f4ba7544
+design_id: sar8_l90_mmain2_stress_screen
+local_case: output/sar8_stress_closure/rg1_strict200_ff_125
+remote_paths:
+- /home/chenzc_intern25/TSMC28/llm_IO/sar8_stress_closure_20261024/rg1_strict200_ff_125
+source_of_inputs: output/sar8_stress_closure/rg1_strict200_ff_125/context.json
+context_sha256: 0165affd8cd33ddfd10987d343f89e53168abb634652c7a937e2b2108c9440a7
+hashes:
+  DUT_sha256: 41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4
+  deck_sha256: 8b80642b42aaf9526219377abaf8d54ee0841b27f73024c768167dda849afc95
+  frozen_DUT_sha256: 2c16d654f8c316c5fdbf246b951332bce812f0506da0dffd62a3d26022e2f062
+test_conditions:
+  corner: ff
+  vdd: 0.99
+  temperature_c: 125
+  stop_ns: 200
+  frames: 2
+  input_diff_v:
+  - 0.81
+  - -0.81
+  rg_parallel_factor: 1
+solver_requested:
+- +preset=cx
+- +mt=4
+- +lqtimeout
+- '60'
+- -preset_override
+saved_signal_count: 1073
+observation_index: management/runs/index.yaml
+oa_parity: not_promoted
+retention: protected_pending_review

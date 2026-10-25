@@ -3288,3 +3288,28 @@ human-triggered note in `docs/experience/`.
 - Scripts compile, parser/pulse/settling fixtures and scoped diff checks pass.
   Protected Obsidian/10-bit/new management registry dirt unchanged; pre-existing
   Obsidian whitespace excluded. Task-only local commit; no push.
+
+## 2026-10-25 — Register local sources, remote runs and live Virtuoso metadata
+
+- Implemented management/project.yaml, designs.yaml, cells.yaml, historical run
+  index and four active immutable-input snapshots. Added source/output/server
+  inventories, discrepancy list, human status/usage pages and read-only CLI.
+  Root README/AGENTS now point to the registry and distinguish legacy manifests.
+- Recovered local Bridge tunnel after the user's graphical connection returned.
+  Live t28_io CIW confirms SAR_ADC_T28 path and tsmcN28 binding,41 visible
+  libraries,247 project cells (232schematic/183symbol/15VerilogA views).
+  Registered119 actual cells omitted by legacy manifest;15 legacy entries absent.
+- Supported schematic reader traversed68 unique project cells for R3/R4 and
+  both TBs; closure counts35/41/36/42, no errors. This is dependency evidence,
+  not an OA/netlist-equivalence or circuit-validation claim. No OA writes.
+- Latest bounded low-priority server census observes256 exact references and60
+  shallow directories,144 recorded references currently missing. Preserves
+  historical/unknown states and separates other libraries and bridge runtime.
+  No raw-waveform contents read, no simulation, deletion, move or user-process kill.
+- Registered current four stream-analysis results and rejected Rgate/4 repair
+  status from existing report. Independent stress/current-probe tasks,10-bit
+  work and user Obsidian edits remain untouched; source counts stamped separately.
+- Five focused fixtures, compile, registry source/recipe/uniqueness/dependency/link
+  checks and scoped diff passed. Policy defaults are declared; legacy submitter
+  enforcement, SSD allocation and WORK-library creation remain subsequent work.
+  Scoped registration commit only, no push.

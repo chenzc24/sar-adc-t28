@@ -7,6 +7,11 @@ the TSMC 28 nm HPC+ ULL platform. Active specification:
 
 ## Project progress and file navigation
 
+The current [project management registry](management/README.md) unifies local
+source files, remote run directories and live Virtuoso library/cell/view records.
+Start with its [status table](management/STATUS.md); older progress documents
+below retain their original dates and experimental scope.
+
 For collaboratively edited, reader-facing Chinese notes, open
 [`Obsidian_docs/Head.md`](Obsidian_docs/Head.md). The `Obsidian_docs/` folder
 can be opened as a separate Obsidian vault. It keeps curated explanations
