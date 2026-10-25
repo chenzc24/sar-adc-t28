@@ -3476,3 +3476,30 @@ human-triggered note in `docs/experience/`.
   changes preserved. No baseline adoption or last-copy deletion.
 - JSON/links, compile, PowerShell parse, registry validation and scoped diff;
   local task-only commit, no push. Original review JSON remains unchanged.
+
+## 2026-10-25 Old home compilation cache cleanup queued
+
+- User authorized old unused compilation artifacts, not raw/source/log/OA/PDK
+  removal. Frozen317 exact top-level own-home *.ahdlSimDB names;316 match
+  project deck basenames.308 directories/3340 generated files116.883MiB are
+  eligible; six generic names and three recent caches retained. No other home
+  data or current per-run SSD cache is targeted. Full metadata kept on SSD and
+  ignored transport; concise origin/eligibility evidence tracked.
+- Inspected cwd/open descriptors/mappings/commands of own-user processes.
+  Initial conservative audit stopped on zombies and ptrace-protected SSH;
+  diagnosed exact process roles and recorded narrow non-simulation exclusions.
+  Other unknown live processes remain fail-closed. No live cache refs observed.
+- Existing loaded-reference Spectre retains managed workload lock; initial
+  delete request correctly deferred. One idempotent nice/256MiB maintenance
+  worker queued (submission PID25034), waits up to2h and rechecks before exact
+  unlink/empty-rmdir. No process kills, resource bypass or duplicate simulation.
+  Actual deletion NOT YET VERIFIED at checkpoint; no freed-space claim.
+- New guarded helper/client and9 focused tests: path, owner/symlink, age,
+  generic/unknown provenance, changed metadata, process refs, duplicate queue
+  and exact-tree deletion preserving sibling source. Python compile/JSON and
+  scoped diff checks; local task-only checkpoint, no push. User Obsidian,
+  independent10-bit and concurrent loaded-block repair files preserved.
+- Recovery uses scripts/management/home_cache_cleanup.py collect; remote
+  journal/status is authoritative. Permanent cache removal is regenerable
+  from retained sources, not restoration from a recycle bin. No cache-policy
+  or global startup/environment changes in this task.
