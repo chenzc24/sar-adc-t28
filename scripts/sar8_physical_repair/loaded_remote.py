@@ -9,9 +9,10 @@ def main():
     native=[a.run_dir+'/raw/'+x for x in os.listdir(a.run_dir+'/raw') if x.endswith('.tran.tran')]
     assert len(native)==1
     subprocess.check_call([exe,native[0],inp+'/selected.txt',inp+'/pairs.txt',out+'/wave'])
-    m=json.load(open(out+'/wave.meta.json'));assert m['PSF_END'] and abs(m['last_time_s']-200e-9)<1e-15
+    config=json.load(open(inp+'/mapping.json'))
+    m=json.load(open(out+'/wave.meta.json'));assert m['PSF_END'] and abs(m['last_time_s']-config['stop_s'])<1e-15
     pairs=[list(map(float,l.split())) for l in open(out+'/wave.stress.tsv')]
-    records=json.load(open(inp+'/mapping.json'))['records'];groups={};failed=[]
+    records=config['records'];groups={};failed=[]
     for r in records:
         _,peak,at=pairs[r['pair_index']];r.update(peak_v=peak,time_ns=at*1e9,exceed=peak>r['limit_v'])
         if r['exceed']:failed.append(r)

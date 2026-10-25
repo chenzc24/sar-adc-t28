@@ -1,6 +1,7 @@
 # Physical stress repair and regression
 
-Status: repair incomplete; first managed candidate reviewed and not adopted.
+Status: repair incomplete; loaded five-PVT and receiver controls reviewed;
+210ns receiver/reset controls running or queued. No ADC baseline adoption.
 User confirmed: preserve 0.81–0.99 V supply and repair using physical circuits
 or voltage-tolerant devices. Device-class/topology screening is now authorized.
 
@@ -212,3 +213,70 @@ tail, reset, MOM and logic unchanged. Actual downstream receiver timing, not an
 invented rail-to-rail condition, determines functional validity. Test SS cold
 under the same full load and strict settings; do not substitute it into the
 already-frozen five-point batch. No new supply or external timing changes.
+
+## Loaded PVT continuation
+
+Start HEAD85378b3; completed six prior jobs and collected outputs are owned by
+this task. User Obsidian/10-bit work and independent home archive remain protected.
+All six native/analysis statuses verified complete/exit0, no reruns required.
+Combined five-point two-frame regression: references/comparator pass their
+device-class stress screens at all corners; SS hot startup242 instead of243
+with -9.978mV held error; TT has8 failed pairs in the comparator receiver;
+FF retains driver/control stress. PMOS latch doubling did not improve output
+high at last SS-cold write(.403->.402V); do not adopt that sizing change.
+
+Next single-variable interface fix: clone ONLY the two COMP_P/N receiving buffers
+in sar8p_timing. Replace their first inverter's4 MOS with legal ordinary IO
+CDF units, NMOS2/PMOS4 (W0.64/1.28um,L150nm); keep second inverter core, all
+other control/BBM/delay/sample circuitry and N4 latch sizes unchanged. Check
+TT and SS cold first, full native stress+receiver/PR/NR/RAW/DEC waveforms. This
+addresses direct comparator-output stress; it is not a proposed cure for all
+remaining FF core gates. Reject if valid timing, reset or external aperture fails.
+Separate evidence for SS hot startup from normal cycles; no power-ramp or
+restart correctness inferred from DC-start two-frame tests.
+
+SS-hot acquisition discrimination: reverse only VINP/VINN external PWL values
+so first/second differential inputs become-.81/+.81V (expected12/243), with
+identical source impedances, reference, supply, clock and all DUT devices.
+Use combined original-N4 candidate, not receiver variant. This separates initial
+DC-state sensitivity from input-polarity acquisition; it is not a POR repair.
+
+## Remaining core logic feasibility
+
+Read-only PDK cell-name inventory confirms ordinary18, under-drive18ud12/15,
+native18 NMOS and core threshold variants; no fast 1.2V core class inferred.
+Before considering under-drive logic, measure its actual native CMI limits in a
+tiny isolated four-device diagnostic fixture. Intentionally excessive terminal
+biases are simulation-only metadata probes, NOT operating recommendations or
+qualified ADC test points. Retain printed limits for both polarities/all six
+pairs; unknown or suppressed limits remain unknown. No model edits/copies.
+Use managed queue and minimal raw/analysis budget; existing loaded jobs continue.
+Ordinary IO/UD FO4 at SS cold is already much slower than core: do not adopt a
+whole-logic replacement without latency, sampling-edge and power verification.
+
+Receiver SS-cold native first frame converts in47.492ns vs44.254ns, still243.
+This puts last reference reset potentially beyond the old200ns stop, but not
+necessarily beyond next actual acquisition(~203ns). Extend an identical rx2
+SS-cold diagnostic to210ns under a NEW immutable ID; preserve old200ns raw.
+Also screen rx1 (half the four receiver MOS multiplicities, nothing else) with
+the same210ns observation. Assess reset/bottom readiness before actual sampling,
+not merely whether a reset timestamp falls within an arbitrary100ns bin.
+This is observation extension, NOT external timing or frequency modification.
+
+Checkpoint reviewed: receiver rx2 TT eliminates all8 failed pairs (now0), codes
+243/12,14 settling windows pass; second conversion34.09475ns,power144.880uW.
+SS cold rx2 also0 failed pairs,243/12,14 windows pass; conversion47.38843ns,
+power103.960uW. Actual sample closing deltas<.001ps; window deltas<.005ps.
+First SS-cold cross-frame reset starts100.75664ns, bottoms settle101.82129ns,
+next actual sample103.32164ns: compact-estimate margin1.50035ns. Second reset
+unobserved at200ns, so both new210ns cases registered/submitted under single-job
+gate, not baseline changes. One-shot flow only analyzes/collects named jobs.
+
+Reverse-input SS hot gives13/243 (expected12/243), held+9.96584/-.282829mV,
+both event counts and full stress screen pass. First high-side gate.763109V,
+normal precharged high-side1.656871V: initial-state issue follows first frame,
+not a unique P/N branch. Initial DC relaxation warning retained; POR not fixed.
+Native under-drive limit probe completed and hashes verified: both polarities,
+all6 pairs1.32V CMI threshold, not a lifetime rating or ADC operating test.
+Unrelated files and all historical raw retained; overall FF/control/startup and
+performance closure remain open. This checkpoint must not be marked complete.

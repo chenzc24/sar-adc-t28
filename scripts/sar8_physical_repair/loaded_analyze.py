@@ -35,6 +35,7 @@ def analyze(run):
     m,w,t,meta=load(folder/'derived')
     steps=int(re.search(r'Number of accepted tran steps\s*=\s*(\d+)',log)[1])
     assert steps+1==meta['native_points']
+    assert abs(meta['last_time_s']-manifest.get('stop_ns',200)*1e-9)<1e-15
     assert meta['traces']==manifest['saved_count']
     assert result['all_MOS_pairs']==manifest['records']==10998
     ev={}
@@ -49,14 +50,16 @@ def analyze(run):
     assert [int(r[0]) for r in rows]==[0,1]
     diff=w['xdut.topp']-w['xdut.topn'];cm=(w['xdut.topp']+w['xdut.topn'])/2
     frames=[];comparisons=[];settling=[]
+    targets=[-.81,.81] if manifest.get('reverse_input_order',False) else [.81,-.81]
+    expected_codes=[12,243] if manifest.get('reverse_input_order',False) else [243,12]
     for i,row in enumerate(rows):
-        lo,hi=i*100,(i+1)*100;target=[.81,-.81][i]
+        lo,hi=i*100,(i+1)*100;target=targets[i]
         code=sum(int(at('d%d'%b,hi-2)>.5*vdd)*2**b for b in range(8))
         names=['xdut.cmp_clk','xdut.xctrl.phi_w','xdut.phi_u','xdut.xref.cap_clk']
         counts=[len(events(n,lo,hi)) for n in names]
         cmp=events(names[0],lo,hi);wr=events(names[1],lo,hi);upd=events(names[2],lo,hi)
         close=events('xdut.seq_sample',lo,hi,0);start=events('xdut.seq_sample',lo,hi)
-        frame=dict(frame=i,code=code,expected=[243,12][i],code_pass=code==[243,12][i],counts=counts,monitor_valid=bool(row[7]),
+        frame=dict(frame=i,code=code,expected=expected_codes[i],code_pass=code==expected_codes[i],counts=counts,monitor_valid=bool(row[7]),
                    monitor_code=int(row[1]),monitor_code_matches=code==int(row[1]),
                    monitor_counts=[int(x) for x in row[2:6]],native_count_match=counts==[int(x) for x in row[2:6]],
                    sample_close_ns=close,sample_start_ns=start,conversion_ns=row[-1]*1e9,
@@ -80,6 +83,28 @@ def analyze(run):
                 errors.append(abs(at('xdut.xcdac.b%s%d'%(s,b),hi-.1)-(.9 if pon else 0)))
         frame['next_sample_bottom_error_mv']=max(errors)*1000
         frame['next_sample_illegal_reference_states']=illegal
+        # Cross the nominal frame boundary when reset spills into dead time.
+        # Reset target is fixed by the MSB-complement preset, not inferred from
+        # whatever (possibly incorrect) gate state happens to be present.
+        following=events('xdut.seq_sample',hi,hi+20)
+        readiness=dict(next_actual_sample_ns=following[0] if following else None,
+                       observed=False,reset_starts_ns=[],all_bottom_error_mv=None,
+                       settled_ns=None,margin_before_sample_ns=None,pass_=None,
+                       source='20ps compact settling estimate; native reset/sample 0.5VDD crossings')
+        if following and wr:
+            deadline=following[0]-.02
+            readiness['reset_starts_ns']=events('xdut.xref.rst0',wr[-1],following[0])
+            ids=np.flatnonzero((t>=wr[-1])&(t<=deadline));err=np.zeros(len(ids))
+            for side in ['p','n']:
+                for bit in range(8):
+                    target_reset=.9 if ((side=='p') != (bit==7)) else 0.
+                    err=np.maximum(err,np.abs(w['xdut.xcdac.b%s%d'%(side,bit)][ids]-target_reset))
+            bad=np.flatnonzero(err>BAND)
+            settled=None if not len(ids) or (len(bad) and bad[-1]==len(ids)-1) else float(t[ids[bad[-1]+1]] if len(bad) else t[ids[0]])
+            readiness.update(observed=True,all_bottom_error_mv=float(err[-1])*1000 if len(ids) else None,
+                settled_ns=settled,margin_before_sample_ns=None if settled is None else following[0]-settled,
+                pass_=settled is not None and len(readiness['reset_starts_ns'])==1)
+        frame['reset_before_actual_next_sample']=readiness
         frames.append(frame)
         for bit,rise in enumerate(cmp):
             nxt=cmp[bit+1] if bit+1<len(cmp) else hi
@@ -132,6 +157,9 @@ def analyze(run):
                   collected_files=len(receipt['files']),collected_bytes=sum(x['bytes'] for x in receipt['files']),
                   simulation_peak_rss_mib=sim['peak_rss_bytes']/2**20,analysis_peak_rss_mib=ana['peak_rss_bytes']/2**20)
     result['numerical_screen_only']=manifest.get('numerical_screen_only',False)
+    result['receiver_n_units']=manifest.get('receiver_n_units',0)
+    result['reverse_input_order']=manifest.get('reverse_input_order',False)
+    result['observation_stop_ns']=manifest.get('stop_ns',200)
     result['frozen_inputs_sha_verified']=True
     result['source_commit']=recipe['source_commit']
     result['simulation_elapsed_s']=sim['elapsed_seconds'];result['analysis_elapsed_s']=ana['elapsed_seconds']
@@ -168,8 +196,18 @@ def analyze(run):
             bw=b['frames'][i].get('sample_window_ns')
             windows.append((frame['sample_window_ns']-bw)*1000 if frame['sample_window_ns'] is not None and bw is not None else None)
         result['baseline_aperture_comparison']=dict(path=str(baseline.relative_to(ROOT)),sample_close_delta_ps=deltas,sample_window_delta_ps=windows)
+    control=VERIFY/('sar8fix-loaded-both-'+manifest['corner']+'_analysis.json')
+    if manifest.get('receiver_n_units',0) and control.exists():
+        b=json.loads(control.read_text())
+        result['receiver_control_comparison']=dict(path=str(control.relative_to(ROOT)),
+            sample_close_delta_ps=[(f['sample_close_ns'][0]-bf['sample_close_ns'][0])*1000
+                for f,bf in zip(frames,b['frames'])],
+            sample_window_delta_ps=[None if f['sample_window_ns'] is None or bf['sample_window_ns'] is None
+                else (f['sample_window_ns']-bf['sample_window_ns'])*1000 for f,bf in zip(frames,b['frames'])],
+            conversion_delta_ns=[f['conversion_ns']-bf['conversion_ns'] for f,bf in zip(frames,b['frames'])])
     (VERIFY/(run+'_analysis.json')).write_text(json.dumps(result,indent=2)+'\n')
     plot(run,w,t,result)
+    if result['observation_stop_ns']>200:plot_reset_tail(run,w,t,result)
     print(json.dumps({k:result[k] for k in ['run_id','all_codes_pass','all_event_counts_pass','frames','groups','failing_pairs']},indent=2))
 
 def plot(run,w,t,r):
@@ -181,14 +219,43 @@ def plot(run,w,t,r):
         ['Timing (V)','Comparator (V)','CDAC top (V)','Input gate current (uA)','Reference / BP7 (V)']):
         for n in names:ax.plot(t,w[n]*(1e6 if ':2' in n else 1),lw=1,label=n.replace('xdut.',''))
         ax.set_ylabel(label);ax.grid(alpha=.2);ax.legend(fontsize=8,loc='best',ncol=len(names))
-    axes[-1].set(xlim=(138,200),xlabel='Time (ns)')
+    axes[-1].set(xlim=(138,r.get('observation_stop_ns',200)),xlabel='Time (ns)')
     label={'ref':'IO scale2 reference / core comparator','comp':'Core reference / N4 comparator',
            'both':'IO scale2 reference / N4 comparator','base':'Unchanged core reference and comparator'}[r['mode']]
+    if r.get('receiver_n_units'):label+=' / IO receiving inverter N%d:P%d'%(r['receiver_n_units'],2*r['receiver_n_units'])
+    if r.get('reverse_input_order'):label+=' / reversed input order (-.81, +.81 V)'
     fig.suptitle('%s | %s, %.2f V, %d C\n'%(label,r['corner'].upper(),r['vdd'],r['temperature_c'])+
         'Physical CDAC / BBM / logic; ideal external VDD and SAMPLE; input/reference 50 ohm, decoupling 4 pF\n'+
         '20 ps display; no mismatch / PEX / noise; stress, energy and clock crossings use all native points',fontsize=10)
     out=ROOT/'docs/figures/sar8_physical_repair';out.mkdir(exist_ok=True)
     fig.savefig(out/(run+'.png'),dpi=160);plt.close(fig)
+
+
+def plot_reset_tail(run,w,t,r):
+    import matplotlib;matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    fig,ax=plt.subplots(2,1,figsize=(10,6),sharex=True,layout='constrained')
+    for n in ['xdut.seq_sample','xdut.preset','xdut.xref.rst0']:
+        ax[0].plot(t,w[n],label=n.replace('xdut.','').upper())
+    err=np.zeros(len(t))
+    for side in ['p','n']:
+        for bit in range(8):
+            target=.9 if ((side=='p') != (bit==7)) else 0.
+            err=np.maximum(err,np.abs(w['xdut.xcdac.b%s%d'%(side,bit)]-target))
+    ax[1].semilogy(t,np.maximum(err*1000,1e-4),label='Worst of all 16 bottoms vs fixed reset target')
+    ax[1].axhline(BAND*1000,color='#777',ls='--',label='0.25 LSB')
+    state=r['frames'][1]['reset_before_actual_next_sample']
+    for a in ax:
+        if state['next_actual_sample_ns'] is not None:
+            a.axvspan(state['next_actual_sample_ns'],r['observation_stop_ns'],color='#368c85',alpha=.1)
+            a.axvline(state['next_actual_sample_ns'],color='#368c85',ls=':')
+        a.grid(alpha=.2);a.legend(fontsize=8)
+    ax[0].set_ylabel('Reset / sample controls (V)')
+    ax[1].set(ylabel='Reset error (mV)',xlabel='Time (ns)',xlim=(195,207),ylim=(1e-4,2000))
+    fig.suptitle('%s / %.2f V / %d C | receiver N%d:P%d, full physical ADC\n'%(r['corner'].upper(),r['vdd'],r['temperature_c'],r['receiver_n_units'],r['receiver_n_units']*2)+
+        '210 ns observation only; unchanged sample clock; shading = next actual sampling\n'+
+        '50 ohm sources; ideal supplies/external clock; 20 ps display; no noise/mismatch/PEX',fontsize=10)
+    fig.savefig(ROOT/'docs/figures/sar8_physical_repair'/(run+'_reset_tail.png'),dpi=170);plt.close(fig)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('run');analyze(p.parse_args().run)

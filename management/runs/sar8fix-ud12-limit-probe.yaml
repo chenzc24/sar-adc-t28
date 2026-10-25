@@ -1,0 +1,75 @@
+managed: true
+recipe_hash: a606e594c7a0a5588b1121b294e7feb44a60eb31391fd7a232689154c90a9d8b
+recipe:
+  schema_version: 1
+  run_id: sar8fix-ud12-limit-probe
+  design_id: isolated_ud12_native_limit_metadata
+  entry: test.scs
+  analyzer: native_summary.py
+  files:
+  - name: test.scs
+    source: output/sar8_physical_repair/sar8fix-ud12-limit-probe/test.scs
+    bytes: 1698
+    sha256: 753409d57f6d31acc054a92c0f22fd8e4b2bc556e9d01a628269fa82bd115164
+  - name: dut.scs
+    source: output/sar8_physical_repair/sar8fix-ud12-limit-probe/dut.scs
+    bytes: 1665
+    sha256: eff887f85b7cf2c5c686d3d893dc5cde0fbcb2894c097f94722dad604674914a
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 512
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 128
+    analysis_virtual_mib: 512
+    max_output_mib: 32
+    simulation_wall_seconds: 120
+    analysis_wall_seconds: 120
+    queue_timeout_seconds: 7200
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - hi
+  - lo
+  - hh
+  expected_stop_s: 1.0e-12
+  qualification_scope: Intentional isolated overbias for native warning thresholds;
+    NOT an ADC test or operating recommendation
+  source_commit: 85378b3dcc53c08ec359c647b09f7e51669a048e
+  oa: null
+  oa_parity: none_metadata_probe
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    temperature_c: 27
+    family: 18ud12
+    intentional_overbias: true
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ud12-limit-probe

@@ -3586,3 +3586,44 @@ human-triggered note in `docs/experience/`.
   comparator and reset figures visually inspected. Python compile and scoped
   diff checks performed; unrelated pre-existing Obsidian trailing whitespace
   left untouched. Task-only local checkpoint commit, no push.
+
+## 2026-10-25 Loaded PVT and tolerant receiver continuation
+
+- Reviewed all five combined IO-reference/N4 PVT cases and the PMOS-latch x2
+  control. Native/analysis exit0, frozen inputs and collected SHA256 verified;
+  all cases1833 MOS/10998 pairs and native event/energy reduction. No OA edits,
+  baseline promotion, raw deletion or push; unrelated Obsidian/10-bit and cleanup
+  commit85378b3 preserved.
+- Combined reference/comparator classes pass their screens at all five corners;
+  original core receivers fail TT8 pairs, broad core driver/control fail FF.
+  SS-hot first242 versus243 remains. PMOS doubling improves late output but not
+  output at actual write; do not adopt. Summary/interface/startup plots reviewed.
+- Four-MOS ordinaryIO receiving-inverter control completes TT and SS cold:
+  both243/12,8/8/8/16 events per frame,14 settling windows,0 failed pairs.
+  TT second conversion34.09475ns,power144.880uW (previous8 failing pairs).
+  SS cold47.38843ns,power103.960uW. Sample close deltas<.001ps, window<.005ps;
+  no meaningful sample-window change. These are bounded tests, not whole closure.
+- Corrected reset measurement to follow fixed preset targets across nominal
+  frame boundaries, using native0.5VDD control crossings and compact20ps settling
+  estimates. SS-cold rx2 first reset100.75664ns, settled101.82129ns, actual sample
+ 103.32164ns,margin1.50035ns. Missing second reset after200ns remains unknown,
+  not a pass/failure inferred from a truncated record. Existing SS-cold control
+  reanalysis verifies observed first margin4.719ns and unknown unobserved tail.
+- Input-order-only SS-hot control has identical DUT SHA:13/243 rather than
+  expected12/243; first held+9.96584mV, second-.282829mV. High-side gate.763109V
+  initially and1.656871V after precharge. Supports DC-start/no-precharge issue
+  rather than one physical side. Native initial DC relaxation warning retained;
+  no POR repair or discarded first-code claim. Polarity comparison plot checked.
+- Tiny managed four-device intentional-overbias probe verifies native UD12
+  CMI thresholds1.32V for both polarities/all6pairs,24,716bytes collected with
+  hashes. No PDK mutation or model copying; metadata probe is not ADC operation
+  or foundry lifetime signoff. Existing SS FO4 speed cost remains a design risk.
+- Submitted immutable rx2-end210 and rx1-end210 SS-cold cases. The first changes
+  observation duration only; second halves ONLY4 receiving-device multiplicities.
+  Verified identical sources, corresponding DUT hashes/delta counts,200ns input
+  reproduction, Python compile and scoped diff checks. Single-worker gate;
+  one-shot continuation analyzes/collects named cases, never resubmits them.
+  Receiver half-size case running, unchanged-size tail case queued at checkpoint.
+- Report retains chronological evidence and leads with current incomplete state.
+  Only task-owned checkpoint sources/results staged; follow-up tail results and
+  remaining FF/control/startup/performance work stay active. Local commit only.
