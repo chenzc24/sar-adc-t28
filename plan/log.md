@@ -3423,3 +3423,28 @@ human-triggered note in `docs/experience/`.
   simulation, remote writes, process kills or OA mutations. Independent active
   physical-repair and user10-bit/Obsidian edits remain outside this commit.
   Scoped local review commit, no push; user remains responsible for next approval.
+
+## 2026-10-25 Fixed-supply native device feasibility checkpoint
+
+- User confirmed 0.81–0.99V must remain; physical circuits/tolerant devices are
+  authorized. Recorded in active physical-stress-repair plan; no voltage or
+  external sample contract changes. Native Spectre used, not EVAS transistor
+  substitution. Read-only CDF audit; no OA/PDK mutation.
+- Completed13 managed small block simulations/analyses: core vs IO/UD12 five
+  PVT points, SS cold hybrid short/long windows, native-NMOS short screen and
+  five long-window PVT points. All original ADC candidates/raw remain intact.
+- Reference IO scale2 passes standalone settling, not full-CDAC closure. Direct
+  IO and first hybrid comparators fail SS timing; native-NMOS N4 resolves both
+  signs at VCM.45V in all five extended-window tests, worst2.820ns and maximum
+  pair1.152V. No claim of ADC repair, integrated timing, power, noise or mismatch.
+- Local window-shadowing measurement bug fixed, all analyses regenerated and
+  checked for identical windows/persistent decisions/Ron multiplicity. Native
+  full-point streams/steps and169 collected hashes checked;322993 samples,
+  97.71MB collected. Peak simulation293.3MiB/analysis115.5MiB; actual native
+  single-thread. A premature analysis request was refused, then same ID retried
+  after simulation completion; no duplicate simulation or analysis.
+- Existing report updated under write-page clarity guidance with three reviewed
+  comparison figures and explicit fixture limits.13 per-run receipts and batch
+  verification retained. No background work remains; repair plan stays active.
+- Concurrent cleanup-review commit c802f73, user Obsidian and independent10-bit
+  changes preserved. Task-only local checkpoint commit; no push, no cleanup.

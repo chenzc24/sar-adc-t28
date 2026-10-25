@@ -1,0 +1,44 @@
+schema_version: 1
+run_id: sar8fix-natlong-sscold
+design_id: native_low_voltage_IO_feasibility
+entry: test.scs
+inputs:
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/dut.scs
+  name: dut.scs
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/test.scs
+  name: test.scs
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/selected.txt
+  name: selected.txt
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/pairs.txt
+  name: pairs.txt
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/mapping.json
+  name: mapping.json
+- source: output/sar8_physical_repair/sar8fix-natlong-sscold/stream.cpp
+  name: stream.cpp
+- source: scripts/sar8_physical_repair/io_remote.py
+  name: io_remote.py
+analyzer: io_remote.py
+expected_stop_s: 5.0e-08
+summary_signals:
+- CLK
+- FcoreY
+- FN1Y
+- FN4Y
+- FN16Y
+qualification_scope: 'Block screen only: ideal clocks/input/reference sources; no
+  ADC qualification'
+oa_parity: netlist_only
+test_conditions:
+  corner: ss
+  vdd: 0.81
+  temperature_c: -40
+resources:
+  threads: 4
+  simulation_rss_mib: 512
+  simulation_virtual_mib: 8192
+  analysis_rss_mib: 256
+  analysis_virtual_mib: 1024
+  max_output_mib: 1024
+  simulation_wall_seconds: 300
+  analysis_wall_seconds: 180
+  queue_timeout_seconds: 3600

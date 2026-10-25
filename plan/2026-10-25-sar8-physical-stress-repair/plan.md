@@ -1,7 +1,8 @@
 # Physical stress repair and regression
 
 Status: repair incomplete; first managed candidate reviewed and not adopted.
-Awaiting user supply-contract choice before broader architecture changes.
+User confirmed: preserve 0.81–0.99 V supply and repair using physical circuits
+or voltage-tolerant devices. Device-class/topology screening is now authorized.
 
 ## Goal and boundaries
 
@@ -42,9 +43,12 @@ management commits b6da655/657f5b6 remain intact.
 4. Full MOS-pair monitoring, independent code/timing checks and all-bottom settling
    on the 200 ns FF cold screen; then FF hot, five PVT risk points, steady-state
    acquisition, static and 1024-point dynamic regression on a viable candidate.
-5. If strict stress closure requires a supply-domain/device-class architecture
-   decision beyond the existing design contract, report the evidence and ask before
-   silently changing voltage/reference range or adding ideal supply rails.
+5. Preserve the user-confirmed 0.81–0.99 V supply contract. Screen legal 1.8 V
+   devices at the EXISTING gate supply, first on small native reference-switch,
+   logic and comparator fixtures. Measure low-supply speed/Ron before integration.
+   Do not add ideal internal rails or silently change input/reference ranges.
+   Circuit protection and device-class changes are permitted; failures remain
+   failures even when output codes are correct.
 
 ## Validation and resource policy
 
@@ -100,7 +104,62 @@ First-frame preclose acquisition error remains -1.978mV. Not repaired, not
 promoted, no new supply rails or relaxed limits. Full PVT/static/FFT not started
 on this known-failing candidate.
 
-User was asked whether 0.81-0.99V must remain fixed or a new supply-domain plan
-is permitted. No response yet. No claim that all in-scope circuit alternatives
-are exhausted; wider supply/topology choice is intentionally not made silently.
+User answered: retain 0.81–0.99 V, solve with circuits or voltage-tolerant devices.
+The next checkpoint begins at HEAD 01cf64b; unrelated dirty state is unchanged.
+First characterize the low-voltage usefulness of existing legal IO devices,
+with original core devices as controls. This is a device feasibility screen,
+not an adopted ADC revision or evidence of completed repair.
 Checkpoint preserves failed/improved evidence while overall target stays open.
+
+## Fixed-supply device screen
+
+- Read-only live CDF audit: ordinary 1.8 V (150 nm / 320 nm defaults),
+  under-drive 1.2 V (105 nm / 320 nm defaults). Reuse complete CDF instance
+  geometry, not core parasitics with a renamed model. Native input acceptance
+  is not layout DRC. Under-drive SOA is deliberately unclassified until audited.
+- Five small corners: TT/.9/27, SS/.81/-40, SS/.81/125, FF/.99/-40,
+  FF/.99/125. Each includes core controls, FO4 inverters, MSB-equivalent MOM
+  loads and two polarities of 1.758 mV StrongARM input at VCM=.45 V.
+  Bench clocks and inputs are ideal; these are not integrated ADC results.
+- Reference fixtures measure near-rail Ron at 10 mV VDS. Off currents at this
+  bias MUST NOT be called full-swing off leakage. The switching fixture has
+  common GN/GP excitation, not the actual integrated BBM driver.
+- SS cold direct-IO StrongARM fails the 1.9 ns fixture window. A physical
+  hybrid retains core input devices and inserts two IO cascodes; 2/4/8 units
+  protect input stress but still fail both 1.9 ns and extended 5.9 ns windows.
+  Extended bench windows do not change ADC sample/closing-edge contracts.
+- Next bounded SS cold candidate uses CDF-default 1.8 V NATIVE NMOS
+  (800 nm / 500 nm) for input/latch devices; ordinary IO tail and PMOS remain.
+  Size factors 1/4/16 are screened, with core comparator as simultaneous control.
+  No candidate promoted or OA edits made.
+- Native-NMOS candidate also receives a 5.9 ns standalone decision window:
+  SS cold N4 resolves at 2.820 ns, maximum pair 0.894 V. N1/N16 take
+  3.426/5.683 ns. Continue the other four module PVT points before considering
+  integration. This does not reallocate the ADC conversion/sample windows.
+- Concurrent history-cleanup-review files and management/README.md appeared
+  during this turn. They are unrelated, outside this target and remain untouched.
+  No historical/raw deletion is performed by this repair task.
+
+## Fixed-supply checkpoint reviewed
+
+13 managed block runs and analyses complete; 322993 native points, 169 collected
+files /97709108 bytes. Simulation group peak293.3MiB, analysis115.5MiB;
+small models actually ran single-thread despite four-thread resource ceiling.
+Core-control CMI warnings remain visible; inputs and all receipts verified.
+Measurement-window variable-shadowing bug fixed and every local analysis rerun;
+native simulations were not rerun. One premature analysis request was refused,
+then the same ID was analyzed once after native completion.
+
+Ordinary IO reference scale2 meets the five standalone settling windows, but
+full-swing off leakage and actual CDAC/BBM loading remain untested for that class.
+Full IO comparators and hybrid core-input/IO-cascode variants are not adopted.
+Native-NMOS N4 comparator resolves both signs at VCM=.45V in all five extended
+window screens: TT1.358ns, SS cold2.820ns, SS hot2.752ns, FF cold.797ns,
+FF hot1.697ns; largest pair1.152V on actual 1.8V devices. This is NOT full ADC
+qualification and does not establish full input-CM range, noise/offset or power.
+
+Next: optimize N4 tail/reset stages and test input sign reversal, real downstream
+load, CM range and kickback; then reference full-off leakage/real BBM/full-CDAC,
+followed by tolerant digital timing integration. Preserve external supply/sample
+contract. All existing ADC circuits/OA remain unchanged. No background worker
+remains at this checkpoint; overall physical repair stays incomplete and active.

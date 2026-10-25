@@ -1,0 +1,275 @@
+{
+  "run_id": "sar8fix-natlong-ffhot",
+  "vdd": 0.99,
+  "blocks": {
+    "core": {
+      "fo4_fall_delay_ps": 18.33545485111543,
+      "fo4_rise_delay_ps": 10.875858909020764,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": 0.18353030860985342,
+          "signed_output_before_reset_v": 0.987059609088394,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": 0.1835303086098321,
+          "signed_output_before_reset_v": 0.9870596090883942,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        }
+      ],
+      "reference": {}
+    },
+    "N1": {
+      "fo4_fall_delay_ps": 54.887253629196664,
+      "fo4_rise_delay_ps": 65.54746037633308,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": 1.3299392460721862,
+          "signed_output_before_reset_v": 0.9815932798235425,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": 1.329939246071259,
+          "signed_output_before_reset_v": 0.9815932798235418,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        }
+      ],
+      "reference": {}
+    },
+    "N4": {
+      "fo4_fall_delay_ps": 54.887253629196664,
+      "fo4_rise_delay_ps": 65.54746037633308,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": 1.696635663860338,
+          "signed_output_before_reset_v": 0.9564705144902574,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": 1.696635663863134,
+          "signed_output_before_reset_v": 0.9564705144902572,
+          "pass_window": true,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": true
+        }
+      ],
+      "reference": {}
+    },
+    "N16": {
+      "fo4_fall_delay_ps": 54.887253629196664,
+      "fo4_rise_delay_ps": 65.54746037633663,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.7562824576789018,
+          "pass_window": false,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": false
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.7562824576792538,
+          "pass_window": false,
+          "window_ns": 5.900000000000002,
+          "pass_1_9ns": false
+        }
+      ],
+      "reference": {}
+    }
+  },
+  "native": {
+    "meta": {
+      "pairs": 266,
+      "PSF_END": true,
+      "lines": 1887829,
+      "peak_rss_kib": 6364,
+      "last_time_s": 5e-08,
+      "points": 29040,
+      "traces": 64,
+      "columns": 25
+    },
+    "verdict": "block_screen_only_UD12_limit_pending",
+    "analysis_complete": true,
+    "groups": {
+      "nch_mac": {
+        "time_s": 1.806963502727683e-08,
+        "terminal": "gb",
+        "instance": "FcoreCPMNLATN",
+        "peak_v": 1.000921813148046,
+        "limit_v": 0.99,
+        "pair_index": 22,
+        "model": "nch_mac",
+        "nodes": [
+          "FcoreCPON",
+          "FcoreCPOP",
+          "FcoreCPY",
+          "0"
+        ]
+      },
+      "pch_18_mac": {
+        "time_s": 4.884114581932019e-08,
+        "terminal": "gd",
+        "instance": "FN16CPMPRSTP",
+        "peak_v": 1.146955555899822,
+        "limit_v": 1.98,
+        "pair_index": 236,
+        "model": "pch_18_mac",
+        "nodes": [
+          "FN16CPOP",
+          "CLK",
+          "VDD",
+          "VDD"
+        ]
+      },
+      "pch_mac": {
+        "time_s": 8.00557594135487e-09,
+        "terminal": "ds",
+        "instance": "FcoreIP",
+        "peak_v": 0.9911146042327018,
+        "limit_v": 0.99,
+        "pair_index": 4,
+        "model": "pch_mac",
+        "nodes": [
+          "FcoreY",
+          "CLK",
+          "VDD",
+          "VDD"
+        ]
+      },
+      "nch_na18_mac": {
+        "time_s": 2.081121181528945e-09,
+        "terminal": "bs",
+        "instance": "FN1CPMNLATP",
+        "peak_v": 1.153139709848183,
+        "limit_v": 1.98,
+        "pair_index": 94,
+        "model": "nch_na18_mac",
+        "nodes": [
+          "FN1CPOP",
+          "FN1CPON",
+          "FN1CPX",
+          "0"
+        ]
+      },
+      "nch_18_mac": {
+        "time_s": 8.101921164487106e-09,
+        "terminal": "ds",
+        "instance": "FN1L0N",
+        "peak_v": 1.030209466376071,
+        "limit_v": 1.98,
+        "pair_index": 74,
+        "model": "nch_18_mac",
+        "nodes": [
+          "FN1L0Y",
+          "FN1Y",
+          "0",
+          "0"
+        ]
+      }
+    }
+  },
+  "warning_lines": [
+    "WARNING (VACOMP-2435): The environment variable CDS_AHDLCMI_ENABLE is no longer supported. Therefore, the simulator will use the default compiled C code flow.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `412' has also been specified at line `1582' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1582' has also been specified at line `1816' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1816' has also been specified at line `1929' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1929' has also been specified at line `1970' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (CMI-2755): FcoreCNMNLATP: Vbd(=-990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): FcoreCNMNLATP: Vgb(=990.001 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): FcoreCNMNLATN: Vbd(=-990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): FcoreCNMNLATN: Vgb(=990.001 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): FcoreCPMNLATP: Vbd(=-990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): FcoreCPMNLATP: Vgb(=990.001 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): FcoreCPMNLATN: Vbd(=-990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): FcoreCPMNLATN: Vgb(=990.001 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): FcoreCNMNLATP: Vbd(=-990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): FcoreCNMNLATP: Vgb(=990.001 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2756): FcoreCNMNLATN: Vbs(=-990.002 mV) has exceeded vbs_max (=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2756): FcoreCPMNLATP: Vbs(=-990.002 mV) has exceeded vbs_max (=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2756): FcoreCNMNLATP: Vbs(=-990.068 mV) has exceeded vbs_max (=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2756): FcoreCNMNLATN: Vbs(=-990.071 mV) has exceeded vbs_max (=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2756): FcoreCPMNLATP: Vbs(=-990.071 mV) has exceeded vbs_max (=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): FcoreL3N: Vgs(=990.02 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): FcoreL2N: Vgs(=990.02 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): FcoreL1N: Vgs(=990.02 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): FcoreL0N: Vgs(=990.02 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): FcoreIN: Vds(=990.02 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): FcoreL3N: Vgs(=990.077 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): FcoreIN: Vds(=990.077 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): FcoreIN: Vds(=990.132 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): FcoreIN: Vds(=990.186 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): FcoreIN: Vds(=990.239 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): FcoreL3P: Vgd(=990.013 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): FcoreL2P: Vgd(=990.013 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): FcoreL1P: Vgd(=990.013 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): FcoreL0P: Vgd(=990.013 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): FcoreL3N: Vgd(=990.013 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance"
+  ],
+  "limits": "UD12 limit unverified; nominal 1.8V devices use provisional 1.98V screen, not lifetime qualification; no integrated ADC qualification",
+  "comparator_stress": {
+    "core": {
+      "core": {
+        "instance": "FcoreCPMNLATN",
+        "model": "nch_mac",
+        "terminal": "gb",
+        "peak_v": 1.000921813148046,
+        "time_ns": 18.069635027276828,
+        "limit_v": 0.99
+      }
+    },
+    "N1": {
+      "IO": {
+        "instance": "FN1CPMNLATP",
+        "model": "nch_na18_mac",
+        "terminal": "bs",
+        "peak_v": 1.153139709848183,
+        "time_ns": 2.081121181528945,
+        "limit_v": 1.98
+      }
+    },
+    "N4": {
+      "IO": {
+        "instance": "FN4CPMNLATN",
+        "model": "nch_na18_mac",
+        "terminal": "bs",
+        "peak_v": 1.142014091335943,
+        "time_ns": 2.100888811085575,
+        "limit_v": 1.98
+      }
+    },
+    "N16": {
+      "IO": {
+        "instance": "FN16CPMNLATN",
+        "model": "nch_na18_mac",
+        "terminal": "gb",
+        "peak_v": 1.146955555899822,
+        "time_ns": 48.84114581932019,
+        "limit_v": 1.98
+      }
+    }
+  },
+  "off_current_bias_abs_vds_v": 0.01,
+  "off_current_scope": "near-rail leakage only, NOT full off-state VDS=0.9 V leakage",
+  "comparator_input_diff_mV": 1.7578125,
+  "comparator_CM_v": 0.45,
+  "load": "comparator two 4.004 fF MOM units/output, no following logic; reference MSB 128 units to ground",
+  "fixture": "Ideal clocks, ideal comparator input, separate 50 ohm/4pF high-reference per switch variant; no whole-CDAC coupling"
+}

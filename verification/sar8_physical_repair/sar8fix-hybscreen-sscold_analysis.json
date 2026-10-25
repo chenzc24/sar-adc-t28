@@ -1,0 +1,254 @@
+{
+  "run_id": "sar8fix-hybscreen-sscold",
+  "vdd": 0.81,
+  "blocks": {
+    "core": {
+      "fo4_fall_delay_ps": 33.65635608247963,
+      "fo4_rise_delay_ps": 29.40362345859171,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": 1.1145222747216934,
+          "signed_output_before_reset_v": 0.8098983300100518,
+          "pass_window": true,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": true
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": 1.1145222747216366,
+          "signed_output_before_reset_v": 0.809898330010052,
+          "pass_window": true,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": true
+        }
+      ],
+      "reference": {}
+    },
+    "18h2": {
+      "fo4_fall_delay_ps": 202.61997418143096,
+      "fo4_rise_delay_ps": 187.278642241262,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.027992452612219262,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.027992452612077834,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        }
+      ],
+      "reference": {}
+    },
+    "18h4": {
+      "fo4_fall_delay_ps": 202.6199741814274,
+      "fo4_rise_delay_ps": 187.27864224126023,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.04712463659209585,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.047124636592076316,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        }
+      ],
+      "reference": {}
+    },
+    "18h8": {
+      "fo4_fall_delay_ps": 202.6199741814292,
+      "fo4_rise_delay_ps": 187.278642241262,
+      "comparator": [
+        {
+          "input_sign": 1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.06197394451553127,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        },
+        {
+          "input_sign": -1,
+          "delay_ns": null,
+          "signed_output_before_reset_v": 0.061973944515496225,
+          "pass_window": false,
+          "window_ns": 1.8999999999999986,
+          "pass_1_9ns": false
+        }
+      ],
+      "reference": {}
+    }
+  },
+  "native": {
+    "meta": {
+      "pairs": 303,
+      "PSF_END": true,
+      "lines": 1544630,
+      "peak_rss_kib": 6364,
+      "last_time_s": 2e-08,
+      "points": 20057,
+      "traces": 76,
+      "columns": 25
+    },
+    "verdict": "block_screen_only_UD12_limit_pending",
+    "analysis_complete": true,
+    "groups": {
+      "nch_mac": {
+        "time_s": 4.080401122597289e-09,
+        "terminal": "ds",
+        "instance": "FcoreL0N",
+        "peak_v": 0.8611540664736402,
+        "limit_v": 0.99,
+        "pair_index": 7,
+        "model": "nch_mac",
+        "nodes": [
+          "FcoreL0Y",
+          "FcoreY",
+          "0",
+          "0"
+        ]
+      },
+      "pch_18_mac": {
+        "time_s": 2.31759060232244e-09,
+        "terminal": "ds",
+        "instance": "F18h2L0P",
+        "peak_v": 0.9661874145783786,
+        "limit_v": 1.98,
+        "pair_index": 76,
+        "model": "pch_18_mac",
+        "nodes": [
+          "F18h2L0Y",
+          "F18h2Y",
+          "VDD",
+          "VDD"
+        ]
+      },
+      "pch_mac": {
+        "time_s": 2.083203485638367e-09,
+        "terminal": "ds",
+        "instance": "FcoreL0P",
+        "peak_v": 0.8409832576719791,
+        "limit_v": 0.99,
+        "pair_index": 9,
+        "model": "pch_mac",
+        "nodes": [
+          "FcoreL0Y",
+          "FcoreY",
+          "VDD",
+          "VDD"
+        ]
+      },
+      "nch_18_mac": {
+        "time_s": 4.310280515540782e-09,
+        "terminal": "ds",
+        "instance": "F18h2L0N",
+        "peak_v": 0.9717934867368746,
+        "limit_v": 1.98,
+        "pair_index": 74,
+        "model": "nch_18_mac",
+        "nodes": [
+          "F18h2L0Y",
+          "F18h2Y",
+          "0",
+          "0"
+        ]
+      }
+    }
+  },
+  "warning_lines": [
+    "WARNING (VACOMP-2435): The environment variable CDS_AHDLCMI_ENABLE is no longer supported. Therefore, the simulator will use the default compiled C code flow.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `342' has also been specified at line `1582' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1582' has also been specified at line `1816' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1816' has also been specified at line `1929' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1929' has also been specified at line `1970' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation."
+  ],
+  "limits": "UD12 limit unverified; nominal 1.8V devices use provisional 1.98V screen, not lifetime qualification; no integrated ADC qualification",
+  "comparator_stress": {
+    "core": {
+      "core": {
+        "instance": "FcoreCPMNLATP",
+        "model": "nch_mac",
+        "terminal": "bs",
+        "peak_v": 0.8431338573143197,
+        "time_ns": 2.0701279387763574,
+        "limit_v": 0.99
+      }
+    },
+    "18h2": {
+      "IO": {
+        "instance": "F18h2CPMNLATP",
+        "model": "nch_18_mac",
+        "terminal": "bs",
+        "peak_v": 0.9185556374432348,
+        "time_ns": 2.1,
+        "limit_v": 1.98
+      },
+      "core": {
+        "instance": "F18h2CPMNINN",
+        "model": "nch_mac",
+        "terminal": "bs",
+        "peak_v": 0.5311650226547355,
+        "time_ns": 2.084224752304554,
+        "limit_v": 0.99
+      }
+    },
+    "18h4": {
+      "IO": {
+        "instance": "F18h4CNMNLATN",
+        "model": "nch_18_mac",
+        "terminal": "bs",
+        "peak_v": 0.8945656029431395,
+        "time_ns": 2.1,
+        "limit_v": 1.98
+      },
+      "core": {
+        "instance": "F18h4CPMNINN",
+        "model": "nch_mac",
+        "terminal": "bd",
+        "peak_v": 0.5458712299604122,
+        "time_ns": 2.10089299906925,
+        "limit_v": 0.99
+      }
+    },
+    "18h8": {
+      "IO": {
+        "instance": "F18h8CPMNLATP",
+        "model": "nch_18_mac",
+        "terminal": "bs",
+        "peak_v": 0.8685957780206387,
+        "time_ns": 2.1,
+        "limit_v": 1.98
+      },
+      "core": {
+        "instance": "F18h8CPMNINN",
+        "model": "nch_mac",
+        "terminal": "bd",
+        "peak_v": 0.6403729311879114,
+        "time_ns": 2.100964165825068,
+        "limit_v": 0.99
+      }
+    }
+  },
+  "off_current_bias_abs_vds_v": 0.01,
+  "off_current_scope": "near-rail leakage only, NOT full off-state VDS=0.9 V leakage",
+  "comparator_input_diff_mV": 1.7578125,
+  "comparator_CM_v": 0.45,
+  "load": "comparator two 4.004 fF MOM units/output, no following logic; reference MSB 128 units to ground",
+  "fixture": "Ideal clocks, ideal comparator input, separate 50 ohm/4pF high-reference per switch variant; no whole-CDAC coupling"
+}
