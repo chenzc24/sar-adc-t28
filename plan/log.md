@@ -3448,3 +3448,31 @@ human-triggered note in `docs/experience/`.
   verification retained. No background work remains; repair plan stays active.
 - Concurrent cleanup-review commit c802f73, user Obsidian and independent10-bit
   changes preserved. Task-only local checkpoint commit; no push, no cleanup.
+
+## 2026-10-25 Approved duplicate cleanup and home metadata inspection
+
+- Human approved five proposals L-A1/L-B1/L-B2/S-A1/S-A2 from immutable review
+  c802f73. Deleted21 exact local files35.074GiB and15 exact remote transfer
+  files10.913GiB, no directories. Native PowerShell LiteralPath locally,
+  exact unlink remotely; intent/outcome journals and final absence readback.
+- Full SHA256 of21 local and25 server files; ten native pairs identical,
+  eleven chunks/historical aggregate verified, four gzip payloads verified
+  against native lengths/SHA/END. Managed heavy-work lock/admission, nice/idle
+  IO, single streaming worker peak17,904KiB; no new Spectre simulation.
+- All ten server-native PSFs retained unchanged. Local free delta35.074GiB;
+  same server filesystem free delta10.914GiB, not summed per path. Permanent
+  duplicate removal; local recovery via retained natives. Old/tmp storage
+  still a retention risk, not silently migrated or claimed as durable backup.
+- Read-only own-home434-entry metadata audit:317 *.ahdlSimDB directories
+  120.48MiB,62 top-level files8.99MiB, multiple live Cadence logs/.nfs files,
+  literal $D/$DST engineering-like folders. No home deletion/moving, startup
+  changes, credential contents, other users' data, process kills or OA edits.
+- Original approved-source CRLF hash guard initially refused before mutation;
+  compared canonical Git LF bytes. Home cache sizing128MiB AS helper failed,
+  read-only256MiB/core0 retry succeeded; final home snapshot contains no core.
+- Added execution/home report, receipts, guarded one-time helper and9 focused
+  tests. Updated inventories/run retention and persistent cleanup navigation;
+  independently committed053ec7f physical repair and user Obsidian/10-bit
+  changes preserved. No baseline adoption or last-copy deletion.
+- JSON/links, compile, PowerShell parse, registry validation and scoped diff;
+  local task-only commit, no push. Original review JSON remains unchanged.

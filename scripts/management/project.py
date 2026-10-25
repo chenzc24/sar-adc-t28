@@ -103,6 +103,26 @@ def merge_observations(index,data):
         if any(x['exit_code']=='0' for x in row['remote_observations']):row['native_execution']='exit_0_observed'
     return index
 
+def completed_cleanup():
+    """Curated cleanup receipts annotate storage, never circuit qualification."""
+    folder=ROOT/'verification/storage/2026-10-25-approved-cleanup'
+    if not (folder/'summary.json').exists():return {},set()
+    summary=load(folder/'summary.json');receipt=load(folder/'local_receipt.json');spec=load(folder/'input.json')
+    assert summary['status']==receipt['status']=='complete'
+    assert summary['review_sha256']==receipt['review_sha256']==spec['review_sha256']
+    cases={}
+    for item in spec['local_targets']:
+        if item['category']!='native_waveform':continue
+        parts=PurePosixPath(item['path'].replace('\\','/')).parts
+        case=PurePosixPath(*parts[-6:-3]).as_posix()
+        assert case.startswith(('output/sar8_r4_staged/','output/sar8_r4_idle/'))
+        native=ROOT/case/'spectre/test.raw/tran_perf.tran.tran'
+        state='present_after_cleanup_requires_reconcile' if native.exists() else 'approved_duplicate_removed'
+        cases[case]=dict(local_native_path=rel(native),local_state=state,
+            retained_server_native=item['remote_counterpart'],server_verification='full_SHA256_then_unchanged_fingerprint',
+            evidence=rel(folder/'summary.json'),observed_at_utc=summary['checked_at_utc'])
+    return cases,{case.split('/')[1] for case in cases}
+
 def local_inventory():
     INV.mkdir(parents=True,exist_ok=True);OUT.mkdir(parents=True,exist_ok=True)
     tracked=set(filter(None,git('ls-files','-z').split('\0')))
@@ -124,6 +144,7 @@ def local_inventory():
             git_state='tracked' if name in tracked else 'untracked',dirty=name in dirty,
             present=present,bytes=p.stat().st_size if present else 0,sha256=digest(p) if present else ''))
     csvsave(INV/'local_files.csv',rows,list(rows[0]))
+    cleanup_cases,cleanup_groups=completed_cleanup()
     output_rows=[];metadata=[];skipped=[]
     for group in sorted((ROOT/'output').iterdir()):
         if not group.is_dir() or group.is_symlink() or group.name in {'project_management','managed_execution'}:continue
@@ -139,7 +160,8 @@ def local_inventory():
                         if size<=8*1024**2:metadata.append(p)
                         else:skipped.append(dict(path=rel(p),reason='metadata_over_8MiB'))
                 except OSError as e:skipped.append(dict(path=rel(p),reason=type(e).__name__))
-        output_rows.append(dict(path=rel(group),files=count,bytes=total,role='generated_evidence',cleanup_status='requires_separate_review'))
+        output_rows.append(dict(path=rel(group),files=count,bytes=total,role='generated_evidence',cleanup_status=
+            'approved_duplicates_removed_remaining_requires_review' if group.name in cleanup_groups else 'requires_separate_review'))
     csvsave(INV/'local_outputs.csv',output_rows,['path','files','bytes','role','cleanup_status'])
     grouped={};errors=[]
     for p in metadata:
@@ -166,6 +188,11 @@ def local_inventory():
         elif row['group']=='sar8_r4_performance':row['design_id']='sar8_r4_original'
         else:row['design_id']=None
         row['retention']='protected_pending_review' if row['group'] in {'sar8_stress_closure','sar8_r4_performance','sar8_idle_performance','b_short_acceptance'} else 'unreviewed_historical_evidence'
+        if row['local_case'] in cleanup_cases:
+            row['approved_cleanup']=cleanup_cases[row['local_case']]
+            row['retention']=('local_duplicate_removed_server_native_retained'
+                if row['approved_cleanup']['local_state']=='approved_duplicate_removed'
+                else 'local_copy_present_after_cleanup_requires_reconcile')
         receipt=ROOT/'verification'/row['group']/(row['case']+'_stream_receipt.json')
         analysis=ROOT/'verification'/row['group']/(row['case']+'_stream_analysis.json')
         if receipt.exists() and analysis.exists():
@@ -533,7 +560,7 @@ def render_status(snapshot,issues):
         '- [完整差异](inventory/issues.yaml)、[资源与权责](project.yaml)、[使用说明](README.md)。','',
         '## 统一执行入口','',
         '新任务使用 `scripts/management/project.py` 的 register / submit / run-status / analyze / collect。',
-        '服务器 SSD 根目录与资源策略见 [执行说明](README.md#统一仿真与回收)。历史数据不迁移、不清理。','',
+        '服务器 SSD 根目录与资源策略见 [执行说明](README.md#统一仿真与回收)。历史清理由独立审核清单和回执管理。','',
         '| Managed run | 本地最后观察 | 远端目录 |','| --- | --- | --- |']
     for item in managed_records():
         rid=item['recipe']['run_id'];p=ROOT/'output/managed_execution/runs'/rid/'status.json'
@@ -541,6 +568,10 @@ def render_status(snapshot,issues):
         label=' / '.join(obs.get(k,{}).get('status','未查询') for k in ['simulation','analysis'])
         lines.append(f"| `{rid}` | {label} | `{item['remote_path']}` |")
     lines+=['','本地最后观察不保证实时；`run-status RUN_ID` 才会查询服务器。','']
+    cleanup_report=REG/'cleanup/2026-10-25/execution.md'
+    if cleanup_report.exists():
+        lines+=['## 已批准历史清理','',
+            '[执行回执与 home 检查](cleanup/2026-10-25/execution.md)：本地35.074 GiB、服务器10.913 GiB重复副本已清理；10份服务器原始波形保留。home未删。','']
     (REG/'STATUS.md').write_text('\n'.join(lines),encoding='utf-8')
 
 def check():

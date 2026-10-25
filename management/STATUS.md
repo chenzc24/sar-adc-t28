@@ -4,10 +4,10 @@
 
 | 范围 | 已登记 | 观察时间 北京时间 |
 | --- | ---: | --- |
-| 本地源文件记录 | 1232 | 2026-10-25 11:27:04 |
-| 本地生成物目录 | 115 | 同上 |
+| 本地源文件记录 | 1397 | 2026-10-25 15:50:40 |
+| 本地生成物目录 | 116 | 同上 |
 | 历史运行元数据记录 | 190 | 同上 |
-| 远端精确引用路径 | 260 | 2026-10-25 11:20:27 |
+| 远端精确引用路径 | 274 | 2026-10-25 15:47:04 |
 | Virtuoso 实际单元 | 247 | 2026-10-25 10:56:43 |
 
 OA 观察方式：`live_bridge_DD_metadata`。
@@ -51,11 +51,29 @@ OA 观察方式：`live_bridge_DD_metadata`。
 ## 统一执行入口
 
 新任务使用 `scripts/management/project.py` 的 register / submit / run-status / analyze / collect。
-服务器 SSD 根目录与资源策略见 [执行说明](README.md#统一仿真与回收)。历史数据不迁移、不清理。
+服务器 SSD 根目录与资源策略见 [执行说明](README.md#统一仿真与回收)。历史清理由独立审核清单和回执管理。
 
 | Managed run | 本地最后观察 | 远端目录 |
 | --- | --- | --- |
+| `sar8fix-c1r4-ffcold` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-c1r4-ffcold` |
+| `sar8fix-hyblong-sscold` | complete / not_started | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-hyblong-sscold` |
+| `sar8fix-hybscreen-sscold` | 未查询 / 未查询 | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-hybscreen-sscold` |
+| `sar8fix-ioscreen-ffcold` | 未查询 / 未查询 | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ioscreen-ffcold` |
+| `sar8fix-ioscreen-ffhot` | complete / not_started | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ioscreen-ffhot` |
+| `sar8fix-ioscreen-sscold` | complete / not_started | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ioscreen-sscold` |
+| `sar8fix-ioscreen-sshot` | 未查询 / 未查询 | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ioscreen-sshot` |
+| `sar8fix-ioscreen-tt` | 未查询 / 未查询 | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-ioscreen-tt` |
+| `sar8fix-natlong-ffcold` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natlong-ffcold` |
+| `sar8fix-natlong-ffhot` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natlong-ffhot` |
+| `sar8fix-natlong-sscold` | complete / not_started | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natlong-sscold` |
+| `sar8fix-natlong-sshot` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natlong-sshot` |
+| `sar8fix-natlong-tt` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natlong-tt` |
+| `sar8fix-natscreen-sscold` | complete / not_started | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-natscreen-sscold` |
 | `workflow-rc-20261025-final` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/workflow-rc-20261025-final` |
 | `workflow-rc-20261025` | complete / complete | `/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/workflow-rc-20261025` |
 
 本地最后观察不保证实时；`run-status RUN_ID` 才会查询服务器。
+
+## 已批准历史清理
+
+[执行回执与 home 检查](cleanup/2026-10-25/execution.md)：本地35.074 GiB、服务器10.913 GiB重复副本已清理；10份服务器原始波形保留。home未删。
