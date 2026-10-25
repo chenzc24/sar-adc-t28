@@ -57,8 +57,8 @@ management commits b6da655/657f5b6 remain intact.
 - Initial budget: simulation RSS 1024 MiB, virtual 8192 MiB, 3600 s; analysis
   RSS 256 MiB, virtual 1024 MiB, 1800 s; output 32 GiB for full MOS voltage
   coverage; collection <=32 MiB. SSD admission reported 557 GiB free.
-- Stream every native point for device peaks; export compact min/max-preserving
-  plotting data, not full raw. Never load multi-GB ASCII PSF in memory.
+- Stream every native point for device peaks; export compact plotting data and
+  separate exact native extrema, not full raw. Never load multi-GB ASCII PSF in memory.
 - Exact case-sensitive voltage/current saves; validate TRACE, END, stop time,
   native PASS/exit, effective CX conservative tolerances and all device mappings.
 - Guardrails: same external sources and SEQ_SAMPLE edges (report actual deltas),
@@ -163,3 +163,52 @@ load, CM range and kickback; then reference full-off leakage/real BBM/full-CDAC,
 followed by tolerant digital timing integration. Preserve external supply/sample
 contract. All existing ADC circuits/OA remain unchanged. No background worker
 remains at this checkpoint; overall physical repair stays incomplete and active.
+
+## Real-load integration phase (user authorized continuation)
+
+Start HEAD 14b9446; unrelated cleanup commit and user dirty files are protected.
+Bridge t28_io / thu-wei / expected CIW / Spectre verified healthy. OA remains none.
+Use unchanged full ADC hierarchy as the real-load fixture: first replace only
+reference switches (ordinary IO scale2) at FF cold, and only comparator (N4)
+at SS cold. Both retain actual CDAC, physical BBM drivers, downstream logic and
+original comparator output MOMs. These are diagnostic integration tests, not
+adopted versions. Follow with combined candidate and five PVT points after
+understanding loaded behavior; fix failed circuits rather than suppress warnings.
+
+Add exact native-point supply-energy integration and event timestamps to bounded
+stream reduction; selected plotted waveforms may be compact. Save comparator
+input gate currents, all four reference-switch terminal currents on diagnostic
+branches, actual reset/compare/write/update/sample signals. Measure load-induced
+top-plate motion, input charge, reset recovery and energy separately from code
+correctness. Do not label motion during CDAC switching as comparator-only kickback.
+Verify unchanged unselected devices, loads, external stimulus and monitor hashes.
+Same corner baseline is required for aperture and energy comparisons. Test the
+new integration reducer on a synthetic sparse PSF before remote use.
+
+Numerical screening study: before spending another full strict batch on a
+known-incomplete integrated circuit, compare the identical loaded reference
+candidate with requested reltol 1e-4 (versus 1e-6 strict; actual CX settings must
+be read from logs). Keep maxstep10ps and absolute tolerances unchanged. This is
+a different-precision diagnostic screen, NOT an equal-accuracy speed claim.
+Check code/events, sample edges, native stress maxima and energy against the
+already completed strict run. Only use it for candidate triage if stress differs
+by <0.1mV, timing by <5ps and energy by <0.5%; final closure still requires strict
+PVT/performance verification. Preserve both inputs and results independently.
+
+Loaded checkpoint: reference-only FF cold and comparator-only SS cold complete;
+both give243/12, reset and external aperture checks pass. IO reference worsens
+BP7 undershoot to -82.31mV but settles; N4 increases compare-phase top motion
+and does not reach the optional 0.8VDD differential-output diagnostic threshold
+before write. This threshold is not substituted for the actual receiver trip point.
+Original core driver/control stress remains unresolved. The combined five-corner
+batch is therefore a diagnostic interaction regression, not final qualification.
+Run it at the original strict tolerance; no digital/timing changes in this batch.
+Preserve new unrelated cleanup commits98bc95c/19ae72f. No historical deletion here.
+
+Next bounded comparator check: N4 raw output high is only0.403V at the final
+SS-cold write (VDD0.81V), despite a correct code. Diagnose by increasing ONLY
+the two cross-coupled PMOS latch multiplicities2->4; keep native input/latch,
+tail, reset, MOM and logic unchanged. Actual downstream receiver timing, not an
+invented rail-to-rail condition, determines functional validity. Test SS cold
+under the same full load and strict settings; do not substitute it into the
+already-frozen five-point batch. No new supply or external timing changes.

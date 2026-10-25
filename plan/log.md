@@ -3527,3 +3527,37 @@ human-triggered note in `docs/experience/`.
   and scoped diff checks passed. No circuit/simulation/process changes.
   Concurrent loaded-block reports, experiments and user notes/10-bit work
   preserved. Task-only local completion commit, no push.
+
+## 2026-10-25 Tolerant reference and comparator real-load checkpoint
+
+- Preserved external0.81–0.99V contract, original input/reference50ohm networks,
+  actual CDAC/MOM/controller load and sample sources. No OA changes or baseline
+  adoption. Cleanup commits14b9446/98bc95c/19ae72f and unrelated user notes/10-bit
+  files untouched. Own code/report updates use the active physical-repair plan.
+- Completed managed strict reference-only FF cold, unchanged SS cold baseline,
+  comparator-only SS cold, and identical reference numerical-control runs.
+  Native exit0/PASS,200ns/END,1015 saved traces/10998 MOS pairs, all frozen and
+  collected SHA256 checked. Native events and V*I integration; compact20ps
+  display and gate-charge estimates explicitly separated. Synthetic sparse
+  GROUP/PROP parser, hidden-spike and frame-split integration tests pass.
+- ReferenceIO scale2 gives243/12, passes its1.98V class screen, but BP7 down to
+  -82.31mV. All14 settling deadlines pass; second-frame power173.597uW.
+  Unchanged core driver/comparator/control still exceed.99V. Not repaired.
+- N4 real load gives243/12, second-frame44.102ns, held+.338mV, final reference
+  reset197.366ns, power102.527uW. SS-cold all-pair screen passes. Larger input
+  charge/kickback and reduced raw output high(.403V at last write) retained as
+  risks; no rail-to-rail diagnostic threshold substituted for actual receiver.
+  Startup DC frame is not a real power-ramp reset test. Original first241 remains.
+- Numerical screen(actual1e-5 versus1e-7 strict) fails predeclared peak delta
+  gate:1.004mV versus0.1mV. Same codes do not justify relaxed PVT settings.
+- Registered/submitted strict combined five-corner batch and separate N4
+  PMOS-latch2->4 SS-cold single-variable control, all unique frozen IDs.
+  Managed single-worker queue; no duplicate simulations or raw downloads.
+  One-shot local continuations request managed analysis then verified collection
+  and local metrics; this is not a new recurring automation. Runs are ongoing,
+  results not yet reviewed, overall repair remains INCOMPLETE.
+- Controlled small circuit seed and observer archived, three original loaded
+  inputs reproducible; no PDK content or raw waveforms staged. Reference,
+  comparator and reset figures visually inspected. Python compile and scoped
+  diff checks performed; unrelated pre-existing Obsidian trailing whitespace
+  left untouched. Task-only local checkpoint commit, no push.

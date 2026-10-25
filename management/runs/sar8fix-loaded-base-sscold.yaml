@@ -1,0 +1,115 @@
+managed: true
+recipe_hash: e509806634c33235f81601addcffc3b399cda0133a05e2b3ca77c7f1350b829a
+recipe:
+  schema_version: 1
+  run_id: sar8fix-loaded-base-sscold
+  design_id: sar8_loaded_tolerant_base
+  entry: test.scs
+  analyzer: loaded_remote.py
+  files:
+  - name: dut.scs
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/dut.scs
+    bytes: 190440
+    sha256: 41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4
+  - name: test.scs
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/test.scs
+    bytes: 31684
+    sha256: 7683f71b64ba513eeda0773d9fd2b5f915f32a3c51af2369106f03f913c85834
+  - name: mapping.json
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/mapping.json
+    bytes: 3278753
+    sha256: e7938301f6d60984791475bf178b23bfd4bef6b570626c28b3e1b20a4e31bbf9
+  - name: selected.txt
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/selected.txt
+    bytes: 3486
+    sha256: 4a6e3a9b62216e3f966286be79b2b6532213ce6106e3a0824e490ec5e9fb9d84
+  - name: pairs.txt
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/pairs.txt
+    bytes: 117808
+    sha256: e487d226e496b56ec1e977c7c279c38c767aaac53294d9c2083fda628726e1a6
+  - name: events.txt
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/events.txt
+    bytes: 253
+    sha256: 17880020ae1de42e3601ab10c1f8bdec597a193556999161441be39658000512
+  - name: products.txt
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/products.txt
+    bytes: 2335
+    sha256: 09d55d7e44870d472db5feaf92567e4c7336dff332769b61ad5cab94ad45476d
+  - name: stream.cpp
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/stream.cpp
+    bytes: 7251
+    sha256: 3452d0a660c712d25caddf6da41e20996012ffadd4a9604b8cfe3f0c26519827
+  - name: r4_perf_monitor.va
+    source: output/sar8_physical_repair/sar8fix-loaded-base-sscold/r4_perf_monitor.va
+    bytes: 3068
+    sha256: b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3
+  - name: loaded_remote.py
+    source: scripts/sar8_physical_repair/loaded_remote.py
+    bytes: 1805
+    sha256: 69575563d9e6eee593a0d2dc1622939c9b2648fcba1328e4494d525361f80f66
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 32768
+    simulation_wall_seconds: 3600
+    analysis_wall_seconds: 1800
+    queue_timeout_seconds: 7200
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - xdut.cmp_clk
+  - xdut.topp
+  - xdut.topn
+  expected_stop_s: 2.0e-07
+  qualification_scope: Two-frame real-load diagnosis, not qualification or baseline
+    adoption
+  source_commit: 14b94468b4a509f6e1c125691230f2e110d00ad0
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ssmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: ss
+    temperature_c: -40
+    vdd: 0.81
+    vrefp: 0.9
+    mode: base
+    tail_units: 4
+    reset_units: 2
+    sample_clock_unchanged: true
+    actual_aperture_to_verify: true
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8fix-loaded-base-sscold
