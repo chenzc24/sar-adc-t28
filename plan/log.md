@@ -3627,3 +3627,31 @@ human-triggered note in `docs/experience/`.
 - Report retains chronological evidence and leads with current incomplete state.
   Only task-owned checkpoint sources/results staged; follow-up tail results and
   remaining FF/control/startup/performance work stay active. Local commit only.
+
+
+### 2026-10-27 — Local SAR ADC document and artifact hygiene
+
+User requested cleanup of obsolete SAR_ADC products and documentation. Archived
+only the former root README and docs/project_status navigation, preserving their
+historical text and rebasing Markdown links. New root and docs index distinguish
+manual ADC, ongoing module audits, preserved R3/R4 references, early 10-bit 5+5
+and independent cdac10 work; catalog covers all 84 engineering reports. Fixed
+navigation to the user's existing Obsidian Rvision/Head.md without moving notes.
+
+Removed 369 individually verified ignored Python/pytest cache files, 4,499,577 B;
+exact inventory and receipt: management/cleanup/2026-10-27/. Local output census
+was 73,293,228,421 B (68.260 GiB), not removable space. Preserved all raw waveform,
+reduced/pickle/log/failure evidence, unresolved plans, dirty work and protected
+active caches. No remote access, OA/PDK/circuit change, run launch or adoption.
+
+Validation: exact archived text with recorded link transformations, all new
+local links and catalog coverage, JSON, cache absence, protected source hashes,
+retained generated-file metadata and original log prefix; git diff --check.
+Machine results are in the cleanup validation.json. Scoped local commit only,
+excluding other owners' changes; no push.
+
+Concurrent observation: the manual ADC owner updated its implementation plan
+with new behavioral-authoring scope during this cleanup. Recorded its exact
+before/after hashes; excluded it from unchanged-file counts and from staging.
+All other protected source records and retained generated-file metadata are
+checked independently. No cleanup operation wrote that plan.
