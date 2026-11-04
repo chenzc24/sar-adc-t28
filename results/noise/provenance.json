@@ -1,0 +1,100 @@
+{
+  "run_id": "sar8noise-b-tt-fft1024-g2-s101-v1",
+  "recipe_hash": "801428c34c56668eb389ab37962e9df6069a265c3ee1151ebda5883afbe6f474",
+  "conditions": {
+    "frames": 1032,
+    "warmup": 8,
+    "stop_s": 0.00010325900000000001,
+    "signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vvdd:p",
+      "vrefhigh:p",
+      "vreflow:p",
+      "vsample:p"
+    ],
+    "frequency_hz": 4501953.125,
+    "samples": 1024,
+    "bin": 461,
+    "amplitude_dbfs": -1,
+    "run_id": "sar8noise-b-tt-fft1024-g2-s101-v1",
+    "kind": "dynamic",
+    "label": "b",
+    "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "reference_v": 0.9,
+    "frame_origin_s": 5.9e-08,
+    "noise": true,
+    "mismatch": false,
+    "PEX": false,
+    "passive_corner": "nominal_tt",
+    "solver_profile": "mm",
+    "solver_reference": "sar8camp-b-tt-fft1024-v1",
+    "noisefmax_hz": 2000000000,
+    "noisefmin_hz": 10000,
+    "noiseseed": 101,
+    "noisescale": 1,
+    "source_run_id": "sar8camp-b-tt-fft1024-mm-v1",
+    "noise_scope": "all enabled device model noise plus four external50ohm resistors",
+    "noise_model_section": "noise_worst"
+  },
+  "inputs": [
+    {
+      "name": "test.scs",
+      "sha256": "1d8d033f46288b7c10c06d9e1ec409c81da7d2ddc71b1ac34182f169cb177d1e"
+    },
+    {
+      "name": "tb.scs",
+      "sha256": "8f05a9a880d8fe6585042d4350b1d97929470c15c988f89fd7940277e57bfeae"
+    },
+    {
+      "name": "context.json",
+      "sha256": "7f2d01f821a539899d8c8b3e037d8ed89a6d910958808be84e7e77d5be3c6b8b"
+    },
+    {
+      "name": "dut.scs",
+      "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea"
+    },
+    {
+      "name": "library_include.scs",
+      "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe"
+    },
+    {
+      "name": "r4_perf_monitor.va",
+      "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3"
+    },
+    {
+      "name": "dynamic_reduce.py",
+      "sha256": "bc4a4298331286b99fa0e0c3764249e72b7300d54c925740da8d6c053f79c088"
+    },
+    {
+      "name": "native_stream.py",
+      "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef"
+    },
+    {
+      "name": "baseline_result.json",
+      "sha256": "e9b5c9f1a53965504f98a09e93dfce0d6c9c824e6f31a70259bd31a82f500f12"
+    },
+    {
+      "name": "reduce_fft.py",
+      "sha256": "3e9053610e76bde74ad0f16fc078a062b611f80a91e71f18f6fbb95b978f39dc"
+    },
+    {
+      "name": "native_summary.py",
+      "sha256": "6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57"
+    }
+  ],
+  "limits": "Single TT noise seed; bandwidth/grid/statistical convergence not established"
+}

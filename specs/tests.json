@@ -1,0 +1,1069 @@
+{
+  "tt_short": {
+    "run_id": "sar8camp-b-mm-bench-v1",
+    "recipe_sha256": "396f74462dba5812999ea99a3ebf78592c02f65eea8d4c5627f05b6d6fa797f0",
+    "entry": "test.scs",
+    "analyzer": "reduce.py",
+    "inputs": [
+      {
+        "source": "design/frozen/b/dut.scs",
+        "name": "dut.scs",
+        "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs"
+      },
+      {
+        "source": "tb/top/short/test.scs",
+        "name": "test.scs",
+        "sha256": "4a167033093b92d2279df29904659ddb3db6b2113fc7a06a6ae75025d4bae7d5",
+        "original_source": "verification/sar8_campaign/sar8camp-b-mm-bench-v1/test.scs"
+      },
+      {
+        "source": "tb/top/short/tb.scs",
+        "name": "tb.scs",
+        "sha256": "4ba6135e471f76411967e7c49f231c4747adca07b840a32576e22f5390faefef",
+        "original_source": "verification/sar8_ab_phase60/b/tb.scs"
+      },
+      {
+        "source": "tb/top/short/context.json",
+        "name": "context.json",
+        "sha256": "0186016a238373505e5c16646288e98d95dcac5f4a52987fa832047bf555edaa",
+        "original_source": "verification/sar8_campaign/sar8camp-b-mm-bench-v1/context.json"
+      },
+      {
+        "source": "tb/common/platform/library_include.scs",
+        "name": "library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "source": "tb/common/veriloga/r4_perf_monitor.va",
+        "name": "r4_perf_monitor.va",
+        "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3",
+        "original_source": "scripts/sar8_ab_phase60/r4_perf_monitor.va"
+      },
+      {
+        "source": "tools/saradc/measure/reduce.py",
+        "name": "reduce.py",
+        "sha256": "a4b65265c6a95c9e802384b7dc24b1128e57ca4399021e69c54801adfd3ad7f1",
+        "original_source": "scripts/sar8_ab_phase60/reduce.py"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 2048,
+      "simulation_wall_seconds": 43200,
+      "analysis_wall_seconds": 1200,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "label": "b",
+      "expected_codes": [
+        0,
+        0,
+        12,
+        127,
+        128,
+        243,
+        255,
+        255,
+        0,
+        128
+      ],
+      "frames": 10,
+      "corner": "tt",
+      "vdd": 0.9,
+      "temperature_c": 27,
+      "reference_v": 0.9,
+      "LSB": 0.00703125,
+      "period_s": 1e-07,
+      "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "signals": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sample",
+        "vdd!",
+        "vinp_src",
+        "vinn_src",
+        "vinp",
+        "vinn",
+        "vrefp",
+        "vrefn",
+        "xdut.sample_int",
+        "xdut.seq_sample",
+        "xdut.cmp_clk",
+        "xdut.xctrl.phi_w",
+        "xdut.phi_u",
+        "xdut.xref.cap_clk",
+        "xdut.topp",
+        "xdut.topn",
+        "xdut.xbootp.g",
+        "xdut.xbootn.g",
+        "xdut.active",
+        "xdut.comp_p",
+        "xdut.comp_n",
+        "xdut.xbootp.btop",
+        "xdut.xbootp.bbot",
+        "xdut.xbootn.btop",
+        "xdut.xbootn.bbot"
+      ],
+      "startup_frames": [
+        0
+      ],
+      "settling_band_lsb": 0.25,
+      "noise": false,
+      "mismatch": false,
+      "PEX": false,
+      "frame_origin_s": 5.9e-08,
+      "expected_stop_s": 1.059e-06,
+      "initial_low_until_s": 6e-08,
+      "startup_method": "External clock low-first phase; no forced internal nodes; DC initialized",
+      "unscored_interval_s": [
+        0,
+        5.9e-08
+      ],
+      "first_valid_frame_must_pass": true,
+      "run_id": "sar8camp-b-mm-bench-v1",
+      "solver_profile": "mm",
+      "solver_reference": "sar8ab-phase60-b-tt-v1"
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-mm-bench-v1",
+    "directory": "tb/top/short",
+    "original_recipe": "management/recipes/sar8camp-b-mm-bench-v1.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 1.059e-06,
+    "summary_signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vinp",
+      "vinn",
+      "vrefp",
+      "vrefn",
+      "xdut.sample_int",
+      "xdut.seq_sample",
+      "xdut.cmp_clk",
+      "xdut.xctrl.phi_w",
+      "xdut.phi_u",
+      "xdut.xref.cap_clk",
+      "xdut.topp",
+      "xdut.topn",
+      "xdut.xbootp.g",
+      "xdut.xbootn.g",
+      "xdut.active",
+      "xdut.comp_p",
+      "xdut.comp_n",
+      "xdut.xbootp.btop",
+      "xdut.xbootp.bbot",
+      "xdut.xbootn.btop",
+      "xdut.xbootn.bbot"
+    ],
+    "qualification_scope": "Paired TT function/aperture/handshake/settling; stress deferred"
+  },
+  "tt_fft1024": {
+    "run_id": "sar8camp-b-tt-fft1024-mm-v1",
+    "recipe_sha256": "41d49ef0b82f0bcfc7c3059cc7b033c9ba6fbbf70d7f933d7a893d96ca5cfc78",
+    "entry": "test.scs",
+    "analyzer": "dynamic_reduce.py",
+    "inputs": [
+      {
+        "source": "tb/top/fft/test.scs",
+        "name": "test.scs",
+        "sha256": "30a32dbcf8d7fcfc7719c470249af536c1d9f000608a498d58dc9434de7d445f",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-fft1024-mm-v1/test.scs"
+      },
+      {
+        "source": "tb/top/fft/tb.scs",
+        "name": "tb.scs",
+        "sha256": "137ac7385dd9bffb29ce236c2877fd881115ee8024bf14d1d5166e7fe55a3ff3",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-fft1024-v1/tb.scs"
+      },
+      {
+        "source": "tb/top/fft/context.json",
+        "name": "context.json",
+        "sha256": "de608f43ff8a02163c33ba2c21d2d836b2243602acc6df0f72a4cc185c66a637",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-fft1024-mm-v1/context.json"
+      },
+      {
+        "source": "design/frozen/b/dut.scs",
+        "name": "dut.scs",
+        "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs"
+      },
+      {
+        "source": "tb/common/platform/library_include.scs",
+        "name": "library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "source": "tb/common/veriloga/r4_perf_monitor.va",
+        "name": "r4_perf_monitor.va",
+        "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3",
+        "original_source": "scripts/sar8_campaign/r4_perf_monitor.va"
+      },
+      {
+        "source": "tools/saradc/measure/dynamic_reduce.py",
+        "name": "dynamic_reduce.py",
+        "sha256": "bc4a4298331286b99fa0e0c3764249e72b7300d54c925740da8d6c053f79c088",
+        "original_source": "scripts/sar8_campaign/dynamic_reduce.py"
+      },
+      {
+        "source": "tools/saradc/measure/native_stream.py",
+        "name": "native_stream.py",
+        "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+        "original_source": "scripts/sar8_campaign/native_stream.py"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 16384,
+      "simulation_wall_seconds": 345600,
+      "analysis_wall_seconds": 7200,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "frames": 1032,
+      "warmup": 8,
+      "stop_s": 0.00010325900000000001,
+      "signals": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sample",
+        "vdd!",
+        "vinp_src",
+        "vinn_src",
+        "vvdd:p",
+        "vrefhigh:p",
+        "vreflow:p",
+        "vsample:p"
+      ],
+      "frequency_hz": 4501953.125,
+      "samples": 1024,
+      "bin": 461,
+      "amplitude_dbfs": -1,
+      "run_id": "sar8camp-b-tt-fft1024-mm-v1",
+      "kind": "dynamic",
+      "label": "b",
+      "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "corner": "tt",
+      "vdd": 0.9,
+      "temperature_c": 27,
+      "reference_v": 0.9,
+      "frame_origin_s": 5.9e-08,
+      "noise": false,
+      "mismatch": false,
+      "PEX": false,
+      "passive_corner": "nominal_tt",
+      "solver_profile": "mm",
+      "solver_reference": "sar8camp-b-tt-fft1024-v1"
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-tt-fft1024-mm-v1",
+    "directory": "tb/top/fft",
+    "original_recipe": "management/recipes/sar8camp-b-tt-fft1024-mm-v1.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 0.00010325900000000001,
+    "summary_signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vvdd:p",
+      "vrefhigh:p",
+      "vreflow:p",
+      "vsample:p"
+    ],
+    "qualification_scope": "Conditional frozen functional characterization; stress deferred"
+  },
+  "tt_static_low": {
+    "run_id": "sar8camp-b-tt-s001-003-v1",
+    "recipe_sha256": "845080938e67f3d9c2417804d1b4924b4e1db8575989a018fd989f4437a68fc3",
+    "entry": "test.scs",
+    "analyzer": "static_reduce.py",
+    "inputs": [
+      {
+        "source": "tb/top/static/test.scs",
+        "name": "test.scs",
+        "sha256": "eee49ec09dd11d60a5b2d748f5a72cf960d3fafc64bfd9179e4c8ac2b913fb58",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-s001-003-v1/test.scs"
+      },
+      {
+        "source": "tb/top/static/tb.scs",
+        "name": "tb.scs",
+        "sha256": "f4ee8486a3df7d0aae84532172bdc1462c56b4b5ffa0611078c4fb087412f286",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-s001-003-v1/tb.scs"
+      },
+      {
+        "source": "tb/top/static/context.json",
+        "name": "context.json",
+        "sha256": "64d863462ed46588c1639a12a7685734ad5d24bb3bca37e5854698b979c183ea",
+        "original_source": "verification/sar8_campaign/sar8camp-b-tt-s001-003-v1/context.json"
+      },
+      {
+        "source": "design/frozen/b/dut.scs",
+        "name": "dut.scs",
+        "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs"
+      },
+      {
+        "source": "tb/common/platform/library_include.scs",
+        "name": "library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "source": "tb/common/veriloga/r4_perf_monitor.va",
+        "name": "r4_perf_monitor.va",
+        "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3",
+        "original_source": "scripts/sar8_campaign/r4_perf_monitor.va"
+      },
+      {
+        "source": "tools/saradc/measure/static_reduce.py",
+        "name": "static_reduce.py",
+        "sha256": "f456567c148671a15a2bc0ebac562c9b75c1be7f62c80fe97b1ae1fa50339863",
+        "original_source": "scripts/sar8_campaign/static_reduce.py"
+      },
+      {
+        "source": "tb/common/veriloga/r4_transition_stim.va",
+        "name": "r4_transition_stim.va",
+        "sha256": "1fceeb6af892b2ef6b295e1285011d67f486188da62dfe13f086cc9be3409040",
+        "original_source": "scripts/sar8_campaign/r4_transition_stim.va"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 2048,
+      "simulation_wall_seconds": 172800,
+      "analysis_wall_seconds": 1800,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=cx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "first": 1,
+      "last": 3,
+      "frames": 35,
+      "warmup": 4,
+      "refine": 7,
+      "stop_s": 3.559e-06,
+      "signals": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sample",
+        "vdd!",
+        "xdut.sample_int",
+        "xdut.cmp_clk",
+        "xdut.topp",
+        "xdut.topn",
+        "vinp_src",
+        "vinn_src"
+      ],
+      "fullscale_v": 1.8,
+      "run_id": "sar8camp-b-tt-s001-003-v1",
+      "kind": "static",
+      "label": "b",
+      "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "corner": "tt",
+      "vdd": 0.9,
+      "temperature_c": 27,
+      "reference_v": 0.9,
+      "frame_origin_s": 5.9e-08,
+      "noise": false,
+      "mismatch": false,
+      "PEX": false,
+      "passive_corner": "nominal_tt"
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-tt-s001-003-v1",
+    "directory": "tb/top/static",
+    "original_recipe": "management/recipes/sar8camp-b-tt-s001-003-v1.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 3.559e-06,
+    "summary_signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "xdut.sample_int",
+      "xdut.cmp_clk",
+      "xdut.topp",
+      "xdut.topn",
+      "vinp_src",
+      "vinn_src"
+    ],
+    "qualification_scope": "Conditional frozen functional characterization; stress deferred"
+  },
+  "mc_comparator_tt": {
+    "run_id": "sar8mc-comp-s4101-v2",
+    "recipe_sha256": "fdcb4b2ed4d18c92216248bc08339a88fd966d64884da6b00ee160f75110830f",
+    "entry": "test.scs",
+    "analyzer": "block_reduce.py",
+    "inputs": [
+      {
+        "source": "tb/blocks/comparator/test.scs",
+        "name": "test.scs",
+        "sha256": "3fa450b9170e995876527cc4d5b7ab39a714320facd474f797e7b0b04ed0a091",
+        "original_source": "verification/sar8_mc/blocks/sar8mc-comp-s4101-v2/test.scs"
+      },
+      {
+        "source": "tb/blocks/comparator/context.json",
+        "name": "context.json",
+        "sha256": "95fd805e8bc38803538e6ff7b3e097be3c5adfca4d2f8ea67ccf414fc5de5578",
+        "original_source": "verification/sar8_mc/blocks/sar8mc-comp-s4101-v2/context.json"
+      },
+      {
+        "source": "tools/saradc/measure/block_reduce.py",
+        "name": "block_reduce.py",
+        "sha256": "c7a9179fe7d373609a50c521652b6ee0b0a39539cb49e0ae6d94b78f0454a9ef",
+        "original_source": "scripts/sar8_mc/block_reduce.py"
+      },
+      {
+        "source": "tools/saradc/measure/native_stream.py",
+        "name": "native_stream.py",
+        "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+        "original_source": "scripts/sar8_campaign/native_stream.py"
+      },
+      {
+        "source": "tb/common/platform/library_include.scs",
+        "name": "library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "source": "tb/common/veriloga/comp_search.va",
+        "name": "comp_search.va",
+        "sha256": "3183a690214d00a6b79b58f3700c5f464dade13183fe4e85743c9fc01d525198",
+        "original_source": "scripts/sar8_mc/comp_search.va"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 256,
+      "simulation_wall_seconds": 7200,
+      "analysis_wall_seconds": 600,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "run_id": "sar8mc-comp-s4101-v2",
+      "family": "comp",
+      "seed": 4101,
+      "mismatch": true,
+      "process_variation": false,
+      "noise": false,
+      "vdd": 0.9,
+      "temperature_c": 27,
+      "cm": 0.45,
+      "scope": "Independent module mismatch characterization, no integrated yield or stress qualification",
+      "parent_dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "cycles": 22,
+      "period_s": 5e-09,
+      "report_s": 3.775e-09,
+      "search_steps": 10,
+      "search_range_v": 0.064,
+      "stop_s": 1.09e-07,
+      "threshold_window_s": 1.75e-09,
+      "fixture_revision": 2,
+      "preserve_inst": "all"
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8mc-comp-s4101-v2",
+    "directory": "tb/blocks/comparator",
+    "original_recipe": "management/recipes/sar8mc-comp-s4101-v2.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 1.09e-07,
+    "summary_signals": [
+      "op",
+      "on",
+      "pr",
+      "nr",
+      "clk",
+      "vinp",
+      "vinn",
+      "xcmp.x",
+      "xcmp.y",
+      "xcmp.tail"
+    ],
+    "qualification_scope": "Independent module mismatch characterization, no integrated yield or stress qualification"
+  },
+  "mc_cdac_tt": {
+    "run_id": "sar8mc-cdac-s4101-v2",
+    "recipe_sha256": "31387780a5667d793f0f8a48566cb358dd1a2665cb12f77f3e344deb33503377",
+    "entry": "test.scs",
+    "analyzer": "block_reduce.py",
+    "inputs": [
+      {
+        "source": "tb/blocks/cdac/test.scs",
+        "name": "test.scs",
+        "sha256": "632ad6cc7997cd7887ae194226bfa7dc4d5e2b7a0084ffd0b51c20d6cc705b1d",
+        "original_source": "verification/sar8_mc/blocks/sar8mc-cdac-s4101-v2/test.scs"
+      },
+      {
+        "source": "tb/blocks/cdac/context.json",
+        "name": "context.json",
+        "sha256": "b04f5a07129a8cf009e135937355f20504c63f79943db99c41c6d7ae806cec57",
+        "original_source": "verification/sar8_mc/blocks/sar8mc-cdac-s4101-v2/context.json"
+      },
+      {
+        "source": "tools/saradc/measure/block_reduce.py",
+        "name": "block_reduce.py",
+        "sha256": "c7a9179fe7d373609a50c521652b6ee0b0a39539cb49e0ae6d94b78f0454a9ef",
+        "original_source": "scripts/sar8_mc/block_reduce.py"
+      },
+      {
+        "source": "tools/saradc/measure/native_stream.py",
+        "name": "native_stream.py",
+        "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+        "original_source": "scripts/sar8_campaign/native_stream.py"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 256,
+      "simulation_wall_seconds": 7200,
+      "analysis_wall_seconds": 600,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "run_id": "sar8mc-cdac-s4101-v2",
+      "family": "cdac",
+      "seed": 4101,
+      "mismatch": true,
+      "process_variation": false,
+      "noise": false,
+      "vdd": 0.9,
+      "temperature_c": 27,
+      "cm": 0.45,
+      "scope": "Independent module mismatch characterization, no integrated yield or stress qualification",
+      "parent_dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "bias_v": 0.45,
+      "frequency_hz": 1000000.0,
+      "nominal_cap_units": 512,
+      "instances": 18,
+      "static_scope": "AC effective binary capacitor weights at one bias; not dynamic CDAC/ADC DNL signoff",
+      "fixture_revision": 2,
+      "preserve_inst": "all",
+      "previous_fixture_statistically_invalid": true
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8mc-cdac-s4101-v2",
+    "directory": "tb/blocks/cdac",
+    "original_recipe": "management/recipes/sar8mc-cdac-s4101-v2.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": "1e-12",
+    "summary_signals": [
+      "vcmomn8:p",
+      "vcmomn7:p",
+      "vcmomn6:p",
+      "vcmomn5:p",
+      "vcmomn4:p",
+      "vcmomn3:p",
+      "vcmomn2:p",
+      "vcmomn1:p",
+      "vcmomn0:p",
+      "vcmomp8:p",
+      "vcmomp7:p",
+      "vcmomp6:p",
+      "vcmomp5:p",
+      "vcmomp4:p",
+      "vcmomp3:p",
+      "vcmomp2:p",
+      "vcmomp1:p",
+      "vcmomp0:p"
+    ],
+    "qualification_scope": "Independent module mismatch characterization, no integrated yield or stress qualification"
+  },
+  "mc_cold_ss": {
+    "run_id": "sar8tm-ssc-s5101-v1",
+    "recipe_sha256": "7f28a109c87644345e7ea20d13973a448cd8c626e28c7564d6fd2926041e29ed",
+    "entry": "test.scs",
+    "analyzer": "timing.py",
+    "inputs": [
+      {
+        "name": "test.scs",
+        "source": "tb/top/mc_ss_cold/test.scs",
+        "sha256": "4407a9c22029218471603fb7c4798afa6fcc16a31e8f8fd7b966890288f6e7a5",
+        "original_source": "verification/sar8_mc/timing_mc/sar8tm-ssc-s5101-v1/test.scs"
+      },
+      {
+        "name": "tb.scs",
+        "source": "tb/top/mc_ss_cold/tb.scs",
+        "sha256": "4ba6135e471f76411967e7c49f231c4747adca07b840a32576e22f5390faefef",
+        "original_source": "verification/sar8_campaign/sar8camp-b-ssc-screen-v1/tb.scs"
+      },
+      {
+        "name": "context.json",
+        "source": "tb/top/mc_ss_cold/context.json",
+        "sha256": "9d757b1da5e1db3bbf4dd7022909c5f8d2285483040f1407c1de151bc725ca06",
+        "original_source": "verification/sar8_mc/timing_mc/sar8tm-ssc-s5101-v1/context.json"
+      },
+      {
+        "name": "dut.scs",
+        "source": "design/frozen/b/dut.scs",
+        "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs"
+      },
+      {
+        "name": "library_include.scs",
+        "source": "tb/common/platform/library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "name": "r4_perf_monitor.va",
+        "source": "tb/common/veriloga/r4_perf_monitor.va",
+        "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3",
+        "original_source": "scripts/sar8_campaign/r4_perf_monitor.va"
+      },
+      {
+        "name": "timing.py",
+        "source": "tools/saradc/measure/timing.py",
+        "sha256": "812de53a61518bd8e70db625e4f4728f928040f9509cea18bc3dcd6fde575434",
+        "original_source": "scripts/sar8_mc/timing_mc/timing.py"
+      },
+      {
+        "name": "native_stream.py",
+        "source": "tools/saradc/measure/native_stream.py",
+        "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+        "original_source": "scripts/sar8_campaign/native_stream.py"
+      },
+      {
+        "name": "block_reduce.py",
+        "source": "tools/saradc/measure/block_reduce.py",
+        "sha256": "c7a9179fe7d373609a50c521652b6ee0b0a39539cb49e0ae6d94b78f0454a9ef",
+        "original_source": "scripts/sar8_mc/block_reduce.py"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 1536,
+      "simulation_wall_seconds": 21600,
+      "analysis_wall_seconds": 1800,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "label": "b",
+      "expected_codes": [
+        0,
+        0,
+        12,
+        127,
+        128,
+        243,
+        255,
+        255,
+        0,
+        128
+      ],
+      "frames": 10,
+      "corner": "ss",
+      "vdd": 0.81,
+      "temperature_c": -40,
+      "reference_v": 0.9,
+      "LSB": 0.00703125,
+      "period_s": 1e-07,
+      "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "signals": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sample",
+        "vdd!",
+        "vinp_src",
+        "vinn_src",
+        "vinp",
+        "vinn",
+        "vrefp",
+        "vrefn",
+        "xdut.sample_int",
+        "xdut.seq_sample",
+        "xdut.cmp_clk",
+        "xdut.xctrl.phi_w",
+        "xdut.phi_u",
+        "xdut.xref.cap_clk",
+        "xdut.topp",
+        "xdut.topn",
+        "xdut.xbootp.g",
+        "xdut.xbootn.g",
+        "xdut.active",
+        "xdut.comp_p",
+        "xdut.comp_n",
+        "xdut.xbootp.btop",
+        "xdut.xbootp.bbot",
+        "xdut.xbootn.btop",
+        "xdut.xbootn.bbot"
+      ],
+      "startup_frames": [
+        0
+      ],
+      "settling_band_lsb": 0.25,
+      "noise": false,
+      "mismatch": true,
+      "PEX": false,
+      "frame_origin_s": 5.9e-08,
+      "expected_stop_s": 1.059e-06,
+      "initial_low_until_s": 6e-08,
+      "startup_method": "External clock low-first phase; no forced internal nodes; DC initialized",
+      "unscored_interval_s": [
+        0,
+        5.9e-08
+      ],
+      "first_valid_frame_must_pass": true,
+      "stop_s": 1.059e-06,
+      "run_id": "sar8tm-ssc-s5101-v1",
+      "kind": "screen",
+      "passive_corner": "nominal_tt",
+      "solver_profile": "mm",
+      "solver_reference": "sar8camp-b-ssc-screen-v1",
+      "seed": 5101
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8tm-ssc-s5101-v1",
+    "directory": "tb/top/mc_ss_cold",
+    "original_recipe": "management/recipes/sar8tm-ssc-s5101-v1.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 1.059e-06,
+    "summary_signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vinp",
+      "vinn",
+      "vrefp",
+      "vrefn",
+      "xdut.sample_int",
+      "xdut.seq_sample",
+      "xdut.cmp_clk",
+      "xdut.xctrl.phi_w",
+      "xdut.phi_u",
+      "xdut.xref.cap_clk",
+      "xdut.topp",
+      "xdut.topn",
+      "xdut.xbootp.g",
+      "xdut.xbootn.g",
+      "xdut.active",
+      "xdut.comp_p",
+      "xdut.comp_n",
+      "xdut.xbootp.btop",
+      "xdut.xbootp.bbot",
+      "xdut.xbootn.btop",
+      "xdut.xbootn.bbot"
+    ],
+    "qualification_scope": "Conditional frozen functional characterization; stress deferred"
+  },
+  "mc_cold_ff": {
+    "run_id": "sar8tm-ffc-s5101-v1",
+    "recipe_sha256": "186c585bb99bef36ad83caf689ef0602f4f9e64c16d49ba761fc87ba15ffa21e",
+    "entry": "test.scs",
+    "analyzer": "timing.py",
+    "inputs": [
+      {
+        "name": "test.scs",
+        "source": "tb/top/mc_ff_cold/test.scs",
+        "sha256": "5eeb37a1b8dfe2a9526a9fb0705a15a073a55a64e31338c251db3e27caa41bf4",
+        "original_source": "verification/sar8_mc/timing_mc/sar8tm-ffc-s5101-v1/test.scs"
+      },
+      {
+        "name": "tb.scs",
+        "source": "tb/top/mc_ff_cold/tb.scs",
+        "sha256": "4ba6135e471f76411967e7c49f231c4747adca07b840a32576e22f5390faefef",
+        "original_source": "verification/sar8_campaign/sar8camp-b-ffc-screen-v1/tb.scs"
+      },
+      {
+        "name": "context.json",
+        "source": "tb/top/mc_ff_cold/context.json",
+        "sha256": "172e0f7fb464336112313b0c1b057c6afb1cae899eeecf87e2a42edf431b21cc",
+        "original_source": "verification/sar8_mc/timing_mc/sar8tm-ffc-s5101-v1/context.json"
+      },
+      {
+        "name": "dut.scs",
+        "source": "design/frozen/b/dut.scs",
+        "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs"
+      },
+      {
+        "name": "library_include.scs",
+        "source": "tb/common/platform/library_include.scs",
+        "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+        "original_source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs"
+      },
+      {
+        "name": "r4_perf_monitor.va",
+        "source": "tb/common/veriloga/r4_perf_monitor.va",
+        "sha256": "bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3",
+        "original_source": "scripts/sar8_campaign/r4_perf_monitor.va"
+      },
+      {
+        "name": "timing.py",
+        "source": "tools/saradc/measure/timing.py",
+        "sha256": "812de53a61518bd8e70db625e4f4728f928040f9509cea18bc3dcd6fde575434",
+        "original_source": "scripts/sar8_mc/timing_mc/timing.py"
+      },
+      {
+        "name": "native_stream.py",
+        "source": "tools/saradc/measure/native_stream.py",
+        "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+        "original_source": "scripts/sar8_campaign/native_stream.py"
+      },
+      {
+        "name": "block_reduce.py",
+        "source": "tools/saradc/measure/block_reduce.py",
+        "sha256": "c7a9179fe7d373609a50c521652b6ee0b0a39539cb49e0ae6d94b78f0454a9ef",
+        "original_source": "scripts/sar8_mc/block_reduce.py"
+      }
+    ],
+    "resources": {
+      "threads": 4,
+      "simulation_rss_mib": 1024,
+      "simulation_virtual_mib": 8192,
+      "analysis_rss_mib": 256,
+      "analysis_virtual_mib": 1024,
+      "max_output_mib": 1536,
+      "simulation_wall_seconds": 21600,
+      "analysis_wall_seconds": 1800,
+      "queue_timeout_seconds": 86400
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "60"
+    ],
+    "conditions": {
+      "label": "b",
+      "expected_codes": [
+        0,
+        0,
+        12,
+        127,
+        128,
+        243,
+        255,
+        255,
+        0,
+        128
+      ],
+      "frames": 10,
+      "corner": "ff",
+      "vdd": 0.99,
+      "temperature_c": -40,
+      "reference_v": 0.9,
+      "LSB": 0.00703125,
+      "period_s": 1e-07,
+      "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "signals": [
+        "d0",
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sample",
+        "vdd!",
+        "vinp_src",
+        "vinn_src",
+        "vinp",
+        "vinn",
+        "vrefp",
+        "vrefn",
+        "xdut.sample_int",
+        "xdut.seq_sample",
+        "xdut.cmp_clk",
+        "xdut.xctrl.phi_w",
+        "xdut.phi_u",
+        "xdut.xref.cap_clk",
+        "xdut.topp",
+        "xdut.topn",
+        "xdut.xbootp.g",
+        "xdut.xbootn.g",
+        "xdut.active",
+        "xdut.comp_p",
+        "xdut.comp_n",
+        "xdut.xbootp.btop",
+        "xdut.xbootp.bbot",
+        "xdut.xbootn.btop",
+        "xdut.xbootn.bbot"
+      ],
+      "startup_frames": [
+        0
+      ],
+      "settling_band_lsb": 0.25,
+      "noise": false,
+      "mismatch": true,
+      "PEX": false,
+      "frame_origin_s": 5.9e-08,
+      "expected_stop_s": 1.059e-06,
+      "initial_low_until_s": 6e-08,
+      "startup_method": "External clock low-first phase; no forced internal nodes; DC initialized",
+      "unscored_interval_s": [
+        0,
+        5.9e-08
+      ],
+      "first_valid_frame_must_pass": true,
+      "stop_s": 1.059e-06,
+      "run_id": "sar8tm-ffc-s5101-v1",
+      "kind": "screen",
+      "passive_corner": "nominal_tt",
+      "solver_profile": "mm",
+      "solver_reference": "sar8camp-b-ffc-screen-v1",
+      "seed": 5101
+    },
+    "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8tm-ffc-s5101-v1",
+    "directory": "tb/top/mc_ff_cold",
+    "original_recipe": "management/recipes/sar8tm-ffc-s5101-v1.yaml",
+    "original_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+    "expected_stop_s": 1.059e-06,
+    "summary_signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vinp",
+      "vinn",
+      "vrefp",
+      "vrefn",
+      "xdut.sample_int",
+      "xdut.seq_sample",
+      "xdut.cmp_clk",
+      "xdut.xctrl.phi_w",
+      "xdut.phi_u",
+      "xdut.xref.cap_clk",
+      "xdut.topp",
+      "xdut.topn",
+      "xdut.xbootp.g",
+      "xdut.xbootn.g",
+      "xdut.active",
+      "xdut.comp_p",
+      "xdut.comp_n",
+      "xdut.xbootp.btop",
+      "xdut.xbootp.bbot",
+      "xdut.xbootn.btop",
+      "xdut.xbootn.bbot"
+    ],
+    "qualification_scope": "Conditional frozen functional characterization; stress deferred"
+  }
+}

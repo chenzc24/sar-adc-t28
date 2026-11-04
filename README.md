@@ -1,45 +1,28 @@
 # SAR ADC T28
 
-8 bit、10 MS/s、全差分异步 SAR ADC，TSMC 28 nm。入口更新于 **2026-11-04**。
+8 bit、10 MS/s、全差分异步 SAR ADC。当前验证对象为 B 版 `sar8_l90_mmain2_stdcell_v1`，采用 Spectre 网表设计；数字逻辑使用原生标准单元。
 
-本轮验证对象为 **B 版 `sar8_l90_mmain2_stdcell_v1`**，模拟电路沿用 L90 / Mmain2，数字逻辑使用原生标准单元。使用 Spectre 网表设计和验证。
-
-| 我要找什么 | 直接打开 |
+| 要找什么 | 入口 |
 | --- | --- |
-| **顶层电路** | [design/sar8_b/top/adc_top.scs](design/sar8_b/top/adc_top.scs) |
-| **子模块与接口** | [design/sar8_b/README.md](design/sar8_b/README.md)；采样、CDAC、比较器、SAR、参考和延时各有独立文件 |
-| **测试台 TB** | [tb/sar8_b/README.md](tb/sar8_b/README.md)；包含实际 test.scs、tb.scs、观察器、配方与分析器 |
-| **仿真配置与结果** | [results/sar8_b/README.md](results/sar8_b/README.md)；TT 全码、FFT、PVT、200 种子和在途冷角验证 |
-
-```text
-design/sar8_b/
-  top/adc_top.scs       顶层连接
-  blocks/              Bootstrap、MOM CDAC、StrongARM、SAR、参考、标准门、RC 延时
-  dut.scs              完整分模块 include 入口
-tb/sar8_b/
-  README.md            测试台、激励、条件、运行命令
-  cases.json           实际输入路径、散列、运行 ID 和服务器位置
-results/sar8_b/
-  README.md            各项验证结果和证据入口
-```
-
-顶层 master 名为 `sar_adc8_join_r4`。B 的冻结源是 [netlist/sar8_l90_mmain2_stdcell_v1/dut.scs](netlist/sar8_l90_mmain2_stdcell_v1/dut.scs)，SHA256 `f31b66c8…`。`design/sar8_b` 是与该源逐子电路核对的分文件视图。原生仿真证据绑定原冻结源；OA 同步及端压可靠性仍有待完成项。
-
-在项目根目录检查电路来源和测试输入，或导出一个测试的完整文件包：
+| 完整总规格 | [docs/specification.md](docs/specification.md)，机器真源 [specs/arch.json](specs/arch.json) |
+| 顶层 | [design/top/adc_top.scs](design/top/adc_top.scs)；完整 include 为 [design/dut.scs](design/dut.scs) |
+| 子模块 | [design/README.md](design/README.md) |
+| VA/Python 行为模型 | [design/behav/README.md](design/behav/README.md) |
+| 实际测试台 | [tb/README.md](tb/README.md) |
+| 仿真结果 | [results/README.md](results/README.md) |
+| 架构、工况与验收 | [specs/README.md](specs/README.md) |
+| 运行和监测 | [docs/simulation.md](docs/simulation.md) |
 
 ```powershell
-.venv/Scripts/python.exe scripts/sar8_entry.py check
-.venv/Scripts/python.exe scripts/sar8_entry.py export tt_short
+.venv/Scripts/python.exe -m tools.saradc check
+.venv/Scripts/python.exe -m tools.saradc prepare tt_short
+.venv/Scripts/python.exe -m tools.saradc observe cold
 ```
 
-第二条把十帧短测的实际输入集中放到 `output/sar8_b/tt_short/`。新仿真沿用 [managed 执行流程](management/README.md#统一仿真与回收)，各项源输入、模型和预算由配方冻结。
+`prepare` 把真实用例打包进被忽略的 `work/decks/`。新仿真通过现有 managed 执行器登记、排队、分析和回收；原始波形及动态运行状态位于工作区和服务器。
 
-| 其他版本与工程资料 | 入口 |
-| --- | --- |
-| A 版，L90 / Mmain2 自建数字门对照 | [冻结网表](netlist/sar8_l90_mmain2_frozen/dut.scs)、[A/B 频谱](verification/sar8_campaign/fft_final/README.md) |
-| 早期 R3、R4、修复实验和独立手搭 ADC | [历史文档索引](docs/README.md) |
-| 设计与运行登记 | [management/designs.yaml](management/designs.yaml)、[管理说明](management/README.md) |
-| 当前失配验证计划 | [模块 200 种子与冷角闭环](plan/2026-11-04-sar8-timing-mc/plan.md) |
-| 工程记录 | [plan/log.md](plan/log.md)、[AGENTS.md](AGENTS.md) |
+分模块设计与冻结 B 源的 49 个子电路逐段一致。迁移后的 TT 短测与冻结 B 的 10 帧码字、逐位事件计数、采样关闭沿和转换时间全部一致。[逐帧对照](results/migration/comparison.json)
 
-工作区位于 `E:\bridge-Agent-T28\projects\sar-adc-t28`，本地整理内容以实际工作区为准。用户笔记在 `Obsidian_docs/`，实验明细在 `verification/`，生成物和回收数据在 `output/`。
+个人笔记已迁到 `E:/Learning/SAR-ADC-T28`。旧实验、历史计划和一次性脚本通过 [来源记录](results/provenance.json) 的 Git 提交追溯；本机完整工作快照位于被忽略的 `work/legacy/`。
+
+开发方法见 [AGENTS.md](AGENTS.md) 与 [工作流](docs/development-workflow.md)，Skills 保存在 `.agents/skills/`。端压可靠性、全电路局部失配和 PEX 仍按各项证据的实际范围报告。

@@ -1,0 +1,278 @@
+{
+  "observed_at_utc": "2026-11-04T13:16:55.877936+00:00",
+  "run_id": "sar8-tree-tt-short-v1",
+  "recipe_sha256": "9f9a393d796e0b71793d5e9d4c79fa421b9744ffc8a35aa1ecd52a0beceab463",
+  "simulation": {
+    "status": "complete",
+    "rss_bytes": 384749568,
+    "started_epoch": 1793796318.691613,
+    "updated_epoch": 1793796689.457396,
+    "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+    "exit_code": 0,
+    "waiting_reasons": [],
+    "elapsed_seconds": 370.7517919540405,
+    "submitted_epoch": 1793796318.370512,
+    "output_bytes": 509337322,
+    "gate": {
+      "pass_gate": true,
+      "workload_slot": 1,
+      "reasons": [],
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "snapshot": {
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 7279042560,
+            "limit": 51539607552,
+            "used": 44260564992
+          }
+        },
+        "cpu_capacity": 48.0,
+        "swap_rate_bytes_s": 0.0,
+        "swap_free": 13131583488,
+        "cgroup_headroom": 7279042560,
+        "host": "thu-wei",
+        "conflicting_processes": [
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ffc-s5115-v1"
+            },
+            "pid": 78938,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ffc-s5116-v1"
+            },
+            "pid": 79072,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ffc-s5117-v1"
+            },
+            "pid": 79367,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ffc-s5118-v1"
+            },
+            "pid": 79700,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "analysis",
+              "reserved_rss_mib": 256,
+              "threads": 1,
+              "run_id": "sar8tm-ssc-s5117-v1"
+            },
+            "pid": 102317,
+            "comm": "python"
+          }
+        ],
+        "epoch": 1793796318.679063,
+        "disk_free": 724175466496,
+        "load1": 32.1,
+        "mem_available": 66303193088
+      },
+      "phase": "simulation"
+    },
+    "phase": "simulation",
+    "child_identity": {
+      "start_ticks": "77125827",
+      "pid": 104147,
+      "state": "R",
+      "pgid": 104147,
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+    },
+    "peak_rss_bytes": 386052096,
+    "worker_identity": {
+      "start_ticks": "77125795",
+      "pid": 104144,
+      "state": "R",
+      "pgid": 104144,
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+    },
+    "queued": true,
+    "native": {
+      "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+      "zero_error_footer": true,
+      "electrical_verdict": "not_inferred",
+      "native_exit": 0,
+      "effective_settings": {
+        "reltol": "1e-06, default 1e-03",
+        "abstol(V)": "10 nV, default 1 uV",
+        "maxstep": "10 ps, default 21.18 ns",
+        "abstol(I)": "100 fA, default 1 pA",
+        "method": "trap"
+      },
+      "native_analysis_pass": true,
+      "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [2, 4], consider adding +mt=2 or +mt=4 on command line.",
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-16780",
+        "SPECTRE-8281",
+        "SPECTRE-8286",
+        "VACOMP-2435"
+      ]
+    }
+  },
+  "analysis": {
+    "status": "failed",
+    "rss_bytes": 0,
+    "started_epoch": 1793797199.70331,
+    "updated_epoch": 1793797200.31085,
+    "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+    "exit_code": 1,
+    "waiting_reasons": [],
+    "elapsed_seconds": 0.607313871383667,
+    "submitted_epoch": 1793796715.994397,
+    "output_bytes": 509343915,
+    "gate": {
+      "pass_gate": true,
+      "workload_slot": 1,
+      "reasons": [],
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "snapshot": {
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 16056528896,
+            "limit": 51539607552,
+            "used": 35483078656
+          }
+        },
+        "cpu_capacity": 48.0,
+        "swap_rate_bytes_s": 0.0,
+        "swap_free": 12595986432,
+        "cgroup_headroom": 16056528896,
+        "host": "thu-wei",
+        "conflicting_processes": [
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ffc-s5115-v1"
+            },
+            "pid": 109698,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ssc-s5116-v1"
+            },
+            "pid": 109749,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ffc-s5116-v1"
+            },
+            "pid": 109863,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ssc-s5117-v1"
+            },
+            "pid": 110028,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ffc-s5117-v1"
+            },
+            "pid": 110155,
+            "comm": "spectre"
+          },
+          {
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "threads": 4,
+              "run_id": "sar8tm-ref-ffc-s5118-v1"
+            },
+            "pid": 119040,
+            "comm": "spectre"
+          }
+        ],
+        "epoch": 1793797199.687208,
+        "disk_free": 719028023296,
+        "load1": 32.78,
+        "mem_available": 66802872320
+      },
+      "phase": "analysis"
+    },
+    "phase": "analysis",
+    "child_identity": {
+      "start_ticks": "77213928",
+      "pid": 136455,
+      "state": "R",
+      "pgid": 136455,
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+    },
+    "peak_rss_bytes": 6455296,
+    "worker_identity": {
+      "start_ticks": "77165558",
+      "pid": 122193,
+      "state": "R",
+      "pgid": 122193,
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+    },
+    "queued": true
+  },
+  "expected_codes": [
+    0,
+    0,
+    12,
+    127,
+    128,
+    243,
+    255,
+    255,
+    0,
+    128
+  ],
+  "electrical_qualification": "deferred",
+  "source_identity": "Split B inputs registered under a new identity; historical B results retain original identities.",
+  "recovery": {
+    "run_id": "sar8-tree-tt-short-v1-measure-v1",
+    "recipe_sha256": "d5afb90f315225819e4e9f39f46a12cfb80cefd0b786f0cb365676f0bd1b73b7",
+    "status": "complete",
+    "cause": "reduce.py line 84 required all signals. Four internal bootstrap btop/bbot traces were not saved. Source-bound analysis uses recover_reduce.py, with all functional timing probes required.",
+    "original_traceback": "Traceback (most recent call last):\n  File \"/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-tree-tt-short-v1/inputs/reduce.py\", line 135, in <module>\n    if __name__=='__main__':main()\n  File \"/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-tree-tt-short-v1/inputs/reduce.py\", line 84, in main\n    assert all(s in v for s in ctx['signals'])\nAssertionError\n"
+  },
+  "comparison": "comparison.json",
+  "raw_warning_lines": "native_warnings.txt"
+}

@@ -1,0 +1,426 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "resolution_bits": 8,
+  "sample_rate_hz": 10000000.0,
+  "supply_v": [
+    0.81,
+    0.99
+  ],
+  "reference_v": [
+    0,
+    0.9
+  ],
+  "external_clock": {
+    "period_s": 1e-07,
+    "initial_low_s": 6e-08,
+    "high_s": 4e-08,
+    "acquisition_s": 4e-08,
+    "conversion_allocation_s": 6e-08,
+    "source_rise_s": 1e-10,
+    "source_fall_s": 1e-10,
+    "spectre_pulse_delay_s": 6e-08,
+    "spectre_pulse_width_s": 3.99e-08,
+    "first_falling_threshold_s": 1.0005e-07,
+    "startup": "One normal initial low interval precharges bootstrap; no artificial 101 ns hold",
+    "cancellation_priority": "New SAMPLE high wins over outstanding bit events"
+  },
+  "top": "sar_adc8_join_r4",
+  "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+  "qualification": {
+    "terminal_voltage": "open",
+    "oa": "not_synchronized",
+    "pex": "not_included"
+  },
+  "schema_version": 2,
+  "authority": {
+    "design": "design/dut.scs",
+    "topology": "design/top/adc_top.scs",
+    "immutable_measured_source": "design/frozen/b/dut.scs",
+    "top_ports_source": "design/manifest.json",
+    "physical_source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+    "requirements_status": "Current B operating contract plus explicitly labelled engineering allocations"
+  },
+  "architecture": {
+    "kind": "fully_differential_asynchronous_SAR",
+    "sampling": "top_plate_bootstrap",
+    "cdac": "flat_binary_8bit_plus_one_dummy_per_side",
+    "comparator": "11_MOS_StrongARM",
+    "control": "native_standard_cells_and_explicit_RC_delays",
+    "output_encoding": "unsigned_binary",
+    "decision_order": "MSB_first",
+    "external_bit_clock": false,
+    "busy_valid_eoc_ports": false
+  },
+  "interface": {
+    "top_master": "sar_adc8_join_r4",
+    "port_order": [
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "SAMPLE",
+      "VDD!",
+      "VINN",
+      "VINP",
+      "VREFN",
+      "VREFP",
+      "0"
+    ],
+    "digital_outputs": [
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "analog_input_ports": [
+      "VINP",
+      "VINN"
+    ],
+    "differential_polarity": "VINP - VINN",
+    "sample_active_level": "high",
+    "sample_close_edge": "falling",
+    "logic_levels": "0 to instantaneous VDD relative to VSS",
+    "reset": "Sampling phase clears the SAR word and cancels the preceding conversion; no external reset port",
+    "publication": "Bits update during conversion; read only after completion and before next acquisition"
+  },
+  "input": {
+    "nominal_common_mode_v": 0.45,
+    "differential_range_v": [
+      -0.9,
+      0.9
+    ],
+    "single_ended_nominal_range_v": [
+      0,
+      0.9
+    ],
+    "validated_common_mode_sweep": null,
+    "source_resistance_ohm_per_pin": 50,
+    "full_scale_span_v": 1.8,
+    "lsb_v": 0.00703125,
+    "ideal_code": "clip(floor((VINP-VINN+VREFP-VREFN)/(2*(VREFP-VREFN)/256)),0,255)",
+    "ideal_transition_v": "-(VREFP-VREFN)+k*2*(VREFP-VREFN)/256, k=1..255",
+    "exact_tie": "upper code; behavioral arithmetic tolerance is declared separately"
+  },
+  "reference": {
+    "low_v": 0.0,
+    "high_v": 0.9,
+    "source_resistance_ohm_per_rail": 50,
+    "decoupling_f_per_rail": 4e-12,
+    "implementation": "External ideal voltage sources with explicit R and C in TB",
+    "on_chip_buffer": "not_present",
+    "relation_to_core_supply": "Reference stays 0.9 V while VDD sweeps 0.81..0.99 V"
+  },
+  "blocks": {
+    "bootstrap": {
+      "implementation": "design/xtor/bootstrap/bootstrap.scs",
+      "instances": [
+        "XBOOTN",
+        "XBOOTP"
+      ],
+      "main_switch_model": "nch_18_mac",
+      "main_switch_l_m": 1.5e-07,
+      "main_switch_parallel_devices": 2,
+      "main_switch_w_m_each": 1e-06,
+      "bootstrap_capacitor": {
+        "model": "cfmom_2t",
+        "nr": 8,
+        "lr_m": 2.5e-06,
+        "w_m": 5e-08,
+        "s_m": 5e-08,
+        "stm": 1,
+        "spm": 3,
+        "multi": 200
+      }
+    },
+    "cdac": {
+      "implementation": "design/xtor/cdac/cdac.scs",
+      "master": "sar8j_r1_cdac",
+      "native_MOM_instances": 18,
+      "weights_lsb_first": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128
+      ],
+      "dummy_units_per_side": 1,
+      "total_units_per_side": 256,
+      "bridge_capacitor": false,
+      "dummy_connections": {
+        "TOPN": "VREFN",
+        "TOPP": "VREFP"
+      },
+      "unit_geometry": {
+        "model": "cfmom_2t",
+        "nr": 8,
+        "lr_m": 2e-06,
+        "w_m": 5e-08,
+        "s_m": 5e-08,
+        "stm": 1,
+        "spm": 3
+      },
+      "reference_switch_l_m": 9e-08,
+      "n_switch_w_m": 1.5e-07,
+      "p_switch_w_m": 1.75e-07,
+      "switch_multi_lsb_first": [
+        3,
+        6,
+        12,
+        24,
+        48,
+        96,
+        192,
+        384
+      ],
+      "unit_capacitance_f": null,
+      "note": "Geometry is authoritative; effective capacitance depends on model, bias and frequency",
+      "nominal_characterization": {
+        "unit_low_frequency_f": 4.00407e-15,
+        "side_256_unit_sum_f": 1.02504192e-12,
+        "bias_sweep_v": [
+          0,
+          -0.45,
+          0.45,
+          -0.9,
+          0.9
+        ],
+        "frequency_sweep_hz": [
+          1000.0,
+          1000000000.0
+        ],
+        "origin_commit": "f4f8e2081fca9e8af746eebdc8148b520dc1280d",
+        "origin_path": "docs/cdac_flat_8b_device.md",
+        "origin_report_sha256": "dccf1851072d7d2cc3681e68f7391d20446c8f00ee7e69a169e88ccdb8fe7b47",
+        "scope": "Earlier same-unit-geometry AC extraction; not a bias-independent constant or a new B corner extraction",
+        "mismatch_scope": "Current B uses 18 grouped MOM instances; do not transfer the old 512-independent-unit mismatch statistics"
+      }
+    },
+    "comparator": {
+      "implementation": "design/xtor/comparator/comparator.scs",
+      "master": "sar_strongarm_t28",
+      "MOS_count": 11,
+      "input_pair_l_m": 3e-08,
+      "input_pair_w_m": 1e-06,
+      "regeneration_n_w_m": 5e-07,
+      "regeneration_p_w_m": 5e-07,
+      "tail_w_m": 1e-06,
+      "uncalibrated_offset_requirement_v": null
+    },
+    "sar": {
+      "implementation": "design/xtor/sar/sar.scs",
+      "decisions_per_frame": 8,
+      "rising_event_counts": {
+        "cmp": 8,
+        "write": 8,
+        "update": 8,
+        "cap": 16
+      },
+      "event_order": "cmp[i] < write[i] < update[i] < cmp[i+1]; two cap rises per bit",
+      "no_fixed_bit_clock": true
+    },
+    "standard_cells": {
+      "implementation": "design/xtor/common/standard_cells.scs",
+      "external_masters": [
+        "DFCNQD1BWP12T30P140",
+        "INVD1BWP12T30P140",
+        "ND2D1BWP12T30P140"
+      ]
+    },
+    "timing_reference": {
+      "implementation": "design/xtor/clock/delays.scs",
+      "quiet_cap_multi": 30,
+      "write_cap_multi": 4,
+      "capture_cap_multi": 10,
+      "RC_clear_devices": "explicit transistor-level circuit; retained"
+    },
+    "reference_control": {
+      "implementation": "design/xtor/reference/reference.scs",
+      "features": [
+        "nonoverlap",
+        "gate_drivers",
+        "idle_reset",
+        "preset"
+      ]
+    }
+  },
+  "loading": {
+    "digital_output_capacitance_f_each": 5e-15,
+    "comparator_output_and_clock_loads": {
+      "model": "cfmom_2t",
+      "nodes": [
+        "COMP_N",
+        "COMP_P",
+        "CMP_CLK"
+      ],
+      "nr": 8,
+      "lr_m": 2.5e-06,
+      "multi_each": 2
+    }
+  },
+  "targets": {
+    "origin": "Carried-forward 8-bit engineering targets in historical config/design_spec.yaml; not measured guarantees",
+    "enob_min_bits": 7.0,
+    "test_level_dbfs": -1.0,
+    "sndr_min_db": 43.9,
+    "missing_codes_allowed": 0,
+    "monotonicity_required": true,
+    "dnl_abs_max_lsb": 1.0,
+    "inl_endpoint_abs_max_lsb": 1.0,
+    "power_max_w": 0.001,
+    "dynamic_validation_scope": "Measured TT coherent FFT; transient-noise, PEX and whole-PVT signoff remain separate"
+  },
+  "error_budget": {
+    "status": "Engineering allocation retained from the 8-bit budget; not a decomposition measured on B",
+    "sampling_noise_rms_lsb": 0.18,
+    "comparator_noise_rms_lsb": 0.18,
+    "reference_noise_rms_lsb": 0.12,
+    "unmodeled_distortion_rms_lsb": 0.15,
+    "jitter_rms_s": 2e-11,
+    "jitter_frequency_hz": 4500000.0,
+    "cdac_settling_abs_lsb": 0.25,
+    "legacy_offset_allocation_lsb": 0.25,
+    "offset_allocation_role": "Provisional residual after correction; not a pass threshold for current uncalibrated comparator",
+    "fixed_offset_gain_delay": "Report separately from random-noise RSS"
+  },
+  "calibration": {
+    "implementation": "not_implemented",
+    "comparator_range_v": null,
+    "comparator_step_v": null,
+    "digital_weight_precision_bits": null,
+    "minimum_observed_comparator_range_abs_v": 0.0376875,
+    "range_interpretation": "Observed 200-seed extrema only; coverage and margin still require a design decision",
+    "weight_correction": "Can represent effective bit weights; cannot repair unresolved decisions or missing acquisition time"
+  },
+  "verification": {
+    "cases": "specs/tests.json",
+    "corners": "specs/corners.json",
+    "monte_carlo": "specs/monte_carlo.json",
+    "static_results": "results/static/results.json",
+    "dynamic_results": "results/fft/results.json",
+    "module_results": "results/mc/modules_200.json",
+    "closed_loop_progress": "results/mc/cold_progress.json",
+    "qualification_separation": [
+      "function",
+      "timing",
+      "linearity",
+      "spectrum",
+      "power",
+      "terminal_stress",
+      "layout"
+    ],
+    "baseline_noise": false,
+    "baseline_PEX": false,
+    "MC_scope": "TT modules and cold closed loop have native local mismatch only in comparator and CDAC; no whole-SAR mismatch guarantee",
+    "noise_characterization": {
+      "results": "results/noise/comparison.json",
+      "provenance": "results/noise/provenance.json",
+      "status": "Single TT transient-noise seed; bandwidth/statistical convergence open"
+    },
+    "diagnostic_screens": {
+      "comparator_speed_limit_s": 7.5e-10,
+      "comparator_speed_scope": "Independent TT speed probes about each seed estimated threshold; not the whole SAR bit deadline",
+      "same_draw_hold_delta_lsb": 0.25,
+      "hold_scope": "Closed-loop reference diagnosis with validated same-draw extended dwell; not an SOA criterion"
+    }
+  },
+  "behavior_models": {
+    "python": "design/behav/python/sar_adc.py",
+    "veriloga": "design/behav/veriloga/sar_adc_b.va",
+    "ports": "Same order as physical top; VDD replaces VDD! and VSS replaces ground as local VA identifiers",
+    "clock": "Single SAMPLE input, autonomous event scheduling after falling edge",
+    "default_timing": {
+      "sample_buffer_s": 3.4436181189696734e-11,
+      "seq_buffer_s": 4.399930612846043e-11,
+      "first_compare_s": 2.6406790723627035e-09,
+      "compare_to_write_s": 3.825576734048699e-10,
+      "write_to_update_s": 4.48310391386626e-10,
+      "update_to_capture_s": 4.0319090863009114e-11,
+      "capture_gap_s": 1.018781827271262e-09,
+      "capture_to_next_compare_s": 1.7582588829641025e-09,
+      "comparator_tau_s": 0.0,
+      "comparator_floor_v": 1e-09,
+      "conversion_budget_s": 6e-08,
+      "transition_s": 2e-11,
+      "decision_epsilon_v": 1e-12
+    },
+    "timing_origin": {
+      "path": "results/migration/original_short.json",
+      "sha256": "ab6e4baa777ef0a8a2b2e71b07ca367585578cd2c782760213aed1721c90e4bc",
+      "estimator": "Median phase intervals from ten native TT frames",
+      "scope": "TT protocol approximation, combined comparator-to-write pipeline, not per-device PVT or mismatch timing",
+      "measured_interval_keys": [
+        "sample_buffer_s",
+        "seq_buffer_s",
+        "first_compare_s",
+        "compare_to_write_s",
+        "write_to_update_s",
+        "update_to_capture_s",
+        "capture_gap_s",
+        "capture_to_next_compare_s"
+      ],
+      "model_defaults": {
+        "comparator_tau_s": "disabled logarithmic term by default",
+        "comparator_floor_v": "behavioral regularization, not measured metastability resolution",
+        "conversion_budget_s": "external low-phase budget",
+        "transition_s": "behavioral output smoothing",
+        "decision_epsilon_v": "floating-point tie regularization"
+      }
+    },
+    "supported_nonidealities": [
+      "sampling_gain",
+      "sampling_offset",
+      "frame_sample_noise",
+      "comparator_offset",
+      "per_decision_comparator_noise",
+      "per_decision_reference_noise",
+      "effective_DAC_weight_errors",
+      "one_pole_trial_settling",
+      "optional_logarithmic_decision_delay",
+      "stuck_bit"
+    ],
+    "noise_rng": "Gaussian per-event model; Python and Spectre RNG streams are not identical",
+    "excluded": [
+      "bootstrap_charge_history",
+      "transistor_terminal_stress",
+      "KCL_accurate_CDAC_switching",
+      "reference_buffer_current",
+      "kickback",
+      "physical_power",
+      "native_PDK_MC",
+      "PEX"
+    ],
+    "legacy_audit": [
+      {
+        "old": "models/behavioral/sar_adc.py",
+        "action": "rewrite without ADCtoolbox SAR dependency; keep explicit 8-bit contract"
+      },
+      {
+        "old": "models/behavioral/sar_async.py",
+        "action": "adapt event sequencing; remove BUSY/VALID, stale publish and old timing"
+      },
+      {
+        "old": "models/behavioral/sar_async_simple.py",
+        "action": "merge timing behavior into one model"
+      },
+      {
+        "old": "models/veriloga/sar_adc_ideal_8b.va",
+        "action": "replace external bit clock with native-top-compatible autonomous model"
+      },
+      {
+        "old": "models/veriloga/sar_macro_controller_8b.va",
+        "action": "keep external-trial/latch macro controller historical"
+      }
+    ]
+  }
+}

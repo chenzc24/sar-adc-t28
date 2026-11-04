@@ -1,0 +1,9 @@
+# Copy to ignored site.local.yaml. Use your existing SSH configuration.
+roots:
+  remote_host: YOUR_SSH_ALIAS
+  new_run_root: /YOUR/OWNED/LOCAL_SSD/sar-adc-t28/runs
+resource_policy:
+  concurrent_heavy_workloads: 7
+  policy_file: work/state/execution_policy.json
+# The retained T28 remote adapter validates its owned workspace and account.
+# Changing accounts or PDK installation requires adapting and validating that adapter.

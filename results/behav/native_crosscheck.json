@@ -1,0 +1,94 @@
+{
+  "scenarios": {
+    "sampling_gain_offset": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "MSB_weight_error": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "stuck_bit3": {
+      "frames": 2050, 
+      "stuck": 2050, 
+      "deadline": 0, 
+      "complete": 0
+    }, 
+    "finite_DAC_settling": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "nominal": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "input_dependent_delay": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "positive_offset": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 0, 
+      "complete": 2050
+    }, 
+    "comparison_deadline": {
+      "frames": 2050, 
+      "stuck": 0, 
+      "deadline": 2050, 
+      "complete": 0
+    }
+  }, 
+  "max_time_error_s": 2.6928871459108716e-17, 
+  "context": {
+    "scenario_names": [
+      "nominal", 
+      "sampling_gain_offset", 
+      "positive_offset", 
+      "MSB_weight_error", 
+      "finite_DAC_settling", 
+      "comparison_deadline", 
+      "stuck_bit3", 
+      "input_dependent_delay"
+    ], 
+    "expected_records": 16400, 
+    "run_id": "sar8-behav-cross-v1", 
+    "source_files": {
+      "tb\\behav\\observer.va": "21901f8b3ed191a2536fccd40de909e2ec7f386452bc886fa086e5ab8d47aa49", 
+      "design\\behav\\veriloga\\b_defaults.vh": "a16cbd349dce04aaa2c95c0b4f51449601159e50a93ef44739beb3836be9bfb7", 
+      "design\\behav\\veriloga\\sar_adc_b.va": "87304c9c6fe2e3e3ce03c4ae3c078549c679a3595f9247c90742a7612821b48d", 
+      "design\\behav\\python\\sar_adc.py": "f7b5b50e5184b6d1342db8591c81313cd06b1a434d7575cae18458c3d8ecaddf", 
+      "specs\\arch.json": "d520fedc8215a4fb404ad84d2abe065e16afa4f7587cc082498b8dd11ac6b31c"
+    }, 
+    "time_tolerance_s": 2e-12, 
+    "scope": "behavioral algorithm and protocol; no PDK or device qualification", 
+    "frames": 2050, 
+    "expected_stop_s": 0.00020506504999999998, 
+    "period_s": 1e-07, 
+    "first_close_s": 1.0005e-07, 
+    "probe_delay_s": 5.5e-08
+  }, 
+  "failure_count": 0, 
+  "frame_records": 16400, 
+  "analysis_complete": true, 
+  "frames_per_scenario": 2050, 
+  "warning_codes": [
+    "VACOMP-2435"
+  ], 
+  "spectre_log_sha256": "be5b5dc1f7d8562fcede552f84ef59f2f57d2cf4bf88d7c37c2c7f27a9a4516f", 
+  "qualification": "Behavioral algorithm and scheduling only; no transistor stress, noise-yield or PVT qualification", 
+  "python_VA_crosscheck_pass": true, 
+  "failures": [], 
+  "independent_pin_probes": 16400, 
+  "max_input_error_v": 5.551115123125783e-17
+}

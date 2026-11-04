@@ -1,0 +1,27 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Independent pin observation, no access to the model's internal word.
+module b_behavior_observer(D0,D1,D2,D3,D4,D5,D6,D7,SAMPLE,VDD,VSS);
+    input D0,D1,D2,D3,D4,D5,D6,D7,SAMPLE,VDD,VSS;
+    electrical D0,D1,D2,D3,D4,D5,D6,D7,SAMPLE,VDD,VSS;
+    parameter integer model_id=0;
+    parameter real probe_delay_s=55n;
+    integer frame_index,code;
+    real probe_at,threshold;
+    analog begin
+        @(initial_step) begin frame_index=-1;probe_at=1e30;end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            frame_index=frame_index+1;probe_at=$abstime+probe_delay_s;
+        end
+        @(timer(probe_at)) begin
+            threshold=0.5*V(VDD,VSS);
+            code=(V(D0,VSS)>threshold)+2*(V(D1,VSS)>threshold)
+                +4*(V(D2,VSS)>threshold)+8*(V(D3,VSS)>threshold)
+                +16*(V(D4,VSS)>threshold)+32*(V(D5,VSS)>threshold)
+                +64*(V(D6,VSS)>threshold)+128*(V(D7,VSS)>threshold);
+            $display("BPROBE,%0d,%0d,%0d",model_id,frame_index,code);
+            probe_at=1e30;
+        end
+    end
+endmodule

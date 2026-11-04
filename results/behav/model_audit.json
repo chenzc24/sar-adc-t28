@@ -1,0 +1,248 @@
+{
+  "physical_B_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+  "old_models": [
+    {
+      "old": "models/behavioral/sar_adc.py",
+      "action": "rewrite without ADCtoolbox SAR dependency; keep explicit 8-bit contract",
+      "original_sha256": "cbc5b3209e33fc38afd6edafc0dac2fb705787262345b4d03b06132f82a12321",
+      "original_retained": true
+    },
+    {
+      "old": "models/behavioral/sar_async.py",
+      "action": "adapt event sequencing; remove BUSY/VALID, stale publish and old timing",
+      "original_sha256": "08bdc188d4d1643516060bda3be5e05e76c578ab87ec3c9fee483fa355c65660",
+      "original_retained": true
+    },
+    {
+      "old": "models/behavioral/sar_async_simple.py",
+      "action": "merge timing behavior into one model",
+      "original_sha256": "e540123c2343bd265aebbdd84ad7b9ad7859611186c99eb156089978a9ee34da",
+      "original_retained": true
+    },
+    {
+      "old": "models/veriloga/sar_adc_ideal_8b.va",
+      "action": "replace external bit clock with native-top-compatible autonomous model",
+      "original_sha256": "99919cfb6a2f59e1dd92b42f1bde2fe5b9daf64ecfd9c5fc00a805818ad04323",
+      "original_retained": true
+    },
+    {
+      "old": "models/veriloga/sar_macro_controller_8b.va",
+      "action": "keep external-trial/latch macro controller historical",
+      "original_sha256": "0a5180c536bf1e78df0bbf4dbca087f295436e8d98ea5afb5bbaeaaf2c50dd48",
+      "original_retained": true
+    }
+  ],
+  "current_models": [
+    "design/behav/python/sar_adc.py",
+    "design/behav/veriloga/sar_adc_b.va"
+  ],
+  "historical_10bit_models": "Retained only under work/legacy; not imported or migrated",
+  "native_source_spec": "results/behav/native_source_spec_v1.json",
+  "test_vector_source": "results/fft/b_codes.csv",
+  "test_vector_source_sha256": "4075f616687dfcd59152e275dece3ddc6843a1e7473da05fc0c449821c48c6b1",
+  "archived_inventory": [
+    {
+      "path": "models/behavioral/sar_adc.py",
+      "sha256": "cbc5b3209e33fc38afd6edafc0dac2fb705787262345b4d03b06132f82a12321",
+      "disposition": "rewrite without ADCtoolbox SAR dependency; keep explicit 8-bit contract",
+      "retained_in": "work/legacy/models/behavioral/sar_adc.py"
+    },
+    {
+      "path": "models/behavioral/sar_async.py",
+      "sha256": "08bdc188d4d1643516060bda3be5e05e76c578ab87ec3c9fee483fa355c65660",
+      "disposition": "adapt event sequencing; remove BUSY/VALID, stale publish and old timing",
+      "retained_in": "work/legacy/models/behavioral/sar_async.py"
+    },
+    {
+      "path": "models/behavioral/sar_async_simple.py",
+      "sha256": "e540123c2343bd265aebbdd84ad7b9ad7859611186c99eb156089978a9ee34da",
+      "disposition": "merge timing behavior into one model",
+      "retained_in": "work/legacy/models/behavioral/sar_async_simple.py"
+    },
+    {
+      "path": "models/veriloga/cdac10_dualrail_comparator.va",
+      "sha256": "39ee25f97d28722cc807e911d2819c87dc2428af986707bb0a88867a3bf7c05e",
+      "disposition": "Historical 10-bit design; not migrated",
+      "retained_in": "work/legacy/models/veriloga/cdac10_dualrail_comparator.va"
+    },
+    {
+      "path": "models/veriloga/cdac10_dualrail_controller.va",
+      "sha256": "360838055ef407753b976c3097ced200d3f103b9d357dbe7d0ee02b1c394c151",
+      "disposition": "Historical 10-bit design; not migrated",
+      "retained_in": "work/legacy/models/veriloga/cdac10_dualrail_controller.va"
+    },
+    {
+      "path": "models/veriloga/cdac10_dualrail_input.va",
+      "sha256": "c74491411e0b4efb3733a59ac95b8cdb41cce4e868454cd0a0e62ee1187f3486",
+      "disposition": "Historical 10-bit design; not migrated",
+      "retained_in": "work/legacy/models/veriloga/cdac10_dualrail_input.va"
+    },
+    {
+      "path": "models/veriloga/cdac8_controller.va",
+      "sha256": "41a1e3186e4d04f93b78cf1b52c4cff531454c85a71e52a94b6f091f2c18233a",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/cdac8_controller.va"
+    },
+    {
+      "path": "models/veriloga/cdac8_device_sequence.va",
+      "sha256": "a8c0d3d6016c4751e45997685b4ac5e4a4d38591e94492a27632102a60974e63",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/cdac8_device_sequence.va"
+    },
+    {
+      "path": "models/veriloga/cdac8_dualrail_comparator.va",
+      "sha256": "e3b41744c84a4b532154c9933122a2db1c79fcfd03c17c53cc756b2837f6ff6c",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/cdac8_dualrail_comparator.va"
+    },
+    {
+      "path": "models/veriloga/cdac8_dualrail_controller.va",
+      "sha256": "41191c72ad698c8af3d183039c9db1491430877049732eec5b25b2f5f96c0a6a",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/cdac8_dualrail_controller.va"
+    },
+    {
+      "path": "models/veriloga/cdac8_dualrail_input.va",
+      "sha256": "a529ab0a7d6c786595e4999a91d94f9820de62d0151cf50be27662efa1710eb1",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/cdac8_dualrail_input.va"
+    },
+    {
+      "path": "models/veriloga/r3_anomaly_replay/r3_replay_stop.va",
+      "sha256": "b8f9414356ae9a9840ab3f593adafeb984c3b29024dd17f839495c717f0687c1",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_anomaly_replay/r3_replay_stop.va"
+    },
+    {
+      "path": "models/veriloga/r3_b_sine_period/r3_sine_probe.va",
+      "sha256": "d6aad1c67c9201eaeb1ffd12ef53764ef58dc9d5c337f8d71ddf52f2b4945c14",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_b_sine_period/r3_sine_probe.va"
+    },
+    {
+      "path": "models/veriloga/r3_performance/r3_perf_monitor.va",
+      "sha256": "ade7c6212853b7319a37255a863586c772b8b129c9d9fbd3f2c31af1dbd32790",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_performance/r3_perf_monitor.va"
+    },
+    {
+      "path": "models/veriloga/r3_performance/r3_transition_stim.va",
+      "sha256": "25392a1c8886bb41a6215eaf6f8582d158426813bdf2e65011782a5d7eb5c3e8",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_performance/r3_transition_stim.va"
+    },
+    {
+      "path": "models/veriloga/r3_refgate_events/a/sar8j_aligned_refgate.va",
+      "sha256": "1e165f392b81564cc99b93a4b484f580264f7c0b756c8ee9c9fd02ac767848bb",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_refgate_events/a/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/r3_refgate_events/b/sar8j_aligned_refgate.va",
+      "sha256": "a989660244d52ec65c34f3218b75be828d30227c3610ac82342a6345080d25d1",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_refgate_events/b/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/r3_refgate_events/b2/sar8j_aligned_refgate.va",
+      "sha256": "6e224c382481e729116712817cf4e58f7d5959f5a2549a065489294f30588a3d",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_refgate_events/b2/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/r3_refgate_events/b3/sar8j_aligned_refgate.va",
+      "sha256": "c06adf6f1127c1b9c63dc0f00d18ea4af22e1031d17c815a21e4c9038551f9ef",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_refgate_events/b3/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/r3_refgate_events/r3_transition_stim.va",
+      "sha256": "df27c9b77e152ca67c9ed5098500a99b72ef32d2290d5f7085b2096db9e661ae",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/r3_refgate_events/r3_transition_stim.va"
+    },
+    {
+      "path": "models/veriloga/sar8_join_b/sar8j_aligned_refgate_b.va",
+      "sha256": "e42d42f8f02630f520554566858419edca1dc39c0283aadd7b86fde4b2ff5d6f",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8_join_b/sar8j_aligned_refgate_b.va"
+    },
+    {
+      "path": "models/veriloga/sar8_join_r2/sar8j_aligned_refgate.va",
+      "sha256": "c613776c23e247ecf8361af7febc2c598f9b244b9f041588f0215bdd83b5b8ff",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8_join_r2/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/sar8_join_r2/sar8j_refcommit.va",
+      "sha256": "f7cf4255308eecbe771f270a2913a375357043967c075971ac5cb5cd2302758e",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8_join_r2/sar8j_refcommit.va"
+    },
+    {
+      "path": "models/veriloga/sar8_r4_performance/r4_perf_monitor.va",
+      "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8_r4_performance/r4_perf_monitor.va"
+    },
+    {
+      "path": "models/veriloga/sar8_r4_performance/r4_transition_stim.va",
+      "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8_r4_performance/r4_transition_stim.va"
+    },
+    {
+      "path": "models/veriloga/sar8a_monitor.va",
+      "sha256": "4f31ccba0dce990b99623948702ce783f1cd6dec13aa34777a940ef44c20e598",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8a_monitor.va"
+    },
+    {
+      "path": "models/veriloga/sar8a_plant.va",
+      "sha256": "d9a87f7a1877a19a988348f199521a4226225246873207b132e376ee3fad0d43",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8a_plant.va"
+    },
+    {
+      "path": "models/veriloga/sar8j_aligned_refgate.va",
+      "sha256": "0abf4845d8c584c8a864ce34e8614baad39abd16edea77e303b4af9fe26b9798",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8j_aligned_refgate.va"
+    },
+    {
+      "path": "models/veriloga/sar8j_r1_refgate.va",
+      "sha256": "c4b19e245616e68094c0ca54a4faf5e1a93bcb0598a67e92336c64822dac5f39",
+      "disposition": "Historical stimulus, monitor, controller or plant for a separate experiment; not a B top behavioral implementation. Active TB inputs are tracked in specs/tests.json.",
+      "retained_in": "work/legacy/models/veriloga/sar8j_r1_refgate.va"
+    },
+    {
+      "path": "models/veriloga/sar_adc_ideal_10b.va",
+      "sha256": "e0cb8c4db56e427a606f5e8ecf22a2405e4af89194acdc570bb36ea3f8e38035",
+      "disposition": "Historical 10-bit design; not migrated",
+      "retained_in": "work/legacy/models/veriloga/sar_adc_ideal_10b.va"
+    },
+    {
+      "path": "models/veriloga/sar_adc_ideal_8b.va",
+      "sha256": "99919cfb6a2f59e1dd92b42f1bde2fe5b9daf64ecfd9c5fc00a805818ad04323",
+      "disposition": "replace external bit clock with native-top-compatible autonomous model",
+      "retained_in": "work/legacy/models/veriloga/sar_adc_ideal_8b.va"
+    },
+    {
+      "path": "models/veriloga/sar_macro_controller_10b.va",
+      "sha256": "aec71a6a0928a9b13d906381cd7453004759f85335c2c1086de522beb8ab57ae",
+      "disposition": "Historical 10-bit design; not migrated",
+      "retained_in": "work/legacy/models/veriloga/sar_macro_controller_10b.va"
+    },
+    {
+      "path": "models/veriloga/sar_macro_controller_8b.va",
+      "sha256": "0a5180c536bf1e78df0bbf4dbca087f295436e8d98ea5afb5bbaeaaf2c50dd48",
+      "disposition": "keep external-trial/latch macro controller historical",
+      "retained_in": "work/legacy/models/veriloga/sar_macro_controller_8b.va"
+    }
+  ],
+  "current_source_sha256": {
+    "design/behav/python/sar_adc.py": "f7b5b50e5184b6d1342db8591c81313cd06b1a434d7575cae18458c3d8ecaddf",
+    "design/behav/veriloga/sar_adc_b.va": "87304c9c6fe2e3e3ce03c4ae3c078549c679a3595f9247c90742a7612821b48d",
+    "design/behav/veriloga/b_defaults.vh": "a16cbd349dce04aaa2c95c0b4f51449601159e50a93ef44739beb3836be9bfb7"
+  }
+}

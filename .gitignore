@@ -1,58 +1,41 @@
-# Local configuration and secrets
+# Local environments and generated output
+/.venv/
+/work/
+/output/
+/plan/
+/site.local.yaml
+/pdk_local/
+*.pdkcache
 .env
 .env.*
 !.env.example
-
-# Python
-.venv/
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-
-# Spectre / Cadence generated data
+/build/
+/dist/
+# Native simulator caches and logs
 *.raw/
 psf/
 *.psf
+*.ahdlSimDB/
+input.ahdlSimDB/
 *.sdb
 *.rdb
 *.log
 *.log.*
+spectre.out
 *.ic
 *.fc
-input.ahdlSimDB/
-
-# Disposable run output
-output/**
-!output/.gitkeep
-
-# Downloaded binary/sign-off artifacts
-artifacts/gds/**
-artifacts/cdl/**
-artifacts/pex/**
-artifacts/reports/**
-!artifacts/gds/.gitkeep
-!artifacts/cdl/.gitkeep
-!artifacts/pex/.gitkeep
-!artifacts/reports/.gitkeep
-
-# Virtuoso captures and exports
-virtuoso/snapshots/**
-virtuoso/exports/**
-!virtuoso/snapshots/.gitkeep
-!virtuoso/exports/.gitkeep
-
-# Editors and OS files
+# Editors and OS
 .idea/
 .vscode/
-Thumbs.db
 .DS_Store
-
-# Personal Obsidian state; curated Markdown notes remain tracked
-Obsidian_docs/.obsidian/
-Obsidian_docs/.trash/
-
-# Native binary waveform caches from historical diagnostic runs
-verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_*.bin.gz
-verification/sar8_module_audit/reference/generated/cinput_r1k_v1/baseline_native.f64le
+Thumbs.db
+*.swp
+*~
+# Notes have moved to E:/Learning/SAR-ADC-T28
+/Obsidian_docs/

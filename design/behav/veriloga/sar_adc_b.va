@@ -1,0 +1,177 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+// Current B interface: D0..D7 SAMPLE VDD VINN VINP VREFN VREFP VSS.
+// SAMPLE high clears the word; its fall samples the differential input.
+// All bit events run autonomously. This is a protocol/voltage abstraction;
+// it predicts no device stress, bootstrap charge history or physical power.
+module sar_adc_b(D0,D1,D2,D3,D4,D5,D6,D7,SAMPLE,VDD,VINN,VINP,VREFN,VREFP,VSS);
+    output D0,D1,D2,D3,D4,D5,D6,D7;
+    input SAMPLE,VDD,VINN,VINP,VREFN,VREFP;
+    inout VSS;
+    electrical D0,D1,D2,D3,D4,D5,D6,D7,SAMPLE,VDD,VINN,VINP,VREFN,VREFP,VSS;
+
+    parameter integer model_id=0;
+    parameter integer noise_seed=271828;
+    parameter integer stuck_bit=-1 from [-1:7];
+    parameter real gain=1.0;
+    parameter real sampling_offset_v=0.0;
+    parameter real comparator_offset_v=0.0;
+    parameter real sample_noise_rms_v=0.0 from [0:inf);
+    parameter real comparator_noise_rms_v=0.0 from [0:inf);
+    parameter real reference_noise_rms_v=0.0 from [0:inf);
+    parameter real dac_tau_s=0.0 from [0:inf);
+    parameter real weight_error0=0.0 from (-1:inf);
+    parameter real weight_error1=0.0 from (-1:inf);
+    parameter real weight_error2=0.0 from (-1:inf);
+    parameter real weight_error3=0.0 from (-1:inf);
+    parameter real weight_error4=0.0 from (-1:inf);
+    parameter real weight_error5=0.0 from (-1:inf);
+    parameter real weight_error6=0.0 from (-1:inf);
+    parameter real weight_error7=0.0 from (-1:inf);
+    parameter real sample_buffer_s=`B_SAMPLE_BUFFER_S from [0:inf);
+    parameter real seq_buffer_s=`B_SEQ_BUFFER_S from [0:inf);
+    parameter real first_compare_s=`B_FIRST_COMPARE_S from [0:inf);
+    parameter real compare_to_write_s=`B_COMPARE_TO_WRITE_S from [0:inf);
+    parameter real write_to_update_s=`B_WRITE_TO_UPDATE_S from [0:inf);
+    parameter real update_to_capture_s=`B_UPDATE_TO_CAPTURE_S from [0:inf);
+    parameter real capture_gap_s=`B_CAPTURE_GAP_S from (0:inf);
+    parameter real capture_to_next_compare_s=`B_CAPTURE_TO_NEXT_COMPARE_S from [0:inf);
+    parameter real comparator_tau_s=`B_COMPARATOR_TAU_S from [0:inf);
+    parameter real comparator_floor_v=`B_COMPARATOR_FLOOR_V from (0:inf);
+    parameter real conversion_budget_s=`B_CONVERSION_BUDGET_S from (0:inf);
+    parameter real transition_s=`B_TRANSITION_S from (0:inf);
+    parameter real decision_epsilon_v=`B_DECISION_EPSILON_V from [0:inf);
+
+    integer word,bit_index,trial,pending,active,phase,frame_index;
+    integer comparisons,writes,updates,captures,random_state,j,problem;
+    real next_at,deadline_at,held,vref,lsb,sample_close,seq_close,last_update;
+    real target,previous_target,dac,mark,last_eval,current_eval,residual,delay;
+    real weights[0:7];
+
+    analog begin
+        @(initial_step) begin
+            word=0;bit_index=7;trial=0;pending=0;active=0;phase=0;frame_index=-1;
+            comparisons=0;writes=0;updates=0;captures=0;problem=0;
+            next_at=1e30;deadline_at=1e30;last_update=-1;
+            random_state=noise_seed;
+            weights[0]=1.0+weight_error0;
+            weights[1]=2.0*(1.0+weight_error1);
+            weights[2]=4.0*(1.0+weight_error2);
+            weights[3]=8.0*(1.0+weight_error3);
+            weights[4]=16.0*(1.0+weight_error4);
+            weights[5]=32.0*(1.0+weight_error5);
+            weights[6]=64.0*(1.0+weight_error6);
+            weights[7]=128.0*(1.0+weight_error7);
+        end
+
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),+1)) begin
+            if (active) begin
+                // The observer diagnoses cancellation, not an added EOC pin.
+                problem=1;
+                if (phase==5) problem=2;
+                $display("BMODEL,%0d,%0d,%.16e,%0d,%0d,%0d,%0d,%0d,%.16e,%.16e,%.16e,%.16e,%0d,%0d",
+                    model_id,frame_index,held,word,comparisons,writes,updates,captures,
+                    sample_close,seq_close,last_update,$abstime,problem,bit_index);
+            end
+            active=0;next_at=1e30;word=0;
+        end
+
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            frame_index=frame_index+1;
+            word=0;bit_index=7;phase=0;problem=0;
+            comparisons=0;writes=0;updates=0;captures=0;
+            held=gain*V(VINP,VINN)+sampling_offset_v;
+            if (sample_noise_rms_v>0)
+                held=held+$rdist_normal(random_state,0.0,sample_noise_rms_v);
+            vref=V(VREFP,VREFN);lsb=2.0*vref/256.0;
+            sample_close=$abstime+sample_buffer_s;
+            seq_close=sample_close+seq_buffer_s;
+            deadline_at=$abstime+conversion_budget_s;
+            last_update=-1;dac=0;previous_target=0;mark=seq_close;last_eval=seq_close;
+            if (vref>0 && V(VDD,VSS)>0) begin
+                active=1;next_at=min(seq_close+first_compare_s,deadline_at);
+            end else begin
+                active=0;next_at=1e30;
+                $display("BMODEL_INVALID,%0d,%0d",model_id,frame_index);
+            end
+        end
+
+        // A changed next_at replaces the pending timer. Checking its time and
+        // SAMPLE level also prevents a stale event from crossing acquisition.
+        @(timer(next_at)) begin
+            if (active && abs($abstime-next_at)<1e-15) begin
+                if (V(SAMPLE,VSS)>=0.5*V(VDD,VSS)-1e-10 || $abstime>=deadline_at-1e-15) begin
+                    problem=1;
+                    if (phase==5) problem=2;
+                    $display("BMODEL,%0d,%0d,%.16e,%0d,%0d,%0d,%0d,%0d,%.16e,%.16e,%.16e,%.16e,%0d,%0d",
+                        model_id,frame_index,held,word,comparisons,writes,updates,captures,
+                        sample_close,seq_close,last_update,$abstime,problem,bit_index);
+                    active=0;next_at=1e30;
+                end else begin
+                    case (phase)
+                        0: begin
+                            trial=word|(1<<bit_index);target=-vref;
+                            for (j=0;j<8;j=j+1)
+                                if ((trial>>j)&1) target=target+lsb*weights[j];
+                            if (dac_tau_s>0) begin
+                                dac=previous_target+(dac-previous_target)*exp(-max(0,mark-last_eval)/dac_tau_s);
+                                dac=target+(dac-target)*exp(-max(0,$abstime-mark)/dac_tau_s);
+                            end else dac=target;
+                            current_eval=$abstime;
+                            comparisons=comparisons+1;
+                            residual=held-dac-comparator_offset_v;
+                            if (reference_noise_rms_v>0)
+                                residual=residual-$rdist_normal(random_state,0.0,reference_noise_rms_v);
+                            if (comparator_noise_rms_v>0)
+                                residual=residual+$rdist_normal(random_state,0.0,comparator_noise_rms_v);
+                            pending=(residual>=-decision_epsilon_v);
+                            delay=compare_to_write_s+comparator_tau_s*max(0,ln(2.0*vref/max(abs(residual),comparator_floor_v)));
+                            if (bit_index==stuck_bit) begin
+                                phase=5;next_at=deadline_at;
+                            end else begin
+                                phase=1;next_at=min($abstime+delay,deadline_at);
+                            end
+                        end
+                        1: begin
+                            if (pending) word=trial;
+                            writes=writes+1;
+                            phase=2;next_at=min($abstime+write_to_update_s,deadline_at);
+                        end
+                        2: begin
+                            updates=updates+1;last_update=$abstime;
+                            phase=3;next_at=min($abstime+update_to_capture_s,deadline_at);
+                        end
+                        3: begin
+                            captures=captures+1;
+                            phase=4;next_at=min($abstime+capture_gap_s,deadline_at);
+                        end
+                        4: begin
+                            captures=captures+1;
+                            previous_target=target;last_eval=current_eval;mark=last_update;
+                            if (bit_index==0) begin
+                                $display("BMODEL,%0d,%0d,%.16e,%0d,%0d,%0d,%0d,%0d,%.16e,%.16e,%.16e,%.16e,%0d,%0d",
+                                    model_id,frame_index,held,word,comparisons,writes,updates,captures,
+                                    sample_close,seq_close,last_update,$abstime,0,-1);
+                                active=0;next_at=1e30;
+                            end else begin
+                                bit_index=bit_index-1;phase=0;
+                                next_at=min($abstime+capture_to_next_compare_s,deadline_at);
+                            end
+                        end
+                    endcase
+                end
+            end
+        end
+
+        V(D0,VSS) <+ transition(word&1,0,transition_s)*V(VDD,VSS);
+        V(D1,VSS) <+ transition((word>>1)&1,0,transition_s)*V(VDD,VSS);
+        V(D2,VSS) <+ transition((word>>2)&1,0,transition_s)*V(VDD,VSS);
+        V(D3,VSS) <+ transition((word>>3)&1,0,transition_s)*V(VDD,VSS);
+        V(D4,VSS) <+ transition((word>>4)&1,0,transition_s)*V(VDD,VSS);
+        V(D5,VSS) <+ transition((word>>5)&1,0,transition_s)*V(VDD,VSS);
+        V(D6,VSS) <+ transition((word>>6)&1,0,transition_s)*V(VDD,VSS);
+        V(D7,VSS) <+ transition((word>>7)&1,0,transition_s)*V(VDD,VSS);
+    end
+endmodule

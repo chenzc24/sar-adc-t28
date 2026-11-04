@@ -1,0 +1,39 @@
+{
+  "python_oracle_pass": true,
+  "nominal_test_vectors": 2050,
+  "center_codes": 256,
+  "transition_probes": 765,
+  "saturation_probes": 5,
+  "native_aperture_inputs": 1024,
+  "binary_SAR_vs_closed_form_failures": [],
+  "measured_static_boundaries": {
+    "source": "results/static/results.json",
+    "center_failures": []
+  },
+  "native_TT_short": {
+    "source": "results/migration/original_short.json",
+    "code_failures": [],
+    "model_minus_native_conversion_ns": [
+      0.13023870569393736,
+      0.13022059217360393,
+      -0.08581967556836645,
+      -0.1148110834225946,
+      -0.1057954154439571,
+      -0.09249535140840592,
+      0.11718530365159552,
+      0.11707824065620187,
+      0.12977342373135414,
+      -0.10605921077771896
+    ],
+    "max_abs_difference_ns": 0.13023870569393736,
+    "interpretation": "Median phase model approximation, not exact transistor timing correlation"
+  },
+  "native_dynamic_comparison": {
+    "source": "results/fft/b_codes.csv",
+    "different_codes": 908,
+    "max_abs_difference_lsb": 3,
+    "interpretation": "Ideal quantization of measured source-at-aperture values; finite acquisition, offset, gain and phase are absent, so differences are retained"
+  },
+  "spec_sha256": "48ba78453bf7a73ab4029d8f9b1ab23fff2dcc79a07e996420a741d359b4cc86",
+  "model_sha256": "f7b5b50e5184b6d1342db8591c81313cd06b1a434d7575cae18458c3d8ecaddf"
+}
