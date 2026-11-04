@@ -1,0 +1,74 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench only: drives inputs, observes raw and real standard-cell receivers.
+// Threshold search has a deliberately long diagnostic decision window. The
+// measured delay is also compared with the shorter B native timing separately.
+module sar8_mc_comp_search(VIP,VIN,OP,ON,PR,NR,CLK,SUP,VSS);
+  output VIP,VIN;
+  input OP,ON,PR,NR,CLK,SUP,VSS;
+  electrical VIP,VIN,OP,ON,PR,NR,CLK,SUP,VSS;
+  parameter real cm=0.45;
+  parameter real range_v=0.064;
+  parameter real period_s=5n;
+  parameter real first_report_s=3.775n;
+  parameter real first_update_s=4.5n;
+  parameter integer steps=10;
+  integer cycle,report_cycle,polarity,valid,guard_bad,unresolved,armed;
+  real lower,upper,probe,pending,offset,clk_time,raw_delay,rx_delay,reset_min;
+  analog begin
+    @(initial_step) begin
+      lower=-range_v;upper=range_v;probe=-range_v;pending=probe;
+      cycle=0;guard_bad=0;unresolved=0;armed=0;offset=0;
+      raw_delay=-1;rx_delay=-1;clk_time=0;reset_min=0;
+    end
+    @(cross(V(CLK,VSS)-0.5*V(SUP,VSS),+1)) begin
+      clk_time=$abstime;armed=1;raw_delay=-1;rx_delay=-1;
+      reset_min=min(V(OP,VSS),V(ON,VSS));
+    end
+    @(cross(abs(V(OP,ON))-0.45,+1)) begin
+      if(armed==1 && raw_delay<0) raw_delay=$abstime-clk_time;
+    end
+    @(cross(abs(V(PR,NR))-0.45,+1)) begin
+      if(armed==1 && rx_delay<0) rx_delay=$abstime-clk_time;
+    end
+    @(timer(first_report_s,period_s)) begin
+      polarity=V(PR,NR)>0.45 ? 1 : V(PR,NR)<-0.45 ? -1 : 0;
+      valid=(polarity!=0);
+      if(cycle==0) begin
+        if(polarity!=-1) guard_bad=1;
+        pending=range_v;
+      end else if(cycle==1) begin
+        if(polarity!=1) guard_bad=1;
+        pending=(lower+upper)/2;
+      end else if(cycle<steps+2) begin
+        if(polarity==1) upper=probe;
+        else if(polarity==-1) lower=probe;
+        else unresolved=unresolved+1;
+        offset=(lower+upper)/2;
+        if(cycle==steps+1) pending=offset-0.00703125;
+        else pending=offset;
+      end else begin
+        case(cycle-(steps+2))
+          0: pending=offset-0.0017578125;
+          1: pending=offset-0.000703125;
+          2: pending=offset+0.000703125;
+          3: pending=offset+0.0017578125;
+          4: pending=offset+0.00703125;
+          5: pending=offset+0.0017578125;
+          6: pending=offset+0.0017578125;
+          7: pending=offset-0.0017578125;
+          8: pending=offset+0.0017578125;
+          default: pending=offset-0.0017578125;
+        endcase
+      end
+      report_cycle=cycle;
+      $strobe("CMPMC,%d,%.15g,%d,%d,%.15g,%.15g,%.15g,%.15g,%.15g,%d,%d,%.15g",
+        report_cycle,probe,polarity,valid,lower,upper,raw_delay,rx_delay,reset_min,guard_bad,unresolved,$abstime);
+      armed=0;cycle=cycle+1;
+    end
+    @(timer(first_update_s,period_s)) probe=pending;
+    V(VIP,VSS)<+cm+transition(probe,0,20p,20p)/2;
+    V(VIN,VSS)<+cm-transition(probe,0,20p,20p)/2;
+  end
+endmodule
