@@ -1,0 +1,121 @@
+managed: true
+recipe_hash: cc6dac778188d02f984b5d12d6b408d2cb2e49af78055c88aa4c6366e4c8eaaa
+recipe:
+  schema_version: 1
+  run_id: manual8-cdac-edge-s100-tt-v1
+  design_id: manual8_cdac_edge_v1
+  entry: test.scs
+  analyzer: cdac_edge_reduce.py
+  files:
+  - name: manual8_sample.va
+    source: verification/manual_adc/cdac_edge_v1/s100/manual8_sample.va
+    bytes: 1607
+    sha256: 0a8080f311bcd84cbb042cd525f119b0a058200d3f9a534a2f0668417410c57d
+  - name: manual8_cmp.va
+    source: verification/manual_adc/cdac_edge_v1/s100/manual8_cmp.va
+    bytes: 2269
+    sha256: b374810880e1f6b7aa213b07c0ab2de7996ca2d32f3851282c633aaf5dd9cf63
+  - name: manual8_sar.va
+    source: verification/manual_adc/cdac_edge_v1/s100/manual8_sar.va
+    bytes: 9270
+    sha256: 24f19076d2d059b22862336dcf9a74159888c406b1b3573b9b18a7b1376a76ec
+  - name: models.scs
+    source: verification/manual_adc/cdac_edge_v1/s100/models.scs
+    bytes: 1340
+    sha256: 61c409306d49b2cc1ac5001f9280429df86b0b7f9e7a4ecd1be5e8d768f59753
+  - name: cdac_core.scs
+    source: verification/manual_adc/cdac_edge_v1/s100/cdac_core.scs
+    bytes: 7594
+    sha256: 9e698c25d39923228abeec4ec8bec8ced0a98e6954e6851bdbd01b5b59a34f78
+  - name: wrappers.scs
+    source: verification/manual_adc/cdac_edge_v1/s100/wrappers.scs
+    bytes: 2183
+    sha256: 97e01435f2414d6a42dd04f4899233d6303eaa4e2ccf824a3ea0c3454f2ccceb
+  - name: test.scs
+    source: verification/manual_adc/cdac_edge_v1/s100/test.scs
+    bytes: 2362
+    sha256: 90f821589f3c49b8aea82887fbe37b1bc05a8cdf3687ad54d8b73ec510e8212c
+  - name: measure.json
+    source: verification/manual_adc/cdac_edge_v1/s100/measure.json
+    bytes: 11256
+    sha256: d6d6c542ab5657a417809e098b743072f5037918a1d80adb080b2d9606df94e2
+  - name: cdac_edge_reduce.py
+    source: scripts/manual_adc/cdac_edge_reduce.py
+    bytes: 16053
+    sha256: 58e79bbac484ec2c848879bf4eece99313a9ec2109d7cff2abcfd99615243a0a
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - clks
+  - xadc.topp
+  - xadc.topn
+  - xadc.cmpck
+  - eoc
+  - fault
+  expected_stop_s: 8.2e-07
+  qualification_scope: TT reference MOS plus ideal capacitors; all other blocks behavioral/ideal;
+    not physical capacitor/PVT qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; OA untouched
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+    single_variable:
+      case: s100
+      sample_rise_s: 1e-10
+      sample_fall_s: 1e-11
+      sample_start_s: 9.979999999999999e-09
+      sample_center_s: 1.003e-08
+      ref_advance_s: 0.0
+      next_boundary_s: 9.979999999999999e-09
+      period_s: 1e-07
+      scope: Native CDAC ref MOS; ideal capacitors and surroundings. Same external
+        clock and sampling 50% midpoint/falling edge.
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-cdac-edge-s100-tt-v1

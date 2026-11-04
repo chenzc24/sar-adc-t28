@@ -1,0 +1,55 @@
+managed: true
+recipe_hash: c355e46b88710606144b7b8130cc57788c03dc7178787c97ed768ada2304225c
+recipe:
+  schema_version: 2
+  run_id: manual8-sar-a-v6-stress-windows-v1
+  design_id: manual8_sar_isolation_v1
+  entry: sar_isolation_stress_windows.py
+  analyzer: sar_isolation_stress_windows.py
+  files:
+  - name: sar_isolation_stress_windows.py
+    source: scripts/manual_adc/sar_isolation_stress_windows.py
+    bytes: 3671
+    sha256: 6b9ab2b1efa44758d327324e29fc6f93ea6b23a02560d6a37d80963888a64766
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 2048
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 32
+    simulation_wall_seconds: 3600
+    analysis_wall_seconds: 1800
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - clks
+  - cmpck
+  - xdut.valid
+  expected_stop_s: 1.62e-06
+  qualification_scope: First 220ns DFF stress windows only; no new simulation
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none
+  kind: analysis_only
+  source:
+    run_id: manual8-sar-a-tt-v6
+    recipe_hash: 71214154eb668ad8870a5bb077945f16eb824369333ddb1c17a23d0381680a1a
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-sar-a-v6-stress-windows-v1

@@ -1,0 +1,80 @@
+schema_version: 1
+run_id: sar8audit-sample-start-ramp-sscold-v1
+design_id: sar8_compact_sampling_power_on_v1
+entry: test.scs
+inputs:
+- source: verification/sar8_module_audit/sampling/stream_package/common/fixture_dut.scs
+  name: fixture_dut.scs
+- source: verification/sar8_module_audit/sampling/stream_package/common/stream.cpp
+  name: stream.cpp
+- source: verification/sar8_module_audit/sampling/stream_package/common/pairs.txt
+  name: pairs.txt
+- source: verification/sar8_module_audit/sampling/stream_package/common/selected.txt
+  name: selected.txt
+- source: verification/sar8_module_audit/sampling/stream_package/common/events.txt
+  name: events.txt
+- source: verification/sar8_module_audit/sampling/stream_package/common/products.txt
+  name: products.txt
+- source: verification/sar8_module_audit/sampling/power_on/common/mapping.json
+  name: mapping.json
+- source: scripts/sar8_physical_repair/loaded_remote.py
+  name: loaded_remote.py
+- source: verification/sar8_module_audit/sampling/power_on_analyze.py
+  name: power_on_analyze.py
+- source: verification/sar8_module_audit/sampling/power_on_managed_v1/compression_config.json
+  name: compression_config.json
+- source: verification/sar8_module_audit/sampling/power_on/ramp_core/test.scs
+  name: test.scs
+analyzer: power_on_analyze.py
+expected_stop_s: 2.6e-07
+spectre_args:
+- +preset=cx
+- +mt=4
+- +lqtimeout
+- '60'
+- -preset_override
+summary_signals:
+- XF.XDUT__SEQ_SAMPLE
+- XF.XDUT__TOPP
+- XF.XDUT__TOPN
+- VDD!
+qualification_scope: Startup diagnostic with accepted external ramps/low-clock prelude,
+  fixed Q128/N4 reset; no POR or first-valid-frame qualification
+oa_parity: netlist_only
+test_conditions:
+  corner: ss
+  passives: tt
+  vdd: 0.81
+  supply_operating_contract_v:
+  - 0.81
+  - 0.99
+  temperature_c: -40
+  noise: false
+  mismatch: false
+  PEX: false
+  history: ramp_core
+  core_supply_profile: 0 until31.1ns; linear toSUP at41.1ns
+  common_external_bias_ramp_ns:
+  - 31.1
+  - 41.1
+  external_SAMPLE_low_until_ns: 101
+  formal_source_windows_ns:
+  - - 101
+    - 141
+  - - 201
+    - 241
+  edge_duration_ns: 0.1
+  first_source_diff_v: -0.81
+  second_source_diff_v: 0
+  POR_implemented: false
+  startup_valid_frame_specified: false
+resources:
+  threads: 4
+  simulation_rss_mib: 1024
+  simulation_virtual_mib: 8192
+  analysis_rss_mib: 256
+  analysis_virtual_mib: 1024
+  max_output_mib: 8192
+  simulation_wall_seconds: 1800
+  analysis_wall_seconds: 1200
+  queue_timeout_seconds: 600

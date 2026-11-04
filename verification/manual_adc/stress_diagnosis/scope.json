@@ -1,0 +1,12 @@
+{
+  "baseline_source": "manual8-joined-dc-v1",
+  "diagnostic_run": "manual8-stress-baseline-v1",
+  "circuit_change": false,
+  "duration_ns": 120,
+  "coverage": "all820 MOS across8 reset shift DFFs,24 data/output DFFs,reset inverter and CMPCK buffer; other combinational cells and analog MOS excluded",
+  "warning_log_limit": "-maxw5 means printed CMI list is not exhaustive; rely on targeted full-native terminal differences",
+  "delay_help_source": "installed Spectre21.1 -h delay; output/manual_adc/delay_help.txt",
+  "delay_definition": "zero output impedance, infinite input impedance, voltage transport delay; not equivalent to passiveRC",
+  "native_failure": "SPECTRE16780 discontinuity on XDUT.net32 at10.1424ns; SPECTRE16928 finalfailure at54.1671ns; initial source -maxstep200ps, native reltol1e-6 gear2only",
+  "interpretation_before_waveforms": "initial warning before first comparator clock excludes comparator decision kickback as trigger for earliest warnings; internal mechanism awaits save-only traces"
+}

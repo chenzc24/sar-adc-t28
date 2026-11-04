@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "run_id": "simcheck-live-param-missing-20261103-v1",
+  "design_id": "simcheck_fault_injection_only",
+  "qualification_scope": "Intentional test case; not circuit qualification",
+  "entry": "test.scs",
+  "inputs": [
+    {
+      "source": "verification/simcheck_live/20261103/param-missing/test.scs",
+      "name": "test.scs"
+    }
+  ],
+  "summary_signals": [
+    "out"
+  ],
+  "expected_stop_s": 2e-08,
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "+lqtimeout",
+    "5",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 512,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 128,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 16,
+    "simulation_wall_seconds": 90,
+    "analysis_wall_seconds": 30,
+    "queue_timeout_seconds": 3600
+  }
+}

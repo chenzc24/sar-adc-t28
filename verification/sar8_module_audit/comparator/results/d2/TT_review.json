@@ -1,0 +1,431 @@
+{
+  "run_id": "sar8audit-comp-d2-tt",
+  "corner": "tt",
+  "source_receipt_sha256": "96825782ee4241c06faa48432903c805fb25578b2819d7bd63c6ea1ad6c66b32",
+  "source_files": {
+    "analysis.admission.json": "49d66597fa44cb70f7853fd320cea5b9f1719522cdfc988ea04b6507a1eb05b9",
+    "analysis.state.json": "41b3d24438b7385366d8c15f324c02cb95279f9a6bb0c962058b354f4e6248c1",
+    "derived/diagnostic.json": "e461b21757fe3bc8a0bef5545b3682a2c5141cea0b2009ea4fde4d61b9bf3aa6",
+    "derived/failing_pairs.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "derived/result.json": "b9fdf31561a2e64527eee258b33ca98f46d04190541d784d40cdab169a8eeb8e",
+    "derived/stream": "c910cbbedb212606a6e7252afed9f3e94b7481ab8069723f6007de5868819048",
+    "derived/wave.bin": "f7cc3adf2101fae599275545867ecd8e7b7f4ca1fffca903dd7ffc2a04b514a1",
+    "derived/wave.columns": "823e73664953ce6a724ab9b49cef6afebcbc5f849f216e008427ac96bcd2510d",
+    "derived/wave.events.tsv": "a3e8f2487fb289e58ca56014ab9b847d75cd3271940f4ce8bc7fdb68d1a621b7",
+    "derived/wave.extrema.tsv": "c18c396561f95fa5f06270a47d702bf478381dca5dc43975896316ae385d9791",
+    "derived/wave.meta.json": "bb8f572fca4d6203ed4c91a33d5de58ce3dfaa8965ba018034885ec8930a5929",
+    "derived/wave.products.tsv": "c3575682a7150a450e133e6363e976acf81d0236344fde4ba04825b8fb4f7322",
+    "derived/wave.reset90.tsv": "dd44de03c5e6917e56ff473e61d015fba987c89be666272a916da2ac3c0ff1bf",
+    "derived/wave.samples.tsv": "d8b530841232298c14355dae2b295a4ac4611796408ffb95935aadac99dd9a09",
+    "derived/wave.stress.tsv": "6c3f3a5c120cc92fbfeda9ca6a46af7224efee2ef39166cfd91758a67b386906",
+    "raw/logStatus": "3356e2d5526cdd19a9fa160d2c175a39b36d82ff7ae6038ad3508a4e0a50f6c5",
+    "simulation.admission.json": "49e06937bb99f831de95600dab09db433b5aaa7fd52b0943e047eaa87bfd9d2d",
+    "simulation.state.json": "2caa68b6af3389434e153e847c936e61d58128177b7e78e95ec8b67ed229d655",
+    "spectre.out": "d9d4f5bfbd13941f35d54aa896166d8ab3a3ba7b9fecba6412fc8975c720057f"
+  },
+  "verified_frozen_files": 14,
+  "collected_bytes": 2007296,
+  "native_points": 100514,
+  "display_points": 11678,
+  "native_stop_s": 2.6e-07,
+  "effective_settings": {
+    "abstol(I)": "100 fA, default 1 pA",
+    "abstol(V)": "10 nV, default 1 uV",
+    "maxstep": "5 ps, default 2.6 ns (conservative)",
+    "method": "gear2only",
+    "reltol": "100e-09, default 100e-06 (conservative)"
+  },
+  "warnings": [
+    "SFE-1131",
+    "VACOMP-2435"
+  ],
+  "native_zero_errors": true,
+  "native_analysis_PASS": true,
+  "CMI_warning_present": false,
+  "actual_multithreading_disabled": true,
+  "terminal_pair_checks": 2802,
+  "failed_terminal_pair_checks": 0,
+  "worst_terminal_by_group": {
+    "comparator": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_na18_mac",
+      "group": "comparator",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "xdut.comp_p"
+      ],
+      "pair_index": 14,
+      "limit_v": 1.98,
+      "peak_v": 1.016813506015623,
+      "time_s": 3.247197190421281e-08
+    },
+    "register": {
+      "instance": "XDUT.XCTRL.XBIT0.XSTORE.X006.MN0",
+      "model": "nch_mac",
+      "group": "register",
+      "terminal": "gd",
+      "nodes": [
+        "xdut.xctrl.xbit0.xstore.m",
+        "xdut.xctrl.xbit0.xstore.mb"
+      ],
+      "pair_index": 110,
+      "limit_v": 0.99,
+      "peak_v": 0.9377592380164129,
+      "time_s": 2.166868273685647e-08
+    },
+    "forward_detection": {
+      "instance": "XDUT.XCTRL.XTIM.X014.X001.MN",
+      "model": "nch_mac",
+      "group": "forward_detection",
+      "terminal": "ds",
+      "nodes": [
+        "0",
+        "xdut.phi_u"
+      ],
+      "pair_index": 870,
+      "limit_v": 0.99,
+      "peak_v": 0.9608896254150074,
+      "time_s": 2.321325881888751e-07
+    },
+    "receiver": {
+      "instance": "XDUT.XCTRL.XTIM.X002.X001.MN",
+      "model": "nch_mac",
+      "group": "receiver",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "xdut.xctrl.xtim.x002.n"
+      ],
+      "pair_index": 754,
+      "limit_v": 0.99,
+      "peak_v": 0.9223032199227462,
+      "time_s": 2.323768715785731e-07
+    }
+  },
+  "actual_write_count": 6,
+  "cycles": [
+    {
+      "index": 0,
+      "input_sign": "+",
+      "expected_DATA": 1,
+      "expected_D0": 1,
+      "clock_rise_ns": 20.05,
+      "actual_input_diff_at_clock_v": 0.001757812500000011,
+      "write_ns": 21.663108369574257,
+      "clock_to_write_ns": 1.6131083695742563,
+      "DATA_v_at_write": 0.9000801563349863,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 0.20708571403831277,
+      "DATA_interval_is_lower_bound": false,
+      "DATA_interval_definition": "last current-cycle half-VDD DATA crossing to write",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.569777016769495,
+          "end_from_clock_ns": 1.3833127615490521
+        }
+      ],
+      "D0_v_at_write": 0.018078359356308932,
+      "D0_v_before_clock_fall": 0.8999987534554947,
+      "D0_matches": true,
+      "D0_required_new_transition": true,
+      "D0_transition_after_write_ns": 0.035331486106199406,
+      "clock_fall_ns": 32.05,
+      "reset_all4_90pct_ready_ns": 32.65486321475193,
+      "reset_all4_90pct_after_fall_ns": 0.6048632147519263,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.7777764411379258,
+        0.03461048444121344
+      ],
+      "received_at_write_v": [
+        0.9000125531925757,
+        3.063268437250182e-05
+      ]
+    },
+    {
+      "index": 1,
+      "input_sign": "+",
+      "expected_DATA": 1,
+      "expected_D0": 1,
+      "clock_rise_ns": 60.05,
+      "actual_input_diff_at_clock_v": 0.001757812500000011,
+      "write_ns": 61.65519939922592,
+      "clock_to_write_ns": 1.6051993992259252,
+      "DATA_v_at_write": 0.8999619902217575,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 0.20750768120486945,
+      "DATA_interval_is_lower_bound": false,
+      "DATA_interval_definition": "last current-cycle half-VDD DATA crossing to write",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.5619366702616526,
+          "end_from_clock_ns": 1.3751635000045477
+        }
+      ],
+      "D0_v_at_write": 0.9158710226678952,
+      "D0_v_before_clock_fall": 0.8999985863523143,
+      "D0_matches": true,
+      "D0_required_new_transition": false,
+      "D0_transition_after_write_ns": null,
+      "clock_fall_ns": 72.05000000000001,
+      "reset_all4_90pct_ready_ns": 72.65486320833334,
+      "reset_all4_90pct_after_fall_ns": 0.6048632083333291,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.7778901142029014,
+        0.03459344745420328
+      ],
+      "received_at_write_v": [
+        0.9000125550423606,
+        3.0598921371901166e-05
+      ]
+    },
+    {
+      "index": 2,
+      "input_sign": "-",
+      "expected_DATA": 0,
+      "expected_D0": 0,
+      "clock_rise_ns": 100.05,
+      "actual_input_diff_at_clock_v": -0.001757812500000011,
+      "write_ns": 101.6624361986549,
+      "clock_to_write_ns": 1.6124361986548967,
+      "DATA_v_at_write": -5.143858212552398e-06,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 1.6124361986548967,
+      "DATA_interval_is_lower_bound": true,
+      "DATA_interval_definition": "no DATA half-crossing this cycle; lower bound since comparator clock rise",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.5615380559840143,
+          "end_from_clock_ns": 1.3747439941156705
+        }
+      ],
+      "D0_v_at_write": 0.9144066438875931,
+      "D0_v_before_clock_fall": 6.905525617298546e-06,
+      "D0_matches": true,
+      "D0_required_new_transition": true,
+      "D0_transition_after_write_ns": 0.03610311460054438,
+      "clock_fall_ns": 112.05000000000003,
+      "reset_all4_90pct_ready_ns": 112.6548676518759,
+      "reset_all4_90pct_after_fall_ns": 0.604867651875873,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.034071812767363395,
+        0.7813105799978931
+      ],
+      "received_at_write_v": [
+        6.808046281512091e-06,
+        0.8999966423932577
+      ]
+    },
+    {
+      "index": 3,
+      "input_sign": "+",
+      "expected_DATA": 1,
+      "expected_D0": 1,
+      "clock_rise_ns": 140.04999999999998,
+      "actual_input_diff_at_clock_v": 0.001757812500000011,
+      "write_ns": 141.6549804463115,
+      "clock_to_write_ns": 1.6049804463115072,
+      "DATA_v_at_write": 0.8999614515293305,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 0.20728891723282336,
+      "DATA_interval_is_lower_bound": false,
+      "DATA_interval_definition": "last current-cycle half-VDD DATA crossing to write",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.5619367199995596,
+          "end_from_clock_ns": 1.3751636131993705
+        }
+      ],
+      "D0_v_at_write": 0.018085891274553,
+      "D0_v_before_clock_fall": 0.8999985856674956,
+      "D0_matches": true,
+      "D0_required_new_transition": true,
+      "D0_transition_after_write_ns": 0.03529506296276283,
+      "clock_fall_ns": 152.05000000000004,
+      "reset_all4_90pct_ready_ns": 152.65486311055392,
+      "reset_all4_90pct_after_fall_ns": 0.6048631105538705,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.7777860962313213,
+        0.034609070505749726
+      ],
+      "received_at_write_v": [
+        0.9000125535710938,
+        3.062969046694089e-05
+      ]
+    },
+    {
+      "index": 4,
+      "input_sign": "-",
+      "expected_DATA": 0,
+      "expected_D0": 0,
+      "clock_rise_ns": 180.05,
+      "actual_input_diff_at_clock_v": -0.001757812500000011,
+      "write_ns": 181.66243618539866,
+      "clock_to_write_ns": 1.6124361853986722,
+      "DATA_v_at_write": -5.144543736679784e-06,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 1.6124361853986722,
+      "DATA_interval_is_lower_bound": true,
+      "DATA_interval_definition": "no DATA half-crossing this cycle; lower bound since comparator clock rise",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.5615380642203641,
+          "end_from_clock_ns": 1.3747439839848785
+        }
+      ],
+      "D0_v_at_write": 0.9144066438471268,
+      "D0_v_before_clock_fall": 6.905511952991837e-06,
+      "D0_matches": true,
+      "D0_required_new_transition": true,
+      "D0_transition_after_write_ns": 0.0361031079796187,
+      "clock_fall_ns": 192.05,
+      "reset_all4_90pct_ready_ns": 192.65486765131863,
+      "reset_all4_90pct_after_fall_ns": 0.604867651318618,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.03407181280211596,
+        0.7813105798213724
+      ],
+      "received_at_write_v": [
+        6.808046303416447e-06,
+        0.8999966423932648
+      ]
+    },
+    {
+      "index": 5,
+      "input_sign": "-",
+      "expected_DATA": 0,
+      "expected_D0": 0,
+      "clock_rise_ns": 220.04999999999998,
+      "actual_input_diff_at_clock_v": -0.001757812500000011,
+      "write_ns": 221.66221722144908,
+      "clock_to_write_ns": 1.6122172214490824,
+      "DATA_v_at_write": -5.200381838478265e-06,
+      "DATA_matches": true,
+      "DATA_before_write_interval_ns": 1.6122172214490824,
+      "DATA_interval_is_lower_bound": true,
+      "DATA_interval_definition": "no DATA half-crossing this cycle; lower bound since comparator clock rise",
+      "PR_NR_both_low_intervals_before_write": [
+        {
+          "start_from_clock_ns": 0.5615380874202789,
+          "end_from_clock_ns": 1.3747441290187832
+        }
+      ],
+      "D0_v_at_write": 0.014307544095105392,
+      "D0_v_before_clock_fall": 6.906532026264923e-06,
+      "D0_matches": true,
+      "D0_required_new_transition": false,
+      "D0_transition_after_write_ns": null,
+      "clock_fall_ns": 232.05,
+      "reset_all4_90pct_ready_ns": 232.65486846801355,
+      "reset_all4_90pct_after_fall_ns": 0.6048684680135186,
+      "pre_update_all4_90pct": true,
+      "pre_compare_all4_90pct": true,
+      "raw_output_at_write_v": [
+        0.03408751694298948,
+        0.7812090107899582
+      ],
+      "received_at_write_v": [
+        6.8003484575899185e-06,
+        0.8999966269146427
+      ]
+    }
+  ],
+  "all_DATA_correct": true,
+  "native_half_supply_validity_rise_counts": {
+    "xdut.xctrl.xtim.raw": 6,
+    "xdut.xctrl.xtim.raw_d": 6,
+    "xdut.xctrl.xtim.dec": 6,
+    "xdut.xctrl.phi_w": 6
+  },
+  "first_positive_forward_rise_times_ns": {
+    "xdut.xctrl.xtim.raw": 21.454021183666512,
+    "xdut.xctrl.xtim.raw_d": 21.603202520173184,
+    "xdut.xctrl.xtim.dec": 21.62546722010209,
+    "xdut.xctrl.data": 21.456022655535943,
+    "xdut.xctrl.phi_w": 21.663108369574257
+  },
+  "receiver_transient_interpretation": "Common-mode output discharge can produce PR/NR=00 before regeneration; XOR is0 in00 and11. Current native half-VDD RAW/RAW_D/DEC/PHI_W counts show no duplicate accepted pulse; subthreshold analog pulses remain outside this binary statement.",
+  "DATA_lead_interpretation": "Observed207psTT/295psSS positive-input lead comes from the parallel DATA path versus delayed-RAW/DEC/write path; it is not a characterized DFF setup requirement or guaranteed setup margin.",
+  "independent_DONE_output_present": false,
+  "all_D0_correct": true,
+  "register_clock_binding_verified": true,
+  "register_polarity": "positive edge master/slave; master CK-low transparent, slave CK-high transparent",
+  "register_clock_attachments": [
+    {
+      "instance": "XBIT7.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT6.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT5.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT4.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT3.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT2.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT1.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    },
+    {
+      "instance": "XBIT0.XSTORE",
+      "CK": "XCTRL.PHI_W"
+    }
+  ],
+  "native_D0_half_supply_transitions": [
+    {
+      "node": "d0",
+      "up": 1,
+      "time_s": 2.1698439855680457e-08
+    },
+    {
+      "node": "d0",
+      "up": 0,
+      "time_s": 1.0169853931325544e-07
+    },
+    {
+      "node": "d0",
+      "up": 1,
+      "time_s": 1.4169027550927426e-07
+    },
+    {
+      "node": "d0",
+      "up": 0,
+      "time_s": 1.816985392933783e-07
+    }
+  ],
+  "register_internal_CKB_aperture_time_verified": false,
+  "setup_hold_qualified": false,
+  "VDD_energy_pj": 2.189794657016845,
+  "VDD_mean_uW": 8.42228714237248,
+  "energy_scope": "entire260ns diagnostic module VDD, including initial reset and idle; not ADC power or isolated comparator energy",
+  "energy_provenance": "existing native trapezoids independently audited to cover0..260ns; no second raw re-integration",
+  "native_functional_observations_pass": true,
+  "module_qualified": false,
+  "kickback_measured": false,
+  "noise_mismatch_measured": false,
+  "simulation_peak_rss_bytes": 306679808,
+  "analysis_peak_rss_bytes": 138342400
+}

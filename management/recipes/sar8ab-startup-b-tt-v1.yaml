@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8ab-startup-b-tt-v1",
+  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "entry": "test.scs",
+  "analyzer": "reduce.py",
+  "inputs": [
+    {
+      "source": "netlist/sar8_l90_mmain2_stdcell_v1/dut.scs",
+      "name": "dut.scs",
+      "sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea"
+    },
+    {
+      "source": "verification/sar8_ab_startup/b/test.scs",
+      "name": "test.scs",
+      "sha256": "151949389cec234fc0a8370f92f78ffbdf6170b65eaa119f5ac1e973fd9c5334"
+    },
+    {
+      "source": "verification/sar8_ab_startup/b/tb.scs",
+      "name": "tb.scs",
+      "sha256": "ddbc87edbd01eb8aac0c8cac3156c4ddc9401bbc25e666c5925a12e4d4ea7c48"
+    },
+    {
+      "source": "verification/sar8_ab_startup/b/context.json",
+      "name": "context.json",
+      "sha256": "e53a55a25f70dbc844f69322852f8393870e9f9572da1fb5517e655530127200"
+    },
+    {
+      "source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs",
+      "name": "library_include.scs",
+      "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe"
+    },
+    {
+      "source": "models/veriloga/sar8_r4_performance/r4_perf_monitor.va",
+      "name": "r4_perf_monitor.va",
+      "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+    },
+    {
+      "source": "scripts/sar8_ab_startup/reduce.py",
+      "name": "reduce.py",
+      "sha256": "97ba76e1d5859500666e051cd76a5e81aa3b7980c0bbc4e38c7b0c208b467a31"
+    }
+  ],
+  "summary_signals": [
+    "d0",
+    "d1",
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "sample",
+    "vdd!",
+    "vinp_src",
+    "vinn_src",
+    "vinp",
+    "vinn",
+    "vrefp",
+    "vrefn",
+    "xdut.sample_int",
+    "xdut.seq_sample",
+    "xdut.cmp_clk",
+    "xdut.xctrl.phi_w",
+    "xdut.phi_u",
+    "xdut.xref.cap_clk",
+    "xdut.topp",
+    "xdut.topn",
+    "xdut.xbootp.g",
+    "xdut.xbootn.g",
+    "xdut.active",
+    "xdut.comp_p",
+    "xdut.comp_n",
+    "xdut.xbootp.btop",
+    "xdut.xbootp.bbot",
+    "xdut.xbootn.btop",
+    "xdut.xbootn.bbot"
+  ],
+  "expected_stop_s": 1.1e-06,
+  "test_conditions": {
+    "label": "b",
+    "expected_codes": [
+      0,
+      0,
+      12,
+      127,
+      128,
+      243,
+      255,
+      255,
+      0,
+      128
+    ],
+    "frames": 10,
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "reference_v": 0.9,
+    "LSB": 0.00703125,
+    "period_s": 1e-07,
+    "dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+    "signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vinp",
+      "vinn",
+      "vrefp",
+      "vrefn",
+      "xdut.sample_int",
+      "xdut.seq_sample",
+      "xdut.cmp_clk",
+      "xdut.xctrl.phi_w",
+      "xdut.phi_u",
+      "xdut.xref.cap_clk",
+      "xdut.topp",
+      "xdut.topn",
+      "xdut.xbootp.g",
+      "xdut.xbootn.g",
+      "xdut.active",
+      "xdut.comp_p",
+      "xdut.comp_n",
+      "xdut.xbootp.btop",
+      "xdut.xbootp.bbot",
+      "xdut.xbootn.btop",
+      "xdut.xbootn.bbot"
+    ],
+    "startup_frames": [
+      0
+    ],
+    "settling_band_lsb": 0.25,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "frame_origin_s": 1e-07,
+    "expected_stop_s": 1.1e-06,
+    "initial_low_until_s": 1.01e-07,
+    "startup_method": "External clock low-first phase; no forced internal nodes; DC initialized",
+    "unscored_interval_s": [
+      0,
+      1e-07
+    ],
+    "first_valid_frame_must_pass": true
+  },
+  "qualification_scope": "Paired TT function/aperture/handshake/settling; stress deferred",
+  "oa_parity": "netlist_only",
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=4",
+    "-preset_override",
+    "+lqtimeout",
+    "60"
+  ],
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 43200,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 7200
+  }
+}

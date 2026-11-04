@@ -1,0 +1,129 @@
+// TT native CDAC held-input diagnostic; not yet Spectre compiled.
+// Original comparator/receiver/clock settings; ideal temporary initialization and fixed bottom rails.
+simulator lang=spectre
+global 0 VDD!
+parameters SUP=0.9
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=pre_simu
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=noise_worst
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=ttmacro_mos_moscap
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_res_bip_dio_disres
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_mom
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_ind_jvar
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_r_metal
+include "cells.scs"
+XACTIVE (TOPP_A TOPN_A CMP_CLK SAMPLE_GUARD REG_RESET TOKEN0 TOKEN1 TOKEN2 TOKEN3 TOKEN4 TOKEN5 TOKEN6 TOKEN7 VDD! 0 D0_A D1_A D2_A D3_A D4_A D5_A D6_A D7_A) audit_comparator_d
+XRESET (TOPP_B TOPN_B 0 SAMPLE_GUARD REG_RESET TOKEN0 TOKEN1 TOKEN2 TOKEN3 TOKEN4 TOKEN5 TOKEN6 TOKEN7 VDD! 0 D0_B D1_B D2_B D3_B D4_B D5_B D6_B D7_B) audit_comparator_d
+include "cdac_load.scs"
+ahdl_include "initializer.va"
+XACTIVE_CDAC (TOPN_A TOPP_A VCM VREFN VREFP) audit_cdac_hold
+VSENSE_AP (TOPP_A HOLD_AP) vsource dc=0
+XINIT_AP (HOLD_AP PREP CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+VSENSE_AN (TOPN_A HOLD_AN) vsource dc=0
+XINIT_AN (HOLD_AN PREN CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+XRESET_CDAC (TOPN_B TOPP_B VCM VREFN VREFP) audit_cdac_hold
+VSENSE_BP (TOPP_B HOLD_BP) vsource dc=0
+XINIT_BP (HOLD_BP PREP CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+VSENSE_BN (TOPN_B HOLD_BN) vsource dc=0
+XINIT_BN (HOLD_BN PREN CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+VVDD (VDD! 0) vsource dc=SUP
+VCMP_CLK (CMP_CLK 0) vsource type=pwl wave=[0n 0 20n 0 20.1n SUP 32n SUP 32.1n 0 60n 0 60.1n SUP 72n SUP 72.1n 0 100n 0 100.1n SUP 112n SUP 112.1n 0 140n 0 140.1n SUP 152n SUP 152.1n 0 180n 0 180.1n SUP 192n SUP 192.1n 0 220n 0 220.1n SUP 232n SUP 232.1n 0 260n 0]
+VPREP (PREP 0) vsource type=pwl wave=[0n 0.45087890625 12n 0.45087890625 12.1n 0.45087890625 52n 0.45087890625 52.1n 0.45087890625 92n 0.45087890625 92.1n 0.44912109375 132n 0.44912109375 132.1n 0.45087890625 172n 0.45087890625 172.1n 0.44912109375 212n 0.44912109375 212.1n 0.44912109375 260n 0.44912109375]
+VPREN (PREN 0) vsource type=pwl wave=[0n 0.44912109375 12n 0.44912109375 12.1n 0.44912109375 52n 0.44912109375 52.1n 0.44912109375 92n 0.44912109375 92.1n 0.45087890625 132n 0.45087890625 132.1n 0.44912109375 172n 0.44912109375 172.1n 0.45087890625 212n 0.45087890625 212.1n 0.45087890625 260n 0.45087890625]
+VREG_RESET (REG_RESET 0) vsource type=pwl wave=[0n SUP 10n SUP 10.1n 0 260n 0]
+VSAMPLE_GUARD (SAMPLE_GUARD 0) vsource dc=0
+VTOKEN0 (TOKEN0 0) vsource dc=SUP
+VTOKEN1 (TOKEN1 0) vsource dc=0
+VTOKEN2 (TOKEN2 0) vsource dc=0
+VTOKEN3 (TOKEN3 0) vsource dc=0
+VTOKEN4 (TOKEN4 0) vsource dc=0
+VTOKEN5 (TOKEN5 0) vsource dc=0
+VTOKEN6 (TOKEN6 0) vsource dc=0
+VTOKEN7 (TOKEN7 0) vsource dc=0
+simulatorOptions options temp=27 tnom=27 reltol=1e-6 vabstol=1e-8 iabstol=1e-13 method=gear2only
+tran_kickback tran stop=260n maxstep=5p errpreset=conservative
+saveOptions options save=selected currents=selected subcktiprobes=no useprobes=no
+VINIT (CINIT 0) vsource type=pwl wave=[0n SUP 18n SUP 18.1n 0 84n 0 84.1n SUP 98n SUP 98.1n 0 124n 0 124.1n SUP 138n SUP 138.1n 0 164n 0 164.1n SUP 178n SUP 178.1n 0 204n 0 204.1n SUP 218n SUP 218.1n 0 260n 0]
+VVCM (VCM 0) vsource dc=0.45
+VREFLOW (VREFN 0) vsource dc=0
+VREFHIGH (VREFP 0) vsource dc=0.9
+save CINIT
+save CMP_CLK
+save D0_A
+save D0_B
+save PREN
+save PREP
+save TOPN_A
+save TOPN_B
+save TOPP_A
+save TOPP_B
+save VCM
+save VDD!
+save VREFN
+save VREFP
+save XACTIVE.COMP_N
+save XACTIVE.COMP_P
+save XACTIVE.XCOMP.TAIL
+save XACTIVE.XCOMP.X
+save XACTIVE.XCOMP.Y
+save XACTIVE.XCTRL.DATA
+save XACTIVE.XCTRL.PHI_W
+save XACTIVE.XCTRL.XTIM.NR
+save XACTIVE.XCTRL.XTIM.PR
+save XACTIVE.XCTRL.XTIM.X002.N
+save XACTIVE.XCTRL.XTIM.X003.N
+save XRESET.COMP_N
+save XRESET.COMP_P
+save XRESET.XCOMP.TAIL
+save XRESET.XCOMP.X
+save XRESET.XCOMP.Y
+save XRESET.XCTRL.DATA
+save XRESET.XCTRL.PHI_W
+save XRESET.XCTRL.XTIM.NR
+save XRESET.XCTRL.XTIM.PR
+save XRESET.XCTRL.XTIM.X002.N
+save XRESET.XCTRL.XTIM.X003.N
+save VSENSE_AN:1
+save VSENSE_AP:1
+save VSENSE_BN:1
+save VSENSE_BP:1
+save VVDD:1
+save XACTIVE.XCOMP.MNINN:2
+save XACTIVE.XCOMP.MNINP:2
+save XACTIVE_CDAC.CMOMN0:1
+save XACTIVE_CDAC.CMOMN1:1
+save XACTIVE_CDAC.CMOMN2:1
+save XACTIVE_CDAC.CMOMN3:1
+save XACTIVE_CDAC.CMOMN4:1
+save XACTIVE_CDAC.CMOMN5:1
+save XACTIVE_CDAC.CMOMN6:1
+save XACTIVE_CDAC.CMOMN7:1
+save XACTIVE_CDAC.CMOMN8:1
+save XACTIVE_CDAC.CMOMP0:1
+save XACTIVE_CDAC.CMOMP1:1
+save XACTIVE_CDAC.CMOMP2:1
+save XACTIVE_CDAC.CMOMP3:1
+save XACTIVE_CDAC.CMOMP4:1
+save XACTIVE_CDAC.CMOMP5:1
+save XACTIVE_CDAC.CMOMP6:1
+save XACTIVE_CDAC.CMOMP7:1
+save XACTIVE_CDAC.CMOMP8:1
+save XRESET.XCOMP.MNINN:2
+save XRESET.XCOMP.MNINP:2
+save XRESET_CDAC.CMOMN0:1
+save XRESET_CDAC.CMOMN1:1
+save XRESET_CDAC.CMOMN2:1
+save XRESET_CDAC.CMOMN3:1
+save XRESET_CDAC.CMOMN4:1
+save XRESET_CDAC.CMOMN5:1
+save XRESET_CDAC.CMOMN6:1
+save XRESET_CDAC.CMOMN7:1
+save XRESET_CDAC.CMOMN8:1
+save XRESET_CDAC.CMOMP0:1
+save XRESET_CDAC.CMOMP1:1
+save XRESET_CDAC.CMOMP2:1
+save XRESET_CDAC.CMOMP3:1
+save XRESET_CDAC.CMOMP4:1
+save XRESET_CDAC.CMOMP5:1
+save XRESET_CDAC.CMOMP6:1
+save XRESET_CDAC.CMOMP7:1
+save XRESET_CDAC.CMOMP8:1

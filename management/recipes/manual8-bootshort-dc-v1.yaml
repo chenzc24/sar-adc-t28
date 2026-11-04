@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-bootshort-dc-v1",
+  "design_id": "manual8_bootstrap_only_hybrid_v1",
+  "entry": "test.scs",
+  "analyzer": "bootstrap_short_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/boot.scs",
+      "name": "boot.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/manual8_cdac.va",
+      "name": "manual8_cdac.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/manual8_cmp.va",
+      "name": "manual8_cmp.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/manual8_sample.va",
+      "name": "manual8_sample.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/manual8_sar.va",
+      "name": "manual8_sar.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/wrappers_hybrid.scs",
+      "name": "wrappers_hybrid.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_short_v1/dc/wrappers_ideal.scs",
+      "name": "wrappers_ideal.scs"
+    },
+    {
+      "source": "scripts/manual_adc/bootstrap_short_reduce.py",
+      "name": "bootstrap_short_reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 8.200000000000001e-07,
+  "summary_signals": [
+    "CLKS",
+    "VINP",
+    "VINN",
+    "XADC.TOPP",
+    "XADC.TOPN",
+    "EOC",
+    "FAULT"
+  ],
+  "qualification_scope": "Unchanged IO bootstrap only, other modules behavioral, short nominal diagnostic; no PVT/FFT/lifetime claim",
+  "oa_parity": "netlist_only; OA unchanged",
+  "test_conditions": {
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "startup_supply_ramp_s": null
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 900,
+    "queue_timeout_seconds": 900
+  }
+}

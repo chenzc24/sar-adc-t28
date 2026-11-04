@@ -1,0 +1,460 @@
+{
+  "run": "sar8audit-ref-bbm-stdcell-hlswap-ff-v1",
+  "result_sha256": "b1e3c3e50d73e6e2aebd478e3426fe1a8686131054527a645ee9d71eba365a5c",
+  "managed_recipe_sha256": "d0020c7f2887144d28c373ad052a6f24e81d0d4af120993e2c1066b7c8f186f7",
+  "native_points": 11298,
+  "receipt_bytes": 26389195,
+  "measurements": {
+    "events": {
+      "HD_positive": {
+        "leg": "HD",
+        "polarity": "positive",
+        "nominal_edge_s": 4.3e-08,
+        "excursion_detected": true,
+        "peak_time_s": 4.3005e-08,
+        "RC1_peak_V": 1.061723101677844,
+        "gate_node": "code",
+        "MP_CLEAR_peak_DGSB_V": {
+          "D": 1.061723101677844,
+          "G": 0.99,
+          "S": 0.99,
+          "B": 0.99,
+          "Vds": 0.0717231016778439,
+          "Vgs": 0.0,
+          "Vgd": -0.0717231016778439,
+          "Vbd": -0.0717231016778439
+        },
+        "receiver_X005_peak_V": {
+          "gate_RC1": 1.061723101677844,
+          "output_Y": 0.0009203965184617571,
+          "NMOS_Vgs": 1.061723101677844,
+          "NMOS_Vgd": 1.0608027051593822
+        },
+        "peak_group_current_A": {
+          "MP_CLEAR_D": -4.589254128264937e-05,
+          "C1": 3.500391079483071e-05,
+          "R1": 7.027542877393691e-06,
+          "X005_native_gates": 3.861087610327477e-06
+        },
+        "MP_CLEAR_peak_DGSB_A": {
+          "1": -4.589254128264937e-05,
+          "2": 0.0001263389223995339,
+          "3": -5.720549623973002e-05,
+          "4": -2.32408848774874e-05
+        },
+        "leading": {
+          "status": "observed",
+          "native_interval_s": [
+            4.2995e-08,
+            4.3005e-08
+          ],
+          "RC1_start_V": 0.9899999871135727,
+          "RC1_stop_V": 1.061723101677844,
+          "charge_C": {
+            "MP_CLEAR_D": -4.2721438271034793e-16,
+            "C1": 3.550631944120771e-16,
+            "R1": 3.3087911475716166e-17,
+            "X005_native_gates": 3.906327694136703e-17
+          },
+          "signed_charge_sum_C": 1.1881238088033368e-25,
+          "max_KCL_A": 6.61767038059478e-14,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": -4.2721438271034793e-16,
+            "2": 1.9601912304003838e-15,
+            "3": -1.391283244957853e-15,
+            "4": -1.4169360273218638e-16
+          }
+        },
+        "whole_excursion": {
+          "status": "observed",
+          "native_interval_s": [
+            4.2995e-08,
+            4.305576917868085e-08
+          ],
+          "RC1_start_V": 0.9899999871135727,
+          "RC1_stop_V": 0.98933584625702,
+          "charge_C": {
+            "MP_CLEAR_D": -5.491394906104501e-16,
+            "C1": -3.424444877195374e-18,
+            "R1": 5.527393302592393e-16,
+            "X005_native_gates": -1.753946512742125e-19
+          },
+          "signed_charge_sum_C": 1.203196072751682e-25,
+          "max_KCL_A": 6.509294186507235e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": -5.491394906104501e-16,
+            "2": 2.002353978656122e-15,
+            "3": -1.3912912849438204e-15,
+            "4": -6.192320310185617e-17
+          }
+        },
+        "observed_return_within400ps": true,
+        "gate_charge_probe": {
+          "native_interval_s": [
+            4.2995e-08,
+            4.301999485755169e-08
+          ],
+          "signed_C": 1.9676861417331926e-15,
+          "scope": "Actual total gate current over stated native interval; not a constant intrinsic capacitance"
+        },
+        "observed_R1_ohm_range": [
+          9790.667562562805,
+          9791.84454198264
+        ],
+        "current_groups": {
+          "MP_CLEAR_D": [
+            "xdut.xbbm0.xd_hd.mp_clear:1"
+          ],
+          "C1": [
+            "xdut.xbbm0.xd_hd.c1:1"
+          ],
+          "R1": [
+            "xdut.xbbm0.xd_hd.r1:2"
+          ],
+          "X005_native_gates": [
+            "xdut.xbbm0.xd_hd.x005.xlib.mm1:2",
+            "xdut.xbbm0.xd_hd.x005.xlib.mm0:2"
+          ]
+        }
+      },
+      "LD_negative": {
+        "leg": "LD",
+        "polarity": "negative",
+        "nominal_edge_s": 4.3e-08,
+        "excursion_detected": true,
+        "peak_time_s": 4.300430227716197e-08,
+        "RC1_peak_V": -0.02035528520832806,
+        "gate_node": "xdut.xbbm0.cb",
+        "MP_CLEAR_peak_DGSB_V": {
+          "D": -0.02035528520832806,
+          "G": 0.6697634051104957,
+          "S": 0.99,
+          "B": 0.99,
+          "Vds": -1.010355285208328,
+          "Vgs": -0.3202365948895043,
+          "Vgd": 0.6901186903188238,
+          "Vbd": 1.010355285208328
+        },
+        "receiver_X005_peak_V": {
+          "gate_RC1": -0.02035528520832806,
+          "output_Y": 0.9887705862619807,
+          "NMOS_Vgs": -0.02035528520832806,
+          "NMOS_Vgd": -1.0091258714703086
+        },
+        "peak_group_current_A": {
+          "MP_CLEAR_D": 4.069936939036112e-06,
+          "C1": -1.444189852636947e-06,
+          "R1": -1.900295852639713e-06,
+          "X005_native_gates": -7.254501520366925e-07
+        },
+        "MP_CLEAR_peak_DGSB_A": {
+          "1": 4.069936939036112e-06,
+          "2": -0.0001491023110410291,
+          "3": 0.0001306751418242957,
+          "4": 1.435723227769602e-05
+        },
+        "leading": {
+          "status": "observed",
+          "native_interval_s": [
+            4.299977222151016e-08,
+            4.300430227716197e-08
+          ],
+          "RC1_start_V": 5.437779397003591e-05,
+          "RC1_stop_V": -0.02035528520832806,
+          "charge_C": {
+            "MP_CLEAR_D": 1.1674936196716944e-16,
+            "C1": -1.0113854156917181e-16,
+            "R1": -3.687214892495194e-18,
+            "X005_native_gates": -1.1923603978724708e-17
+          },
+          "signed_charge_sum_C": 1.5267777270803027e-24,
+          "max_KCL_A": 1.0817227590298836e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": 1.1674936196716944e-16,
+            "2": -3.8891408787477223e-16,
+            "3": 2.1298410447020002e-16,
+            "4": 5.918062143740479e-17
+          }
+        },
+        "whole_excursion": {
+          "status": "observed",
+          "native_interval_s": [
+            4.299977222151016e-08,
+            4.300554815960298e-08
+          ],
+          "RC1_start_V": 5.437779397003591e-05,
+          "RC1_stop_V": 0.0007609290336180319,
+          "charge_C": {
+            "MP_CLEAR_D": 3.100920731814851e-18,
+            "C1": 3.41743470074763e-18,
+            "R1": -5.253303000823199e-18,
+            "X005_native_gates": -1.2650505333559848e-18
+          },
+          "signed_charge_sum_C": 1.8983832971332573e-24,
+          "max_KCL_A": 1.1602509562261867e-11,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": 3.100920731814851e-18,
+            "2": -6.076272696488262e-16,
+            "3": 5.475283169276894e-16,
+            "4": 5.699803198932218e-17
+          }
+        },
+        "observed_return_within400ps": true,
+        "gate_charge_probe": {
+          "native_interval_s": [
+            4.2995e-08,
+            4.30399149525628e-08
+          ],
+          "signed_C": -2.5244801879671377e-15,
+          "scope": "Actual total gate current over stated native interval; not a constant intrinsic capacitance"
+        },
+        "observed_R1_ohm_range": [
+          9790.667572599248,
+          9792.134234134966
+        ],
+        "current_groups": {
+          "MP_CLEAR_D": [
+            "xdut.xbbm0.xd_ld.mp_clear:1"
+          ],
+          "C1": [
+            "xdut.xbbm0.xd_ld.c1:1"
+          ],
+          "R1": [
+            "xdut.xbbm0.xd_ld.r1:2"
+          ],
+          "X005_native_gates": [
+            "xdut.xbbm0.xd_ld.x005.xlib.mm1:2",
+            "xdut.xbbm0.xd_ld.x005.xlib.mm0:2"
+          ]
+        }
+      },
+      "LD_positive": {
+        "leg": "LD",
+        "polarity": "positive",
+        "nominal_edge_s": 4.8e-08,
+        "excursion_detected": true,
+        "peak_time_s": 4.801531234898625e-08,
+        "RC1_peak_V": 1.052681857979553,
+        "gate_node": "xdut.xbbm0.cb",
+        "MP_CLEAR_peak_DGSB_V": {
+          "D": 1.052681857979553,
+          "G": 0.9227682268956632,
+          "S": 0.99,
+          "B": 0.99,
+          "Vds": 0.06268185797955295,
+          "Vgs": -0.06723177310433681,
+          "Vgd": -0.12991363108388976,
+          "Vbd": -0.06268185797955295
+        },
+        "receiver_X005_peak_V": {
+          "gate_RC1": 1.052681857979553,
+          "output_Y": -2.580194935193946e-05,
+          "NMOS_Vgs": 1.052681857979553,
+          "NMOS_Vgd": 1.052707659928905
+        },
+        "peak_group_current_A": {
+          "MP_CLEAR_D": -5.938583963794372e-06,
+          "C1": 6.437873289504179e-09,
+          "R1": 5.924442996572417e-06,
+          "X005_native_gates": 7.703093945363185e-09
+        },
+        "MP_CLEAR_peak_DGSB_A": {
+          "1": -5.938583963794372e-06,
+          "2": 1.330965763135243e-05,
+          "3": -5.885807045107422e-06,
+          "4": -1.485266622420494e-06
+        },
+        "leading": {
+          "status": "observed",
+          "native_interval_s": [
+            4.799888471562804e-08,
+            4.801531234898625e-08
+          ],
+          "RC1_start_V": 0.9899875930028863,
+          "RC1_stop_V": 1.052681857979553,
+          "charge_C": {
+            "MP_CLEAR_D": -3.970116746213099e-16,
+            "C1": 3.104939453771719e-16,
+            "R1": 5.212573630009503e-17,
+            "X005_native_gates": 3.4391992947156284e-17
+          },
+          "signed_charge_sum_C": 3.1133381700678757e-27,
+          "max_KCL_A": 2.516250787630369e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": -3.970116746213099e-16,
+            "2": 1.9022541617743858e-15,
+            "3": -1.3837814722442567e-15,
+            "4": -1.214610149088254e-16
+          }
+        },
+        "whole_excursion": {
+          "status": "observed",
+          "native_interval_s": [
+            4.799888471562804e-08,
+            4.806473378524551e-08
+          ],
+          "RC1_start_V": 0.9899875930028863,
+          "RC1_stop_V": 0.9896154330535756,
+          "charge_C": {
+            "MP_CLEAR_D": -5.281106161352656e-16,
+            "C1": -1.8211922024814807e-18,
+            "R1": 5.299250148217071e-16,
+            "X005_native_gates": 6.793161215553114e-21
+          },
+          "signed_charge_sum_C": -3.5482443033069934e-25,
+          "max_KCL_A": 2.516250787630369e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": -5.281106161352656e-16,
+            "2": 1.995179575044937e-15,
+            "3": -1.4085144647231028e-15,
+            "4": -5.855449418657387e-17
+          }
+        },
+        "observed_return_within400ps": true,
+        "gate_charge_probe": {
+          "native_interval_s": [
+            4.7995e-08,
+            4.803997541782306e-08
+          ],
+          "signed_C": 1.9296979507520954e-15,
+          "scope": "Actual total gate current over stated native interval; not a constant intrinsic capacitance"
+        },
+        "observed_R1_ohm_range": [
+          9790.66756032297,
+          9791.813368650182
+        ],
+        "current_groups": {
+          "MP_CLEAR_D": [
+            "xdut.xbbm0.xd_ld.mp_clear:1"
+          ],
+          "C1": [
+            "xdut.xbbm0.xd_ld.c1:1"
+          ],
+          "R1": [
+            "xdut.xbbm0.xd_ld.r1:2"
+          ],
+          "X005_native_gates": [
+            "xdut.xbbm0.xd_ld.x005.xlib.mm1:2",
+            "xdut.xbbm0.xd_ld.x005.xlib.mm0:2"
+          ]
+        }
+      },
+      "HD_negative": {
+        "leg": "HD",
+        "polarity": "negative",
+        "nominal_edge_s": 4.8e-08,
+        "excursion_detected": true,
+        "peak_time_s": 4.799816032597847e-08,
+        "RC1_peak_V": -0.01995267997006776,
+        "gate_node": "code",
+        "MP_CLEAR_peak_DGSB_V": {
+          "D": -0.01995267997006776,
+          "G": 0.6771277281316768,
+          "S": 0.99,
+          "B": 0.99,
+          "Vds": -1.0099526799700678,
+          "Vgs": -0.3128722718683232,
+          "Vgd": 0.6970804081017445,
+          "Vbd": 1.0099526799700678
+        },
+        "receiver_X005_peak_V": {
+          "gate_RC1": -0.01995267997006776,
+          "output_Y": 0.9890708628759861,
+          "NMOS_Vgs": -0.01995267997006776,
+          "NMOS_Vgd": -1.009023542846054
+        },
+        "peak_group_current_A": {
+          "MP_CLEAR_D": 3.032749825387213e-06,
+          "C1": -5.804440433935341e-07,
+          "R1": -1.862854786853027e-06,
+          "X005_native_gates": -5.894499653840577e-07
+        },
+        "MP_CLEAR_peak_DGSB_A": {
+          "1": 3.032749825387213e-06,
+          "2": -0.0001271711790100142,
+          "3": 0.0001116367524047771,
+          "4": 1.250167677985665e-05
+        },
+        "leading": {
+          "status": "observed",
+          "native_interval_s": [
+            4.799500308682886e-08,
+            4.799816032597847e-08
+          ],
+          "RC1_start_V": 1.886074282964249e-05,
+          "RC1_stop_V": -0.01995267997006776,
+          "charge_C": {
+            "MP_CLEAR_D": 1.1398399563150445e-16,
+            "C1": -9.89817763349677e-17,
+            "R1": -3.334669584771695e-18,
+            "X005_native_gates": -1.1667548341831232e-17
+          },
+          "signed_charge_sum_C": 1.3699338284766694e-24,
+          "max_KCL_A": 1.03014120603445e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": 1.1398399563150445e-16,
+            "2": -3.7810260176137015e-16,
+            "3": 2.0634227349404062e-16,
+            "4": 5.777633263582346e-17
+          }
+        },
+        "whole_excursion": {
+          "status": "observed",
+          "native_interval_s": [
+            4.799500308682886e-08,
+            4.799952798359311e-08
+          ],
+          "RC1_start_V": 1.886074282964249e-05,
+          "RC1_stop_V": 0.000898892238536692,
+          "charge_C": {
+            "MP_CLEAR_D": 1.8297677326127083e-18,
+            "C1": 4.200667104651156e-18,
+            "R1": -5.02224860338286e-18,
+            "X005_native_gates": -1.008183465321972e-18
+          },
+          "signed_charge_sum_C": 2.7685590326698725e-24,
+          "max_KCL_A": 1.03014120603445e-12,
+          "MP_CLEAR_DGSB_charge_C": {
+            "1": 1.8297677326127083e-18,
+            "2": -5.9630548854767645e-16,
+            "3": 5.381457918173151e-16,
+            "4": 5.632992899774473e-17
+          }
+        },
+        "observed_return_within400ps": true,
+        "gate_charge_probe": {
+          "native_interval_s": [
+            4.7995e-08,
+            4.801996827600902e-08
+          ],
+          "signed_C": -2.5244412448922773e-15,
+          "scope": "Actual total gate current over stated native interval; not a constant intrinsic capacitance"
+        },
+        "observed_R1_ohm_range": [
+          9790.667572337165,
+          9792.395733224026
+        ],
+        "current_groups": {
+          "MP_CLEAR_D": [
+            "xdut.xbbm0.xd_hd.mp_clear:1"
+          ],
+          "C1": [
+            "xdut.xbbm0.xd_hd.c1:1"
+          ],
+          "R1": [
+            "xdut.xbbm0.xd_hd.r1:2"
+          ],
+          "X005_native_gates": [
+            "xdut.xbbm0.xd_hd.x005.xlib.mm1:2",
+            "xdut.xbbm0.xd_hd.x005.xlib.mm0:2"
+          ]
+        }
+      }
+    },
+    "native_points": 11298,
+    "source_native_columns": 441,
+    "signs": "Currents positive into named component port. Negative MP_CLEAR D charge delivers charge into RC1; C1/R1/native receiver gates take the balancing charge.",
+    "interpretation": "Actual native total D/G/S/B currents including displacement; closed incidence budget identifies branch exchange, not a unique intrinsic Cgd/channel/diode decomposition. Only standard native X005 MM1/MM0 used.",
+    "missing_crossing_is_not_accepted": true
+  }
+}

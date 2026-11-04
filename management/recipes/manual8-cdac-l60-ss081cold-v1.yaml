@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-cdac-l60-ss081cold-v1",
+  "design_id": "manual8_cdac_l60pvt_v1",
+  "entry": "test.scs",
+  "analyzer": "cdac_l60pvt_leak_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/manual8_sample.va",
+      "name": "manual8_sample.va"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/manual8_cmp.va",
+      "name": "manual8_cmp.va"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/manual8_sar.va",
+      "name": "manual8_sar.va"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/cdac_core.scs",
+      "name": "cdac_core.scs"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/wrappers.scs",
+      "name": "wrappers.scs"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/cdac_l60pvt_v1/ss081cold/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "scripts/manual_adc/cdac_l60pvt_edge_reduce.py",
+      "name": "cdac_l60pvt_edge_reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/cdac_l60pvt_leak_reduce.py",
+      "name": "cdac_l60pvt_leak_reduce.py"
+    }
+  ],
+  "expected_stop_s": 8.2e-07,
+  "summary_signals": [
+    "CLKS",
+    "XADC.TOPP",
+    "XADC.TOPN",
+    "XADC.CMPCK",
+    "EOC",
+    "FAULT"
+  ],
+  "qualification_scope": "L60 native reference MOS / ideal caps and surrounding blocks; fixed0..0.9V input/reference, logic and PMOS body follow VDD; short PVT screen only.",
+  "oa_parity": "none; OA untouched",
+  "test_conditions": {
+    "corner": "ss",
+    "vdd": 0.81,
+    "temperature_c": -40,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "single_variable": {
+      "case": "ss081cold",
+      "sample_rise_s": 1e-10,
+      "sample_fall_s": 1e-11,
+      "sample_start_s": 9.979999999999999e-09,
+      "sample_center_s": 1.003e-08,
+      "ref_advance_s": 0.0,
+      "next_boundary_s": 9.979999999999999e-09,
+      "period_s": 1e-07,
+      "scope": "Native CDAC ref MOS; ideal capacitors and surroundings. Same external clock and sampling 50% midpoint/falling edge.",
+      "corner": "ss",
+      "temperature_c": -40,
+      "reference_nmos_length_nm": 60,
+      "logic_vdd_V": 0.81,
+      "reference_v": 0.9
+    },
+    "measurement_only": false,
+    "reference_nmos_length_nm": 60,
+    "baseline_run": "manual8-cdac-nl60-ffhot-v1",
+    "reference_v": 0.9
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 768,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 600
+  }
+}

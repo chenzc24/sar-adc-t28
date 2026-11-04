@@ -1,0 +1,30 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Switch abstraction, NOT a bootstrap gate-voltage/reliability model.
+// Pin order matches manual_boot. The external CDAC supplies hold capacitance.
+module manual8_sample(CLKS, GND, VDD, VIN, VOUT);
+    input CLKS, VDD;
+    inout GND, VIN, VOUT;
+    electrical CLKS, GND, VDD, VIN, VOUT;
+    parameter real ron = 1.0 from (0:inf);
+    parameter real roff = 1e12 from (0:inf);
+    parameter real trf = 10p from (0:inf);
+    parameter real threshold = 0.5 from (0:1);
+    parameter real cin = 0 from [0:inf);
+    // Positive qclk injects +qclk into VOUT on closing, -qclk on opening.
+    // Reciprocal clock-feedthrough abstraction, not calibrated turnoff physics.
+    parameter real qclk = 0;
+    integer tracking;
+    real on_fraction;
+    analog begin
+        @(initial_step)
+            tracking = (V(CLKS,GND) > threshold*V(VDD,GND));
+        @(cross(V(CLKS,GND)-threshold*V(VDD,GND), +1)) tracking = 1;
+        @(cross(V(CLKS,GND)-threshold*V(VDD,GND), -1)) tracking = 0;
+        on_fraction = transition(tracking, 0, trf, trf);
+        I(VIN,VOUT) <+ (on_fraction/ron + (1-on_fraction)/roff)*V(VIN,VOUT);
+        I(VIN,GND) <+ cin*ddt(V(VIN,GND));
+        I(VOUT,GND) <+ qclk*ddt(on_fraction);
+    end
+endmodule

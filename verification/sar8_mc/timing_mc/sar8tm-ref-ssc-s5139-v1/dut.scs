@@ -1,0 +1,1910 @@
+// MOS terminal order: D G S B (drain gate source bulk/body)
+subckt sar8p_inv A VDD VSS Y
+    XLIB (A Y VDD VSS) INVD1BWP12T30P140
+ends sar8p_inv
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_clkbuf
+// View name: schematic
+subckt sar8p_clkbuf A VDD VSS Y
+    X000 (A VDD VSS AB) sar8p_inv
+    XFINAL (AB VDD VSS Y) sar8p_inv
+ends sar8p_clkbuf
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar_bootstrap_flat_8b_p
+// View name: schematic
+subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
+    Mmain (VOUT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Mmain_U1 (VOUT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M4C (CTRL CLKS BBOT 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Msin (BBOT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Maux (G VDD! GRESET 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MRSTG (GRESET CLKSB 0 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 \
+        sd=180.0n ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 \
+        sa=155.00n sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n \
+        sa4=155.00n sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n \
+        spa1=180.0n spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n \
+        spba=233.666n spba1=239.844n spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M4A (CTRL G BBOT 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M8 (BBOT CLKSB 0 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNCLK (CLKSB CLKS 0 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M2 (BTOP G VDD! BTOP) pch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M4 (G CTRL BTOP BTOP) pch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    M4B (CTRL CLKS VDD! VDD!) pch_18_mac l=150.0n w=1u multi=1 nf=1 \
+        sd=180.0n ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 \
+        sa=155.00n sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n \
+        sa4=155.00n sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n \
+        spa1=180.0n spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n \
+        spba=233.666n spba1=239.844n spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPCLK (CLKSB CLKS VDD! VDD!) pch_18_mac l=150.0n w=1u multi=1 nf=1 \
+        sd=180.0n ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 \
+        sa=155.00n sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n \
+        sa4=155.00n sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n \
+        spa1=180.0n spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n \
+        spba=233.666n spba1=239.844n spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Cboot (BTOP BBOT) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 \
+        multi=200 mismatchflag=1
+ends sar_bootstrap_flat_8b_p
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b0
+// View name: schematic
+subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=3 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=3 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b0
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b1
+// View name: schematic
+subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=6 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=6 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b1
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b2
+// View name: schematic
+subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=12 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=12 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b3
+// View name: schematic
+subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=24 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=24 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b3
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b4
+// View name: schematic
+subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=48 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=48 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b4
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b5
+// View name: schematic
+subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=96 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=96 nf=1 sd=100n \
+        ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b5
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b6
+// View name: schematic
+subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=192 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=192 nf=1 \
+        sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b6
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_sw_b7
+// View name: schematic
+subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
+    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=384 nf=1 \
+        sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
+        nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=384 nf=1 \
+        sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
+        nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8j_r1_sw_b7
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8j_r1_cdac
+// View name: schematic
+subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
+        GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 \
+        GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD VREFN \
+        VREFP VSS
+    CMOMN8 (TOPN VREFN) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
+        multi=1 mismatchflag=1
+    CMOMN7 (TOPN BN7) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
+        multi=128 mismatchflag=1
+    CMOMN6 (TOPN BN6) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=64 \
+        mismatchflag=1
+    CMOMN5 (TOPN BN5) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=32 \
+        mismatchflag=1
+    CMOMN4 (TOPN BN4) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=16 \
+        mismatchflag=1
+    CMOMN3 (TOPN BN3) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=8 \
+        mismatchflag=1
+    CMOMN2 (TOPN BN2) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    CMOMN1 (TOPN BN1) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=2 \
+        mismatchflag=1
+    CMOMN0 (TOPN BN0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    CMOMP8 (TOPP VREFP) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
+        multi=1 mismatchflag=1
+    CMOMP7 (TOPP BP7) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
+        multi=128 mismatchflag=1
+    CMOMP6 (TOPP BP6) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=64 \
+        mismatchflag=1
+    CMOMP5 (TOPP BP5) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=32 \
+        mismatchflag=1
+    CMOMP4 (TOPP BP4) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=16 \
+        mismatchflag=1
+    CMOMP3 (TOPP BP3) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=8 \
+        mismatchflag=1
+    CMOMP2 (TOPP BP2) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    CMOMP1 (TOPP BP1) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=2 \
+        mismatchflag=1
+    CMOMP0 (TOPP BP0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    XSN0 (BN0 GNN0 GNP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSP0 (BP0 GPN0 GPP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSN1 (BN1 GNN1 GNP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSP1 (BP1 GPN1 GPP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSN2 (BN2 GNN2 GNP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSP2 (BP2 GPN2 GPP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSN3 (BN3 GNN3 GNP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSP3 (BP3 GPN3 GPP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSN4 (BN4 GNN4 GNP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSP4 (BP4 GPN4 GPP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSN5 (BN5 GNN5 GNP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSP5 (BP5 GPN5 GPP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSN6 (BN6 GNN6 GNP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSP6 (BP6 GPN6 GPP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSN7 (BN7 GNN7 GNP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+    XSP7 (BP7 GPN7 GPP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+ends sar8j_r1_cdac
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_nand2
+// View name: schematic
+subckt sar8p_nand2 A B VDD VSS Y
+    XLIB (A B Y VDD VSS) ND2D1BWP12T30P140
+ends sar8p_nand2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_and2
+// View name: schematic
+subckt sar8p_and2 A B VDD VSS Y
+    X000 (A B VDD VSS N) sar8p_nand2
+    X001 (N VDD VSS Y) sar8p_inv
+ends sar8p_and2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_buf
+// View name: schematic
+subckt sar8p_buf A VDD VSS Y
+    X001 (N VDD VSS Y) sar8p_inv
+    X000 (A VDD VSS N) sar8p_inv
+ends sar8p_buf
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_xor2
+// View name: schematic
+subckt sar8p_xor2 A B VDD VSS Y
+    X003 (NA NB VDD VSS Y) sar8p_nand2
+    X002 (B N VDD VSS NB) sar8p_nand2
+    X001 (A N VDD VSS NA) sar8p_nand2
+    X000 (A B VDD VSS N) sar8p_nand2
+ends sar8p_xor2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_delay_valid
+// View name: schematic
+subckt sar8p_delay_valid A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_valid
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_delay_write
+// View name: schematic
+subckt sar8p_delay_write A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_write
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_delay_quiet
+// View name: schematic
+subckt sar8p_delay_quiet A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=45 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=45 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_quiet
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_or2
+// View name: schematic
+subckt sar8p_or2 A B VDD VSS Y
+    X001 (B VDD VSS BB) sar8p_inv
+    X000 (A VDD VSS AB) sar8p_inv
+    X002 (AB BB VDD VSS Y) sar8p_nand2
+ends sar8p_or2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_sr
+// View name: schematic
+subckt sar8p_sr Q R S VDD VSS
+    X000 (R VDD VSS RB) sar8p_inv
+    X003 (RB Q VDD VSS QB) sar8p_nand2
+    X002 (SN QB VDD VSS Q) sar8p_nand2
+    X001 (S RB VDD VSS SN) sar8p_nand2
+    CQB (QB VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+ends sar8p_sr
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_timing
+// View name: schematic
+subckt sar8p_timing ACTIVE CMP_CLK COMP_N COMP_P DATA PHI_U PHI_W SAMPLE \
+        VDD VSS
+    X017 (PHI_U VDD VSS UN) sar8p_inv
+    X016 (PHI_W VDD VSS WN) sar8p_inv
+    X015 (CMP_CLK VDD VSS CN) sar8p_inv
+    X004 (NR VDD VSS NRB) sar8p_inv
+    X000 (SAMPLE VDD VSS SN) sar8p_inv
+    X022 (QUIET QUIET_D VDD VSS CLOCK_SET) sar8p_and2
+    X020 (Q1 LIVE VDD VSS QUIET) sar8p_and2
+    X019 (Q0 UN VDD VSS Q1) sar8p_and2
+    X018 (CN WN VDD VSS Q0) sar8p_and2
+    X014 (UD SN VDD VSS PHI_U) sar8p_and2
+    X013 (PHI_W WRITE_D VDD VSS UD) sar8p_and2
+    X010 (WD SN VDD VSS WRITE_REQ) sar8p_and2
+    X009 (DEC CMP_CLK VDD VSS WD) sar8p_and2
+    X008 (RAW RAW_D VDD VSS DEC) sar8p_and2
+    X005 (PR NRB VDD VSS DATA) sar8p_and2
+    X001 (SN ACTIVE VDD VSS LIVE) sar8p_and2
+    X025 (CLOCK_Q VDD VSS CMP_CLK) sar8p_buf
+    X003 (COMP_N VDD VSS NR) sar8p_buf
+    X002 (COMP_P VDD VSS PR) sar8p_buf
+    X006 (PR NR VDD VSS RAW) sar8p_xor2
+    XD_RAW_D (RAW VDD VSS RAW_D) sar8p_delay_valid
+    X011 (WRITE_REQ VDD VSS PHI_W) sar8p_clkbuf
+    XD_WRITE_D (PHI_W VDD VSS WRITE_D) sar8p_delay_write
+    XD_QUIET_D (QUIET VDD VSS QUIET_D) sar8p_delay_quiet
+    X023 (SAMPLE PHI_U VDD VSS CLOCK_RESET) sar8p_or2
+    XCLOCK (CLOCK_Q CLOCK_RESET CLOCK_SET VDD VSS) sar8p_sr
+ends sar8p_timing
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_dffr
+// View name: schematic
+subckt sar8p_dffr CK D Q RST VDD VSS
+    XRESET (RST RN VDD VSS) INVD1BWP12T30P140
+    XFF (D CK RN Q VDD VSS) DFCNQD1BWP12T30P140
+ends sar8p_dffr
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_bitseq8
+// View name: schematic
+subckt sar8p_bitseq8 PHI_U SAMPLE T0 T1 T2 T3 T4 T5 T6 T7 VDD VSS
+    XF0 (PHI_U T1 T0 SAMPLE VDD VSS) sar8p_dffr
+    XF1 (PHI_U T2 T1 SAMPLE VDD VSS) sar8p_dffr
+    XF2 (PHI_U T3 T2 SAMPLE VDD VSS) sar8p_dffr
+    XF3 (PHI_U T4 T3 SAMPLE VDD VSS) sar8p_dffr
+    XF4 (PHI_U T5 T4 SAMPLE VDD VSS) sar8p_dffr
+    XF5 (PHI_U T6 T5 SAMPLE VDD VSS) sar8p_dffr
+    XF6 (PHI_U T7 T6 SAMPLE VDD VSS) sar8p_dffr
+    XF7 (PHI_U VDD NT7 SAMPLE VDD VSS) sar8p_dffr
+    X001 (NT7 VDD VSS T7) sar8p_inv
+ends sar8p_bitseq8
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_mux2
+// View name: schematic
+subckt sar8p_mux2 D0 D1 SEL VDD VSS Y
+    X000 (SEL VDD VSS SB) sar8p_inv
+    X003 (N0 N1 VDD VSS Y) sar8p_nand2
+    X002 (D1 SEL VDD VSS N1) sar8p_nand2
+    X001 (D0 SB VDD VSS N0) sar8p_nand2
+ends sar8p_mux2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_bit
+// View name: schematic
+subckt sar8p_bit CODE D DATA PHI_W SAMPLE TOKEN VDD VSS
+    XMUX (D DATA TOKEN VDD VSS NEXT_D) sar8p_mux2
+    XSTORE (PHI_W NEXT_D D SAMPLE VDD VSS) sar8p_dffr
+    X002 (D TOKEN VDD VSS CODE) sar8p_or2
+ends sar8p_bit
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar_logic_8b_physical
+// View name: schematic
+subckt sar_logic_8b_physical CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 \
+        CODE6 CODE7 COMP_N COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE VDD \
+        VSS
+    XTIM (ACTIVE CMP_CLK COMP_N COMP_P DATA PHI_U PHI_W SAMPLE VDD VSS) \
+        sar8p_timing
+    XSEQ (PHI_U SAMPLE T0 T1 T2 T3 T4 T5 T6 T7 VDD VSS) sar8p_bitseq8
+    XBIT7 (CODE7 D7 DATA PHI_W SAMPLE T7 VDD VSS) sar8p_bit
+    XBIT6 (CODE6 D6 DATA PHI_W SAMPLE T6 VDD VSS) sar8p_bit
+    XBIT5 (CODE5 D5 DATA PHI_W SAMPLE T5 VDD VSS) sar8p_bit
+    XBIT4 (CODE4 D4 DATA PHI_W SAMPLE T4 VDD VSS) sar8p_bit
+    XBIT3 (CODE3 D3 DATA PHI_W SAMPLE T3 VDD VSS) sar8p_bit
+    XBIT2 (CODE2 D2 DATA PHI_W SAMPLE T2 VDD VSS) sar8p_bit
+    XBIT1 (CODE1 D1 DATA PHI_W SAMPLE T1 VDD VSS) sar8p_bit
+    XBIT0 (CODE0 D0 DATA PHI_W SAMPLE T0 VDD VSS) sar8p_bit
+    X018 (A01 A23 VDD VSS ACTIVE) sar8p_or2
+    X017 (A2 A3 VDD VSS A23) sar8p_or2
+    X016 (A0 A1 VDD VSS A01) sar8p_or2
+    X015 (T6 T7 VDD VSS A3) sar8p_or2
+    X014 (T4 T5 VDD VSS A2) sar8p_or2
+    X013 (T2 T3 VDD VSS A1) sar8p_or2
+    X012 (T0 T1 VDD VSS A0) sar8p_or2
+ends sar_logic_8b_physical
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_delay_capture
+// View name: schematic
+subckt sar8p_delay_capture A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_capture
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_delay_bbm
+// View name: schematic
+subckt sar8p_delay_bbm A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_bbm
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_nonoverlap
+// View name: schematic
+subckt sar8p_nonoverlap CODE H L VDD VSS
+    X000 (CODE VDD VSS CB) sar8p_inv
+    XD_LD (CB VDD VSS LD) sar8p_delay_bbm
+    XD_HD (CODE VDD VSS HD) sar8p_delay_bbm
+    X004 (CB LD VDD VSS L) sar8p_and2
+    X002 (CODE HD VDD VSS H) sar8p_and2
+ends sar8p_nonoverlap
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b0
+// View name: schematic
+subckt sar8p_refdrv_b0 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b0
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b1
+// View name: schematic
+subckt sar8p_refdrv_b1 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b1
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b2
+// View name: schematic
+subckt sar8p_refdrv_b2 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b2
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b3
+// View name: schematic
+subckt sar8p_refdrv_b3 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b3
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b4
+// View name: schematic
+subckt sar8p_refdrv_b4 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b4
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b5
+// View name: schematic
+subckt sar8p_refdrv_b5 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b5
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b6
+// View name: schematic
+subckt sar8p_refdrv_b6 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b6
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refdrv_b7
+// View name: schematic
+subckt sar8p_refdrv_b7 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b7
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar8p_refword
+// View name: schematic
+subckt sar8p_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 \
+        D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 \
+        GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 \
+        GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD \
+        VSS
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN SAMPLE VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 SAMPLE VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8p_refword
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar_strongarm_t28
+// View name: schematic
+subckt sar_strongarm_t28 CLK OUTN OUTP VDD VINN VINP VSS
+    MNLATN (OUTN OUTP Y VSS) nch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 \
+        nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNLATP (OUTP OUTN X VSS) nch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 \
+        nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNINN (X VINN TAIL VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNINP (Y VINP TAIL VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNTAIL (TAIL CLK VSS VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTN (OUTN CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTP (OUTP CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTY (Y CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTX (X CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPLATN (OUTN OUTP VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPLATP (OUTP OUTN VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar_strongarm_t28
+// End of subcircuit definition.
+
+// Library name: SAR_ADC_T28
+// Cell name: sar_adc8_join_r4
+// View name: schematic
+subckt sar8r_delay A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8r_delay
+subckt sar8r_edge A VDD VSS Y
+    XD (A VDD VSS AD) sar8r_delay
+    XA (A AD VDD VSS QUAL) sar8p_and2
+    XB (QUAL VDD VSS Y) sar8p_clkbuf
+ends sar8r_edge
+
+subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VREFP 0
+    XSEQ (SAMPLE_MATCH VDD! 0 SEQ_SAMPLE) sar8r_edge
+    XIDLE (ACTIVE SAMPLE_INT VDD! 0 PRESET SAMPLE_MATCH) sar8i_idle
+    XSAMPLE (SAMPLE VDD! 0 SAMPLE_INT) sar8p_clkbuf
+    XBOOTN (SEQ_SAMPLE TOPN VINN) sar_bootstrap_flat_8b_p
+    XBOOTP (SEQ_SAMPLE TOPP VINP) sar_bootstrap_flat_8b_p
+    XCDAC (GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2 GNP3  GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7 GPP0  GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
+    XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE_INT VDD! 0 ACTIVE)  sar8i_ctrl
+    XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 D2 D3 D4  D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2  GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7  GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE_INT VDD! 0 RST_DONE PRESET)  sar8i_refword
+    XCOMP (CMP_CLK COMP_N COMP_P VDD! TOPN TOPP 0) sar_strongarm_t28
+    CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_COMP_P (COMP_P 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+    CL_CMP_CLK (CMP_CLK 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+ends sar_adc8_join_r4
+
+subckt sar8s_step A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8s_step
+subckt sar8s_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE
+    XRR7 (SAMPLE SAMPLE VDD VSS RST7) sar8p_and2
+    XRSTEP1 (SAMPLE VDD VSS TAP1) sar8s_step
+    XRR6 (SAMPLE TAP1 VDD VSS RST6) sar8p_and2
+    XRSTEP2 (TAP1 VDD VSS TAP2) sar8s_step
+    XRR5 (SAMPLE TAP2 VDD VSS RST5) sar8p_and2
+    XRSTEP3 (TAP2 VDD VSS TAP3) sar8s_step
+    XRR4 (SAMPLE TAP3 VDD VSS RST4) sar8p_and2
+    XRSTEP4 (TAP3 VDD VSS TAP4) sar8s_step
+    XRR3 (SAMPLE TAP4 VDD VSS RST3) sar8p_and2
+    XRSTEP5 (TAP4 VDD VSS TAP5) sar8s_step
+    XRR2 (SAMPLE TAP5 VDD VSS RST2) sar8p_and2
+    XRSTEP6 (TAP5 VDD VSS TAP6) sar8s_step
+    XRR1 (SAMPLE TAP6 VDD VSS RST1) sar8p_and2
+    XRSTEP7 (TAP6 VDD VSS TAP7) sar8s_step
+    XRR0 (SAMPLE TAP7 VDD VSS RST0) sar8p_and2
+    XRDONE (RST0 VDD VSS RST_DONE) sar8p_buf
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN RST7 VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 RST6 VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 RST5 VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 RST4 VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 RST3 VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 RST2 VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 RST1 VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 RST0 VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8s_refword
+
+subckt sar8i_ctrl CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5  CODE6 CODE7 COMP_N COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE VDD  VSS ACTIVE
+    XTIM (ACTIVE CMP_CLK COMP_N COMP_P DATA PHI_U PHI_W SAMPLE VDD VSS)  sar8p_timing
+    XSEQ (PHI_U SAMPLE T0 T1 T2 T3 T4 T5 T6 T7 VDD VSS) sar8p_bitseq8
+    XBIT7 (CODE7 D7 DATA PHI_W SAMPLE T7 VDD VSS) sar8p_bit
+    XBIT6 (CODE6 D6 DATA PHI_W SAMPLE T6 VDD VSS) sar8p_bit
+    XBIT5 (CODE5 D5 DATA PHI_W SAMPLE T5 VDD VSS) sar8p_bit
+    XBIT4 (CODE4 D4 DATA PHI_W SAMPLE T4 VDD VSS) sar8p_bit
+    XBIT3 (CODE3 D3 DATA PHI_W SAMPLE T3 VDD VSS) sar8p_bit
+    XBIT2 (CODE2 D2 DATA PHI_W SAMPLE T2 VDD VSS) sar8p_bit
+    XBIT1 (CODE1 D1 DATA PHI_W SAMPLE T1 VDD VSS) sar8p_bit
+    XBIT0 (CODE0 D0 DATA PHI_W SAMPLE T0 VDD VSS) sar8p_bit
+    X018 (A01 A23 VDD VSS ACTIVE) sar8p_or2
+    X017 (A2 A3 VDD VSS A23) sar8p_or2
+    X016 (A0 A1 VDD VSS A01) sar8p_or2
+    X015 (T6 T7 VDD VSS A3) sar8p_or2
+    X014 (T4 T5 VDD VSS A2) sar8p_or2
+    X013 (T2 T3 VDD VSS A1) sar8p_or2
+    X012 (T0 T1 VDD VSS A0) sar8p_or2
+ends sar8i_ctrl
+subckt sar8i_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE PRESET
+    XRR7 (PRESET PRESET VDD VSS RST7) sar8p_and2
+    XRSTEP1 (PRESET VDD VSS TAP1) sar8s_step
+    XRR6 (PRESET TAP1 VDD VSS RST6) sar8p_and2
+    XRSTEP2 (TAP1 VDD VSS TAP2) sar8s_step
+    XRR5 (PRESET TAP2 VDD VSS RST5) sar8p_and2
+    XRSTEP3 (TAP2 VDD VSS TAP3) sar8s_step
+    XRR4 (PRESET TAP3 VDD VSS RST4) sar8p_and2
+    XRSTEP4 (TAP3 VDD VSS TAP4) sar8s_step
+    XRR3 (PRESET TAP4 VDD VSS RST3) sar8p_and2
+    XRSTEP5 (TAP4 VDD VSS TAP5) sar8s_step
+    XRR2 (PRESET TAP5 VDD VSS RST2) sar8p_and2
+    XRSTEP6 (TAP5 VDD VSS TAP6) sar8s_step
+    XRR1 (PRESET TAP6 VDD VSS RST1) sar8p_and2
+    XRSTEP7 (TAP6 VDD VSS TAP7) sar8s_step
+    XRR0 (PRESET TAP7 VDD VSS RST0) sar8p_and2
+    XRDONE (RST0 VDD VSS RST_DONE) sar8p_buf
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN RST7 VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 RST6 VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 RST5 VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 RST4 VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 RST3 VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 RST2 VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 RST1 VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 RST0 VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8i_refword
+subckt sar8i_guard A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8i_guard
+subckt sar8i_idle ACTIVE SAMPLE VDD VSS PRESET SAMPLE_MATCH
+    XN (ACTIVE VDD VSS IDLE) sar8p_inv
+    XD (IDLE VDD VSS IDLE_D) sar8i_guard
+    XP (SAMPLE IDLE_D VDD VSS PRESET) sar8p_or2
+    XA (SAMPLE SAMPLE VDD VSS SAMPLE_AND) sar8p_and2
+    XB (SAMPLE_AND VDD VSS SAMPLE_MATCH) sar8p_buf
+ends sar8i_idle

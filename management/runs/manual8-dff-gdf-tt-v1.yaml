@@ -1,0 +1,87 @@
+managed: true
+recipe_hash: bcb0a404af13fcec96d7a19a02904a623f288db97996864cbc58c78ceafb8c90
+recipe:
+  schema_version: 1
+  run_id: manual8-dff-gdf-tt-v1
+  design_id: manual8_sar_dff_candidates_v1
+  entry: test.scs
+  analyzer: sar_dff_candidates_reduce.py
+  files:
+  - name: test.scs
+    source: verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/test.scs
+    bytes: 5179
+    sha256: 0e9f51fa71cc7eefca2da4d64a51d8be27b65d0b0134bcd018d99ef71eae9a9c
+  - name: models.scs
+    source: verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/models.scs
+    bytes: 1569
+    sha256: 821480b30b163abbe0117a770ab275a285e27b533ccec9b9cbad8934bea505af
+  - name: measure.json
+    source: verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/measure.json
+    bytes: 12501
+    sha256: 970747226dfdde978893d8cbfecc1abedac9456716e7770cc094a9710ff1a757
+  - name: sar_dff_candidates_reduce.py
+    source: scripts/manual_adc/sar_dff_candidates_reduce.py
+    bytes: 4081
+    sha256: d6f317226f5c5ae9c0fd2d13e84fec011447ccc768049f488649c354e4cc4e8e
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 300
+    analysis_wall_seconds: 300
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - cdn
+  - qa
+  - qb
+  expected_stop_s: 9.0e-09
+  qualification_scope: Native GDFCNQMCOD1BWP12T30P140 substitution only; ideal identical
+    CDN1x/CP/D and 5fF Q load; not PVT/SAR qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; OA read-only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-dff-gdf-tt-v1

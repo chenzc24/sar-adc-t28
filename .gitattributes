@@ -5,3 +5,15 @@ models/veriloga/cdac8_device_sequence.va text eol=lf
 models/veriloga/sar8j_r1_refgate.va text eol=lf
 models/veriloga/sar8j_aligned_refgate.va text eol=lf
 models/veriloga/sar8_join_r2/*.va text eol=lf
+
+# Scientific inputs and measurement receipts are bound by byte-level SHA256.
+# Preserve their recorded LF/CRLF bytes on every platform.
+design/** -text
+netlist/** -text
+models/** -text
+tb/** -text
+results/** -text
+verification/** -text
+scripts/** -text
+management/recipes/** -text
+management/runs/** -text

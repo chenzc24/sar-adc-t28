@@ -1,0 +1,103 @@
+managed: true
+recipe_hash: 1933f7950fcca2fa5e96c9b9cf03205a5bad25d117a042d7be37ce95b9c72317
+recipe:
+  schema_version: 1
+  run_id: sar8audit-gpp-singleio-sscold
+  design_id: sar8_reference_GPP_single_IO_driver_implementation
+  entry: test.scs
+  analyzer: gpp_single_io_analyze.py
+  files:
+  - name: dut.scs
+    source: verification/sar8_module_audit/reference/generated/gpp_single_io_v1/dut.scs
+    bytes: 31211
+    sha256: d352e371631d4c4c382dc3666a857e52e4137162b32757efbf66d71d75c6198a
+  - name: test.scs
+    source: verification/sar8_module_audit/reference/generated/gpp_single_io_v1/sscold/test.scs
+    bytes: 17318
+    sha256: 5d15f68e857f58077d1ab5262aa053f39fc00b84c8ea62214115e3bfd3117534
+  - name: reference_current_analyze.py
+    source: verification/sar8_module_audit/reference/reference_current_analyze.py
+    bytes: 29142
+    sha256: 96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e
+  - name: io_cell_analyze.py
+    source: verification/sar8_module_audit/reference/io_cell_analyze.py
+    bytes: 10327
+    sha256: a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9
+  - name: gpp_single_io_analyze.py
+    source: verification/sar8_module_audit/reference/gpp_single_io_analyze.py
+    bytes: 13079
+    sha256: cca5d8301e8a9f956bdd15a0690a348d4cd766558e3a58c0ceff1da2d2ad0e93
+  - name: pre_driver_boundary.json
+    source: verification/sar8_module_audit/reference/pre_driver_boundary.json
+    bytes: 7574
+    sha256: 625c48d54e141c5d28229e158b86f641f1f386b34dbab4c7dba990bdf9d94a22
+  - name: measurement.json
+    source: verification/sar8_module_audit/reference/generated/gpp_single_io_v1/sscold/measurement.json
+    bytes: 193836
+    sha256: 0a3900ff763f63510bb06221e6d40a7c2f6694f262441808e48620b674a10367
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 512
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 512
+    max_output_mib: 2048
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - l0
+  - xdut.pre
+  - xdut.gnn0
+  - xdut.gpp0
+  - xdut.xcdac.bn0
+  - xdut.xcdac.bp0
+  expected_stop_s: 5.2e-08
+  qualification_scope: Only bit0 GPP driver implementation changes core3-stage6MOS
+    to singleIO2MOS; X025/ABC/load/commands unchanged; L0 ideal, no full chain acceptance
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ssmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: sscold
+    supply_V: 0.81
+    temperature_C: -40
+    variant: real_X025_GPP_single_IO_ideal_L0
+    logical_stimulus: true
+    FF_waveform_replay: false
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-gpp-singleio-sscold

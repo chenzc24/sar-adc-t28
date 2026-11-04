@@ -1,0 +1,90 @@
+{
+  "analyzer": "source_semantics.py",
+  "design_id": "native_DFF_indexed_FF_Liberty_conditions",
+  "entry": "source_semantics.py",
+  "expected_stop_s": 2e-08,
+  "inputs": [
+    {
+      "name": "source_semantics.py",
+      "sha256": "efbcd7c6cdffeb8581e09232a410202ecdca05abe3fdc6f4fdd9203c88524b92",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/source_semantics.py"
+    },
+    {
+      "name": "liberty_semantics.py",
+      "sha256": "276f248eb7f4ab50de04c61da99935e22e422e3b4b2fe70620d5cc91c601891b",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/liberty_semantics.py"
+    },
+    {
+      "name": "measured_comparison.py",
+      "sha256": "c90cb353a39a765e8c8b7e1e9fa470f2a268c06d358d12023ebcf1fad7560330",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/measured_comparison.py"
+    },
+    {
+      "name": "source_binding.json",
+      "sha256": "75d9aabab0a4175a5023960ced7835245dc3e9a10f63e6c50929a95551f87ba1",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/source_binding.json"
+    },
+    {
+      "name": "semantic_config.json",
+      "sha256": "507f8cfefd3fd423acce31edac468b38967ff2377c21584398ae37df30fb3752",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/semantic_config.json"
+    },
+    {
+      "name": "native_references.json",
+      "sha256": "b15aa0900ef89fea04f2c8393aeb54c5493714fa0eb1bff99ea1cd8e6ded66af",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_references.json"
+    },
+    {
+      "name": "native_baseline.bin.gz",
+      "sha256": "3261a40a6a2edac0206d4837b92aa1df4b44b8ea77885147c3f4ae4c1065009f",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_baseline.bin.gz"
+    },
+    {
+      "name": "native_rck2k.bin.gz",
+      "sha256": "c43bd3434300f28f30ce10076e4daaa74edf78bfe6effb376900e07b53a316e8",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_rck2k.bin.gz"
+    },
+    {
+      "name": "archive_index.py",
+      "sha256": "cbcb4fe3ee1898ebf9f4adb9c46fa8f428a45f82e0ee4f9ea62f281c41c68475",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/index_v1/archive_index.py"
+    },
+    {
+      "name": "source_audit.py",
+      "sha256": "38ecc67ebeca81333673e1a1ceef92dc25e00650ca3d644b7aff069a2b5a8fd6",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/index_v1/source_audit.py"
+    },
+    {
+      "name": "external_library.json",
+      "sha256": "839d0edcb5e9ef56fd26eb8cb0307aa34a447d5da43aea1fd1cbeadf9d49973e",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/external_library.json"
+    }
+  ],
+  "kind": "analysis_only",
+  "oa_parity": "read_only_dependency_audit",
+  "qualification_scope": "Read exact indexed FF text member and selected DFF semantics; full archive SHA/CRC same pass, compact native-pin threshold reference only, no library copy/db decode/new simulation/compatibility or reliability qualification",
+  "resources": {
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "analysis_wall_seconds": 900,
+    "max_output_mib": 4,
+    "queue_timeout_seconds": 600,
+    "threads": 1
+  },
+  "run_id": "sar8audit-ctrl-ff-liberty-semantics-v1",
+  "schema_version": 1,
+  "source_run_id": "sar8audit-ctrl-usage-baseline-ff-v1",
+  "summary_signals": [
+    "XDUT.U19_CK",
+    "XDUT.U19_D",
+    "XDUT.XU19.RN"
+  ],
+  "test_conditions": {
+    "PEX": false,
+    "corner": "ff",
+    "mismatch": false,
+    "noise": false,
+    "temperature_c": -40,
+    "vdd": 0.99
+  }
+}

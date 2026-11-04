@@ -1,0 +1,100 @@
+managed: true
+recipe_hash: aac930d299156539fafeb15f7866d5f0df7a4e20528b41b10b964c198e927a46
+recipe:
+  schema_version: 2
+  run_id: cmpdesign-i4-ffhot-reset-review-v1
+  design_id: manual8_comparator_design
+  entry: precharge_reduce.py
+  analyzer: precharge_reduce.py
+  files:
+  - name: precharge_reduce.py
+    source: comparator_design/scripts/precharge_reduce.py
+    bytes: 7522
+    sha256: cfbedb81c1a05ba6eec4a14d5dbebffc83b0f65f034fa26f95f398d592cc9ff6
+  - name: native_frames.py
+    source: comparator_design/scripts/native_frames.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 32
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - ck
+  - in
+  - ip
+  - nb0_held
+  - ni4_held
+  - onb0_driven
+  - onb0_held
+  - oni4_driven
+  - oni4_held
+  - opb0_driven
+  - opb0_held
+  - opi4_driven
+  - opi4_held
+  - pb0_held
+  - pi4_held
+  - track
+  - ub0_driven
+  - ub0_held
+  - ui4_driven
+  - ui4_held
+  - vck:1
+  - vsb0_driven:1
+  - vsb0_held:1
+  - vsi4_driven:1
+  - vsi4_held:1
+  - xb0_driven.ln
+  - xb0_driven.lp
+  - xb0_driven.net1
+  - xb0_driven.net2
+  - xb0_driven.net3
+  - xb0_held.ln
+  - xb0_held.lp
+  - xb0_held.net1
+  - xb0_held.net2
+  - xb0_held.net3
+  - xi4_driven.ln
+  - xi4_driven.lp
+  - xi4_driven.net1
+  - xi4_driven.net2
+  - xi4_driven.net3
+  - xi4_held.ln
+  - xi4_held.lp
+  - xi4_held.net1
+  - xi4_held.net2
+  - xi4_held.net3
+  expected_stop_s: 4.0e-07
+  qualification_scope: Isolated comparator sizing measurement; no ADC baseline adoption
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist only; user OA read-only
+  kind: analysis_only
+  source:
+    run_id: cmpdesign-b0-i4-ff-hot-v1
+    recipe_hash: 864bd01333057d68a5f61ff1aa4027a722b7538a26491f7be1fd97275977a8de
+  test_conditions:
+    corner: ff
+    vdd: 0.99
+    temperature_c: 125
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-i4-ffhot-reset-review-v1

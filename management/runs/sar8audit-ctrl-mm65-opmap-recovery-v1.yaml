@@ -1,0 +1,64 @@
+managed: true
+recipe_hash: 6dad2f98b9fa87ab178f879416527217301cb1907feb417c96e8b142f1208920
+recipe:
+  schema_version: 2
+  run_id: sar8audit-ctrl-mm65-opmap-recovery-v1
+  design_id: native_DFCNQD1_U19_MM65_info_parser_recovery
+  entry: recover_source.py
+  analyzer: recover_source.py
+  files:
+  - name: recover_source.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/intrinsic_probe_v1/op_mapping_v1/recovery/recover_source.py
+    bytes: 6069
+    sha256: a45d8a6b95c43426feeee6e3316624fb9d014c3818bc189f1f774b83d46f37d8
+  - name: read_info_v2.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/intrinsic_probe_v1/op_mapping_v1/recovery/read_info_v2.py
+    bytes: 3922
+    sha256: 631faf4074259ba9f3e925e4cb41052ba573511049e4237b4c1eb19da7badd98
+  - name: source_binding.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/intrinsic_probe_v1/op_mapping_v1/recovery/source_binding.json
+    bytes: 3995
+    sha256: 023e41fbe407d6782ae7c09fffde51780eeb4870baf56f4dfc8d5011901b8a3f
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 2048
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 8
+    simulation_wall_seconds: 3600
+    analysis_wall_seconds: 60
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - xdut.u19_q
+  - xdut.u19_ck
+  - xdut.xu19.xff.net176
+  expected_stop_s: 2.0e-08
+  qualification_scope: Exact completed source metadata only; explicit Instance scopes
+    and full Model identifiers, no waveform reanalysis, native rerun or pure-channel
+    claim
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  kind: analysis_only
+  source:
+    run_id: sar8audit-ctrl-mm65-opmapping-ff-v1
+    recipe_hash: d6ea28629d09a0b808c2392767688153b3b8c72ac68e2ab3847a3826ab3006a8
+  test_conditions:
+    PEX: false
+    corner: ff
+    mismatch: false
+    noise: false
+    temperature_c: -40
+    vdd: 0.99
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-ctrl-mm65-opmap-recovery-v1

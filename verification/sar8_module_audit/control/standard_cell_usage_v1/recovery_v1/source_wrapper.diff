@@ -1,0 +1,55 @@
+--- frozen_source
++++ independent_gzip_recovery
+@@ -9,9 +9,10 @@
+ import sys
+ sys.dont_write_bytecode=True
+ 
+-import fast_gate_analyze as fast
++import fast_gzip_analyze as fast
+ import standard_cell_full_analyze as frozen
+-import standard_cell_storage_v2_analyze as coverage
++import storage_gzip as history
++import usage_gzip as usage
+ 
+ 
+ def inside(path,root):
+@@ -70,9 +71,9 @@
+     cfg_path=safe_file(run,'inputs/measurement.json')
+     if frozen.identity(cfg_path)!=binding['source_inputs']['measurement.json']:
+         raise ValueError('Analysis configuration differs from source')
+-    if frozen.identity(safe_file(run,'inputs/fast_gate_analyze.py'))['sha256']!=binding['fast_reducer_sha256']:
++    if frozen.identity(safe_file(run,'inputs/fast_gzip_analyze.py'))['sha256']!=binding['fast_reducer_sha256']:
+         raise ValueError('Unexpected fast reducer')
+-    for name in ['full_gate_analyze.py','standard_cell_full_analyze.py','standard_cell_storage_v2_analyze.py']:
++    for name in ['full_gate_analyze.py','standard_cell_full_analyze.py','usage_analyze.py']:
+         if frozen.identity(safe_file(run,'inputs/'+name))!=binding['source_inputs'][name]:
+             raise ValueError('Frozen observation/coverage helper differs: '+name)
+     return state,dict(run_id=binding['source_run_id'],recipe_hash=h,
+@@ -103,21 +104,22 @@
+         p=safe_file(source,rel)
+         if os.path.getsize(p)>1024**2:raise ValueError('Source log exceeds declared1MiB copy allowance')
+         shutil.copyfile(p,os.path.join(output,name));log_proof[name]=frozen.identity(p)
+-    result=coverage.add_coverage(fast.summarize(path,cfg,output),cfg)
+-    result['storage_observations']=frozen.observe_history(output,cfg)
++    result=fast.summarize(path,cfg,output)
++    result['storage_observations']=history.observe_history(output,cfg)
++    result['usage_observations']=usage.usage_observations(output,cfg)
+     for key in ['peak_error_v','peak_time_error_s']:result.pop(key,None)
+-    result['peak_snapshot_role']='Diagnostic first-SR maximum, not source-fit acceptance'
++    result['peak_snapshot_role']='Diagnostic net176 maximum; joint stress is computed from all simultaneous D/S values'
+     result['measurement_sha256']=frozen.identity(cfg_path)['sha256'];result['external_identity']=external
+     result['physical_terminal_screen_pass']=not any(v['over_limit_native_points'] for v in result['full_history_voltage_stress'].values())
+     native=state['native'];codes=native.get('warning_codes')
+     result['native_warning_codes']=codes;result['native_CMI_present']=any(c.startswith('CMI') for c in codes) if codes is not None else None
+     result['native_effective_settings']=native.get('effective_settings');result['whole_ADC_qualified']=None
+-    result['returned_waveform']=frozen.compress_history(output)
++    result['returned_waveform']=history.verify_compressed(output,cfg,result)
+     after=os.stat(path)
+     if (before.st_size,before.st_mtime,before.st_ino)!=(after.st_size,after.st_mtime,after.st_ino):
+         raise ValueError('Source raw metadata changed during analysis')
+     if verify_source(run,source,binding)[1]!=provenance:raise ValueError('Source binding/state changed during analysis')
+-    result.update(analysis_kind='analysis_only_exact_completed_source_reuse',source_run_id=binding['source_run_id'],
++    result.update(analysis_kind='analysis_only_completed_source_streaming_gzip',source_run_id=binding['source_run_id'],
+         source_recipe_hash=binding['source_recipe_hash'],source_provenance=provenance,
+         original_native_logs=log_proof,source_raw_unchanged=True,simulation_started=False,
+         fast_reducer_sha256=binding['fast_reducer_sha256'],source_binding_sha256=frozen.identity(os.path.join(run,'inputs/source_binding.json'))['sha256'],

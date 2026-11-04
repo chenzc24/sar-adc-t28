@@ -1,0 +1,176 @@
+{
+  "collected_files": 7,
+  "bytes": 1794472,
+  "skipped": [],
+  "local_path": "output/managed_execution/runs/sar8phys-nominal-stiff-v2/collected",
+  "state": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8phys-nominal-stiff-v2",
+    "registered": {
+      "epoch": 1793755713.025644,
+      "files_complete": true,
+      "recipe_hash": "6350b83b09871da33ac09eac485a735028b44a455dce9dde7b7d27101b0a8cf7"
+    },
+    "simulation": {
+      "status": "complete",
+      "rss_bytes": 354459648,
+      "started_epoch": 1793756308.992837,
+      "updated_epoch": 1793756393.520331,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 84.510507106781,
+      "submitted_epoch": 1793756308.60962,
+      "output_bytes": 434209014,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 0,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 48886378496,
+              "limit": 51539607552,
+              "used": 2653229056
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 16769884160,
+          "cgroup_headroom": 48886378496,
+          "host": "thu-wei",
+          "conflicting_processes": [],
+          "epoch": 1793756308.940086,
+          "disk_free": 868135985152,
+          "load1": 40.2,
+          "mem_available": 60579905536
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "73124857",
+        "pid": 144668,
+        "state": "R",
+        "pgid": 144668,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 356036608,
+      "worker_identity": {
+        "start_ticks": "73124820",
+        "pid": 144662,
+        "state": "R",
+        "pgid": 144662,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": true,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 0,
+        "effective_settings": {
+          "reltol": "1e-06, default 1e-03",
+          "abstol(V)": "10 nV, default 1 uV",
+          "maxstep": "5 ps, default 45.18 ns",
+          "abstol(I)": "100 fA, default 1 pA",
+          "method": "trap"
+        },
+        "native_analysis_pass": true,
+        "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+        "warning_codes": [
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "complete",
+      "rss_bytes": 13303808,
+      "started_epoch": 1793756400.960737,
+      "updated_epoch": 1793756431.217574,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 30.256407022476196,
+      "submitted_epoch": 1793756400.592565,
+      "output_bytes": 435978136,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 0,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 46696902656,
+              "limit": 51539607552,
+              "used": 4842704896
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 16769884160,
+          "cgroup_headroom": 46696902656,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8phys-nominal-hold-v2"
+              },
+              "pid": 144685,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8phys-s4121-stiff-v2"
+              },
+              "pid": 144813,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8phys-s4121-hold-v2"
+              },
+              "pid": 144917,
+              "comm": "spectre"
+            }
+          ],
+          "epoch": 1793756400.922494,
+          "disk_free": 866176864256,
+          "load1": 51.56,
+          "mem_available": 63425392640
+        },
+        "phase": "analysis"
+      },
+      "phase": "analysis",
+      "child_identity": {
+        "start_ticks": "73134053",
+        "pid": 148691,
+        "state": "R",
+        "pgid": 148691,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 13410304,
+      "worker_identity": {
+        "start_ticks": "73134018",
+        "pid": 148688,
+        "state": "R",
+        "pgid": 148688,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true
+    },
+    "run_id": "sar8phys-nominal-stiff-v2"
+  }
+}

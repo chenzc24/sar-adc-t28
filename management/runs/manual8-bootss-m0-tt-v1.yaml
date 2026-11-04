@@ -1,0 +1,92 @@
+managed: true
+recipe_hash: f97a761777aec2a1a634e616e0ba9c7cc8167573285f078c8b8dfd336f686253
+recipe:
+  schema_version: 1
+  run_id: manual8-bootss-m0-tt-v1
+  design_id: manual8_bootstrap_m6_ss_diagnosis
+  entry: test.scs
+  analyzer: bootstrap_ss_m0_reduce.py
+  files:
+  - name: measure.json
+    source: verification/manual_adc/bootstrap_ss_diagnosis_v1/m0_tt/measure.json
+    bytes: 2638
+    sha256: b29ab53f93c328b73f6c2a9f1a827f532a21a9ecddef17ea858ff860c4079932
+  - name: models.scs
+    source: verification/manual_adc/bootstrap_ss_diagnosis_v1/m0_tt/models.scs
+    bytes: 1316
+    sha256: b4659e52783eb0070303ec1e29587ce489e58b542a05c2a0028aeae2cc661bf2
+  - name: test.scs
+    source: verification/manual_adc/bootstrap_ss_diagnosis_v1/m0_tt/test.scs
+    bytes: 10520
+    sha256: 196dff16d6e863150a7e310307273553eb6cdc144e804ad62c303022770d15c3
+  - name: bootstrap_ss_m0_reduce.py
+    source: scripts/manual_adc/bootstrap_ss_m0_reduce.py
+    bytes: 1094
+    sha256: d40924c1383a2b47885e996caea6fc08b31e6a2c60e3e1ee345ae77f7911f5e3
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 900
+    queue_timeout_seconds: 900
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - vd0:1
+  expected_stop_s: 2.0e-09
+  qualification_scope: Isolated M0 small-VDS conductance; gate/body-bias diagnostic,
+    not a replacement circuit
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist_only; OA unchanged
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+    startup_supply_ramp_s: 1e-09
+    first_clock_delay_s: 1.1e-07
+    M0_total_width_um: 6
+    reference_v: 0.9
+    input_cm_v: 0.45
+    stimulus: constant VDS1mV, VGS0.8/0.81/0.889/0.9V, VIN0.05/0.25/0.45/0.65/0.85V,
+      body0V
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-bootss-m0-tt-v1

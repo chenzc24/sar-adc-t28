@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8tm-cdac-s4216-v1",
+  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "entry": "test.scs",
+  "analyzer": "block_reduce.py",
+  "inputs": [
+    {
+      "name": "test.scs",
+      "source": "verification/sar8_mc/timing_mc/sar8tm-cdac-s4216-v1/test.scs",
+      "sha256": "286c3d202a4e99496a1d979c83433b94454ceb4713cf08d7cdc3132155586269"
+    },
+    {
+      "name": "context.json",
+      "source": "verification/sar8_mc/timing_mc/sar8tm-cdac-s4216-v1/context.json",
+      "sha256": "b7588e60b79b84fa4a3dc5a97e350a904c4f9d068e0914bc7cc63fa42ef3adbc"
+    },
+    {
+      "name": "block_reduce.py",
+      "source": "scripts/sar8_mc/block_reduce.py",
+      "sha256": "c7a9179fe7d373609a50c521652b6ee0b0a39539cb49e0ae6d94b78f0454a9ef"
+    },
+    {
+      "name": "native_stream.py",
+      "source": "scripts/sar8_campaign/native_stream.py",
+      "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef"
+    }
+  ],
+  "summary_signals": [
+    "vcmomn8:p",
+    "vcmomn7:p",
+    "vcmomn6:p",
+    "vcmomn5:p",
+    "vcmomn4:p",
+    "vcmomn3:p",
+    "vcmomn2:p",
+    "vcmomn1:p",
+    "vcmomn0:p",
+    "vcmomp8:p",
+    "vcmomp7:p",
+    "vcmomp6:p",
+    "vcmomp5:p",
+    "vcmomp4:p",
+    "vcmomp3:p",
+    "vcmomp2:p",
+    "vcmomp1:p",
+    "vcmomp0:p"
+  ],
+  "expected_stop_s": 1e-12,
+  "test_conditions": {
+    "run_id": "sar8tm-cdac-s4216-v1",
+    "family": "cdac",
+    "seed": 4216,
+    "mismatch": true,
+    "process_variation": false,
+    "noise": false,
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "cm": 0.45,
+    "scope": "Independent module mismatch characterization, no integrated yield or stress qualification",
+    "parent_dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+    "bias_v": 0.45,
+    "frequency_hz": 1000000.0,
+    "nominal_cap_units": 512,
+    "instances": 18,
+    "static_scope": "AC effective binary capacitor weights at one bias; not dynamic CDAC/ADC DNL signoff",
+    "fixture_revision": 2,
+    "preserve_inst": "all",
+    "previous_fixture_statistically_invalid": true
+  },
+  "qualification_scope": "Independent module mismatch characterization, no integrated yield or stress qualification",
+  "spectre_args": [
+    "+preset=mx",
+    "+mt=4",
+    "-preset_override",
+    "+lqtimeout",
+    "60"
+  ],
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 256,
+    "simulation_wall_seconds": 7200,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 86400
+  }
+}

@@ -1,0 +1,120 @@
+managed: true
+recipe_hash: 2e9f002e93b712bbecbbe042599a77415061549e410fcee78bec259dc32231a5
+recipe:
+  schema_version: 1
+  run_id: manual8-bootshort-sine-v1
+  design_id: manual8_bootstrap_only_hybrid_v1
+  entry: test.scs
+  analyzer: bootstrap_short_reduce.py
+  files:
+  - name: boot.scs
+    source: verification/manual_adc/bootstrap_short_v1/sine/boot.scs
+    bytes: 5222
+    sha256: ae87386a5741c8f46aa9fe3a9998024f8a9f2fc1eeb6e5865ef9dcee274fa2bf
+  - name: manual8_cdac.va
+    source: verification/manual_adc/bootstrap_short_v1/sine/manual8_cdac.va
+    bytes: 1959
+    sha256: 3d330cd2abb029a04a64713f4adefaba7c29417c07cdc1eaf0946876c75e8ec1
+  - name: manual8_cmp.va
+    source: verification/manual_adc/bootstrap_short_v1/sine/manual8_cmp.va
+    bytes: 2269
+    sha256: b374810880e1f6b7aa213b07c0ab2de7996ca2d32f3851282c633aaf5dd9cf63
+  - name: manual8_sample.va
+    source: verification/manual_adc/bootstrap_short_v1/sine/manual8_sample.va
+    bytes: 1303
+    sha256: a4b9f77201f80d29f417ea14221aaef5df0652cb20a7e2e97fa2722070d2c891
+  - name: manual8_sar.va
+    source: verification/manual_adc/bootstrap_short_v1/sine/manual8_sar.va
+    bytes: 9030
+    sha256: 53365f64033fd8bd895a10b8ef6a0f71508b35e8684ba58df8bafeb6c963f99a
+  - name: measure.json
+    source: verification/manual_adc/bootstrap_short_v1/sine/measure.json
+    bytes: 11341
+    sha256: 2b11f931401d0ebd0091d59863408fbd2f598a451e00278ace823a5b83536753
+  - name: models.scs
+    source: verification/manual_adc/bootstrap_short_v1/sine/models.scs
+    bytes: 1316
+    sha256: b4659e52783eb0070303ec1e29587ce489e58b542a05c2a0028aeae2cc661bf2
+  - name: test.scs
+    source: verification/manual_adc/bootstrap_short_v1/sine/test.scs
+    bytes: 2017
+    sha256: d41cba307cda179e907a2e2dae6aaffa0c0ba8642ec53fed324653b023800098
+  - name: wrappers_hybrid.scs
+    source: verification/manual_adc/bootstrap_short_v1/sine/wrappers_hybrid.scs
+    bytes: 1850
+    sha256: d210df8b2f03922714ef0697d611534408216131da0ef45cd70d86f2bbad86ff
+  - name: wrappers_ideal.scs
+    source: verification/manual_adc/bootstrap_short_v1/sine/wrappers_ideal.scs
+    bytes: 1925
+    sha256: 218190f1e22da7d01379995b982b1bec00e5d2db3435128ccdb392f1bc9e303a
+  - name: bootstrap_short_reduce.py
+    source: scripts/manual_adc/bootstrap_short_reduce.py
+    bytes: 9278
+    sha256: 09680b6dcf35e6da6916eb137f1c0297aef6f5820e509e1f5cdd7e1c649007f2
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 900
+    queue_timeout_seconds: 900
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - clks
+  - vinp
+  - vinn
+  - xadc.topp
+  - xadc.topn
+  - eoc
+  - fault
+  expected_stop_s: 1.6200000000000002e-06
+  qualification_scope: Unchanged IO bootstrap only, other modules behavioral, short
+    nominal diagnostic; no PVT/FFT/lifetime claim
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist_only; OA unchanged
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+    startup_supply_ramp_s: null
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-bootshort-sine-v1

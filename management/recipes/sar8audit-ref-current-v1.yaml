@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8audit-ref-current-v1",
+  "design_id": "sar8_reference_driver0_current_diagnostic",
+  "entry": "test.scs",
+  "analyzer": "reference_current_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/generated/approximate_replay/dut.scs",
+      "name": "dut.scs",
+      "sha256": "a45dd1db472b24696e6c19f509ddd75a8eadb6dbe9a0957846858845648a2d1a"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/approximate_replay/test.scs",
+      "name": "test.scs",
+      "sha256": "0d40eebbe841540b0d1f4c225a6ae335c3b67a7b8455de4d5a43ecd0d51c9671"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/approximate_replay/boundary_sources_approximate.scs",
+      "name": "boundary_sources_approximate.scs",
+      "sha256": "60e98573553b9c87df48d961daee643701fb685cba217383e9fa38a5274015f4"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "output/managed_execution/runs/sar8audit-ref-native-v1/collected/derived/native.diagnostic.f64le",
+      "name": "source_diagnostic.f64le",
+      "sha256": "38a9d9be6dbfdf22e8590e1bd108e2c6739a54ddb0426ebf3996d1a15e449d6d"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/managed_reproduction/measurement.json",
+      "name": "measurement.json",
+      "sha256": "1a92ce76f22222148f80ee86a4e18226d7f76c3fcd914a8a042b1f9e1553e7fd"
+    }
+  ],
+  "expected_stop_s": 6.599650423427016e-08,
+  "summary_signals": [
+    "VDD!",
+    "XDUT.XREF.XDRV0.GNNDRV",
+    "XDUT.GNN0"
+  ],
+  "qualification_scope": "First FF-cold driver0 native-current reproduction diagnostic; no circuit qualification; fidelity screens approved in parent module-audit plan, acceptance evaluated separately",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "FF/TT-passives",
+    "vdd": 0.99,
+    "temperature_c": -40,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "boundary_replay": "approximate <=1uV at all original native knots"
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 8192,
+    "simulation_wall_seconds": 1800,
+    "analysis_wall_seconds": 1800,
+    "queue_timeout_seconds": 600
+  }
+}

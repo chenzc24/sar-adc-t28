@@ -1,0 +1,952 @@
+{
+  "schema_version": 1,
+  "run": "sar8audit-ctrl-first-event-v1",
+  "source_run": "sar8fix-loaded-both-ffcold",
+  "provenance": {
+    "recipe_sha256": "587e794d928d6f25fa64ce7749d1d613fd0dd6fe3e1e46b7554b1dd1efb74ae7",
+    "receipt_sha256": "7b69394b6d7a27ae3382fb96a39d8668f673fcca149d4d346e7a67ea5a28e96a",
+    "receipt_files": [
+      {
+        "sha256": "4cec39a24e0fab2bfb4f5cbd2c26589815623231a964b9b2bcd7d139cae83607",
+        "bytes": 655,
+        "name": "analysis.admission.json"
+      },
+      {
+        "sha256": "18e3d0ca8777edaf742a8739019ec580184c3bbae7477550fbc5e9937c8624d6",
+        "bytes": 1518,
+        "name": "analysis.state.json"
+      },
+      {
+        "sha256": "2e48aa50431f88dba628d845646bc06499e29baf555894dcbd3cb5bcd67007a8",
+        "bytes": 3350,
+        "name": "derived/peak.columns.json"
+      },
+      {
+        "sha256": "a67fe0bf7a06a8f90dc1e11b65e6f71cd845c1942842c97285e04aa4773b52de",
+        "bytes": 1028160,
+        "name": "derived/peak.native.bin"
+      },
+      {
+        "sha256": "87557a06b3cc0d2a97dbf02a5e849ee65e624312a0963edd847a78c01b752324",
+        "bytes": 174575,
+        "name": "derived/result.json"
+      },
+      {
+        "sha256": "43eee2939a9b94a27d23dd83adcd86627cca0b9c0c376d2543f1dc3b73543ee0",
+        "bytes": 91,
+        "name": "raw/logStatus"
+      },
+      {
+        "sha256": "6ebaf34a2e96f5bf04265f4d08309c2c16c0e821a30b8dc94ef366d974e25003",
+        "bytes": 655,
+        "name": "simulation.admission.json"
+      },
+      {
+        "sha256": "83461e8cd0c283d2562c11acab3c65d02158968b32dfa07af4a0122d0ae1af47",
+        "bytes": 2295,
+        "name": "simulation.state.json"
+      },
+      {
+        "sha256": "02ff95e2198e1310b4de07055379f31defc745154117351e86cf80c239c73e52",
+        "bytes": 25412,
+        "name": "spectre.out"
+      }
+    ],
+    "receipt_total_bytes": 1236711,
+    "frozen_input_hashes_verified": [
+      {
+        "name": "test.scs",
+        "bytes": 18122,
+        "sha256": "a4ed68134301d9bbb1f516b604b14ba55743021f23ee401e5413157474853dbb"
+      },
+      {
+        "name": "dut.scs",
+        "bytes": 11862,
+        "sha256": "336485a0b322200704e12ca2410424352808e5073b953faaa95775d97b1c7bad"
+      },
+      {
+        "name": "measurement.json",
+        "bytes": 116332,
+        "sha256": "72001473e6cc30d252d7b204a7b681961aff2746005fdc3d1d095325584c0869"
+      },
+      {
+        "name": "first_event_analyze.py",
+        "bytes": 13609,
+        "sha256": "da5ac34ce446cdde78490fe6b79f7f533e3f34e866ecd11cece28d67643003c8"
+      },
+      {
+        "name": "pwl/active.pwl",
+        "bytes": 373831,
+        "sha256": "a713614a23f51cfb381306d614181243fa7333a70d13ff669b3f877a1b5f2244"
+      },
+      {
+        "name": "pwl/dec.pwl",
+        "bytes": 399510,
+        "sha256": "5283226d1a819b8410c3b05814f7f4a5d78b3fc31d719a85cafcd5755cee916c"
+      },
+      {
+        "name": "pwl/phi_u.pwl",
+        "bytes": 395577,
+        "sha256": "566f1a09dea1f14a61fe163f94cb4baa44cc9d3300fd4161d3c2463303e1ef81"
+      },
+      {
+        "name": "pwl/phi_w.pwl",
+        "bytes": 399650,
+        "sha256": "35f43f2b53addb74765dacf30b6334cf23a257fac88bb356aed328eb5fc3f2ab"
+      },
+      {
+        "name": "pwl/sample_int.pwl",
+        "bytes": 384162,
+        "sha256": "859e1a6b037c1815159c89fe783fb852e7fe86f6b9df912cbbb0d74cff951c04"
+      },
+      {
+        "name": "pwl/topn.pwl",
+        "bytes": 382070,
+        "sha256": "1d7a1528bf8838dbcfab442be293147a72a334f86c31fc6fb210ae74fb847f5f"
+      },
+      {
+        "name": "pwl/topp.pwl",
+        "bytes": 373373,
+        "sha256": "5977c48de41b43ba8c3456cb28606dac729437dc01cf73cfc2ed818744f709f7"
+      },
+      {
+        "name": "native_summary.py",
+        "bytes": 2972,
+        "sha256": "6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57"
+      }
+    ],
+    "native_points_reported": 5917,
+    "local_diagnostic_rows": 1836,
+    "full_raw_available_locally": false,
+    "completion_evidence": "Frozen checked reducer reports raw END/5917 points and native logStatus PASS; local table has 1836 diagnostic rows only.",
+    "simulation_peak_rss_bytes": 305225728,
+    "analysis_peak_rss_bytes": 10338304
+  },
+  "source_native_recovery": {
+    "export_run": "sar8audit-ctrl-native-v1",
+    "source_run": "sar8fix-loaded-both-ffcold",
+    "all_receipt_hashes": [
+      {
+        "name": "analysis.admission.json",
+        "sha256": "d5d76f237b166c4e255004251f2d3765abdcdad7bc63c00644fd48f9f9047ed9",
+        "bytes": 655
+      },
+      {
+        "name": "analysis.state.json",
+        "sha256": "501f6dd6134e86a6e5fe3a63d98faafa958ac2f03c9f7d0e139b03b76d5f7503",
+        "bytes": 2060
+      },
+      {
+        "name": "derived/boundary.columns.json",
+        "sha256": "6301a0617159c664a86c346d6a189a09ccb88be0a49037ebb7e45f1b836295da",
+        "bytes": 4478
+      },
+      {
+        "name": "derived/boundary.native.bin",
+        "sha256": "e376fbbc157f424a673209a6230fe809f43da6bafa2433ce850c6b4223fce590",
+        "bytes": 1819168
+      },
+      {
+        "name": "derived/initial_state.json",
+        "sha256": "993a3fc295b17a96fe33e349b03c1be9629329445f21fcae20995a1a2b1190a5",
+        "bytes": 1097
+      },
+      {
+        "name": "derived/native_export.meta.json",
+        "sha256": "224d8f748494a9a2c61a9bab1e9a6d03ee2c25c4ce48490323e1770cf95b460a",
+        "bytes": 1612
+      },
+      {
+        "name": "derived/native_stream",
+        "sha256": "bb3edc7a1f43db451704ac3768c06a299e808207eb1d0a8e3301ed23fb591e4b",
+        "bytes": 55072
+      },
+      {
+        "name": "derived/peak.native.bin",
+        "sha256": "04a0ebd802d26f70b5e1ced4924652eb571959cd1a285b78d82fac3247e530a3",
+        "bytes": 970320
+      },
+      {
+        "name": "derived/peak_summary.json",
+        "sha256": "edc808cdc31bcb13f193571cfdeb5858360791fbac35de667f8e9f72adc81858",
+        "bytes": 3926
+      },
+      {
+        "name": "derived/result.json",
+        "sha256": "2c1006ef2b316f261fcd0512586f4b50a32bb265fc197005fd65a8041fe28c5a",
+        "bytes": 1895
+      },
+      {
+        "name": "derived/selected_native.txt",
+        "sha256": "a14c31b0e9f0fd4393bd7b62ea5b5ea3cf224216b160e614f0483f362509db47",
+        "bytes": 488
+      },
+      {
+        "name": "derived/source_readonly_provenance.json",
+        "sha256": "dbdf60408a5d2585bc64bb6201a75ef2c4402dd18cade0717c5600295461be73",
+        "bytes": 1951
+      },
+      {
+        "name": "source_provenance.json",
+        "sha256": "1d594a0cdc59cf9871cd9f6c1e966948dba121cced98e3c3fd9a636b0db94b24",
+        "bytes": 508
+      }
+    ],
+    "receipt_sha256": "e9e1045e26a662f2ee012b22e511cd66684f5e30d5473a228bbfdc4629c04033",
+    "files": 13,
+    "total_bytes": 2863230,
+    "native_points": 8746,
+    "diagnostic_points": 4665,
+    "source_prefix_sha256": "8c435c4f16e9636d41f3ad29d2cc4ffa82b73eba28a32ee14d1c54167ce9b8c7",
+    "native_peak": {
+      "node": "xdut.xctrl.xtim.x020.n",
+      "time_s": 4.10895154336558e-08,
+      "value_v": 1.078642014935018
+    },
+    "export_peak_error_v": 0.0,
+    "export_peak_time_error_s": 0.0,
+    "initial_state_witnesses": {
+      "time_s": 0,
+      "values_v": {
+        "xdut.sample_int": 0.9899996251544562,
+        "xdut.xctrl.phi_w": 6.600978749660476e-07,
+        "xdut.phi_u": 1.248775177106673e-06,
+        "xdut.active": 0.9899997697147681,
+        "xdut.xctrl.xtim.dec": 9.836658727413902e-07,
+        "xdut.xctrl.xtim.wd": 9.845151479452683e-07,
+        "xdut.topp": 0.8549176924296817,
+        "xdut.topn": 0.04500000004650074,
+        "xdut.comp_p": 0.9899996496333214,
+        "xdut.comp_n": 0.989999648156795,
+        "xdut.xctrl.xtim.clock_q": 2.127787400707586e-06,
+        "xdut.xctrl.xtim.xclock.rb": 9.91453272115028e-07,
+        "xdut.xctrl.xtim.xclock.sn": 0.9899999563802637,
+        "xdut.xctrl.xtim.xclock.qb": 0.9899999564343802,
+        "xdut.xctrl.xtim.xd_quiet_d.rc0": 5.857521183818325e-08,
+        "xdut.xctrl.xtim.xd_quiet_d.rc1": 0.9899999873033846,
+        "xdut.xctrl.xtim.x020.n": 0.9899998426542438,
+        "xdut.xctrl.xtim.x020.x000.mid": 0.8624708702885009,
+        "xdut.xctrl.xtim.quiet": 9.742229616100555e-07,
+        "xdut.xctrl.xtim.quiet_d": 9.826401780523987e-07,
+        "xdut.xctrl.xtim.q1": 0.9899998416831369,
+        "xdut.xctrl.xtim.live": 9.827050603719278e-07,
+        "xdut.xctrl.xtim.clock_reset": 0.9899997678023985,
+        "xdut.cmp_clk": 9.908398577731979e-07,
+        "vdd!": 0.99
+      }
+    },
+    "parser_peak_rss_kib": 6052,
+    "managed_analysis_peak_rss_bytes": 121257984,
+    "analysis_elapsed_s": 10.182586908340454,
+    "native_history_stop_s": 4.159078565059045e-08,
+    "source_END_scanned": false,
+    "note": "This verifies lossless data recovery; no isolated electrical reproduction or current attribution has run.",
+    "current_attribution_available": false
+  },
+  "peak": {
+    "value_v": 1.079890183994581,
+    "time_s": 4.108574058979127e-08,
+    "source_value_v": 1.078642014935018,
+    "source_time_s": 4.10895154336558e-08,
+    "error_v": 0.0012481690595629313,
+    "error_s": -3.774843864533156e-12
+  },
+  "edges": {
+    "xdut.sample_int": {
+      "source_s": [
+        4.107179603919251e-08
+      ],
+      "fixture_s": [
+        4.1071796062399276e-08
+      ],
+      "error_s": [
+        2.3206763843412005e-17
+      ],
+      "counts_equal": true,
+      "within_5ps": true
+    },
+    "xdut.xctrl.xtim.live": {
+      "source_s": [
+        4.1085839157729936e-08
+      ],
+      "fixture_s": [
+        4.1082104424453984e-08
+      ],
+      "error_s": [
+        -3.734733275951751e-12
+      ],
+      "counts_equal": true,
+      "within_5ps": true
+    },
+    "xdut.xctrl.xtim.clock_reset": {
+      "source_s": [
+        4.1079404794673675e-08
+      ],
+      "fixture_s": [
+        4.1079404908983504e-08
+      ],
+      "error_s": [
+        1.143098292367117e-16
+      ],
+      "counts_equal": true,
+      "within_5ps": true
+    },
+    "xdut.xctrl.xtim.quiet": {
+      "source_s": [
+        4.11030906314128e-08
+      ],
+      "fixture_s": [
+        4.109935354610755e-08
+      ],
+      "error_s": [
+        -3.7370853052474e-12
+      ],
+      "counts_equal": true,
+      "within_5ps": true
+    }
+  },
+  "path_delays": {
+    "source_peak_after_LIVE_s": 3.676275925866758e-12,
+    "fixture_peak_after_LIVE_s": 3.636165337285353e-12,
+    "source_QUIET_after_LIVE_s": 1.725147368286353e-11,
+    "fixture_QUIET_after_LIVE_s": 1.7249121653567882e-11
+  },
+  "LIVE_slew": {
+    "source": {
+      "crossings_s": {
+        "0.1": [
+          4.108404244601136e-08
+        ],
+        "0.9": [
+          4.1087879342101084e-08
+        ]
+      },
+      "rise_10_90_s": 3.836896089725859e-12
+    },
+    "fixture": {
+      "crossings_s": {
+        "0.1": [
+          4.108041720132531e-08
+        ],
+        "0.9": [
+          4.1084129592366434e-08
+        ]
+      },
+      "rise_10_90_s": 3.712391041123307e-12
+    }
+  },
+  "source_event_order": [
+    "xdut.sample_int",
+    "xdut.xctrl.xtim.clock_reset",
+    "xdut.xctrl.xtim.live",
+    "xdut.xctrl.xtim.quiet"
+  ],
+  "fixture_event_order": [
+    "xdut.sample_int",
+    "xdut.xctrl.xtim.clock_reset",
+    "xdut.xctrl.xtim.live",
+    "xdut.xctrl.xtim.quiet"
+  ],
+  "initial_witness_errors_v": {
+    "xdut.sample_int": 0.0,
+    "xdut.xctrl.phi_w": 0.0,
+    "xdut.phi_u": 0.0,
+    "xdut.active": 0.0,
+    "xdut.xctrl.xtim.dec": 0.0,
+    "xdut.xctrl.xtim.wd": -9.367925039900838e-09,
+    "xdut.topp": 0.0,
+    "xdut.topn": 0.0,
+    "xdut.comp_p": -1.900800739029762e-09,
+    "xdut.comp_n": -4.919045171192238e-10,
+    "xdut.xctrl.xtim.clock_q": 6.870578740967151e-10,
+    "xdut.xctrl.xtim.xclock.rb": 1.9171857861686662e-09,
+    "xdut.xctrl.xtim.xclock.sn": -2.0622059615504895e-11,
+    "xdut.xctrl.xtim.xclock.qb": -7.518285993768359e-11,
+    "xdut.xctrl.xtim.xd_quiet_d.rc0": 2.3015480636519563e-09,
+    "xdut.xctrl.xtim.xd_quiet_d.rc1": -8.460010469946155e-12,
+    "xdut.xctrl.xtim.x020.n": -3.4389083802821574e-09,
+    "xdut.xctrl.xtim.x020.x000.mid": -1.7182785194691519e-09,
+    "xdut.xctrl.xtim.quiet": 1.259382505644928e-10,
+    "xdut.xctrl.xtim.quiet_d": 5.525651721289818e-10,
+    "xdut.xctrl.xtim.q1": 3.5454972291404374e-12,
+    "xdut.xctrl.xtim.live": 1.8802373106069027e-09,
+    "xdut.xctrl.xtim.clock_reset": -2.437314572389937e-09,
+    "xdut.cmp_clk": 1.0750361666479616e-09,
+    "vdd!": 0.0
+  },
+  "max_initial_witness_error_v": 9.367925039900838e-09,
+  "independent_critical_kcl": {
+    "xdut.xctrl.xtim.x020.n": {
+      "max_abs_a": 1.8928644302439125e-12,
+      "reducer_all_history_max_abs_a": 1.8928644302439125e-12
+    },
+    "xdut.xctrl.xtim.x020.x000.mid": {
+      "max_abs_a": 9.50746856324394e-13,
+      "reducer_all_history_max_abs_a": 9.50746856324394e-13
+    },
+    "xdut.xctrl.xtim.quiet": {
+      "max_abs_a": 3.64851230553586e-12,
+      "reducer_all_history_max_abs_a": 3.64851230553586e-12
+    },
+    "xdut.xctrl.xtim.xd_quiet_d.rc0": {
+      "max_abs_a": 1.6865873796309203e-12,
+      "reducer_all_history_max_abs_a": 1.6865873796309203e-12
+    },
+    "xdut.xctrl.xtim.xd_quiet_d.rc1": {
+      "max_abs_a": 1.4404678215203595e-12,
+      "reducer_all_history_max_abs_a": 1.4404678215203595e-12
+    },
+    "xdut.xctrl.xtim.clock_set": {
+      "max_abs_a": 1.0021644690575018e-12,
+      "reducer_all_history_max_abs_a": 1.0021644690575018e-12
+    },
+    "xdut.xctrl.xtim.clock_q": {
+      "max_abs_a": 1.9806974011981173e-12,
+      "reducer_all_history_max_abs_a": 1.9806974011981173e-12
+    }
+  },
+  "max_critical_kcl_a": 3.64851230553586e-12,
+  "fixed_approved_screens": {
+    "peak_amplitude_within_1mV": false,
+    "peak_time_within_5ps": true,
+    "selected_edges_count_and_time": true,
+    "selected_edge_order": true,
+    "original_positive_spike_polarity": true,
+    "initial_within_1mV": true,
+    "critical_kcl_within_1nA": true
+  },
+  "faithful_reproduction_screen_pass": false,
+  "frozen_analyzer_acceptance_pass": null,
+  "local_fixture_current_evidence_only": true,
+  "original_whole_ADC_current_attribution": false,
+  "currents": {
+    "xdut.xctrl.xtim.x020.x000.mp1:1": {
+      "at_n_peak_a": -3.027227130281879e-06,
+      "event_min_a": -7.00850375665733e-05,
+      "event_max_a": 1.252932097582649e-06
+    },
+    "xdut.xctrl.xtim.x020.x000.mp0:1": {
+      "at_n_peak_a": 2.087220738019967e-07,
+      "event_min_a": -7.000225071381372e-05,
+      "event_max_a": 1.597248436367407e-05
+    },
+    "xdut.xctrl.xtim.x020.x000.mn0:1": {
+      "at_n_peak_a": 2.517796525665658e-06,
+      "event_min_a": -2.993705177698803e-07,
+      "event_max_a": 0.0002718434530404419
+    },
+    "xdut.xctrl.xtim.x020.x001.mp:2": {
+      "at_n_peak_a": 1.387515407529825e-07,
+      "event_min_a": -9.08926072783713e-05,
+      "event_max_a": 1.114360888111255e-05
+    },
+    "xdut.xctrl.xtim.x020.x001.mn:2": {
+      "at_n_peak_a": 1.619569033868758e-07,
+      "event_min_a": -5.804058369021163e-05,
+      "event_max_a": 1.111109405116918e-05
+    }
+  },
+  "integrated_currents": {
+    "prepeak": {
+      "start_s": 4.104074535873642e-08,
+      "stop_s": 4.108574058979127e-08,
+      "native_points": 1070,
+      "sign": "Q_into_N = -trapezoid(total native terminal current dt); not channel or parasitic decomposition",
+      "branch_net_q_c": {
+        "xdut.xctrl.xtim.x020.x000.mp1:1": 1.663628808243401e-16,
+        "xdut.xctrl.xtim.x020.x000.mp0:1": -5.255189856177574e-17,
+        "xdut.xctrl.xtim.x020.x000.mn0:1": -4.02793892743048e-17,
+        "xdut.xctrl.xtim.x020.x001.mp:2": -3.680497081654737e-17,
+        "xdut.xctrl.xtim.x020.x001.mn:2": -3.6726621642430924e-17
+      },
+      "sum_net_q_c": 5.292812754884528e-25,
+      "max_abs_summed_current_a": 4.580081054373567e-13
+    },
+    "full_event": {
+      "start_s": 4.104074535873642e-08,
+      "stop_s": 4.11198711017952e-08,
+      "native_points": 1616,
+      "sign": "Q_into_N = -trapezoid(total native terminal current dt); not channel or parasitic decomposition",
+      "branch_net_q_c": {
+        "xdut.xctrl.xtim.x020.x000.mp1:1": 6.800561264342656e-16,
+        "xdut.xctrl.xtim.x020.x000.mp0:1": 4.58153118943333e-16,
+        "xdut.xctrl.xtim.x020.x000.mn0:1": -2.3542659130633633e-15,
+        "xdut.xctrl.xtim.x020.x001.mp:2": 8.258211962456095e-16,
+        "xdut.xctrl.xtim.x020.x001.mn:2": 3.902354671922618e-16
+      },
+      "sum_net_q_c": -4.247893356048193e-24,
+      "max_abs_summed_current_a": 1.8928644302439125e-12
+    }
+  },
+  "ideal_input_replay_checks": {
+    "xdut.sample_int": {
+      "max_abs_error_to_declared_linear_pwl_v": 3.8835601401387976e-13,
+      "time_s": 4.106856032236831e-08,
+      "native_knots": 8746
+    },
+    "xdut.xctrl.phi_w": {
+      "max_abs_error_to_declared_linear_pwl_v": 7.389379906574955e-16,
+      "time_s": 4.107913104325785e-08,
+      "native_knots": 8746
+    },
+    "xdut.phi_u": {
+      "max_abs_error_to_declared_linear_pwl_v": 1.1492543028346347e-14,
+      "time_s": 4.109224678686417e-08,
+      "native_knots": 8746
+    },
+    "xdut.active": {
+      "max_abs_error_to_declared_linear_pwl_v": 1.1213252548714081e-14,
+      "time_s": 4.108112404630567e-08,
+      "native_knots": 8746
+    },
+    "xdut.xctrl.xtim.dec": {
+      "max_abs_error_to_declared_linear_pwl_v": 3.621394074779195e-17,
+      "time_s": 4.108160874235722e-08,
+      "native_knots": 8746
+    },
+    "xdut.topp": {
+      "max_abs_error_to_declared_linear_pwl_v": 2.220446049250313e-16,
+      "time_s": 4.114197714913582e-08,
+      "native_knots": 8746
+    },
+    "xdut.topn": {
+      "max_abs_error_to_declared_linear_pwl_v": 5.273559366969494e-16,
+      "time_s": 4.110076421580994e-08,
+      "native_knots": 8746
+    }
+  },
+  "pwl_warning_check": {
+    "log_timestamp_s_rounded": 4.10608e-08,
+    "bounding_native_times_s": [
+      4.106075896111546e-08,
+      4.106089602205835e-08
+    ],
+    "all_native_times_strictly_increasing": true,
+    "native_knot_voltage_continuity": true,
+    "declared_model": "Piecewise linear through original native knots; derivative changes at knots. Warning does not prove a finite voltage jump.",
+    "local_knots": [
+      {
+        "time_s": 4.106034756294529e-08,
+        "value_v": 0.971414262239062,
+        "previous_gap_s": 1.3564795002250408e-13,
+        "next_gap_s": 1.3632020396796044e-13,
+        "incoming_slope_v_s": -12224579847.00806,
+        "outgoing_slope_v_s": -12839346848.723928,
+        "slope_jump_v_s": -614767001.715868
+      },
+      {
+        "time_s": 4.106048388314926e-08,
+        "value_v": 0.9696639998578286,
+        "previous_gap_s": 1.3632020396796044e-13,
+        "next_gap_s": 1.3711721009055872e-13,
+        "incoming_slope_v_s": -12839346848.723928,
+        "outgoing_slope_v_s": -13473490078.601965,
+        "slope_jump_v_s": -634143229.8780365
+      },
+      {
+        "time_s": 4.106062100035935e-08,
+        "value_v": 0.9678165524880679,
+        "previous_gap_s": 1.3711721009055872e-13,
+        "next_gap_s": 1.3796075611418908e-13,
+        "incoming_slope_v_s": -13473490078.601965,
+        "outgoing_slope_v_s": -14127414649.164238,
+        "slope_jump_v_s": -653924570.562273
+      },
+      {
+        "time_s": 4.106075896111546e-08,
+        "value_v": 0.9658675236811305,
+        "previous_gap_s": 1.3796075611418908e-13,
+        "next_gap_s": 1.3706094288963014e-13,
+        "incoming_slope_v_s": -14127414649.164238,
+        "outgoing_slope_v_s": -14796964138.171242,
+        "slope_jump_v_s": -669549489.0070038
+      },
+      {
+        "time_s": 4.106089602205835e-08,
+        "value_v": 0.9638394378244487,
+        "previous_gap_s": 1.3706094288963014e-13,
+        "next_gap_s": 1.2998454326510476e-13,
+        "incoming_slope_v_s": -14796964138.171242,
+        "outgoing_slope_v_s": -15461901494.269299,
+        "slope_jump_v_s": -664937356.0980568
+      },
+      {
+        "time_s": 4.106102600660162e-08,
+        "value_v": 0.9618296296207061,
+        "previous_gap_s": 1.2998454326510476e-13,
+        "next_gap_s": 1.2273359234506047e-13,
+        "incoming_slope_v_s": -15461901494.269299,
+        "outgoing_slope_v_s": -16104828976.461067,
+        "slope_jump_v_s": -642927482.1917686
+      },
+      {
+        "time_s": 4.106114874019396e-08,
+        "value_v": 0.9598530261063222,
+        "previous_gap_s": 1.2273359234506047e-13,
+        "next_gap_s": 1.1733872254727666e-13,
+        "incoming_slope_v_s": -16104828976.461067,
+        "outgoing_slope_v_s": -16728276332.32918,
+        "slope_jump_v_s": -623447355.8681126
+      },
+      {
+        "time_s": 4.106126607891651e-08,
+        "value_v": 0.9578901515310688,
+        "previous_gap_s": 1.1733872254727666e-13,
+        "next_gap_s": 1.1301694744806876e-13,
+        "incoming_slope_v_s": -16728276332.32918,
+        "outgoing_slope_v_s": -17338463930.043827,
+        "slope_jump_v_s": -610187597.7146473
+      },
+      {
+        "time_s": 4.106137909586396e-08,
+        "value_v": 0.9559306112642568,
+        "previous_gap_s": 1.1301694744806876e-13,
+        "next_gap_s": 1.0920652481562931e-13,
+        "incoming_slope_v_s": -17338463930.043827,
+        "outgoing_slope_v_s": -17938567658.645874,
+        "slope_jump_v_s": -600103728.602047
+      }
+    ],
+    "numerical_cause_proven": false
+  },
+  "omitted_terminal_loads": {
+    "XDUT.XCTRL.XTIM.SN": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X014.X000.MP1",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X014.N",
+          "XDUT.XCTRL.XTIM.SN",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X014.X000.MN1",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X014.X000.MID",
+          "XDUT.XCTRL.XTIM.SN",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X010.X000.MP1",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X010.N",
+          "XDUT.XCTRL.XTIM.SN",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X010.X000.MN1",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X010.X000.MID",
+          "XDUT.XCTRL.XTIM.SN",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.LIVE": [],
+    "XDUT.XCTRL.XTIM.Q1": [],
+    "XDUT.XCTRL.XTIM.CLOCK_RESET": [],
+    "XDUT.XCTRL.XTIM.QUIET": [],
+    "XDUT.XCTRL.XTIM.PR": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X000.MP0",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X005.N",
+          "XDUT.XCTRL.XTIM.PR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X000.MN0",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X005.N",
+          "XDUT.XCTRL.XTIM.PR",
+          "XDUT.XCTRL.XTIM.X005.X000.MID",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X001.MP0",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.NA",
+          "XDUT.XCTRL.XTIM.PR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X001.MN0",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.NA",
+          "XDUT.XCTRL.XTIM.PR",
+          "XDUT.XCTRL.XTIM.X006.X001.MID",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MP0",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.N",
+          "XDUT.XCTRL.XTIM.PR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MN0",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.N",
+          "XDUT.XCTRL.XTIM.PR",
+          "XDUT.XCTRL.XTIM.X006.X000.MID",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.NR": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X004.MP",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.NRB",
+          "XDUT.XCTRL.XTIM.NR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X004.MN",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.NRB",
+          "XDUT.XCTRL.XTIM.NR",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X002.MP0",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.NB",
+          "XDUT.XCTRL.XTIM.NR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X002.MN0",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.NB",
+          "XDUT.XCTRL.XTIM.NR",
+          "XDUT.XCTRL.XTIM.X006.X002.MID",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MP1",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.N",
+          "XDUT.XCTRL.XTIM.NR",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MN1",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X006.X000.MID",
+          "XDUT.XCTRL.XTIM.NR",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.WD": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X010.X000.MP0",
+        "port": 2,
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X010.N",
+          "XDUT.XCTRL.XTIM.WD",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X010.X000.MN0",
+        "port": 2,
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X010.N",
+          "XDUT.XCTRL.XTIM.WD",
+          "XDUT.XCTRL.XTIM.X010.X000.MID",
+          "0"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.X020.N": []
+  },
+  "proposed_supplementary_native_export": {
+    "proposed_names": [
+      "xdut.xctrl.xtim.sn",
+      "xdut.xctrl.xtim.ud",
+      "xdut.xctrl.xtim.write_req",
+      "xdut.xctrl.xtim.x010.n",
+      "xdut.xctrl.xtim.x010.x000.mid",
+      "xdut.xctrl.xtim.x014.n",
+      "xdut.xctrl.xtim.x014.x000.mid",
+      "xdut.xctrl.xtim.x001.n",
+      "xdut.xctrl.xtim.x001.x000.mid"
+    ],
+    "exact_save_present": {
+      "source": {
+        "xdut.xctrl.xtim.sn": true,
+        "xdut.xctrl.xtim.ud": true,
+        "xdut.xctrl.xtim.write_req": true,
+        "xdut.xctrl.xtim.x010.n": true,
+        "xdut.xctrl.xtim.x010.x000.mid": true,
+        "xdut.xctrl.xtim.x014.n": true,
+        "xdut.xctrl.xtim.x014.x000.mid": true,
+        "xdut.xctrl.xtim.x001.n": true,
+        "xdut.xctrl.xtim.x001.x000.mid": true
+      },
+      "fixture": {
+        "xdut.xctrl.xtim.sn": true,
+        "xdut.xctrl.xtim.ud": false,
+        "xdut.xctrl.xtim.write_req": false,
+        "xdut.xctrl.xtim.x010.n": false,
+        "xdut.xctrl.xtim.x010.x000.mid": false,
+        "xdut.xctrl.xtim.x014.n": false,
+        "xdut.xctrl.xtim.x014.x000.mid": false,
+        "xdut.xctrl.xtim.x001.n": true,
+        "xdut.xctrl.xtim.x001.x000.mid": true
+      }
+    },
+    "note": "Not in current diagnostic binary. An approved analysis-only supplement can inspect existing raw TRACE; requested save is not proof of resolved TRACE until export.",
+    "no_remote_export_performed": true
+  },
+  "native_warning_codes": [
+    "CMI-2751",
+    "CMI-2752",
+    "CMI-2753",
+    "CMI-2754",
+    "CMI-2755",
+    "SFE-1131",
+    "SPECTRE-16780",
+    "VACOMP-2435"
+  ],
+  "warning_lines": [
+    "WARNING (VACOMP-2435): The environment variable CDS_AHDLCMI_ENABLE is no longer supported. Therefore, the simulator will use the default compiled C code flow.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `412' has also been specified at line `1582' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1582' has also been specified at line `1816' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1816' has also been specified at line `1929' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (SFE-1131): Scope option `scalefactor' specified with scope `TopCircuit' at line `1929' has also been specified at line `1970' in file `/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs'. As a result, the last specified value will be used for simulation.",
+    "WARNING (CMI-2751): XDUT.XCTRL.XTIM.X023.X000.MP: Vds(=-990.001 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): XDUT.XCTRL.XTIM.X023.X000.MP: Vbd(=990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): XDUT.XCTRL.XTIM.X000.MP: Vds(=-990.001 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): XDUT.XCTRL.XTIM.X000.MP: Vbd(=990.001 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): XDUT.XCTRL.XTIM.X023.X002.MN0: Vgd(=-990.002 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): XDUT.XCTRL.XTIM.X001.X000.MN0: Vgd(=-990.002 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgs(=-990.003 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgb(=-990.003 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgd(=-990.002 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): XDUT.XCTRL.XTIM.X023.X000.MP: Vds(=-990.003 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): XDUT.XCTRL.XTIM.X023.X000.MP: Vbd(=990.003 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): XDUT.XCTRL.XTIM.X001.X000.MP0: Vgs(=-990.003 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): XDUT.XCTRL.XTIM.X001.X000.MP0: Vgb(=-990.003 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): XDUT.XCTRL.XTIM.X001.X000.MP0: Vgd(=-990.002 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): XDUT.XCTRL.XTIM.X000.MP: Vds(=-990.003 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): XDUT.XCTRL.XTIM.X000.MP: Vbd(=990.003 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2754): XDUT.XCTRL.XTIM.X023.X002.MN0: Vgd(=-990.003 mV) has exceeded vgd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgs(=-990.004 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgb(=-990.004 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2751): XDUT.XCTRL.XTIM.X023.X000.MP: Vds(=-990.004 mV) has exceeded vds_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2755): XDUT.XCTRL.XTIM.X023.X000.MP: Vbd(=990.004 mV) has exceeded vbd_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): XDUT.XCTRL.XTIM.X001.X000.MP0: Vgs(=-990.004 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): XDUT.XCTRL.XTIM.X001.X000.MP0: Vgb(=-990.004 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2752): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgs(=-990.004 mV) has exceeded vgs_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (CMI-2753): XDUT.XCTRL.XTIM.X023.X002.MP0: Vgb(=-990.004 mV) has exceeded vgb_max(=990 mV). Check and update the settings of the SOA-related model parameters and terminal bias of the instance",
+    "WARNING (SPECTRE-16780): LTE tolerance was temporarily relaxed to step over a discontinuity in the signal: XDUT.SAMPLE_INT. Check the design or use '+diagnose' to get more information."
+  ],
+  "effective_settings": {
+    "source": {
+      "abstol(I)": "100 fA, default 1 pA",
+      "abstol(V)": "10 nV, default 1 uV",
+      "maxstep": "10 ps, default 2 ns (conservative)",
+      "method": "gear2only",
+      "reltol": "100e-09, default 100e-06 (conservative)"
+    },
+    "fixture": {
+      "abstol(I)": "100 fA, default 1 pA",
+      "abstol(V)": "10 nV, default 1 uV",
+      "maxstep": "10 ps, default 415.908 ps (conservative)",
+      "method": "gear2only",
+      "reltol": "100e-09, default 100e-06 (conservative)"
+    }
+  },
+  "proposed_contract_in_frozen_measurement": {
+    "status": "proposal_pending_parent_review",
+    "peak_voltage_error_abs_v": 0.001,
+    "peak_time_error_abs_s": 5e-12,
+    "expected_edge_time_error_abs_s": 5e-12,
+    "initial_witness_error_abs_v": 0.001,
+    "critical_kcl_peak_abs_a": 1e-09,
+    "rationale": "Numerical first-reproduction diagnostics at unchanged devices and native replay; not ADC accuracy, lifetime or a zero-stress pass requirement."
+  },
+  "interpolation_policy": "Original source and fixture traces plotted independently on unshifted native time axes. Piecewise interpolation used only for event times and checking declared PWL at fixture-native times, never for alignment or fitting.",
+  "integration_policy": "Native-grid trapezoids are numerical charge estimates, not exact continuous-time integrals; endpoints are reported original fixture timestamps."
+}

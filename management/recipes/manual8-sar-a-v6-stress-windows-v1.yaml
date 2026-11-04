@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-sar-a-v6-stress-windows-v1",
+  "design_id": "manual8_sar_isolation_v1",
+  "kind": "analysis_only",
+  "source_run_id": "manual8-sar-a-tt-v6",
+  "entry": "sar_isolation_stress_windows.py",
+  "analyzer": "sar_isolation_stress_windows.py",
+  "inputs": [
+    {
+      "source": "scripts/manual_adc/sar_isolation_stress_windows.py",
+      "name": "sar_isolation_stress_windows.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 1.62e-06,
+  "summary_signals": [
+    "clks",
+    "cmpck",
+    "xdut.valid"
+  ],
+  "qualification_scope": "First 220ns DFF stress windows only; no new simulation",
+  "oa_parity": "none",
+  "test_conditions": {
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27
+  },
+  "resources": {
+    "threads": 1,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "analysis_wall_seconds": 1800,
+    "max_output_mib": 32,
+    "queue_timeout_seconds": 600
+  }
+}

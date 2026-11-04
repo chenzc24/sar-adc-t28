@@ -1,0 +1,70 @@
+{
+  "base_run": "sar8audit-ctrl-stdcell-resetnand-ff-v1",
+  "base_recipe_sha256": "7f60d766e2c8f6f4b964d5744cdd1442292e7f86485596b8374694a5ec616c9d",
+  "source_proof": {
+    "run": "sar8audit-ctrl-stdcell-resetnand-ff-v1",
+    "recipe_sha256": "7f60d766e2c8f6f4b964d5744cdd1442292e7f86485596b8374694a5ec616c9d",
+    "receipt_files": 9,
+    "receipt_bytes": 9448118,
+    "required_currents": 435,
+    "native_points": 6058,
+    "local_diagnostic_points": 1977,
+    "END": true,
+    "all_receipt_and_input_hashes_match": true,
+    "critical_kcl_max_a": 3.936502649877569e-12,
+    "native_warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "SFE-1131",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "changed_component": "XDUT.XCTRL.XTIM.XCLOCK.X003.CMID",
+  "old_component": {
+    "model": "cfmom_2t",
+    "nodes": [
+      "XDUT.XCTRL.XTIM.XCLOCK.X003.MID",
+      "0"
+    ],
+    "parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1"
+  },
+  "new_component": {
+    "model": "cfmom_2t",
+    "nodes": [
+      "XDUT.XCTRL.XTIM.XCLOCK.X003.MID",
+      "0"
+    ],
+    "parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 mismatchflag=1"
+  },
+  "unchanged_leaf_count": 127,
+  "no_added_or_removed_leaves": true,
+  "private_masters": [
+    "sar8audit_sr_rb_qbcap",
+    "sar8audit_nand_qbcap1"
+  ],
+  "shared_masters_unchanged": true,
+  "all_MOS_and_logic_unchanged": true,
+  "library_MOS_count": 18,
+  "library_current_ports": 72,
+  "total_MOS": 101,
+  "total_passive": 16,
+  "voltage_saves": 62,
+  "current_saves": 435,
+  "critical_KCL": 61,
+  "physical_pairs": 606,
+  "legacy_aliases": 3,
+  "all_save_catalogs_and_source_power_ports_unchanged": true,
+  "test_deck_byte_identical": true,
+  "unchanged_PWL": 11,
+  "foundry_body_copied_or_modified": false,
+  "declared_input_files": 25,
+  "declared_package_bytes": 4668313,
+  "recipe_file_sha256": "bc207d890e6890435142443cf8b62b6b7a6504f921501b402cd7453f7f6e1c7c",
+  "remote_operations": false,
+  "simulation_completed": false,
+  "repair_claim": false
+}

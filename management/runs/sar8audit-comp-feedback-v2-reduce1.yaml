@@ -1,0 +1,72 @@
+managed: true
+recipe_hash: fba4c814e8d1b7e4721d4ca9d69ad6777090d1c9305233fc26f95d4a68942cda
+recipe:
+  schema_version: 2
+  run_id: sar8audit-comp-feedback-v2-reduce1
+  design_id: sar8_comp_native_feedback_tt_v2
+  entry: feedback_source_reduce.py
+  analyzer: feedback_source_reduce.py
+  files:
+  - name: feedback_analyze.py
+    source: verification/sar8_module_audit/comparator/generated/feedback_v2_reduce_v1/feedback_analyze.py
+    bytes: 16966
+    sha256: 64405f6b3b6685f65a18ceae90cd272e89b9595403a0656c41fff9fb0d2d2a12
+  - name: native_support.py
+    source: verification/sar8_module_audit/comparator/generated/feedback_v2_reduce_v1/native_support.py
+    bytes: 21032
+    sha256: 1a4f6a077402a9dfc1de5c79635f09ddba919884bf7c4aeecb0cd31187835803
+  - name: measurement.json
+    source: verification/sar8_module_audit/comparator/generated/feedback_v2_reduce_v1/measurement.json
+    bytes: 194134
+    sha256: a0e884489a0334281a8e4d79d210177408d1b8852aa56a52acd7779abc2baaae
+  - name: feedback_source_reduce.py
+    source: verification/sar8_module_audit/comparator/generated/feedback_v2_reduce_v1/feedback_source_reduce.py
+    bytes: 11502
+    sha256: ba7303724e9645867b585c64b2d1f8b726bb0901e7c1528ae7685859762ddb1a
+  - name: source_binding.json
+    source: verification/sar8_module_audit/comparator/generated/feedback_v2_reduce_v1/source_binding.json
+    bytes: 2086
+    sha256: 70661312fd5268fa87f84ddc4cf5a0b6fad80df7361d430d559000b880587a32
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 512
+    max_output_mib: 32
+    simulation_wall_seconds: 1
+    analysis_wall_seconds: 1800
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - topp
+  - topn
+  - xdut.cmp_clk
+  - xdut.phi_u
+  expected_stop_s: 1.0e-07
+  qualification_scope: Analysis-only completed-v2 full-native protocol/990 stress
+    metrics; bounded native-row export only, full8742 stress coverage incomplete
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: completed_source_netlist_only_no_OA_change
+  kind: analysis_only
+  source:
+    run_id: sar8audit-comp-feedback-tt-v2
+    recipe_hash: d56adca4380107296e7bd8aebe5fadd39f419aa579e8a0235bc53284b2b5cb90
+  test_conditions:
+    source_run: sar8audit-comp-feedback-tt-v2
+    source_recipe_hash: d56adca4380107296e7bd8aebe5fadd39f419aa579e8a0235bc53284b2b5cb90
+    simulation_reused: true
+    measurement_native_points: 156161
+    waveform_decimated_only: true
+    metric_decimation: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-comp-feedback-v2-reduce1

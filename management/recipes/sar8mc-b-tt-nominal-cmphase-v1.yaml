@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8mc-b-tt-nominal-cmphase-v1",
+  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "kind": "analysis_only",
+  "source_run_id": "sar8mc-b-tt-nominal-v1",
+  "entry": "reduce_commonmode.py",
+  "analyzer": "reduce_commonmode.py",
+  "inputs": [
+    {
+      "source": "scripts/sar8_mc/reduce_commonmode.py",
+      "name": "reduce_commonmode.py",
+      "sha256": "c6af9caeb7fa7e53fb3af347897a2017f559f2362bb85ba9e8eef1bac6247cf1"
+    },
+    {
+      "source": "scripts/sar8_campaign/native_stream.py",
+      "name": "native_stream.py",
+      "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef"
+    }
+  ],
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 1536,
+    "simulation_wall_seconds": 21600,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 86400
+  },
+  "summary_signals": [
+    "xdut.topp",
+    "xdut.topn",
+    "xdut.cmp_clk"
+  ],
+  "expected_stop_s": 1.059e-06,
+  "spectre_args": [
+    "+preset=mx",
+    "+mt=4",
+    "-preset_override",
+    "+lqtimeout",
+    "60"
+  ],
+  "qualification_scope": "Native common-mode/clock boundary only"
+}

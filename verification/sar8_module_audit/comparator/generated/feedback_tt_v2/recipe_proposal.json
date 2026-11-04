@@ -1,0 +1,80 @@
+{
+  "run_id": "sar8audit-comp-feedback-tt-v2",
+  "design_id": "sar8_comp_native_feedback_tt_v2",
+  "entry": "test.scs",
+  "analyzer": "feedback_analyze.py",
+  "inputs": [
+    {
+      "name": "cells.scs",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/cells.scs",
+      "sha256": "6ccf52aed46f235896aeea29868f0f02bc28a7c4fed19ffa53bf83a65ba5cc3e"
+    },
+    {
+      "name": "cdac_load.scs",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/cdac_load.scs",
+      "sha256": "3268101c6eadefd664d620f392c6ed5d95de86e8d29ab97742db75fc3ef22190"
+    },
+    {
+      "name": "initializer.va",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/initializer.va",
+      "sha256": "03b5823fc7d101f5237472ab46cd578bf7a341d1337684f5a525d6f07ba79401"
+    },
+    {
+      "name": "native_support.py",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/native_support.py",
+      "sha256": "1a4f6a077402a9dfc1de5c79635f09ddba919884bf7c4aeecb0cd31187835803"
+    },
+    {
+      "name": "test.scs",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/test.scs",
+      "sha256": "ca713dd1330aadc38a4534ed08eb5cef2138bc01c422d586e2cd6cc7ad43e121"
+    },
+    {
+      "name": "feedback_analyze.py",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/feedback_analyze.py",
+      "sha256": "64405f6b3b6685f65a18ceae90cd272e89b9595403a0656c41fff9fb0d2d2a12"
+    },
+    {
+      "name": "measurement.json",
+      "source": "verification/sar8_module_audit/comparator/generated/feedback_tt_v2/measurement.json",
+      "sha256": "a0e884489a0334281a8e4d79d210177408d1b8852aa56a52acd7779abc2baaae"
+    }
+  ],
+  "expected_stop_s": 1e-07,
+  "summary_signals": [
+    "TOPP",
+    "TOPN",
+    "XDUT.CMP_CLK",
+    "XDUT.PHI_U"
+  ],
+  "qualification_scope": "Native-feedback functional diagnosis with165-MOS direct-chain stress screen; full1457-MOS stress waveform coverage deferred",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ttmacro_mos_moscap/TT passives",
+    "vdd_v": 0.9,
+    "temperature_c": 27,
+    "mismatch": false,
+    "transient_noise": false,
+    "PEX": false,
+    "input": "Held+0.25LSB; one native eight-token sequence",
+    "startup": "Ideal SAMPLE_INT, not full startup handshake"
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "+lqtimeout",
+    "60",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 1800,
+    "analysis_wall_seconds": 1800,
+    "queue_timeout_seconds": 600
+  }
+}

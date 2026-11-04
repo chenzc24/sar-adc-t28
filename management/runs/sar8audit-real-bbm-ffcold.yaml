@@ -1,0 +1,106 @@
+managed: true
+recipe_hash: 7559d2fd8cb85edf5034c7711babe6f653611d0b52bba9b122f2b1616b87820a
+recipe:
+  schema_version: 1
+  run_id: sar8audit-real-bbm-ffcold
+  design_id: sar8_reference_complete_bit0_BBM_real_driver_load
+  entry: test.scs
+  analyzer: real_bbm_analyze.py
+  files:
+  - name: dut.scs
+    source: verification/sar8_module_audit/reference/generated/real_bbm_v1/dut.scs
+    bytes: 40893
+    sha256: 5d4318d63e50ef8ea66443cf87f3db44edf16d169d824ab10d7604268194dae4
+  - name: test.scs
+    source: verification/sar8_module_audit/reference/generated/real_bbm_v1/ffcold/test.scs
+    bytes: 22880
+    sha256: 1721bc5e8f6fbc416b35745e07643f3f9a2f853ff282907d39c36bc4e9dc51be
+  - name: reference_current_analyze.py
+    source: verification/sar8_module_audit/reference/reference_current_analyze.py
+    bytes: 29142
+    sha256: 96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e
+  - name: io_cell_analyze.py
+    source: verification/sar8_module_audit/reference/io_cell_analyze.py
+    bytes: 10327
+    sha256: a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9
+  - name: real_bbm_analyze.py
+    source: verification/sar8_module_audit/reference/real_bbm_analyze.py
+    bytes: 15347
+    sha256: 1983866ca0ab12ed03f305ec7fcf90e969e04b9f84df1a693f7e087e9552fda5
+  - name: bbm_boundary.json
+    source: verification/sar8_module_audit/reference/generated/real_bbm_v1/bbm_boundary.json
+    bytes: 19183
+    sha256: 92327ba9ae66772ad6916318d0d87f28c564c86f9236f20473bc76d505478895
+  - name: measurement.json
+    source: verification/sar8_module_audit/reference/generated/real_bbm_v1/ffcold/measurement.json
+    bytes: 296463
+    sha256: 1bea3a91d34bed1635d1480e14dbfdc59cd68cd4b2a57da23bf3188cf2d478e4
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 512
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 512
+    max_output_mib: 2048
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - code
+  - xdut.h0
+  - xdut.l0
+  - xdut.gnn0
+  - xdut.gnp0
+  - xdut.gpn0
+  - xdut.gpp0
+  - xdut.xcdac.bn0
+  - xdut.xcdac.bp0
+  expected_stop_s: 5.2e-08
+  qualification_scope: Complete original bit0 CODE-to-H/L BBM and original high driver,
+    tested IO low paths/physical loads; ideal CODE/rails, not wholeADC qualification
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: ffcold
+    supply_V: 0.99
+    temperature_C: -40
+    variant: full_original_bit0_BBM_real_H_driver_ideal_CODE
+    logical_stimulus: true
+    FF_waveform_replay: false
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-real-bbm-ffcold

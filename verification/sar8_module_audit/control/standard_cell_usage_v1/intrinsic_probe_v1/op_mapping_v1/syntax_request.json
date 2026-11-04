@@ -1,0 +1,27 @@
+{
+  "acceptance": "Exact supported info instance selection/output format and save OP/field addressing must be documented before native deck generation",
+  "commands": [
+    [
+      "/home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre",
+      "-64",
+      "-h",
+      "info"
+    ],
+    [
+      "/home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre",
+      "-64",
+      "-h",
+      "save"
+    ]
+  ],
+  "execute_by": "parent under current ownership; child performs local preparation only",
+  "no_runtime_or_circuit_change": true,
+  "per_child_limits": {
+    "output_bytes": 524288,
+    "wall_seconds": 8
+  },
+  "scope": "installed info/save syntax, no simulation, no CIW",
+  "selection": "Only relevant syntax/units/alias/unsupported-field definitions and output SHA; no credentials or PDK/model parameter bodies",
+  "status": "not_executed_help_request_only",
+  "termination": "kill exact child process group on timeout or output overflow; preserve result and stop, no automatic retry"
+}

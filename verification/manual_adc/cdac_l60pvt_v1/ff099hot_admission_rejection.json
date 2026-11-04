@@ -1,0 +1,47 @@
+{
+  "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+  "gate": {
+    "pass_gate": false,
+    "phase": "simulation",
+    "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+    "reasons": [
+      "user_cgroup_headroom"
+    ],
+    "snapshot": {
+      "cgroup_headroom": 1768923136,
+      "cgroups": {
+        "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+          "headroom": 1768923136,
+          "limit": 51539607552,
+          "used": 49770684416
+        }
+      },
+      "conflicting_processes": [],
+      "cpu_capacity": 48.0,
+      "disk_free": 281630339072,
+      "epoch": 1793108528.275566,
+      "host": "thu-wei",
+      "load1": 2.69,
+      "mem_available": 121127755776,
+      "swap_free": 21474832384,
+      "swap_rate_bytes_s": 0.0
+    },
+    "workload_slot": 1
+  },
+  "phase": "simulation",
+  "queued": true,
+  "reason": "queue_timeout",
+  "status": "rejected",
+  "submitted_epoch": 1793107921.643021,
+  "updated_epoch": 1793108528.27855,
+  "waiting_reasons": [
+    "user_cgroup_headroom"
+  ],
+  "worker_identity": {
+    "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+    "pgid": 126938,
+    "pid": 126938,
+    "start_ticks": "8285154",
+    "state": "R"
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "kind": "analysis_only",
+  "source_run_id": "sar8audit-ctrl-stdfull-storage-ff-v2",
+  "run_id": "sar8audit-ctrl-storage-ff-v2-fastanalysis-v1",
+  "design_id": "standard_cell_full_storage_ff_measure_v2",
+  "entry": "fast_source_analyze.py",
+  "analyzer": "fast_source_analyze.py",
+  "inputs": [
+    {
+      "name": "fast_source_analyze.py",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_fastanalysis_v1/fast_source_analyze.py",
+      "sha256": "8b44e9d3185e62b0dfca655e640e3ef4f1ee65493358fdf63ffaafc074d926a1"
+    },
+    {
+      "name": "fast_gate_analyze.py",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_fastanalysis_v1/fast_gate_analyze.py",
+      "sha256": "8d73ae9197319770ee2648965b8e9f3260b86b2408d397e1d931575f463c57f7"
+    },
+    {
+      "name": "full_gate_analyze.py",
+      "source": "verification/sar8_module_audit/control/full_gate_analyze.py",
+      "sha256": "fc57a31dac441f84dfcc8587a17c1247740ad6d40d2c43c04aaaf76b2daee2f6"
+    },
+    {
+      "name": "standard_cell_full_analyze.py",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_analyze.py",
+      "sha256": "ddf8b334bf0bc873fccf5af2ea8822aca51ef1bd063119bb3c196a328d66779a"
+    },
+    {
+      "name": "standard_cell_storage_v2_analyze.py",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_v2_analyze.py",
+      "sha256": "ddd65282da77d3d9f7e79ecd98b3bd79771df430e25e9450ff1a209e4ccf2cd1"
+    },
+    {
+      "name": "measurement.json",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_v2/ff/measurement.json",
+      "sha256": "95579aeb0b6e60f8b8e1ae228a4c4c4ee6751f38100ce107886f8a4542fb826e"
+    },
+    {
+      "name": "external_library.json",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/external_library.json",
+      "sha256": "839d0edcb5e9ef56fd26eb8cb0307aa34a447d5da43aea1fd1cbeadf9d49973e"
+    },
+    {
+      "name": "source_binding.json",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_fastanalysis_v1/source_binding.json",
+      "sha256": "8f0a449d46a24f5bee9123e91fa49e8cb7bd4696ddcedba7e7ef12ec54d5f957"
+    }
+  ],
+  "expected_stop_s": 2e-08,
+  "summary_signals": [
+    "xdut.u00_q",
+    "xdut.u01_q",
+    "xdut.u02_q",
+    "xdut.u03_q",
+    "xdut.u04_q",
+    "xdut.u05_q",
+    "xdut.u06_q",
+    "xdut.u07_q",
+    "xdut.u08_q",
+    "xdut.u09_q",
+    "xdut.u10_q",
+    "xdut.u11_q",
+    "xdut.u12_q",
+    "xdut.u13_q",
+    "xdut.u14_q",
+    "xdut.u15_q",
+    "xdut.u16_q",
+    "xdut.u17_q",
+    "xdut.u18_q",
+    "xdut.u19_q",
+    "xdut.u20_q",
+    "xdut.u21_q",
+    "xdut.u22_q",
+    "xdut.u23_q",
+    "xdut.u24_q",
+    "xdut.u25_q"
+  ],
+  "qualification_scope": "Exact field-preserving reanalysis of completed FFv2 only, no simulation or full ADC qualification",
+  "test_conditions": {
+    "corner": "ff",
+    "vdd": 0.99,
+    "temperature_c": -40,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "oa_parity": "netlist_only",
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 128,
+    "simulation_wall_seconds": 1200,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "+lqtimeout",
+    "60",
+    "-preset_override"
+  ]
+}

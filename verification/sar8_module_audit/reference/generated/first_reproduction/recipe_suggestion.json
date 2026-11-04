@@ -1,0 +1,30 @@
+{
+  "status": "proposal_only_not_a_managed_recipe",
+  "run_id": null,
+  "entry": "test.scs",
+  "corner": "FF/0.99V/-40C with TT passives",
+  "simulation_stop_s": 6.599650423427016e-08,
+  "stop_reason": "Last recovered native knot; no unobserved held-tail interval is simulated",
+  "proposed_resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "analysis_rss_mib": 256,
+    "max_output_mib": 16384,
+    "collection_mib": 32
+  },
+  "required_before_dispatch": [
+    "Parent packaging choice for native PWL sources",
+    "Review deliberate load/clock feedback cuts",
+    "Approve numerical reproduction tolerances and KCL residual bounds",
+    "Freeze exact source hashes and source-map",
+    "Prepare native current/KCL reducer as separate reviewed managed input"
+  ],
+  "proposed_reproduction_not_ADC_spec": {
+    "stage_peak_abs_agreement_v": 0.001,
+    "corresponding_halfrail_edge_agreement_ps": 2,
+    "branch_KCL_abs_floor_a": 1e-10,
+    "branch_KCL_relative_peak": 1e-05,
+    "comment": "Proposed diagnostic tolerances only; also require same node, transition, sign/order and correct reference command mapping"
+  },
+  "remote_started": false
+}

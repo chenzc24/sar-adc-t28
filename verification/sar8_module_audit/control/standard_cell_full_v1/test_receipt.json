@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "kind": "local_deterministic_checks_not_native_simulation",
+  "command": "./.venv/Scripts/python.exe -B verification/sar8_module_audit/control/test_standard_cell_full.py",
+  "tests": 4,
+  "elapsed_s": 2.347,
+  "checks": [
+    "Actual library switch graph/reset/positive edge and full candidate protected analog delta",
+    "All26 source immediate native gate fanout counts and corner-scaled input/current catalog",
+    "Synthetic hold mismatch, missing hold -> unknown, missing voltage -> hard failure, extra edge detection",
+    "Lossless gzip exact bytes/raw PSF preserved and complete collection/log oversize rejection"
+  ],
+  "test_file_sha256": "96d5e73442165bed803218b23d04b144ba667d4fea840b2c7e4dad8da7fa0f50",
+  "independent_followup": [
+    "Every15 recipe input hash verified in each corner",
+    "AST parse of three local helpers",
+    "git diff --check scoped to control"
+  ],
+  "native_Spectre_run_performed": false,
+  "old_custom_SR_pair_started": false,
+  "prepared_by_this_session": true
+}

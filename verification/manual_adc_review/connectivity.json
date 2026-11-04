@@ -1,0 +1,1998 @@
+{
+  "L1_SAR_ADC_8bit": {
+    "source_sha256": "e457f30075a6cabb886f9f604dc0e7391047913e2c2bcb43466c69dd884ca37e",
+    "pins": {},
+    "instances": [
+      {
+        "name": "I1",
+        "lib": "SAR_ADC_T28_manual",
+        "cell": "L2_CDAC_8bit",
+        "numInst": 1,
+        "terms": {},
+        "params": {}
+      },
+      {
+        "name": "I0",
+        "lib": "SAR_ADC_T28_manual",
+        "cell": "L2_CDAC_8bit",
+        "numInst": 1,
+        "terms": {},
+        "params": {}
+      },
+      {
+        "name": "I2",
+        "lib": "SAR_ADC_T28_manual",
+        "cell": "L2_StrongArm_CMP",
+        "numInst": 1,
+        "terms": {},
+        "params": {}
+      },
+      {
+        "name": "I3",
+        "lib": "SAR_ADC_T28_manual",
+        "cell": "L2_SAR_logic",
+        "numInst": 1,
+        "terms": {},
+        "params": {}
+      }
+    ]
+  },
+  "L2_bootstrap_switch": {
+    "source_sha256": "5e24a7d0fb35434db774cbb5cb02b791a16436125797fd67d8c6bd9cf37682b7",
+    "pins": {
+      "CLKS": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VDD": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "GND": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VIN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VOUT": {
+        "direction": "inputOutput",
+        "numBits": 1
+      }
+    },
+    "instances": [
+      {
+        "name": "M11",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "CLKS",
+          "D": "CLKSB",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M9",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "CLKSB",
+          "D": "net7",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M8",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "VDD",
+          "D": "net1",
+          "S": "net7",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M7",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "CLKS",
+          "D": "net4",
+          "S": "net3",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M5",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "net1",
+          "D": "net4",
+          "S": "net3",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M4",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "CLKSB",
+          "D": "net3",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M2",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "net1",
+          "D": "net3",
+          "S": "VIN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M0",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "net1",
+          "D": "VOUT",
+          "S": "VIN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "C0",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net3",
+          "PLUS": "net2"
+        },
+        "params": {
+          "c": "1p"
+        }
+      },
+      {
+        "name": "M10",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "CLKSB",
+          "G": "CLKS",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M6",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net4",
+          "G": "CLKS",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M3",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net1",
+          "G": "net4",
+          "B": "net2",
+          "S": "net2"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M1",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net2",
+          "G": "net1",
+          "B": "net2",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      }
+    ]
+  },
+  "L2_CDAC_8bit": {
+    "source_sha256": "b01af12719e50d24b3ab5fbed58d8e4eda1f33e0db57f2c40b5b7663530eed05",
+    "pins": {
+      "VTOP": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DCTRL<7:1>": {
+        "direction": "inputOutput",
+        "numBits": 7
+      },
+      "GND": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VREFP": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VREFN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VIN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VDD": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "CLKS": {
+        "direction": "inputOutput",
+        "numBits": 1
+      }
+    },
+    "instances": [
+      {
+        "name": "C7",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net4",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "4*cunit"
+        }
+      },
+      {
+        "name": "C6",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "gnd!",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "cunit"
+        }
+      },
+      {
+        "name": "C5",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net1",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "cunit"
+        }
+      },
+      {
+        "name": "C4",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net2",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "2*cunit"
+        }
+      },
+      {
+        "name": "C3",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net5",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "16*cunit"
+        }
+      },
+      {
+        "name": "C2",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net3",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "8*cunit"
+        }
+      },
+      {
+        "name": "C1",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net6",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "32*cunit"
+        }
+      },
+      {
+        "name": "C0",
+        "lib": "analogLib",
+        "cell": "cap",
+        "numInst": 1,
+        "terms": {
+          "MINUS": "net7",
+          "PLUS": "VTOP"
+        },
+        "params": {
+          "c": "64*cunit"
+        }
+      },
+      {
+        "name": "M12",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net1",
+          "G": "DCTRL<1>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "2"
+        }
+      },
+      {
+        "name": "M9",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net2",
+          "G": "DCTRL<2>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "4"
+        }
+      },
+      {
+        "name": "M8",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net4",
+          "G": "DCTRL<3>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "8"
+        }
+      },
+      {
+        "name": "M6",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net3",
+          "G": "DCTRL<4>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "16"
+        }
+      },
+      {
+        "name": "M5",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net5",
+          "G": "DCTRL<5>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "32"
+        }
+      },
+      {
+        "name": "M4",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net6",
+          "G": "DCTRL<6>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "64"
+        }
+      },
+      {
+        "name": "M0",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net7",
+          "G": "DCTRL<7>",
+          "B": "VDD",
+          "S": "VREFP"
+        },
+        "params": {
+          "l": "100n",
+          "w": "3u",
+          "nf": "1",
+          "simM": "128"
+        }
+      },
+      {
+        "name": "M14",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<1>",
+          "D": "net1",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "2"
+        }
+      },
+      {
+        "name": "M11",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<2>",
+          "D": "net2",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "4"
+        }
+      },
+      {
+        "name": "M10",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<3>",
+          "D": "net4",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "8"
+        }
+      },
+      {
+        "name": "M7",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<4>",
+          "D": "net3",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "16"
+        }
+      },
+      {
+        "name": "M3",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<5>",
+          "D": "net5",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "32"
+        }
+      },
+      {
+        "name": "M2",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<6>",
+          "D": "net6",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "64"
+        }
+      },
+      {
+        "name": "M1",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "DCTRL<7>",
+          "D": "net7",
+          "S": "VREFN",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "1u",
+          "nf": "1",
+          "simM": "128"
+        }
+      },
+      {
+        "name": "I0",
+        "lib": "basic",
+        "cell": "gnd",
+        "numInst": 1,
+        "terms": {
+          "gnd!": "gnd!"
+        },
+        "params": {}
+      },
+      {
+        "name": "I1",
+        "lib": "SAR_ADC_T28_manual",
+        "cell": "L2_bootstrap_switch",
+        "numInst": 1,
+        "terms": {
+          "VOUT": "VTOP",
+          "GND": "GND",
+          "VIN": "VIN",
+          "VDD": "VDD",
+          "CLKS": "CLKS"
+        },
+        "params": {}
+      }
+    ]
+  },
+  "L2_SAR_logic": {
+    "source_sha256": "ef5419644fb0c20020b4c370b7a72b392e41cf17ac0bb268b6460e9efb1abe58",
+    "pins": {
+      "VDD": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "GND": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DCMPP": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DCMPN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "CLKS": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "CMPCK": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DO<7:0>": {
+        "direction": "inputOutput",
+        "numBits": 8
+      },
+      "DCTRLP<7:0>": {
+        "direction": "inputOutput",
+        "numBits": 8
+      },
+      "DCTRLN<7:0>": {
+        "direction": "inputOutput",
+        "numBits": 8
+      }
+    },
+    "instances": [
+      {
+        "name": "I3",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "OR2D1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "CLK<0>",
+          "A1": "CLKS",
+          "VSS": "GND",
+          "Z": "net34",
+          "VDD": "VDD"
+        },
+        "params": {}
+      },
+      {
+        "name": "I2",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "NR2D1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net34",
+          "A1": "VALID",
+          "VDD": "VDD",
+          "ZN": "net35",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I0",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "OR2D4BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "DCMPN",
+          "A1": "DCMPP",
+          "VSS": "GND",
+          "Z": "VALID",
+          "VDD": "VDD"
+        },
+        "params": {}
+      },
+      {
+        "name": "DELAY16",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net3",
+          "ps": "CLK<0>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY15",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net7",
+          "ps": "CLK<1>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY14",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net6",
+          "ps": "CLK<2>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY13",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net5",
+          "ps": "CLK<3>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY12",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net4",
+          "ps": "CLK<4>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY11",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net11",
+          "ps": "CLK<5>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY10",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net9",
+          "ps": "CLK<6>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY9",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net21",
+          "ps": "CLK<7>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY8",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net15",
+          "ps": "CLK<0>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY7",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net19",
+          "ps": "CLK<1>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY6",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net18",
+          "ps": "CLK<2>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY5",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net17",
+          "ps": "CLK<3>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY4",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net16",
+          "ps": "CLK<4>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY3",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net26",
+          "ps": "CLK<5>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY2",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net25",
+          "ps": "CLK<6>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY1",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "net32",
+          "ps": "CLK<7>"
+        },
+        "params": {
+          "td": "100p",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "DELAY0",
+        "lib": "analogLib",
+        "cell": "delay",
+        "numInst": 1,
+        "terms": {
+          "n": "GND",
+          "ns": "GND",
+          "p": "CMPCKe",
+          "ps": "net35"
+        },
+        "params": {
+          "td": "5n",
+          "gain": "1.0"
+        }
+      },
+      {
+        "name": "I4",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "BUFFD4BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "I": "CMPCKe",
+          "Z": "CMPCK",
+          "VSS": "GND",
+          "VDD": "VDD"
+        },
+        "params": {}
+      },
+      {
+        "name": "I12",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<1>",
+          "Q": "CLK<0>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I11",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<2>",
+          "Q": "CLK<1>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I10",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<3>",
+          "Q": "CLK<2>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I9",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<4>",
+          "Q": "CLK<3>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I8",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<5>",
+          "Q": "CLK<4>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I7",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<6>",
+          "Q": "CLK<5>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I6",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "CLK<7>",
+          "Q": "CLK<6>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I5",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFCNQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CDN": "CLKS",
+          "CP": "VALID",
+          "D": "VDD",
+          "Q": "CLK<7>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I46<7:0>",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 8,
+        "terms": {
+          "CP": "<*8>CLKS",
+          "D": "DCTRLP<7:0>",
+          "Q": "DO<7:0>",
+          "VDD": "<*8>VDD",
+          "VSS": "<*8>GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I44",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<0>",
+          "D": "DCMPN",
+          "Q": "net2",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I42",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<1>",
+          "D": "DCMPN",
+          "Q": "net13",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I40",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<2>",
+          "D": "DCMPN",
+          "Q": "net12",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I38",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<3>",
+          "D": "DCMPN",
+          "Q": "net10",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I36",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<4>",
+          "D": "DCMPN",
+          "Q": "net8",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I34",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<5>",
+          "D": "DCMPN",
+          "Q": "net23",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I32",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<6>",
+          "D": "DCMPN",
+          "Q": "net22",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I30",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<7>",
+          "D": "DCMPN",
+          "Q": "net20",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I28",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<0>",
+          "D": "DCMPP",
+          "Q": "net14",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I26",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<1>",
+          "D": "DCMPP",
+          "Q": "net30",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I24",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<2>",
+          "D": "DCMPP",
+          "Q": "net29",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I22",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<3>",
+          "D": "DCMPP",
+          "Q": "net28",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I20",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<4>",
+          "D": "DCMPP",
+          "Q": "net27",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I18",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<5>",
+          "D": "DCMPP",
+          "Q": "net24",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I16",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<6>",
+          "D": "DCMPP",
+          "Q": "net33",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I14",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "DFQD1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "CP": "CLK<7>",
+          "D": "DCMPP",
+          "Q": "net31",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I45",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net3",
+          "A1": "net2",
+          "Z": "DCTRLN<0>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I43",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net7",
+          "A1": "net13",
+          "Z": "DCTRLN<1>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I41",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net6",
+          "A1": "net12",
+          "Z": "DCTRLN<2>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I29",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net15",
+          "A1": "net14",
+          "Z": "DCTRLP<0>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I27",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net19",
+          "A1": "net30",
+          "Z": "DCTRLP<1>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I25",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D0BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net18",
+          "A1": "net29",
+          "Z": "DCTRLP<2>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I31",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D16BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net21",
+          "A1": "net20",
+          "Z": "net1",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I15",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D16BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net32",
+          "A1": "net31",
+          "Z": "net36",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I33",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D8BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net9",
+          "A1": "net22",
+          "Z": "DCTRLN<6>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I17",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D8BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net25",
+          "A1": "net33",
+          "Z": "DCTRLP<6>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I35",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D4BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net11",
+          "A1": "net23",
+          "Z": "DCTRLN<5>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I19",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D4BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net26",
+          "A1": "net24",
+          "Z": "DCTRLP<5>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I37",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D2BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net4",
+          "A1": "net8",
+          "Z": "DCTRLN<4>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I21",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D2BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net16",
+          "A1": "net27",
+          "Z": "DCTRLP<4>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I39",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net5",
+          "A1": "net10",
+          "Z": "DCTRLN<3>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I23",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "AN2D1BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "A2": "net17",
+          "A1": "net28",
+          "Z": "DCTRLP<3>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I48",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "INVD16BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "I": "net1",
+          "ZN": "DCTRLN<7>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      },
+      {
+        "name": "I47",
+        "lib": "tcbn28hpcplusbwp12t30p140",
+        "cell": "INVD16BWP12T30P140",
+        "numInst": 1,
+        "terms": {
+          "I": "net36",
+          "ZN": "DCTRLP<7>",
+          "VDD": "VDD",
+          "VSS": "GND"
+        },
+        "params": {}
+      }
+    ]
+  },
+  "L2_StrongArm_CMP": {
+    "source_sha256": "eefa42a3a638df16ed80ce3612808ea0e7e0c7e945eca15c244fa94b627c9abf",
+    "pins": {
+      "CLK": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VINP": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VINN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "VDD": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "GND": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DCMPP": {
+        "direction": "inputOutput",
+        "numBits": 1
+      },
+      "DCMPN": {
+        "direction": "inputOutput",
+        "numBits": 1
+      }
+    },
+    "instances": [
+      {
+        "name": "M13",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "DCMPN",
+          "G": "LN",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M11",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "DCMPP",
+          "G": "LP",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M5",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net2",
+          "G": "CLK",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M4",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "LN",
+          "G": "CLK",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M3",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "net1",
+          "G": "CLK",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M2",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "LP",
+          "G": "CLK",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M0",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "LP",
+          "G": "LN",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M1",
+        "lib": "tsmcN28",
+        "cell": "pch_mac",
+        "numInst": 1,
+        "terms": {
+          "D": "LN",
+          "G": "LP",
+          "B": "VDD",
+          "S": "VDD"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M14",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "LN",
+          "D": "DCMPN",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M12",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "LP",
+          "D": "DCMPP",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M10",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "CLK",
+          "D": "net3",
+          "S": "GND",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M9",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "VINN",
+          "D": "net2",
+          "S": "net3",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M8",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "VINP",
+          "D": "net1",
+          "S": "net3",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M7",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "LP",
+          "D": "LN",
+          "S": "net2",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      },
+      {
+        "name": "M6",
+        "lib": "tsmcN28",
+        "cell": "nch_mac",
+        "numInst": 1,
+        "terms": {
+          "G": "LN",
+          "D": "LP",
+          "S": "net1",
+          "B": "GND"
+        },
+        "params": {
+          "l": "30n",
+          "w": "100n",
+          "nf": "1",
+          "simM": "1"
+        }
+      }
+    ]
+  }
+}

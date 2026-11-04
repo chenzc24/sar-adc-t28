@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "run_id": "cmpdesign-combo-latch-current-ff-hot-v2",
+  "design_id": "manual8_comparator_design",
+  "entry": "test.scs",
+  "analyzer": "edge_current_reduce.py",
+  "inputs": [
+    {
+      "source": "comparator_design/testbenches/cmpdesign-combo-latch-current-ff-hot-v2/dut.scs",
+      "name": "dut.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-combo-latch-current-ff-hot-v2/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-combo-latch-current-ff-hot-v2/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-combo-latch-current-ff-hot-v2/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "comparator_design/scripts/edge_current_reduce.py",
+      "name": "edge_current_reduce.py"
+    },
+    {
+      "source": "comparator_design/scripts/native_frames.py",
+      "name": "native_frames.py"
+    }
+  ],
+  "expected_stop_s": 3.8102500000000004e-07,
+  "summary_signals": [
+    "CK",
+    "PA4_held",
+    "NA4_held",
+    "OPA4_held",
+    "ONA4_held",
+    "XA4_held.LP",
+    "XA4_held.LN",
+    "XA4_held.net1",
+    "XA4_held.net2",
+    "XA4_held.net3",
+    "XA4_held.M0:1",
+    "XA4_held.M0:2",
+    "XA4_held.M11:2",
+    "XA4_held.M12:2",
+    "XA4_held.M13:2",
+    "XA4_held.M14:2",
+    "XA4_held.M1:1",
+    "XA4_held.M1:2",
+    "XA4_held.M2:1",
+    "XA4_held.M4:1",
+    "XA4_held.M6:1",
+    "XA4_held.M6:2",
+    "XA4_held.M7:1",
+    "XA4_held.M7:2"
+  ],
+  "qualification_scope": "Isolated comparator sizing measurement; no ADC baseline adoption",
+  "oa_parity": "netlist only; user OA read-only",
+  "test_conditions": {
+    "corner": "ff",
+    "vdd": 0.99,
+    "temperature_c": 125,
+    "rise_ps": 200,
+    "fall_ps": 500,
+    "M3_M5_multi": 2,
+    "M8_M9_multi": 2,
+    "observation_only": true,
+    "preceding_failed_run": "cmpdesign-combo-latch-current-ff-hot-v1"
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 600
+  }
+}

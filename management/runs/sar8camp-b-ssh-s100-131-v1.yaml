@@ -1,0 +1,144 @@
+managed: true
+recipe_hash: f5a341201e3f11470a41c5ee3e8b04efb394dc9d93e53e314df6b956bff585f9
+recipe:
+  schema_version: 1
+  run_id: sar8camp-b-ssh-s100-131-v1
+  design_id: sar8_l90_mmain2_stdcell_v1
+  entry: test.scs
+  analyzer: static_reduce.py
+  files:
+  - name: test.scs
+    source: verification/sar8_campaign/sar8camp-b-ssh-s100-131-v1/test.scs
+    bytes: 2419
+    sha256: d846de05db7ddf99361d45c199d956ca01b97b576c594b6250270a300a14e0a8
+  - name: tb.scs
+    source: verification/sar8_campaign/sar8camp-b-ssh-s100-131-v1/tb.scs
+    bytes: 966
+    sha256: f4ee8486a3df7d0aae84532172bdc1462c56b4b5ffa0611078c4fb087412f286
+  - name: context.json
+    source: verification/sar8_campaign/sar8camp-b-ssh-s100-131-v1/context.json
+    bytes: 772
+    sha256: 83a9b6db33288c6d62fcf981892fa08ed0a87f21e46a00405055029f919d7ab5
+  - name: dut.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/dut.scs
+    bytes: 94100
+    sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+  - name: library_include.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs
+    bytes: 253
+    sha256: 4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe
+  - name: r4_perf_monitor.va
+    source: scripts/sar8_campaign/r4_perf_monitor.va
+    bytes: 3231
+    sha256: bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3
+  - name: static_reduce.py
+    source: scripts/sar8_campaign/static_reduce.py
+    bytes: 6251
+    sha256: f456567c148671a15a2bc0ebac562c9b75c1be7f62c80fe97b1ae1fa50339863
+  - name: r4_transition_stim.va
+    source: scripts/sar8_campaign/r4_transition_stim.va
+    bytes: 3407
+    sha256: 1fceeb6af892b2ef6b295e1285011d67f486188da62dfe13f086cc9be3409040
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 2048
+    simulation_wall_seconds: 172800
+    analysis_wall_seconds: 1800
+    queue_timeout_seconds: 86400
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - -preset_override
+  - +lqtimeout
+  - '60'
+  summary_signals:
+  - d0
+  - d1
+  - d2
+  - d3
+  - d4
+  - d5
+  - d6
+  - d7
+  - sample
+  - vdd!
+  - xdut.sample_int
+  - xdut.cmp_clk
+  - xdut.topp
+  - xdut.topn
+  - vinp_src
+  - vinn_src
+  expected_stop_s: 3.2559000000000005e-05
+  qualification_scope: Conditional frozen functional characterization; stress deferred
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ssmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    first: 100
+    last: 131
+    frames: 325
+    warmup: 4
+    refine: 7
+    stop_s: 3.2559000000000005e-05
+    signals:
+    - d0
+    - d1
+    - d2
+    - d3
+    - d4
+    - d5
+    - d6
+    - d7
+    - sample
+    - vdd!
+    - xdut.sample_int
+    - xdut.cmp_clk
+    - xdut.topp
+    - xdut.topn
+    - vinp_src
+    - vinn_src
+    fullscale_v: 1.8
+    run_id: sar8camp-b-ssh-s100-131-v1
+    kind: static
+    label: b
+    dut_sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+    corner: ss
+    vdd: 0.81
+    temperature_c: 125
+    reference_v: 0.9
+    frame_origin_s: 5.9e-08
+    noise: false
+    mismatch: false
+    PEX: false
+    passive_corner: nominal_tt
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-ssh-s100-131-v1

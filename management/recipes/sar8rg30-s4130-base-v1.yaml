@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8rg30-s4130-base-v1",
+  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "entry": "test.scs",
+  "analyzer": "reduce.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_mc/regen30/sar8rg30-s4130-base-v1/test.scs",
+      "name": "test.scs",
+      "sha256": "772f27d2ecd7b8985870d73b9cc409b6b913d33276901518fafdccef4ac5d0c9"
+    },
+    {
+      "source": "verification/sar8_mc/regen30/sar8rg30-s4130-base-v1/context.json",
+      "name": "context.json",
+      "sha256": "232c419e7d2dd2ff20b7c7e8949d55cdbd28dd0bcaf78242f04f44d98cd4dbef"
+    },
+    {
+      "source": "verification/sar8_mc/regen30/sar8rg30-s4130-base-v1/expected_mismatch.json",
+      "name": "expected_mismatch.json",
+      "sha256": "1eb9c2fbaecd740da0354a1774e84b5baeaf4716c5823e218ad6edb618c4fc37"
+    },
+    {
+      "source": "verification/sar8_mc/physical_input/clock_sources.scs",
+      "name": "clock_sources.scs",
+      "sha256": "380c3c63b8c0aa0e61906f2c60c0182c675b2985ef1301b04d032c9df42c07fb"
+    },
+    {
+      "source": "scripts/sar8_mc/physical_input/held_search.va",
+      "name": "held_search.va",
+      "sha256": "bfa2aaf9af62507fb74d575bd69aea7ecfb9d2ea105794bc12d5531f556b0551"
+    },
+    {
+      "source": "scripts/sar8_mc/physical_input/reduce_flexible.py",
+      "name": "reduce.py",
+      "sha256": "dd7756466245fbf5a088db17f92db13bafa829913a1ae9ac77f22439d07b8ac4"
+    },
+    {
+      "source": "scripts/sar8_campaign/native_stream.py",
+      "name": "native_stream.py",
+      "sha256": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef"
+    },
+    {
+      "source": "netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs",
+      "name": "library_include.scs",
+      "sha256": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe"
+    }
+  ],
+  "summary_signals": [
+    "OP",
+    "ON",
+    "PR",
+    "NR",
+    "CLK",
+    "VINP",
+    "VINN",
+    "SIP",
+    "SIN",
+    "SAMPLE",
+    "SAMPLE_HOLD",
+    "XHOLD.XBOOTP.G",
+    "XHOLD.XBOOTN.G",
+    "XHOLD.IP",
+    "XHOLD.IN",
+    "XCMP.X",
+    "XCMP.Y",
+    "XCMP.TAIL"
+  ],
+  "expected_stop_s": 1.259e-06,
+  "test_conditions": {
+    "run_id": "sar8rg30-s4130-base-v1",
+    "seed": 4130,
+    "mode": "hold",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "cm_source_v": 0.45,
+    "period_s": 1e-07,
+    "cycles": 12,
+    "search_steps": 10,
+    "search_range_v": 0.064,
+    "report_s": 1.0350460848744649e-07,
+    "pre_s": 1.0266910939879553e-07,
+    "first_clock_rise_s": 1.0276910939879552e-07,
+    "first_clock_fall_s": 1.035546084874465e-07,
+    "threshold_window_s": 7.354990886509678e-10,
+    "stop_s": 1.259e-06,
+    "RCLAMP_ohm": 1e+18,
+    "parent_dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+    "scope": "First-comparison threshold plus repeated native eight-pulse burst, static N-low/P-high bottom word; nominal real front-end; not full SAR feedback",
+    "front_end_mismatch": false,
+    "diagnostic": "input_pair_nominal",
+    "parent_run_id": "sar8mc-comp-s4130-v2",
+    "nominalized_instances": [
+      "XCMP.MNINN",
+      "XCMP.MNINP"
+    ]
+  },
+  "qualification_scope": "First-comparison threshold plus repeated native eight-pulse burst, static N-low/P-high bottom word; nominal real front-end; not full SAR feedback",
+  "spectre_args": [
+    "+preset=mx",
+    "+mt=4",
+    "-preset_override",
+    "+lqtimeout",
+    "60"
+  ],
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 14400,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 86400
+  }
+}

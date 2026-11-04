@@ -1,0 +1,79 @@
+{
+  "source": "verification\\sar8_campaign\\fft_final\\a_panel_input.json",
+  "source_key": null,
+  "source_sha256": "23c364a05b2c69671cd4f9d3d6952bbcf89398357f09e0c8f15431bbd5991280",
+  "toolbox_version": "0.9.1",
+  "toolbox_module": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\.venv\\Lib\\site-packages\\adctoolbox\\__init__.py",
+  "settings": {
+    "samples": 1024,
+    "fs_hz": 10000000.0,
+    "fin_hz": 4501953.125,
+    "bin": 461,
+    "full_scale_vpp": 1.8,
+    "lsb_v": 0.00703125,
+    "window": "rectangular",
+    "side_bin": 0,
+    "max_harmonic": 5,
+    "nf_method": 3,
+    "fit_frequency_fixed": true,
+    "value_phase_bins": 32,
+    "panel12_fit": "Library automatic frequency refinement, 3 iterations"
+  },
+  "spectrum": {
+    "enob": 7.812193657936769,
+    "sndr_dbc": 48.78940582077934,
+    "sfdr_dbc": 64.00398429412009,
+    "snr_dbc": 48.81830300231323,
+    "sig_pwr_dbfs": -0.9943647729363986,
+    "noise_floor_dbfs": -49.81266777524963,
+    "nsd_dbfs_hz": -116.80236781860981,
+    "thd_dbc": -70.57313465084961,
+    "harmonics_dbc": [
+      -149.0056352270636,
+      -82.10307733196865,
+      -149.0056352270636,
+      -70.88974445919116
+    ]
+  },
+  "residual": {
+    "rms_mv": 2.0631888491613664,
+    "rms_lsb": 0.2934313029918388,
+    "peak_lsb": 0.5058436034129303,
+    "ideal_quantization_rms_mv": 2.029747040119778,
+    "harmonic_h2_h5_rms_mv": 0.1680167347775618,
+    "remaining_rms_mv": 2.0563362089256003,
+    "pdf_sample_std_lsb": 0.29357468501993705,
+    "pdf_kl_gaussian": 0.08798899345898721,
+    "rising_falling_fit_gap_mv": 0.013607729691355834,
+    "acf_max_abs_nonzero_lag": 0.12744213278073652
+  },
+  "spur": {
+    "bin": 195,
+    "frequency_hz": 1904296.875,
+    "dbc": -64.00398429412004
+  },
+  "phase_bins": {
+    "count": 32,
+    "am_pm_model_r2_binned": 0.19094841984102773
+  },
+  "phase_plane": {
+    "lag": 5,
+    "outliers": []
+  },
+  "validation": {
+    "prior_sndr_abs_difference_db": 2.0605739337042905e-13,
+    "prior_sfdr_abs_difference_db": 2.984279490192421e-13,
+    "parseval_residual_power_abs_difference_v2": 5.0779625187895305e-18,
+    "snr_direct_abs_difference_db": 4.263256414560601e-14,
+    "pdf_lsb_max_difference": 0.0,
+    "decomposition_max_difference_v": 0.0
+  },
+  "limits": [
+    "No thermal-noise or jitter measurement: deterministic transient only.",
+    "Value-binned residual is not static INL/DNL.",
+    "Near-Nyquist delayed-sample geometry is not analog phase portrait.",
+    "Panel12 trend is diagnostic only, not proof of circuit memory.",
+    "No CMI warnings in this run; not reliability sign-off.",
+    "Refer to source results for native process completion evidence."
+  ]
+}

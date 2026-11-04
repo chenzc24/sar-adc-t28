@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "run_id": "cmpdesign-precharge-a4l90-ff-hot-v1",
+  "design_id": "manual8_comparator_design",
+  "entry": "test.scs",
+  "analyzer": "precharge_b_reduce.py",
+  "inputs": [
+    {
+      "source": "comparator_design/testbenches/cmpdesign-precharge-a4l90-ff-hot-v1/dut.scs",
+      "name": "dut.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-precharge-a4l90-ff-hot-v1/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-precharge-a4l90-ff-hot-v1/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "comparator_design/testbenches/cmpdesign-precharge-a4l90-ff-hot-v1/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "comparator_design/scripts/precharge_b_reduce.py",
+      "name": "precharge_b_reduce.py"
+    },
+    {
+      "source": "comparator_design/scripts/native_frames.py",
+      "name": "native_frames.py"
+    }
+  ],
+  "expected_stop_s": 4e-07,
+  "summary_signals": [
+    "CK",
+    "IN",
+    "IP",
+    "NA4L90_held",
+    "ONA4L90_driven",
+    "ONA4L90_held",
+    "OPA4L90_driven",
+    "OPA4L90_held",
+    "PA4L90_held",
+    "TRACK",
+    "UA4L90_driven",
+    "UA4L90_held",
+    "VCK:1",
+    "VSA4L90_driven:1",
+    "VSA4L90_held:1",
+    "XA4L90_driven.LN",
+    "XA4L90_driven.LP",
+    "XA4L90_driven.net1",
+    "XA4L90_driven.net2",
+    "XA4L90_driven.net3",
+    "XA4L90_held.LN",
+    "XA4L90_held.LP",
+    "XA4L90_held.net1",
+    "XA4L90_held.net2",
+    "XA4L90_held.net3",
+    "XA4L90_held.M6:2",
+    "XA4L90_held.M0:2",
+    "XA4L90_held.M7:1",
+    "XA4L90_held.M1:1",
+    "XA4L90_held.M4:1",
+    "XA4L90_held.M13:2",
+    "XA4L90_held.M14:2",
+    "XA4L90_held.M5:1",
+    "XA4L90_held.M9:1",
+    "XA4L90_held.M7:3"
+  ],
+  "qualification_scope": "Isolated comparator sizing measurement; no ADC baseline adoption",
+  "oa_parity": "netlist only; user OA read-only",
+  "test_conditions": {
+    "corner": "ff",
+    "vdd": 0.99,
+    "temperature_c": 125,
+    "single_variable": {
+      "source_run_id": "cmpdesign-precharge-a4-ff-hot-v1",
+      "devices": [
+        "M3",
+        "M5"
+      ],
+      "old_L_nm": 30,
+      "new_L_nm": 90,
+      "W_nm": 100,
+      "nf": 1,
+      "multi": 1,
+      "M2_M4_multi": 4,
+      "frozen_diffusion_LDE": true
+    },
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 600
+  }
+}

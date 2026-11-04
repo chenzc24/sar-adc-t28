@@ -57,10 +57,11 @@ libraries:
   work_creation_status: planned_not_created
 resource_policy:
   status: enforced_by_managed_entry
-  concurrent_simulations: 1
-  threads_per_simulation: 4
-  concurrent_heavy_analyses: 1
-  heavy_analysis_with_simulation: false
+  concurrent_heavy_workloads: 7
+  concurrent_simulations: 7
+  threads_per_simulation: 16
+  concurrent_heavy_analyses: 7
+  heavy_analysis_with_simulation: true
   analysis_method: bounded_streaming_or_memory_mapping
   inventory_reads_waveform_contents: false
   checks:

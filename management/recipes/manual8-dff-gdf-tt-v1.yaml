@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-dff-gdf-tt-v1",
+  "design_id": "manual8_sar_dff_candidates_v1",
+  "entry": "test.scs",
+  "analyzer": "sar_dff_candidates_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/dff_candidates_v1/gdf/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "scripts/manual_adc/sar_dff_candidates_reduce.py",
+      "name": "sar_dff_candidates_reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 9e-09,
+  "summary_signals": [
+    "CDN",
+    "QA",
+    "QB"
+  ],
+  "qualification_scope": "Native GDFCNQMCOD1BWP12T30P140 substitution only; ideal identical CDN1x/CP/D and 5fF Q load; not PVT/SAR qualification",
+  "oa_parity": "none; OA read-only",
+  "test_conditions": {
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 300,
+    "analysis_wall_seconds": 300,
+    "queue_timeout_seconds": 600
+  }
+}

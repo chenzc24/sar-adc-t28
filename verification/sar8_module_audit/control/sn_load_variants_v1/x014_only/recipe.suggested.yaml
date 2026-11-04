@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8audit-ctrl-snload-x014-v1",
+  "design_id": "sar8_control_conditional_SN_MOS_load",
+  "entry": "test.scs",
+  "analyzer": "first_event_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/test.scs",
+      "name": "test.scs",
+      "sha256": "201dec7af8e4519f31c2ab5545fa260208ae1bd4d74e163b99f59e67e74e3c63"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/dut.scs",
+      "name": "dut.scs",
+      "sha256": "8153af41c0aaae859b393e80655077f6e391819e369b08301871b30450f9baa1"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/measurement.json",
+      "name": "measurement.json",
+      "sha256": "43eb389b38b951bdce9ea7cc314f2c8712aaf877849acd22eefdea5140ad793a"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/first_event_analyze.py",
+      "name": "first_event_analyze.py",
+      "sha256": "da5ac34ce446cdde78490fe6b79f7f533e3f34e866ecd11cece28d67643003c8"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/active.pwl",
+      "name": "pwl/active.pwl",
+      "sha256": "a713614a23f51cfb381306d614181243fa7333a70d13ff669b3f877a1b5f2244"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/bias_x014_mid.pwl",
+      "name": "pwl/bias_x014_mid.pwl",
+      "sha256": "32c492403463899a47f7243d5a0d80c1629fe176fa3297dcbf86d0a3b9029677"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/bias_x014_n.pwl",
+      "name": "pwl/bias_x014_n.pwl",
+      "sha256": "193a9650bfff948a221d5804c09986a27087202a5275b38f5b171a66fb52de6b"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/dec.pwl",
+      "name": "pwl/dec.pwl",
+      "sha256": "5283226d1a819b8410c3b05814f7f4a5d78b3fc31d719a85cafcd5755cee916c"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/phi_u.pwl",
+      "name": "pwl/phi_u.pwl",
+      "sha256": "566f1a09dea1f14a61fe163f94cb4baa44cc9d3300fd4161d3c2463303e1ef81"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/phi_w.pwl",
+      "name": "pwl/phi_w.pwl",
+      "sha256": "35f43f2b53addb74765dacf30b6334cf23a257fac88bb356aed328eb5fc3f2ab"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/sample_int.pwl",
+      "name": "pwl/sample_int.pwl",
+      "sha256": "859e1a6b037c1815159c89fe783fb852e7fe86f6b9df912cbbb0d74cff951c04"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/topn.pwl",
+      "name": "pwl/topn.pwl",
+      "sha256": "1d7a1528bf8838dbcfab442be293147a72a334f86c31fc6fb210ae74fb847f5f"
+    },
+    {
+      "source": "verification/sar8_module_audit/control/sn_load_variants_v1/x014_only/pwl/topp.pwl",
+      "name": "pwl/topp.pwl",
+      "sha256": "5977c48de41b43ba8c3456cb28606dac729437dc01cf73cfc2ed818744f709f7"
+    }
+  ],
+  "expected_stop_s": 4.159078565059045e-08,
+  "summary_signals": [
+    "xdut.xctrl.xtim.sn",
+    "xdut.xctrl.xtim.live",
+    "xdut.xctrl.xtim.x020.n"
+  ],
+  "qualification_scope": "Conditional original-MOS SN gate-load sensitivity; not complete X010/X014 logic restoration or ADC qualification",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ff",
+    "vdd": 0.99,
+    "temperature_c": -40,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "+lqtimeout",
+    "60",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 1024,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 600
+  }
+}

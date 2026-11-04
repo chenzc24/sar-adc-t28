@@ -1,0 +1,1929 @@
+{
+  "scope": "FF/0.99V/-40C first-event conditional fixture; no full-cycle/PVT/ADC qualification",
+  "cases": {
+    "stack": {
+      "proof": {
+        "run": "sar8audit-ctrl-stackorder-v1",
+        "recipe_sha256": "f7fdea18a1eb32890b5dd3688952ac6e14e91d8d05106bc8dfcd3d85305a82e3",
+        "receipt_files": 9,
+        "receipt_bytes": 2109393,
+        "required_currents": 444,
+        "native_points": 5939,
+        "local_diagnostic_points": 1858,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 2.7391757888598975e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "node_extrema": {
+        "xdut.xctrl.xtim.live": {
+          "max": 0.9899997939750786,
+          "max_time_s": 4.114295041410901e-08,
+          "min": -0.01162914540350368,
+          "min_time_s": 4.108191298760719e-08
+        },
+        "xdut.xctrl.xtim.q1": {
+          "max": 0.9913342696841991,
+          "max_time_s": 4.108522671982682e-08,
+          "min": 0.982645226138979,
+          "min_time_s": 4.108971148367626e-08
+        },
+        "xdut.xctrl.xtim.x020.n": {
+          "max": 1.005230071170713,
+          "max_time_s": 4.108464544391226e-08,
+          "min": 2.518958479475504e-06,
+          "min_time_s": 4.11282422212217e-08
+        },
+        "xdut.xctrl.xtim.quiet": {
+          "max": 0.9679866970917789,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -0.01673781841965656,
+          "min_time_s": 4.108788542924112e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.ab": {
+          "max": 1.009554154491966,
+          "max_time_s": 4.10933769048613e-08,
+          "min": 8.06533586093947e-05,
+          "min_time_s": 4.111171536158624e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.rc0": {
+          "max": 0.2724092165661684,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -1.877833607743696e-05,
+          "min_time_s": 4.108817595493475e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.rc1": {
+          "max": 0.9959740753189755,
+          "max_time_s": 4.110578608751461e-08,
+          "min": 0.9898681448314356,
+          "min_time_s": 4.108785233609022e-08
+        },
+        "xdut.xctrl.xtim.x001.n": {
+          "max": 1.006275562759078,
+          "max_time_s": 4.107675319649627e-08,
+          "min": 2.119083381060648e-06,
+          "min_time_s": 4.125414321951675e-08
+        },
+        "xdut.xctrl.xtim.x019.n": {
+          "max": 0.0001579332324794371,
+          "max_time_s": 4.109634184669205e-08,
+          "min": -0.0005226287084508293,
+          "min_time_s": 4.108776176556788e-08
+        },
+        "xdut.xctrl.xtim.quiet_d": {
+          "max": 0.004383532297633217,
+          "max_time_s": 4.110419377234125e-08,
+          "min": -0.004522090870261455,
+          "min_time_s": 4.109758668395724e-08
+        },
+        "xdut.xctrl.xtim.clock_set": {
+          "max": 0.002337948533105985,
+          "max_time_s": 4.110527384830098e-08,
+          "min": -0.006521344232309617,
+          "min_time_s": 4.109804941175902e-08
+        },
+        "xdut.xctrl.xtim.clock_q": {
+          "max": 0.003532208951417785,
+          "max_time_s": 4.109849878368249e-08,
+          "min": -0.00535128916763284,
+          "min_time_s": 4.108740392972376e-08
+        }
+      },
+      "edges": {
+        "xdut.sample_int": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": [
+            4.107179605984855e-08
+          ]
+        },
+        "xdut.xctrl.xtim.live": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [
+            4.1085056495041145e-08
+          ],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.quiet": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [
+            4.1094599062845794e-08
+          ],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.quiet_d": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.clock_set": {
+          "method": "full_history_scalar_max_below_halfrail_proves_no_crossing",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.clock_q": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.cmp_clk": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        }
+      },
+      "node_end_voltages": {
+        "xdut.xctrl.xtim.quiet": 0.9679866970917789,
+        "xdut.xctrl.xtim.xd_quiet_d.rc0": 0.2724092165661684,
+        "xdut.xctrl.xtim.xd_quiet_d.rc1": 0.9943311252114307
+      },
+      "source_energy": {
+        "BIAS10_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147496832026e-08,
+          "max_power_w": 7.909888192524549e-06,
+          "min_power_time_s": 4.107629867827364e-08,
+          "min_power_w": -1.1162688725047484e-06,
+          "native_points": 5939,
+          "net_delivered_j": 3.737378087438855e-17
+        },
+        "BIAS10_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106580076125197e-08,
+          "max_power_w": 3.3100326062360964e-07,
+          "min_power_time_s": 4.107935597897827e-08,
+          "min_power_w": -2.5571159259744294e-05,
+          "native_points": 5939,
+          "net_delivered_j": -2.529142406164778e-16
+        },
+        "BIAS14_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147496832026e-08,
+          "max_power_w": 7.909890848548128e-06,
+          "min_power_time_s": 4.107629867827364e-08,
+          "min_power_w": -1.1162692831199183e-06,
+          "native_points": 5939,
+          "net_delivered_j": 3.737378858758332e-17
+        },
+        "BIAS14_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106580076125197e-08,
+          "max_power_w": 3.3090250589453144e-07,
+          "min_power_time_s": 4.107932211186083e-08,
+          "min_power_w": -2.5571072325189528e-05,
+          "native_points": 5939,
+          "net_delivered_j": -2.529207315332988e-16
+        },
+        "VDD": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108614574707586e-08,
+          "max_power_w": 0.0011615901198650624,
+          "min_power_time_s": 4.105133630493288e-08,
+          "min_power_w": 2.4449677952150215e-05,
+          "native_points": 5939,
+          "net_delivered_j": 1.0855904757434376e-12
+        }
+      },
+      "total_five_source_work_j": 1.0851593883407498e-12,
+      "initial_VDD_power_w": 2.4728669640907718e-05,
+      "all_node_KCL_max_a": 3.95405336637908e-12,
+      "native_warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "QUIET_after_sample_close_s": 2.2803002997245614e-11,
+      "LIVE_after_sample_close_s": 1.3260435192596172e-11
+    },
+    "io": {
+      "proof": {
+        "run": "sar8audit-ctrl-iolocal-v1",
+        "recipe_sha256": "aa418b9919dce4576fe5013f09e6d1721c63df76b856e20e205a682d570682a7",
+        "receipt_files": 9,
+        "receipt_bytes": 4436865,
+        "required_currents": 438,
+        "native_points": 6065,
+        "local_diagnostic_points": 1984,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 7.900699349672835e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "node_extrema": {
+        "xdut.xctrl.xtim.live": {
+          "max": 0.9899999998840566,
+          "max_time_s": 4.143418086607698e-08,
+          "min": -0.1750761295623216,
+          "min_time_s": 4.108574765967512e-08
+        },
+        "xdut.xctrl.xtim.q1": {
+          "max": 0.9935086252324427,
+          "max_time_s": 4.110507400196569e-08,
+          "min": 0.9753974949332097,
+          "min_time_s": 4.114113076600728e-08
+        },
+        "xdut.xctrl.xtim.x020.n": {
+          "max": 1.034017195146723,
+          "max_time_s": 4.110188796674354e-08,
+          "min": 0.0001143468607520794,
+          "min_time_s": 4.159078565059045e-08
+        },
+        "xdut.xctrl.xtim.quiet": {
+          "max": 0.8294757725009488,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -0.02701636424501908,
+          "min_time_s": 4.11301139220777e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.ab": {
+          "max": 1.031652415579897,
+          "max_time_s": 4.118932492622873e-08,
+          "min": 0.0003642418516922412,
+          "min_time_s": 4.159078565059045e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.rc0": {
+          "max": 0.1786371827098246,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -0.0001674426745652811,
+          "min_time_s": 4.113410912336021e-08
+        },
+        "xdut.xctrl.xtim.xd_quiet_d.rc1": {
+          "max": 0.9978320876892438,
+          "max_time_s": 4.127592033064071e-08,
+          "min": 0.9895988718383647,
+          "min_time_s": 4.112988181240678e-08
+        },
+        "xdut.xctrl.xtim.x001.n": {
+          "max": 1.005442435052148,
+          "max_time_s": 4.107682414573895e-08,
+          "min": 6.234129271893487e-08,
+          "min_time_s": 4.127977768763763e-08
+        },
+        "xdut.xctrl.xtim.x019.n": {
+          "max": 0.0002944397371990153,
+          "max_time_s": 4.11573942263285e-08,
+          "min": -0.0004988974588292721,
+          "min_time_s": 4.11235548776802e-08
+        },
+        "xdut.xctrl.xtim.quiet_d": {
+          "max": 0.000306094414638693,
+          "max_time_s": 4.122929428269899e-08,
+          "min": -1.57061405520717e-05,
+          "min_time_s": 4.108436116698987e-08
+        },
+        "xdut.xctrl.xtim.clock_set": {
+          "max": 0.001437756421140707,
+          "max_time_s": 4.108137858625947e-08,
+          "min": -0.002059665572964543,
+          "min_time_s": 4.108672710741532e-08
+        },
+        "xdut.xctrl.xtim.clock_q": {
+          "max": 0.00352084256717891,
+          "max_time_s": 4.109828747243213e-08,
+          "min": -0.005351818936515939,
+          "min_time_s": 4.108739861600039e-08
+        }
+      },
+      "edges": {
+        "xdut.sample_int": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": [
+            4.10717960528797e-08
+          ]
+        },
+        "xdut.xctrl.xtim.live": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [
+            4.110055378043581e-08
+          ],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.quiet": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [
+            4.119231320935061e-08
+          ],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.quiet_d": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.clock_set": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.xctrl.xtim.clock_q": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        },
+        "xdut.cmp_clk": {
+          "method": "native_waveform_halfrail",
+          "rising_s": [],
+          "falling_s": []
+        }
+      },
+      "node_end_voltages": {
+        "xdut.xctrl.xtim.quiet": 0.8294757725009488,
+        "xdut.xctrl.xtim.xd_quiet_d.rc0": 0.1786371827098246,
+        "xdut.xctrl.xtim.xd_quiet_d.rc1": 0.9966233952629162
+      },
+      "source_energy": {
+        "BIAS10_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147597989131e-08,
+          "max_power_w": 7.991611883171635e-06,
+          "min_power_time_s": 4.107628346702675e-08,
+          "min_power_w": -1.1166099018962344e-06,
+          "native_points": 6065,
+          "net_delivered_j": 3.7820053854662854e-17
+        },
+        "BIAS10_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.10658044011743e-08,
+          "max_power_w": 3.3155206942051847e-07,
+          "min_power_time_s": 4.107928893724892e-08,
+          "min_power_w": -2.5883782261571426e-05,
+          "native_points": 6065,
+          "net_delivered_j": -2.5297884994918935e-16
+        },
+        "BIAS14_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147597989131e-08,
+          "max_power_w": 7.991614596203445e-06,
+          "min_power_time_s": 4.107628346702675e-08,
+          "min_power_w": -1.1166103098343987e-06,
+          "native_points": 6065,
+          "net_delivered_j": 3.782006139470955e-17
+        },
+        "BIAS14_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.10658044011743e-08,
+          "max_power_w": 3.314509128180266e-07,
+          "min_power_time_s": 4.107928893724892e-08,
+          "min_power_w": -2.588417355542499e-05,
+          "native_points": 6065,
+          "net_delivered_j": -2.529853677958484e-16
+        },
+        "VDD": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108022156977277e-08,
+          "max_power_w": 0.000949626470628403,
+          "min_power_time_s": 4.105133630493288e-08,
+          "min_power_w": -2.4319869429016896e-07,
+          "native_points": 6065,
+          "net_delivered_j": 6.101679317235725e-14
+        }
+      },
+      "total_five_source_work_j": 6.058646906986158e-14,
+      "initial_VDD_power_w": 3.575048291440647e-08,
+      "all_node_KCL_max_a": 7.900699349672835e-12,
+      "native_warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "QUIET_after_sample_close_s": 1.2051715647091382e-10,
+      "LIVE_after_sample_close_s": 2.8757727556109596e-11
+    }
+  },
+  "core_failures": [
+    {
+      "instance": "XDUT.XCTRL.XTIM.X001.X000.MN0",
+      "model": "nch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.100042565758002e-08,
+          "last_over_limit_s": 4.107001210015055e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.106802456991471e-08,
+          "max_abs_v": 0.998833941053089,
+          "max_time_s": 4.127977768763763e-08,
+          "max_v": 0.989999537667905,
+          "min_time_s": 4.106802456991471e-08,
+          "min_v": -0.998833941053089,
+          "native_points": 6065,
+          "over_limit_native_points": 615
+        },
+        "VDS": {
+          "first_over_limit_s": 4.104320396086332e-08,
+          "last_over_limit_s": 4.107805864662961e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107651117038163e-08,
+          "max_abs_v": 1.0022332934553433,
+          "max_time_s": 4.107651117038163e-08,
+          "max_v": 1.0022332934553433,
+          "min_time_s": 4.127733887064367e-08,
+          "min_v": -1.48979445662824e-07,
+          "native_points": 6065,
+          "over_limit_native_points": 197
+        },
+        "VGB": {
+          "first_over_limit_s": 4.114091413892883e-08,
+          "last_over_limit_s": 4.115062264278721e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.114463890881658e-08,
+          "max_abs_v": 0.9900137025173125,
+          "max_time_s": 4.114463890881658e-08,
+          "max_v": 0.9900137025173125,
+          "min_time_s": 4.106793806028218e-08,
+          "min_v": -0.008984164138582688,
+          "native_points": 6065,
+          "over_limit_native_points": 37
+        },
+        "VDB": {
+          "first_over_limit_s": 4.103475202180282e-08,
+          "last_over_limit_s": 4.107854379277082e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107682414573895e-08,
+          "max_abs_v": 1.005442435052148,
+          "max_time_s": 4.107682414573895e-08,
+          "max_v": 1.005442435052148,
+          "min_time_s": 4.127977768763763e-08,
+          "min_v": 6.234129271893487e-08,
+          "native_points": 6065,
+          "over_limit_native_points": 219
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x001.x000.mid"
+          ]
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x001.n"
+          ]
+        },
+        "VDS": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x001.n",
+            "xdut.xctrl.xtim.x001.x000.mid"
+          ]
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.008981836342937808,
+          "max_v": 0.9899996303795194,
+          "max_abs_v": 0.9899996303795194,
+          "variable_node": "xdut.xctrl.xtim.sn",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 2.119083381060648e-06,
+          "max_v": 1.006275562759078,
+          "max_abs_v": 1.006275562759078,
+          "variable_node": "xdut.xctrl.xtim.x001.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -5.184443689990888e-05,
+          "max_v": 0.1004023472433804,
+          "max_abs_v": 0.1004023472433804,
+          "variable_node": "xdut.xctrl.xtim.x001.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X001.X000.MN1",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.106740199458099e-08,
+          "last_over_limit_s": 4.107834650549312e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107643756779642e-08,
+          "max_abs_v": 0.9902411872443798,
+          "max_time_s": 4.107643756779642e-08,
+          "max_v": 0.9902411872443798,
+          "min_time_s": 4.108418559625498e-08,
+          "min_v": 0.9834862954330557,
+          "native_points": 6065,
+          "over_limit_native_points": 234
+        },
+        "VGD": {
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.106937489682761e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.106748848599898e-08,
+          "max_abs_v": 0.9900514922801383,
+          "max_time_s": 4.106748848599898e-08,
+          "max_v": 0.9900514922801383,
+          "min_time_s": 4.108540279762199e-08,
+          "min_v": 0.872511941780059,
+          "native_points": 6065,
+          "over_limit_native_points": 611
+        },
+        "VGB": {
+          "first_over_limit_s": 4.106740199458099e-08,
+          "last_over_limit_s": 4.107834650549312e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107643756779642e-08,
+          "max_abs_v": 0.9902411872443798,
+          "max_time_s": 4.107643756779642e-08,
+          "max_v": 0.9902411872443798,
+          "min_time_s": 4.108418559625498e-08,
+          "min_v": 0.9834862954330557,
+          "native_points": 6065,
+          "over_limit_native_points": 234
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9834862954330557,
+          "max_v": 0.9902411826090313,
+          "max_abs_v": 0.9902411826090313,
+          "variable_node": "xdut.active",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x001.x000.mid"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -5.184443689990888e-05,
+          "max_v": 0.1004023472433804,
+          "max_abs_v": 0.1004023472433804,
+          "variable_node": "xdut.xctrl.xtim.x001.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9834862954330557,
+          "max_v": 0.9902411826090313,
+          "max_abs_v": 0.9902411826090313,
+          "variable_node": "xdut.active",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -5.184443689990888e-05,
+          "max_v": 0.1004023472433804,
+          "max_abs_v": 0.1004023472433804,
+          "variable_node": "xdut.xctrl.xtim.x001.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X001.X000.MP0",
+      "model": "pch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.100042565758002e-08,
+          "last_over_limit_s": 4.106993247215325e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.106793806028218e-08,
+          "max_abs_v": 0.9989841641385827,
+          "max_time_s": 4.114463890881658e-08,
+          "max_v": 1.370251731247496e-05,
+          "min_time_s": 4.106793806028218e-08,
+          "min_v": -0.9989841641385827,
+          "native_points": 6065,
+          "over_limit_native_points": 617
+        },
+        "VGD": {
+          "first_over_limit_s": 4.100042565758002e-08,
+          "last_over_limit_s": 4.107001210015055e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.106802456991471e-08,
+          "max_abs_v": 0.998833941053089,
+          "max_time_s": 4.127977768763763e-08,
+          "max_v": 0.989999537667905,
+          "min_time_s": 4.106802456991471e-08,
+          "min_v": -0.998833941053089,
+          "native_points": 6065,
+          "over_limit_native_points": 615
+        },
+        "VGB": {
+          "first_over_limit_s": 4.100042565758002e-08,
+          "last_over_limit_s": 4.106993247215325e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.106793806028218e-08,
+          "max_abs_v": 0.9989841641385827,
+          "max_time_s": 4.114463890881658e-08,
+          "max_v": 1.370251731247496e-05,
+          "min_time_s": 4.106793806028218e-08,
+          "min_v": -0.9989841641385827,
+          "native_points": 6065,
+          "over_limit_native_points": 617
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9989818363429378,
+          "max_v": -3.696204805558878e-07,
+          "max_abs_v": 0.9989818363429378,
+          "variable_node": "xdut.xctrl.xtim.sn",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x001.n"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9899978809166189,
+          "max_v": 0.016275562759078044,
+          "max_abs_v": 0.9899978809166189,
+          "variable_node": "xdut.xctrl.xtim.x001.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9989818363429378,
+          "max_v": -3.696204805558878e-07,
+          "max_abs_v": 0.9989818363429378,
+          "variable_node": "xdut.xctrl.xtim.sn",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9899978809166189,
+          "max_v": 0.016275562759078044,
+          "max_abs_v": 0.9899978809166189,
+          "variable_node": "xdut.xctrl.xtim.x001.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X019.X000.MN0",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.107875184564077e-08,
+          "last_over_limit_s": 4.11462456754482e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.112578978275828e-08,
+          "max_abs_v": 0.9902466793418272,
+          "max_time_s": 4.112578978275828e-08,
+          "max_v": 0.9902466793418272,
+          "min_time_s": 4.115977514585283e-08,
+          "min_v": 0.9898537514949334,
+          "native_points": 6065,
+          "over_limit_native_points": 439
+        },
+        "VGD": {
+          "first_over_limit_s": 4.107722842503769e-08,
+          "last_over_limit_s": 4.114438453118636e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.112388034412881e-08,
+          "max_abs_v": 0.9904973383204454,
+          "max_time_s": 4.112388034412881e-08,
+          "max_v": 0.9904973383204454,
+          "min_time_s": 4.115785390373145e-08,
+          "min_v": 0.9897059068463642,
+          "native_points": 6065,
+          "over_limit_native_points": 455
+        },
+        "VGB": {
+          "first_over_limit_s": 4.108483990732607e-08,
+          "last_over_limit_s": 4.115832158581289e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108705889796801e-08,
+          "max_abs_v": 0.990022520915951,
+          "max_time_s": 4.108705889796801e-08,
+          "max_v": 0.990022520915951,
+          "min_time_s": 4.111627933399836e-08,
+          "min_v": 0.9899891722877485,
+          "native_points": 6065,
+          "over_limit_native_points": 275
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.q0",
+            "xdut.xctrl.xtim.x019.x000.mid"
+          ]
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.q0",
+            "xdut.xctrl.xtim.x019.n"
+          ]
+        },
+        "VDS": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x019.n",
+            "xdut.xctrl.xtim.x019.x000.mid"
+          ]
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9899394576272988,
+          "max_v": 0.9900285521325164,
+          "max_abs_v": 0.9900285521325164,
+          "variable_node": "xdut.xctrl.xtim.q0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0005226287084508293,
+          "max_v": 0.0001579332324794371,
+          "max_abs_v": 0.0005226287084508293,
+          "variable_node": "xdut.xctrl.xtim.x019.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0001684196448983467,
+          "max_v": 6.443261684250552e-05,
+          "max_abs_v": 0.0001684196448983467,
+          "variable_node": "xdut.xctrl.xtim.x019.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X019.X000.MN1",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.106766664426015e-08,
+          "last_over_limit_s": 4.109877711380903e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.109295383480595e-08,
+          "max_abs_v": 0.9902604202336138,
+          "max_time_s": 4.109295383480595e-08,
+          "max_v": 0.9902604202336138,
+          "min_time_s": 4.110275961598123e-08,
+          "min_v": 0.9899594100126681,
+          "native_points": 6065,
+          "over_limit_native_points": 283
+        },
+        "VGD": {
+          "first_over_limit_s": 4.106937489682761e-08,
+          "last_over_limit_s": 4.114542438272374e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.112565002031501e-08,
+          "max_abs_v": 0.9902239682522598,
+          "max_time_s": 4.112565002031501e-08,
+          "max_v": 0.9902239682522598,
+          "min_time_s": 4.115928194545223e-08,
+          "min_v": 0.9898474809726019,
+          "native_points": 6065,
+          "over_limit_native_points": 543
+        },
+        "VGB": {
+          "first_over_limit_s": 4.106766664426015e-08,
+          "last_over_limit_s": 4.109877711380903e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.109295383480595e-08,
+          "max_abs_v": 0.9902604202336138,
+          "max_time_s": 4.109295383480595e-08,
+          "max_v": 0.9902604202336138,
+          "min_time_s": 4.110275961598123e-08,
+          "min_v": 0.9899594100126681,
+          "native_points": 6065,
+          "over_limit_native_points": 283
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.989937979277884,
+          "max_v": 0.9902707362576856,
+          "max_abs_v": 0.9902707362576856,
+          "variable_node": "xdut.xctrl.xtim.un",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.un",
+            "xdut.xctrl.xtim.x019.x000.mid"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0001684196448983467,
+          "max_v": 6.443261684250552e-05,
+          "max_abs_v": 0.0001684196448983467,
+          "variable_node": "xdut.xctrl.xtim.x019.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.989937979277884,
+          "max_v": 0.9902707362576856,
+          "max_abs_v": 0.9902707362576856,
+          "variable_node": "xdut.xctrl.xtim.un",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0001684196448983467,
+          "max_v": 6.443261684250552e-05,
+          "max_abs_v": 0.0001684196448983467,
+          "variable_node": "xdut.xctrl.xtim.x019.x000.mid",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X019.X000.MP0",
+      "model": "pch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.107722842503769e-08,
+          "last_over_limit_s": 4.114438453118636e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.112388034412881e-08,
+          "max_abs_v": 0.9904973383204454,
+          "max_time_s": 4.112388034412881e-08,
+          "max_v": 0.9904973383204454,
+          "min_time_s": 4.115785390373145e-08,
+          "min_v": 0.9897059068463642,
+          "native_points": 6065,
+          "over_limit_native_points": 455
+        },
+        "VDS": {
+          "first_over_limit_s": 4.107704392919833e-08,
+          "last_over_limit_s": 4.1144133679298e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.11235548776802e-08,
+          "max_abs_v": 0.9904988974588292,
+          "max_time_s": 4.11573942263285e-08,
+          "max_v": -0.989705560262801,
+          "min_time_s": 4.11235548776802e-08,
+          "min_v": -0.9904988974588292,
+          "native_points": 6065,
+          "over_limit_native_points": 456
+        },
+        "VDB": {
+          "first_over_limit_s": 4.107704392919833e-08,
+          "last_over_limit_s": 4.1144133679298e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.11235548776802e-08,
+          "max_abs_v": 0.9904988974588292,
+          "max_time_s": 4.11573942263285e-08,
+          "max_v": -0.989705560262801,
+          "min_time_s": 4.11235548776802e-08,
+          "min_v": -0.9904988974588292,
+          "native_points": 6065,
+          "over_limit_native_points": 456
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -6.054237270114449e-05,
+          "max_v": 2.8552132516401763e-05,
+          "max_abs_v": 6.054237270114449e-05,
+          "variable_node": "xdut.xctrl.xtim.q0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.q0",
+            "xdut.xctrl.xtim.x019.n"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9905226287084509,
+          "max_v": -0.9898420667675205,
+          "max_abs_v": 0.9905226287084509,
+          "variable_node": "xdut.xctrl.xtim.x019.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -6.054237270114449e-05,
+          "max_v": 2.8552132516401763e-05,
+          "max_abs_v": 6.054237270114449e-05,
+          "variable_node": "xdut.xctrl.xtim.q0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9905226287084509,
+          "max_v": -0.9898420667675205,
+          "max_abs_v": 0.9905226287084509,
+          "variable_node": "xdut.xctrl.xtim.x019.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X019.X000.MP1",
+      "model": "pch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.1071802682248e-08,
+          "last_over_limit_s": 4.1144133679298e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.112388034412881e-08,
+          "max_abs_v": 0.990474920840724,
+          "max_time_s": 4.112388034412881e-08,
+          "max_v": 0.990474920840724,
+          "min_time_s": 4.115785390373145e-08,
+          "min_v": 0.9896987373961037,
+          "native_points": 6065,
+          "over_limit_native_points": 564
+        },
+        "VDS": {
+          "first_over_limit_s": 4.107704392919833e-08,
+          "last_over_limit_s": 4.1144133679298e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.11235548776802e-08,
+          "max_abs_v": 0.9904988974588292,
+          "max_time_s": 4.11573942263285e-08,
+          "max_v": -0.989705560262801,
+          "min_time_s": 4.11235548776802e-08,
+          "min_v": -0.9904988974588292,
+          "native_points": 6065,
+          "over_limit_native_points": 456
+        },
+        "VDB": {
+          "first_over_limit_s": 4.107704392919833e-08,
+          "last_over_limit_s": 4.1144133679298e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.11235548776802e-08,
+          "max_abs_v": 0.9904988974588292,
+          "max_time_s": 4.11573942263285e-08,
+          "max_v": -0.989705560262801,
+          "min_time_s": 4.11235548776802e-08,
+          "min_v": -0.9904988974588292,
+          "native_points": 6065,
+          "over_limit_native_points": 456
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -6.20207221160296e-05,
+          "max_v": 0.00027073625768558873,
+          "max_abs_v": 0.00027073625768558873,
+          "variable_node": "xdut.xctrl.xtim.un",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.un",
+            "xdut.xctrl.xtim.x019.n"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9905226287084509,
+          "max_v": -0.9898420667675205,
+          "max_abs_v": 0.9905226287084509,
+          "variable_node": "xdut.xctrl.xtim.x019.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -6.20207221160296e-05,
+          "max_v": 0.00027073625768558873,
+          "max_abs_v": 0.00027073625768558873,
+          "variable_node": "xdut.xctrl.xtim.un",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9905226287084509,
+          "max_v": -0.9898420667675205,
+          "max_abs_v": 0.9905226287084509,
+          "variable_node": "xdut.xctrl.xtim.x019.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X022.X000.MP1",
+      "model": "pch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.108112076891817e-08,
+          "last_over_limit_s": 4.112779206619326e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108436116698987e-08,
+          "max_abs_v": 0.990015706140552,
+          "max_time_s": 4.122929428269899e-08,
+          "max_v": -0.9896939055853613,
+          "min_time_s": 4.108436116698987e-08,
+          "min_v": -0.990015706140552,
+          "native_points": 6065,
+          "over_limit_native_points": 336
+        },
+        "VGD": {
+          "first_over_limit_s": 4.10789350476612e-08,
+          "last_over_limit_s": 4.119470435448868e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.115694232346575e-08,
+          "max_abs_v": 0.9934087875556372,
+          "max_time_s": 4.122511571940112e-08,
+          "max_v": -0.978819875208584,
+          "min_time_s": 4.115694232346575e-08,
+          "min_v": -0.9934087875556372,
+          "native_points": 6065,
+          "over_limit_native_points": 435
+        },
+        "VGB": {
+          "first_over_limit_s": 4.108112076891817e-08,
+          "last_over_limit_s": 4.112779206619326e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108436116698987e-08,
+          "max_abs_v": 0.990015706140552,
+          "max_time_s": 4.122929428269899e-08,
+          "max_v": -0.9896939055853613,
+          "min_time_s": 4.108436116698987e-08,
+          "min_v": -0.990015706140552,
+          "native_points": 6065,
+          "over_limit_native_points": 336
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9945220908702614,
+          "max_v": -0.9856164677023668,
+          "max_abs_v": 0.9945220908702614,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x022.n"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.12515244056431596,
+          "max_v": 0.011198710062302109,
+          "max_abs_v": 0.12515244056431596,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9945220908702614,
+          "max_v": -0.9856164677023668,
+          "max_abs_v": 0.9945220908702614,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.12515244056431596,
+          "max_v": 0.011198710062302109,
+          "max_abs_v": 0.12515244056431596,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X022.X001.MN",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.106738540155345e-08,
+          "last_over_limit_s": 4.119470435448868e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.115694232346575e-08,
+          "max_abs_v": 0.9934653790176925,
+          "max_time_s": 4.115694232346575e-08,
+          "max_v": 0.9934653790176925,
+          "min_time_s": 4.122511571940112e-08,
+          "min_v": 0.9791210087632495,
+          "native_points": 6065,
+          "over_limit_native_points": 575
+        },
+        "VGD": {
+          "first_over_limit_s": 4.107436996269623e-08,
+          "last_over_limit_s": 4.119470435448868e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.115694232346575e-08,
+          "max_abs_v": 0.9934637178640344,
+          "max_time_s": 4.115694232346575e-08,
+          "max_v": 0.9934637178640344,
+          "min_time_s": 4.122566886318182e-08,
+          "min_v": 0.9791240202426,
+          "native_points": 6065,
+          "over_limit_native_points": 531
+        },
+        "VGB": {
+          "first_over_limit_s": 4.106738540155345e-08,
+          "last_over_limit_s": 4.119470435448868e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.115694232346575e-08,
+          "max_abs_v": 0.9934653790176925,
+          "max_time_s": 4.115694232346575e-08,
+          "max_v": 0.9934653790176925,
+          "min_time_s": 4.122511571940112e-08,
+          "min_v": 0.9791210087632495,
+          "native_points": 6065,
+          "over_limit_native_points": 575
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.864847559435684,
+          "max_v": 1.001198710062302,
+          "max_abs_v": 1.001198710062302,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x022.n",
+            "xdut.xctrl.xtim.clock_set"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.006521344232309617,
+          "max_v": 0.002337948533105985,
+          "max_abs_v": 0.006521344232309617,
+          "variable_node": "xdut.xctrl.xtim.clock_set",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.864847559435684,
+          "max_v": 1.001198710062302,
+          "max_abs_v": 1.001198710062302,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.006521344232309617,
+          "max_v": 0.002337948533105985,
+          "max_abs_v": 0.006521344232309617,
+          "variable_node": "xdut.xctrl.xtim.clock_set",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X022.X001.MP",
+      "model": "pch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.107436996269623e-08,
+          "last_over_limit_s": 4.119470435448868e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.115694232346575e-08,
+          "max_abs_v": 0.9934637178640344,
+          "max_time_s": 4.115694232346575e-08,
+          "max_v": 0.9934637178640344,
+          "min_time_s": 4.122566886318182e-08,
+          "min_v": 0.9791240202426,
+          "native_points": 6065,
+          "over_limit_native_points": 531
+        },
+        "VDS": {
+          "first_over_limit_s": 4.107436996269623e-08,
+          "last_over_limit_s": 4.122566886318182e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108672710741532e-08,
+          "max_abs_v": 0.9920596655729645,
+          "max_time_s": 4.108137858625947e-08,
+          "max_v": -0.9885622435788592,
+          "min_time_s": 4.108672710741532e-08,
+          "min_v": -0.9920596655729645,
+          "native_points": 6065,
+          "over_limit_native_points": 620
+        },
+        "VDB": {
+          "first_over_limit_s": 4.107436996269623e-08,
+          "last_over_limit_s": 4.122566886318182e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108672710741532e-08,
+          "max_abs_v": 0.9920596655729645,
+          "max_time_s": 4.108137858625947e-08,
+          "max_v": -0.9885622435788592,
+          "min_time_s": 4.108672710741532e-08,
+          "min_v": -0.9920596655729645,
+          "native_points": 6065,
+          "over_limit_native_points": 620
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.12515244056431596,
+          "max_v": 0.011198710062302109,
+          "max_abs_v": 0.12515244056431596,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.x022.n",
+            "xdut.xctrl.xtim.clock_set"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9965213442323096,
+          "max_v": -0.987662051466894,
+          "max_abs_v": 0.9965213442323096,
+          "variable_node": "xdut.xctrl.xtim.clock_set",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.12515244056431596,
+          "max_v": 0.011198710062302109,
+          "max_abs_v": 0.12515244056431596,
+          "variable_node": "xdut.xctrl.xtim.x022.n",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9965213442323096,
+          "max_v": -0.987662051466894,
+          "max_abs_v": 0.9965213442323096,
+          "variable_node": "xdut.xctrl.xtim.clock_set",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.MN_CLEAR",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.107350207901405e-08,
+          "last_over_limit_s": 4.120491755723583e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.118932492622873e-08,
+          "max_abs_v": 1.031652415579897,
+          "max_time_s": 4.118932492622873e-08,
+          "max_v": 1.031652415579897,
+          "min_time_s": 4.159078565059045e-08,
+          "min_v": 0.0003642418516922412,
+          "native_points": 6065,
+          "over_limit_native_points": 390
+        },
+        "VGD": {
+          "first_over_limit_s": 4.107393339162296e-08,
+          "last_over_limit_s": 4.12041208118765e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.118834312938822e-08,
+          "max_abs_v": 1.0273830652098004,
+          "max_time_s": 4.118834312938822e-08,
+          "max_v": 1.0273830652098004,
+          "min_time_s": 4.159078565059045e-08,
+          "min_v": -0.17827294085813236,
+          "native_points": 6065,
+          "over_limit_native_points": 371
+        },
+        "VGB": {
+          "first_over_limit_s": 4.107350207901405e-08,
+          "last_over_limit_s": 4.120491755723583e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.118932492622873e-08,
+          "max_abs_v": 1.031652415579897,
+          "max_time_s": 4.118932492622873e-08,
+          "max_v": 1.031652415579897,
+          "min_time_s": 4.159078565059045e-08,
+          "min_v": 0.0003642418516922412,
+          "native_points": 6065,
+          "over_limit_native_points": 390
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 8.06533586093947e-05,
+          "max_v": 1.009554154491966,
+          "max_abs_v": 1.009554154491966,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.ab",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.xd_quiet_d.ab"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -1.877833607743696e-05,
+          "max_v": 0.2724092165661684,
+          "max_abs_v": 0.2724092165661684,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 8.06533586093947e-05,
+          "max_v": 1.009554154491966,
+          "max_abs_v": 1.009554154491966,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.ab",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -1.877833607743696e-05,
+          "max_v": 0.2724092165661684,
+          "max_abs_v": 0.2724092165661684,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.X002.MN",
+      "model": "nch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.108067960088187e-08,
+          "last_over_limit_s": 4.114438453118636e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.113477800764803e-08,
+          "max_abs_v": 0.9901590262913103,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": -0.8116123223689065,
+          "min_time_s": 4.113477800764803e-08,
+          "min_v": -0.9901590262913103,
+          "native_points": 6065,
+          "over_limit_native_points": 417
+        },
+        "VDS": {
+          "first_over_limit_s": 4.108959040343129e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.130783056311489e-08,
+          "max_abs_v": 0.9903222275101272,
+          "max_time_s": 4.130783056311489e-08,
+          "max_v": 0.9903222275101272,
+          "min_time_s": 4.112965033978388e-08,
+          "min_v": 0.9899862288019444,
+          "native_points": 6065,
+          "over_limit_native_points": 628
+        },
+        "VDB": {
+          "first_over_limit_s": 4.108959040343129e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.130783056311489e-08,
+          "max_abs_v": 0.9903222275101272,
+          "max_time_s": 4.130783056311489e-08,
+          "max_v": 0.9903222275101272,
+          "min_time_s": 4.112965033978388e-08,
+          "min_v": 0.9899862288019444,
+          "native_points": 6065,
+          "over_limit_native_points": 628
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -1.877833607743696e-05,
+          "max_v": 0.2724092165661684,
+          "max_abs_v": 0.2724092165661684,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.xd_quiet_d.b"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9887587652431862,
+          "max_v": 0.9902786838319073,
+          "max_abs_v": 0.9902786838319073,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.b",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -1.877833607743696e-05,
+          "max_v": 0.2724092165661684,
+          "max_abs_v": 0.2724092165661684,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9887587652431862,
+          "max_v": 0.9902786838319073,
+          "max_abs_v": 0.9902786838319073,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.b",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.X002.MP",
+      "model": "pch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.107880730450919e-08,
+          "last_over_limit_s": 4.114364204876027e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.113410912336021e-08,
+          "max_abs_v": 0.9901674426745652,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": -0.8113628172901755,
+          "min_time_s": 4.113410912336021e-08,
+          "min_v": -0.9901674426745652,
+          "native_points": 6065,
+          "over_limit_native_points": 483
+        },
+        "VGD": {
+          "first_over_limit_s": 4.108067960088187e-08,
+          "last_over_limit_s": 4.114438453118636e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.113477800764803e-08,
+          "max_abs_v": 0.9901590262913103,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": -0.8116123223689065,
+          "min_time_s": 4.113477800764803e-08,
+          "min_v": -0.9901590262913103,
+          "native_points": 6065,
+          "over_limit_native_points": 417
+        },
+        "VGB": {
+          "first_over_limit_s": 4.107880730450919e-08,
+          "last_over_limit_s": 4.114364204876027e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.113410912336021e-08,
+          "max_abs_v": 0.9901674426745652,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": -0.8113628172901755,
+          "min_time_s": 4.113410912336021e-08,
+          "min_v": -0.9901674426745652,
+          "native_points": 6065,
+          "over_limit_native_points": 483
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9900187783360774,
+          "max_v": -0.7175907834338315,
+          "max_abs_v": 0.9900187783360774,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "not_available",
+          "missing_waveforms": [
+            "xdut.xctrl.xtim.xd_quiet_d.b"
+          ]
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0012412347568138138,
+          "max_v": 0.0002786838319073226,
+          "max_abs_v": 0.0012412347568138138,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.b",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9900187783360774,
+          "max_v": -0.7175907834338315,
+          "max_abs_v": 0.9900187783360774,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.0012412347568138138,
+          "max_v": 0.0002786838319073226,
+          "max_abs_v": 0.0012412347568138138,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.b",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.X005.MN",
+      "model": "nch_mac",
+      "failures": {
+        "VGS": {
+          "first_over_limit_s": 4.107311542088984e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.127592033064071e-08,
+          "max_abs_v": 0.9978320876892438,
+          "max_time_s": 4.127592033064071e-08,
+          "max_v": 0.9978320876892438,
+          "min_time_s": 4.112988181240678e-08,
+          "min_v": 0.9895988718383647,
+          "native_points": 6065,
+          "over_limit_native_points": 718
+        },
+        "VGD": {
+          "first_over_limit_s": 4.108150898960157e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.128739678742775e-08,
+          "max_abs_v": 0.997682754778198,
+          "max_time_s": 4.128739678742775e-08,
+          "max_v": 0.997682754778198,
+          "min_time_s": 4.113112884083148e-08,
+          "min_v": 0.989561588121301,
+          "native_points": 6065,
+          "over_limit_native_points": 718
+        },
+        "VGB": {
+          "first_over_limit_s": 4.107311542088984e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.127592033064071e-08,
+          "max_abs_v": 0.9978320876892438,
+          "max_time_s": 4.127592033064071e-08,
+          "max_v": 0.9978320876892438,
+          "min_time_s": 4.112988181240678e-08,
+          "min_v": 0.9895988718383647,
+          "native_points": 6065,
+          "over_limit_native_points": 718
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9898681448314356,
+          "max_v": 0.9959740753189755,
+          "max_abs_v": 0.9959740753189755,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "simultaneous_diagnostic_window",
+          "min_v": 0.9896396172825213,
+          "max_v": 0.9998820644165859,
+          "max_abs_v": 0.9998820644165859,
+          "first_s": 4.080999999999977e-08,
+          "last_s": 4.159078565059045e-08
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.004522090870261455,
+          "max_v": 0.004383532297633217,
+          "max_abs_v": 0.004522090870261455,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": 0.9898681448314356,
+          "max_v": 0.9959740753189755,
+          "max_abs_v": 0.9959740753189755,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.004522090870261455,
+          "max_v": 0.004383532297633217,
+          "max_abs_v": 0.004522090870261455,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.X005.MP",
+      "model": "pch_mac",
+      "failures": {
+        "VGD": {
+          "first_over_limit_s": 4.108150898960157e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.128739678742775e-08,
+          "max_abs_v": 0.997682754778198,
+          "max_time_s": 4.128739678742775e-08,
+          "max_v": 0.997682754778198,
+          "min_time_s": 4.113112884083148e-08,
+          "min_v": 0.989561588121301,
+          "native_points": 6065,
+          "over_limit_native_points": 718
+        },
+        "VDS": {
+          "first_over_limit_s": 4.108112076891817e-08,
+          "last_over_limit_s": 4.112779206619326e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108436116698987e-08,
+          "max_abs_v": 0.990015706140552,
+          "max_time_s": 4.122929428269899e-08,
+          "max_v": -0.9896939055853613,
+          "min_time_s": 4.108436116698987e-08,
+          "min_v": -0.990015706140552,
+          "native_points": 6065,
+          "over_limit_native_points": 336
+        },
+        "VDB": {
+          "first_over_limit_s": 4.108112076891817e-08,
+          "last_over_limit_s": 4.112779206619326e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108436116698987e-08,
+          "max_abs_v": 0.990015706140552,
+          "max_time_s": 4.122929428269899e-08,
+          "max_v": -0.9896939055853613,
+          "min_time_s": 4.108436116698987e-08,
+          "min_v": -0.990015706140552,
+          "native_points": 6065,
+          "over_limit_native_points": 336
+        }
+      },
+      "old_stack_comparable_pairs": {
+        "VGS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.00013185516856439872,
+          "max_v": 0.005974075318975536,
+          "max_abs_v": 0.005974075318975536,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGD": {
+          "method": "simultaneous_diagnostic_window",
+          "min_v": 0.9896396172825213,
+          "max_v": 0.9998820644165859,
+          "max_abs_v": 0.9998820644165859,
+          "first_s": 4.080999999999977e-08,
+          "last_s": 4.159078565059045e-08
+        },
+        "VDS": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9945220908702614,
+          "max_v": -0.9856164677023668,
+          "max_abs_v": 0.9945220908702614,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VGB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.00013185516856439872,
+          "max_v": 0.005974075318975536,
+          "max_abs_v": 0.005974075318975536,
+          "variable_node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VDB": {
+          "method": "full_history_single_scalar_plus_ideal_constant",
+          "min_v": -0.9945220908702614,
+          "max_v": -0.9856164677023668,
+          "max_abs_v": 0.9945220908702614,
+          "variable_node": "xdut.xctrl.xtim.quiet_d",
+          "scope": "Exact constant-reference identity, not subtraction of independent varying extrema"
+        },
+        "VSB": {
+          "method": "exact_constant_identity",
+          "min_v": 0.0,
+          "max_v": 0.0,
+          "max_abs_v": 0.0
+        }
+      },
+      "changed_in_io_local": false
+    }
+  ],
+  "full_ADC_qualified": false,
+  "evidence_policy": "Native rows or exact one-variable versus ideal-constant identities only. Missing old waveforms never reconstructed from scalar extrema.",
+  "power_policy": "Signed net delivered source work over0..END, not complete-cycle dissipation or whole-ADC power",
+  "screen_counts": {
+    "changed_IO_instances": 15,
+    "changed_IO_pairs": 90,
+    "changed_IO_failed_pairs": 0,
+    "retained_core_instances": 17,
+    "retained_core_pairs": 102,
+    "retained_core_failed_pairs": 46,
+    "retained_failed_instances": 15
+  },
+  "worst_IO_absolute_screen_pair": {
+    "value_v": 1.1650761295623215,
+    "instance": "XDUT.XCTRL.XTIM.X001.X001.MP",
+    "terminal_pair": "VDS",
+    "provisional_limit_v": 1.98
+  },
+  "io_LIVE_minimum_junction_observation": {
+    "time_s": 4.108574765967512e-08,
+    "NMOS_VDB_v": -0.1750761295623216,
+    "NMOS_body_total_current_a": 4.409244948146349e-06,
+    "PMOS_body_total_current_a": 4.738934436742442e-06,
+    "qualification": "Signed NMOS junction forward polarity is observed; absolute1.98V screen does not qualify forward junctions. Total body port currents are not isolated DC diode current."
+  },
+  "io_causal_snapshots": {
+    "xdut.xctrl.xtim.xd_quiet_d.ab": {
+      "time_s": 4.118932492622873e-08,
+      "voltage_v": 1.031652415579897,
+      "terminal_current_a": {
+        "xdut.xctrl.xtim.xd_quiet_d.x006.mp:1": -1.768741316222575e-06,
+        "xdut.xctrl.xtim.xd_quiet_d.x006.mn:1": 1.857981378839302e-06,
+        "xdut.xctrl.xtim.xd_quiet_d.mn_clear:2": -8.924225294473611e-08
+      },
+      "KCL_sum_a": -2.1903280091048833e-12
+    },
+    "xdut.xctrl.xtim.xd_quiet_d.rc0": {
+      "time_s": 4.113410912336021e-08,
+      "voltage_v": -0.0001674426745652811,
+      "terminal_current_a": {
+        "xdut.xctrl.xtim.xd_quiet_d.r0:2": 2.067907798733537e-06,
+        "xdut.xctrl.xtim.xd_quiet_d.c0:1": -4.528120197357094e-09,
+        "xdut.xctrl.xtim.xd_quiet_d.x002.mp:2": -9.302928329767062e-10,
+        "xdut.xctrl.xtim.xd_quiet_d.x002.mn:2": -1.651041991024476e-10,
+        "xdut.xctrl.xtim.xd_quiet_d.mn_clear:1": -2.062284281503928e-06
+      },
+      "KCL_sum_a": 1.7285738017127816e-19
+    },
+    "xdut.xctrl.xtim.xd_quiet_d.rc1": {
+      "time_s": 4.127592033064071e-08,
+      "voltage_v": 0.9978320876892438,
+      "terminal_current_a": {
+        "xdut.xctrl.xtim.xd_quiet_d.r1:2": 7.672744871152052e-07,
+        "xdut.xctrl.xtim.xd_quiet_d.c1:1": 1.468137998361466e-09,
+        "xdut.xctrl.xtim.xd_quiet_d.x005.mp:2": 2.91776718446421e-10,
+        "xdut.xctrl.xtim.xd_quiet_d.x005.mn:2": 4.429195976766015e-10,
+        "xdut.xctrl.xtim.xd_quiet_d.mp_clear:1": -7.694773214286611e-07
+      },
+      "KCL_sum_a": 1.0285479099092882e-18
+    },
+    "xdut.xctrl.xtim.x001.n": {
+      "time_s": 4.107682414573895e-08,
+      "voltage_v": 1.005442435052148,
+      "terminal_current_a": {
+        "xdut.xctrl.xtim.x001.x000.mp1:1": -4.432785638803893e-08,
+        "xdut.xctrl.xtim.x001.x000.mp0:1": -6.853157123091712e-06,
+        "xdut.xctrl.xtim.x001.x000.mn0:1": 6.466610025369054e-06,
+        "xdut.xctrl.xtim.x001.x001.mp:2": 1.124386025076404e-07,
+        "xdut.xctrl.xtim.x001.x001.mn:2": 3.184363516189198e-07
+      },
+      "KCL_sum_a": 1.586360361309296e-17
+    },
+    "xdut.xctrl.xtim.quiet": {
+      "time_s": 4.159078565059045e-08,
+      "voltage_v": 0.8294757725009488,
+      "terminal_current_a": {
+        "xdut.xctrl.xtim.x020.x001.mp:1": -6.6980908025496e-05,
+        "xdut.xctrl.xtim.x020.x001.mn:1": 3.901052641043817e-08,
+        "xdut.xctrl.xtim.xd_quiet_d.r0:1": 6.64684655717792e-05,
+        "xdut.xctrl.xtim.xd_quiet_d.x006.mp:2": 7.492127560487566e-08,
+        "xdut.xctrl.xtim.xd_quiet_d.x006.mn:2": 1.059243722721941e-07,
+        "xdut.xctrl.xtim.xd_quiet_d.mp_clear:2": 2.131295589600699e-07,
+        "xdut.xctrl.xtim.x022.x000.mp0:2": 8.358692205528089e-08,
+        "xdut.xctrl.xtim.x022.x000.mn0:2": -4.130201097999448e-09
+      },
+      "KCL_sum_a": 4.880490683771481e-16
+    }
+  },
+  "change": {
+    "VDD_net_energy_reduction_fraction": 0.943793912588841,
+    "QUIET_delay_increase_s": 9.77141534736682e-11,
+    "N_peak_above_rail_old_v": 0.015230071170712955,
+    "N_peak_above_rail_new_v": 0.044017195146722976
+  }
+}

@@ -1,0 +1,136 @@
+managed: true
+recipe_hash: 33d9580d9a69435ddc30893ef6fe3948c2ba9acecb9364917de25142e16ff74e
+recipe:
+  schema_version: 1
+  run_id: sar8rg30-s4106-base-v1
+  design_id: sar8_l90_mmain2_stdcell_v1
+  entry: test.scs
+  analyzer: reduce.py
+  files:
+  - name: test.scs
+    source: verification/sar8_mc/regen30/sar8rg30-s4106-base-v1/test.scs
+    bytes: 29493
+    sha256: 1f76b71f65c6bcf8f9937dd37abd1c1770ea4b4e0c215af10fef9a376fa3707f
+  - name: context.json
+    source: verification/sar8_mc/regen30/sar8rg30-s4106-base-v1/context.json
+    bytes: 942
+    sha256: 1e4dc5606aea97678e14be3a6c3bea24eb636e28c0a330af3886e527ab88f9cd
+  - name: expected_mismatch.json
+    source: verification/sar8_mc/regen30/sar8rg30-s4106-base-v1/expected_mismatch.json
+    bytes: 39170
+    sha256: 08e4e1ba879fe09b001c357c1b2f3bbb968f35120b130d9e23da8b70a0170b40
+  - name: clock_sources.scs
+    source: verification/sar8_mc/physical_input/clock_sources.scs
+    bytes: 6771729
+    sha256: 380c3c63b8c0aa0e61906f2c60c0182c675b2985ef1301b04d032c9df42c07fb
+  - name: held_search.va
+    source: scripts/sar8_mc/physical_input/held_search.va
+    bytes: 3163
+    sha256: bfa2aaf9af62507fb74d575bd69aea7ecfb9d2ea105794bc12d5531f556b0551
+  - name: reduce.py
+    source: scripts/sar8_mc/physical_input/reduce_flexible.py
+    bytes: 7372
+    sha256: dd7756466245fbf5a088db17f92db13bafa829913a1ae9ac77f22439d07b8ac4
+  - name: native_stream.py
+    source: scripts/sar8_campaign/native_stream.py
+    bytes: 1654
+    sha256: fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef
+  - name: library_include.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs
+    bytes: 253
+    sha256: 4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 14400
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 86400
+  spectre_args:
+  - +preset=mx
+  - +mt=4
+  - -preset_override
+  - +lqtimeout
+  - '60'
+  summary_signals:
+  - op
+  - 'on'
+  - pr
+  - nr
+  - clk
+  - vinp
+  - vinn
+  - sip
+  - sin
+  - sample
+  - sample_hold
+  - xhold.xbootp.g
+  - xhold.xbootn.g
+  - xhold.ip
+  - xhold.in
+  - xcmp.x
+  - xcmp.y
+  - xcmp.tail
+  expected_stop_s: 1.259e-06
+  qualification_scope: First-comparison threshold plus repeated native eight-pulse
+    burst, static N-low/P-high bottom word; nominal real front-end; not full SAR feedback
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: not_claimed
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_MOS_MOSCAP
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_MOM
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    run_id: sar8rg30-s4106-base-v1
+    seed: 4106
+    mode: hold
+    vdd: 0.9
+    temperature_c: 27
+    cm_source_v: 0.45
+    period_s: 1e-07
+    cycles: 12
+    search_steps: 10
+    search_range_v: 0.064
+    report_s: 1.0350460848744649e-07
+    pre_s: 1.0266910939879553e-07
+    first_clock_rise_s: 1.0276910939879552e-07
+    first_clock_fall_s: 1.035546084874465e-07
+    threshold_window_s: 7.354990886509678e-10
+    stop_s: 1.259e-06
+    RCLAMP_ohm: 1e+18
+    parent_dut_sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+    scope: First-comparison threshold plus repeated native eight-pulse burst, static
+      N-low/P-high bottom word; nominal real front-end; not full SAR feedback
+    front_end_mismatch: false
+    diagnostic: input_pair_nominal
+    parent_run_id: sar8mc-comp-s4106-v2
+    nominalized_instances:
+    - XCMP.MNINN
+    - XCMP.MNINP
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8rg30-s4106-base-v1

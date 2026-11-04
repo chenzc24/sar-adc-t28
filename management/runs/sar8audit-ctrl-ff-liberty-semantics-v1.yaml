@@ -1,0 +1,96 @@
+managed: true
+recipe_hash: a4a97646beb0fbd2033ff805ac83ac9c7ee787337b8d2443c3e38fa817dc17f9
+recipe:
+  schema_version: 2
+  run_id: sar8audit-ctrl-ff-liberty-semantics-v1
+  design_id: native_DFF_indexed_FF_Liberty_conditions
+  entry: source_semantics.py
+  analyzer: source_semantics.py
+  files:
+  - name: source_semantics.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/source_semantics.py
+    bytes: 10087
+    sha256: efbcd7c6cdffeb8581e09232a410202ecdca05abe3fdc6f4fdd9203c88524b92
+  - name: liberty_semantics.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/liberty_semantics.py
+    bytes: 16303
+    sha256: 276f248eb7f4ab50de04c61da99935e22e422e3b4b2fe70620d5cc91c601891b
+  - name: measured_comparison.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/measured_comparison.py
+    bytes: 10427
+    sha256: c90cb353a39a765e8c8b7e1e9fa470f2a268c06d358d12023ebcf1fad7560330
+  - name: source_binding.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/source_binding.json
+    bytes: 4233
+    sha256: 75d9aabab0a4175a5023960ced7835245dc3e9a10f63e6c50929a95551f87ba1
+  - name: semantic_config.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/semantic_config.json
+    bytes: 944
+    sha256: 507f8cfefd3fd423acce31edac468b38967ff2377c21584398ae37df30fb3752
+  - name: native_references.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_references.json
+    bytes: 2656
+    sha256: b15aa0900ef89fea04f2c8393aeb54c5493714fa0eb1bff99ea1cd8e6ded66af
+  - name: native_baseline.bin.gz
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_baseline.bin.gz
+    bytes: 598428
+    sha256: 3261a40a6a2edac0206d4837b92aa1df4b44b8ea77885147c3f4ae4c1065009f
+  - name: native_rck2k.bin.gz
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/liberty_v1/native_rck2k.bin.gz
+    bytes: 610978
+    sha256: c43bd3434300f28f30ce10076e4daaa74edf78bfe6effb376900e07b53a316e8
+  - name: archive_index.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/index_v1/archive_index.py
+    bytes: 10946
+    sha256: cbcb4fe3ee1898ebf9f4adb9c46fa8f428a45f82e0ee4f9ea62f281c41c68475
+  - name: source_audit.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/characterization/index_v1/source_audit.py
+    bytes: 8873
+    sha256: 38ecc67ebeca81333673e1a1ceef92dc25e00650ca3d644b7aff069a2b5a8fd6
+  - name: external_library.json
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/external_library.json
+    bytes: 975
+    sha256: 839d0edcb5e9ef56fd26eb8cb0307aa34a447d5da43aea1fd1cbeadf9d49973e
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 2048
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 4
+    simulation_wall_seconds: 3600
+    analysis_wall_seconds: 900
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - xdut.u19_ck
+  - xdut.u19_d
+  - xdut.xu19.rn
+  expected_stop_s: 2.0e-08
+  qualification_scope: Read exact indexed FF text member and selected DFF semantics;
+    full archive SHA/CRC same pass, compact native-pin threshold reference only, no
+    library copy/db decode/new simulation/compatibility or reliability qualification
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: read_only_dependency_audit
+  kind: analysis_only
+  source:
+    run_id: sar8audit-ctrl-usage-baseline-ff-v1
+    recipe_hash: a4880aca396bc8ee6112e2069a7eb18579d54be2d04a1f795f6708667f47b1a1
+  test_conditions:
+    PEX: false
+    corner: ff
+    mismatch: false
+    noise: false
+    temperature_c: -40
+    vdd: 0.99
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-ctrl-ff-liberty-semantics-v1

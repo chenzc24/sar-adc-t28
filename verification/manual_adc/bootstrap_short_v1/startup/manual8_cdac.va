@@ -1,0 +1,41 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// One side: explicit floating top plate, seven bottom plates, 128*Cunit total.
+// High gate selects VREFN; low gate selects VREFP, matching native switches.
+// First-bit P/N crossing belongs in the TOP wrapper, never inside this model.
+module manual8_cdac(GND, VDD, VTOP, VREFP, VREFN,
+                   DCTRL_7, DCTRL_6, DCTRL_5, DCTRL_4, DCTRL_3, DCTRL_2, DCTRL_1);
+    input VDD, DCTRL_7, DCTRL_6, DCTRL_5, DCTRL_4, DCTRL_3, DCTRL_2, DCTRL_1;
+    inout GND, VTOP, VREFP, VREFN;
+    electrical GND, VDD, VTOP, VREFP, VREFN;
+    electrical DCTRL_7, DCTRL_6, DCTRL_5, DCTRL_4, DCTRL_3, DCTRL_2, DCTRL_1;
+    electrical [7:1] bp, gate;
+    parameter real cunit = 10f from (0:inf);
+    parameter real ctop = 0 from [0:inf);
+    parameter real ron_unit = 10 from (0:inf);
+    parameter real roff = 1e12 from (0:inf);
+    parameter real vsmooth = 10m from (0:inf);
+    // 1: resistance inversely proportional to capacitor weight; 0: common Ron.
+    parameter integer scale_ron = 1 from [0:1];
+    real low_fraction[7:1];
+    genvar b;
+    analog begin
+        V(gate[7],GND) <+ V(DCTRL_7,GND);
+        V(gate[6],GND) <+ V(DCTRL_6,GND);
+        V(gate[5],GND) <+ V(DCTRL_5,GND);
+        V(gate[4],GND) <+ V(DCTRL_4,GND);
+        V(gate[3],GND) <+ V(DCTRL_3,GND);
+        V(gate[2],GND) <+ V(DCTRL_2,GND);
+        V(gate[1],GND) <+ V(DCTRL_1,GND);
+        I(VTOP,GND) <+ (cunit+ctop)*ddt(V(VTOP,GND));
+        for (b=1; b<=7; b=b+1) begin
+            low_fraction[b] = 0.5*(1+tanh((V(gate[b],GND)-0.5*V(VDD,GND))/vsmooth));
+            I(VTOP,bp[b]) <+ cunit*pow(2,b-1)*ddt(V(VTOP,bp[b]));
+            I(bp[b],VREFP) <+ ((1-low_fraction[b])*pow(2,scale_ron*(b-1))/ron_unit
+                                      +1/roff)*V(bp[b],VREFP);
+            I(bp[b],VREFN) <+ (low_fraction[b]*pow(2,scale_ron*(b-1))/ron_unit
+                                      +1/roff)*V(bp[b],VREFN);
+        end
+    end
+endmodule

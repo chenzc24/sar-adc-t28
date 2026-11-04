@@ -1,0 +1,81 @@
+{
+  "run_id": "sar8audit-refcell-ioa-ffcold",
+  "design_id": "sar8_reference_loaded_IO_A_stage_ideal_PRE_feasibility",
+  "entry": "test.scs",
+  "analyzer": "io_astage_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_astage_v1/dut.scs",
+      "name": "dut.scs",
+      "sha256": "adfb47cac3e923acb59cbb0a171e38e20cb0b5be87346fc4bedc1a1b5a6896c3"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_astage_v1/ffcold/test.scs",
+      "name": "test.scs",
+      "sha256": "7cdc323100b5c7911956e12c483cfe8047f91b48db9b415f5ce1e5ed1ad82645"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+      "name": "io_cell_analyze.py",
+      "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_bstage_analyze.py",
+      "name": "io_bstage_analyze.py",
+      "sha256": "953c73bbd99f649d8ec36801c4148794ee77d96f3f0f90ebb209ceaf28bdfe6b"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_astage_analyze.py",
+      "name": "io_astage_analyze.py",
+      "sha256": "2e7d4e590b3b1951747f80a0f70ad829515e9aab751d76e6584fca40c7a517e1"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/pre_driver_boundary.json",
+      "name": "pre_driver_boundary.json",
+      "sha256": "625c48d54e141c5d28229e158b86f641f1f386b34dbab4c7dba990bdf9d94a22"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_astage_v1/ffcold/measurement.json",
+      "name": "measurement.json",
+      "sha256": "c5d0b888df5b652c6cf975afd16f9682af869b962660775263a78bc260038cf1"
+    }
+  ],
+  "summary_signals": [
+    "PRE",
+    "XDUT.GNNA",
+    "XDUT.GNNB",
+    "XDUT.GNNDRV",
+    "XDUT.GNN0",
+    "XDUT.XCDAC.BN0"
+  ],
+  "expected_stop_s": 5.2e-08,
+  "qualification_scope": "Bit0 NN: only A becomes IO; B/C and original physical loads retained; ideal PRE, no full-chain acceptance",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ffcold",
+    "supply_V": 0.99,
+    "temperature_C": -40,
+    "variant": "IO_ABC_ideal_PRE",
+    "logical_stimulus": true,
+    "FF_waveform_replay": false,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 512,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}

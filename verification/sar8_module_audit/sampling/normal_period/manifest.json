@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "status": "local_prepared_not_registered_or_run",
+  "generator_sha256": "facf1639ab11cf016bda90235701817ce645c61355081303aa99b84c248d3da3",
+  "run_id": "sar8audit-sample-v2-low60cold",
+  "source": "verification/sar8_module_audit/sampling/cold_controls/low40cold/test.scs",
+  "source_sha256": "5bfc068ea6b5302cf1a5eb370a5ea59b76d91b53ddb77a3d194f102d6bbd324a",
+  "deck_sha256": "c13f1a5ff56817dc9f50863fafa7bca49fc1c9109b4f933ad20276b8f2585d9a",
+  "diff_sha256": "a2233ce83c4b56488c4851c2a329d5a77a938f0e2d8d70389f3b71b90f3b2d04",
+  "clock_contract": {
+    "source": "output/sar8_physical_repair/sar8fix-loaded-both-rx2-tt/test.scs",
+    "source_sha256": "dd774416dd147b54caab69bb72007646d5ee44ecece788d64e64ab8e0a480bc8",
+    "VSAMPLE": "VSAMPLE (SAMPLE 0) vsource type=pulse val0=SUP val1=0 delay=41n rise=100p fall=100p width=59.9n period=100n",
+    "period_ns": 100.0,
+    "rate_MSps": 10,
+    "nominal_high_half_level_interval_ns": 40,
+    "nominal_low_half_level_interval_ns": 60,
+    "external_low_flat_plateau_ns": 59.9,
+    "source_fall_start_ns": 41.0,
+    "source_fall_end_ns": 41.1,
+    "source_rise_start_ns": 101.0,
+    "source_rise_end_ns": 101.1,
+    "source_close_start_ns": 141.0,
+    "edge_duration_ns": 0.1
+  },
+  "only_delta": "VSAMPLE initial fall60.9-61ns ->41-41.1ns",
+  "formal_source_tail_from101ns_identical": true,
+  "initial_SAMPLE": "SUP; same natural high-DC operating point, pending native verification",
+  "actual_SEQ_low_interval_ns": null,
+  "actual_acquisition_ns": null,
+  "reused_measurement_files": {
+    "fixture_dut.scs": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/fixture_dut.scs",
+      "sha256": "42d5bf8b68012168e279e67bff5aa07eaa45174a0631e9b47571c1f7b45b22cd",
+      "bytes": 143840
+    },
+    "stream.cpp": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/stream.cpp",
+      "sha256": "3452d0a660c712d25caddf6da41e20996012ffadd4a9604b8cfe3f0c26519827",
+      "bytes": 7251
+    },
+    "mapping.json": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/mapping.json",
+      "sha256": "66971034258ec27475aaa5fb12cd2b5772769360850177b5a18ce48184cdd50d",
+      "bytes": 461671
+    },
+    "pairs.txt": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/pairs.txt",
+      "sha256": "9d6b2d0a5c0c0311670ab25c1d131feeaa168d42be6bf677648f209b5be34737",
+      "bytes": 17535
+    },
+    "selected.txt": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/selected.txt",
+      "sha256": "14424dc255e5c5dfc641c4ec956bff684d1213f5c7c82352dd5c5379fcf97e33",
+      "bytes": 3498
+    },
+    "events.txt": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/events.txt",
+      "sha256": "6097d83fb8d8b5244439017ec28e73ef72399ba1ad3f560b0ea2c60752295932",
+      "bytes": 126
+    },
+    "products.txt": {
+      "path": "verification/sar8_module_audit/sampling/stream_package/common/products.txt",
+      "sha256": "e719bd220796986537d8fcf9a3ce8a1349d9a757599fe5fa9d484bc6b47aeeb0",
+      "bytes": 138
+    }
+  },
+  "analyzer": {
+    "stream_source": "output/sar8_physical_repair/sar8fix-loaded-both-rx2-tt/stream.cpp",
+    "stream_sha256": "3452d0a660c712d25caddf6da41e20996012ffadd4a9604b8cfe3f0c26519827",
+    "analyzer_source": "scripts/sar8_physical_repair/loaded_remote.py",
+    "analyzer_sha256": "ec4c809c168f0c398704efe9318afae1b98962652862c025df267d192f5bb4cc",
+    "stream_byte_identical": true,
+    "analyzer_unmodified": true
+  },
+  "all_sources_devices_models_and_loads_otherwise_unchanged": true,
+  "low_DC_equilibrium_is_normal_period": false,
+  "finite_precharge_minimum_ns": null,
+  "full_ADC_PVT_qualified": false,
+  "simulator_invoked": false,
+  "remote_submission": false,
+  "analysis_rss_limit_mib": 256,
+  "collection_limit_mib": 32
+}

@@ -1,0 +1,53 @@
+{
+  "target": "XDUT.XBBM0.XD_HD.MP_CLEAR",
+  "new_resistor": "XDUT.XBBM0.XD_HD.R_CLEAR_GATE",
+  "old_gate_node": "CODE",
+  "new_gate_node": "XDUT.XBBM0.XD_HD.CLEAR_G",
+  "LD_and_all_other_existing_leaf_records_exact": true,
+  "unchanged_existing_leaf_records": 193,
+  "original_primitives": 194,
+  "candidate_primitives": 195,
+  "all123_MOS_models_dimensions_DSB_exact": true,
+  "changed_existing": {
+    "XDUT.XBBM0.XD_HD.MP_CLEAR": {
+      "old": {
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XBBM0.XD_HD.RC1",
+          "CODE",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=3u multi=1 nf=1 sd=100n ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      "new": {
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XBBM0.XD_HD.RC1",
+          "XDUT.XBBM0.XD_HD.CLEAR_G",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=3u multi=1 nf=1 sd=100n ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    }
+  },
+  "added_passive": {
+    "instance": "XDUT.XBBM0.XD_HD.R_CLEAR_GATE",
+    "model": "rupolym",
+    "nodes": [
+      "CODE",
+      "XDUT.XBBM0.XD_HD.CLEAR_G"
+    ],
+    "parameters": "l=17.13u w=1u m=1 multi=(1)"
+  },
+  "resistor_geometry_source": "XDUT.XBBM0.XD_HD.R0",
+  "resistor_parameters_identical_to_existing_native_passed_R0": true,
+  "native_library_and_BBM_boolean_cells_exact": true,
+  "cloned_only_HD_delay_master": "sar8audit_delay_bbm_HD_clear_gate_R",
+  "no_supply_or_sampling_clock_change": true,
+  "baseline_dut_sha256": "3821c79b8cbae113c8bf327c8c39bba4a808c174899a6bdc275f093a9329876a",
+  "baseline_recipe_proposal_sha256": "739a937ac526501d15922f09de3babc87a4dc9270e9845a5731bfe50d26874e4",
+  "rationale": "Existing HL native RC1 charge closure identifies MP_CLEAR D as dominant source/sink for both polarities. One existing-R0-geometry gate resistor slows only HD analog clear edge, keeps DC strength; LD untouched control. MeasuredR1~9790.7ohm and eventQg/0.99~1.99fF imply~19.5ps first estimate, not a pass prediction.",
+  "candidate_dut_sha256": "790321313eb64b556bad42b64f4d9a7142574f1ab471ddcc2fa19a5909545dd3"
+}

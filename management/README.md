@@ -84,12 +84,27 @@ OA、PDK、现有历史目录均未迁移，`SAR_ADC_T28_WORK` 仍未创建。
 本地输入逐项列出，包含文件也需打包；PDK 只引用服务器路径，不复制内容。
 同一 ID 不接受改动后的输入；失败或连接丢失先查原状态，不能自动换 ID 重跑。
 
+注册上传最多32MiB输入包，单次传输超时为180秒（含base64传输开销）；其他RPC仍为45秒。
+传输超时后先核对同一运行的远端状态，不自动重试，不改变仿真资源或时间门禁。
+
 默认分析器只输出所选瞬态信号的极值、首尾值、样本均值和完整性，逐行扫描 PSF ASCII，
 不把整条波形读入内存。**样本均值不是时间加权均值；原生 PASS 不代表 ADC 性能合格。**
 复杂 ADC 测量需打包专用流式分析器，接口为
 `--run-dir DIR --output-dir DIR`，结果写 `derived/result.json`，仍受分析资源门禁约束。
 服务器当前是 Python 2.7.5，专用远端分析器需兼容此运行时；ADCtoolbox 等 Python 3
 分析放在本地小结果上运行，不把整份原始波形拉到本地再展开。
+
+已完成的托管仿真需要补测量时，可新建 `kind: analysis_only` 配方，并指定
+`source_run_id` 和专用 `analyzer`。注册时绑定源运行的 recipe SHA256；服务端在
+注册、分析启动和执行时核对源仿真已完成且原生日志通过。仍走
+`register → analyze → run-status → collect`，不要调用 `submit`；工具会拒绝为此类
+运行启动仿真。原始 v1 仿真配方与散列保持不变。
+
+此分析器接口额外提供 `--source-run-dir DIR`：只能读取该源目录，工作文件和结果
+写入新运行的目录。源运行元数据证据写入 `source_provenance.json`，原始文件的
+只读流式读取与完整性证据由专用分析器负责。分析器必须先经代码审阅；这不是
+文件系统写入沙箱。它仍占用一个受管重任务槽位，受分析内存/时间/输出门禁和32MiB回收限制。
+不支持把未完成仿真或另一个 analysis-only 运行当作源，也不覆盖原分析结果。
 
 ### 存放位置
 
@@ -119,7 +134,7 @@ ID 和远端路径序号见 [历史索引](runs/index.yaml)；多路径必须明
 
 | 检查或限制 | 已执行规则 |
 | --- | --- |
-| 并发 | 仿真与重型分析共用独占锁，单组；Spectre 最多 4 线程 |
+| 并发 | 用户于2026-10-27授权总计2个受管重任务槽位，仿真/重分析共用；每项Spectre最多4线程。旧workload.lock为slot0，兼容在途旧worker；非受管重任务仍阻止准入 |
 | 内存准入 | 主机 `MemAvailable ≥ 声明RSS预算 + 8 GiB`；用户 cgroup 余量另留 1 GiB |
 | 换页/CPU | 检查实际换页速率、CPU 配额与负载；SwapFree 低不单独等同故障 |
 | 磁盘准入 | SSD 空间 ≥ 声明输出预算 + 16 GiB；运行中另设 4 GiB 底线 |
@@ -144,3 +159,10 @@ ID 和远端路径序号见 [历史索引](runs/index.yaml)；多路径必须明
 
 未审核运行、冻结基准及关键异常证据继续保护；其余删减仍由用户按精确清单批准。
 统一仿真入口没有删除命令。本次一次性清理另有审核绑定、跨端校验和逐文件回执，不能用来批量删其他目录。
+
+
+2026-10-28: 用户为FFT/PVT截止时间明确授权最多6个managed重任务并发，每仿真仍最多4线程；CPU总配额、内存/磁盘、交换与未知进程门禁保持。覆盖此前2槽位描述。
+
+2026-10-28: user-authorized thread scaling diagnostic allows up to16threads/job; default remains4. Six shared heavy slots and aggregate account CPU/memory/disk gates remain enforced. Existing FFTs retain their original4thread recipes.
+
+2026-10-28: 用户授权增加一个槽位供0.9V比较器PT串行测试，总managed重任务上限6→7；原有单任务预算及账号资源门禁不变。已入队案例沿用原ID。

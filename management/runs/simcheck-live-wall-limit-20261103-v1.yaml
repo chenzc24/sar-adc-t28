@@ -1,0 +1,41 @@
+managed: true
+recipe_hash: f1d7dab405cdd06f4f4a24eb984633e403ebe2d0e163ee001b1fa7403c6b70cf
+recipe:
+  schema_version: 1
+  run_id: simcheck-live-wall-limit-20261103-v1
+  design_id: simcheck_fault_injection_only
+  entry: test.scs
+  analyzer: native_summary.py
+  files:
+  - name: test.scs
+    source: verification/simcheck_live/20261103/wall-limit/test.scs
+    bytes: 323
+    sha256: 3272f9eecb50c4dcb9827332ca959f8e51b15373476c9977fbbfde4a1f85a970
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 512
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 128
+    analysis_virtual_mib: 512
+    max_output_mib: 8
+    simulation_wall_seconds: 8
+    analysis_wall_seconds: 30
+    queue_timeout_seconds: 3600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '5'
+  - -preset_override
+  summary_signals:
+  - out
+  expected_stop_s: 1.0
+  qualification_scope: Intentional test case; not circuit qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: not_claimed
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/simcheck-live-wall-limit-20261103-v1

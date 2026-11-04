@@ -48,6 +48,23 @@ def state(path,phase,**kw):
     old=read(p) if os.path.isfile(p) else {}
     old.update(kw);old.update(phase=phase,updated_epoch=time.time())
     write(p,old);return old
+def managed_process(pid):
+    """Recognize only a live child group owned by a live registered managed worker."""
+    try:
+        cwd=os.path.realpath('/proc/'+str(pid)+'/cwd')
+        if not cwd.startswith(ROOT+'/runs/'):return None
+        run_id=cwd[len(ROOT+'/runs/'):].split('/')[0];path=runpath(run_id)
+        if not read(path+'/registered.json').get('files_complete'):return None
+        for phase in ['simulation','analysis']:
+            p=path+'/'+phase+'.state.json'
+            if not os.path.isfile(p):continue
+            s=read(p);child=s.get('child_identity');worker_id=s.get('worker_identity')
+            if s.get('status')=='running' and same_process(child) and same_process(worker_id) and os.getpgid(pid)==child['pgid']:
+                b=read(path+'/recipe.json')['resources']
+                return dict(run_id=run_id,phase=phase,reserved_rss_mib=b['simulation_rss_mib'] if phase=='simulation' else b['analysis_rss_mib'],threads=b['threads'] if phase=='simulation' else 1)
+    except (IOError,OSError,ValueError,KeyError,AssertionError):pass
+    return None
+
 def snapshot():
     mem={s.split(':')[0]:int(s.split(':')[1].split()[0])*1024 for s in open('/proc/meminfo')}
     cg={};quota=[]
@@ -81,7 +98,9 @@ def snapshot():
             comm=open(base+'/comm').read().strip()
             cmd=open(base+'/cmdline','rb').read().replace(b'\x00',b' ').decode('utf-8','replace')
             if comm.startswith('spectre') or any(x in cmd for x in ['stream_worker.py','reduce_remote.py','stream_reduce.py','/reduce.py']) or ROOT+'/runs/' in cmd:
-                conflicts.append(dict(pid=int(pid),comm=comm))
+                item=dict(pid=int(pid),comm=comm);managed=managed_process(int(pid))
+                if managed:item['managed']=managed
+                conflicts.append(item)
         except (IOError,OSError):pass
     return dict(host=socket.gethostname(),epoch=time.time(),mem_available=mem['MemAvailable'],swap_free=mem['SwapFree'],swap_rate_bytes_s=rate,
         cgroups=cg,cgroup_headroom=min([v['headroom'] for v in cg.values()] or [mem['MemAvailable']]),
@@ -90,15 +109,22 @@ def snapshot():
 def gate(recp,phase,obs,pol):
     budget=recp['resources'];reasons=[]
     rss=budget['simulation_rss_mib'] if phase=='simulation' else budget['analysis_rss_mib']
-    need=rss*1024**2;disk=budget['max_output_mib']*1024**2
+    running={};unknown=[]
+    for item in obs['conflicting_processes']:
+        if item.get('managed'):
+            m=item['managed'];running[(m['run_id'],m['phase'])]=m
+        else:unknown.append(item)
+    need=(rss+sum(m.get('reserved_rss_mib',0) for m in running.values()))*1024**2;disk=budget['max_output_mib']*1024**2
     if budget['threads']>pol['threads_per_simulation']:reasons.append('threads_exceed_policy')
     if budget['threads']>obs['cpu_capacity']:reasons.append('threads_exceed_cpu_quota')
+    if budget['threads']+sum(m.get('threads',0) for m in running.values())>obs['cpu_capacity']:reasons.append('aggregate_threads_exceed_cpu_quota')
     if obs['mem_available']<need+pol['host_memory_reserve_mib']*1024**2:reasons.append('host_memory_headroom')
     if obs['cgroup_headroom']<need+pol['user_memory_reserve_mib']*1024**2:reasons.append('user_cgroup_headroom')
     if obs['disk_free']<disk+pol['disk_reserve_mib']*1024**2:reasons.append('disk_headroom')
     if obs['swap_rate_bytes_s']>pol['max_swap_rate_mib_s']*1024**2:reasons.append('active_swapping')
     if obs['load1']>obs['cpu_capacity']*pol['max_load_per_cpu']:reasons.append('cpu_load')
-    if obs['conflicting_processes']:reasons.append('existing_simulation_or_analysis')
+    if unknown:reasons.append('existing_simulation_or_analysis')
+    if len(running)>=pol.get('max_managed_workloads',1):reasons.append('managed_workload_capacity')
     if not obs['cgroups']:reasons.append('user_cgroup_observation_missing')
     return dict(pass_gate=not reasons,reasons=reasons,snapshot=obs,phase=phase,policy_sha256=sha(ROOT+'/policy.json') if os.path.exists(ROOT+'/policy.json') else None)
 def storage_init(req):
@@ -123,6 +149,7 @@ def register(req):
         assert os.path.isfile(path+'/registered.json'),'Incomplete registration: preserve partial files, reconcile or use a new run ID'
         assert read(path+'/registered.json')['recipe_hash']==fingerprint,'Run ID already has different immutable inputs'
         return dict(existing=True,path=path,recipe_hash=fingerprint)
+    if recp.get('kind')=='analysis_only':source_provenance(recp)
     os.mkdir(path,0o700);mkdir(path+'/inputs');mkdir(path+'/raw');mkdir(path+'/derived')
     for item in req['files']:
         name=relative(item['name']);dest=contained(path+'/inputs',path+'/inputs/'+name)
@@ -144,10 +171,42 @@ def inspect(run_id):
         if s.get('status') not in TERMINAL and s.get('worker_identity') and not same_process(s['worker_identity']):
             s=dict(s,observation='worker_not_alive_reconcile_required')
         result[phase]=s
+    if read(path+'/recipe.json').get('kind')=='analysis_only':
+        result['simulation']=dict(status='not_applicable',reason='analysis_only_source_reuse')
     return result
+
+def source_provenance(recp):
+    """Validate an exact completed managed source; never mutate that directory."""
+    source=recp['source'];assert source['run_id']!=recp['run_id'],'Source cannot be itself'
+    path=runpath(source['run_id']);owned(path)
+    for name in ['recipe.json','registered.json','simulation.state.json','raw']:
+        owned(path+'/'+name)
+    registration=read(path+'/registered.json');original=read(path+'/recipe.json')
+    assert registration['files_complete'] and registration['recipe_hash']==source['recipe_hash'],'Source registration mismatch'
+    actual=hashlib.sha256(json.dumps(original,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    assert actual==source['recipe_hash'],'Source recipe hash mismatch'
+    assert original['run_id']==source['run_id'] and original.get('kind','simulation')=='simulation','Source must be a simulation'
+    status=read(path+'/simulation.state.json');native=status.get('native',{})
+    assert status.get('status')=='complete' and status.get('exit_code')==0,'Source simulation must complete first'
+    assert native.get('native_analysis_pass') and native.get('zero_error_footer'),'Source native success missing'
+    return dict(run_id=source['run_id'],path=path,recipe_hash=actual,
+        simulation_state_sha256=sha(path+'/simulation.state.json'),
+        recipe_file_sha256=sha(path+'/recipe.json'),registration_sha256=sha(path+'/registered.json'))
+
+def validate_phase(recp,phase):
+    if recp.get('kind')=='analysis_only':
+        assert phase=='analysis','Analysis-only run cannot execute a simulation'
+        return source_provenance(recp)
+    if phase=='analysis':assert inspect(recp['run_id'])['simulation'].get('status')=='complete','Native simulation must complete first'
+    return None
+
+def analysis_command(path,recp,source=None):
+    cmd=[sys.executable,path+'/inputs/'+relative(recp['analyzer']),'--run-dir',path,'--output-dir',path+'/derived']
+    if source:cmd+=['--source-run-dir',source['path']]
+    return cmd
 def spawn(run_id,phase,queue):
     path=runpath(run_id);owned(path);assert read(path+'/registered.json')['files_complete']
-    if phase=='analysis':assert inspect(run_id)['simulation'].get('status')=='complete','Native simulation must complete first'
+    recp=read(path+'/recipe.json');validate_phase(recp,phase)
     lock=open(path+'/'+phase+'.launch.lock','a');fcntl.flock(lock,fcntl.LOCK_EX)
     try:
         if os.path.exists(path+'/'+phase+'.state.json'):return dict(existing=True,state=inspect(run_id))
@@ -217,24 +276,38 @@ def native_summary(path,rc):
     status=path+'/raw/logStatus';passed=os.path.isfile(status) and bool(re.search(r'\bPASS\b',open(status).read()))
     return dict(native_exit=rc,native_analysis_pass=passed,zero_error_footer=zero,version=version,thread_log=threads,
         warning_codes=sorted(warnings),effective_settings=settings,electrical_verdict='not_inferred')
+def acquire_workload_slot(pol,folder=None):
+    """Legacy lock is slot0; preserve old live workers while admitting one extra."""
+    folder=folder or ROOT+'/locks'
+    for slot in range(pol.get('max_managed_workloads',1)):
+        lock=open(folder+('/workload.lock' if slot==0 else '/workload.'+str(slot)+'.lock'),'a')
+        try:
+            fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+            return lock,slot
+        except IOError:lock.close()
+    return None,None
+
 def worker(run_id,phase):
     path=runpath(run_id);owned(path);recp=read(path+'/recipe.json');own=identity(os.getpid())
+    validate_phase(recp,phase)
     state(path,phase,status='queued',worker_identity=own,agent_sha256=sha(os.path.abspath(__file__)))
-    budget=recp['resources'];started=time.time();lock=open(ROOT+'/locks/workload.lock','a')
+    budget=recp['resources'];started=time.time();lock=None
     while True:
-        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);held=True
-        except IOError:held=False
-        if held:
+        lock,slot=acquire_workload_slot(policy())
+        if lock is not None:
             g=gate(recp,phase,snapshot(),policy())
+            g['workload_slot']=slot
             write(path+'/'+phase+'.admission.json',g)
             if g['pass_gate']:break
-            fcntl.flock(lock,fcntl.LOCK_UN)
+            lock.close();lock=None
         else:g=dict(pass_gate=False,reasons=['managed_workload_lock'])
         state(path,phase,status='queued',waiting_reasons=g['reasons'])
         if time.time()-started>budget['queue_timeout_seconds']:
-            state(path,phase,status='rejected',reason='queue_timeout',gate=g);lock.close();return
+            state(path,phase,status='rejected',reason='queue_timeout',gate=g);return
         time.sleep(10)
     for item in recp['files']:assert sha(path+'/inputs/'+relative(item['name']))==item['sha256']
+    source=validate_phase(recp,phase)
+    if source:write(path+'/source_provenance.json',source)
     os.nice(10)
     if os.path.exists('/usr/bin/ionice'):subprocess.call(['/usr/bin/ionice','-c','3','-p',str(os.getpid())])
     if phase=='simulation':
@@ -244,7 +317,7 @@ def worker(run_id,phase):
         cmd=['/bin/csh','-f','-c',invocation]
         as_limit=budget['simulation_virtual_mib']
     else:
-        cmd=[sys.executable,path+'/inputs/'+relative(recp['analyzer']),'--run-dir',path,'--output-dir',path+'/derived']
+        cmd=analysis_command(path,recp,source)
         as_limit=budget['analysis_virtual_mib']
     def child_setup():
         os.setsid();resource.setrlimit(resource.RLIMIT_AS,(as_limit*1024**2,as_limit*1024**2))
@@ -275,6 +348,9 @@ def worker(run_id,phase):
     size=tree_bytes(path)
     if size>budget['max_output_mib']*1024**2:reason='output_size_limit'
     result=dict(exit_code=rc,elapsed_seconds=time.time()-t0,peak_rss_bytes=peak,output_bytes=size)
+    if source:
+        assert source_provenance(recp)==source,'Source metadata changed during analysis'
+        result['source_provenance']=source
     if phase=='simulation':
         result['native']=native_summary(path,rc)
         ok=rc==0 and result['native']['native_analysis_pass'] and result['native']['zero_error_footer']
@@ -284,7 +360,7 @@ def worker(run_id,phase):
     state(path,phase,**result);lock.close()
 def artifacts(run_id):
     path=runpath(run_id);owned(path);out=[]
-    candidates=['simulation.state.json','analysis.state.json','simulation.admission.json','analysis.admission.json','spectre.out','raw/logStatus']
+    candidates=['simulation.state.json','analysis.state.json','simulation.admission.json','analysis.admission.json','spectre.out','raw/logStatus','source_provenance.json']
     if os.path.isdir(path+'/derived'):
         for parent,dirs,files in os.walk(path+'/derived',followlinks=False):
             dirs[:]=[d for d in dirs if not os.path.islink(os.path.join(parent,d))]

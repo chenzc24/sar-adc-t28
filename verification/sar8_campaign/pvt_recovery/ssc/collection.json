@@ -1,0 +1,188 @@
+{
+  "collected_files": 8,
+  "bytes": 2433757,
+  "skipped": [],
+  "local_path": "output/managed_execution/runs/sar8camp-b-ssc-screen-mm-v2/collected",
+  "state": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-ssc-screen-mm-v2",
+    "registered": {
+      "epoch": 1793146998.716823,
+      "files_complete": true,
+      "recipe_hash": "159eaee057069d4789364d36bdc8ca3f65bcd9c021e66c90892d44c6d1f827f8"
+    },
+    "simulation": {
+      "status": "complete",
+      "rss_bytes": 395362304,
+      "started_epoch": 1793147034.054725,
+      "updated_epoch": 1793147342.157017,
+      "agent_sha256": "aa26a451b43e537c863de709bf14c7623fc99f98c8fb41782a51a41f8fa67615",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 308.08550214767456,
+      "submitted_epoch": 1793147033.738936,
+      "output_bytes": 589528061,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 1,
+        "reasons": [],
+        "policy_sha256": "bd74a262b4346e9a530120fa14b8b414596bc5f7f865fa868d3ddb9f8e6ecc08",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 24855871488,
+              "limit": 51539607552,
+              "used": 26683736064
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 21474832384,
+          "cgroup_headroom": 24855871488,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-b-tt-fft1024-mm-v1"
+              },
+              "pid": 59993,
+              "comm": "spectre"
+            }
+          ],
+          "epoch": 1793147034.040272,
+          "disk_free": 275816755200,
+          "load1": 5.16,
+          "mem_available": 107260682240
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "12196394",
+        "pid": 60018,
+        "state": "R",
+        "pgid": 60018,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 396697600,
+      "worker_identity": {
+        "start_ticks": "12196364",
+        "pid": 59991,
+        "state": "R",
+        "pgid": 59991,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": true,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 0,
+        "effective_settings": {
+          "reltol": "1e-06, default 1e-03",
+          "abstol(V)": "10 nV, default 1 uV",
+          "maxstep": "10 ps, default 21.18 ns",
+          "abstol(I)": "100 fA, default 1 pA",
+          "method": "trap"
+        },
+        "native_analysis_pass": true,
+        "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [2, 4], consider adding +mt=2 or +mt=4 on command line.",
+        "warning_codes": [
+          "CMI-2751",
+          "SFE-1131",
+          "SFE-2453",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "complete",
+      "rss_bytes": 17715200,
+      "started_epoch": 1793147366.278973,
+      "updated_epoch": 1793147404.271339,
+      "agent_sha256": "aa26a451b43e537c863de709bf14c7623fc99f98c8fb41782a51a41f8fa67615",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 37.99206495285034,
+      "submitted_epoch": 1793147365.959267,
+      "output_bytes": 591935863,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 1,
+        "reasons": [],
+        "policy_sha256": "bd74a262b4346e9a530120fa14b8b414596bc5f7f865fa868d3ddb9f8e6ecc08",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 22068686848,
+              "limit": 51539607552,
+              "used": 29470920704
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 21474832384,
+          "cgroup_headroom": 22068686848,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-b-tt-fft1024-mm-v1"
+              },
+              "pid": 59993,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-b-ffc-screen-mm-v2"
+              },
+              "pid": 60308,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8camp-b-ssh-screen-mm-v2"
+              },
+              "pid": 62809,
+              "comm": "python"
+            }
+          ],
+          "epoch": 1793147366.264272,
+          "disk_free": 273565708288,
+          "load1": 12.35,
+          "mem_available": 106201038848
+        },
+        "phase": "analysis"
+      },
+      "phase": "analysis",
+      "child_identity": {
+        "start_ticks": "12229617",
+        "pid": 63124,
+        "state": "R",
+        "pgid": 63124,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 18501632,
+      "worker_identity": {
+        "start_ticks": "12229586",
+        "pid": 63119,
+        "state": "R",
+        "pgid": 63119,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true
+    },
+    "run_id": "sar8camp-b-ssc-screen-mm-v2"
+  }
+}

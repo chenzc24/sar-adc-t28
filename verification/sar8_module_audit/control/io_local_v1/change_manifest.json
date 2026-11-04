@@ -1,0 +1,1054 @@
+{
+  "base_run": "sar8audit-ctrl-stackorder-v1",
+  "base_recipe_sha256": "f7fdea18a1eb32890b5dd3688952ac6e14e91d8d05106bc8dfcd3d85305a82e3",
+  "base_proof": {
+    "run": "sar8audit-ctrl-stackorder-v1",
+    "recipe_sha256": "f7fdea18a1eb32890b5dd3688952ac6e14e91d8d05106bc8dfcd3d85305a82e3",
+    "receipt_files": 9,
+    "receipt_bytes": 2109393,
+    "required_currents": 444,
+    "native_points": 5939,
+    "local_diagnostic_points": 1858,
+    "END": true,
+    "all_receipt_and_input_hashes_match": true,
+    "critical_kcl_max_a": 2.7391757888598975e-12,
+    "native_warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "SFE-1131",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "electrical_change": {
+    "changed_MOS": {
+      "XDUT.XCTRL.XTIM.X001.X001.MN": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X001.N",
+            "0",
+            "0"
+          ],
+          "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X001.N",
+            "0",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=2"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X001.X001.MP": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X001.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X001.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X019.X001.MN": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.Q1",
+            "XDUT.XCTRL.XTIM.X019.N",
+            "0",
+            "0"
+          ],
+          "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.Q1",
+            "XDUT.XCTRL.XTIM.X019.N",
+            "0",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=2"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X019.X001.MP": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.Q1",
+            "XDUT.XCTRL.XTIM.X019.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.Q1",
+            "XDUT.XCTRL.XTIM.X019.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.MN0": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X020.X000.MID",
+            "0"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.LIVE",
+            "XDUT.XCTRL.XTIM.X020.X000.MID",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.MN1": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.X000.MID",
+            "XDUT.XCTRL.XTIM.Q1",
+            "0",
+            "0"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.X000.MID",
+            "XDUT.XCTRL.XTIM.Q1",
+            "0",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.MP0": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.Q1",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.Q1",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.MP1": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.X020.X000.B_PM",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X020.N",
+            "XDUT.XCTRL.XTIM.X020.X000.B_PM",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X001.MN": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X020.N",
+            "0",
+            "0"
+          ],
+          "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X020.N",
+            "0",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=2"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X020.X001.MP": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X020.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X020.N",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X022.X000.MN0": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X022.N",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X022.X000.MID",
+            "0"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X022.N",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "XDUT.XCTRL.XTIM.X022.X000.MID",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.X022.X000.MP0": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X022.N",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.X022.N",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      },
+      "XDUT.XCTRL.XTIM.XD_QUIET_D.MP_CLEAR": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=3u multi=1 nf=1 sd=100n ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=10"
+        }
+      },
+      "XDUT.XCTRL.XTIM.XD_QUIET_D.X006.MN": {
+        "before": {
+          "model": "nch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "0",
+            "0"
+          ],
+          "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "nch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "0",
+            "0"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=2"
+        }
+      },
+      "XDUT.XCTRL.XTIM.XD_QUIET_D.X006.MP": {
+        "before": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "after": {
+          "model": "pch_18_mac",
+          "nodes": [
+            "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+            "XDUT.XCTRL.XTIM.QUIET",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "ad=4.96e-14 as=4.96e-14 l=150n nf=1 nrd=0 nrs=0 pd=950.0n ps=950.0n sa=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n sap=172.362n sapb=242.67n sb=155.00n sb1=155.00n sb2=155.00n sb3=155.00n sd=180n spa=180.0n spa1=180.0n spa2=180.0n spa3=180.0n spba=233.666n spba1=239.844n spmb=1.11111e15 spmt=1.11111e15 spomb=0 spomb1=1.11111e+60 spomt=0 spomt1=1.11111e+60 w=320n multi=4"
+        }
+      }
+    },
+    "removed_pullups": {
+      "XDUT.XCTRL.XTIM.X020.X000.RPU0": {
+        "model": "rupolym",
+        "nodes": [
+          "VDD!",
+          "XDUT.XCTRL.XTIM.X020.X000.FLOOR1"
+        ],
+        "parameters": "l=17.13u w=1u m=1 multi=(1)"
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.RPU1": {
+        "model": "rupolym",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X020.X000.FLOOR1",
+          "XDUT.XCTRL.XTIM.X020.X000.FLOOR2"
+        ],
+        "parameters": "l=17.13u w=1u m=1 multi=(1)"
+      },
+      "XDUT.XCTRL.XTIM.X020.X000.RPU2": {
+        "model": "rupolym",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X020.X000.FLOOR2",
+          "XDUT.XCTRL.XTIM.X020.X000.B_PM"
+        ],
+        "parameters": "l=17.13u w=1u m=1 multi=(1)"
+      }
+    },
+    "unchanged_leaf_count": 116
+  },
+  "CDF_record": {
+    "source": "verification/sar8_physical_repair/io_cdf_audit.json",
+    "sha256": "3c73c0d014799b805521d5c25d5e392b462a8758d5e8d544d511fd3127bf46ee"
+  },
+  "boundary": {
+    "XDUT.XCTRL.XTIM.X001.X000.MN0": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X001.N",
+        "XDUT.XCTRL.XTIM.SN",
+        "XDUT.XCTRL.XTIM.X001.X000.MID",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X001.X000.MN0_VGS",
+        "VGD": "X001.X000.MN0_VGD",
+        "VDS": "X001.X000.MN0_VDS",
+        "VGB": "X001.X000.MN0_VGB",
+        "VDB": "X001.X000.MN0_VDB",
+        "VSB": "X001.X000.MN0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X001.X000.MN1": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X001.X000.MID",
+        "XDUT.ACTIVE",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X001.X000.MN1_VGS",
+        "VGD": "X001.X000.MN1_VGD",
+        "VDS": "X001.X000.MN1_VDS",
+        "VGB": "X001.X000.MN1_VGB",
+        "VDB": "X001.X000.MN1_VDB",
+        "VSB": "X001.X000.MN1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X001.X000.MP0": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X001.N",
+        "XDUT.XCTRL.XTIM.SN",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X001.X000.MP0_VGS",
+        "VGD": "X001.X000.MP0_VGD",
+        "VDS": "X001.X000.MP0_VDS",
+        "VGB": "X001.X000.MP0_VGB",
+        "VDB": "X001.X000.MP0_VDB",
+        "VSB": "X001.X000.MP0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X001.X000.MP1": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X001.N",
+        "XDUT.ACTIVE",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X001.X000.MP1_VGS",
+        "VGD": "X001.X000.MP1_VGD",
+        "VDS": "X001.X000.MP1_VDS",
+        "VGB": "X001.X000.MP1_VGB",
+        "VDB": "X001.X000.MP1_VDB",
+        "VSB": "X001.X000.MP1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X001.X001.MN": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.LIVE",
+        "XDUT.XCTRL.XTIM.X001.N",
+        "0",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X001.X001.MN_VGS",
+        "VGD": "X001.X001.MN_VGD",
+        "VDS": "X001.X001.MN_VDS",
+        "VGB": "X001.X001.MN_VGB",
+        "VDB": "X001.X001.MN_VDB",
+        "VSB": "X001.X001.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X001.X001.MP": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.LIVE",
+        "XDUT.XCTRL.XTIM.X001.N",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X001.X001.MP_VGS",
+        "VGD": "X001.X001.MP_VGD",
+        "VDS": "X001.X001.MP_VDS",
+        "VGB": "X001.X001.MP_VGB",
+        "VDB": "X001.X001.MP_VDB",
+        "VSB": "X001.X001.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X000.MN0": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X019.N",
+        "XDUT.XCTRL.XTIM.Q0",
+        "XDUT.XCTRL.XTIM.X019.X000.MID",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X019.X000.MN0_VGS",
+        "VGD": "X019.X000.MN0_VGD",
+        "VDS": "X019.X000.MN0_VDS",
+        "VGB": "X019.X000.MN0_VGB",
+        "VDB": "X019.X000.MN0_VDB",
+        "VSB": "X019.X000.MN0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X000.MN1": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X019.X000.MID",
+        "XDUT.XCTRL.XTIM.UN",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X019.X000.MN1_VGS",
+        "VGD": "X019.X000.MN1_VGD",
+        "VDS": "X019.X000.MN1_VDS",
+        "VGB": "X019.X000.MN1_VGB",
+        "VDB": "X019.X000.MN1_VDB",
+        "VSB": "X019.X000.MN1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X000.MP0": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X019.N",
+        "XDUT.XCTRL.XTIM.Q0",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X019.X000.MP0_VGS",
+        "VGD": "X019.X000.MP0_VGD",
+        "VDS": "X019.X000.MP0_VDS",
+        "VGB": "X019.X000.MP0_VGB",
+        "VDB": "X019.X000.MP0_VDB",
+        "VSB": "X019.X000.MP0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X000.MP1": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X019.N",
+        "XDUT.XCTRL.XTIM.UN",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X019.X000.MP1_VGS",
+        "VGD": "X019.X000.MP1_VGD",
+        "VDS": "X019.X000.MP1_VDS",
+        "VGB": "X019.X000.MP1_VGB",
+        "VDB": "X019.X000.MP1_VDB",
+        "VSB": "X019.X000.MP1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X001.MN": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.Q1",
+        "XDUT.XCTRL.XTIM.X019.N",
+        "0",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X019.X001.MN_VGS",
+        "VGD": "X019.X001.MN_VGD",
+        "VDS": "X019.X001.MN_VDS",
+        "VGB": "X019.X001.MN_VGB",
+        "VDB": "X019.X001.MN_VDB",
+        "VSB": "X019.X001.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X019.X001.MP": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.Q1",
+        "XDUT.XCTRL.XTIM.X019.N",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X019.X001.MP_VGS",
+        "VGD": "X019.X001.MP_VGD",
+        "VDS": "X019.X001.MP_VDS",
+        "VGB": "X019.X001.MP_VGB",
+        "VDB": "X019.X001.MP_VDB",
+        "VSB": "X019.X001.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MN0": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.LIVE",
+        "XDUT.XCTRL.XTIM.X020.X000.MID",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "MN0_VGS",
+        "VGD": "MN0_VGD",
+        "VDS": "MN0_VDS",
+        "VGB": "MN0_VGB",
+        "VDB": "MN0_VDB",
+        "VSB": "MN0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MN1": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.X000.MID",
+        "XDUT.XCTRL.XTIM.Q1",
+        "0",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "MN1_VGS",
+        "VGD": "MN1_VGD",
+        "VDS": "MN1_VDS",
+        "VGB": "MN1_VGB",
+        "VDB": "MN1_VDB",
+        "VSB": "MN1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MP0": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.Q1",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X020.X000.MP0_VGS",
+        "VGD": "X020.X000.MP0_VGD",
+        "VDS": "X020.X000.MP0_VDS",
+        "VGB": "X020.X000.MP0_VGB",
+        "VDB": "X020.X000.MP0_VDB",
+        "VSB": "X020.X000.MP0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MP1": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.X020.X000.B_PM",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X020.X000.MP1_VGS",
+        "VGD": "X020.X000.MP1_VGD",
+        "VDS": "X020.X000.MP1_VDS",
+        "VGB": "X020.X000.MP1_VGB",
+        "VDB": "X020.X000.MP1_VDB",
+        "VSB": "X020.X000.MP1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X001.MN": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET",
+        "XDUT.XCTRL.XTIM.X020.N",
+        "0",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X020.X001.MN_VGS",
+        "VGD": "X020.X001.MN_VGD",
+        "VDS": "X020.X001.MN_VDS",
+        "VGB": "X020.X001.MN_VGB",
+        "VDB": "X020.X001.MN_VDB",
+        "VSB": "X020.X001.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X020.X001.MP": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET",
+        "XDUT.XCTRL.XTIM.X020.N",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X020.X001.MP_VGS",
+        "VGD": "X020.X001.MP_VGD",
+        "VDS": "X020.X001.MP_VDS",
+        "VGB": "X020.X001.MP_VGB",
+        "VDB": "X020.X001.MP_VDB",
+        "VSB": "X020.X001.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X000.MN0": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X022.N",
+        "XDUT.XCTRL.XTIM.QUIET",
+        "XDUT.XCTRL.XTIM.X022.X000.MID",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X022.X000.MN0_VGS",
+        "VGD": "X022.X000.MN0_VGD",
+        "VDS": "X022.X000.MN0_VDS",
+        "VGB": "X022.X000.MN0_VGB",
+        "VDB": "X022.X000.MN0_VDB",
+        "VSB": "X022.X000.MN0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X000.MN1": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X022.X000.MID",
+        "XDUT.XCTRL.XTIM.QUIET_D",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X022.X000.MN1_VGS",
+        "VGD": "X022.X000.MN1_VGD",
+        "VDS": "X022.X000.MN1_VDS",
+        "VGB": "X022.X000.MN1_VGB",
+        "VDB": "X022.X000.MN1_VDB",
+        "VSB": "X022.X000.MN1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X000.MP0": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X022.N",
+        "XDUT.XCTRL.XTIM.QUIET",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "X022.X000.MP0_VGS",
+        "VGD": "X022.X000.MP0_VGD",
+        "VDS": "X022.X000.MP0_VDS",
+        "VGB": "X022.X000.MP0_VGB",
+        "VDB": "X022.X000.MP0_VDB",
+        "VSB": "X022.X000.MP0_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X000.MP1": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X022.N",
+        "XDUT.XCTRL.XTIM.QUIET_D",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X022.X000.MP1_VGS",
+        "VGD": "X022.X000.MP1_VGD",
+        "VDS": "X022.X000.MP1_VDS",
+        "VGB": "X022.X000.MP1_VGB",
+        "VDB": "X022.X000.MP1_VDB",
+        "VSB": "X022.X000.MP1_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X001.MN": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.CLOCK_SET",
+        "XDUT.XCTRL.XTIM.X022.N",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X022.X001.MN_VGS",
+        "VGD": "X022.X001.MN_VGD",
+        "VDS": "X022.X001.MN_VDS",
+        "VGB": "X022.X001.MN_VGB",
+        "VDB": "X022.X001.MN_VDB",
+        "VSB": "X022.X001.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.X022.X001.MP": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.CLOCK_SET",
+        "XDUT.XCTRL.XTIM.X022.N",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "X022.X001.MP_VGS",
+        "VGD": "X022.X001.MP_VGD",
+        "VDS": "X022.X001.MP_VDS",
+        "VGB": "X022.X001.MP_VGB",
+        "VDB": "X022.X001.MP_VDB",
+        "VSB": "X022.X001.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.MN_CLEAR": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC0",
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.MN_CLEAR_VGS",
+        "VGD": "XD_QUIET_D.MN_CLEAR_VGD",
+        "VDS": "XD_QUIET_D.MN_CLEAR_VDS",
+        "VGB": "XD_QUIET_D.MN_CLEAR_VGB",
+        "VDB": "XD_QUIET_D.MN_CLEAR_VDB",
+        "VSB": "XD_QUIET_D.MN_CLEAR_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.MP_CLEAR": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+        "XDUT.XCTRL.XTIM.QUIET",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.MP_CLEAR_VGS",
+        "VGD": "XD_QUIET_D.MP_CLEAR_VGD",
+        "VDS": "XD_QUIET_D.MP_CLEAR_VDS",
+        "VGB": "XD_QUIET_D.MP_CLEAR_VGB",
+        "VDB": "XD_QUIET_D.MP_CLEAR_VDB",
+        "VSB": "XD_QUIET_D.MP_CLEAR_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X002.MN": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.B",
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC0",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X002.MN_VGS",
+        "VGD": "XD_QUIET_D.X002.MN_VGD",
+        "VDS": "XD_QUIET_D.X002.MN_VDS",
+        "VGB": "XD_QUIET_D.X002.MN_VGB",
+        "VDB": "XD_QUIET_D.X002.MN_VDB",
+        "VSB": "XD_QUIET_D.X002.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X002.MP": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.B",
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC0",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X002.MP_VGS",
+        "VGD": "XD_QUIET_D.X002.MP_VGD",
+        "VDS": "XD_QUIET_D.X002.MP_VDS",
+        "VGB": "XD_QUIET_D.X002.MP_VGB",
+        "VDB": "XD_QUIET_D.X002.MP_VDB",
+        "VSB": "XD_QUIET_D.X002.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X005.MN": {
+      "model": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET_D",
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+        "0",
+        "0"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X005.MN_VGS",
+        "VGD": "XD_QUIET_D.X005.MN_VGD",
+        "VDS": "XD_QUIET_D.X005.MN_VDS",
+        "VGB": "XD_QUIET_D.X005.MN_VGB",
+        "VDB": "XD_QUIET_D.X005.MN_VDB",
+        "VSB": "XD_QUIET_D.X005.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X005.MP": {
+      "model": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET_D",
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": false,
+      "limit_abs_v": 0.99,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X005.MP_VGS",
+        "VGD": "XD_QUIET_D.X005.MP_VGD",
+        "VDS": "XD_QUIET_D.X005.MP_VDS",
+        "VGB": "XD_QUIET_D.X005.MP_VGB",
+        "VDB": "XD_QUIET_D.X005.MP_VDB",
+        "VSB": "XD_QUIET_D.X005.MP_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X006.MN": {
+      "model": "nch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+        "XDUT.XCTRL.XTIM.QUIET",
+        "0",
+        "0"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X006.MN_VGS",
+        "VGD": "XD_QUIET_D.X006.MN_VGD",
+        "VDS": "XD_QUIET_D.X006.MN_VDS",
+        "VGB": "XD_QUIET_D.X006.MN_VGB",
+        "VDB": "XD_QUIET_D.X006.MN_VDB",
+        "VSB": "XD_QUIET_D.X006.MN_VSB"
+      }
+    },
+    "XDUT.XCTRL.XTIM.XD_QUIET_D.X006.MP": {
+      "model": "pch_18_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.XD_QUIET_D.AB",
+        "XDUT.XCTRL.XTIM.QUIET",
+        "VDD!",
+        "VDD!"
+      ],
+      "changed": true,
+      "limit_abs_v": 1.98,
+      "six_pair_labels": {
+        "VGS": "XD_QUIET_D.X006.MP_VGS",
+        "VGD": "XD_QUIET_D.X006.MP_VGD",
+        "VDS": "XD_QUIET_D.X006.MP_VDS",
+        "VGB": "XD_QUIET_D.X006.MP_VGB",
+        "VDB": "XD_QUIET_D.X006.MP_VDB",
+        "VSB": "XD_QUIET_D.X006.MP_VSB"
+      }
+    }
+  },
+  "old_FO4": {
+    "ffcold": {
+      "source": "verification/sar8_physical_repair/sar8fix-ioscreen-ffcold_analysis.json",
+      "sha256": "e648032516378b19ed49183c2a6f64ef2ededf93f45689010f7e45c3e87c988c",
+      "supply_v": 0.99,
+      "scope": "Existing FO4 only, not this loaded interface",
+      "delays_ps": {
+        "core": {
+          "fo4_fall_delay_ps": 16.730665691623514,
+          "fo4_rise_delay_ps": 12.105394589772445
+        },
+        "18": {
+          "fo4_fall_delay_ps": 52.40915940431634,
+          "fo4_rise_delay_ps": 66.6271930379434
+        }
+      }
+    },
+    "sscold": {
+      "source": "verification/sar8_physical_repair/sar8fix-ioscreen-sscold_analysis.json",
+      "sha256": "1cd84c5438b15510f0db922337f7914b2c347332a812b8bd22680a5a6e32c1a7",
+      "supply_v": 0.81,
+      "scope": "Existing FO4 only, not this loaded interface",
+      "delays_ps": {
+        "core": {
+          "fo4_fall_delay_ps": 33.65635897861452,
+          "fo4_rise_delay_ps": 29.403624409491513
+        },
+        "18": {
+          "fo4_fall_delay_ps": 202.62000753698396,
+          "fo4_rise_delay_ps": 187.27846181513462
+        }
+      }
+    }
+  },
+  "observed_MOS": 32,
+  "changed_MOS": 15,
+  "removed_pullups": 3,
+  "total_MOS": 101,
+  "total_passive": 19,
+  "voltage_saves": 62,
+  "current_saves": 438,
+  "critical_KCL": 27,
+  "diagnostic_currents": 169,
+  "simultaneous_pairs": 196,
+  "original_PWL_byte_identical": 11,
+  "non_save_noncomment_deck_identical": true,
+  "analyzer_unchanged_sha256": "fc57a31dac441f84dfcc8587a17c1247740ad6d40d2c43c04aaaf76b2daee2f6",
+  "declared_input_files": 15,
+  "declared_package_bytes": 4481087,
+  "recipe_file_sha256": "185777388be0fe0d906940d437fdff9ddd457b2f831dd4dde466721d661e1987",
+  "simulation_completed": false,
+  "qualification_pass_inferred": false,
+  "remote_operations": false
+}

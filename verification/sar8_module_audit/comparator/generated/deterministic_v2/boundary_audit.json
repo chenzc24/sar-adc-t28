@@ -1,0 +1,2059 @@
+{
+  "status": "structural_review_only_not_Spectre_compiled",
+  "retained_native_MOS": 467,
+  "original_ADC_MOS": 1833,
+  "unchanged_comparator_receiver_primitive_count": 19,
+  "native_subcircuit_hashes": {
+    "sar8fix_recv_buf": "eb248907d1a5f126df04eedd2fcc8d2cfac2a3b9d941707c6a155b6a775a7dcd",
+    "sar8fix_recv_inv": "039ad9a731f83d324684c640aaf363dbe387f2aedc52de03d9a2036622fa0c6e",
+    "sar8p_and2": "073a693853212b78863d7f97cc7a79fa6d7de46416039134e2fc6d2e15db4417",
+    "sar8p_bit": "6c016f77e9372805e8072ff03d7b36b326869c83c4020bd91033a94ed0931104",
+    "sar8p_clkbuf": "d61d21ad5e3ebd1eebfeeaad3854be796003f0b407bfeb4ae5f0c6e865a7a9e9",
+    "sar8p_delay_valid": "e5d30f2a490067ee40ea2e753d134e06773b57bad64ab0efa12385444c9c2913",
+    "sar8p_delay_write": "15a9f5295969258575fb155116fd90422ae48a3a124ebcc771f8fa9d2989b56c",
+    "sar8p_dffr": "320eb045ad24bb2a90fa8bc55029ab05afd33545c67c0a8410f6ac492f6420d5",
+    "sar8p_inv": "d7fffb218217a58fa44c505d11a5b810ba4c34916e3c849c910c9f2fcf9af573",
+    "sar8p_mux2": "b23622c2204310c76a65520535056a30db143b924ae30ac82faae2a00849f06c",
+    "sar8p_nand2": "d18be8768c89bde02a909e6cd23433b037dce429f438c08653a0547aea2e861c",
+    "sar8p_or2": "a7c8b612f544bf3c34fc485ff09111f1e2a368e68b305ded3dccd5d3d884263e",
+    "sar8p_xor2": "0da74115fc9391cbf0e9b2e322c0296c28984573656b701d8354f08714a4dcfe",
+    "sar_strongarm_t28": "8d45e758626e306fd5d011777c346d873abf906c2eb984b4d34a22f7f8647359"
+  },
+  "preserved_terminal_fanout": {
+    "XDUT.COMP_P": [
+      {
+        "instance": "XDUT.CL_COMP_P",
+        "terminal": "1",
+        "model": "cfmom_2t",
+        "parameter_sha256": "8e7da2b8a8716d8f7d5e51916f2c7f919bef51073faab41484bd12cf79c9e407"
+      },
+      {
+        "instance": "XDUT.XCOMP.MNLATN",
+        "terminal": "g",
+        "model": "nch_na18_mac",
+        "parameter_sha256": "7dfc84e12d0f64ea89719e2b4670fa2f884469c793c2a504c6ffd1523e3f7f0b"
+      },
+      {
+        "instance": "XDUT.XCOMP.MNLATP",
+        "terminal": "d",
+        "model": "nch_na18_mac",
+        "parameter_sha256": "7dfc84e12d0f64ea89719e2b4670fa2f884469c793c2a504c6ffd1523e3f7f0b"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPLATN",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPLATP",
+        "terminal": "d",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTP",
+        "terminal": "d",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X002.X000.MN",
+        "terminal": "g",
+        "model": "nch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X002.X000.MP",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "246d6ce572e2ff31edebbaf1adfbd4847a606502c7f8a967455ee275fa8a2f6b"
+      }
+    ],
+    "XDUT.COMP_N": [
+      {
+        "instance": "XDUT.CL_COMP_N",
+        "terminal": "1",
+        "model": "cfmom_2t",
+        "parameter_sha256": "8e7da2b8a8716d8f7d5e51916f2c7f919bef51073faab41484bd12cf79c9e407"
+      },
+      {
+        "instance": "XDUT.XCOMP.MNLATN",
+        "terminal": "d",
+        "model": "nch_na18_mac",
+        "parameter_sha256": "7dfc84e12d0f64ea89719e2b4670fa2f884469c793c2a504c6ffd1523e3f7f0b"
+      },
+      {
+        "instance": "XDUT.XCOMP.MNLATP",
+        "terminal": "g",
+        "model": "nch_na18_mac",
+        "parameter_sha256": "7dfc84e12d0f64ea89719e2b4670fa2f884469c793c2a504c6ffd1523e3f7f0b"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPLATN",
+        "terminal": "d",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPLATP",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTN",
+        "terminal": "d",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X003.X000.MN",
+        "terminal": "g",
+        "model": "nch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X003.X000.MP",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "246d6ce572e2ff31edebbaf1adfbd4847a606502c7f8a967455ee275fa8a2f6b"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.PR": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X002.X001.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X002.X001.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X000.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X000.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.XCTRL.XTIM.NR": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X003.X001.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X003.X001.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X004.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X004.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X000.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X006.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.XCTRL.DATA": [
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XMUX.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XMUX.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X001.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X005.X001.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.XCTRL.PHI_W": [
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X011.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "b35828fd5e1da9f7e0bcb265238324e7e91e6dca077dd372f99926dfe47c38c9"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X011.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "5cc069ebc7bc215ded81ab05527684367b5668b8eb5a29650f78b4c778ef9cdb"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X013.X000.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X013.X000.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X016.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X016.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.XD_WRITE_D.MP_CLEAR",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "5cc069ebc7bc215ded81ab05527684367b5668b8eb5a29650f78b4c778ef9cdb"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.XD_WRITE_D.R0",
+        "terminal": "1",
+        "model": "rupolym",
+        "parameter_sha256": "98b2959bb94fb0348ce7e00ae4dc3f7e8702847193ccc224856bd6e1c1158b7b"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.XD_WRITE_D.X006.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.XD_WRITE_D.X006.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ]
+  },
+  "clock_cut": {
+    "removed_native_driver": "XDUT.XCTRL.XTIM.X025 sar8p_buf (both inverters removed)",
+    "removed_driver_primitives": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X001.MP",
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.CMP_CLK",
+          "XDUT.XCTRL.XTIM.X025.N",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X001.MN",
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.CMP_CLK",
+          "XDUT.XCTRL.XTIM.X025.N",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X000.MP",
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X025.N",
+          "XDUT.XCTRL.XTIM.CLOCK_Q",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X000.MN",
+        "model": "nch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X025.N",
+          "XDUT.XCTRL.XTIM.CLOCK_Q",
+          "0",
+          "0"
+        ],
+        "parameters": "l=30n w=500n multi=1 nf=1 sd=100n ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    ],
+    "removed_clock_node_terminals": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X001.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X025.X001.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "retained_clock_node_terminals": [
+      {
+        "instance": "XDUT.CL_CMP_CLK",
+        "terminal": "1",
+        "model": "cfmom_2t",
+        "parameter_sha256": "8e7da2b8a8716d8f7d5e51916f2c7f919bef51073faab41484bd12cf79c9e407"
+      },
+      {
+        "instance": "XDUT.XCOMP.MNTAIL",
+        "terminal": "g",
+        "model": "nch_18_mac",
+        "parameter_sha256": "246d6ce572e2ff31edebbaf1adfbd4847a606502c7f8a967455ee275fa8a2f6b"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTN",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTP",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTX",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCOMP.MPRSTY",
+        "terminal": "g",
+        "model": "pch_18_mac",
+        "parameter_sha256": "0fe20e111ddbc0f49c77c6e82d502274f407f2249542dabab233064131813076"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X009.X000.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X009.X000.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X015.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X015.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "ideal_driver": "VCMP_CLK -> CMP_CLK",
+    "original_producer_parallel_connection": false,
+    "limitation": "Original clock output junction loading and source impedance are removed; ideal diagnostic clock cannot qualify original asynchronous timing."
+  },
+  "removed_timing_instances": [
+    {
+      "instance": "XDUT.XCTRL.XTIM.X017",
+      "master": "sar8p_inv",
+      "original_nodes": [
+        "PHI_U",
+        "VDD",
+        "VSS",
+        "UN"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X022",
+      "master": "sar8p_and2",
+      "original_nodes": [
+        "QUIET",
+        "QUIET_D",
+        "VDD",
+        "VSS",
+        "CLOCK_SET"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X020",
+      "master": "sar8p_and2",
+      "original_nodes": [
+        "Q1",
+        "LIVE",
+        "VDD",
+        "VSS",
+        "QUIET"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X019",
+      "master": "sar8p_and2",
+      "original_nodes": [
+        "Q0",
+        "UN",
+        "VDD",
+        "VSS",
+        "Q1"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X018",
+      "master": "sar8p_and2",
+      "original_nodes": [
+        "CN",
+        "WN",
+        "VDD",
+        "VSS",
+        "Q0"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X001",
+      "master": "sar8p_and2",
+      "original_nodes": [
+        "SN",
+        "ACTIVE",
+        "VDD",
+        "VSS",
+        "LIVE"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X025",
+      "master": "sar8p_buf",
+      "original_nodes": [
+        "CLOCK_Q",
+        "VDD",
+        "VSS",
+        "CMP_CLK"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D",
+      "master": "sar8p_delay_quiet",
+      "original_nodes": [
+        "QUIET",
+        "VDD",
+        "VSS",
+        "QUIET_D"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.X023",
+      "master": "sar8p_or2",
+      "original_nodes": [
+        "SAMPLE",
+        "PHI_U",
+        "VDD",
+        "VSS",
+        "CLOCK_RESET"
+      ]
+    },
+    {
+      "instance": "XDUT.XCTRL.XTIM.XCLOCK",
+      "master": "sar8p_sr",
+      "original_nodes": [
+        "CLOCK_Q",
+        "CLOCK_RESET",
+        "CLOCK_SET",
+        "VDD",
+        "VSS"
+      ]
+    }
+  ],
+  "removed_controller_instances": [
+    {
+      "instance": "XDUT.XCTRL.XSEQ",
+      "master": "sar8p_bitseq8"
+    },
+    {
+      "instance": "XDUT.XCTRL.X018",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X017",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X016",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X015",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X014",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X013",
+      "master": "sar8p_or2"
+    },
+    {
+      "instance": "XDUT.XCTRL.X012",
+      "master": "sar8p_or2"
+    }
+  ],
+  "register_diagnostic_bindings": {
+    "reset": "REG_RESET independent from SAMPLE_GUARD",
+    "token_inputs": "TOKEN0=SUP; TOKEN1..TOKEN7=0; no advancement",
+    "leaf_bit_cells": "original eight sar8p_bit unchanged"
+  },
+  "native_MOS_partition": {
+    "N4_comparator": 11,
+    "receiver_forward_cone": 88,
+    "eight_register_loads": 368
+  },
+  "excluded_ADC_top_instances": [
+    "XSEQ",
+    "XIDLE",
+    "XSAMPLE",
+    "XBOOTN",
+    "XBOOTP",
+    "XCDAC",
+    "XREF"
+  ],
+  "removed_boundary_terminal_fanout": {
+    "XDUT.PHI_U": [
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.MN_MF",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.MN_SI",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.MP_MI",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.MP_SF",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "57f134375fa5437e26363650712519781c91d07abbcd43150e108c6f99e5aaab"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X017.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X017.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X023.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X023.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.X000.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.X000.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X002.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X002.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.XREQUEST.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XREQUEST.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.ACTIVE": [
+      {
+        "instance": "XDUT.XCTRL.X018.X002.MN0",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.X018.X002.MP0",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.X018.X002.MP1",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X001.X000.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X001.X000.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XIDLE.XN.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XIDLE.XN.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.SAMPLE_INT": [
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT0.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT1.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT2.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT3.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT4.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT5.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT6.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XBIT7.XSTORE.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF0.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF1.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF2.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF3.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF4.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF5.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF6.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.X001.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEQ.XF7.X001.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X023.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.X023.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XIDLE.XA.X000.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XIDLE.XA.X000.MN1",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XIDLE.XA.X000.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XIDLE.XA.X000.MP1",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XIDLE.XP.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XIDLE.XP.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XREF.X003.X000.MN",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "8b12b869acf3b2a19f53efd1d04d1e38aed9f44008457cbf6e03f375000f599a"
+      },
+      {
+        "instance": "XDUT.XREF.X003.X000.MP",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      },
+      {
+        "instance": "XDUT.XSAMPLE.MN",
+        "terminal": "d",
+        "model": "nch_mac",
+        "parameter_sha256": "b35828fd5e1da9f7e0bcb265238324e7e91e6dca077dd372f99926dfe47c38c9"
+      },
+      {
+        "instance": "XDUT.XSAMPLE.MP",
+        "terminal": "d",
+        "model": "pch_mac",
+        "parameter_sha256": "5cc069ebc7bc215ded81ab05527684367b5668b8eb5a29650f78b4c778ef9cdb"
+      }
+    ],
+    "XDUT.CODE0": [
+      {
+        "instance": "XDUT.XREF.XMUX0.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE1": [
+      {
+        "instance": "XDUT.XREF.XMUX1.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE2": [
+      {
+        "instance": "XDUT.XREF.XMUX2.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE3": [
+      {
+        "instance": "XDUT.XREF.XMUX3.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE4": [
+      {
+        "instance": "XDUT.XREF.XMUX4.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE5": [
+      {
+        "instance": "XDUT.XREF.XMUX5.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE6": [
+      {
+        "instance": "XDUT.XREF.XMUX6.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "XDUT.CODE7": [
+      {
+        "instance": "XDUT.XREF.XMUX7.X001.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X001.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D0": [
+      {
+        "instance": "XDUT.XREF.XMUX0.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX0.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D1": [
+      {
+        "instance": "XDUT.XREF.XMUX1.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX1.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D2": [
+      {
+        "instance": "XDUT.XREF.XMUX2.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX2.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D3": [
+      {
+        "instance": "XDUT.XREF.XMUX3.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX3.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D4": [
+      {
+        "instance": "XDUT.XREF.XMUX4.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX4.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D5": [
+      {
+        "instance": "XDUT.XREF.XMUX5.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX5.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D6": [
+      {
+        "instance": "XDUT.XREF.XMUX6.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX6.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ],
+    "D7": [
+      {
+        "instance": "XDUT.XREF.XMUX7.X002.MN0",
+        "terminal": "g",
+        "model": "nch_mac",
+        "parameter_sha256": "201bbb33d5ac907113c478e25a0d30ff868a851ad72164e51a9a3837b892ed00"
+      },
+      {
+        "instance": "XDUT.XREF.XMUX7.X002.MP0",
+        "terminal": "g",
+        "model": "pch_mac",
+        "parameter_sha256": "51c0cc7001e2dbb09d3a3202ba9f5549b8b6dae016bc0b2c1078fd1550228339"
+      }
+    ]
+  },
+  "boundary_limitations": [
+    "Reference-word, sample sequencing and analog-chain loads beyond PHI_U/ACTIVE/CODE/D are absent and enumerated above.",
+    "Complete immediate DATA, PHI_W, PR/NR and COMP_P/N native loads are identical; the two removed CMP_CLK driver drain terminals are explicit.",
+    "PHI_U/reset/registered-output absolute delays cannot qualify the original ADC without restoring the excluded boundary loads.",
+    "Long reset intervals are diagnostic stimulus, not a new allocated comparison or ADC sample-time budget.",
+    "Physical reset completion and input-update-during-reset are future native-wave checks, not established by this structural build."
+  ]
+}

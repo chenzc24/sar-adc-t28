@@ -1,0 +1,167 @@
+// OA-derived full-parameter nominal test. Foundry models are not distributed.
+simulator lang=spectre
+global 0 VDD!
+parameters SUP=0.9 VDIFF=0.123
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=pre_simu
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=noise_worst
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=TTGlobalCorner_LocalMC_MOS_MOSCAP
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_res_bip_dio_disres
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=TTGlobalCorner_LocalMC_MOM
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_ind_jvar
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_r_metal
+
+
+simulatorOptions options temp=27 tnom=27 reltol=1e-6 vabstol=1e-8 iabstol=1e-13 method=trap maxwarns=5 maxnotes=5 preserve_inst=all
+saveOptions options save=selected
+include "library_include.scs"
+subckt sar8p_and2 A B VDD VSS Y
+    X000 (A B VDD VSS N) sar8p_nand2
+    X001 (N VDD VSS Y) sar8p_inv
+ends sar8p_and2
+
+subckt sar8p_buf A VDD VSS Y
+    X001 (N VDD VSS Y) sar8p_inv
+    X000 (A VDD VSS N) sar8p_inv
+ends sar8p_buf
+
+subckt sar8p_delay_valid A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_valid
+
+subckt sar8p_inv A VDD VSS Y
+    XLIB (A Y VDD VSS) INVD1BWP12T30P140
+ends sar8p_inv
+
+subckt sar8p_nand2 A B VDD VSS Y
+    XLIB (A B Y VDD VSS) ND2D1BWP12T30P140
+ends sar8p_nand2
+
+subckt sar8p_xor2 A B VDD VSS Y
+    X003 (NA NB VDD VSS Y) sar8p_nand2
+    X002 (B N VDD VSS NB) sar8p_nand2
+    X001 (A N VDD VSS NA) sar8p_nand2
+    X000 (A B VDD VSS N) sar8p_nand2
+ends sar8p_xor2
+
+subckt sar_strongarm_t28 CLK OUTN OUTP VDD VINN VINP VSS
+    MNLATN (OUTN OUTP Y VSS) nch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 \
+        nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNLATP (OUTP OUTN X VSS) nch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.662935 \
+        nrs=0.662935 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNINN (X VINN TAIL VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNINP (Y VINP TAIL VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MNTAIL (TAIL CLK VSS VSS) nch_mac l=30n w=1u multi=1 nf=1 sd=100n \
+        ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.289519 nrs=0.289519 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTN (OUTN CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTP (OUTP CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTY (Y CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPRSTX (X CLK VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPLATN (OUTN OUTP VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MPLATP (OUTP OUTN VDD VDD) pch_mac l=30n w=500n multi=1 nf=1 sd=100n \
+        ad=3.75e-14 as=3.75e-14 pd=1.15u ps=1.15u nrd=0.383209 \
+        nrs=0.383209 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar_strongarm_t28
+
+VVDD (SUP 0) vsource dc=0.9
+VCLOCK (CLK 0) vsource type=pulse val0=0 val1=0.9 delay=2n rise=50p fall=50p width=1.95n period=5n
+XCMP (CLK ON OP SUP VINN VINP 0) sar_strongarm_t28
+XRXN (ON SUP 0 NR) sar8p_buf
+XRXP (OP SUP 0 PR) sar8p_buf
+XNRB (NR SUP 0 NRB) sar8p_inv
+XDATA (PR NRB SUP 0 DATA) sar8p_and2
+XRAW (PR NR SUP 0 RAW) sar8p_xor2
+XDELAY (RAW SUP 0 RAW_D) sar8p_delay_valid
+CDATA (DATA 0) capacitor c=5f
+XSEARCH (VINP VINN OP ON PR NR CLK SUP 0) sar8_mc_comp_search
+ahdl_include "comp_search.va"
+CL_ON (ON 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+CL_OP (OP 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+mc montecarlo numruns=1 seed=4164 variations=mismatch sampling=standard donominal=no savemismatchparams=yes mismatchparamfile="mismatch.params" mismatchscalarfile="mismatch.values" savefamilyplots=yes savedatainseparatedir=yes {
+comp_tran tran stop=109n maxstep=5p errpreset=conservative
+}
+save OP ON PR NR CLK VINP VINN XCMP.X XCMP.Y XCMP.TAIL

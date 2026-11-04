@@ -1,0 +1,24 @@
+{
+  "native_exports_sha256": {
+    "L2_bootstrap_switch": "b30617e216709c3e7dde71dd1fc6a7715d888b297296253e327c2e7e97c2e22c",
+    "L2_CDAC_8bit": "e741dc678a8773f7257845a19a5c2e0edfd86d69924c8f1befdfef585c1558e2",
+    "L2_SAR_logic": "12d7e939088a7092382e609260dcfc5e4b97dfc83603af0d70b29db197c7c006",
+    "L2_StrongArm_CMP": "62809a4c595913af2b7ce29b11d7b333e8722b2e28b858d54fa4ce2fac2505e2"
+  },
+  "source": "SAR_ADC_T28_manual read-only OCEAN export",
+  "changes": [
+    "CDN uses standard inverter of CLKS",
+    "first bit only crossed at new top",
+    "output latches read original positive decisions",
+    "feedback delay parameterized default2ns; original5ns",
+    "all source ground aliases unified"
+  ],
+  "initial_parameters": {
+    "cunit_F": 1e-14,
+    "total_cap_per_side_F": 1.28e-12,
+    "main_mult": 1,
+    "cmp_mult": 1,
+    "tloop_s": 2e-09
+  },
+  "note": "Native CDAC nf=10 for NMOS differs from live CDF nf=1; retain actual emitted native parameters; no hand CDF reinterpretation"
+}

@@ -1,0 +1,110 @@
+managed: true
+recipe_hash: 2da9906bc04f86aead3f9b2f1a264098a01dd3339a9b321b2b0fbaa1e6b38d66
+recipe:
+  schema_version: 1
+  run_id: manual8-cdac-isolation-tt-v1
+  design_id: manual8_cdac_isolation_v1
+  entry: test.scs
+  analyzer: cdac_isolation_reduce.py
+  files:
+  - name: manual8_sample.va
+    source: verification/manual_adc/cdac_isolation_v1/manual8_sample.va
+    bytes: 1303
+    sha256: a4b9f77201f80d29f417ea14221aaef5df0652cb20a7e2e97fa2722070d2c891
+  - name: manual8_cmp.va
+    source: verification/manual_adc/cdac_isolation_v1/manual8_cmp.va
+    bytes: 2269
+    sha256: b374810880e1f6b7aa213b07c0ab2de7996ca2d32f3851282c633aaf5dd9cf63
+  - name: manual8_sar.va
+    source: verification/manual_adc/cdac_isolation_v1/manual8_sar.va
+    bytes: 9030
+    sha256: 53365f64033fd8bd895a10b8ef6a0f71508b35e8684ba58df8bafeb6c963f99a
+  - name: models.scs
+    source: verification/manual_adc/cdac_isolation_v1/models.scs
+    bytes: 1340
+    sha256: 61c409306d49b2cc1ac5001f9280429df86b0b7f9e7a4ecd1be5e8d768f59753
+  - name: cdac_core.scs
+    source: verification/manual_adc/cdac_isolation_v1/cdac_core.scs
+    bytes: 7594
+    sha256: 9e698c25d39923228abeec4ec8bec8ced0a98e6954e6851bdbd01b5b59a34f78
+  - name: wrappers.scs
+    source: verification/manual_adc/cdac_isolation_v1/wrappers.scs
+    bytes: 1939
+    sha256: a04ffb446ec4480304ac5a3b54e21df30be45231ffb0a1cbb6be3a6d53f690c4
+  - name: test.scs
+    source: verification/manual_adc/cdac_isolation_v1/test.scs
+    bytes: 2232
+    sha256: babb9435170721e493c62805de8dd1f8a70ac49f82514fc2c17bb7c5660fd671
+  - name: measure.json
+    source: verification/manual_adc/cdac_isolation_v1/measure.json
+    bytes: 10769
+    sha256: 5eb655f5a5c35b305ab58e3307b8f46139844a251e1388acc6725f84a98f1632
+  - name: cdac_isolation_reduce.py
+    source: scripts/manual_adc/cdac_isolation_reduce.py
+    bytes: 11653
+    sha256: 86bbc192d4e477cc47a5770bdb6e130c8e928bc103ff0ef22a922db454299e2d
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - clks
+  - xadc.topp
+  - xadc.topn
+  - xadc.cmpck
+  - eoc
+  - fault
+  expected_stop_s: 8.2e-07
+  qualification_scope: TT reference MOS plus ideal capacitors; all other blocks behavioral/ideal;
+    not physical capacitor/PVT qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; behavioral reference only; OA untouched
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-cdac-isolation-tt-v1

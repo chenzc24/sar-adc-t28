@@ -1,0 +1,121 @@
+managed: true
+recipe_hash: 4efcc7323a12ebcbdad9ea08fa611fe4c11d4ad3241175cc0cf830d26f1063a6
+recipe:
+  schema_version: 1
+  run_id: sar8audit-comp-d2-tt
+  design_id: sar8_comparator_D2_diagnostic
+  entry: test.scs
+  analyzer: remote_reduce.py
+  files:
+  - name: cells.scs
+    source: verification/sar8_module_audit/comparator/generated/deterministic_v2/cells.scs
+    bytes: 20272
+    sha256: f6189e388fc36d590510215e0434755fafd451c4087af9c75af7bbfa0112ddb3
+  - name: test.scs
+    source: verification/sar8_module_audit/comparator/generated/deterministic_v2/tt.scs
+    bytes: 12245
+    sha256: d76c5973e60b7baf3628279028c9d3968eeaf81778f850a8e4dc5f99f3ca6cd0
+  - name: loaded_remote.py
+    source: scripts/sar8_physical_repair/loaded_remote.py
+    bytes: 1833
+    sha256: ec4c809c168f0c398704efe9318afae1b98962652862c025df267d192f5bb4cc
+  - name: remote_reduce.py
+    source: verification/sar8_module_audit/comparator/remote_reduce.py
+    bytes: 4669
+    sha256: 9d801df162c44cc12fde771b84866c056f67404e1a2dff5e814e6616343743ad
+  - name: mapping.json
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/mapping.json
+    bytes: 805272
+    sha256: 48dd0b61876ce14adcfac35fe456fa9c2d081176b3b2d3668a84c456a19dd916
+  - name: pairs.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/pairs.txt
+    bytes: 33666
+    sha256: a494037816eda17d12262da894f882eaeab0b21f377850f35f821b025db41e26
+  - name: selected.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/selected.txt
+    bytes: 226
+    sha256: 9e2cca2311073b8764416a9066497aef89414b82fa439fe9d299e438c2d0ac0e
+  - name: events.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/events.txt
+    bytes: 178
+    sha256: 84b51abf83c8592aea5366a251993846e664d939c64f7a1bd0129dd6a48bf511
+  - name: products.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/products.txt
+    bytes: 16
+    sha256: ce05c376b228802ea55cfcfbcdb79f18c6b061423adb1b7518589a31bc728358
+  - name: snapshot_nodes.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/snapshot_nodes.txt
+    bytes: 197
+    sha256: 6227e770149d0cfe35e9471359df283ee8fe6ef8ea5c8d6fad7c01d8b7af93b2
+  - name: check_times.txt
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/check_times.txt
+    bytes: 610
+    sha256: af8165f4e6a4b1a6c9e4fc1c5fdc098f0b8f1ca84e3478b1b85bb202abc17672
+  - name: stream.cpp
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/stream.cpp
+    bytes: 9331
+    sha256: 0224b47554f18acaff70a6ac6eba92019da442058911ab0ac9f68764d086c22d
+  - name: package_manifest.json
+    source: verification/sar8_module_audit/comparator/managed_inputs/d2/package_manifest.json
+    bytes: 1486
+    sha256: ee3675aa0e0543b86e7c18b84b7ee79b04a18301bde3dd5f5169f694324f3e8f
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 8192
+    simulation_wall_seconds: 1800
+    analysis_wall_seconds: 900
+    queue_timeout_seconds: 3600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - cmp_clk
+  - xdut.comp_p
+  - xdut.comp_n
+  expected_stop_s: 2.6e-07
+  qualification_scope: Ideal-input comparator/receiver diagnostic; no ADC async timing
+    or statistical qualification
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-comp-d2-tt

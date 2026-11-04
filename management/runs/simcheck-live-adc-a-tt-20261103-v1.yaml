@@ -1,0 +1,102 @@
+managed: true
+recipe_hash: f317c9b9cfdea39ce3351842af2afca92d469fdc2029b1c1de4b6f3afd86800c
+recipe:
+  schema_version: 1
+  run_id: simcheck-live-adc-a-tt-20261103-v1
+  design_id: sar8_l90_mmain2_frozen
+  entry: test.scs
+  analyzer: native_summary.py
+  files:
+  - name: test.scs
+    source: verification/simcheck_live/20261103/adc-a-tt/test.scs
+    bytes: 2193
+    sha256: b81a4bf39a8b749150d665c4e93b443c44134437089dd159c8e19ff31621c2a9
+  - name: tb.scs
+    source: verification/sar8_campaign/sar8camp-a-tt-fft1024-v1/tb.scs
+    bytes: 1212
+    sha256: 137ac7385dd9bffb29ce236c2877fd881115ee8024bf14d1d5166e7fe55a3ff3
+  - name: dut.scs
+    source: netlist/sar8_l90_mmain2_frozen/dut.scs
+    bytes: 190440
+    sha256: 41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4
+  - name: library_include.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs
+    bytes: 253
+    sha256: 4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe
+  - name: r4_perf_monitor.va
+    source: scripts/sar8_campaign/r4_perf_monitor.va
+    bytes: 3231
+    sha256: bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 128
+    analysis_virtual_mib: 512
+    max_output_mib: 64
+    simulation_wall_seconds: 600
+    analysis_wall_seconds: 30
+    queue_timeout_seconds: 3600
+  spectre_args:
+  - +preset=mx
+  - +mt=4
+  - +lqtimeout
+  - '5'
+  - -preset_override
+  summary_signals:
+  - d0
+  - d1
+  - d2
+  - d3
+  - d4
+  - d5
+  - d6
+  - d7
+  - sample
+  - vdd!
+  - vinp_src
+  - vinn_src
+  - vvdd:p
+  - vrefhigh:p
+  - vreflow:p
+  - vsample:p
+  expected_stop_s: 3.59e-07
+  qualification_scope: Three original TT ADC frames for log-tool validation only
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    frames: 3
+    stop_s: 3.59e-07
+    source_run: sar8camp-a-tt-fft1024-mm-v1
+    fault_injection: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/simcheck-live-adc-a-tt-20261103-v1

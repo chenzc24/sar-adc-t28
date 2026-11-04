@@ -1,0 +1,174 @@
+{
+  "run_id": "cmpdesign-r500-f200-a4-ff-hot-v1",
+  "collection": {
+    "collected_files": 8,
+    "bytes": 9288274,
+    "skipped": [],
+    "local_path": "output/managed_execution/runs/cmpdesign-r500-f200-a4-ff-hot-v1/collected",
+    "state": {
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-r500-f200-a4-ff-hot-v1",
+      "registered": {
+        "epoch": 1793104940.730799,
+        "files_complete": true,
+        "recipe_hash": "25ca7d15b49800cdc95e9b80b14543c390ed1051331e3bb55ae3de28f5fd8384"
+      },
+      "simulation": {
+        "status": "complete",
+        "rss_bytes": 302862336,
+        "started_epoch": 1793104947.893012,
+        "updated_epoch": 1793104971.563664,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 23.656316995620728,
+        "submitted_epoch": 1793104947.574681,
+        "output_bytes": 75953865,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 1,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 9359740928,
+                "limit": 51539607552,
+                "used": 42179866624
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 9359740928,
+            "host": "thu-wei",
+            "conflicting_processes": [
+              {
+                "managed": {
+                  "phase": "analysis",
+                  "reserved_rss_mib": 256,
+                  "threads": 1,
+                  "run_id": "manual8-cdac-s100-sscold-v1"
+                },
+                "pid": 68693,
+                "comm": "python"
+              }
+            ],
+            "epoch": 1793104947.879619,
+            "disk_free": 289227960320,
+            "load1": 3.18,
+            "mem_available": 121138274304
+          },
+          "phase": "simulation"
+        },
+        "phase": "simulation",
+        "child_identity": {
+          "start_ticks": "7987778",
+          "pid": 69417,
+          "state": "R",
+          "pgid": 69417,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 304496640,
+        "worker_identity": {
+          "start_ticks": "7987747",
+          "pid": 69414,
+          "state": "R",
+          "pgid": 69414,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true,
+        "native": {
+          "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+          "zero_error_footer": true,
+          "electrical_verdict": "not_inferred",
+          "native_exit": 0,
+          "effective_settings": {
+            "reltol": "100e-09, default 100e-06 (conservative)",
+            "abstol(V)": "10 nV, default 1 uV",
+            "maxstep": "20 ps, default 4 ns (conservative)",
+            "abstol(I)": "10 fA, default 1 pA",
+            "method": "gear2only"
+          },
+          "native_analysis_pass": true,
+          "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+          "warning_codes": [
+            "CMI-2752",
+            "CMI-2753",
+            "CMI-2754",
+            "CMI-2755",
+            "CMI-2756",
+            "SFE-1131"
+          ]
+        }
+      },
+      "analysis": {
+        "status": "complete",
+        "rss_bytes": 9457664,
+        "started_epoch": 1793105010.326879,
+        "updated_epoch": 1793105042.994813,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 32.6676869392395,
+        "submitted_epoch": 1793104989.979106,
+        "output_bytes": 85227992,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 8804462592,
+                "limit": 51539607552,
+                "used": 42735144960
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 8804462592,
+            "host": "thu-wei",
+            "conflicting_processes": [
+              {
+                "managed": {
+                  "phase": "simulation",
+                  "reserved_rss_mib": 1024,
+                  "threads": 1,
+                  "run_id": "manual8-bootwidth-dc-m8-v1"
+                },
+                "pid": 70210,
+                "comm": "spectre"
+              }
+            ],
+            "epoch": 1793105010.313091,
+            "disk_free": 288801181696,
+            "load1": 3.68,
+            "mem_available": 120903376896
+          },
+          "phase": "analysis"
+        },
+        "phase": "analysis",
+        "child_identity": {
+          "start_ticks": "7994022",
+          "pid": 71615,
+          "state": "R",
+          "pgid": 71615,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 9543680,
+        "worker_identity": {
+          "start_ticks": "7991988",
+          "pid": 70839,
+          "state": "R",
+          "pgid": 70839,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true
+      },
+      "run_id": "cmpdesign-r500-f200-a4-ff-hot-v1"
+    }
+  },
+  "source": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\managed_execution\\runs\\cmpdesign-r500-f200-a4-ff-hot-v1\\collected"
+}

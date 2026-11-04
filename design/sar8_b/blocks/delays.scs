@@ -1,0 +1,190 @@
+// Generated from frozen B by scripts/sar8_entry.py build.
+// Electrical subcircuit statements are preserved verbatim.
+
+subckt sar8p_delay_valid A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_valid
+
+subckt sar8p_delay_write A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_write
+
+subckt sar8p_delay_quiet A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=30 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=30 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_quiet
+
+subckt sar8p_delay_capture A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_capture
+
+subckt sar8p_delay_bbm A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_bbm
+
+subckt sar8r_delay A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8r_delay
+
+subckt sar8r_edge A VDD VSS Y
+    XD (A VDD VSS AD) sar8r_delay
+    XA (A AD VDD VSS QUAL) sar8p_and2
+    XB (QUAL VDD VSS Y) sar8p_clkbuf
+ends sar8r_edge
+
+subckt sar8s_step A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8s_step
+
+subckt sar8i_guard A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8i_guard

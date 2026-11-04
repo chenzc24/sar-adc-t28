@@ -1,0 +1,11 @@
+--- frozen_rck2k/dut.scs
++++ rck20k_v1/dut.scs
+@@ -58,7 +58,7 @@
+     XCU19 (FF_CK VDD VSS U19_CK_DRV) sar8p_clkbuf
+     XDU19 (FF_D VDD VSS U19_D) sar8p_buf
+     XRU19 (FF_RST VDD VSS U19_RST) sar8p_buf
+-    RCK (U19_CK_DRV U19_CK) resistor r=2000
++    RCK (U19_CK_DRV U19_CK) resistor r=20000
+     XU19 (U19_CK U19_D U19_Q U19_RST VDD VSS) sar8p_dffr
+     XLU19_0 (U19_Q VDD VSS U19_L0_Y) sar8p_inv
+     XLU19_1 (U19_Q VDD VSS U19_L1_Y) sar8p_delay_bbm

@@ -1,0 +1,61 @@
+{
+  "kind": "analysis_only",
+  "source_run_id": "sar8audit-ref-current-v2",
+  "run_id": "sar8audit-ref-current-v2-reduce1",
+  "design_id": "sar8_reference_driver0_current_diagnostic",
+  "analyzer": "reference_source_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/reference_source_reduce.py",
+      "name": "reference_source_reduce.py",
+      "sha256": "7e4b30a9111c26b39ff85678ea6bf9cc4464b7843b78e404c37a1b793df1b649"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/current_v2/measurement.json",
+      "name": "measurement.json",
+      "sha256": "ae858f0b4ee9a24b8c4b9354c541faf9fa3d12f34e35b6f4c8e0e56095d40980"
+    },
+    {
+      "source": "output/managed_execution/runs/sar8audit-ref-native-v1/collected/derived/native.diagnostic.f64le",
+      "name": "source_diagnostic.f64le",
+      "sha256": "38a9d9be6dbfdf22e8590e1bd108e2c6739a54ddb0426ebf3996d1a15e449d6d"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/source_reduce_v1/source_binding.json",
+      "name": "source_binding.json",
+      "sha256": "af5b4bacbbc0227d9b7023d2cd4e172fade76c7cac5906017433c1900c472ea2"
+    }
+  ],
+  "summary_signals": [
+    "vdd!",
+    "xdut.xref.xdrv0.gnndrv",
+    "xdut.gnn0"
+  ],
+  "expected_stop_s": 6.599650423427016e-08,
+  "qualification_scope": "Analysis-only completed-v2 current attribution; waveform columns reduced, all275 current measurements preserved; acceptance separately evaluated",
+  "oa_parity": "completed_source_netlist_only_no_OA_change",
+  "test_conditions": {
+    "source_run": "sar8audit-ref-current-v2",
+    "source_recipe_hash": "4fd9a1d867afc325c1071a698186e16ef8845691fc1cccf6e394d28cfadb88cc",
+    "simulation_reused": true,
+    "fault_current_columns": 15,
+    "selected_current_statistics": 275,
+    "interpolation_of_native_measurements": false
+  },
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "simulation_wall_seconds": 1,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "analysis_wall_seconds": 1800,
+    "max_output_mib": 64,
+    "queue_timeout_seconds": 600
+  }
+}

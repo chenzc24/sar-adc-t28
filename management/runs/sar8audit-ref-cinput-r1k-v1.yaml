@@ -1,0 +1,101 @@
+managed: true
+recipe_hash: c0a08c8b95cc536402aff144e3d71a4dd8d67e6943be902cc7c52b8a50da7732
+recipe:
+  schema_version: 1
+  run_id: sar8audit-ref-cinput-r1k-v1
+  design_id: sar8_reference_driver0_current_diagnostic
+  entry: test.scs
+  analyzer: reference_cinput_analyze.py
+  files:
+  - name: dut.scs
+    source: verification/sar8_module_audit/reference/generated/cinput_r1k_v1/dut.scs
+    bytes: 168802
+    sha256: a83950d1cc96ba3d45af531e27b6ed212f13c2c67beaa5e1685c52bb8727d7fa
+  - name: test.scs
+    source: verification/sar8_module_audit/reference/generated/cinput_r1k_v1/test.scs
+    bytes: 15327
+    sha256: 35de4edacc8bfcf258c839ba46e97b3c1e3106d39e28b6930bbc48fb0bdcefff
+  - name: boundary_sources_approximate.scs
+    source: verification/sar8_module_audit/reference/generated/approximate_replay/boundary_sources_approximate.scs
+    bytes: 22534325
+    sha256: 60e98573553b9c87df48d961daee643701fb685cba217383e9fa38a5274015f4
+  - name: reference_current_analyze.py
+    source: verification/sar8_module_audit/reference/reference_current_analyze.py
+    bytes: 29142
+    sha256: 96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e
+  - name: reference_cinput_analyze.py
+    source: verification/sar8_module_audit/reference/reference_cinput_analyze.py
+    bytes: 6808
+    sha256: 2dfd0492d5eee3bd78bbb39a1835c1e5df9dcf15ebc7a1af7080d1d0bf36aae7
+  - name: baseline_native.f64le
+    source: verification/sar8_module_audit/reference/generated/cinput_r1k_v1/baseline_native.f64le
+    bytes: 2515568
+    sha256: 14c3b23b240ef9318878ed74dd2d10bd5a906f07d42de8ae15c404a4f2864497
+  - name: measurement.json
+    source: verification/sar8_module_audit/reference/generated/cinput_r1k_v1/measurement.json
+    bytes: 153835
+    sha256: 99c4d85a6f391382300d3d41727dd27889b9f25d5e0ba7bd62161c7cd9b2839a
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 512
+    max_output_mib: 8192
+    simulation_wall_seconds: 1800
+    analysis_wall_seconds: 1800
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - vdd!
+  - xdut.xref.xdrv0.gnndrv
+  - xdut.gnn0
+  expected_stop_s: 6.599650423427016e-08
+  qualification_scope: Driver0 final-stage common-input ideal1kOhm mechanism experiment;
+    no whole-ADC/PDK-resistor qualification
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: FF/TT-passives
+    vdd: 0.99
+    temperature_c: -40
+    noise: false
+    mismatch: false
+    PEX: false
+    boundary_replay: approximate <=1uV at all original native knots
+    R_CIN_ohm: 1000
+    resistor_class: ideal mechanism experiment
+    baseline_run: sar8audit-ref-current-v2
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-ref-cinput-r1k-v1

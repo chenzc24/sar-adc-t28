@@ -1,0 +1,165 @@
+{
+  "samples_each": 30,
+  "seeds": [
+    4101,
+    4102,
+    4103,
+    4104,
+    4105,
+    4106,
+    4107,
+    4108,
+    4109,
+    4110,
+    4111,
+    4112,
+    4113,
+    4114,
+    4115,
+    4116,
+    4117,
+    4118,
+    4119,
+    4120,
+    4121,
+    4122,
+    4123,
+    4124,
+    4125,
+    4126,
+    4127,
+    4128,
+    4129,
+    4130
+  ],
+  "source_dut_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+  "independent_draws_verified": true,
+  "repeatability_verified": true,
+  "cdac": {
+    "dac_dnl_abs_max_lsb": {
+      "n": 30,
+      "mean": 0.04696243265119593,
+      "std_sample": 0.02537063100179697,
+      "min": 0.010858525232123384,
+      "max": 0.12309069879704748
+    },
+    "dac_inl_endpoint_abs_max_lsb": {
+      "n": 30,
+      "mean": 0.03333784941625196,
+      "std_sample": 0.012447334702450692,
+      "min": 0.014636546184669811,
+      "max": 0.061543855080546654
+    },
+    "major_carry7_error_lsb": {
+      "n": 30,
+      "mean": -0.0020649771376718825,
+      "std_sample": 0.04838130086643413,
+      "min": -0.1001713588237958,
+      "max": 0.12309069879704748
+    },
+    "monotonic_dac_samples": 30,
+    "scope": "Native MOM linearized binary DAC levels at0.45V bias; not complete SAR ADC DNL/INL"
+  },
+  "comparator": {
+    "valid_threshold_samples": 30,
+    "effective_offset_mv": {
+      "n": 30,
+      "mean": -3.8875,
+      "std_sample": 12.62060780546287,
+      "min": -23.9375,
+      "max": 25.3125
+    },
+    "nominal_offset_interval_mv": [
+      0.0,
+      0.125
+    ],
+    "threshold_resolution_mv": 0.125,
+    "unresolved_speed_probes": 0,
+    "scope": "B core plus defined native receiver/MOM loads; threshold at1.75ns, cm0.45V, TT, no transient noise",
+    "receiver_delay_ns_by_overdrive_lsb": {
+      "-1.0": {
+        "n": 30,
+        "mean": 0.2454083623678736,
+        "std_sample": 0.01441154925336135,
+        "min": 0.21802905692229,
+        "max": 0.272065084402758
+      },
+      "-0.25": {
+        "n": 60,
+        "mean": 0.29471750941144564,
+        "std_sample": 0.01933579368655745,
+        "min": 0.253733959900148,
+        "max": 0.32726432595685195
+      },
+      "-0.1": {
+        "n": 30,
+        "mean": 0.33027779891344977,
+        "std_sample": 0.0235385133219021,
+        "min": 0.27696092406940004,
+        "max": 0.365887789059423
+      },
+      "0.1": {
+        "n": 30,
+        "mean": 0.33730009092706387,
+        "std_sample": 0.022093309387231693,
+        "min": 0.277570154223391,
+        "max": 0.37633400006312695
+      },
+      "0.25": {
+        "n": 120,
+        "mean": 0.3002638305940232,
+        "std_sample": 0.01757363735525079,
+        "min": 0.261798137510533,
+        "max": 0.333773956992308
+      },
+      "1.0": {
+        "n": 30,
+        "mean": 0.249175678977453,
+        "std_sample": 0.012858229736769563,
+        "min": 0.22534153466589402,
+        "max": 0.27455862293911
+      }
+    }
+  },
+  "warning_runs_by_code": {
+    "cdac": {
+      "SFE-1131": 30,
+      "SFE-3016": 30,
+      "SPECTRE-8282": 30,
+      "SPECTRE-8287": 30,
+      "VACOMP-2435": 30
+    },
+    "comp": {
+      "SFE-1131": 30,
+      "SFE-3016": 30,
+      "SPECTRE-17191": 1,
+      "SPECTRE-8281": 30,
+      "SPECTRE-8286": 30,
+      "VACOMP-2435": 30,
+      "SPECTRE-16780": 1,
+      "SPECTRE-16881": 1
+    }
+  },
+  "electrical_verdict": "deferred_not_qualified",
+  "limitations": [
+    "30local-mismatch draws per independent module, no process variation/PVT/noise/PEX or yield signoff",
+    "MOM multi-aware mismatch retained; no arbitrary percentage mismatch injected",
+    "Comparator input is low-impedance stimulus for threshold measurement: kickback not characterized",
+    "Diagnostic5ns clock with2ns high; actual B roughly0.79\u20131.02ns high is a separate timing reference",
+    "DATA register bank and full asynchronous feedback omitted from comparator fixture",
+    "Invalid lowercase save warnings retained; actual required native vectors validated independently; future save spelling should be corrected",
+    "AC text precision leaves a small nominal DNL floor; CDAC figures are binary-DAC weight predictions, not ADC transition scans",
+    "Same numeric seed in different hierarchies does not guarantee same device sample; whole-chip replay requires explicit sample mapping"
+  ],
+  "actual_B_boundary": {
+    "native_cmp_high_ns_range": [
+      0.7854990886509715,
+      1.0149862946257084
+    ],
+    "top_cm_at_evaluation_v_range": [
+      0.44901703048764735,
+      0.44908169892682054
+    ],
+    "scope": "Actual retained B ten key-code frames; not all input/PVT common-mode envelope"
+  }
+}

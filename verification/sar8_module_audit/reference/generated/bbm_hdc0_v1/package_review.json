@@ -1,0 +1,167 @@
+{
+  "status": "local_unexecuted_HD_C0_multi4_only",
+  "registered": false,
+  "simulation_started": false,
+  "baseline_dut_sha256": "5d4318d63e50ef8ea66443cf87f3db44edf16d169d824ab10d7604268194dae4",
+  "candidate_dut_sha256": "b3aa7345ddc41502a606b8b0988b1eb311c652c8fa5303ecee0d8b3e53705b8c",
+  "primitive_count": 196,
+  "MOS_count": 123,
+  "single_component_contrast": {
+    "instance": "XDUT.XBBM0.XD_HD.C0",
+    "old_multi": 1,
+    "new_multi": 4,
+    "model": "cfmom_2t",
+    "old_parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 mismatchflag=1",
+    "new_parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 mismatchflag=1",
+    "nodes": [
+      "XDUT.XBBM0.XD_HD.RC0",
+      "0"
+    ],
+    "all195_other_flat_records_identical": true,
+    "all_commands_and_saves_identical": true,
+    "HD_master_cloned_to_avoid_changing_LD": true,
+    "model_parameter_evidence": {
+      "same_unit_multi200": {
+        "instance": "XDUT.XBOOTP.Cboot",
+        "parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=200 mismatchflag=1"
+      },
+      "same_model_multi4": {
+        "instance": "XDUT.XCDAC.CMOMN2",
+        "parameters": "nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=4 mismatchflag=1"
+      },
+      "same_unit_multi2": {
+        "instance": "XDUT.XBBM0.X002.X000.CMID",
+        "parameters": "nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1"
+      }
+    },
+    "legality_scope": "Unit geometry unchanged and previously native accepted; model multi4 exists in same completed fixture at lr2u, multi2/200 at target lr2.5u. Native candidate validation still required; no layout signoff."
+  },
+  "cases": [
+    {
+      "run_id": "sar8audit-bbm-hdc0x4-ffcold",
+      "recipe": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/ffcold/recipe_proposal.json",
+      "recipe_sha256": "0ab4664d440537a1120e13626c576cc5e23fefdf981d4153ef638c89ddd4c892",
+      "staged_bytes": 442695,
+      "files": [
+        {
+          "name": "dut.scs",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/dut.scs",
+          "bytes": 42327,
+          "sha256": "b3aa7345ddc41502a606b8b0988b1eb311c652c8fa5303ecee0d8b3e53705b8c"
+        },
+        {
+          "name": "test.scs",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/ffcold/test.scs",
+          "bytes": 22880,
+          "sha256": "1721bc5e8f6fbc416b35745e07643f3f9a2f853ff282907d39c36bc4e9dc51be"
+        },
+        {
+          "name": "reference_current_analyze.py",
+          "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+          "bytes": 29142,
+          "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+        },
+        {
+          "name": "io_cell_analyze.py",
+          "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+          "bytes": 10327,
+          "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+        },
+        {
+          "name": "real_bbm_analyze.py",
+          "source": "verification/sar8_module_audit/reference/real_bbm_analyze.py",
+          "bytes": 15347,
+          "sha256": "1983866ca0ab12ed03f305ec7fcf90e969e04b9f84df1a693f7e087e9552fda5"
+        },
+        {
+          "name": "bbm_hdc0_analyze.py",
+          "source": "verification/sar8_module_audit/reference/bbm_hdc0_analyze.py",
+          "bytes": 5742,
+          "sha256": "e07a3bfa66e21153611291b39d6a26ae809e68b1dcfe8eeafdae61aa3bdb2dc6"
+        },
+        {
+          "name": "bbm_boundary.json",
+          "source": "verification/sar8_module_audit/reference/generated/real_bbm_v1/bbm_boundary.json",
+          "bytes": 19183,
+          "sha256": "92327ba9ae66772ad6916318d0d87f28c564c86f9236f20473bc76d505478895"
+        },
+        {
+          "name": "measurement.json",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/ffcold/measurement.json",
+          "bytes": 297747,
+          "sha256": "beabd4608e3c5896c8fd06daf189c263587fc5963ca90c9cb260345906eed8f8"
+        }
+      ],
+      "signals": {
+        "voltages": 116,
+        "mandatory_currents": 656,
+        "terminal_screens": 738,
+        "KCL": 36,
+        "native_columns": 376
+      }
+    },
+    {
+      "run_id": "sar8audit-bbm-hdc0x4-sscold",
+      "recipe": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/sscold/recipe_proposal.json",
+      "recipe_sha256": "86caf38f2d3f07a8002b26f9d78ecee40ed6c771f10f01f8d9d5ded291102523",
+      "staged_bytes": 442695,
+      "files": [
+        {
+          "name": "dut.scs",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/dut.scs",
+          "bytes": 42327,
+          "sha256": "b3aa7345ddc41502a606b8b0988b1eb311c652c8fa5303ecee0d8b3e53705b8c"
+        },
+        {
+          "name": "test.scs",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/sscold/test.scs",
+          "bytes": 22880,
+          "sha256": "f26980cfaf67bbe72f6a0f40c1d9f14cea7af3ac080e437d6f3858feccc7ad9b"
+        },
+        {
+          "name": "reference_current_analyze.py",
+          "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+          "bytes": 29142,
+          "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+        },
+        {
+          "name": "io_cell_analyze.py",
+          "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+          "bytes": 10327,
+          "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+        },
+        {
+          "name": "real_bbm_analyze.py",
+          "source": "verification/sar8_module_audit/reference/real_bbm_analyze.py",
+          "bytes": 15347,
+          "sha256": "1983866ca0ab12ed03f305ec7fcf90e969e04b9f84df1a693f7e087e9552fda5"
+        },
+        {
+          "name": "bbm_hdc0_analyze.py",
+          "source": "verification/sar8_module_audit/reference/bbm_hdc0_analyze.py",
+          "bytes": 5742,
+          "sha256": "e07a3bfa66e21153611291b39d6a26ae809e68b1dcfe8eeafdae61aa3bdb2dc6"
+        },
+        {
+          "name": "bbm_boundary.json",
+          "source": "verification/sar8_module_audit/reference/generated/real_bbm_v1/bbm_boundary.json",
+          "bytes": 19183,
+          "sha256": "92327ba9ae66772ad6916318d0d87f28c564c86f9236f20473bc76d505478895"
+        },
+        {
+          "name": "measurement.json",
+          "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/sscold/measurement.json",
+          "bytes": 297747,
+          "sha256": "7310d067a83b754eb6d88db77ce6d0f11b2574eaa35dc1c26224e1fa8e24e5b0"
+        }
+      ],
+      "signals": {
+        "voltages": 116,
+        "mandatory_currents": 656,
+        "terminal_screens": 738,
+        "KCL": 36,
+        "native_columns": 376
+      }
+    }
+  ]
+}

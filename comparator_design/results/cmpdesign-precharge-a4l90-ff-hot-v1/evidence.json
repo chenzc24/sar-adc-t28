@@ -1,0 +1,164 @@
+{
+  "run_id": "cmpdesign-precharge-a4l90-ff-hot-v1",
+  "collection": {
+    "collected_files": 8,
+    "bytes": 9402864,
+    "skipped": [],
+    "local_path": "output/managed_execution/runs/cmpdesign-precharge-a4l90-ff-hot-v1/collected",
+    "state": {
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-precharge-a4l90-ff-hot-v1",
+      "registered": {
+        "epoch": 1793102139.825229,
+        "files_complete": true,
+        "recipe_hash": "c58a0e8bcd4501e2dc6eca306da2d4e43c18a995da814047cbe673bc1a2bbe8c"
+      },
+      "simulation": {
+        "status": "complete",
+        "rss_bytes": 307339264,
+        "started_epoch": 1793102144.431525,
+        "updated_epoch": 1793102168.83686,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 24.388922929763794,
+        "submitted_epoch": 1793102144.114276,
+        "output_bytes": 89677632,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 13325053952,
+                "limit": 51539607552,
+                "used": 38214553600
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 13325053952,
+            "host": "thu-wei",
+            "conflicting_processes": [],
+            "epoch": 1793102144.418267,
+            "disk_free": 293183807488,
+            "load1": 3.19,
+            "mem_available": 121134399488
+          },
+          "phase": "simulation"
+        },
+        "phase": "simulation",
+        "child_identity": {
+          "start_ticks": "7707432",
+          "pid": 18951,
+          "state": "R",
+          "pgid": 18951,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 309002240,
+        "worker_identity": {
+          "start_ticks": "7707401",
+          "pid": 18948,
+          "state": "R",
+          "pgid": 18948,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true,
+        "native": {
+          "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+          "zero_error_footer": true,
+          "electrical_verdict": "not_inferred",
+          "native_exit": 0,
+          "effective_settings": {
+            "reltol": "100e-09, default 100e-06 (conservative)",
+            "abstol(V)": "10 nV, default 1 uV",
+            "maxstep": "20 ps, default 4 ns (conservative)",
+            "abstol(I)": "10 fA, default 1 pA",
+            "method": "gear2only"
+          },
+          "native_analysis_pass": true,
+          "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+          "warning_codes": [
+            "CMI-2751",
+            "CMI-2752",
+            "CMI-2753",
+            "CMI-2754",
+            "CMI-2755",
+            "CMI-2756",
+            "SFE-1131"
+          ]
+        }
+      },
+      "analysis": {
+        "status": "complete",
+        "rss_bytes": 9195520,
+        "started_epoch": 1793102194.380193,
+        "updated_epoch": 1793102225.002211,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 30.621787071228027,
+        "submitted_epoch": 1793102184.044686,
+        "output_bytes": 99065730,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 13135089664,
+                "limit": 51539607552,
+                "used": 38404517888
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 13135089664,
+            "host": "thu-wei",
+            "conflicting_processes": [
+              {
+                "managed": {
+                  "phase": "analysis",
+                  "reserved_rss_mib": 256,
+                  "threads": 1,
+                  "run_id": "cmpdesign-precharge-a4l60-ff-hot-v1"
+                },
+                "pid": 20525,
+                "comm": "python"
+              }
+            ],
+            "epoch": 1793102194.36258,
+            "disk_free": 292997705728,
+            "load1": 3.39,
+            "mem_available": 121117876224
+          },
+          "phase": "analysis"
+        },
+        "phase": "analysis",
+        "child_identity": {
+          "start_ticks": "7712427",
+          "pid": 20658,
+          "state": "R",
+          "pgid": 20658,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 9261056,
+        "worker_identity": {
+          "start_ticks": "7711394",
+          "pid": 20523,
+          "state": "R",
+          "pgid": 20523,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true
+      },
+      "run_id": "cmpdesign-precharge-a4l90-ff-hot-v1"
+    }
+  },
+  "source": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\managed_execution\\runs\\cmpdesign-precharge-a4l90-ff-hot-v1\\collected"
+}

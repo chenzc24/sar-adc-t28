@@ -1,0 +1,1036 @@
+// Generated from frozen B by scripts/sar8_entry.py build.
+// Electrical subcircuit statements are preserved verbatim.
+
+subckt sar8p_nonoverlap CODE H L VDD VSS
+    X000 (CODE VDD VSS CB) sar8p_inv
+    XD_LD (CB VDD VSS LD) sar8p_delay_bbm
+    XD_HD (CODE VDD VSS HD) sar8p_delay_bbm
+    X004 (CB LD VDD VSS L) sar8p_and2
+    X002 (CODE HD VDD VSS H) sar8p_and2
+ends sar8p_nonoverlap
+
+subckt sar8p_refdrv_b0 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=1 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=1 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b0
+
+subckt sar8p_refdrv_b1 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=2 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=2 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=2 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b1
+
+subckt sar8p_refdrv_b2 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=4 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=4 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=4 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b2
+
+subckt sar8p_refdrv_b3 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=8 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=8 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=8 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b3
+
+subckt sar8p_refdrv_b4 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=16 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=16 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=16 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b4
+
+subckt sar8p_refdrv_b5 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=32 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=32 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=32 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b5
+
+subckt sar8p_refdrv_b6 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=64 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=64 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=64 multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b6
+
+subckt sar8p_refdrv_b7 GNN GNP GPN GPP H L VDD VSS
+    XSTD_GNNCN (GNNB GNNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNBN (GNNA GNNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNNAN (GNNPRE GNNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPCN (GNPB GNPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPBN (GNPA GNPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GNPAN (H GNPA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNCN (GPNB GPNDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNBN (GPNA GPNB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPNAN (GPNPRE GPNA VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPCN (GPPB GPPDRV VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPBN (GPPA GPPB VDD VSS) INVD1BWP12T30P140
+    XSTD_GPPAN (L GPPA VDD VSS) INVD1BWP12T30P140
+//Series configuration of RGNN1
+RGNN1  (GNNRG RGNN1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNN1_2__dmy0  (RGNN1_1__dmy0 RGNN1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_3__dmy0  (RGNN1_2__dmy0 RGNN1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_4__dmy0  (RGNN1_3__dmy0 RGNN1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN1_5__dmy0  (RGNN1_4__dmy0 GNN ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGNN1
+
+//Series configuration of RGNN0
+RGNN0  (GNNDRV RGNN0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNN0_2__dmy0  (RGNN0_1__dmy0 RGNN0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_3__dmy0  (RGNN0_2__dmy0 RGNN0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_4__dmy0  (RGNN0_3__dmy0 RGNN0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNN0_5__dmy0  (RGNN0_4__dmy0 GNNRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGNN0
+
+//Series configuration of RGNP1
+RGNP1  (GNPRG RGNP1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNP1_2__dmy0  (RGNP1_1__dmy0 RGNP1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_3__dmy0  (RGNP1_2__dmy0 RGNP1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_4__dmy0  (RGNP1_3__dmy0 RGNP1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP1_5__dmy0  (RGNP1_4__dmy0 GNP ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGNP1
+
+//Series configuration of RGNP0
+RGNP0  (GNPDRV RGNP0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGNP0_2__dmy0  (RGNP0_1__dmy0 RGNP0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_3__dmy0  (RGNP0_2__dmy0 RGNP0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_4__dmy0  (RGNP0_3__dmy0 RGNP0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGNP0_5__dmy0  (RGNP0_4__dmy0 GNPRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGNP0
+
+//Series configuration of RGPN1
+RGPN1  (GPNRG RGPN1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPN1_2__dmy0  (RGPN1_1__dmy0 RGPN1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_3__dmy0  (RGPN1_2__dmy0 RGPN1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_4__dmy0  (RGPN1_3__dmy0 RGPN1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN1_5__dmy0  (RGPN1_4__dmy0 GPN ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGPN1
+
+//Series configuration of RGPN0
+RGPN0  (GPNDRV RGPN0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPN0_2__dmy0  (RGPN0_1__dmy0 RGPN0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_3__dmy0  (RGPN0_2__dmy0 RGPN0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_4__dmy0  (RGPN0_3__dmy0 RGPN0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPN0_5__dmy0  (RGPN0_4__dmy0 GPNRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGPN0
+
+//Series configuration of RGPP1
+RGPP1  (GPPRG RGPP1_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPP1_2__dmy0  (RGPP1_1__dmy0 RGPP1_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_3__dmy0  (RGPP1_2__dmy0 RGPP1_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_4__dmy0  (RGPP1_3__dmy0 RGPP1_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP1_5__dmy0  (RGPP1_4__dmy0 GPP ) rupolym l=17.13u w=1u m=128 multi=(1)
+//End of RGPP1
+
+//Series configuration of RGPP0
+RGPP0  (GPPDRV RGPP0_1__dmy0 ) rupolym l=17.13u w=1u m=128 multi=(1)
+RGPP0_2__dmy0  (RGPP0_1__dmy0 RGPP0_2__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_3__dmy0  (RGPP0_2__dmy0 RGPP0_3__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_4__dmy0  (RGPP0_3__dmy0 RGPP0_4__dmy0 ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+RGPP0_5__dmy0  (RGPP0_4__dmy0 GPPRG ) rupolym l=17.13u w=1u m=128 \
+        multi=(1)
+//End of RGPP0
+
+    X025 (L VDD VSS GNNPRE) sar8p_inv
+    X008 (H VDD VSS GPNPRE) sar8p_inv
+ends sar8p_refdrv_b7
+
+subckt sar8p_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 \
+        D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 \
+        GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 \
+        GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD \
+        VSS
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN SAMPLE VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 SAMPLE VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 SAMPLE VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8p_refword
+
+subckt sar8s_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE
+    XRR7 (SAMPLE SAMPLE VDD VSS RST7) sar8p_and2
+    XRSTEP1 (SAMPLE VDD VSS TAP1) sar8s_step
+    XRR6 (SAMPLE TAP1 VDD VSS RST6) sar8p_and2
+    XRSTEP2 (TAP1 VDD VSS TAP2) sar8s_step
+    XRR5 (SAMPLE TAP2 VDD VSS RST5) sar8p_and2
+    XRSTEP3 (TAP2 VDD VSS TAP3) sar8s_step
+    XRR4 (SAMPLE TAP3 VDD VSS RST4) sar8p_and2
+    XRSTEP4 (TAP3 VDD VSS TAP4) sar8s_step
+    XRR3 (SAMPLE TAP4 VDD VSS RST3) sar8p_and2
+    XRSTEP5 (TAP4 VDD VSS TAP5) sar8s_step
+    XRR2 (SAMPLE TAP5 VDD VSS RST2) sar8p_and2
+    XRSTEP6 (TAP5 VDD VSS TAP6) sar8s_step
+    XRR1 (SAMPLE TAP6 VDD VSS RST1) sar8p_and2
+    XRSTEP7 (TAP6 VDD VSS TAP7) sar8s_step
+    XRR0 (SAMPLE TAP7 VDD VSS RST0) sar8p_and2
+    XRDONE (RST0 VDD VSS RST_DONE) sar8p_buf
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN RST7 VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 RST6 VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 RST5 VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 RST4 VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 RST3 VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 RST2 VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 RST1 VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 RST0 VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8s_refword
+
+subckt sar8i_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE PRESET
+    XRR7 (PRESET PRESET VDD VSS RST7) sar8p_and2
+    XRSTEP1 (PRESET VDD VSS TAP1) sar8s_step
+    XRR6 (PRESET TAP1 VDD VSS RST6) sar8p_and2
+    XRSTEP2 (TAP1 VDD VSS TAP2) sar8s_step
+    XRR5 (PRESET TAP2 VDD VSS RST5) sar8p_and2
+    XRSTEP3 (TAP2 VDD VSS TAP3) sar8s_step
+    XRR4 (PRESET TAP3 VDD VSS RST4) sar8p_and2
+    XRSTEP4 (TAP3 VDD VSS TAP4) sar8s_step
+    XRR3 (PRESET TAP4 VDD VSS RST3) sar8p_and2
+    XRSTEP5 (TAP4 VDD VSS TAP5) sar8s_step
+    XRR2 (PRESET TAP5 VDD VSS RST2) sar8p_and2
+    XRSTEP6 (TAP5 VDD VSS TAP6) sar8s_step
+    XRR1 (PRESET TAP6 VDD VSS RST1) sar8p_and2
+    XRSTEP7 (TAP6 VDD VSS TAP7) sar8s_step
+    XRR0 (PRESET TAP7 VDD VSS RST0) sar8p_and2
+    XRDONE (RST0 VDD VSS RST_DONE) sar8p_buf
+    X002 (FIRST1 VDD VSS FIRST2) sar8p_buf
+    X001 (FIRST0 VDD VSS FIRST1) sar8p_buf
+    X000 (PHI_U VDD VSS FIRST0) sar8p_buf
+    X007 (FIRST2 LATE_CLK VDD VSS CAP_REQ) sar8p_or2
+    X003 (SAMPLE ACK VDD VSS REQ_RESET) sar8p_or2
+    XREQUEST (REQ_Q REQ_RESET PHI_U VDD VSS) sar8p_sr
+    XD_LATE_CLK (REQ_Q VDD VSS LATE_CLK) sar8p_delay_capture
+    XD_ACK (LATE_CLK VDD VSS ACK) sar8p_delay_valid
+    X008 (CAP_REQ VDD VSS CAP_CLK) sar8p_clkbuf
+    XMUX7 (CODE7 D7 PHI_U VDD VSS TARGET7) sar8p_mux2
+    XMUX6 (CODE6 D6 PHI_U VDD VSS TARGET6) sar8p_mux2
+    XMUX5 (CODE5 D5 PHI_U VDD VSS TARGET5) sar8p_mux2
+    XMUX4 (CODE4 D4 PHI_U VDD VSS TARGET4) sar8p_mux2
+    XMUX3 (CODE3 D3 PHI_U VDD VSS TARGET3) sar8p_mux2
+    XMUX2 (CODE2 D2 PHI_U VDD VSS TARGET2) sar8p_mux2
+    XMUX1 (CODE1 D1 PHI_U VDD VSS TARGET1) sar8p_mux2
+    XMUX0 (CODE0 D0 PHI_U VDD VSS TARGET0) sar8p_mux2
+    X018 (MSB_QN VDD VSS Q7) sar8p_inv
+    X017 (TARGET7 VDD VSS MSB_DN) sar8p_inv
+    XSTORE7 (CAP_CLK MSB_DN MSB_QN RST7 VDD VSS) sar8p_dffr
+    XSTORE6 (CAP_CLK TARGET6 Q6 RST6 VDD VSS) sar8p_dffr
+    XSTORE5 (CAP_CLK TARGET5 Q5 RST5 VDD VSS) sar8p_dffr
+    XSTORE4 (CAP_CLK TARGET4 Q4 RST4 VDD VSS) sar8p_dffr
+    XSTORE3 (CAP_CLK TARGET3 Q3 RST3 VDD VSS) sar8p_dffr
+    XSTORE2 (CAP_CLK TARGET2 Q2 RST2 VDD VSS) sar8p_dffr
+    XSTORE1 (CAP_CLK TARGET1 Q1 RST1 VDD VSS) sar8p_dffr
+    XSTORE0 (CAP_CLK TARGET0 Q0 RST0 VDD VSS) sar8p_dffr
+    XBBM7 (Q7 H7 L7 VDD VSS) sar8p_nonoverlap
+    XBBM6 (Q6 H6 L6 VDD VSS) sar8p_nonoverlap
+    XBBM5 (Q5 H5 L5 VDD VSS) sar8p_nonoverlap
+    XBBM4 (Q4 H4 L4 VDD VSS) sar8p_nonoverlap
+    XBBM3 (Q3 H3 L3 VDD VSS) sar8p_nonoverlap
+    XBBM2 (Q2 H2 L2 VDD VSS) sar8p_nonoverlap
+    XBBM1 (Q1 H1 L1 VDD VSS) sar8p_nonoverlap
+    XBBM0 (Q0 H0 L0 VDD VSS) sar8p_nonoverlap
+    XDRV0 (GNN0 GNP0 GPN0 GPP0 H0 L0 VDD VSS) sar8p_refdrv_b0
+    XDRV1 (GNN1 GNP1 GPN1 GPP1 H1 L1 VDD VSS) sar8p_refdrv_b1
+    XDRV2 (GNN2 GNP2 GPN2 GPP2 H2 L2 VDD VSS) sar8p_refdrv_b2
+    XDRV3 (GNN3 GNP3 GPN3 GPP3 H3 L3 VDD VSS) sar8p_refdrv_b3
+    XDRV4 (GNN4 GNP4 GPN4 GPP4 H4 L4 VDD VSS) sar8p_refdrv_b4
+    XDRV5 (GNN5 GNP5 GPN5 GPP5 H5 L5 VDD VSS) sar8p_refdrv_b5
+    XDRV6 (GNN6 GNP6 GPN6 GPP6 H6 L6 VDD VSS) sar8p_refdrv_b6
+    XDRV7 (GNN7 GNP7 GPN7 GPP7 H7 L7 VDD VSS) sar8p_refdrv_b7
+ends sar8i_refword
+
+subckt sar8i_idle ACTIVE SAMPLE VDD VSS PRESET SAMPLE_MATCH
+    XN (ACTIVE VDD VSS IDLE) sar8p_inv
+    XD (IDLE VDD VSS IDLE_D) sar8i_guard
+    XP (SAMPLE IDLE_D VDD VSS PRESET) sar8p_or2
+    XA (SAMPLE SAMPLE VDD VSS SAMPLE_AND) sar8p_and2
+    XB (SAMPLE_AND VDD VSS SAMPLE_MATCH) sar8p_buf
+ends sar8i_idle

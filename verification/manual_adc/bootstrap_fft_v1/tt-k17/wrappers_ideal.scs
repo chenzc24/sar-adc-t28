@@ -1,0 +1,22 @@
+simulator lang=spectre
+ahdl_include "manual8_sample.va"
+ahdl_include "manual8_cdac.va"
+ahdl_include "manual8_cmp.va"
+ahdl_include "manual8_sar.va"
+
+// Interface-compatible wrappers. Select real/behavioral implementations here.
+// Optional monitor pins are only on the behavioral ADC top, not the OA design.
+subckt manual_cdac_beh CLKS GND VDD VIN VTOP VREFP VREFN DCTRL_7 DCTRL_6 DCTRL_5 DCTRL_4 DCTRL_3 DCTRL_2 DCTRL_1
+parameters cunit=10f sample_ron=1 ref_ron=10 sample_qclk=0
+XS (CLKS GND VDD VIN VTOP) manual8_sample ron=sample_ron qclk=sample_qclk
+XD (GND VDD VTOP VREFP VREFN DCTRL_7 DCTRL_6 DCTRL_5 DCTRL_4 DCTRL_3 DCTRL_2 DCTRL_1) manual8_cdac cunit=cunit ron_unit=ref_ron
+ends manual_cdac_beh
+
+subckt manual_adc_beh CLKS GND VDD VINP VINN VREFP VREFN DO_7 DO_6 DO_5 DO_4 DO_3 DO_2 DO_1 DO_0 BUSY EOC FAULT
+parameters cunit=10f sample_ron=1 ref_ron=10 sample_qclk=0 cmp_td=200p cmp_vos=0 cmp_cin=0 cmp_edge=50p cmp_qkickp=0 cmp_qkickn=0 t_start=4n t_capture=50p t_update=100p t_settle=2n t_reset=500p t_timeout=8n logic_edge=50p
+// Cross ONLY bit7, exactly as in the corrected native-derived candidate.
+XP (CLKS GND VDD VINP TOPP VREFP VREFN DN_7 DP_6 DP_5 DP_4 DP_3 DP_2 DP_1) manual_cdac_beh cunit=cunit sample_ron=sample_ron ref_ron=ref_ron sample_qclk=sample_qclk
+XN (CLKS GND VDD VINN TOPN VREFP VREFN DP_7 DN_6 DN_5 DN_4 DN_3 DN_2 DN_1) manual_cdac_beh cunit=cunit sample_ron=sample_ron ref_ron=ref_ron sample_qclk=sample_qclk
+XC (CMPCK TOPP TOPN VDD GND DCMPP DCMPN) manual8_cmp td=cmp_td vos=cmp_vos cin=cmp_cin trf=cmp_edge qkickp=cmp_qkickp qkickn=cmp_qkickn
+XL (CLKS GND VDD DCMPP DCMPN CMPCK DO_7 DO_6 DO_5 DO_4 DO_3 DO_2 DO_1 DO_0 DP_7 DP_6 DP_5 DP_4 DP_3 DP_2 DP_1 DP_0 DN_7 DN_6 DN_5 DN_4 DN_3 DN_2 DN_1 DN_0 BUSY EOC FAULT) manual8_sar t_start=t_start t_capture=t_capture t_update=t_update t_settle=t_settle t_reset=t_reset t_timeout=t_timeout trf=logic_edge
+ends manual_adc_beh

@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "source_run_id": "sar8fix-loaded-both-ffcold",
+  "source_recipe_hash": "5fa0009c9440314865e346dd7713f57012a24f5b06c41644ac8260ed13b8b325",
+  "source_input_sha256": {
+    "dut.scs": "b9bf9f4682334ad37b24633e5dfe8a155deef668dc1a930d96f539b713113680",
+    "test.scs": "e6160bb51a25fd41cec7a196da1bdbb9a701ec88f31de13a7d8bc8608d6ddcbf"
+  },
+  "history_start_s": 0,
+  "history_stop_s": 4.16e-8,
+  "diagnostic_start_s": 4.08e-8,
+  "diagnostic_stop_s": 4.16e-8,
+  "expected_peak": {
+    "signal": "xdut.xctrl.xtim.x020.n",
+    "reference": "VDD is not subtracted; node-to-ground peak",
+    "value_v": 1.078642014935018,
+    "time_s": 4.10895154336558e-8,
+    "acceptance_error_v": null,
+    "acceptance_time_error_s": null
+  },
+  "primary_boundary_series_count": 10,
+  "signals": [
+    {
+      "frozen_save_name": "XDUT.SAMPLE_INT",
+      "native_match_name": "xdut.sample_int",
+      "role": "upstream_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.PHI_W",
+      "native_match_name": "xdut.xctrl.phi_w",
+      "role": "upstream_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.PHI_U",
+      "native_match_name": "xdut.phi_u",
+      "role": "upstream_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.ACTIVE",
+      "native_match_name": "xdut.active",
+      "role": "upstream_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.DEC",
+      "native_match_name": "xdut.xctrl.xtim.dec",
+      "role": "input_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.WD",
+      "native_match_name": "xdut.xctrl.xtim.wd",
+      "role": "witness_only_do_not_drive",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.TOPP",
+      "native_match_name": "xdut.topp",
+      "role": "input_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.TOPN",
+      "native_match_name": "xdut.topn",
+      "role": "input_replay",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.COMP_P",
+      "native_match_name": "xdut.comp_p",
+      "role": "witness_only_do_not_drive",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.COMP_N",
+      "native_match_name": "xdut.comp_n",
+      "role": "witness_only_do_not_drive",
+      "primary_boundary_series": true,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.CLOCK_Q",
+      "native_match_name": "xdut.xctrl.xtim.clock_q",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.XCLOCK.RB",
+      "native_match_name": "xdut.xctrl.xtim.xclock.rb",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.XCLOCK.SN",
+      "native_match_name": "xdut.xctrl.xtim.xclock.sn",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.XCLOCK.QB",
+      "native_match_name": "xdut.xctrl.xtim.xclock.qb",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.XD_QUIET_D.RC0",
+      "native_match_name": "xdut.xctrl.xtim.xd_quiet_d.rc0",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.XD_QUIET_D.RC1",
+      "native_match_name": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+      "role": "initial_state_witness",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.X020.N",
+      "native_match_name": "xdut.xctrl.xtim.x020.n",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.X020.X000.MID",
+      "native_match_name": "xdut.xctrl.xtim.x020.x000.mid",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.QUIET",
+      "native_match_name": "xdut.xctrl.xtim.quiet",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.QUIET_D",
+      "native_match_name": "xdut.xctrl.xtim.quiet_d",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.Q1",
+      "native_match_name": "xdut.xctrl.xtim.q1",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.LIVE",
+      "native_match_name": "xdut.xctrl.xtim.live",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.XCTRL.XTIM.CLOCK_RESET",
+      "native_match_name": "xdut.xctrl.xtim.clock_reset",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "XDUT.CMP_CLK",
+      "native_match_name": "xdut.cmp_clk",
+      "role": "peak_diagnostic",
+      "primary_boundary_series": false,
+      "required": true
+    },
+    {
+      "frozen_save_name": "VDD!",
+      "native_match_name": "vdd!",
+      "role": "reference",
+      "primary_boundary_series": false,
+      "required": true
+    }
+  ],
+  "max_parser_output_bytes": 31457280,
+  "max_collected_directory_bytes": 33554431,
+  "max_runtime_rss_kib": 262144,
+  "output_format": {
+    "files": [
+      "boundary.native.bin",
+      "boundary.columns.json",
+      "initial_state.json",
+      "peak.native.bin",
+      "peak_summary.json",
+      "native_export.meta.json",
+      "source_readonly_provenance.json",
+      "result.json"
+    ],
+    "binary": "little-endian float64 rows; first column time in seconds; remaining manifest order, original solver points only",
+    "pwl_use": "Ten primary column series can later be converted to Spectre PWL. COMP_P/N and WD are witnesses only in the corrected single-driver fixture."
+  },
+  "source_policy": "Read existing completed managed ASCII transient only. No write inside source, raw resimulation, interpolation, resampling, waveform clipping, missing-signal zero fill or peak pass default.",
+  "wrapper_interface": [
+    "--run-dir",
+    "--output-dir",
+    "--source-run-dir"
+  ],
+  "compiler": "g++ -O2 -std=c++11",
+  "notes": [
+    "Parser may stop after the first native time marker beyond requested history, without scanning source END. Full-source completion is verified from immutable managed metadata; exported prefix coverage is separate.",
+    "The ten series include three output witnesses which must not be connected as ideal voltage sources to native circuit outputs.",
+    "Peak equality is reported as a numerical difference; reproduction acceptance tolerances remain unallocated."
+  ]
+}

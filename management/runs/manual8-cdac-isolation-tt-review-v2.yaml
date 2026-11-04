@@ -1,0 +1,62 @@
+managed: true
+recipe_hash: c5edaff5be3da92e0616dae1100f7dcb3f14b1c8092059ec77a62b7575fcf16e
+recipe:
+  schema_version: 2
+  run_id: manual8-cdac-isolation-tt-review-v2
+  design_id: manual8_cdac_isolation_v1
+  entry: cdac_isolation_review.py
+  analyzer: cdac_isolation_review.py
+  files:
+  - name: cdac_isolation_review.py
+    source: scripts/manual_adc/cdac_isolation_review.py
+    bytes: 14115
+    sha256: a2744a39d1e8b2193dd9892613449ecd2bfc68d71887dbecb66880e6c40a1b45
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 32
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - clks
+  - xadc.topp
+  - xadc.topn
+  - xadc.cmpck
+  - eoc
+  - fault
+  expected_stop_s: 8.2e-07
+  qualification_scope: TT reference MOS plus ideal capacitors; all other blocks behavioral/ideal;
+    not physical capacitor/PVT qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; behavioral reference only; OA untouched
+  kind: analysis_only
+  source:
+    run_id: manual8-cdac-isolation-tt-v1
+    recipe_hash: 2da9906bc04f86aead3f9b2f1a264098a01dd3339a9b321b2b0fbaa1e6b38d66
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-cdac-isolation-tt-review-v2

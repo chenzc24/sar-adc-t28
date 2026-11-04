@@ -1,0 +1,71 @@
+--- frozen_liberty_v1/source_semantics.py
++++ liberty_v2/source_semantics.py
+@@ -12,6 +12,7 @@
+ import source_audit as bound
+ import liberty_semantics as liberty
+ import measured_comparison as measured
++import header_reader
+ sys.dont_write_bytecode=True
+ 
+ 
+@@ -45,15 +46,17 @@
+         if bound.identity(bound.safe_file(root,rel))!=want:raise ValueError('Completed index evidence changed:'+rel)
+     result=bound.read(bound.safe_file(root,'derived/result.json'))
+     if not result['archive_index_complete'] or not result['gzip_integrity_verified'] or result['full_compressed_sha256']!=binding['archive_sha256']:raise ValueError('Index was not a complete integrity-verified archive audit')
+-    matches=[]
++    matches=[];previous=None;predecessor=None
+     with open(bound.safe_file(root,'derived/members.ndjson')) as f:
+         for line in f:
+             row=json.loads(line)
+-            if row['name']==binding['member']['name']:matches.append(row)
++            if row['name']==binding['member']['name']:matches.append(row);predecessor=previous
++            previous=row
+     if matches!=[binding['member']]:raise ValueError('Exact indexed member identity differs')
++    if predecessor!=binding['predecessor']:raise ValueError('Exact indexed predecessor differs')
+     return dict(index_run_id=binding['index_run_id'],index_recipe_hash=digest,
+         archive_index_complete=True,gzip_integrity_verified=True,
+-        archive_sha256=result['full_compressed_sha256'],member=matches[0])
++        archive_sha256=result['full_compressed_sha256'],member=matches[0],predecessor=predecessor)
+ 
+ 
+ def audit(run,output,source):
+@@ -75,7 +78,7 @@
+     if not os.path.isdir(output):os.makedirs(output)
+     bound.write_atomic(os.path.join(output,'identity_before.json'),dict(source=source_proof,index=index_proof,library_and_PDK=deps,archive=before),65536)
+     raw=open(path,'rb');stream=archive.GzipStream(raw,before['bytes'],cfg)
+-    member=None;semantic_parser=None;semantic=None;stage='known_prefix_skip';reason=None;status='incomplete'
++    member=None;semantic_parser=None;semantic=None;header_evidence=None;stage='known_prefix_skip';reason=None;status='incomplete'
+     def checkpoint():
+         bound.write_atomic(os.path.join(output,'checkpoint.json'),dict(stage=stage,compressed_bytes_read=stream.compressed,
+             decoded_bytes_consumed=stream.position,decoded_bytes_produced=stream.decoded,
+@@ -85,11 +88,11 @@
+             repeat_or_resume_authorized=False),65536)
+     checkpoint()
+     try:
+-        target=binding['member'];offset=target['decoded_header_offset']
+-        while stream.position<offset:
+-            stream.skip(min(64*1024**2,offset-stream.position));checkpoint()
+-        head=archive.header(stream.read_exact(512))
+-        if head['name']!=target['name'] or head['size']!=target['bytes'] or head['type']!=target['type'] or stream.position!=target['decoded_body_offset']:raise archive.InvalidArchive('Indexed tar header/body identity mismatch')
++        target=binding['member'];stage='indexed_gap_and_header_identity'
++        header_evidence=header_reader.locate(stream,target,binding['predecessor'],cfg,checkpoint)
++        bound.write_atomic(os.path.join(output,'header_evidence.json'),header_evidence,65536)
++        if header_evidence['extension_bound_hit']:raise archive.BoundReached(header_evidence['extension_recovery_error'])
++        if not header_evidence['all_required_fields_match']:raise archive.InvalidArchive('Indexed effective header fields mismatch; see header_evidence.json')
+         stage='selected_Liberty_semantics';member=Member(stream,target['bytes'],checkpoint)
+         semantic_parser=liberty.Semantics(member,cfg);semantic=semantic_parser.parse()
+         if member.remaining:raise liberty.ParseError('Semantic parser did not consume the complete bounded member')
+@@ -116,11 +119,11 @@
+         if bound.identity(path)!=want:raise ValueError('Source library/PDK changed during semantic audit')
+     rss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*1024
+     if rss>256*1024**2:raise ValueError('Semantic audit RSS exceeds256MiB')
+-    result=dict(analysis_kind='source_bound_indexed_FF_Liberty_semantics',analysis_complete=status=='complete',
++    result=dict(analysis_kind='source_bound_indexed_FF_Liberty_semantics_header_v2',analysis_complete=status=='complete',
+         status=status,stop_reason=reason,source=source_proof,index=index_proof,library_and_PDK=deps,
+         archive_identity_before_after=before,full_archive_sha256_verified=status=='complete',
+         compressed_bytes_read=stream.compressed,decoded_bytes_produced=stream.decoded,
+-        member=binding['member'],member_bytes_read=member.count if member else 0,
++        member=binding['member'],header_identity_evidence=header_evidence,member_bytes_read=member.count if member else 0,
+         member_sha256=member.digest.hexdigest() if member and member.remaining==0 else None,
+         semantic=semantic if status=='complete' else None,measured_comparison=comparison,
+         target_cell_found=bool(semantic and semantic.get('target_cell')),peak_RSS_bytes=rss,

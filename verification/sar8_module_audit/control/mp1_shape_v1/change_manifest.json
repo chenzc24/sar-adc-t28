@@ -1,0 +1,75 @@
+{
+  "base_run": "sar8audit-ctrl-snload-both-v1",
+  "base_recipe_sha256": "66cda5e5a9c65de39abee30125b33fe39f8926729145adbe5d25999b0bcc802c",
+  "base_completed_result": {
+    "run": "sar8audit-ctrl-snload-both-v1",
+    "recipe_sha256": "66cda5e5a9c65de39abee30125b33fe39f8926729145adbe5d25999b0bcc802c",
+    "receipt_files": 9,
+    "receipt_bytes": 1725886,
+    "required_currents": 436,
+    "native_points": 6041,
+    "local_diagnostic_points": 1960,
+    "END": true,
+    "all_receipt_and_input_hashes_match": true,
+    "critical_kcl_max_a": 3.653740843407617e-12,
+    "native_warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "SFE-1131",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "changed_original_instances": {
+    "XDUT.XCTRL.XTIM.X020.X000.MP1": {
+      "before": {
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X020.N",
+          "XDUT.XCTRL.XTIM.LIVE",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      },
+      "after": {
+        "model": "pch_mac",
+        "nodes": [
+          "XDUT.XCTRL.XTIM.X020.N",
+          "XDUT.XCTRL.XTIM.X020.X000.B_PM",
+          "VDD!",
+          "VDD!"
+        ],
+        "parameters": "l=30n w=1u multi=1 nf=1 sd=100n ad=7.5e-14 as=7.5e-14 pd=2.15u ps=2.15u nrd=0.165806 nrs=0.165806 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+      }
+    }
+  },
+  "new_instances": {
+    "XDUT.XCTRL.XTIM.X020.X000.RSLEW": {
+      "model": "rupolym",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.LIVE",
+        "XDUT.XCTRL.XTIM.X020.X000.B_PM"
+      ],
+      "parameters": "l=17.13u w=1u m=1 multi=(1)"
+    }
+  },
+  "unchanged_original_instances": 129,
+  "all_original_MOS_models_and_parameters_unchanged": true,
+  "new_MOS": 0,
+  "total_MOS": 101,
+  "total_passive": 19,
+  "new_voltage_sources": 0,
+  "new_clocks": 0,
+  "external_source_and_bias_PWL_hashes_unchanged": true,
+  "recipe_file_sha256": "0a5ed40d4ed3653d03836152265aafdee10cdf22c3d438ac364ea799dc8f831a",
+  "declared_package_bytes": 4413193,
+  "voltage_saves": 62,
+  "current_saves": 438,
+  "critical_kcl_nodes": 14,
+  "original_gate_initial_witness_does_not_exist": true,
+  "simulation_started_by_this_session": false
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-sar-b-tt-v2",
+  "design_id": "manual8_sar_isolation_v1",
+  "entry": "test.scs",
+  "analyzer": "sar_isolation_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/tb_b_v2/dut.scs",
+      "name": "dut.scs"
+    },
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/tb_b_v2/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/tb_b_v2/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/sar_isolation_v1/tb_b_v2/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "verification/manual_adc/behavioral_v1/manual8_sample.va",
+      "name": "manual8_sample.va"
+    },
+    {
+      "source": "verification/manual_adc/behavioral_v1/manual8_cdac.va",
+      "name": "manual8_cdac.va"
+    },
+    {
+      "source": "verification/manual_adc/behavioral_v1/manual8_cmp.va",
+      "name": "manual8_cmp.va"
+    },
+    {
+      "source": "scripts/manual_adc/sar_isolation_reduce.py",
+      "name": "sar_isolation_reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 1.62e-06,
+  "summary_signals": [
+    "CLKS",
+    "CMPCK",
+    "XDUT.VALID"
+  ],
+  "qualification_scope": "All 32 DFF external pins; ten representative DFF internals only. Static gate replicas exclude bottom-plate Miller; ideal source/delay power excluded.",
+  "oa_parity": "none; behavioral reference only; OA untouched",
+  "test_conditions": {
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}

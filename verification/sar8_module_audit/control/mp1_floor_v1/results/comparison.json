@@ -1,0 +1,360 @@
+{
+  "scope": "FF/0.99V/-40C first-event conditional-load fixture only",
+  "source_reanalysis_proof": {
+    "run": "sar8audit-ctrl-mp1shape-stress-v1",
+    "recipe_sha256": "cba77733017f88e06d61f9d27249c8d1eefa2cea1b40d041fdccfabea02bdbba",
+    "receipt_files": 7,
+    "receipt_bytes": 1909884,
+    "all_receipt_and_input_hashes_match": true
+  },
+  "cases": {
+    "shape": {
+      "proof": {
+        "run": "sar8audit-ctrl-mp1shape-v1",
+        "recipe_sha256": "8dc67ee9a10e3eeb56b27df222a593b475c600bb74ede6cd5496cfc055287d7a",
+        "receipt_files": 9,
+        "receipt_bytes": 1927723,
+        "required_currents": 438,
+        "native_points": 6054,
+        "local_diagnostic_points": 1973,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 3.4516312605401694e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "peak_v": 1.005487759293553,
+      "peak_time_s": 4.108941054156641e-08,
+      "peak_voltages_v": {
+        "live": 0.9579383815743948,
+        "q1": 0.9857342632336794,
+        "x020.x000.b_pm": 0.374913512974018,
+        "x020.x000.mid": 0.6071464454587657
+      },
+      "at_peak_current_a": {
+        "x020.x000.mp1:1": -8.148963415220194e-06,
+        "x020.x000.mn0:1": 7.737661044513274e-06,
+        "x020.x000.cmid:1": -0.0007946394696699963,
+        "x020.x000.mn1:1": 0.0008409067380513553,
+        "x020.x000.mn0:3": -4.626726860840043e-05,
+        "x020.x000.mp1:2": 5.954405310284258e-05
+      },
+      "prepeak_charge": {
+        "first_s": 4.104074535873642e-08,
+        "last_s": 4.108941054156641e-08,
+        "into_N_c": {
+          "xdut.xctrl.xtim.x020.x000.mp1:1": 3.263678493586382e-17,
+          "xdut.xctrl.xtim.x020.x000.mp0:1": -9.549517952095773e-18,
+          "xdut.xctrl.xtim.x020.x000.mn0:1": -1.0432378969273715e-17,
+          "xdut.xctrl.xtim.x020.x001.mp:2": -6.341054423863106e-18,
+          "xdut.xctrl.xtim.x020.x001.mn:2": -6.313833318871608e-18
+        }
+      },
+      "common_window_charge": {
+        "requested_last_s": 4.10894e-08,
+        "first_native_s": 4.104074535873642e-08,
+        "last_native_s": 4.108936054156641e-08,
+        "into_N_c": {
+          "xdut.xctrl.xtim.x020.x000.mp1:1": 3.223905282281131e-17,
+          "xdut.xctrl.xtim.x020.x000.mp0:1": -9.535026938154775e-18,
+          "xdut.xctrl.xtim.x020.x000.mn0:1": -1.00631048330658e-17,
+          "xdut.xctrl.xtim.x020.x001.mp:2": -6.334162682783147e-18,
+          "xdut.xctrl.xtim.x020.x001.mn:2": -6.3067581174885435e-18
+        }
+      },
+      "node_KCL_max_a": 3.955868204237276e-12,
+      "full_history_stress": {
+        "INV_MN_VGS": {
+          "first_over_limit_s": 4.106802204428556e-08,
+          "last_over_limit_s": 4.109100715039135e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108941054156641e-08,
+          "max_abs_v": 1.005487759293553,
+          "max_time_s": 4.108941054156641e-08,
+          "max_v": 1.005487759293553,
+          "min_time_s": 4.159078565059045e-08,
+          "min_v": 6.261159080203183e-06,
+          "native_points": 6054,
+          "over_limit_native_points": 413
+        },
+        "MP1_VGD": {
+          "first_over_limit_s": 4.106065924689547e-08,
+          "last_over_limit_s": 4.108392352132514e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108288752322185e-08,
+          "max_abs_v": 0.9967918860734916,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": 0.9899934805268531,
+          "min_time_s": 4.108288752322185e-08,
+          "min_v": -0.9967918860734916,
+          "native_points": 6054,
+          "over_limit_native_points": 581
+        },
+        "MP1_VSG": {
+          "first_over_limit_s": 4.106009523416787e-08,
+          "last_over_limit_s": 4.108386980369793e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108283119888933e-08,
+          "max_abs_v": 0.9970217130377143,
+          "max_time_s": 4.108283119888933e-08,
+          "max_v": 0.9970217130377143,
+          "min_time_s": 4.118117414844832e-08,
+          "min_v": 2.3470377363832284e-07,
+          "native_points": 6054,
+          "over_limit_native_points": 607
+        }
+      },
+      "source_energy": {
+        "BIAS10_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147315705642e-08,
+          "max_power_w": 7.909594017618666e-06,
+          "min_power_time_s": 4.107628888503788e-08,
+          "min_power_w": -1.1162966296347417e-06,
+          "native_points": 6054,
+          "net_delivered_j": 3.737032649541865e-17
+        },
+        "BIAS10_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106614287003192e-08,
+          "max_power_w": 3.299687887009468e-07,
+          "min_power_time_s": 4.107935528593901e-08,
+          "min_power_w": -2.556970237818347e-05,
+          "native_points": 6054,
+          "net_delivered_j": -2.529142027900607e-16
+        },
+        "BIAS14_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147315705642e-08,
+          "max_power_w": 7.909596702163547e-06,
+          "min_power_time_s": 4.107628888503788e-08,
+          "min_power_w": -1.116297038391164e-06,
+          "native_points": 6054,
+          "net_delivered_j": 3.737033422758697e-17
+        },
+        "BIAS14_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106614287003192e-08,
+          "max_power_w": 3.298282648260743e-07,
+          "min_power_time_s": 4.107932142423885e-08,
+          "min_power_w": -2.5569788770788145e-05,
+          "native_points": 6054,
+          "net_delivered_j": -2.529206717430713e-16
+        },
+        "VDD": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108427380120002e-08,
+          "max_power_w": 0.001050260731630191,
+          "min_power_time_s": 4.105133630493288e-08,
+          "min_power_w": -2.379849482205953e-07,
+          "native_points": 6054,
+          "net_delivered_j": 7.077190868311208e-14
+        }
+      },
+      "VDD_initial_delivered_current_a": 4.142441357605546e-08,
+      "QUIET_rising_s": [
+        4.110252187779782e-08
+      ],
+      "QUIET_falling_s": [],
+      "native_warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ]
+    },
+    "floor": {
+      "proof": {
+        "run": "sar8audit-ctrl-mp1floor-v1",
+        "recipe_sha256": "3813f5e217e5d2b360b75fa11d46603b3ca0bbeb8e6e56380f56caa2b0fb529f",
+        "receipt_files": 9,
+        "receipt_bytes": 2094661,
+        "required_currents": 444,
+        "native_points": 6055,
+        "local_diagnostic_points": 1974,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 3.5009287881345406e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "peak_v": 1.025472328525216,
+      "peak_time_s": 4.108955259940524e-08,
+      "peak_voltages_v": {
+        "live": 0.9685960754275237,
+        "q1": 0.985676886999728,
+        "x020.x000.b_pm": 0.656207651045754,
+        "x020.x000.mid": 0.5711468187941104
+      },
+      "at_peak_current_a": {
+        "x020.x000.mp1:1": -2.027055303060359e-05,
+        "x020.x000.mn0:1": 1.967694928420344e-05,
+        "x020.x000.cmid:1": -0.0007847229548729098,
+        "x020.x000.mn1:1": 0.000845697061940112,
+        "x020.x000.mn0:3": -6.097410663075528e-05,
+        "x020.x000.mp1:2": 4.327025625543812e-05
+      },
+      "prepeak_charge": {
+        "first_s": 4.104074535873642e-08,
+        "last_s": 4.108955259940524e-08,
+        "into_N_c": {
+          "xdut.xctrl.xtim.x020.x000.mp1:1": 7.500463105833864e-17,
+          "xdut.xctrl.xtim.x020.x000.mp0:1": -2.0933406040624725e-17,
+          "xdut.xctrl.xtim.x020.x000.mn0:1": -2.5159838533045656e-17,
+          "xdut.xctrl.xtim.x020.x001.mp:2": -1.4488011753256668e-17,
+          "xdut.xctrl.xtim.x020.x001.mn:2": -1.4423374210017752e-17
+        }
+      },
+      "common_window_charge": {
+        "requested_last_s": 4.10894e-08,
+        "first_native_s": 4.104074535873642e-08,
+        "last_native_s": 4.108935039458476e-08,
+        "into_N_c": {
+          "xdut.xctrl.xtim.x020.x000.mp1:1": 7.098182852444634e-17,
+          "xdut.xctrl.xtim.x020.x000.mp0:1": -2.0675231558321798e-17,
+          "xdut.xctrl.xtim.x020.x000.mn0:1": -2.167668280932045e-17,
+          "xdut.xctrl.xtim.x020.x001.mp:2": -1.4348128904334275e-17,
+          "xdut.xctrl.xtim.x020.x001.mn:2": -1.4281784815475586e-17
+        }
+      },
+      "node_KCL_max_a": 3.954057447468812e-12,
+      "full_history_stress": {
+        "INV_MN_VGS": {
+          "first_over_limit_s": 4.106836553209386e-08,
+          "last_over_limit_s": 4.109120492048287e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108955259940524e-08,
+          "max_abs_v": 1.025472328525216,
+          "max_time_s": 4.108955259940524e-08,
+          "max_v": 1.025472328525216,
+          "min_time_s": 4.159078565059045e-08,
+          "min_v": 6.259850872479959e-06,
+          "native_points": 6055,
+          "over_limit_native_points": 404
+        },
+        "MP1_VGD": {
+          "first_over_limit_s": null,
+          "last_over_limit_s": null,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.159078565059045e-08,
+          "max_abs_v": 0.9899935479168068,
+          "max_time_s": 4.159078565059045e-08,
+          "max_v": 0.9899935479168068,
+          "min_time_s": 4.108274910191102e-08,
+          "min_v": -0.7382062700565335,
+          "native_points": 6055,
+          "over_limit_native_points": 0
+        },
+        "MP1_VSG": {
+          "first_over_limit_s": null,
+          "last_over_limit_s": null,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108269371388836e-08,
+          "max_abs_v": 0.738497345939961,
+          "max_time_s": 4.108269371388836e-08,
+          "max_v": 0.738497345939961,
+          "min_time_s": 4.116819338290307e-08,
+          "min_v": 1.536724512085641e-07,
+          "native_points": 6055,
+          "over_limit_native_points": 0
+        }
+      },
+      "source_energy": {
+        "BIAS10_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147212102415e-08,
+          "max_power_w": 7.909865234554749e-06,
+          "min_power_time_s": 4.107630007696409e-08,
+          "min_power_w": -1.116272374956869e-06,
+          "native_points": 6055,
+          "net_delivered_j": 3.7373531897136826e-17
+        },
+        "BIAS10_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106580081128897e-08,
+          "max_power_w": 3.3145670627274254e-07,
+          "min_power_time_s": 4.107932102199545e-08,
+          "min_power_w": -2.557097066483292e-05,
+          "native_points": 6055,
+          "net_delivered_j": -2.529141322345263e-16
+        },
+        "BIAS14_MID": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108147212102415e-08,
+          "max_power_w": 7.909867935981734e-06,
+          "min_power_time_s": 4.107630007696409e-08,
+          "min_power_w": -1.116272786225848e-06,
+          "native_points": 6055,
+          "net_delivered_j": 3.737353962232023e-17
+        },
+        "BIAS14_N": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.106580081128897e-08,
+          "max_power_w": 3.313559048737835e-07,
+          "min_power_time_s": 4.107932102199545e-08,
+          "min_power_w": -2.557114024093781e-05,
+          "native_points": 6055,
+          "net_delivered_j": -2.529206116886078e-16
+        },
+        "VDD": {
+          "first_time_s": 0.0,
+          "last_time_s": 4.159078565059045e-08,
+          "max_power_time_s": 4.108427891203792e-08,
+          "max_power_w": 0.0010574737366878403,
+          "min_power_time_s": 4.105133630493288e-08,
+          "min_power_w": 2.444903906652208e-05,
+          "native_points": 6055,
+          "net_delivered_j": 1.0849297307882126e-12
+        }
+      },
+      "VDD_initial_delivered_current_a": 2.497781137705473e-05,
+      "QUIET_rising_s": [
+        4.110205888945147e-08
+      ],
+      "QUIET_falling_s": [],
+      "native_warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ]
+    }
+  },
+  "current_policy": "Native total terminal current; positive leaves its node. Charge into N is negative integral. No channel/Cgd decomposition or waveform fitting.",
+  "full_ADC_qualified": false,
+  "same_interval_VDD_energy_ratio": 15.329948718015904,
+  "next_single_variable": "Only X020 private CMID multi2->1; preserve floor and all other circuit/stimulus/observer inputs"
+}

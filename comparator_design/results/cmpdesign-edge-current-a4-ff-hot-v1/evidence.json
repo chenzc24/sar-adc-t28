@@ -1,0 +1,163 @@
+{
+  "run_id": "cmpdesign-edge-current-a4-ff-hot-v1",
+  "collection": {
+    "collected_files": 10,
+    "bytes": 3437761,
+    "skipped": [],
+    "local_path": "output/managed_execution/runs/cmpdesign-edge-current-a4-ff-hot-v1/collected",
+    "state": {
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-edge-current-a4-ff-hot-v1",
+      "registered": {
+        "epoch": 1793105777.233267,
+        "files_complete": true,
+        "recipe_hash": "6f661afbe4763e359fc1d88c8418a30db011286428e580c3ece0390d5e9d06dd"
+      },
+      "simulation": {
+        "status": "complete",
+        "rss_bytes": 299057152,
+        "started_epoch": 1793105781.313139,
+        "updated_epoch": 1793105800.593107,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 19.26505994796753,
+        "submitted_epoch": 1793105781.001237,
+        "output_bytes": 170743397,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 7825502208,
+                "limit": 51539607552,
+                "used": 43714105344
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 7825502208,
+            "host": "thu-wei",
+            "conflicting_processes": [],
+            "epoch": 1793105781.300735,
+            "disk_free": 287677419520,
+            "load1": 3.11,
+            "mem_available": 120682373120
+          },
+          "phase": "simulation"
+        },
+        "phase": "simulation",
+        "child_identity": {
+          "start_ticks": "8071120",
+          "pid": 87156,
+          "state": "R",
+          "pgid": 87156,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 300720128,
+        "worker_identity": {
+          "start_ticks": "8071090",
+          "pid": 87154,
+          "state": "R",
+          "pgid": 87154,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true,
+        "native": {
+          "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+          "zero_error_footer": true,
+          "electrical_verdict": "not_inferred",
+          "native_exit": 0,
+          "effective_settings": {
+            "reltol": "100e-09, default 100e-06 (conservative)",
+            "abstol(V)": "10 nV, default 1 uV",
+            "maxstep": "20 ps, default 850 ps (conservative)",
+            "abstol(I)": "10 fA, default 1 pA",
+            "method": "gear2only"
+          },
+          "native_analysis_pass": true,
+          "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+          "warning_codes": [
+            "CMI-2752",
+            "CMI-2753",
+            "CMI-2754",
+            "CMI-2755",
+            "CMI-2756",
+            "SFE-1131"
+          ]
+        }
+      },
+      "analysis": {
+        "status": "complete",
+        "rss_bytes": 9023488,
+        "started_epoch": 1793105821.792094,
+        "updated_epoch": 1793105829.083185,
+        "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 7.290838956832886,
+        "submitted_epoch": 1793105821.478853,
+        "output_bytes": 174168114,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 1,
+          "reasons": [],
+          "policy_sha256": "ff3b0b7d87194e6426179792e5278fdcfe518f9588151855d3a84bb8835f01bb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 7356366848,
+                "limit": 51539607552,
+                "used": 44183240704
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 21474832384,
+            "cgroup_headroom": 7356366848,
+            "host": "thu-wei",
+            "conflicting_processes": [
+              {
+                "managed": {
+                  "phase": "simulation",
+                  "reserved_rss_mib": 1024,
+                  "threads": 1,
+                  "run_id": "manual8-bootpvt-ss-cold-dc-v1"
+                },
+                "pid": 88231,
+                "comm": "spectre"
+              }
+            ],
+            "epoch": 1793105821.778235,
+            "disk_free": 287438852096,
+            "load1": 3.03,
+            "mem_available": 120895365120
+          },
+          "phase": "analysis"
+        },
+        "phase": "analysis",
+        "child_identity": {
+          "start_ticks": "8075168",
+          "pid": 88632,
+          "state": "R",
+          "pgid": 88632,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "peak_rss_bytes": 9572352,
+        "worker_identity": {
+          "start_ticks": "8075138",
+          "pid": 88622,
+          "state": "R",
+          "pgid": 88622,
+          "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+        },
+        "queued": true
+      },
+      "run_id": "cmpdesign-edge-current-a4-ff-hot-v1"
+    }
+  },
+  "source": "E:\\bridge-Agent-T28\\projects\\sar-adc-t28\\output\\managed_execution\\runs\\cmpdesign-edge-current-a4-ff-hot-v1\\collected"
+}

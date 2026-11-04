@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-delay-control-v1",
+  "design_id": "manual8_candidate_v1",
+  "entry": "test.scs",
+  "analyzer": "reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/stress_diagnosis/delay_control_v1/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/stress_diagnosis/delay_control_v1/dut.scs",
+      "name": "dut.scs"
+    },
+    {
+      "source": "verification/manual_adc/stress_diagnosis/delay_control_v1/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/stress_diagnosis/delay_control_v1/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 1.2e-07,
+  "summary_signals": [
+    "CLKS",
+    "DCMPP",
+    "DCMPN",
+    "CMPCK",
+    "DO_0",
+    "DO_1",
+    "DO_2",
+    "DO_3",
+    "DO_4",
+    "DO_5",
+    "DO_6",
+    "DO_7",
+    "XDUT.CLK_0",
+    "XDUT.CLK_1",
+    "XDUT.CLK_2",
+    "XDUT.CLK_3",
+    "XDUT.CLK_4",
+    "XDUT.CLK_5",
+    "XDUT.CLK_6",
+    "XDUT.CLK_7",
+    "DCTRLP_0",
+    "DCTRLP_1",
+    "DCTRLP_2",
+    "DCTRLP_3",
+    "DCTRLP_4",
+    "DCTRLP_5",
+    "DCTRLP_6",
+    "DCTRLP_7",
+    "DCTRLN_0",
+    "DCTRLN_1",
+    "DCTRLN_2",
+    "DCTRLN_3",
+    "DCTRLN_4",
+    "DCTRLN_5",
+    "DCTRLN_6",
+    "DCTRLN_7"
+  ],
+  "qualification_scope": "Matched120ns original200ps maxstep control; compare5ps run without stop-time confounding",
+  "oa_parity": "netlist_only; user OA unchanged",
+  "test_conditions": {
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 1024,
+    "simulation_wall_seconds": 1200,
+    "analysis_wall_seconds": 600,
+    "queue_timeout_seconds": 3600
+  }
+}

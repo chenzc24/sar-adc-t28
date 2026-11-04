@@ -1,0 +1,17 @@
+`include "disciplines.vams"
+module records(out);
+output out; electrical out;
+integer frame;
+analog begin
+V(out) <+ 0.25;
+@(initial_step) frame=0;
+@(timer(1n,2n)) begin
+if(frame<2) $strobe("R4MEAS,%d,23,8,8,8,16,23,1",frame);
+else if(frame==2) $strobe("R4MEAS,2,23,8,8,8,16,23,0");
+else if(frame==3) $strobe("R4MEAS,3,broken");
+else if(frame==4) $strobe("FAIL,intentional_testbench_report");
+else if(frame==5) $strobe("PASS,intentional_testbench_report");
+frame=frame+1;
+end
+end
+endmodule

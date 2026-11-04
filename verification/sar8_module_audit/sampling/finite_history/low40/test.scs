@@ -1,0 +1,340 @@
+// Short-low/long-low history diagnosis; not zero-precharge reproduction.
+// Local preparation only; not Spectre compiled.
+simulator lang=spectre
+global 0 VDD!
+parameters SUP=0.81
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=pre_simu
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=noise_worst
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=ssmacro_mos_moscap
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_res_bip_dio_disres
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_mom
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_ind_jvar
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_r_metal
+include "fixture_dut.scs"
+XF (SAMPLE VDD! VINN VINP VREFN VREFP CMP_RESET REF0_GNNB REF0_GNPB REF0_GPNB REF0_GPPB REF1_GNNB REF1_GNPB REF1_GPNB REF1_GPPB REF2_GNNB REF2_GNPB REF2_GPNB REF2_GPPB REF3_GNNB REF3_GNPB REF3_GPNB REF3_GPPB REF4_GNNB REF4_GNPB REF4_GPNB REF4_GPPB REF5_GNNB REF5_GNPB REF5_GPNB REF5_GPPB REF6_GNNB REF6_GNPB REF6_GPNB REF6_GPPB REF7_GNNB REF7_GNPB REF7_GPNB REF7_GPPB 0) sampling_compact
+VVINP (VINP_SRC 0) vsource type=pwl wave=[0n 0.855 100.2n 0.855 100.3n 0.045 200.2n 0.045 200.3n 0.45 300.2n 0.45 300.3n 0.45087890625 400.2n 0.45087890625 400.3n 0.44912109375 500.2n 0.44912109375 500.3n 0.5115234375]
+VVINN (VINN_SRC 0) vsource type=pwl wave=[0n 0.045 100.2n 0.045 100.3n 0.855 200.2n 0.855 200.3n 0.45 300.2n 0.45 300.3n 0.44912109375 400.2n 0.44912109375 400.3n 0.45087890625 500.2n 0.45087890625 500.3n 0.3884765625]
+VREFLOW (VREFN_SRC 0) vsource dc=0 type=dc
+VREFHIGH (VREFP_SRC 0) vsource dc=0.9 type=dc
+RINP (VINP_SRC VINP) resistor r=50
+RINN (VINN_SRC VINN) resistor r=50
+RREFP (VREFP_SRC VREFP) resistor r=50
+RREFN (VREFN_SRC VREFN) resistor r=50
+CREFP (VREFP 0) capacitor c=4p
+CREFN (VREFN 0) capacitor c=4p
+VVDD (VDD! 0) vsource dc=SUP type=dc
+VCMP_RESET (CMP_RESET 0) vsource dc=0 type=dc
+VSAMPLE (SAMPLE 0) vsource type=pwl wave=[0n SUP 60.9n SUP 61n 0 101n 0 101.1n SUP 141n SUP 141.1n 0 201n 0 201.1n SUP 241n SUP 241.1n 0]
+VREF0_GNNB (REF0_GNNB 0) vsource dc=0 type=dc
+VREF0_GNPB (REF0_GNPB 0) vsource dc=0 type=dc
+VREF0_GPNB (REF0_GPNB 0) vsource dc=SUP type=dc
+VREF0_GPPB (REF0_GPPB 0) vsource dc=SUP type=dc
+VREF1_GNNB (REF1_GNNB 0) vsource dc=0 type=dc
+VREF1_GNPB (REF1_GNPB 0) vsource dc=0 type=dc
+VREF1_GPNB (REF1_GPNB 0) vsource dc=SUP type=dc
+VREF1_GPPB (REF1_GPPB 0) vsource dc=SUP type=dc
+VREF2_GNNB (REF2_GNNB 0) vsource dc=0 type=dc
+VREF2_GNPB (REF2_GNPB 0) vsource dc=0 type=dc
+VREF2_GPNB (REF2_GPNB 0) vsource dc=SUP type=dc
+VREF2_GPPB (REF2_GPPB 0) vsource dc=SUP type=dc
+VREF3_GNNB (REF3_GNNB 0) vsource dc=0 type=dc
+VREF3_GNPB (REF3_GNPB 0) vsource dc=0 type=dc
+VREF3_GPNB (REF3_GPNB 0) vsource dc=SUP type=dc
+VREF3_GPPB (REF3_GPPB 0) vsource dc=SUP type=dc
+VREF4_GNNB (REF4_GNNB 0) vsource dc=0 type=dc
+VREF4_GNPB (REF4_GNPB 0) vsource dc=0 type=dc
+VREF4_GPNB (REF4_GPNB 0) vsource dc=SUP type=dc
+VREF4_GPPB (REF4_GPPB 0) vsource dc=SUP type=dc
+VREF5_GNNB (REF5_GNNB 0) vsource dc=0 type=dc
+VREF5_GNPB (REF5_GNPB 0) vsource dc=0 type=dc
+VREF5_GPNB (REF5_GPNB 0) vsource dc=SUP type=dc
+VREF5_GPPB (REF5_GPPB 0) vsource dc=SUP type=dc
+VREF6_GNNB (REF6_GNNB 0) vsource dc=0 type=dc
+VREF6_GNPB (REF6_GNPB 0) vsource dc=0 type=dc
+VREF6_GPNB (REF6_GPNB 0) vsource dc=SUP type=dc
+VREF6_GPPB (REF6_GPPB 0) vsource dc=SUP type=dc
+VREF7_GNNB (REF7_GNNB 0) vsource dc=SUP type=dc
+VREF7_GNPB (REF7_GNPB 0) vsource dc=SUP type=dc
+VREF7_GPNB (REF7_GPNB 0) vsource dc=0 type=dc
+VREF7_GPPB (REF7_GPPB 0) vsource dc=0 type=dc
+simulatorOptions options method=gear2only reltol=1e-6 vabstol=1e-8 iabstol=1e-13 temp=125 tnom=27 scalem=1.0 scale=1.0 gmin=1e-12 rforce=1 checklimitdest=psf
+saveOptions options save=allpub currents=selected subcktiprobes=no useprobes=no
+save VVDD:1 VREFHIGH:1 VREFLOW:1 VVINP:1 VVINN:1 VSAMPLE:1 VCMP_RESET:1
+save XF.M0000:1 XF.M0000:2 XF.M0000:3 XF.M0000:4
+save XF.M0001:1 XF.M0001:2 XF.M0001:3 XF.M0001:4
+save XF.M0002:1 XF.M0002:2 XF.M0002:3 XF.M0002:4
+save XF.M0003:1 XF.M0003:2 XF.M0003:3 XF.M0003:4
+save XF.M0004:1 XF.M0004:2 XF.M0004:3 XF.M0004:4
+save XF.M0005:1 XF.M0005:2 XF.M0005:3 XF.M0005:4
+save XF.M0006:1 XF.M0006:2 XF.M0006:3 XF.M0006:4
+save XF.M0007:1 XF.M0007:2 XF.M0007:3 XF.M0007:4
+save XF.M0008:1 XF.M0008:2 XF.M0008:3 XF.M0008:4
+save XF.M0009:1 XF.M0009:2 XF.M0009:3 XF.M0009:4
+save XF.M0010:1 XF.M0010:2 XF.M0010:3 XF.M0010:4
+save XF.M0011:1 XF.M0011:2 XF.M0011:3 XF.M0011:4
+save XF.M0012:1 XF.M0012:2 XF.M0012:3 XF.M0012:4
+save XF.C0013:1 XF.C0013:2
+save XF.M0014:1 XF.M0014:2 XF.M0014:3 XF.M0014:4
+save XF.M0015:1 XF.M0015:2 XF.M0015:3 XF.M0015:4
+save XF.M0016:1 XF.M0016:2 XF.M0016:3 XF.M0016:4
+save XF.M0017:1 XF.M0017:2 XF.M0017:3 XF.M0017:4
+save XF.M0018:1 XF.M0018:2 XF.M0018:3 XF.M0018:4
+save XF.M0019:1 XF.M0019:2 XF.M0019:3 XF.M0019:4
+save XF.M0020:1 XF.M0020:2 XF.M0020:3 XF.M0020:4
+save XF.M0021:1 XF.M0021:2 XF.M0021:3 XF.M0021:4
+save XF.M0022:1 XF.M0022:2 XF.M0022:3 XF.M0022:4
+save XF.M0023:1 XF.M0023:2 XF.M0023:3 XF.M0023:4
+save XF.M0024:1 XF.M0024:2 XF.M0024:3 XF.M0024:4
+save XF.M0025:1 XF.M0025:2 XF.M0025:3 XF.M0025:4
+save XF.M0026:1 XF.M0026:2 XF.M0026:3 XF.M0026:4
+save XF.C0027:1 XF.C0027:2
+tran_startup tran stop=160n maxstep=10p errpreset=conservative lteratio=10
+
+// Measurement-only stream saves.
+save CREFN:1
+save CREFP:1
+save RREFN:1
+save RREFP:1
+save VCMP_RESET:1
+save VREFHIGH:1
+save VREFLOW:1
+save VSAMPLE:1
+save VVDD:1
+save VVINN:1
+save VVINP:1
+save XF.C0013:1
+save XF.C0013:2
+save XF.C0027:1
+save XF.C0027:2
+save XF.M0000:1
+save XF.M0000:2
+save XF.M0000:3
+save XF.M0000:4
+save XF.M0001:1
+save XF.M0001:2
+save XF.M0001:3
+save XF.M0001:4
+save XF.M0002:1
+save XF.M0002:2
+save XF.M0002:3
+save XF.M0002:4
+save XF.M0003:1
+save XF.M0003:2
+save XF.M0003:3
+save XF.M0003:4
+save XF.M0004:1
+save XF.M0004:2
+save XF.M0004:3
+save XF.M0004:4
+save XF.M0005:1
+save XF.M0005:2
+save XF.M0005:3
+save XF.M0005:4
+save XF.M0006:1
+save XF.M0006:2
+save XF.M0006:3
+save XF.M0006:4
+save XF.M0007:1
+save XF.M0007:2
+save XF.M0007:3
+save XF.M0007:4
+save XF.M0008:1
+save XF.M0008:2
+save XF.M0008:3
+save XF.M0008:4
+save XF.M0009:1
+save XF.M0009:2
+save XF.M0009:3
+save XF.M0009:4
+save XF.M0010:1
+save XF.M0010:2
+save XF.M0010:3
+save XF.M0010:4
+save XF.M0011:1
+save XF.M0011:2
+save XF.M0011:3
+save XF.M0011:4
+save XF.M0012:1
+save XF.M0012:2
+save XF.M0012:3
+save XF.M0012:4
+save XF.M0014:1
+save XF.M0014:2
+save XF.M0014:3
+save XF.M0014:4
+save XF.M0015:1
+save XF.M0015:2
+save XF.M0015:3
+save XF.M0015:4
+save XF.M0016:1
+save XF.M0016:2
+save XF.M0016:3
+save XF.M0016:4
+save XF.M0017:1
+save XF.M0017:2
+save XF.M0017:3
+save XF.M0017:4
+save XF.M0018:1
+save XF.M0018:2
+save XF.M0018:3
+save XF.M0018:4
+save XF.M0019:1
+save XF.M0019:2
+save XF.M0019:3
+save XF.M0019:4
+save XF.M0020:1
+save XF.M0020:2
+save XF.M0020:3
+save XF.M0020:4
+save XF.M0021:1
+save XF.M0021:2
+save XF.M0021:3
+save XF.M0021:4
+save XF.M0022:1
+save XF.M0022:2
+save XF.M0022:3
+save XF.M0022:4
+save XF.M0023:1
+save XF.M0023:2
+save XF.M0023:3
+save XF.M0023:4
+save XF.M0024:1
+save XF.M0024:2
+save XF.M0024:3
+save XF.M0024:4
+save XF.M0025:1
+save XF.M0025:2
+save XF.M0025:3
+save XF.M0025:4
+save XF.M0026:1
+save XF.M0026:2
+save XF.M0026:3
+save XF.M0026:4
+save XF.M0046:1
+save XF.M0046:2
+save XF.M0046:3
+save XF.M0046:4
+save XF.M0047:1
+save XF.M0047:2
+save XF.M0047:3
+save XF.M0047:4
+save XF.M0048:1
+save XF.M0048:2
+save XF.M0048:3
+save XF.M0048:4
+save XF.M0049:1
+save XF.M0049:2
+save XF.M0049:3
+save XF.M0049:4
+save XF.M0050:1
+save XF.M0050:2
+save XF.M0050:3
+save XF.M0050:4
+save XF.M0051:1
+save XF.M0051:2
+save XF.M0051:3
+save XF.M0051:4
+save XF.M0052:1
+save XF.M0052:2
+save XF.M0052:3
+save XF.M0052:4
+save XF.M0053:1
+save XF.M0053:2
+save XF.M0053:3
+save XF.M0053:4
+save XF.M0054:1
+save XF.M0054:2
+save XF.M0054:3
+save XF.M0054:4
+save XF.M0055:1
+save XF.M0055:2
+save XF.M0055:3
+save XF.M0055:4
+save XF.M0056:1
+save XF.M0056:2
+save XF.M0056:3
+save XF.M0056:4
+save XF.M0057:1
+save XF.M0057:2
+save XF.M0057:3
+save XF.M0057:4
+save XF.M0058:1
+save XF.M0058:2
+save XF.M0058:3
+save XF.M0058:4
+save XF.M0059:1
+save XF.M0059:2
+save XF.M0059:3
+save XF.M0059:4
+save XF.M0060:1
+save XF.M0060:2
+save XF.M0060:3
+save XF.M0060:4
+save XF.M0061:1
+save XF.M0061:2
+save XF.M0061:3
+save XF.M0061:4
+save XF.M0062:1
+save XF.M0062:2
+save XF.M0062:3
+save XF.M0062:4
+save XF.M0063:1
+save XF.M0063:2
+save XF.M0063:3
+save XF.M0063:4
+save XF.M0064:1
+save XF.M0064:2
+save XF.M0064:3
+save XF.M0064:4
+save XF.M0065:1
+save XF.M0065:2
+save XF.M0065:3
+save XF.M0065:4
+save XF.M0066:1
+save XF.M0066:2
+save XF.M0066:3
+save XF.M0066:4
+save XF.M0067:1
+save XF.M0067:2
+save XF.M0067:3
+save XF.M0067:4
+save XF.M0068:1
+save XF.M0068:2
+save XF.M0068:3
+save XF.M0068:4
+save XF.M0069:1
+save XF.M0069:2
+save XF.M0069:3
+save XF.M0069:4
+save XF.M0070:1
+save XF.M0070:2
+save XF.M0070:3
+save XF.M0070:4
+save XF.M0071:1
+save XF.M0071:2
+save XF.M0071:3
+save XF.M0071:4
+save XF.M0072:1
+save XF.M0072:2
+save XF.M0072:3
+save XF.M0072:4
+save XF.M0073:1
+save XF.M0073:2
+save XF.M0073:3
+save XF.M0073:4
+save XF.M0074:1
+save XF.M0074:2
+save XF.M0074:3
+save XF.M0074:4
+save XF.M0075:1
+save XF.M0075:2
+save XF.M0075:3
+save XF.M0075:4
+save XF.M0076:1
+save XF.M0076:2
+save XF.M0076:3
+save XF.M0076:4
+save XF.M0077:1
+save XF.M0077:2
+save XF.M0077:3
+save XF.M0077:4

@@ -1,0 +1,928 @@
+{
+  "local_wall_cap_s": 30,
+  "metadata": {
+    "CIW_used": false,
+    "captured_bytes": 12858,
+    "command": [
+      "/home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre",
+      "-64",
+      "-h",
+      "info"
+    ],
+    "elapsed_s": 0.34954118728637695,
+    "executable_realpath": "/home/cadence/spectre/SPECTRE211Hotfix/share/bin/cdnWrapper",
+    "full_captured_output_sha256": "3775fa1bbb1a67f3e5bb7e6ad5bddf471b8b877c0628abf724217fdfe0d39412",
+    "hard_output_cap_bytes": 524288,
+    "hard_wall_cap_s": 8,
+    "header": [
+      "",
+      "*******************",
+      "Circuit Information",
+      "*******************",
+      "",
+      "The circuit information analysis outputs several types of information about the",
+      "circuit and its components. You can use various filters to specify what",
+      "information is output. You can create a listing of model, instance,",
+      "temperature-dependent, input, output, and operating point parameters. You can",
+      "also generate a summary of the minimum and maximum parameter values (by using"
+    ],
+    "hostname": "thu-wei",
+    "no_remote_files_created": true,
+    "no_simulation_requested": true,
+    "read_only": true,
+    "returncode": 0,
+    "selected_semantics": [
+      {
+        "line": 1,
+        "text": ""
+      },
+      {
+        "line": 2,
+        "text": "*******************"
+      },
+      {
+        "line": 3,
+        "text": "Circuit Information"
+      },
+      {
+        "line": 4,
+        "text": "*******************"
+      },
+      {
+        "line": 5,
+        "text": ""
+      },
+      {
+        "line": 6,
+        "text": "The circuit information analysis outputs several types of information about the"
+      },
+      {
+        "line": 7,
+        "text": "circuit and its components. You can use various filters to specify what"
+      },
+      {
+        "line": 8,
+        "text": "information is output. You can create a listing of model, instance,"
+      },
+      {
+        "line": 9,
+        "text": "temperature-dependent, input, output, and operating point parameters. You can"
+      },
+      {
+        "line": 10,
+        "text": "also generate a summary of the minimum and maximum parameter values (by using"
+      },
+      {
+        "line": 11,
+        "text": "`extremes=yes' or `only'). Finally,  you can request that Spectre provides a"
+      },
+      {
+        "line": 12,
+        "text": "node-to-terminal map (by using `what=terminals') or a terminal-to-node map (by"
+      },
+      {
+        "line": 13,
+        "text": "using `what=nodes')."
+      },
+      {
+        "line": 14,
+        "text": ""
+      },
+      {
+        "line": 15,
+        "text": "The following are brief descriptions of the types of parameters you can request"
+      },
+      {
+        "line": 16,
+        "text": "with the `info' statement:"
+      },
+      {
+        "line": 17,
+        "text": ""
+      },
+      {
+        "line": 18,
+        "text": "Input parameters: Parameters that you specify in the netlist, such as the given"
+      },
+      {
+        "line": 19,
+        "text": "length of a MOSFET or the saturation current of a bipolar transistor (use"
+      },
+      {
+        "line": 20,
+        "text": "`what=inst', `models', `input', or `all')"
+      },
+      {
+        "line": 21,
+        "text": ""
+      },
+      {
+        "line": 22,
+        "text": "Output parameters: Parameters that are computed by Spectre, such as"
+      },
+      {
+        "line": 23,
+        "text": "temperature-dependent parameters and the effective length of a MOSFET after"
+      },
+      {
+        "line": 24,
+        "text": "scaling (use `what=output' or `all')"
+      },
+      {
+        "line": 25,
+        "text": ""
+      },
+      {
+        "line": 26,
+        "text": "Operating-point parameters: Parameters that depend on the actual solution"
+      },
+      {
+        "line": 27,
+        "text": "computed (use `what=oppoint')"
+      },
+      {
+        "line": 28,
+        "text": "Initial condition file creation: write node voltages and source currents into a"
+      },
+      {
+        "line": 29,
+        "text": "file which can be read by the transient analysis readic/readns statement."
+      },
+      {
+        "line": 30,
+        "text": ""
+      },
+      {
+        "line": 31,
+        "text": ""
+      },
+      {
+        "line": 32,
+        "text": "Synopsis:"
+      },
+      {
+        "line": 33,
+        "text": "Name info <parameter=value> ..."
+      },
+      {
+        "line": 34,
+        "text": ""
+      },
+      {
+        "line": 35,
+        "text": ""
+      },
+      {
+        "line": 36,
+        "text": "=========="
+      },
+      {
+        "line": 37,
+        "text": "Parameters"
+      },
+      {
+        "line": 38,
+        "text": "=========="
+      },
+      {
+        "line": 39,
+        "text": ""
+      },
+      {
+        "line": 40,
+        "text": "1       what=oppoint      The parameters that should be printed. Possible"
+      },
+      {
+        "line": 41,
+        "text": "                          values are none, inst, models, input, output, nodes,"
+      },
+      {
+        "line": 42,
+        "text": "                          all, terminals, oppoint, captab, parameters,"
+      },
+      {
+        "line": 43,
+        "text": "                          primitives, subckts, assert, allparameters, netlist,"
+      },
+      {
+        "line": 44,
+        "text": "                          options, dumpall, bridges, opens, customreplace,"
+      },
+      {
+        "line": 45,
+        "text": "                          custominsert, customopen, faultparam, allcap, netcap,"
+      },
+      {
+        "line": 46,
+        "text": "                          moscap and dhe."
+      },
+      {
+        "line": 47,
+        "text": "2       where=logfile     Where the parameters should be printed. Asserts can"
+      },
+      {
+        "line": 48,
+        "text": "                          only be written to rawfile. Possible values are"
+      },
+      {
+        "line": 49,
+        "text": "                          nowhere, screen, file, logfile, rawfile and sdsfile."
+      },
+      {
+        "line": 50,
+        "text": "3       file=\"%C:r.info.what\""
+      },
+      {
+        "line": 51,
+        "text": "                          File name when `where=file'."
+      },
+      {
+        "line": 52,
+        "text": "4       save              Signals to output. Possible values are all, lvl,"
+      },
+      {
+        "line": 53,
+        "text": "                          allpub, lvlpub, selected, none and nooutput."
+      },
+      {
+        "line": 54,
+        "text": "5       nestlvl           Levels of subcircuits to output."
+      },
+      {
+        "line": 55,
+        "text": "6       extremes=yes      Print minimum and maximum values. Possible values are"
+      },
+      {
+        "line": 56,
+        "text": "                          no, yes and only."
+      },
+      {
+        "line": 57,
+        "text": "7       title             Analysis title."
+      },
+      {
+        "line": 58,
+        "text": "8       descriptions=no   Print descriptions. Possible values are no and yes."
+      },
+      {
+        "line": 59,
+        "text": ""
+      },
+      {
+        "line": 60,
+        "text": "Operating point parameters"
+      },
+      {
+        "line": 61,
+        "text": "9       oppoint=all       Operating point type when 'what=oppoint', all -"
+      },
+      {
+        "line": 62,
+        "text": "                          operating point for devices, stacked devices, node"
+      },
+      {
+        "line": 63,
+        "text": "                          voltages, and source currents. node - operating point"
+      },
+      {
+        "line": 64,
+        "text": "                          for node voltages, and source currents. dev -"
+      },
+      {
+        "line": 65,
+        "text": "                          operating point for devices. subckt - operating point"
+      },
+      {
+        "line": 66,
+        "text": "                          for stacked devices. alldev - operating point for"
+      },
+      {
+        "line": 67,
+        "text": "                          regular and stacked devices. stacked device parameter"
+      },
+      {
+        "line": 68,
+        "text": "                          reporting requires Spectre option subcktoppoint=yes,"
+      },
+      {
+        "line": 69,
+        "text": "                          and save statement for stacked device parameters of"
+      },
+      {
+        "line": 70,
+        "text": "                          interest. Possible values are all, node, dev, subckt"
+      },
+      {
+        "line": 71,
+        "text": "                          and alldev."
+      },
+      {
+        "line": 72,
+        "text": ""
+      },
+      {
+        "line": 73,
+        "text": "Initial condition file creation"
+      },
+      {
+        "line": 74,
+        "text": "10      optype=ic         Print Spectre format operating point file which can"
+      },
+      {
+        "line": 75,
+        "text": "                          be read with readic/readns in transient statement."
+      },
+      {
+        "line": 76,
+        "text": "                          Time for writing operating point file needs to be"
+      },
+      {
+        "line": 77,
+        "text": "                          defined in infotimes statement. Possible values are"
+      },
+      {
+        "line": 78,
+        "text": "                          ic and nodeset."
+      },
+      {
+        "line": 79,
+        "text": ""
+      },
+      {
+        "line": 80,
+        "text": "Fault generation parameters"
+      },
+      {
+        "line": 81,
+        "text": "11      faultblock        Name of the fault block when fault list generation"
+      },
+      {
+        "line": 82,
+        "text": "                          requested."
+      },
+      {
+        "line": 83,
+        "text": "12      faultdev=[...]    Fault devices defined by primitive names, subckt"
+      },
+      {
+        "line": 84,
+        "text": "                          names, or model names."
+      },
+      {
+        "line": 85,
+        "text": "13      faultcustom=[...]"
+      },
+      {
+        "line": 86,
+        "text": "                          Custom fault subcircuit defined by subckt model name"
+      },
+      {
+        "line": 87,
+        "text": "                          from the netlist."
+      },
+      {
+        "line": 88,
+        "text": "14      faultres=10       Resistance value for bridges or opens (default 10 Ohm"
+      },
+      {
+        "line": 89,
+        "text": "                          for bridges, 1G Ohm for opens)."
+      },
+      {
+        "line": 90,
+        "text": "15      faultcap=0        Capacitance value for open faults."
+      },
+      {
+        "line": 91,
+        "text": "16      faultterminals=[...]"
+      },
+      {
+        "line": 92,
+        "text": "                          List of device terminals to be considered for fault"
+      },
+      {
+        "line": 93,
+        "text": "                          generation (default is all terminals of faultdev)."
+      },
+      {
+        "line": 94,
+        "text": "17      faultstuckat=[...]"
+      },
+      {
+        "line": 95,
+        "text": "                          Supply node name(s) to generate stuck-at fault list"
+      },
+      {
+        "line": 96,
+        "text": "                          when 'what=bridges'."
+      },
+      {
+        "line": 97,
+        "text": "18      faultextract=no   Enables the generation of a layout-based fault list"
+      },
+      {
+        "line": 98,
+        "text": "                          when DSPF files are included in the netlist. Set it"
+      },
+      {
+        "line": 99,
+        "text": "                          to: 'no' to disable the generation of a layout-based"
+      },
+      {
+        "line": 100,
+        "text": "                          fault list, only the schematic-based faults are"
+      },
+      {
+        "line": 101,
+        "text": "                          generated, this is the default value; 'spf' to"
+      },
+      {
+        "line": 102,
+        "text": "                          generate a list of faults that are compatible with a"
+      },
+      {
+        "line": 103,
+        "text": "                          layout-based netlist; 'sch' to generate a list of"
+      },
+      {
+        "line": 104,
+        "text": "                          faults that are compatible with a schematic-based"
+      },
+      {
+        "line": 105,
+        "text": "                          netlist. Possible values are no, spf and sch."
+      },
+      {
+        "line": 106,
+        "text": "19      faultcmin=1e-20   Defines the minimum capacitance value an extracted"
+      },
+      {
+        "line": 107,
+        "text": "                          parasitic capacitor must have to be identified as a"
+      },
+      {
+        "line": 108,
+        "text": "                          bridge defect during the generation of faults."
+      },
+      {
+        "line": 109,
+        "text": "20      faultrmin=0.001   Defines the minimum resistance value an extracted"
+      },
+      {
+        "line": 110,
+        "text": "                          parasitic resistor must have to be identified as an"
+      },
+      {
+        "line": 111,
+        "text": "                          open defect during the generation of faults."
+      },
+      {
+        "line": 112,
+        "text": "21      subckt=[...]      Faults are generated for all instances of the"
+      },
+      {
+        "line": 113,
+        "text": "                          specified subcircuits."
+      },
+      {
+        "line": 114,
+        "text": "22      inst=[...]        Faults are generated for the specified subcircuit"
+      },
+      {
+        "line": 115,
+        "text": "                          instances."
+      },
+      {
+        "line": 116,
+        "text": "23      xsubckt=[...]     All instances of the specified subcircuits are"
+      },
+      {
+        "line": 117,
+        "text": "                          excluded from fault generation."
+      },
+      {
+        "line": 118,
+        "text": "24      xinst=[...]       All specified subcircuit instances are excluded from"
+      },
+      {
+        "line": 119,
+        "text": "                          fault generation."
+      },
+      {
+        "line": 120,
+        "text": "25      faultlevel        Defines the hierarchical level of the design to be"
+      },
+      {
+        "line": 121,
+        "text": "                          considered during the fault list generation. By"
+      },
+      {
+        "line": 122,
+        "text": "                          default, Spectre generates faults in subcircuits at"
+      },
+      {
+        "line": 123,
+        "text": "                          all levels of the design."
+      },
+      {
+        "line": 124,
+        "text": "26      faultmaxcount=100,000"
+      },
+      {
+        "line": 125,
+        "text": "                          Upper bound for number of faults to be generated"
+      },
+      {
+        "line": 126,
+        "text": "                          before collapsing."
+      },
+      {
+        "line": 127,
+        "text": "27      faultrule=none    Comply with IEEE 2427 requirements for fault list"
+      },
+      {
+        "line": 128,
+        "text": "                          generation. Possible values are none and 2427."
+      },
+      {
+        "line": 129,
+        "text": "28      faultcollapse=yes"
+      },
+      {
+        "line": 130,
+        "text": "                          If yes, only one fault will be included into the"
+      },
+      {
+        "line": 131,
+        "text": "                          fault list for each set of equivalent faults having"
+      },
+      {
+        "line": 132,
+        "text": "                          the same topology. Possible values are no and yes."
+      },
+      {
+        "line": 133,
+        "text": "29      weight_expr       Expression to define fault weighting function."
+      },
+      {
+        "line": 134,
+        "text": "30      weight_factor=1.  Value to define weighting factor for given block in"
+      },
+      {
+        "line": 135,
+        "text": "                          the fault list."
+      },
+      {
+        "line": 136,
+        "text": "31      faultduplicate=yes"
+      },
+      {
+        "line": 137,
+        "text": "                          If no, duplicated faults will be excluded from the"
+      },
+      {
+        "line": 138,
+        "text": "                          fault lists when several info analyses specified for"
+      },
+      {
+        "line": 139,
+        "text": "                          fault generation. Possible values are no and yes."
+      },
+      {
+        "line": 140,
+        "text": "32      faultparam        Parameter's name to generate fault list when"
+      },
+      {
+        "line": 141,
+        "text": "                          'what=faultparam'."
+      },
+      {
+        "line": 142,
+        "text": "33      faultvalues=[...]"
+      },
+      {
+        "line": 143,
+        "text": "                          Parameter values for fault generation when"
+      },
+      {
+        "line": 144,
+        "text": "                          'what=faultparam'."
+      },
+      {
+        "line": 145,
+        "text": "34      faultpercentage=[...]"
+      },
+      {
+        "line": 146,
+        "text": "                          Percentage in parameter value deviation for fault"
+      },
+      {
+        "line": 147,
+        "text": "                          generation when 'what=faultparam'."
+      },
+      {
+        "line": 148,
+        "text": "35      faultfile         File name containing parameter values when"
+      },
+      {
+        "line": 149,
+        "text": "                          'what=faultparam'."
+      },
+      {
+        "line": 150,
+        "text": "36      faultstart=0      Parameter's initial value for fault generation when"
+      },
+      {
+        "line": 151,
+        "text": "                          'what=faultparam'."
+      },
+      {
+        "line": 152,
+        "text": "37      faultstep=0       Step size to sweep parameter's value for fault"
+      },
+      {
+        "line": 153,
+        "text": "                          generation when 'what=faultparam'."
+      },
+      {
+        "line": 154,
+        "text": "38      faultstop=0       Parameter's final value for fault generation when"
+      },
+      {
+        "line": 155,
+        "text": "                          'what=faultparam'."
+      },
+      {
+        "line": 156,
+        "text": ""
+      },
+      {
+        "line": 157,
+        "text": "Design hierarchy extraction parameters for Midas Safety Platform"
+      },
+      {
+        "line": 158,
+        "text": "39      dheminarea=0 um^2"
+      },
+      {
+        "line": 159,
+        "text": "                          Lower bound of area value for device to be considered"
+      },
+      {
+        "line": 160,
+        "text": "                          during design hierarchy extraction."
+      },
+      {
+        "line": 161,
+        "text": "40      dhesubckt=[...]   Design hierarchy is generated for all instances of"
+      },
+      {
+        "line": 162,
+        "text": "                          the specified subcircuits."
+      },
+      {
+        "line": 163,
+        "text": "41      dheinst=[...]     Design hierarchy is generated for the specified"
+      },
+      {
+        "line": 164,
+        "text": "                          subcircuit instances."
+      },
+      {
+        "line": 165,
+        "text": "42      dhexsubckt=[...]  All instances of the specified subcircuits are"
+      },
+      {
+        "line": 166,
+        "text": "                          excluded from the design hierarchy."
+      },
+      {
+        "line": 167,
+        "text": "43      dhexinst=[...]    The specified subcircuit instances are excluded from"
+      },
+      {
+        "line": 168,
+        "text": "                          the design hierarchy."
+      },
+      {
+        "line": 169,
+        "text": "44      dheparams         Name of the file that provides the rules to calculate"
+      },
+      {
+        "line": 170,
+        "text": "                          area for subcircuits when 'what=dhe'."
+      },
+      {
+        "line": 171,
+        "text": ""
+      },
+      {
+        "line": 172,
+        "text": "Captab parameters"
+      },
+      {
+        "line": 173,
+        "text": "45      detail=node       How detailed should the capacitance table be. "
+      },
+      {
+        "line": 174,
+        "text": "                          Possible values are node, nodetoground and"
+      },
+      {
+        "line": 175,
+        "text": "                          nodetonode."
+      },
+      {
+        "line": 176,
+        "text": "46      sort=name         How to sort the capacitance table. Possible values"
+      },
+      {
+        "line": 177,
+        "text": "                          are name and value."
+      },
+      {
+        "line": 178,
+        "text": "47      filter            If set to \"rc\" nodes within RC net will be dropped. "
+      },
+      {
+        "line": 179,
+        "text": "                          Possible values are none and rc."
+      },
+      {
+        "line": 180,
+        "text": "48      threshold=0 F     Threshold value for printing capacitances (ignore"
+      },
+      {
+        "line": 181,
+        "text": "                          capacitances smaller than this value)."
+      },
+      {
+        "line": 182,
+        "text": "49      skip_ground       Whether capt skip ground or not. Possible values are"
+      },
+      {
+        "line": 183,
+        "text": "                          yes and no."
+      },
+      {
+        "line": 184,
+        "text": "50      node=[...]        Nodes for which captab analyses will performed."
+      },
+      {
+        "line": 185,
+        "text": "51      intrinsic_cap_merge=no"
+      },
+      {
+        "line": 186,
+        "text": "                          Merge the internal captab node to external node. "
+      },
+      {
+        "line": 187,
+        "text": "                          Possible values are no and yes."
+      },
+      {
+        "line": 188,
+        "text": ""
+      },
+      {
+        "line": 189,
+        "text": "Example initial condition file creation"
+      },
+      {
+        "line": 190,
+        "text": "        tran1 tran stop=10n infotimes=[3n 4n] infonames=[myinfo1 myinfo2]"
+      },
+      {
+        "line": 191,
+        "text": "        myinfo1 info what=oppoint optype=ic where=file file='3n.ic'"
+      },
+      {
+        "line": 192,
+        "text": "        myinfo2 info what=oppoint optype=nodeset where=file file='4n.ic'"
+      },
+      {
+        "line": 193,
+        "text": ""
+      },
+      {
+        "line": 194,
+        "text": "==============="
+      },
+      {
+        "line": 195,
+        "text": "Parameter Index"
+      },
+      {
+        "line": 196,
+        "text": "==============="
+      },
+      {
+        "line": 197,
+        "text": ""
+      },
+      {
+        "line": 198,
+        "text": "    descriptions .................... 8   faultstep ...................... 37"
+      },
+      {
+        "line": 199,
+        "text": "    detail ......................... 45   faultstop ...................... 38"
+      },
+      {
+        "line": 200,
+        "text": "    dheinst ........................ 41   faultstuckat ................... 17"
+      },
+      {
+        "line": 201,
+        "text": "    dheminarea ..................... 39   faultterminals ................. 16"
+      },
+      {
+        "line": 202,
+        "text": "    dheparams ...................... 44   faultvalues .................... 33"
+      },
+      {
+        "line": 203,
+        "text": "    dhesubckt ...................... 40   file ............................ 3"
+      },
+      {
+        "line": 204,
+        "text": "    dhexinst ....................... 43   filter ......................... 47"
+      },
+      {
+        "line": 205,
+        "text": "    dhexsubckt ..................... 42   inst ........................... 22"
+      },
+      {
+        "line": 206,
+        "text": "    extremes ........................ 6   intrinsic_cap_merge ............ 51"
+      },
+      {
+        "line": 207,
+        "text": "    faultblock ..................... 11   nestlvl ......................... 5"
+      },
+      {
+        "line": 208,
+        "text": "    faultcap ....................... 15   node ........................... 50"
+      },
+      {
+        "line": 209,
+        "text": "    faultcmin ...................... 19   oppoint ......................... 9"
+      },
+      {
+        "line": 210,
+        "text": "    faultcollapse .................. 28   optype ......................... 10"
+      },
+      {
+        "line": 211,
+        "text": "    faultcustom .................... 13   save ............................ 4"
+      },
+      {
+        "line": 212,
+        "text": "    faultdev ....................... 12   skip_ground .................... 49"
+      },
+      {
+        "line": 213,
+        "text": "    faultduplicate ................. 31   sort ........................... 46"
+      },
+      {
+        "line": 214,
+        "text": "    faultextract ................... 18   subckt ......................... 21"
+      },
+      {
+        "line": 215,
+        "text": "    faultfile ...................... 35   threshold ...................... 48"
+      },
+      {
+        "line": 216,
+        "text": "    faultlevel ..................... 25   title ........................... 7"
+      },
+      {
+        "line": 217,
+        "text": "    faultmaxcount .................. 26   weight_expr .................... 29"
+      },
+      {
+        "line": 218,
+        "text": "    faultparam ..................... 32   weight_factor .................. 30"
+      },
+      {
+        "line": 219,
+        "text": "    faultpercentage ................ 34   what ............................ 1"
+      },
+      {
+        "line": 220,
+        "text": "    faultres ....................... 14   where ........................... 2"
+      }
+    ],
+    "stop_reason": null,
+    "tail": [
+      "faultrule ...................... 27 xsubckt ........................ 23",
+      "faultstart ..................... 36",
+      "",
+      ""
+    ],
+    "uid": 596
+  },
+  "returncode": 0,
+  "script_sha256": "5d80583509c6506e1fe1368cd801f640f744eadcbdf09e1501a9adeddc9ab5ed",
+  "stage": "bounded_readonly_exact_file_or_help"
+}

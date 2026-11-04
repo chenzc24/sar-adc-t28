@@ -1,0 +1,67 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench-only input source. Search decisions use actual transistor ADC outputs.
+module r4_transition_stim(VP,VN,D0,D1,D2,D3,D4,D5,D6,D7);
+    output VP,VN;
+    input D0,D1,D2,D3,D4,D5,D6,D7;
+    electrical VP,VN,D0,D1,D2,D3,D4,D5,D6,D7;
+    parameter integer first_k=1 from [1:255];
+    parameter integer last_k=255 from [1:255];
+    parameter integer warmup=4 from [0:inf);
+    parameter integer refine=7 from [1:20];
+    parameter real half_span_lsb=0.5 from (0:inf);
+    integer k,phase,frame,code,status,finished;
+    integer report_frame,report_k,report_phase,edge_k,edge_status,center_k;
+    real lo,hi,trial,pending,lsb,report_trial,edge_lo,edge_hi;
+    analog begin
+        @(initial_step) begin
+            lsb=1.8/256;k=first_k;phase=0;frame=0;status=0;finished=0;
+            lo=max(-0.9,-0.9+k*lsb-half_span_lsb*lsb);
+            hi=min(0.9,-0.9+k*lsb+half_span_lsb*lsb);
+            trial=-0.9+(k-0.5)*lsb;pending=trial;
+        end
+        @(timer(98n,100n)) begin
+            code=(V(D0)>0.45)+2*(V(D1)>0.45)+4*(V(D2)>0.45)+8*(V(D3)>0.45)+
+                16*(V(D4)>0.45)+32*(V(D5)>0.45)+64*(V(D6)>0.45)+128*(V(D7)>0.45);
+            if (frame>=warmup && !finished) begin
+                report_frame=frame;report_k=k;report_phase=phase;report_trial=trial;
+                $strobe("R4SEARCH,%d,%d,%d,%.12g,%d",report_frame,report_k,report_phase,report_trial,code);
+                if (phase==0) begin
+                    center_k=k-1;
+                    $strobe("R4CENTER,%d,%.12g,%d",center_k,report_trial,code);
+                    pending=lo;phase=1;
+                end else if (phase==1) begin
+                    if(code>=k) status=status+1;
+                    pending=hi;phase=2;
+                end else if (phase==2) begin
+                    if(code<k) status=status+2;
+                    pending=(lo+hi)/2;phase=3;
+                end else if (phase==99) begin
+                    center_k=k;
+                    $strobe("R4CENTER,%d,%.12g,%d",center_k,report_trial,code);
+                    finished=1;
+                    $strobe("R4STATIC_DONE,%d,%d",first_k,last_k);
+                end else begin
+                    if (code>=k) hi=trial; else lo=trial;
+                    if (phase==refine+2) begin
+                        edge_k=k;edge_lo=lo;edge_hi=hi;edge_status=status;
+                        $strobe("R4THR,%d,%.12g,%.12g,%d",edge_k,edge_lo,edge_hi,edge_status);
+                        if (k==last_k) begin phase=99;pending=-0.9+(k+0.5)*lsb;end
+                        else begin
+                            k=k+1;phase=0;status=0;
+                            lo=max(-0.9,-0.9+k*lsb-half_span_lsb*lsb);
+                            hi=min(0.9,-0.9+k*lsb+half_span_lsb*lsb);
+                            pending=-0.9+(k-0.5)*lsb;
+                        end
+                    end else begin phase=phase+1;pending=(lo+hi)/2;end
+                end
+            end
+            frame=frame+1;
+        end
+        // Input changes at the beginning of the next acquisition, well before closing.
+        @(timer(100.8n,100n)) trial=pending;
+        V(VP) <+ transition(0.45+trial/2,0,100p,100p);
+        V(VN) <+ transition(0.45-trial/2,0,100p,100p);
+    end
+endmodule

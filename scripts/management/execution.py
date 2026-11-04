@@ -10,7 +10,7 @@ OUT=ROOT/'output/managed_execution'
 SPEC_ROOT=ROOT/'management/runs'
 REMOTE_ROOT='/server_local_ssd/chenzc_intern25/sar-adc-t28'
 POLICY={
- 'version':1,'threads_per_simulation':4,'host_memory_reserve_mib':8192,'user_memory_reserve_mib':1024,
+ 'version':2,'max_managed_workloads':7,'threads_per_simulation':16,'host_memory_reserve_mib':8192,'user_memory_reserve_mib':1024,
  'disk_reserve_mib':16384,'runtime_disk_floor_mib':4096,'max_swap_rate_mib_s':4,'max_load_per_cpu':1.25,
  'max_collection_mib':32,'local_disk_reserve_mib':2048,
  'spectre_path':'/home/cadence/spectre/SPECTRE211Hotfix/tools/bin/spectre',
@@ -53,7 +53,7 @@ print(json.dumps({'ok':True,'result':result}))
     cmd='python -u -c '+shlex.quote("import base64;exec(base64.b64decode('"+encoded+"'))")
     out=folder/(stamp+'.output.json');err=folder/(stamp+'.stderr')
     with inp.open('rb') as i,out.open('wb') as o,err.open('wb') as e:
-        try:rc=subprocess.run(['ssh','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','ConnectionAttempts=1',
+        try:rc=subprocess.run(['ssh','-C','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','ConnectionAttempts=1',
             '-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2','thu-wei',cmd],stdin=i,stdout=o,stderr=e,timeout=timeout).returncode
         except subprocess.TimeoutExpired:rc=124
     if rc:raise RuntimeError(f'Remote result uncertain (exit {rc}); inspect {out}. Never auto-resubmit. '+err.read_text(errors='replace')[-1200:])
@@ -73,6 +73,18 @@ def storage():
 
 def register(spec_path):
     spec=project.load(root_path(spec_path));run_id=valid_id(spec['run_id']);files=[]
+    kind=spec.get('kind','simulation')
+    if kind not in ('simulation','analysis_only'):raise ValueError('Unsupported recipe kind')
+    source_ref=None
+    if kind=='analysis_only':
+        source_id=valid_id(spec['source_run_id'])
+        if source_id==run_id:raise ValueError('Analysis source cannot be itself')
+        record=project.load(SPEC_ROOT/(source_id+'.yaml'))
+        if not record.get('managed') or record['recipe'].get('kind','simulation')!='simulation':raise ValueError('Source must be a managed simulation')
+        if record['recipe_hash']!=recipe_hash(record['recipe']):raise ValueError('Source recipe hash mismatch')
+        if record['recipe']['run_id']!=source_id:raise ValueError('Source run ID mismatch')
+        source_ref=dict(run_id=source_id,recipe_hash=record['recipe_hash'])
+        if not spec.get('analyzer'):raise ValueError('Analysis-only run requires a dedicated analyzer')
     local=OUT/'runs'/run_id
     defaults=dict(threads=4,simulation_rss_mib=2048,simulation_virtual_mib=8192,analysis_rss_mib=512,
         analysis_virtual_mib=1024,max_output_mib=1024,simulation_wall_seconds=3600,analysis_wall_seconds=1800,queue_timeout_seconds=3600)
@@ -88,7 +100,8 @@ def register(spec_path):
         names.add(name)
         if source.stat().st_size>32*1024**2:raise ValueError('Source package file too large')
         files.append(dict(name=name,source=source.relative_to(ROOT).as_posix(),bytes=source.stat().st_size,sha256=project.digest(source)))
-    if spec['entry'] not in names:raise ValueError('Entry missing from package')
+    entry=spec.get('entry',spec.get('analyzer')) if kind=='analysis_only' else spec['entry']
+    if entry not in names:raise ValueError('Entry missing from package')
     analyzer=spec.get('analyzer','native_summary.py')
     if analyzer not in names:raise ValueError('Analyzer missing from package')
     if sum(f['bytes'] for f in files)>32*1024**2:raise ValueError('Input package exceeds 32 MiB')
@@ -104,14 +117,15 @@ def register(spec_path):
             elif posixpath.normpath(posixpath.join(posixpath.dirname(f['name']),inc)) not in names:
                 raise ValueError('Relative include missing from package '+inc)
     spectre_args=spec.get('spectre_args',['+preset=cx',f"+mt={defaults['threads']}",'+lqtimeout','60','-preset_override'])
-    if not all(isinstance(x,str) and re.fullmatch(r'\+preset=(?:cx|ax|mx)|\+mt=[1-4]|\+lqtimeout|[0-9]{1,3}|-preset_override',x) for x in spectre_args):raise ValueError('Unsupported Spectre argument; extend the reviewed allowlist first')
+    if not all(isinstance(x,str) and re.fullmatch(r'\+preset=(?:cx|ax|mx)|\+mt=(?:[1-9]|1[0-6])|\+lqtimeout|[0-9]{1,3}|-preset_override',x) for x in spectre_args):raise ValueError('Unsupported Spectre argument; extend the reviewed allowlist first')
     if [x for x in spectre_args if x.startswith('+mt=')]!=[f"+mt={defaults['threads']}"]:raise ValueError('Declared thread count must match exactly one +mt')
     if sum(x.startswith('+preset=') for x in spectre_args)!=1:raise ValueError('Declare exactly one preset')
-    recipe=dict(schema_version=1,run_id=run_id,design_id=spec['design_id'],entry=spec['entry'],analyzer=analyzer,
+    recipe=dict(schema_version=1,run_id=run_id,design_id=spec['design_id'],entry=entry,analyzer=analyzer,
         files=files,resources=defaults,spectre_args=spectre_args,summary_signals=[s.lower() for s in spec.get('summary_signals',[])],
         expected_stop_s=float(spec['expected_stop_s']),qualification_scope=spec.get('qualification_scope','workflow_only'),
         source_commit=project.git('rev-parse','HEAD').strip(),oa=spec.get('oa'),oa_parity=spec.get('oa_parity','not_claimed'))
     # Keep existing v1 recipes byte-identical when no new metadata is requested.
+    if source_ref:recipe.update(schema_version=2,kind='analysis_only',source=source_ref)
     if dependencies:recipe['model_dependencies']=dependencies
     if 'test_conditions' in spec:recipe['test_conditions']=spec['test_conditions']
     if not recipe['summary_signals'] or len(recipe['summary_signals'])>128:raise ValueError('Declare 1..128 summary signals')
@@ -137,12 +151,15 @@ def register(spec_path):
             if project.digest(dest)!=f['sha256']:raise ValueError('Frozen local input changed')
         else:shutil.copyfile(ROOT/f['source'],dest)
     project.save(local/'recipe.json',recipe)
-    result=rpc(dict(action='register',recipe=recipe,recipe_hash=h,files=[dict(name=f['name'],sha256=f['sha256'],base64=base64.b64encode((local/'inputs'/f['name']).read_bytes()).decode()) for f in files]))
+    # A capped32MiB package expands under base64; allow a bounded upload without
+    # relaxing execution/resource gates or automatically retrying uncertain work.
+    result=rpc(dict(action='register',recipe=recipe,recipe_hash=h,files=[dict(name=f['name'],sha256=f['sha256'],base64=base64.b64encode((local/'inputs'/f['name']).read_bytes()).decode()) for f in files]),timeout=180)
     project.save(local/'registration.json',result);return result
 
 def recipe(run_id):return project.load(SPEC_ROOT/(valid_id(run_id)+'.yaml'))['recipe']
 def phase(action,run_id,queue=False):
-    recipe(run_id)
+    recp=recipe(run_id)
+    if action=='submit' and recp.get('kind')=='analysis_only':raise ValueError('Analysis-only runs cannot submit a simulation; use analyze')
     result=rpc(dict(action=action,run_id=run_id,queue=queue))
     project.save(OUT/'runs'/run_id/(action+'.json'),result)
     return result
@@ -165,7 +182,7 @@ def transfer(listing,dest,request):
         if p.exists():
             if project.digest(p)!=item['sha256']:raise RuntimeError('Artifact collision')
             continue
-        response=rpc(dict(request,name=item['name']))
+        response=rpc(dict(request,name=item['name']),timeout=180)
         blob=base64.b64decode(response['base64'])
         if hashlib.sha256(blob).hexdigest()!=item['sha256'] or len(blob)!=item['bytes']:raise RuntimeError('Transfer checksum mismatch; retry collection only')
         with p.open('xb') as f:f.write(blob)

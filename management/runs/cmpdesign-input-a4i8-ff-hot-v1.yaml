@@ -1,0 +1,135 @@
+managed: true
+recipe_hash: 8baed6fc96304f2d79a86960d6d16300457ffe60ad4134b7fcab7f86dbff9ef2
+recipe:
+  schema_version: 1
+  run_id: cmpdesign-input-a4i8-ff-hot-v1
+  design_id: manual8_comparator_design
+  entry: test.scs
+  analyzer: precharge_b_reduce.py
+  files:
+  - name: dut.scs
+    source: comparator_design/testbenches/cmpdesign-input-a4i8-ff-hot-v1/dut.scs
+    bytes: 7120
+    sha256: c6df219310b747b432b5acd1a22333f914bffc96e7c9597517a5147db95bad0c
+  - name: models.scs
+    source: comparator_design/testbenches/cmpdesign-input-a4i8-ff-hot-v1/models.scs
+    bytes: 1316
+    sha256: 49c0360ef696a9c8d24b5e8ce5eac7a86a36db4586bb0caebc20e91d948ad056
+  - name: test.scs
+    source: comparator_design/testbenches/cmpdesign-input-a4i8-ff-hot-v1/test.scs
+    bytes: 7661
+    sha256: 7e0c139eaa3c92ac5bb74464c2e0870a93c97a687f1585e726953a1b4a4a3894
+  - name: measure.json
+    source: comparator_design/testbenches/cmpdesign-input-a4i8-ff-hot-v1/measure.json
+    bytes: 15842
+    sha256: 67655c13e49e20b3ba56d0e3eb4be0648de7676131046ebcc7a1a33cf543481e
+  - name: precharge_b_reduce.py
+    source: comparator_design/scripts/precharge_b_reduce.py
+    bytes: 8018
+    sha256: cf3c70a5bb39077af2fe55bfb5a570a63b5c6fe3bd51b20e06727ac06b1c4ede
+  - name: native_frames.py
+    source: comparator_design/scripts/native_frames.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - ck
+  - in
+  - ip
+  - na4i8_held
+  - ona4i8_driven
+  - ona4i8_held
+  - opa4i8_driven
+  - opa4i8_held
+  - pa4i8_held
+  - track
+  - ua4i8_driven
+  - ua4i8_held
+  - vck:1
+  - vsa4i8_driven:1
+  - vsa4i8_held:1
+  - xa4i8_driven.ln
+  - xa4i8_driven.lp
+  - xa4i8_driven.net1
+  - xa4i8_driven.net2
+  - xa4i8_driven.net3
+  - xa4i8_held.ln
+  - xa4i8_held.lp
+  - xa4i8_held.net1
+  - xa4i8_held.net2
+  - xa4i8_held.net3
+  - xa4i8_held.m6:2
+  - xa4i8_held.m0:2
+  - xa4i8_held.m7:1
+  - xa4i8_held.m1:1
+  - xa4i8_held.m4:1
+  - xa4i8_held.m13:2
+  - xa4i8_held.m14:2
+  - xa4i8_held.m5:1
+  - xa4i8_held.m9:1
+  - xa4i8_held.m7:3
+  - xa4i8_held.m8:2
+  - xa4i8_held.m9:2
+  expected_stop_s: 4.0e-07
+  qualification_scope: Isolated comparator sizing measurement; no ADC baseline adoption
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist only; user OA read-only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: ff
+    vdd: 0.99
+    temperature_c: 125
+    single_variable:
+      source_run_id: cmpdesign-precharge-a4-ff-hot-v1
+      devices:
+      - M8
+      - M9
+      old_multi: 4
+      new_multi: 8
+      M2_M4_multi: 4
+      M3_M5_multi: 1
+      M3_M5_L_nm: 30
+      M3_M5_W_nm: 100
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-input-a4i8-ff-hot-v1

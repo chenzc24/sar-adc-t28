@@ -1,0 +1,212 @@
+managed: true
+recipe_hash: 36f0ca04f03edb6cf09271e68c256102c617cf1a86e0c4037d744b6f97b298b6
+recipe:
+  schema_version: 1
+  run_id: cmpdesign-sizing-tt-v1
+  design_id: manual8_comparator_design
+  entry: test.scs
+  analyzer: sizing_reduce.py
+  files:
+  - name: dut.scs
+    source: comparator_design/testbenches/cmpdesign-sizing-tt-v1/dut.scs
+    bytes: 42576
+    sha256: 4f38b2f50d3c6f7169742102196825633fb6fd8a7a9a6a949c4f6db21cfb6f12
+  - name: models.scs
+    source: comparator_design/testbenches/cmpdesign-sizing-tt-v1/models.scs
+    bytes: 1316
+    sha256: b4659e52783eb0070303ec1e29587ce489e58b542a05c2a0028aeae2cc661bf2
+  - name: test.scs
+    source: comparator_design/testbenches/cmpdesign-sizing-tt-v1/test.scs
+    bytes: 11754
+    sha256: d6fc53a2d70127837d52ffe0d1b8b8cf58f033df2259800e77132d7b3a48075d
+  - name: measure.json
+    source: comparator_design/testbenches/cmpdesign-sizing-tt-v1/measure.json
+    bytes: 53986
+    sha256: a5ca131d0681b8492bc9da93254d2d364b722a17df7bd2f77fe485b494c31e95
+  - name: sizing_reduce.py
+    source: comparator_design/scripts/sizing_reduce.py
+    bytes: 6532
+    sha256: 4a1904d398aeaf2b6c3c1f0208dc7b33e7989807a93db95f01aa0afca994c695
+  - name: native_frames.py
+    source: comparator_design/scripts/native_frames.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 512
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - ck
+  - in
+  - ip
+  - nb0_held
+  - ni4_held
+  - no4_held
+  - np4_held
+  - nr2_held
+  - nt4_held
+  - onb0_driven
+  - onb0_held
+  - oni4_driven
+  - oni4_held
+  - ono4_driven
+  - ono4_held
+  - onp4_driven
+  - onp4_held
+  - onr2_driven
+  - onr2_held
+  - ont4_driven
+  - ont4_held
+  - opb0_driven
+  - opb0_held
+  - opi4_driven
+  - opi4_held
+  - opo4_driven
+  - opo4_held
+  - opp4_driven
+  - opp4_held
+  - opr2_driven
+  - opr2_held
+  - opt4_driven
+  - opt4_held
+  - pb0_held
+  - pi4_held
+  - po4_held
+  - pp4_held
+  - pr2_held
+  - pt4_held
+  - track
+  - ub0_driven
+  - ub0_held
+  - ui4_driven
+  - ui4_held
+  - uo4_driven
+  - uo4_held
+  - up4_driven
+  - up4_held
+  - ur2_driven
+  - ur2_held
+  - ut4_driven
+  - ut4_held
+  - vck:1
+  - vsb0_driven:1
+  - vsb0_held:1
+  - vsi4_driven:1
+  - vsi4_held:1
+  - vso4_driven:1
+  - vso4_held:1
+  - vsp4_driven:1
+  - vsp4_held:1
+  - vsr2_driven:1
+  - vsr2_held:1
+  - vst4_driven:1
+  - vst4_held:1
+  - xb0_driven.ln
+  - xb0_driven.lp
+  - xb0_driven.net1
+  - xb0_driven.net2
+  - xb0_driven.net3
+  - xb0_held.ln
+  - xb0_held.lp
+  - xb0_held.net1
+  - xb0_held.net2
+  - xb0_held.net3
+  - xi4_driven.ln
+  - xi4_driven.lp
+  - xi4_driven.net1
+  - xi4_driven.net2
+  - xi4_driven.net3
+  - xi4_held.ln
+  - xi4_held.lp
+  - xi4_held.net1
+  - xi4_held.net2
+  - xi4_held.net3
+  - xo4_driven.ln
+  - xo4_driven.lp
+  - xo4_driven.net1
+  - xo4_driven.net2
+  - xo4_driven.net3
+  - xo4_held.ln
+  - xo4_held.lp
+  - xo4_held.net1
+  - xo4_held.net2
+  - xo4_held.net3
+  - xp4_driven.ln
+  - xp4_driven.lp
+  - xp4_driven.net1
+  - xp4_driven.net2
+  - xp4_driven.net3
+  - xp4_held.ln
+  - xp4_held.lp
+  - xp4_held.net1
+  - xp4_held.net2
+  - xp4_held.net3
+  - xr2_driven.ln
+  - xr2_driven.lp
+  - xr2_driven.net1
+  - xr2_driven.net2
+  - xr2_driven.net3
+  - xr2_held.ln
+  - xr2_held.lp
+  - xr2_held.net1
+  - xr2_held.net2
+  - xr2_held.net3
+  - xt4_driven.ln
+  - xt4_driven.lp
+  - xt4_driven.net1
+  - xt4_driven.net2
+  - xt4_driven.net3
+  - xt4_held.ln
+  - xt4_held.lp
+  - xt4_held.net1
+  - xt4_held.net2
+  - xt4_held.net3
+  expected_stop_s: 4.0e-07
+  qualification_scope: Isolated comparator sizing measurement; no ADC baseline adoption
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist only; user OA read-only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-sizing-tt-v1

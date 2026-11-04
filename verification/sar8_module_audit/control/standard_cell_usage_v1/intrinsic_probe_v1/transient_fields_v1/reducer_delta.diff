@@ -1,0 +1,11 @@
+--- frozen_fast_gzip_analyze.py
++++ base_gzip_analyze.py
+@@ -189,6 +189,8 @@
+                             aliases[group] = name
+                             canonical.add(norm(group)); native_binding[norm(group)] = name; group = None
+                         continue
++                    if section == 'VALUE' and key != sweep and key in aliases and not selected_by_native.get(aliases[key]):
++                        continue  # extra named OP values are handled by field_capture, not baseline arithmetic
+                     value = float(tail)
+                     if not finite(value):
+                         raise ValueError('Invalid native scalar')

@@ -1,0 +1,235 @@
+{
+  "actual_cell_graph_verified": true,
+  "combinational": {
+    "INVD1BWP12T30P140": [
+      {
+        "inputs": {
+          "I": 0
+        },
+        "outputs": [
+          1
+        ],
+        "stable_states": 1
+      },
+      {
+        "inputs": {
+          "I": 1
+        },
+        "outputs": [
+          0
+        ],
+        "stable_states": 1
+      }
+    ],
+    "ND2D1BWP12T30P140": [
+      {
+        "inputs": {
+          "A1": 0,
+          "A2": 0
+        },
+        "outputs": [
+          1
+        ],
+        "stable_states": 2
+      },
+      {
+        "inputs": {
+          "A1": 0,
+          "A2": 1
+        },
+        "outputs": [
+          1
+        ],
+        "stable_states": 1
+      },
+      {
+        "inputs": {
+          "A1": 1,
+          "A2": 0
+        },
+        "outputs": [
+          1
+        ],
+        "stable_states": 1
+      },
+      {
+        "inputs": {
+          "A1": 1,
+          "A2": 1
+        },
+        "outputs": [
+          0
+        ],
+        "stable_states": 1
+      }
+    ]
+  },
+  "DFCNQ_stable_rows": [
+    {
+      "CP": 0,
+      "D": 0,
+      "CDN": 0,
+      "stable_states": 8,
+      "Q_values": [
+        0
+      ],
+      "mq_values": [
+        0
+      ]
+    },
+    {
+      "CP": 0,
+      "D": 0,
+      "CDN": 1,
+      "stable_states": 4,
+      "Q_values": [
+        0,
+        1
+      ],
+      "mq_values": [
+        0
+      ]
+    },
+    {
+      "CP": 0,
+      "D": 1,
+      "CDN": 0,
+      "stable_states": 4,
+      "Q_values": [
+        0
+      ],
+      "mq_values": [
+        1
+      ]
+    },
+    {
+      "CP": 0,
+      "D": 1,
+      "CDN": 1,
+      "stable_states": 4,
+      "Q_values": [
+        0,
+        1
+      ],
+      "mq_values": [
+        1
+      ]
+    },
+    {
+      "CP": 1,
+      "D": 0,
+      "CDN": 0,
+      "stable_states": 16,
+      "Q_values": [
+        0
+      ],
+      "mq_values": [
+        0
+      ]
+    },
+    {
+      "CP": 1,
+      "D": 0,
+      "CDN": 1,
+      "stable_states": 8,
+      "Q_values": [
+        0,
+        1
+      ],
+      "mq_values": [
+        0,
+        1
+      ]
+    },
+    {
+      "CP": 1,
+      "D": 1,
+      "CDN": 0,
+      "stable_states": 16,
+      "Q_values": [
+        0
+      ],
+      "mq_values": [
+        0
+      ]
+    },
+    {
+      "CP": 1,
+      "D": 1,
+      "CDN": 1,
+      "stable_states": 8,
+      "Q_values": [
+        0,
+        1
+      ],
+      "mq_values": [
+        0,
+        1
+      ]
+    }
+  ],
+  "ideal_rising_transfer": [
+    {
+      "previous_Q": 0,
+      "D_before_rise": 0,
+      "D_after_rise": 0,
+      "Q_after_rise": 0,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 0,
+      "D_before_rise": 0,
+      "D_after_rise": 1,
+      "Q_after_rise": 0,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 0,
+      "D_before_rise": 1,
+      "D_after_rise": 0,
+      "Q_after_rise": 1,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 0,
+      "D_before_rise": 1,
+      "D_after_rise": 1,
+      "Q_after_rise": 1,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 1,
+      "D_before_rise": 0,
+      "D_after_rise": 0,
+      "Q_after_rise": 0,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 1,
+      "D_before_rise": 0,
+      "D_after_rise": 1,
+      "Q_after_rise": 0,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 1,
+      "D_before_rise": 1,
+      "D_after_rise": 0,
+      "Q_after_rise": 1,
+      "falling_edge_preserves_Q": true
+    },
+    {
+      "previous_Q": 1,
+      "D_before_rise": 1,
+      "D_after_rise": 1,
+      "Q_after_rise": 1,
+      "falling_edge_preserves_Q": true
+    }
+  ],
+  "CP": "positive edge in ideal switch/master-memory model",
+  "CDN": "asynchronous active-low output clear; reset output0 for both clock levels",
+  "difference_from_custom": "During asserted clear with CP low native master may track D; output Q remains0. Original custom master was also cleared. Native overlap/release must be tested.",
+  "dynamic_native_timing_verified": false,
+  "setup_hold_recovery_removal_limits": null,
+  "method": "Enumerate every Boolean internal node, actual MOS on-state D/S constraints, and continuity of master/slave memory across clock phases; not SPICE or Liberty timing."
+}

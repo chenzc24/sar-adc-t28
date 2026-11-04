@@ -1,0 +1,18 @@
+simulator lang=spectre
+include "models.scs"
+include "dut.scs"
+VVDD (VDD 0) vsource dc=.9
+VCLK (CLKS 0) vsource type=pulse val0=0 val1=.9 delay=10n rise=50p fall=50p width=39.9n period=100n
+VIN0 (IN0 0) vsource dc=0.05
+X0 (CLKS 0 VDD IN0 OUT0) manual_boot
+CLOAD0 (OUT0 0) capacitor c=1.28p
+VIN1 (IN1 0) vsource dc=0.45
+X1 (CLKS 0 VDD IN1 OUT1) manual_boot
+CLOAD1 (OUT1 0) capacitor c=1.28p
+VIN2 (IN2 0) vsource dc=0.85
+X2 (CLKS 0 VDD IN2 OUT2) manual_boot
+CLOAD2 (OUT2 0) capacitor c=1.28p
+simulatorOptions options reltol=1e-5 vabstol=1e-7 iabstol=1e-13 temp=27 tnom=27 gmin=1e-12 checklimitdest=psf
+saveOptions options save=selected currents=selected
+tran_test tran stop=215n maxstep=20p errpreset=conservative
+save CLKS IN0 IN1 IN2 OUT0 OUT1 OUT2 VDD VVDD:1 X0.CLKSB X0.net1 X0.net2 X0.net3 X0.net4 X0.net7 X1.CLKSB X1.net1 X1.net2 X1.net3 X1.net4 X1.net7 X2.CLKSB X2.net1 X2.net2 X2.net3 X2.net4 X2.net7

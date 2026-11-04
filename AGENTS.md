@@ -52,6 +52,12 @@ Do not bypass a refused/queued gate, rerun an uncertain submission under a new
 ID, or invoke old launchers for new work. Historical tools remain for bounded
 read-only recovery; this is not an OS-wide sandbox of arbitrary SSH commands.
 
+Current user-authorized concurrency (2026-10-28): at most seven managed heavy
+workloads total across simulation and analysis. Each retains its declared
+thread, memory and output limits. Unknown/unmanaged heavy processes still block
+admission. The managed slot policy, including the legacy slot0 lock, is the
+source of truth; old single-task plan entries describe prior policy.
+
 Before starting a target:
 
 1. Run `git status --short --branch` at repository root.

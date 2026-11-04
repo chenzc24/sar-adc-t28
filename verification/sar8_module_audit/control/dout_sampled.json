@@ -1,0 +1,1407 @@
+{
+  "schema_version": 1,
+  "common_inputs": [
+    {
+      "path": "verification/sar8_module_audit/control/events.json",
+      "sha256": "ffbcb65ad86052b28490467a0d876ee22936ae795ef0a2f9ad7b0e21d8b08e22",
+      "bytes": 40123,
+      "role": "existing_event_table",
+      "expected_sha256": null,
+      "expected_sha256_matches": null
+    }
+  ],
+  "time_unit": "ns",
+  "compact_binary_batch_bytes": 29841584,
+  "compact_binary_batch_limit_bytes": 33554432,
+  "total_consumed_evidence_bytes": 29982317,
+  "script_sha256": "7c92aa4ab0127d75f9512cec448b866938f64ae8dbd9551906f9d7607ffa4cd9",
+  "scope": "Existing approximately 20 ps compact exports only; sampled-ready estimates, no raw PSF",
+  "unknowns": [
+    "No proof of intersample glitch absence",
+    "No receiver VIL/VIH or setup/hold specification",
+    "90/98 ns are historical observer times, not an approved silicon interface",
+    "Matching the final word before final write does not qualify conversion completion"
+  ],
+  "runs": [
+    {
+      "run_id": "sar8fix-loaded-both-rx2-tt",
+      "input_hashes": [
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-tt/collected/collection_receipt.json",
+          "sha256": "afc2dd368b073b1aa4ff0667b3a1b4015a160d0f5509f9cc59b9a88645136c63",
+          "bytes": 7115,
+          "role": "collection_receipt",
+          "expected_sha256": "afc2dd368b073b1aa4ff0667b3a1b4015a160d0f5509f9cc59b9a88645136c63",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-tt/collected/derived/wave.meta.json",
+          "sha256": "1fc19fe3f280bd5a6a42cefcbb8739bf64ce0be49dd6506513dbab990c272bf2",
+          "bytes": 169,
+          "role": "collected:derived/wave.meta.json",
+          "expected_sha256": "1fc19fe3f280bd5a6a42cefcbb8739bf64ce0be49dd6506513dbab990c272bf2",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-tt/collected/derived/wave.columns",
+          "sha256": "6c22414c8364f7585303199cb63c429d74ae1b65912ad68643e51df02087147e",
+          "bytes": 3454,
+          "role": "collected:derived/wave.columns",
+          "expected_sha256": "6c22414c8364f7585303199cb63c429d74ae1b65912ad68643e51df02087147e",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "verification/sar8_physical_repair/sar8fix-loaded-both-rx2-tt_analysis.json",
+          "sha256": "4219071e5fc80677a519ad0d964fe3325fd0a676e870db940191463ba4407c40",
+          "bytes": 36429,
+          "role": "existing_local_derived_summary",
+          "expected_sha256": "4219071e5fc80677a519ad0d964fe3325fd0a676e870db940191463ba4407c40",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-tt/inputs/r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+          "bytes": 3068,
+          "role": "frozen_observer",
+          "expected_sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-tt/collected/derived/wave.bin",
+          "sha256": "ecb81d9d98a921b7d12753171ce1b7dc17a1a19e34766a17c753907ab3bb4efa",
+          "bytes": 14313008,
+          "role": "collected:derived/wave.bin",
+          "expected_sha256_matches": true
+        }
+      ],
+      "compact_binary_bytes": 14313008,
+      "nominal_export_min_spacing_ps": 20,
+      "provenance_derived_grid_gap_bound_ns": 0.03,
+      "band_fraction_from_legacy_observer": 0.1,
+      "band_role": "Strict +/-fraction*VDD around expected zero or VDD; old diagnostic, not VIL/VIH",
+      "missing_columns": [],
+      "frames": [
+        {
+          "frame": 0,
+          "expected_word_from_prior_case": 243,
+          "status": "sampled_diagnostic",
+          "search_start_SEQ_SAMPLE_close_ns": 41.12320763668485,
+          "legacy_observer_window_ns": [
+            90.0,
+            98.0
+          ],
+          "sampled_bus_ready_ns": 74.7738191636704,
+          "sampled_bus_ready_from_SEQ_SAMPLE_close_ns": 33.65061152698554,
+          "last_native_write_crossing_ns": 74.70599649072093,
+          "sampled_bus_ready_minus_last_write_ns": 0.0678226729494611,
+          "per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 74.7738191636704,
+              "sampled_ready_bracket_ns": [
+                74.75378789222012,
+                74.7738191636704
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 74.75378789222012,
+              "bit": 0,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 69.97698198897064,
+              "sampled_ready_bracket_ns": [
+                69.95692183221598,
+                69.97698198897064
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 69.95692183221598,
+              "bit": 1,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 41.130722115887494,
+              "sampled_ready_bracket_ns": [
+                41.12320763668485,
+                41.130722115887494
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 2,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 41.130722115887494,
+              "sampled_ready_bracket_ns": [
+                41.12320763668485,
+                41.130722115887494
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 3,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 56.40757010589543,
+              "sampled_ready_bracket_ns": [
+                56.38753482762258,
+                56.40757010589543
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 56.38753482762258,
+              "bit": 4,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 52.348615546654685,
+              "sampled_ready_bracket_ns": [
+                52.328396403768146,
+                52.348615546654685
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 52.328396403768146,
+              "bit": 5,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 48.353031115276664,
+              "sampled_ready_bracket_ns": [
+                48.33298841861207,
+                48.353031115276664
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 48.33298841861207,
+              "bit": 6,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 44.389718479175684,
+              "sampled_ready_bracket_ns": [
+                44.36959273039431,
+                44.389718479175684
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2495,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 44.36959273039431,
+              "bit": 7,
+              "expected_bit": 1
+            }
+          ],
+          "legacy_window_all_checked_samples_in_expected_band": true,
+          "legacy_window_per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.02999999999919,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.02999999999919
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 267,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.97999999999767,
+                98.00999999999767
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            }
+          ],
+          "qualified_DOUT_valid_time_ns": null,
+          "setup_requirement_ns": null,
+          "hold_requirement_ns": null,
+          "silicon_acceptance": {
+            "status": "undecided",
+            "pass_": null,
+            "reason": "Receiver thresholds, interface timing and intersample glitches are unverified"
+          }
+        },
+        {
+          "frame": 1,
+          "expected_word_from_prior_case": 12,
+          "status": "sampled_diagnostic",
+          "search_start_SEQ_SAMPLE_close_ns": 141.12322782462914,
+          "legacy_observer_window_ns": [
+            190.0,
+            198.0
+          ],
+          "sampled_bus_ready_ns": 165.3788389648859,
+          "sampled_bus_ready_from_SEQ_SAMPLE_close_ns": 24.255611140256747,
+          "last_native_write_crossing_ns": 174.69869067419233,
+          "sampled_bus_ready_minus_last_write_ns": -9.319851709306448,
+          "per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 0,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 1,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 165.3788389648859,
+              "sampled_ready_bracket_ns": [
+                165.3586664346413,
+                165.3788389648859
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 165.3586664346413,
+              "bit": 2,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 160.4689006141948,
+              "sampled_ready_bracket_ns": [
+                160.44878418880498,
+                160.4689006141948
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 160.44878418880498,
+              "bit": 3,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 4,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 5,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 6,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.14131038489572,
+              "sampled_ready_bracket_ns": [
+                141.12322782462914,
+                141.14131038489572
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2528,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 7,
+              "expected_bit": 0
+            }
+          ],
+          "legacy_window_all_checked_samples_in_expected_band": true,
+          "legacy_window_per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.00000000000412,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.00000000000412
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 290,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99000000001308,
+                198.0200000000132
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            }
+          ],
+          "qualified_DOUT_valid_time_ns": null,
+          "setup_requirement_ns": null,
+          "hold_requirement_ns": null,
+          "silicon_acceptance": {
+            "status": "undecided",
+            "pass_": null,
+            "reason": "Receiver thresholds, interface timing and intersample glitches are unverified"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "sar8fix-loaded-both-rx2-end210-sscold",
+      "input_hashes": [
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-end210-sscold/collected/collection_receipt.json",
+          "sha256": "6a80508f974b7df3a919cc9fcb25fbd0415ebd7ab3e76f9f865aaf8b32ef6f30",
+          "bytes": 7164,
+          "role": "collection_receipt",
+          "expected_sha256": "6a80508f974b7df3a919cc9fcb25fbd0415ebd7ab3e76f9f865aaf8b32ef6f30",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-end210-sscold/collected/derived/wave.meta.json",
+          "sha256": "8068591bb8772b5d48e5ae6a1596cb2426473b3ae1f4e5492ae1bdf347e87297",
+          "bytes": 170,
+          "role": "collected:derived/wave.meta.json",
+          "expected_sha256": "8068591bb8772b5d48e5ae6a1596cb2426473b3ae1f4e5492ae1bdf347e87297",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-end210-sscold/collected/derived/wave.columns",
+          "sha256": "6c22414c8364f7585303199cb63c429d74ae1b65912ad68643e51df02087147e",
+          "bytes": 3454,
+          "role": "collected:derived/wave.columns",
+          "expected_sha256": "6c22414c8364f7585303199cb63c429d74ae1b65912ad68643e51df02087147e",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "verification/sar8_physical_repair/sar8fix-loaded-both-rx2-end210-sscold_analysis.json",
+          "sha256": "491c46570180dc15afceae17a1b558da4f6f0a621265a467071815329c574176",
+          "bytes": 36519,
+          "role": "existing_local_derived_summary",
+          "expected_sha256": "491c46570180dc15afceae17a1b558da4f6f0a621265a467071815329c574176",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-end210-sscold/inputs/r4_perf_monitor.va",
+          "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+          "bytes": 3068,
+          "role": "frozen_observer",
+          "expected_sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3",
+          "expected_sha256_matches": true
+        },
+        {
+          "path": "output/managed_execution/runs/sar8fix-loaded-both-rx2-end210-sscold/collected/derived/wave.bin",
+          "sha256": "2577fc68d5b4d76b0da9ad2c4d75e4c0bc5acf92dd488007af0de3dd0ef78e82",
+          "bytes": 15528576,
+          "role": "collected:derived/wave.bin",
+          "expected_sha256_matches": true
+        }
+      ],
+      "compact_binary_bytes": 15528576,
+      "nominal_export_min_spacing_ps": 20,
+      "provenance_derived_grid_gap_bound_ns": 0.03,
+      "band_fraction_from_legacy_observer": 0.1,
+      "band_role": "Strict +/-fraction*VDD around expected zero or VDD; old diagnostic, not VIL/VIH",
+      "missing_columns": [],
+      "frames": [
+        {
+          "frame": 0,
+          "expected_word_from_prior_case": 243,
+          "status": "sampled_diagnostic",
+          "search_start_SEQ_SAMPLE_close_ns": 41.162332262228354,
+          "legacy_observer_window_ns": [
+            90.0,
+            98.0
+          ],
+          "sampled_bus_ready_ns": 88.07293253949672,
+          "sampled_bus_ready_from_SEQ_SAMPLE_close_ns": 46.910600277268365,
+          "last_native_write_crossing_ns": 87.97704697037793,
+          "sampled_bus_ready_minus_last_write_ns": 0.09588556911879209,
+          "per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 88.07293253949672,
+              "sampled_ready_bracket_ns": [
+                88.05274494780996,
+                88.07293253949672
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 88.05274494780996,
+              "bit": 0,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 81.84568774327042,
+              "sampled_ready_bracket_ns": [
+                81.8255667436162,
+                81.84568774327042
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 81.8255667436162,
+              "bit": 1,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 41.17050501193679,
+              "sampled_ready_bracket_ns": [
+                41.162332262228354,
+                41.17050501193679
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 2,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 41.17050501193679,
+              "sampled_ready_bracket_ns": [
+                41.162332262228354,
+                41.17050501193679
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 3,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 63.44453332600052,
+              "sampled_ready_bracket_ns": [
+                63.42452776073358,
+                63.44453332600052
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 63.42452776073358,
+              "bit": 4,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 57.50096171368975,
+              "sampled_ready_bracket_ns": [
+                57.48095058601136,
+                57.50096171368975
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 57.48095058601136,
+              "bit": 5,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 51.780567046102746,
+              "sampled_ready_bracket_ns": [
+                51.76021301822437,
+                51.780567046102746
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 51.76021301822437,
+              "bit": 6,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 46.072999756163284,
+              "sampled_ready_bracket_ns": [
+                46.052943621949595,
+                46.072999756163284
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2609,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 46.052943621949595,
+              "bit": 7,
+              "expected_bit": 1
+            }
+          ],
+          "legacy_window_all_checked_samples_in_expected_band": true,
+          "legacy_window_per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 90.00233738016657,
+              "sampled_ready_bracket_ns": [
+                90.0,
+                90.00233738016657
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 336,
+              "observed_max_gap_ns": 0.030000000000001137,
+              "read_bracket_ns": [
+                97.9818712204208,
+                98.00198022503814
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            }
+          ],
+          "qualified_DOUT_valid_time_ns": null,
+          "setup_requirement_ns": null,
+          "hold_requirement_ns": null,
+          "silicon_acceptance": {
+            "status": "undecided",
+            "pass_": null,
+            "reason": "Receiver thresholds, interface timing and intersample glitches are unverified"
+          }
+        },
+        {
+          "frame": 1,
+          "expected_word_from_prior_case": 12,
+          "status": "sampled_diagnostic",
+          "search_start_SEQ_SAMPLE_close_ns": 141.16235640228723,
+          "legacy_observer_window_ns": [
+            190.0,
+            198.0
+          ],
+          "sampled_bus_ready_ns": 175.6865253484533,
+          "sampled_bus_ready_from_SEQ_SAMPLE_close_ns": 34.52416894616607,
+          "last_native_write_crossing_ns": 187.87264853323876,
+          "sampled_bus_ready_minus_last_write_ns": -12.186123184785458,
+          "per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 0,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 1,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 175.6865253484533,
+              "sampled_ready_bracket_ns": [
+                175.6664011089787,
+                175.6865253484533
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 175.6664011089787,
+              "bit": 2,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 169.2615099280026,
+              "sampled_ready_bracket_ns": [
+                169.241469887967,
+                169.2615099280026
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": false,
+              "last_out_of_band_sample_ns": 169.241469887967,
+              "bit": 3,
+              "expected_bit": 1
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 4,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 5,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 6,
+              "expected_bit": 0
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 141.1720878162086,
+              "sampled_ready_bracket_ns": [
+                141.16235640228723,
+                141.1720878162086
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 2623,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null,
+              "bit": 7,
+              "expected_bit": 0
+            }
+          ],
+          "legacy_window_all_checked_samples_in_expected_band": true,
+          "legacy_window_per_bit": [
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            },
+            {
+              "status": "sampled_estimate",
+              "sampled_ready_ns": 190.0029614361465,
+              "sampled_ready_bracket_ns": [
+                190.0,
+                190.0029614361465
+              ],
+              "reason": "First sampled in-band suffix; intersample behavior and receiver validity unqualified",
+              "checked_samples": 343,
+              "observed_max_gap_ns": 0.030000000000114824,
+              "read_bracket_ns": [
+                197.99738208932928,
+                198.0186519890266
+              ],
+              "all_checked_samples_in_band": true,
+              "last_out_of_band_sample_ns": null
+            }
+          ],
+          "qualified_DOUT_valid_time_ns": null,
+          "setup_requirement_ns": null,
+          "hold_requirement_ns": null,
+          "silicon_acceptance": {
+            "status": "undecided",
+            "pass_": null,
+            "reason": "Receiver thresholds, interface timing and intersample glitches are unverified"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "run_id": "sar8audit-bbm-hdc0x4-ffcold",
+  "design_id": "sar8_reference_BBM_HD_C0_multi4_single_variable",
+  "entry": "test.scs",
+  "analyzer": "bbm_hdc0_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/dut.scs",
+      "name": "dut.scs",
+      "sha256": "b3aa7345ddc41502a606b8b0988b1eb311c652c8fa5303ecee0d8b3e53705b8c"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/ffcold/test.scs",
+      "name": "test.scs",
+      "sha256": "1721bc5e8f6fbc416b35745e07643f3f9a2f853ff282907d39c36bc4e9dc51be"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+      "name": "io_cell_analyze.py",
+      "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/real_bbm_analyze.py",
+      "name": "real_bbm_analyze.py",
+      "sha256": "1983866ca0ab12ed03f305ec7fcf90e969e04b9f84df1a693f7e087e9552fda5"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/bbm_hdc0_analyze.py",
+      "name": "bbm_hdc0_analyze.py",
+      "sha256": "e07a3bfa66e21153611291b39d6a26ae809e68b1dcfe8eeafdae61aa3bdb2dc6"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/real_bbm_v1/bbm_boundary.json",
+      "name": "bbm_boundary.json",
+      "sha256": "92327ba9ae66772ad6916318d0d87f28c564c86f9236f20473bc76d505478895"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/bbm_hdc0_v1/ffcold/measurement.json",
+      "name": "measurement.json",
+      "sha256": "beabd4608e3c5896c8fd06daf189c263587fc5963ca90c9cb260345906eed8f8"
+    }
+  ],
+  "summary_signals": [
+    "CODE",
+    "XDUT.H0",
+    "XDUT.L0",
+    "XDUT.GNN0",
+    "XDUT.GNP0",
+    "XDUT.GPN0",
+    "XDUT.GPP0",
+    "XDUT.XCDAC.BN0",
+    "XDUT.XCDAC.BP0"
+  ],
+  "expected_stop_s": 5.2e-08,
+  "qualification_scope": "Only HD delay-leg C0 MOM multi1->4 on complete BBM/real load; CODE/sampling unchanged, no RC1 repair or wholeADC claim",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ffcold",
+    "supply_V": 0.99,
+    "temperature_C": -40,
+    "variant": "full_BBM_HD_C0_multi4_ideal_CODE",
+    "logical_stimulus": true,
+    "FF_waveform_replay": false,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 512,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}

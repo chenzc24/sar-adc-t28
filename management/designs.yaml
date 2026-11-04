@@ -2,6 +2,24 @@ schema_version: 1
 adopted_new_baseline: null
 current_development: sar8_l90_mmain2_stress_screen
 designs:
+  - id: sar8_l90_mmain2_stdcell_v1
+    role: isolated_digital_migration_candidate
+    parent: sar8_l90_mmain2_frozen
+    source_netlist: netlist/sar8_l90_mmain2_stdcell_v1/dut.scs
+    dut_sha256_recorded: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+    oa: null
+    oa_parity: netlist_only_not_adopted
+    evidence: [netlist/sar8_l90_mmain2_stdcell_v1/manifest.json, plan/2026-10-27-sar8-frozen-stdcell/plan.md]
+    qualification: {structural_rebase: checked, simulation: not_run, nominal_static: pending, device_stress: deferred_not_qualified, layout: not_qualified}
+  - id: sar8_l90_mmain2_frozen
+    role: frozen_historical_functional_characterization
+    source_commit_recorded: e94e8028e6dcc9aa843116a7d0c46c865df5f7b7
+    source_netlist: netlist/sar8_l90_mmain2_frozen/dut.scs
+    dut_sha256_recorded: 41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4
+    oa: null
+    oa_parity: netlist_only_not_adopted
+    evidence: [netlist/sar8_l90_mmain2_frozen/manifest.json, plan/2026-10-27-sar8-frozen-functional/plan.md]
+    qualification: {nominal_static: pending_new_measurement, PVT: historical_sparse_points_only, startup: known_failure, device_stress: deferred_known_failures, layout: not_qualified}
   - id: sar8_r3_b_reference
     role: preserved_OA_reference
     source_config: config/sar8_join_r3.yaml

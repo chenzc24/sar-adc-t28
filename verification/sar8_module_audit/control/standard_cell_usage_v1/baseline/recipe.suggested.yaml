@@ -1,0 +1,103 @@
+{
+  "analyzer": "usage_analyze.py",
+  "design_id": "native_DFCNQD1_U19_slew_diagnostic_baseline",
+  "entry": "test.scs",
+  "expected_stop_s": 2e-08,
+  "inputs": [
+    {
+      "name": "test.scs",
+      "sha256": "407de7848e71ebc2e364e495203171ff0c8d77fce8063080d611ccf7c4fafe2a",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/baseline/test.scs"
+    },
+    {
+      "name": "dut.scs",
+      "sha256": "d1ab8ad9e0d3180daea21a72d0d73309023890ab1fadd4de407af8a79add9c5c",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/baseline/dut.scs"
+    },
+    {
+      "name": "measurement.json",
+      "sha256": "3f4d7fd2239b16ee905df9a2da0813ef68090f2c73aee138046483cb4c4ca60a",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/baseline/measurement.json"
+    },
+    {
+      "name": "external_library.json",
+      "sha256": "839d0edcb5e9ef56fd26eb8cb0307aa34a447d5da43aea1fd1cbeadf9d49973e",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/external_library.json"
+    },
+    {
+      "name": "usage_analyze.py",
+      "sha256": "2efe9275bda0b6d90c884e955f262cf04b15505ad936f4aecfb6de9881b8c7ff",
+      "source": "verification/sar8_module_audit/control/standard_cell_usage_v1/usage_analyze.py"
+    },
+    {
+      "name": "full_gate_analyze.py",
+      "sha256": "fc57a31dac441f84dfcc8587a17c1247740ad6d40d2c43c04aaaf76b2daee2f6",
+      "source": "verification/sar8_module_audit/control/full_gate_analyze.py"
+    },
+    {
+      "name": "standard_cell_full_analyze.py",
+      "sha256": "ddf8b334bf0bc873fccf5af2ea8822aca51ef1bd063119bb3c196a328d66779a",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_analyze.py"
+    },
+    {
+      "name": "fast_gate_analyze.py",
+      "sha256": "8d73ae9197319770ee2648965b8e9f3260b86b2408d397e1d931575f463c57f7",
+      "source": "verification/sar8_module_audit/control/standard_cell_storage_fastanalysis_v1/fast_gate_analyze.py"
+    },
+    {
+      "name": "pwl/ff_ck.pwl",
+      "sha256": "f08f462cb6eceea7f9598aa30f4f367348f5dc5da2839e84ce218a0a20986024",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_ck.pwl"
+    },
+    {
+      "name": "pwl/ff_d.pwl",
+      "sha256": "36898dca0dbecadca94de65120d9e51c25fd89defe7ce9533aefe8c884330242",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_d.pwl"
+    },
+    {
+      "name": "pwl/ff_rst.pwl",
+      "sha256": "0850d7059b608b61ae815c2e96042f2428cf882356e5a66ff329b7b650d29753",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_rst.pwl"
+    },
+    {
+      "name": "pwl/context.pwl",
+      "sha256": "00dab1ef92f4640e9ac9229f26b1ab2880809d07b3c69e598c3909d03de392c5",
+      "source": "verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/context.pwl"
+    }
+  ],
+  "oa_parity": "netlist_only",
+  "qualification_scope": "One native DFCNQD1 U19 with unchanged conditioners and exact original three first-hop loads; CK series resistance diagnostic only",
+  "resources": {
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "analysis_wall_seconds": 300,
+    "max_output_mib": 256,
+    "queue_timeout_seconds": 600,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "simulation_wall_seconds": 300,
+    "threads": 1
+  },
+  "run_id": "sar8audit-ctrl-usage-baseline-ff-v1",
+  "schema_version": 1,
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "+lqtimeout",
+    "60",
+    "-preset_override"
+  ],
+  "summary_signals": [
+    "XDUT.U19_Q",
+    "XDUT.U19_CK",
+    "XDUT.XU19.XFF.net176"
+  ],
+  "test_conditions": {
+    "PEX": false,
+    "corner": "ff",
+    "mismatch": false,
+    "noise": false,
+    "temperature_c": -40,
+    "vdd": 0.99
+  }
+}

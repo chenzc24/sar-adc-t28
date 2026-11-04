@@ -1,0 +1,1999 @@
+{
+  "scope": "FF0.99V/-40C first event; only XCLOCK.X000 reset INV replacement",
+  "implementation": "Original2custom MOS ->2native INVD1 MOS, no explicit capacitor change; dimensions/intrinsic parasitics change together.",
+  "whole_ADC_qualified": false,
+  "circuit_repair_claim": false,
+  "cases": {
+    "Original RB": {
+      "proof": {
+        "run": "sar8audit-ctrl-stdcell-live-ff-v1",
+        "recipe_sha256": "a99eeaad32f6fb75ac2c548ebf617690091e2175fb022aa43437e522684a9226",
+        "receipt_files": 9,
+        "receipt_bytes": 9416094,
+        "required_currents": 436,
+        "native_points": 6053,
+        "local_diagnostic_points": 1972,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 3.936502649877569e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "node_extrema": {
+        "clock_reset": {
+          "max": 1.014005522612231,
+          "max_time_s": 4.107481086027839e-08,
+          "min": 1.209066270734601e-06,
+          "min_time_s": 4.113534446216614e-08
+        },
+        "xclock.rb": {
+          "max": 0.9928732729617367,
+          "max_time_s": 4.10934651345775e-08,
+          "min": -0.02552335088458898,
+          "min_time_s": 4.107886937666219e-08
+        },
+        "xclock.qb": {
+          "max": 1.005041145822793,
+          "max_time_s": 4.108292922883862e-08,
+          "min": 0.8721373811551003,
+          "min_time_s": 4.108978853780195e-08
+        },
+        "xclock.sn": {
+          "max": 1.005368348919377,
+          "max_time_s": 4.108354621246625e-08,
+          "min": 0.9892745706311905,
+          "min_time_s": 4.107834522260414e-08
+        },
+        "clock_q": {
+          "max": 0.003520001803298079,
+          "max_time_s": 4.109828908428358e-08,
+          "min": -0.005351685003080244,
+          "min_time_s": 4.108741420323771e-08
+        },
+        "clock_set": {
+          "max": 0.001506966080223975,
+          "max_time_s": 4.111727445643923e-08,
+          "min": -0.003959216019157343,
+          "min_time_s": 4.110777858155007e-08
+        },
+        "sn": {
+          "max": 0.9899997071928339,
+          "max_time_s": 4.124806995605193e-08,
+          "min": -0.009411215927171755,
+          "min_time_s": 4.106787746841947e-08
+        },
+        "live": {
+          "max": 0.9899995407599349,
+          "max_time_s": 4.120092154372918e-08,
+          "min": -0.02136999416283879,
+          "min_time_s": 4.108174333269549e-08
+        },
+        "x001.n": {
+          "max": 1.002511868539165,
+          "max_time_s": 4.107596436665376e-08,
+          "min": 1.821543095701167e-06,
+          "min_time_s": 4.125162962106714e-08
+        },
+        "x020.n": {
+          "max": 1.007965646766415,
+          "max_time_s": 4.108718467920705e-08,
+          "min": 9.613587276003124e-06,
+          "min_time_s": 4.159078565059045e-08
+        },
+        "quiet": {
+          "max": 0.9543793456454672,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -0.009152088697197894,
+          "min_time_s": 4.109381481014573e-08
+        },
+        "xd_quiet_d.rc1": {
+          "max": 0.9957623410504554,
+          "max_time_s": 4.111839331438265e-08,
+          "min": 0.9899321665344589,
+          "min_time_s": 4.109370506104841e-08
+        }
+      },
+      "reset": {
+        "nodes": {
+          "CLOCK_RESET": {
+            "node": "xdut.xctrl.xtim.clock_reset",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "NM_gate": {
+                "min": -8.204474881190037e-05,
+                "max": 2.802293035110921e-06,
+                "min_time_s": 4.107883650454704e-08,
+                "max_time_s": 4.10737832535254e-08
+              },
+              "PM_gate": {
+                "min": -0.0001445122468698306,
+                "max": 2.816501396264302e-06,
+                "min_time_s": 4.108003479804333e-08,
+                "max_time_s": 4.10737832535254e-08
+              },
+              "total_gate": {
+                "min": -0.00021540314674648717,
+                "max": 5.618794431375223e-06,
+                "min_time_s": 4.10795629322328e-08,
+                "max_time_s": 4.10737832535254e-08
+              },
+              "input_voltage": {
+                "min": 1.209066270734601e-06,
+                "max": 1.014005522612231,
+                "min_time_s": 4.113534446216614e-08,
+                "max_time_s": 4.107481086027839e-08
+              }
+            },
+            "native_KCL_max_a": 1.971372809034478e-12,
+            "threshold_events": [
+              {
+                "fraction": 0.9,
+                "direction": -1,
+                "time_s": 4.107727150313256e-08
+              },
+              {
+                "fraction": 0.5,
+                "direction": -1,
+                "time_s": 4.1079404899752354e-08
+              },
+              {
+                "fraction": 0.1,
+                "direction": -1,
+                "time_s": 4.1084123435818385e-08
+              }
+            ],
+            "rise_10_90_s": [],
+            "fall_90_10_s": [
+              6.851932685822307e-12
+            ],
+            "rising_halfrail_s": [],
+            "falling_halfrail_s": [
+              4.1079404899752354e-08
+            ],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": {
+                "NM_gate": -3.9266817788055396e-16,
+                "PM_gate": -8.392122326161333e-16
+              },
+              "total_into_gate_devices_c": -1.2318804104966873e-15,
+              "into_gate_terminal_work_j": {
+                "NM_gate": -1.8918005905794336e-16,
+                "PM_gate": -2.7952397769156913e-16
+              },
+              "total_into_gate_terminal_work_j": -4.687040367495125e-16
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Real upstream OR output; reset inverter input loading",
+            "gate_loading_measured": true
+          },
+          "RB": {
+            "node": "xdut.xctrl.xtim.xclock.rb",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "QB_NM_gate": {
+                "min": -1.290412211859918e-05,
+                "max": 9.350435635971064e-05,
+                "min_time_s": 4.109016660458788e-08,
+                "max_time_s": 4.108420703674358e-08
+              },
+              "QB_PM_gate": {
+                "min": -1.005684816495902e-05,
+                "max": 0.0001440190621815985,
+                "min_time_s": 4.107808720860529e-08,
+                "max_time_s": 4.108205209193592e-08
+              },
+              "SN_NM_gate": {
+                "min": -4.652571265764815e-06,
+                "max": 0.000125222003560814,
+                "min_time_s": 4.107808720860529e-08,
+                "max_time_s": 4.108425481535402e-08
+              },
+              "SN_PM_gate": {
+                "min": -1.010491975560091e-05,
+                "max": 0.0001445228437729564,
+                "min_time_s": 4.107808720860529e-08,
+                "max_time_s": 4.108205209193592e-08
+              },
+              "total_gate": {
+                "min": -2.9192362330636402e-05,
+                "max": 0.0004284221684970798,
+                "min_time_s": 4.107808720860529e-08,
+                "max_time_s": 4.108274099757119e-08
+              },
+              "input_voltage": {
+                "min": -0.02552335088458898,
+                "max": 0.9928732729617367,
+                "min_time_s": 4.107886937666219e-08,
+                "max_time_s": 4.10934651345775e-08
+              }
+            },
+            "native_KCL_max_a": 1.0981318342850746e-12,
+            "threshold_events": [
+              {
+                "fraction": 0.1,
+                "direction": 1,
+                "time_s": 4.1080751300842286e-08
+              },
+              {
+                "fraction": 0.5,
+                "direction": 1,
+                "time_s": 4.1083111378843966e-08
+              },
+              {
+                "fraction": 0.9,
+                "direction": 1,
+                "time_s": 4.10860227912677e-08
+              }
+            ],
+            "rise_10_90_s": [
+              5.271490425415414e-12
+            ],
+            "fall_90_10_s": [],
+            "rising_halfrail_s": [
+              4.1083111378843966e-08
+            ],
+            "falling_halfrail_s": [],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": {
+                "QB_NM_gate": 2.6692371328924856e-16,
+                "QB_PM_gate": 6.637113686459381e-16,
+                "SN_NM_gate": 6.334858916973678e-16,
+                "SN_PM_gate": 6.636736833424164e-16
+              },
+              "total_into_gate_devices_c": 2.2277946569749707e-15,
+              "into_gate_terminal_work_j": {
+                "QB_NM_gate": 6.168780984372972e-17,
+                "QB_PM_gate": 2.828100020922566e-16,
+                "SN_NM_gate": 3.7729979480124115e-16,
+                "SN_PM_gate": 2.8613740520939186e-16
+              },
+              "total_into_gate_terminal_work_j": 1.0079350119466193e-15
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Actual reset-inverter output and unchanged four SR gate loads",
+            "gate_loading_measured": true
+          },
+          "SR_QB": {
+            "node": "xdut.xctrl.xtim.xclock.qb",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "min": 0.8721373811551003,
+                "max": 1.005041145822793,
+                "min_time_s": 4.108978853780195e-08,
+                "max_time_s": 4.108292922883862e-08
+              }
+            },
+            "native_KCL_max_a": 9.228404984680001e-13,
+            "threshold_events": [
+              {
+                "fraction": 0.9,
+                "direction": -1,
+                "time_s": 4.108766916895146e-08
+              },
+              {
+                "fraction": 0.9,
+                "direction": 1,
+                "time_s": 4.1092793702797497e-08
+              }
+            ],
+            "rise_10_90_s": [],
+            "fall_90_10_s": [],
+            "rising_halfrail_s": [],
+            "falling_halfrail_s": [],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": null,
+              "total_into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Cross-coupled SR receiver QB",
+            "gate_loading_measured": false
+          },
+          "SR_SN": {
+            "node": "xdut.xctrl.xtim.xclock.sn",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "min": 0.9892745706311905,
+                "max": 1.005368348919377,
+                "min_time_s": 4.107834522260414e-08,
+                "max_time_s": 4.108354621246625e-08
+              }
+            },
+            "native_KCL_max_a": 9.902854338057128e-13,
+            "threshold_events": [],
+            "rise_10_90_s": [],
+            "fall_90_10_s": [],
+            "rising_halfrail_s": [],
+            "falling_halfrail_s": [],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": null,
+              "total_into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Reset-qualified set NAND output",
+            "gate_loading_measured": false
+          },
+          "CLOCK_Q": {
+            "node": "xdut.xctrl.xtim.clock_q",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "min": -0.005351685003080244,
+                "max": 0.003520001803298079,
+                "min_time_s": 4.108741420323771e-08,
+                "max_time_s": 4.109828908428358e-08
+              }
+            },
+            "native_KCL_max_a": 1.9785452523418464e-12,
+            "threshold_events": [],
+            "rise_10_90_s": [],
+            "fall_90_10_s": [],
+            "rising_halfrail_s": [],
+            "falling_halfrail_s": [],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": null,
+              "total_into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Actual clock SR output, no invented edge",
+            "gate_loading_measured": false
+          },
+          "CLOCK_SET": {
+            "node": "xdut.xctrl.xtim.clock_set",
+            "native_points": 1972,
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "min": -0.003959216019157343,
+                "max": 0.001506966080223975,
+                "min_time_s": 4.110777858155007e-08,
+                "max_time_s": 4.111727445643923e-08
+              }
+            },
+            "native_KCL_max_a": 9.982834632225072e-13,
+            "threshold_events": [],
+            "rise_10_90_s": [],
+            "fall_90_10_s": [],
+            "rising_halfrail_s": [],
+            "falling_halfrail_s": [],
+            "event_exchange": {
+              "requested_start_s": 4.1e-08,
+              "first_native_s": 4.100014207276235e-08,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1952,
+              "into_gate_devices_c": null,
+              "total_into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "full_settling_pass": null,
+            "role": "Actual SR set input",
+            "gate_loading_measured": false
+          }
+        },
+        "excursion_widths": {
+          "nodes": {
+            "CLOCK_RESET": {
+              "below_0_v": {
+                "cumulative_s": 0.0,
+                "episodes": [],
+                "over_limit_native_points": 0
+              },
+              "below_minus_1mV": {
+                "cumulative_s": 0.0,
+                "episodes": [],
+                "over_limit_native_points": 0
+              },
+              "above_0p99_v": {
+                "cumulative_s": 2.9549819903593124e-11,
+                "episodes": [
+                  {
+                    "start_s": 4.100229763115477e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.1004490032091853e-08,
+                    "width_s": 2.1924009370805624e-12,
+                    "open_at_window_stop": false
+                  },
+                  {
+                    "start_s": 4.103385610745489e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.105321650430121e-08,
+                    "width_s": 1.936039684631513e-11,
+                    "open_at_window_stop": false
+                  },
+                  {
+                    "start_s": 4.106812571296212e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.107612273508232e-08,
+                    "width_s": 7.997022120197432e-12,
+                    "open_at_window_stop": false
+                  }
+                ],
+                "over_limit_native_points": 163
+              },
+              "above_0p991_v": {
+                "cumulative_s": 6.844147741238197e-12,
+                "episodes": [
+                  {
+                    "start_s": 4.106925621976475e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.1076100367505985e-08,
+                    "width_s": 6.844147741238197e-12,
+                    "open_at_window_stop": false
+                  }
+                ],
+                "over_limit_native_points": 112
+              }
+            },
+            "RB": {
+              "below_0_v": {
+                "cumulative_s": 1.5371997728949093e-11,
+                "episodes": [
+                  {
+                    "start_s": 4.105585823466041e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.1066961652840146e-08,
+                    "width_s": 1.1103418179738219e-11,
+                    "open_at_window_stop": false
+                  },
+                  {
+                    "start_s": 4.107553982766477e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.107980840721398e-08,
+                    "width_s": 4.268579549210874e-12,
+                    "open_at_window_stop": false
+                  }
+                ],
+                "over_limit_native_points": 655
+              },
+              "below_minus_1mV": {
+                "cumulative_s": 3.890474266283166e-12,
+                "episodes": [
+                  {
+                    "start_s": 4.107590185026141e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.107979232452769e-08,
+                    "width_s": 3.890474266283166e-12,
+                    "open_at_window_stop": false
+                  }
+                ],
+                "over_limit_native_points": 120
+              },
+              "above_0p99_v": {
+                "cumulative_s": 5.006519318024464e-10,
+                "episodes": [
+                  {
+                    "start_s": 4.1090133718788e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.159078565059045e-08,
+                    "width_s": 5.006519318024464e-10,
+                    "open_at_window_stop": true
+                  }
+                ],
+                "over_limit_native_points": 674
+              },
+              "above_0p991_v": {
+                "cumulative_s": 1.2930514610710393e-11,
+                "episodes": [
+                  {
+                    "start_s": 4.1090559298688595e-08,
+                    "open_at_window_start": false,
+                    "stop_s": 4.1103489813299305e-08,
+                    "width_s": 1.2930514610710393e-11,
+                    "open_at_window_stop": false
+                  }
+                ],
+                "over_limit_native_points": 196
+              }
+            }
+          },
+          "first_native_s": 4.080999999999977e-08,
+          "last_native_s": 4.159078565059045e-08,
+          "native_points": 1972,
+          "scope": "Diagnostic-window native-sample crossing estimates; thresholds0/-1mV/0.99V/0.991V describe width, not relaxed physical limits."
+        },
+        "reset_release_R_fall_to_RB_rise": [
+          {
+            "cause_s": 4.1079404899752354e-08,
+            "effect_s": 4.1083111378843966e-08,
+            "delay_s": 3.706479091612394e-12
+          }
+        ],
+        "reset_assert_R_rise_to_RB_fall": [],
+        "scope": "Actual native first-event window. Ordered halfrail pairs retain signed delay; unequal counts are unpaired. Empty edge lists are unobserved, never zero delay or full reset qualification. Voltage-only SR receivers have unavailable gate charge/work, not zero physical load."
+      },
+      "sample_close_s": 4.10717960757768e-08,
+      "QUIET_after_sample_close_s": 3.198648635387625e-11,
+      "snapshots": {
+        "xclock.rb_min": {
+          "time_s": 4.107886937666219e-08,
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "direction": "min",
+          "voltages_v": {
+            "clock_reset": 0.6062393841315024,
+            "xclock.rb": -0.02552335088458898,
+            "xclock.qb": 0.9893011882453975,
+            "xclock.sn": 0.9895297839729136,
+            "clock_q": -5.24817632751339e-05
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x000.mp:1": -1.497752772219267e-05,
+            "xdut.xctrl.xtim.xclock.x000.mn:1": 1.576422330974022e-05,
+            "xdut.xctrl.xtim.xclock.x003.mp0:2": -2.495294064847817e-07,
+            "xdut.xctrl.xtim.xclock.x003.mn0:2": -7.711442424264361e-08,
+            "xdut.xctrl.xtim.xclock.x001.mp1:2": -4.740693616115074e-07,
+            "xdut.xctrl.xtim.xclock.x001.mn1:2": 1.40186433600212e-08
+          },
+          "KCL_sum_a": 1.038568638337325e-12
+        },
+        "xclock.rb_max": {
+          "time_s": 4.10934651345775e-08,
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 0.01216384178216527,
+            "xclock.rb": 0.9928732729617367,
+            "xclock.qb": 0.8977191911270983,
+            "xclock.sn": 0.9903565154851312,
+            "clock_q": 0.001586094124012256
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x000.mp:1": 1.058947828267495e-05,
+            "xdut.xctrl.xtim.xclock.x000.mn:1": 2.258934801156784e-07,
+            "xdut.xctrl.xtim.xclock.x003.mp0:2": -1.923374915568915e-06,
+            "xdut.xctrl.xtim.xclock.x003.mn0:2": -9.776701556637424e-06,
+            "xdut.xctrl.xtim.xclock.x001.mp1:2": 1.493944172288462e-08,
+            "xdut.xctrl.xtim.xclock.x001.mn1:2": 8.6976526768424e-07
+          },
+          "KCL_sum_a": -8.586151301912678e-18
+        },
+        "clock_reset_max": {
+          "time_s": 4.107481086027839e-08,
+          "node": "xdut.xctrl.xtim.clock_reset",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 1.014005522612231,
+            "xclock.rb": 0.0009384021438921788,
+            "xclock.qb": 0.9900047338704053,
+            "xclock.sn": 0.9899913583783377,
+            "clock_q": -1.660119252802625e-06
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x000.mp:2": 1.847762539018272e-07,
+            "xdut.xctrl.xtim.xclock.x000.mn:2": 2.02454563183453e-07,
+            "xdut.xctrl.xtim.x023.x002.mp1:1": 1.338914871545281e-07,
+            "xdut.xctrl.xtim.x023.x002.mp0:1": -1.497480745658479e-05,
+            "xdut.xctrl.xtim.x023.x002.mn0:1": 1.445368407659456e-05
+          },
+          "KCL_sum_a": -1.0757504225483106e-12
+        },
+        "xclock.qb_max": {
+          "time_s": 4.108292922883862e-08,
+          "node": "xdut.xctrl.xtim.xclock.qb",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 0.1244237295057493,
+            "xclock.rb": 0.4648459544111638,
+            "xclock.qb": 1.005041145822793,
+            "xclock.sn": 1.004688952329551,
+            "clock_q": 0.002183009424975567
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x003.mp1:1": 4.960157137868464e-05,
+            "xdut.xctrl.xtim.xclock.x003.mp0:1": -5.459284520119951e-05,
+            "xdut.xctrl.xtim.xclock.x003.mn0:1": 4.253604125037107e-06,
+            "xdut.xctrl.xtim.xclock.x002.mp1:2": 1.031920181614708e-07,
+            "xdut.xctrl.xtim.xclock.x002.mn1:2": 9.229552227172627e-08,
+            "xdut.xctrl.xtim.xclock.cqb:1": 5.421821570643379e-07
+          },
+          "KCL_sum_a": 1.977428855611706e-17
+        }
+      },
+      "groups": {
+        "other_core": {
+          "MOS": 87,
+          "pairs": 522,
+          "failed_pairs": 199
+        },
+        "RB_stage": {
+          "MOS": 2,
+          "pairs": 12,
+          "failed_pairs": 8
+        },
+        "existing_library": {
+          "MOS": 12,
+          "pairs": 72,
+          "failed_pairs": 30
+        }
+      },
+      "rail_excursions_ranked": [
+        {
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "amplitude_v": 0.02552335088458898,
+          "direction": "negative",
+          "time_s": 4.107886937666219e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.clock_reset",
+          "amplitude_v": 0.0240055226122311,
+          "direction": "positive",
+          "time_s": 4.107481086027839e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.live",
+          "amplitude_v": 0.02136999416283879,
+          "direction": "negative",
+          "time_s": 4.108174333269549e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x020.n",
+          "amplitude_v": 0.0179656467664151,
+          "direction": "positive",
+          "time_s": 4.108718467920705e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.sn",
+          "amplitude_v": 0.015368348919376995,
+          "direction": "positive",
+          "time_s": 4.108354621246625e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.qb",
+          "amplitude_v": 0.015041145822793034,
+          "direction": "positive",
+          "time_s": 4.108292922883862e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xd_quiet_d.ab",
+          "amplitude_v": 0.014032207218543924,
+          "direction": "positive",
+          "time_s": 4.110142162610935e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x001.n",
+          "amplitude_v": 0.012511868539164972,
+          "direction": "positive",
+          "time_s": 4.107596436665376e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x023.ab",
+          "amplitude_v": 0.01078050900384358,
+          "direction": "negative",
+          "time_s": 4.106759770537334e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.sn",
+          "amplitude_v": 0.009411215927171755,
+          "direction": "negative",
+          "time_s": 4.106787746841947e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.quiet",
+          "amplitude_v": 0.009152088697197894,
+          "direction": "negative",
+          "time_s": 4.109381481014573e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x022.n",
+          "amplitude_v": 0.007915915373427729,
+          "direction": "positive",
+          "time_s": 4.110190099787331e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.snload10_n",
+          "amplitude_v": 0.007666479788986158,
+          "direction": "positive",
+          "time_s": 4.107977375756295e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.snload14_n",
+          "amplitude_v": 0.007664968419125895,
+          "direction": "positive",
+          "time_s": 4.107977375756295e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x020.a1_filter",
+          "amplitude_v": 0.007540530005513964,
+          "direction": "negative",
+          "time_s": 4.108253356912921e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "amplitude_v": 0.005762341050455366,
+          "direction": "positive",
+          "time_s": 4.111839331438265e-08
+        },
+        {
+          "node": "xdut.sample_int",
+          "amplitude_v": 0.00559121163445897,
+          "direction": "positive",
+          "time_s": 4.105479383040849e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.clock_q",
+          "amplitude_v": 0.005351685003080244,
+          "direction": "negative",
+          "time_s": 4.108741420323771e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.clock_set",
+          "amplitude_v": 0.003959216019157343,
+          "direction": "negative",
+          "time_s": 4.110777858155007e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.x002.mid",
+          "amplitude_v": 0.003587057716797933,
+          "direction": "negative",
+          "time_s": 4.108813303157353e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.quiet_d",
+          "amplitude_v": 0.002522343956847735,
+          "direction": "negative",
+          "time_s": 4.110713268899962e-08
+        },
+        {
+          "node": "xdut.phi_u",
+          "amplitude_v": 0.001240956257178424,
+          "direction": "negative",
+          "time_s": 4.108843937867908e-08
+        }
+      ],
+      "largest_physical_pair_observations": [
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MP",
+          "pair": "VDS",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MP",
+          "pair": "VDB",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MP0",
+          "pair": "VGS",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MP0",
+          "pair": "VGB",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X001.MP1",
+          "pair": "VGS",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X001.MP1",
+          "pair": "VGB",
+          "first_over_limit_s": 4.105587545640489e-08,
+          "last_over_limit_s": 4.107980531041216e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.015523350884589,
+          "max_time_s": 4.10934651345775e-08,
+          "max_v": 0.0028732729617366726,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.015523350884589,
+          "native_points": 6053,
+          "over_limit_native_points": 655
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X001.MP1",
+          "pair": "VGD",
+          "first_over_limit_s": 4.105602186099165e-08,
+          "last_over_limit_s": 4.107983081318783e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107890196536702e-08,
+          "max_abs_v": 1.0150691884100245,
+          "max_time_s": 4.109392341080049e-08,
+          "max_v": 0.002534583785727129,
+          "min_time_s": 4.107890196536702e-08,
+          "min_v": -1.0150691884100245,
+          "native_points": 6053,
+          "over_limit_native_points": 654
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MP0",
+          "pair": "VGD",
+          "first_over_limit_s": 4.105602186099165e-08,
+          "last_over_limit_s": 4.107982032503593e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.0148245391299864,
+          "max_time_s": 4.109021869169756e-08,
+          "max_v": 0.1175666157358678,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.0148245391299864,
+          "native_points": 6053,
+          "over_limit_native_points": 653
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MN0",
+          "pair": "VGD",
+          "first_over_limit_s": 4.105602186099165e-08,
+          "last_over_limit_s": 4.107982032503593e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107886937666219e-08,
+          "max_abs_v": 1.0148245391299864,
+          "max_time_s": 4.109021869169756e-08,
+          "max_v": 0.1175666157358678,
+          "min_time_s": 4.107886937666219e-08,
+          "min_v": -1.0148245391299864,
+          "native_points": 6053,
+          "over_limit_native_points": 653
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MN",
+          "pair": "VGS",
+          "first_over_limit_s": 4.100273065347267e-08,
+          "last_over_limit_s": 4.107612023519056e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107481086027839e-08,
+          "max_abs_v": 1.014005522612231,
+          "max_time_s": 4.107481086027839e-08,
+          "max_v": 1.014005522612231,
+          "min_time_s": 4.113534446216614e-08,
+          "min_v": 1.209066270734601e-06,
+          "native_points": 6053,
+          "over_limit_native_points": 163
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MN",
+          "pair": "VGB",
+          "first_over_limit_s": 4.100273065347267e-08,
+          "last_over_limit_s": 4.107612023519056e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107481086027839e-08,
+          "max_abs_v": 1.014005522612231,
+          "max_time_s": 4.107481086027839e-08,
+          "max_v": 1.014005522612231,
+          "min_time_s": 4.113534446216614e-08,
+          "min_v": 1.209066270734601e-06,
+          "native_points": 6053,
+          "over_limit_native_points": 163
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.X023.X002.MN0",
+          "pair": "VDB",
+          "first_over_limit_s": 4.100273065347267e-08,
+          "last_over_limit_s": 4.107612023519056e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107481086027839e-08,
+          "max_abs_v": 1.014005522612231,
+          "max_time_s": 4.107481086027839e-08,
+          "max_v": 1.014005522612231,
+          "min_time_s": 4.113534446216614e-08,
+          "min_v": 1.209066270734601e-06,
+          "native_points": 6053,
+          "over_limit_native_points": 163
+        }
+      ],
+      "source_energy_j": {
+        "BIAS10_MID": 5.285246128212493e-17,
+        "BIAS10_N": -2.6313781518142176e-16,
+        "BIAS14_MID": 5.285246861525231e-17,
+        "BIAS14_N": -2.63144027975951e-16,
+        "VDD": 6.652662146654634e-14
+      },
+      "boundary_source_energy_j": {
+        "BOUNDARY_VREPLAY_ACTIVE": 9.3591213338863e-17,
+        "BOUNDARY_VREPLAY_PHI_U": 1.1251964719365096e-21,
+        "BOUNDARY_VREPLAY_SAMPLE_INT": -1.0379605157969782e-15,
+        "BOUNDARY_VREPLAY_TOPN": -9.261505725662618e-20,
+        "BOUNDARY_VREPLAY_TOPP": -9.803200302162448e-19,
+        "BOUNDARY_XCTRL_VREPLAY_PHI_W": 1.699698899582093e-24,
+        "BOUNDARY_XCTRL_XTIM_VREPLAY_DEC": -7.78885300116742e-25
+      },
+      "R0_absorbed_j": 2.7239390518149566e-16,
+      "KCL_max_a": 3.936502649877569e-12,
+      "native_library_current_ports": 48,
+      "native_effective_settings": {
+        "abstol(I)": "100 fA, default 1 pA",
+        "abstol(V)": "10 nV, default 1 uV",
+        "maxstep": "10 ps, default 415.908 ps (conservative)",
+        "method": "gear2only",
+        "reltol": "100e-09, default 100e-06 (conservative)"
+      },
+      "simulation_seconds": 18.659634113311768,
+      "simulation_peak_rss_bytes": 337395712,
+      "analysis_seconds": 36.856152057647705,
+      "analysis_peak_rss_bytes": 13250560
+    },
+    "Library RB": {
+      "proof": {
+        "run": "sar8audit-ctrl-stdcell-rb-ff-v1",
+        "recipe_sha256": "745d10a01ded0cc487e7d2e5ff4ba57d130f7de2ec4e2959979f937375524bc4",
+        "receipt_files": 9,
+        "receipt_bytes": 9487824,
+        "required_currents": 436,
+        "native_points": 6065,
+        "local_diagnostic_points": 1984,
+        "END": true,
+        "all_receipt_and_input_hashes_match": true,
+        "critical_kcl_max_a": 3.936502649877001e-12,
+        "native_warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      },
+      "node_extrema": {
+        "clock_reset": {
+          "max": 1.014622490492944,
+          "max_time_s": 4.107477806522166e-08,
+          "min": 6.468800468705686e-07,
+          "min_time_s": 4.112952564393599e-08
+        },
+        "xclock.rb": {
+          "max": 0.9946502495156945,
+          "max_time_s": 4.10957925634641e-08,
+          "min": -0.02057122230654677,
+          "min_time_s": 4.107880952247534e-08
+        },
+        "xclock.qb": {
+          "max": 1.002318870928414,
+          "max_time_s": 4.108340502104857e-08,
+          "min": 0.8779977706779508,
+          "min_time_s": 4.109140816800875e-08
+        },
+        "xclock.sn": {
+          "max": 1.001749370250803,
+          "max_time_s": 4.108425683784972e-08,
+          "min": 0.9894047048097548,
+          "min_time_s": 4.107829757974139e-08
+        },
+        "clock_q": {
+          "max": 0.003442345018150756,
+          "max_time_s": 4.109989972500227e-08,
+          "min": -0.004503476265917286,
+          "min_time_s": 4.108868767637879e-08
+        },
+        "clock_set": {
+          "max": 0.001507197198981651,
+          "max_time_s": 4.11172816396347e-08,
+          "min": -0.003961294297763496,
+          "min_time_s": 4.110769423372621e-08
+        },
+        "sn": {
+          "max": 0.9899997075569682,
+          "max_time_s": 4.124813918698204e-08,
+          "min": -0.009411216698315133,
+          "min_time_s": 4.106787461162598e-08
+        },
+        "live": {
+          "max": 0.9899995407595449,
+          "max_time_s": 4.120096415117431e-08,
+          "min": -0.02136789275763041,
+          "min_time_s": 4.108172302923508e-08
+        },
+        "x001.n": {
+          "max": 1.002511509038746,
+          "max_time_s": 4.107597471978762e-08,
+          "min": 1.821500863441693e-06,
+          "min_time_s": 4.125170090550004e-08
+        },
+        "x020.n": {
+          "max": 1.00796558967887,
+          "max_time_s": 4.108719832653943e-08,
+          "min": 9.613586718171706e-06,
+          "min_time_s": 4.159078565059045e-08
+        },
+        "quiet": {
+          "max": 0.9543793481708703,
+          "max_time_s": 4.159078565059045e-08,
+          "min": -0.009151535039787368,
+          "min_time_s": 4.109381374974086e-08
+        },
+        "xd_quiet_d.rc1": {
+          "max": 0.9957623395385892,
+          "max_time_s": 4.111840158042799e-08,
+          "min": 0.9899321715159382,
+          "min_time_s": 4.10937039437622e-08
+        }
+      },
+      "reset": {
+        "excursion_widths": {
+          "first_native_s": 4.080999999999977e-08,
+          "last_native_s": 4.159078565059045e-08,
+          "native_points": 1984,
+          "nodes": {
+            "CLOCK_RESET": {
+              "above_0p991_v": {
+                "cumulative_s": 6.850362802263525e-12,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.106920554551942e-08,
+                    "stop_s": 4.107605590832168e-08,
+                    "width_s": 6.850362802263525e-12
+                  }
+                ],
+                "over_limit_native_points": 114
+              },
+              "above_0p99_v": {
+                "cumulative_s": 2.9864224324622995e-11,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.10021822646062e-08,
+                    "stop_s": 4.1004510306006076e-08,
+                    "width_s": 2.3280413998744433e-12
+                  },
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.1033630978545225e-08,
+                    "stop_s": 4.1053176876321156e-08,
+                    "width_s": 1.954589777593171e-11
+                  },
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.106808676245259e-08,
+                    "stop_s": 4.107607704760141e-08,
+                    "width_s": 7.990285148816842e-12
+                  }
+                ],
+                "over_limit_native_points": 166
+              },
+              "below_0_v": {
+                "cumulative_s": 0.0,
+                "episodes": [],
+                "over_limit_native_points": 0
+              },
+              "below_minus_1mV": {
+                "cumulative_s": 0.0,
+                "episodes": [],
+                "over_limit_native_points": 0
+              }
+            },
+            "RB": {
+              "above_0p991_v": {
+                "cumulative_s": 1.7305413019386914e-11,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.109257589062772e-08,
+                    "stop_s": 4.1109881303647105e-08,
+                    "width_s": 1.7305413019386914e-11
+                  }
+                ],
+                "over_limit_native_points": 264
+              },
+              "above_0p99_v": {
+                "cumulative_s": 4.98490366714007e-10,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": true,
+                    "start_s": 4.109229528387644e-08,
+                    "stop_s": 4.159078565059045e-08,
+                    "width_s": 4.98490366714007e-10
+                  }
+                ],
+                "over_limit_native_points": 639
+              },
+              "below_0_v": {
+                "cumulative_s": 1.5983484404817798e-11,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.105518094593783e-08,
+                    "stop_s": 4.1066968418256706e-08,
+                    "width_s": 1.178747231887441e-11
+                  },
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.1075509279764635e-08,
+                    "stop_s": 4.107970529185058e-08,
+                    "width_s": 4.196012085943388e-12
+                  }
+                ],
+                "over_limit_native_points": 661
+              },
+              "below_minus_1mV": {
+                "cumulative_s": 3.735086020956516e-12,
+                "episodes": [
+                  {
+                    "open_at_window_start": false,
+                    "open_at_window_stop": false,
+                    "start_s": 4.1075951216781127e-08,
+                    "stop_s": 4.107968630280208e-08,
+                    "width_s": 3.735086020956516e-12
+                  }
+                ],
+                "over_limit_native_points": 112
+              }
+            }
+          },
+          "scope": "Diagnostic-window native-sample crossing estimates; thresholds0/-1mV/0.99V/0.991V describe width, not relaxed physical limits."
+        },
+        "nodes": {
+          "CLOCK_Q": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "max": 0.003442345018150756,
+                "max_time_s": 4.109989972500227e-08,
+                "min": -0.004503476265917286,
+                "min_time_s": 4.108868767637879e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "fall_90_10_s": [],
+            "falling_halfrail_s": [],
+            "full_settling_pass": null,
+            "gate_loading_measured": false,
+            "native_KCL_max_a": 1.984620340160172e-12,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.clock_q",
+            "rise_10_90_s": [],
+            "rising_halfrail_s": [],
+            "role": "Actual clock SR output, no invented edge",
+            "threshold_events": []
+          },
+          "CLOCK_RESET": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "NM_gate": {
+                "max": 2.322793969048823e-06,
+                "max_time_s": 4.107380382774911e-08,
+                "min": -7.219034996491604e-05,
+                "min_time_s": 4.107890579729146e-08
+              },
+              "PM_gate": {
+                "max": 1.529315899848352e-06,
+                "max_time_s": 4.107380382774911e-08,
+                "min": -8.528680091646647e-05,
+                "min_time_s": 4.107971358119913e-08
+              },
+              "input_voltage": {
+                "max": 1.014622490492944,
+                "max_time_s": 4.107477806522166e-08,
+                "min": 6.468800468705686e-07,
+                "min_time_s": 4.112952564393599e-08
+              },
+              "total_gate": {
+                "max": 3.852109868897175e-06,
+                "max_time_s": 4.107380382774911e-08,
+                "min": -0.00015049146799255768,
+                "min_time_s": 4.107930801889245e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": {
+                "NM_gate": -3.1757232993231043e-16,
+                "PM_gate": -4.380894432630811e-16
+              },
+              "into_gate_terminal_work_j": {
+                "NM_gate": -1.4993709715148663e-16,
+                "PM_gate": -1.411182574819372e-16
+              },
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": -7.5566177319539155e-16,
+              "total_into_gate_terminal_work_j": -2.910553546334238e-16
+            },
+            "fall_90_10_s": [
+              5.520042078002158e-12
+            ],
+            "falling_halfrail_s": [
+              4.1079156209338347e-08
+            ],
+            "full_settling_pass": null,
+            "gate_loading_measured": true,
+            "native_KCL_max_a": 1.974107340475831e-12,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.clock_reset",
+            "rise_10_90_s": [],
+            "rising_halfrail_s": [],
+            "role": "Real upstream OR output; reset inverter input loading",
+            "threshold_events": [
+              {
+                "direction": -1,
+                "fraction": 0.9,
+                "time_s": 4.10771733695968e-08
+              },
+              {
+                "direction": -1,
+                "fraction": 0.5,
+                "time_s": 4.1079156209338347e-08
+              },
+              {
+                "direction": -1,
+                "fraction": 0.1,
+                "time_s": 4.1082693411674804e-08
+              }
+            ]
+          },
+          "CLOCK_SET": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "max": 0.001507197198981651,
+                "max_time_s": 4.11172816396347e-08,
+                "min": -0.003961294297763496,
+                "min_time_s": 4.110769423372621e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "fall_90_10_s": [],
+            "falling_halfrail_s": [],
+            "full_settling_pass": null,
+            "gate_loading_measured": false,
+            "native_KCL_max_a": 9.98303330380285e-13,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.clock_set",
+            "rise_10_90_s": [],
+            "rising_halfrail_s": [],
+            "role": "Actual SR set input",
+            "threshold_events": []
+          },
+          "RB": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "QB_NM_gate": {
+                "max": 6.8180338735243e-05,
+                "max_time_s": 4.108530242448665e-08,
+                "min": -1.089290788900236e-05,
+                "min_time_s": 4.109265179283045e-08
+              },
+              "QB_PM_gate": {
+                "max": 0.0001101665454915086,
+                "max_time_s": 4.108226401662014e-08,
+                "min": -8.270670803323282e-06,
+                "min_time_s": 4.107805523692213e-08
+              },
+              "SN_NM_gate": {
+                "max": 9.480765210709402e-05,
+                "max_time_s": 4.108537303404972e-08,
+                "min": -3.829051423076037e-06,
+                "min_time_s": 4.107805523692213e-08
+              },
+              "SN_PM_gate": {
+                "max": 0.0001105890097939767,
+                "max_time_s": 4.108223169960793e-08,
+                "min": -8.309642480999422e-06,
+                "min_time_s": 4.107805523692213e-08
+              },
+              "input_voltage": {
+                "max": 0.9946502495156945,
+                "max_time_s": 4.10957925634641e-08,
+                "min": -0.02057122230654677,
+                "min_time_s": 4.107880952247534e-08
+              },
+              "total_gate": {
+                "max": 0.00032362411627276144,
+                "max_time_s": 4.108254657621964e-08,
+                "min": -2.4010796951514014e-05,
+                "min_time_s": 4.107805523692213e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": {
+                "QB_NM_gate": 2.6693229265371977e-16,
+                "QB_PM_gate": 6.637033460367004e-16,
+                "SN_NM_gate": 6.334855746965464e-16,
+                "SN_PM_gate": 6.636659632655316e-16
+              },
+              "into_gate_terminal_work_j": {
+                "QB_NM_gate": 6.351364088181295e-17,
+                "QB_PM_gate": 2.8157378799445113e-16,
+                "SN_NM_gate": 3.762187720492646e-16,
+                "SN_PM_gate": 2.8534583098463326e-16
+              },
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": 2.227787176652498e-15,
+              "total_into_gate_terminal_work_j": 1.006652031910162e-15
+            },
+            "fall_90_10_s": [],
+            "falling_halfrail_s": [],
+            "full_settling_pass": null,
+            "gate_loading_measured": true,
+            "native_KCL_max_a": 1.059390320541138e-12,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.xclock.rb",
+            "rise_10_90_s": [
+              6.956791770102937e-12
+            ],
+            "rising_halfrail_s": [
+              4.108386862022698e-08
+            ],
+            "role": "Actual reset-inverter output and unchanged four SR gate loads",
+            "threshold_events": [
+              {
+                "direction": 1,
+                "fraction": 0.1,
+                "time_s": 4.108080867434404e-08
+              },
+              {
+                "direction": 1,
+                "fraction": 0.5,
+                "time_s": 4.108386862022698e-08
+              },
+              {
+                "direction": 1,
+                "fraction": 0.9,
+                "time_s": 4.108776546611414e-08
+              }
+            ]
+          },
+          "SR_QB": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "max": 1.002318870928414,
+                "max_time_s": 4.108340502104857e-08,
+                "min": 0.8779977706779508,
+                "min_time_s": 4.109140816800875e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "fall_90_10_s": [],
+            "falling_halfrail_s": [],
+            "full_settling_pass": null,
+            "gate_loading_measured": false,
+            "native_KCL_max_a": 9.343594623597955e-13,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.xclock.qb",
+            "rise_10_90_s": [],
+            "rising_halfrail_s": [],
+            "role": "Cross-coupled SR receiver QB",
+            "threshold_events": [
+              {
+                "direction": -1,
+                "fraction": 0.9,
+                "time_s": 4.108940975810592e-08
+              },
+              {
+                "direction": 1,
+                "fraction": 0.9,
+                "time_s": 4.109398856360673e-08
+              }
+            ]
+          },
+          "SR_SN": {
+            "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+            "diagnostic_window_extrema": {
+              "input_voltage": {
+                "max": 1.001749370250803,
+                "max_time_s": 4.108425683784972e-08,
+                "min": 0.9894047048097548,
+                "min_time_s": 4.107829757974139e-08
+              }
+            },
+            "event_exchange": {
+              "first_native_s": 4.100014207276235e-08,
+              "into_gate_devices_c": null,
+              "into_gate_terminal_work_j": null,
+              "last_native_s": 4.159078565059045e-08,
+              "native_points": 1964,
+              "requested_start_s": 4.1e-08,
+              "total_into_gate_devices_c": null,
+              "total_into_gate_terminal_work_j": null
+            },
+            "fall_90_10_s": [],
+            "falling_halfrail_s": [],
+            "full_settling_pass": null,
+            "gate_loading_measured": false,
+            "native_KCL_max_a": 9.902698537827748e-13,
+            "native_points": 1984,
+            "node": "xdut.xctrl.xtim.xclock.sn",
+            "rise_10_90_s": [],
+            "rising_halfrail_s": [],
+            "role": "Reset-qualified set NAND output",
+            "threshold_events": []
+          }
+        },
+        "reset_assert_R_rise_to_RB_fall": [],
+        "reset_release_R_fall_to_RB_rise": [
+          {
+            "cause_s": 4.1079156209338347e-08,
+            "delay_s": 4.7124108886350245e-12,
+            "effect_s": 4.108386862022698e-08
+          }
+        ],
+        "scope": "Actual native first-event window. Ordered halfrail pairs retain signed delay; unequal counts are unpaired. Empty edge lists are unobserved, never zero delay or full reset qualification. Voltage-only SR receivers have unavailable gate charge/work, not zero physical load."
+      },
+      "sample_close_s": 4.1071796066158104e-08,
+      "QUIET_after_sample_close_s": 3.198650543220151e-11,
+      "snapshots": {
+        "xclock.rb_min": {
+          "time_s": 4.107880952247534e-08,
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "direction": "min",
+          "voltages_v": {
+            "clock_reset": 0.5756470380827103,
+            "xclock.rb": -0.02057122230654677,
+            "xclock.qb": 0.9894248287890894,
+            "xclock.sn": 0.9896047207876918,
+            "clock_q": -4.566288528872305e-05
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x003.mp0:2": -2.193943141221045e-07,
+            "xdut.xctrl.xtim.xclock.x003.mn0:2": -6.893899073697814e-08,
+            "xdut.xctrl.xtim.xclock.x001.mp1:2": -4.118120222286639e-07,
+            "xdut.xctrl.xtim.xclock.x001.mn1:2": 5.530235213748223e-09,
+            "xdut.xctrl.xtim.xclock.x000.mm1:1": 1.900554509891018e-05,
+            "xdut.xctrl.xtim.xclock.x000.mm0:1": -1.831092900674076e-05
+          },
+          "KCL_sum_a": 1.00029542310833e-12
+        },
+        "xclock.rb_max": {
+          "time_s": 4.10957925634641e-08,
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 0.004944377623254734,
+            "xclock.rb": 0.9946502495156945,
+            "xclock.qb": 0.9074153604942883,
+            "xclock.sn": 0.9903023724794443,
+            "clock_q": 0.002209781878724243
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x003.mp0:2": -1.770319852851197e-06,
+            "xdut.xctrl.xtim.xclock.x003.mn0:2": -8.699417085745128e-06,
+            "xdut.xctrl.xtim.xclock.x001.mp1:2": 2.265547603384758e-08,
+            "xdut.xctrl.xtim.xclock.x001.mn1:2": 6.355378008505127e-07,
+            "xdut.xctrl.xtim.xclock.x000.mm1:1": 8.108675227543179e-08,
+            "xdut.xctrl.xtim.xclock.x000.mm0:1": 9.73045690943726e-06
+          },
+          "KCL_sum_a": 7.269296310340509e-19
+        },
+        "clock_reset_max": {
+          "time_s": 4.107477806522166e-08,
+          "node": "xdut.xctrl.xtim.clock_reset",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 1.014622490492944,
+            "xclock.rb": 0.000717595321771631,
+            "xclock.qb": 0.9900041032626493,
+            "xclock.sn": 0.9899940976896706,
+            "clock_q": -6.019912743607434e-07
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.x023.x002.mp1:1": 2.192028340433463e-07,
+            "xdut.xctrl.xtim.x023.x002.mp0:1": -1.31179190408614e-05,
+            "xdut.xctrl.xtim.x023.x002.mn0:1": 1.259879486290721e-05,
+            "xdut.xctrl.xtim.xclock.x000.mm1:2": 1.857899608444475e-07,
+            "xdut.xctrl.xtim.xclock.x000.mm0:2": 1.141303133897504e-07
+          },
+          "KCL_sum_a": -1.069676646645054e-12
+        },
+        "xclock.qb_max": {
+          "time_s": 4.108340502104857e-08,
+          "node": "xdut.xctrl.xtim.xclock.qb",
+          "direction": "max",
+          "voltages_v": {
+            "clock_reset": 0.0842262837292157,
+            "xclock.rb": 0.4369912317596122,
+            "xclock.qb": 1.002318870928414,
+            "xclock.sn": 1.001201956731436,
+            "clock_q": 0.001528629486837062
+          },
+          "positive_out_terminal_currents_a": {
+            "xdut.xctrl.xtim.xclock.x003.mp1:1": 4.051620604165753e-05,
+            "xdut.xctrl.xtim.xclock.x003.mp0:1": -3.96579153324275e-05,
+            "xdut.xctrl.xtim.xclock.x003.mn0:1": -6.670076720649035e-07,
+            "xdut.xctrl.xtim.xclock.x002.mp1:2": 2.608135408580729e-08,
+            "xdut.xctrl.xtim.xclock.x002.mn1:2": -1.343565368856999e-08,
+            "xdut.xctrl.xtim.xclock.cqb:1": -2.039287375613364e-07
+          },
+          "KCL_sum_a": 1.0261092780659053e-18
+        }
+      },
+      "groups": {
+        "other_core": {
+          "MOS": 87,
+          "pairs": 522,
+          "failed_pairs": 199
+        },
+        "existing_library": {
+          "MOS": 12,
+          "pairs": 72,
+          "failed_pairs": 30
+        },
+        "RB_stage": {
+          "MOS": 2,
+          "pairs": 12,
+          "failed_pairs": 8
+        }
+      },
+      "rail_excursions_ranked": [
+        {
+          "node": "xdut.xctrl.xtim.clock_reset",
+          "amplitude_v": 0.02462249049294396,
+          "direction": "positive",
+          "time_s": 4.107477806522166e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.live",
+          "amplitude_v": 0.02136789275763041,
+          "direction": "negative",
+          "time_s": 4.108172302923508e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.rb",
+          "amplitude_v": 0.02057122230654677,
+          "direction": "negative",
+          "time_s": 4.107880952247534e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x020.n",
+          "amplitude_v": 0.017965589678869964,
+          "direction": "positive",
+          "time_s": 4.108719832653943e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xd_quiet_d.ab",
+          "amplitude_v": 0.01403224223757693,
+          "direction": "positive",
+          "time_s": 4.11014222333197e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x001.n",
+          "amplitude_v": 0.012511509038745983,
+          "direction": "positive",
+          "time_s": 4.107597471978762e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.qb",
+          "amplitude_v": 0.012318870928414105,
+          "direction": "positive",
+          "time_s": 4.108340502104857e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.sn",
+          "amplitude_v": 0.011749370250802915,
+          "direction": "positive",
+          "time_s": 4.108425683784972e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x023.ab",
+          "amplitude_v": 0.01077869995458646,
+          "direction": "negative",
+          "time_s": 4.106760750656343e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.sn",
+          "amplitude_v": 0.009411216698315133,
+          "direction": "negative",
+          "time_s": 4.106787461162598e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.quiet",
+          "amplitude_v": 0.009151535039787368,
+          "direction": "negative",
+          "time_s": 4.109381374974086e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x022.n",
+          "amplitude_v": 0.007916287177733738,
+          "direction": "positive",
+          "time_s": 4.11019017321064e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.snload10_n",
+          "amplitude_v": 0.007666479788986158,
+          "direction": "positive",
+          "time_s": 4.107977375756295e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.snload14_n",
+          "amplitude_v": 0.007664968419125895,
+          "direction": "positive",
+          "time_s": 4.107977375756295e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.x020.a1_filter",
+          "amplitude_v": 0.007540794701811328,
+          "direction": "negative",
+          "time_s": 4.108254657621964e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xd_quiet_d.rc1",
+          "amplitude_v": 0.0057623395385891785,
+          "direction": "positive",
+          "time_s": 4.111840158042799e-08
+        },
+        {
+          "node": "xdut.sample_int",
+          "amplitude_v": 0.00559121163445897,
+          "direction": "positive",
+          "time_s": 4.105479383040849e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.clock_q",
+          "amplitude_v": 0.004503476265917286,
+          "direction": "negative",
+          "time_s": 4.108868767637879e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.clock_set",
+          "amplitude_v": 0.003961294297763496,
+          "direction": "negative",
+          "time_s": 4.110769423372621e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.xclock.x002.mid",
+          "amplitude_v": 0.003123277729582488,
+          "direction": "negative",
+          "time_s": 4.10894444909599e-08
+        },
+        {
+          "node": "xdut.xctrl.xtim.quiet_d",
+          "amplitude_v": 0.002522325619172604,
+          "direction": "negative",
+          "time_s": 4.11071340580291e-08
+        },
+        {
+          "node": "xdut.phi_u",
+          "amplitude_v": 0.001240956257178424,
+          "direction": "negative",
+          "time_s": 4.108843937867908e-08
+        }
+      ],
+      "largest_physical_pair_observations": [
+        {
+          "instance": "XDUT.XCTRL.XTIM.X023.X002.MN0",
+          "pair": "VDB",
+          "first_over_limit_s": 4.100225430034034e-08,
+          "last_over_limit_s": 4.107604876858683e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107477806522166e-08,
+          "max_abs_v": 1.014622490492944,
+          "max_time_s": 4.107477806522166e-08,
+          "max_v": 1.014622490492944,
+          "min_time_s": 4.112952564393599e-08,
+          "min_v": 6.468800468705686e-07,
+          "native_points": 6065,
+          "over_limit_native_points": 166
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MM1",
+          "pair": "VGS",
+          "first_over_limit_s": 4.100225430034034e-08,
+          "last_over_limit_s": 4.107604876858683e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107477806522166e-08,
+          "max_abs_v": 1.014622490492944,
+          "max_time_s": 4.107477806522166e-08,
+          "max_v": 1.014622490492944,
+          "min_time_s": 4.112952564393599e-08,
+          "min_v": 6.468800468705686e-07,
+          "native_points": 6065,
+          "over_limit_native_points": 166
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MM1",
+          "pair": "VGB",
+          "first_over_limit_s": 4.100225430034034e-08,
+          "last_over_limit_s": 4.107604876858683e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107477806522166e-08,
+          "max_abs_v": 1.014622490492944,
+          "max_time_s": 4.107477806522166e-08,
+          "max_v": 1.014622490492944,
+          "min_time_s": 4.112952564393599e-08,
+          "min_v": 6.468800468705686e-07,
+          "native_points": 6065,
+          "over_limit_native_points": 166
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MM1",
+          "pair": "VGD",
+          "first_over_limit_s": 4.104435639932704e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107482122076342e-08,
+          "max_abs_v": 1.0139219661925316,
+          "max_time_s": 4.107482122076342e-08,
+          "max_v": 1.0139219661925316,
+          "min_time_s": 4.110045872738418e-08,
+          "min_v": -0.9917117444607116,
+          "native_points": 6065,
+          "over_limit_native_points": 737
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MM0",
+          "pair": "VGD",
+          "first_over_limit_s": 4.104435639932704e-08,
+          "last_over_limit_s": 4.159078565059045e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107482122076342e-08,
+          "max_abs_v": 1.0139219661925316,
+          "max_time_s": 4.107482122076342e-08,
+          "max_v": 1.0139219661925316,
+          "min_time_s": 4.110045872738418e-08,
+          "min_v": -0.9917117444607116,
+          "native_points": 6065,
+          "over_limit_native_points": 737
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.X001.X001.MM0",
+          "pair": "VDS",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.108272459791611e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108172302923508e-08,
+          "max_abs_v": 1.0113678927576304,
+          "max_time_s": 4.120096415117431e-08,
+          "max_v": -4.5924045510847833e-07,
+          "min_time_s": 4.108172302923508e-08,
+          "min_v": -1.0113678927576304,
+          "native_points": 6065,
+          "over_limit_native_points": 733
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.X001.X001.MM0",
+          "pair": "VDB",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.108272459791611e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.108172302923508e-08,
+          "max_abs_v": 1.0113678927576304,
+          "max_time_s": 4.120096415117431e-08,
+          "max_v": -4.5924045510847833e-07,
+          "min_time_s": 4.108172302923508e-08,
+          "min_v": -1.0113678927576304,
+          "native_points": 6065,
+          "over_limit_native_points": 733
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MP0",
+          "pair": "VGS",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.107968624529628e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107880952247534e-08,
+          "max_abs_v": 1.0105712223065468,
+          "max_time_s": 4.10957925634641e-08,
+          "max_v": 0.004650249515694482,
+          "min_time_s": 4.107880952247534e-08,
+          "min_v": -1.0105712223065468,
+          "native_points": 6065,
+          "over_limit_native_points": 661
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X003.MP0",
+          "pair": "VGB",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.107968624529628e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107880952247534e-08,
+          "max_abs_v": 1.0105712223065468,
+          "max_time_s": 4.10957925634641e-08,
+          "max_v": 0.004650249515694482,
+          "min_time_s": 4.107880952247534e-08,
+          "min_v": -1.0105712223065468,
+          "native_points": 6065,
+          "over_limit_native_points": 661
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X001.MP1",
+          "pair": "VGS",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.107968624529628e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107880952247534e-08,
+          "max_abs_v": 1.0105712223065468,
+          "max_time_s": 4.10957925634641e-08,
+          "max_v": 0.004650249515694482,
+          "min_time_s": 4.107880952247534e-08,
+          "min_v": -1.0105712223065468,
+          "native_points": 6065,
+          "over_limit_native_points": 661
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X001.MP1",
+          "pair": "VGB",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.107968624529628e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107880952247534e-08,
+          "max_abs_v": 1.0105712223065468,
+          "max_time_s": 4.10957925634641e-08,
+          "max_v": 0.004650249515694482,
+          "min_time_s": 4.107880952247534e-08,
+          "min_v": -1.0105712223065468,
+          "native_points": 6065,
+          "over_limit_native_points": 661
+        },
+        {
+          "instance": "XDUT.XCTRL.XTIM.XCLOCK.X000.MM0",
+          "pair": "VDS",
+          "first_over_limit_s": 4.105520694354169e-08,
+          "last_over_limit_s": 4.107968624529628e-08,
+          "limit_abs_v": 0.99,
+          "max_abs_time_s": 4.107880952247534e-08,
+          "max_abs_v": 1.0105712223065468,
+          "max_time_s": 4.10957925634641e-08,
+          "max_v": 0.004650249515694482,
+          "min_time_s": 4.107880952247534e-08,
+          "min_v": -1.0105712223065468,
+          "native_points": 6065,
+          "over_limit_native_points": 661
+        }
+      ],
+      "source_energy_j": {
+        "BIAS10_MID": 5.285261911699956e-17,
+        "BIAS10_N": -2.6313761988005065e-16,
+        "BIAS14_MID": 5.285262645150126e-17,
+        "BIAS14_N": -2.6314383325958383e-16,
+        "VDD": 6.603150067160765e-14
+      },
+      "boundary_source_energy_j": {
+        "BOUNDARY_VREPLAY_ACTIVE": 9.359126392892342e-17,
+        "BOUNDARY_VREPLAY_PHI_U": 1.9480856490958277e-21,
+        "BOUNDARY_VREPLAY_SAMPLE_INT": -1.0378057868797593e-15,
+        "BOUNDARY_VREPLAY_TOPN": -9.261649621570259e-20,
+        "BOUNDARY_VREPLAY_TOPP": -9.803418384692615e-19,
+        "BOUNDARY_XCTRL_VREPLAY_PHI_W": 1.7000415522457156e-24,
+        "BOUNDARY_XCTRL_XTIM_VREPLAY_DEC": -7.78895563855487e-25
+      },
+      "R0_absorbed_j": 2.7239389243990375e-16,
+      "KCL_max_a": 3.936502649877001e-12,
+      "native_library_current_ports": 56,
+      "native_effective_settings": {
+        "abstol(I)": "100 fA, default 1 pA",
+        "abstol(V)": "10 nV, default 1 uV",
+        "maxstep": "10 ps, default 415.908 ps (conservative)",
+        "method": "gear2only",
+        "reltol": "100e-09, default 100e-06 (conservative)"
+      },
+      "simulation_seconds": 18.981556177139282,
+      "simulation_peak_rss_bytes": 335695872,
+      "analysis_seconds": 38.86519813537598,
+      "analysis_peak_rss_bytes": 13365248
+    }
+  },
+  "change": {
+    "RB_negative_amplitude_reduction_fraction": 0.19402344936739113,
+    "reset_release_delay_added_s": 1.0059317970226302e-12,
+    "native_sample_close_extraction_delta_s": -9.618694390783021e-18,
+    "VDD_net_work_reduction_fraction": 0.007442446106896705
+  },
+  "next_experiment_recommendation": {
+    "target": "XDUT.XCTRL.XTIM.X023.X002",
+    "action": "Replace only original CLOCK_RESET output NAND with unchanged verified ND2D1BWP12T30P140; A1=AB,A2=BB. Preserve both real upstream inverters and library RB/SR loads, reset polarity/priority, external PWL and sampling edges.",
+    "reason": "Largest remaining rail/physical stress is upstream CLOCK_RESET +24.622mV. Its falling edge also excites RB undershoot; test the source stage before more RB sizing.",
+    "confound": "Whole four-MOS NAND plus explicit MID-cap implementation replacement; dimensions/parasitics/cap change together. Native core standard cell is not guaranteed SOA-safe.",
+    "no_package_or_remote_job_generated": true
+  }
+}

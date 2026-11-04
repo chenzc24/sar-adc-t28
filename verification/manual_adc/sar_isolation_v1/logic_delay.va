@@ -1,0 +1,17 @@
+`include "constants.vams"
+`include "disciplines.vams"
+// Ideal *digital* transport delay. This does not reproduce analog input overshoot.
+// transition queues delayed changes; no RC and no capacitance at the input.
+module sar_logic_delay(OUT, GND, IN, VDD);
+ output OUT; input IN,VDD; inout GND;
+ electrical OUT,GND,IN,VDD;
+ parameter real td=2n from (0:inf);
+ parameter real trf=50p from (0:inf);
+ integer state;
+ analog begin
+  @(initial_step) state=(V(IN,GND)>=0.5*V(VDD,GND));
+  @(cross(V(IN,GND)-0.5*V(VDD,GND),+1)) state=1;
+  @(cross(V(IN,GND)-0.5*V(VDD,GND),-1)) state=0;
+  V(OUT,GND)<+V(VDD,GND)*transition(state,max(td-trf/2,0),trf,trf);
+ end
+endmodule

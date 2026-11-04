@@ -1,0 +1,76 @@
+{
+  "run_id": "sar8audit-gpp-singleio-ffcold",
+  "design_id": "sar8_reference_GPP_single_IO_driver_implementation",
+  "entry": "test.scs",
+  "analyzer": "gpp_single_io_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/generated/gpp_single_io_v1/dut.scs",
+      "name": "dut.scs",
+      "sha256": "d352e371631d4c4c382dc3666a857e52e4137162b32757efbf66d71d75c6198a"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/gpp_single_io_v1/ffcold/test.scs",
+      "name": "test.scs",
+      "sha256": "fb4e9a3280461c7a1e1086379fe3b1554e38a96bae2e64b7e9abca04c2ab7d5f"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+      "name": "io_cell_analyze.py",
+      "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/gpp_single_io_analyze.py",
+      "name": "gpp_single_io_analyze.py",
+      "sha256": "cca5d8301e8a9f956bdd15a0690a348d4cd766558e3a58c0ceff1da2d2ad0e93"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/pre_driver_boundary.json",
+      "name": "pre_driver_boundary.json",
+      "sha256": "625c48d54e141c5d28229e158b86f641f1f386b34dbab4c7dba990bdf9d94a22"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/gpp_single_io_v1/ffcold/measurement.json",
+      "name": "measurement.json",
+      "sha256": "f2779d3edc4168132ec571bd25431334df4b9698a34bd09857201daf041c091f"
+    }
+  ],
+  "summary_signals": [
+    "L0",
+    "XDUT.PRE",
+    "XDUT.GNN0",
+    "XDUT.GPP0",
+    "XDUT.XCDAC.BN0",
+    "XDUT.XCDAC.BP0"
+  ],
+  "expected_stop_s": 5.2e-08,
+  "qualification_scope": "Only bit0 GPP driver implementation changes core3-stage6MOS to singleIO2MOS; X025/ABC/load/commands unchanged; L0 ideal, no full chain acceptance",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ffcold",
+    "supply_V": 0.99,
+    "temperature_C": -40,
+    "variant": "real_X025_GPP_single_IO_ideal_L0",
+    "logical_stimulus": true,
+    "FF_waveform_replay": false,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 512,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}

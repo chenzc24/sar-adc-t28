@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "run_id": "sar8frozen-tt-196-227-v1",
+  "design_id": "sar8_l90_mmain2_frozen",
+  "entry": "test.scs",
+  "analyzer": "reduce.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_frozen_static/sar8frozen-tt-196-227-v1/test.scs",
+      "name": "test.scs",
+      "sha256": "2e94ce7d92749fba9133d76245b860dec87d56891976df03f7793aa45e92feb2"
+    },
+    {
+      "source": "verification/sar8_frozen_static/sar8frozen-tt-196-227-v1/tb.scs",
+      "name": "tb.scs",
+      "sha256": "b87a9b9e38b1af60488f6b3182fe35c70e7fd9a6f7156822dfccc9c99c4e6288"
+    },
+    {
+      "source": "verification/sar8_frozen_static/sar8frozen-tt-196-227-v1/r4_transition_stim.va",
+      "name": "r4_transition_stim.va",
+      "sha256": "59ebda10b1bf14491294994bd1dfbc185233bf502892264759a4806d7d18fb8a"
+    },
+    {
+      "source": "verification/sar8_frozen_static/sar8frozen-tt-196-227-v1/r4_perf_monitor.va",
+      "name": "r4_perf_monitor.va",
+      "sha256": "b3c60c5bb2addfd0fd8ace7c755cdb84682b571fe826a2683ac2e6a4c25605a3"
+    },
+    {
+      "source": "verification/sar8_frozen_static/sar8frozen-tt-196-227-v1/context.json",
+      "name": "context.json",
+      "sha256": "13005df8923c115d90d255cebb45acaf81581e50a35140ebf07365cb1c8a3d82"
+    },
+    {
+      "source": "netlist/sar8_l90_mmain2_frozen/dut.scs",
+      "name": "dut.scs",
+      "sha256": "41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4"
+    },
+    {
+      "source": "scripts/sar8_frozen_static/reduce.py",
+      "name": "reduce.py",
+      "sha256": "642d01e7ead23cfdad843824df0dc22494b27c485744a19ed2a75ae65ee15774"
+    }
+  ],
+  "expected_stop_s": 3.25e-05,
+  "summary_signals": [
+    "d0",
+    "d1",
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "sample",
+    "vdd!",
+    "xdut.sample_int",
+    "xdut.cmp_clk",
+    "xdut.topp",
+    "xdut.topn",
+    "vinp_src",
+    "vinn_src"
+  ],
+  "test_conditions": {
+    "run_id": "sar8frozen-tt-196-227-v1",
+    "first": 196,
+    "last": 227,
+    "warmup": 4,
+    "refine": 7,
+    "frames": 325,
+    "dut_sha256": "41d5444c4fcc3f26b097cca609474804afde2e61616c424c8a0cb8a5b2f298c4",
+    "stop_s": 3.25e-05,
+    "code_read_ns": 98,
+    "sampled_range_v": [
+      -0.9,
+      0.9
+    ],
+    "fullscale_v": 1.8,
+    "corner": "tt",
+    "vdd": 0.9,
+    "reference_v": 0.9,
+    "temperature_c": 27,
+    "requested_reltol": 1e-06,
+    "requested_maxstep_s": 1e-11,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "startup_separate": true,
+    "stress_deferred_not_qualified": true
+  },
+  "qualification_scope": "Steady-state static function only; retained startup/stress limitations",
+  "oa_parity": "Netlist-only frozen historical candidate; OA unchanged",
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=4",
+    "-preset_override",
+    "+lqtimeout",
+    "60"
+  ],
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 43200,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 7200
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "collected_files": 7,
+  "bytes": 473324,
+  "skipped": [],
+  "local_path": "output/managed_execution/runs/sar8camp-b-tt-fft1024-mm-v1/collected",
+  "state": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8camp-b-tt-fft1024-mm-v1",
+    "registered": {
+      "epoch": 1793117984.862642,
+      "files_complete": true,
+      "recipe_hash": "673cb77e6b0484f2661a47ca964ec71f99dd49d0dc1b2c458b7741c93b1737ab"
+    },
+    "simulation": {
+      "status": "complete",
+      "rss_bytes": 406978560,
+      "started_epoch": 1793147033.770477,
+      "updated_epoch": 1793177556.043362,
+      "agent_sha256": "aa26a451b43e537c863de709bf14c7623fc99f98c8fb41782a51a41f8fa67615",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 30522.21028804779,
+      "submitted_epoch": 1793147033.463707,
+      "output_bytes": 5242470076,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 0,
+        "reasons": [],
+        "policy_sha256": "bd74a262b4346e9a530120fa14b8b414596bc5f7f865fa868d3ddb9f8e6ecc08",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 24860897280,
+              "limit": 51539607552,
+              "used": 26678710272
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 21474832384,
+          "cgroup_headroom": 24860897280,
+          "host": "thu-wei",
+          "conflicting_processes": [],
+          "epoch": 1793147033.755959,
+          "disk_free": 275816439808,
+          "load1": 5.16,
+          "mem_available": 107264499712
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "12196366",
+        "pid": 59993,
+        "state": "R",
+        "pgid": 59993,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 408281088,
+      "worker_identity": {
+        "start_ticks": "12196336",
+        "pid": 59990,
+        "state": "R",
+        "pgid": 59990,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": true,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 0,
+        "effective_settings": {
+          "reltol": "1e-06, default 1e-03",
+          "abstol(V)": "10 nV, default 1 uV",
+          "maxstep": "10 ps, default 2.06518 us",
+          "abstol(I)": "100 fA, default 1 pA",
+          "method": "trap"
+        },
+        "native_analysis_pass": true,
+        "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [2, 4], consider adding +mt=2 or +mt=4 on command line.",
+        "warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SFE-2453",
+          "SPECTRE-16780",
+          "SPECTRE-16881",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "complete",
+      "rss_bytes": 7139328,
+      "started_epoch": 1793177572.289773,
+      "updated_epoch": 1793177865.46516,
+      "agent_sha256": "aa26a451b43e537c863de709bf14c7623fc99f98c8fb41782a51a41f8fa67615",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 293.1750719547272,
+      "submitted_epoch": 1793177571.963956,
+      "output_bytes": 5242774487,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 1,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 6369484800,
+              "limit": 51539607552,
+              "used": 45170122752
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 21474832384,
+          "cgroup_headroom": 6369484800,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8camp-a-tt-fft1024-mm-v1"
+              },
+              "pid": 47576,
+              "comm": "python"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-b-tt-s004-035-v1"
+              },
+              "pid": 151115,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-b-tt-s036-067-v1"
+              },
+              "pid": 151134,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-a-tt-s004-035-v1"
+              },
+              "pid": 152424,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8camp-a-tt-s036-067-v1"
+              },
+              "pid": 152482,
+              "comm": "spectre"
+            }
+          ],
+          "epoch": 1793177572.27515,
+          "disk_free": 256573493248,
+          "load1": 15.68,
+          "mem_available": 98814603264
+        },
+        "phase": "analysis"
+      },
+      "phase": "analysis",
+      "child_identity": {
+        "start_ticks": "15250339",
+        "pid": 47636,
+        "state": "R",
+        "pgid": 47636,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 7319552,
+      "worker_identity": {
+        "start_ticks": "15250307",
+        "pid": 47634,
+        "state": "R",
+        "pgid": 47634,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true
+    },
+    "run_id": "sar8camp-b-tt-fft1024-mm-v1"
+  }
+}

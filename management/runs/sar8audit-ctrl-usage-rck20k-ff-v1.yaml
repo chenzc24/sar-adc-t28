@@ -1,0 +1,137 @@
+managed: true
+recipe_hash: c5e24bb1779f7a04a405799aa719a4f4b67047f7d4ac5cf7bd6cb9d563e2fea9
+recipe:
+  schema_version: 1
+  run_id: sar8audit-ctrl-usage-rck20k-ff-v1
+  design_id: native_DFCNQD1_U19_slew_diagnostic_rck20k
+  entry: test.scs
+  analyzer: analyze.py
+  files:
+  - name: test.scs
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/test.scs
+    bytes: 4872
+    sha256: 7bba26a1ad6d932eb4026c55205c8d99f03d882fdefb589de70ef32c5f24c64c
+  - name: dut.scs
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/dut.scs
+    bytes: 2567
+    sha256: 11522666de7a280e3cbf7c676449ef52741be4c5431424734f4ae44d9d43a1c6
+  - name: measurement.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/measurement.json
+    bytes: 102237
+    sha256: 151f469ebd9c4843fd25181549d54c58bfb9037ee26e4c6c8f0e6a8503033668
+  - name: extension_config.json
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/extension_config.json
+    bytes: 50683
+    sha256: 47a39971fd0f7b1884ac3b3d023d376c7b58acb7c90cfeb1fb242da853511c99
+  - name: analyze.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/analyze.py
+    bytes: 3324
+    sha256: 86cb25c64b18c59f88fe7c65dd530c12b9b413e2951c40385004f1688c6412af
+  - name: transition_observe.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/rck20k_v1/transition_observe.py
+    bytes: 6482
+    sha256: db7703889cda16f40a57f394854e0eada1cf70932942dc73f629d710d704cf25
+  - name: fast_gzip_analyze.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/recovery_v1/fast_gzip_analyze.py
+    bytes: 17288
+    sha256: 93568448e763a6ee4b90f6fc0b3ad1d83728e0c617dddb9396a980d0b855261e
+  - name: stream_gzip.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/recovery_v1/stream_gzip.py
+    bytes: 1357
+    sha256: 4e17165f185ae4573aa4fc0b8750ec825ae5d0f43e5111d6ee341c165b980a9a
+  - name: storage_gzip.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/recovery_v1/storage_gzip.py
+    bytes: 7284
+    sha256: 98c6a74bde6590373bd2aec540b4a3341e2164a6baa2a531f0afa3b0ab1385cd
+  - name: usage_gzip.py
+    source: verification/sar8_module_audit/control/standard_cell_usage_v1/recovery_v1/usage_gzip.py
+    bytes: 2246
+    sha256: d59c81cf282c897363f56b244ff9ce768f54889862b148e178184becad5fe18b
+  - name: external_library.json
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/external_library.json
+    bytes: 975
+    sha256: 839d0edcb5e9ef56fd26eb8cb0307aa34a447d5da43aea1fd1cbeadf9d49973e
+  - name: full_gate_analyze.py
+    source: verification/sar8_module_audit/control/full_gate_analyze.py
+    bytes: 16677
+    sha256: fc57a31dac441f84dfcc8587a17c1247740ad6d40d2c43c04aaaf76b2daee2f6
+  - name: standard_cell_full_analyze.py
+    source: verification/sar8_module_audit/control/standard_cell_full_analyze.py
+    bytes: 12853
+    sha256: ddf8b334bf0bc873fccf5af2ea8822aca51ef1bd063119bb3c196a328d66779a
+  - name: pwl/ff_ck.pwl
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_ck.pwl
+    bytes: 751
+    sha256: f08f462cb6eceea7f9598aa30f4f367348f5dc5da2839e84ce218a0a20986024
+  - name: pwl/ff_d.pwl
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_d.pwl
+    bytes: 341
+    sha256: 36898dca0dbecadca94de65120d9e51c25fd89defe7ce9533aefe8c884330242
+  - name: pwl/ff_rst.pwl
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/ff_rst.pwl
+    bytes: 403
+    sha256: 0850d7059b608b61ae815c2e96042f2428cf882356e5a66ff329b7b650d29753
+  - name: pwl/context.pwl
+    source: verification/sar8_module_audit/control/standard_cell_full_v1/ff/pwl/context.pwl
+    bytes: 587
+    sha256: 00dab1ef92f4640e9ac9229f26b1ab2880809d07b3c69e598c3909d03de392c5
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 256
+    simulation_wall_seconds: 300
+    analysis_wall_seconds: 300
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - xdut.u19_q
+  - xdut.u19_ck
+  - xdut.xu19.xff.net176
+  expected_stop_s: 2.0e-08
+  qualification_scope: One native DFCNQD1 U19 with unchanged conditioners and exact
+    original three first-hop loads; CK series resistance diagnostic only
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    PEX: false
+    corner: ff
+    mismatch: false
+    noise: false
+    temperature_c: -40
+    vdd: 0.99
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-ctrl-usage-rck20k-ff-v1

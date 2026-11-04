@@ -1,0 +1,84 @@
+{
+  "status": "local_only_not_Spectre_compiled",
+  "parent_proposal_sha256": "fb9dd7872f730634cfc467af7ddb95c56d78b46d4ced855a989f12b1ba3b2b0d",
+  "source_circuit_MOS": 1457,
+  "unchanged_native_chain": true,
+  "unchanged_MOM_parameters": true,
+  "MOM_instances": 18,
+  "case": {
+    "name": "positive_to_negative",
+    "HSIGN": 1,
+    "LSB_v": 0.00703125,
+    "large_LSB": 8,
+    "small_LSB": 0.25,
+    "nominal_diff_by_cycle_v": [
+      0.05625,
+      -0.0017578125,
+      -0.0017578125,
+      -0.0017578125,
+      -0.0017578125,
+      -0.0017578125,
+      -0.0017578125,
+      -0.0017578125
+    ],
+    "expected_DATA_by_cycle": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "bottom_P_step_v": -0.02911764705882353,
+    "alpha_nominal": 0.99609375,
+    "nominal_common_mode_v": 0.45,
+    "delay_after_armed_CLK_fall10_s": 9e-10,
+    "slew_s": 2e-10,
+    "actual_residual_not_normalized": true,
+    "unknown_input_gate_charge_not_compensated": true
+  },
+  "bit_weight_units_per_side": 255,
+  "total_weight_units_per_side": 256,
+  "ideal_second_diff_v": -0.0017578124999999972,
+  "ideal_second_CM_v": 0.45,
+  "unchanged_payloads": [
+    "cells.scs",
+    "initializer.va",
+    "native_support.py",
+    "feedback_analyze.py"
+  ],
+  "passive_observation_ports": {
+    "test_wrapper": "audit_history_feedback",
+    "aliases": {
+      "XDUT.CMP_CLK": "CMP_CLK",
+      "XDUT.PHI_U": "PHI_U"
+    },
+    "flattened_native_devices_and_loads_identical": true
+  },
+  "native_voltage_saves": 127,
+  "native_current_saves": 23,
+  "wave_columns": 60,
+  "selected_MOS_pairs": 990,
+  "full_stress_complete": false,
+  "max_wave_raw_bytes": 14400000,
+  "queue": "Parent serial scheduling; standard-cell FF has priority",
+  "input_bytes": 315055,
+  "input_sha256": {
+    "cells.scs": "6ccf52aed46f235896aeea29868f0f02bc28a7c4fed19ffa53bf83a65ba5cc3e",
+    "initializer.va": "03b5823fc7d101f5237472ab46cd578bf7a341d1337684f5a525d6f07ba79401",
+    "native_support.py": "1a4f6a077402a9dfc1de5c79635f09ddba919884bf7c4aeecb0cd31187835803",
+    "feedback_analyze.py": "64405f6b3b6685f65a18ceae90cd272e89b9595403a0656c41fff9fb0d2d2a12",
+    "cdac_load.scs": "df3a366b964a3e60c991d56e75ab1e322325a76c0e8ed683fcc088c19cf266cc",
+    "history_charge.va": "45792fae3744aeadc3b6a376bdad5764d3753693e97dc3386e1920e4c33d7613",
+    "history_analyze.py": "0ce4dedcff7e704779bd8b8bceee8b6f734c1a4a2494595e158045c1466cb11e",
+    "history_export.py": "a8c3d1572284c4d3cec8e0fec4cef87762012bca04e2e854bdba10c20b4572d0",
+    "history_interface.scs": "da8a826994c988270fb7963f4112ce38fdee650b438a157fbb3cf48bca1b4961",
+    "test.scs": "76c61283c39e9ad26e6a39b2252222ab9809c512c4afbbc69dbf4e5e6d4dd0a7",
+    "measurement.json": "112295541b73f165390e4cd85448fafc8e513a9d9e33bca9ca0d236362efd052"
+  },
+  "builder_sha256": "24a6cce7a3d9cb28c8b5602a5a408280e5aad1b09a46a89a197a133fbf693371",
+  "remote_submitted": false,
+  "baseline_adopted": false
+}

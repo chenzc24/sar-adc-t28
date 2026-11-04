@@ -1,0 +1,135 @@
+managed: true
+recipe_hash: 24306072b56f9a60a0d2e73fa0619d797094ce81a7829cbb6c61b3d4c0e1a81d
+recipe:
+  schema_version: 1
+  run_id: sar8audit-ref-rc1-hd-x005-d1p25-ff-v1
+  design_id: sar8_reference_HD_native_verified_INVD1P25_after_clear_gate_R
+  entry: test.scs
+  analyzer: drive_analyze.py
+  files:
+  - name: dut.scs
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/dut.scs
+    bytes: 36420
+    sha256: d851c862f08012bb4ac1781530882e8a238d9aa767bd179731ca9100767b0bac
+  - name: test.scs
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/ffcold/test.scs
+    bytes: 24582
+    sha256: 7f950934eed39fb11521b9c1727352da74945ba9c8af9df7bec61c1b3937777d
+  - name: reference_current_analyze.py
+    source: verification/sar8_module_audit/reference/reference_current_analyze.py
+    bytes: 29142
+    sha256: 96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e
+  - name: io_cell_analyze.py
+    source: verification/sar8_module_audit/reference/io_cell_analyze.py
+    bytes: 10327
+    sha256: a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9
+  - name: standard_cell_bbm_analyze.py
+    source: verification/sar8_module_audit/reference/standard_cell_bbm_analyze.py
+    bytes: 19879
+    sha256: 297536a139b1bb2b17310d51bf4b0ed215c9c044a51265844fef1349a2875fef
+  - name: standard_cell_bbm_lswap_analyze.py
+    source: verification/sar8_module_audit/reference/standard_cell_bbm_lswap_analyze.py
+    bytes: 2274
+    sha256: c53ce801f34bbba6d3554c2750e6e8e14a5dc0fb77dbebb2cb594a09a25a83a8
+  - name: standard_cell_bbm_hlswap_analyze.py
+    source: verification/sar8_module_audit/reference/standard_cell_bbm_hlswap_v1/standard_cell_bbm_hlswap_analyze.py
+    bytes: 7298
+    sha256: e027435d6adb4ec87138544a6d11a5f6710b6e16100917500fc3a4f3c585c0ed
+  - name: rc1_drive_event_measure.py
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/rc1_drive_event_measure.py
+    bytes: 6076
+    sha256: 5a098854c3827051c70e475e8a58b33720a97787e94776aef28703b716e2ed3c
+  - name: drive_analyze.py
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/drive_analyze.py
+    bytes: 10964
+    sha256: a1ec0986875678e8a6a6aebe465943187b4435f506122d21d64f88d1a2f29d87
+  - name: migration.json
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/migration.json
+    bytes: 19866
+    sha256: bdeb26888df8b9de859e8f9031bf4e9af45198b7111e735d644188887ea29272
+  - name: library_metadata.json
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/library_metadata.json
+    bytes: 5833
+    sha256: 0f7454c7255b42ec9eef47c57b943327cec564980af89af7ed793025a3e069b6
+  - name: library_probe.json
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/library_probe.json
+    bytes: 4200
+    sha256: 176cf31dbd052269c55a70559f317cbc149135870a9c6631120284536f5453aa
+  - name: single_variable_delta.json
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/single_variable_delta.json
+    bytes: 2836
+    sha256: 40500a20eb21652fe22c20009ff3ff3caf1dfbc0df1eafd13df083d6eb4a3df3
+  - name: measurement.json
+    source: verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/ffcold/measurement.json
+    bytes: 406016
+    sha256: 280b10180088fc0001080000f8b49ac24050a29fa31652ee5807c5b6f2c4bb7d
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 512
+    max_output_mib: 2048
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=4
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - code
+  - xdut.h0
+  - xdut.l0
+  - xdut.gnn0
+  - xdut.gnp0
+  - xdut.gpn0
+  - xdut.gpp0
+  - xdut.xcdac.bn0
+  - xdut.xcdac.bp0
+  expected_stop_s: 5.2e-08
+  qualification_scope: Only verified native HD.X005 INVD1P25 master instead ofD1;
+    gateR/LD/other193 leaves and external timing/load retained;125MOS750screens662actualcurrents;
+    no ADC qualification
+  source_commit: b7cd241912035100cf07f3f1e7de196c1d465ec7
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: ffcold
+    supply_V: 0.99
+    temperature_C: -40
+    variant: HD_X005_verified_native_INVD1P25_with_HD_clear_gate_R_ideal_CODE
+    logical_stimulus: true
+    FF_waveform_replay: false
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8audit-ref-rc1-hd-x005-d1p25-ff-v1

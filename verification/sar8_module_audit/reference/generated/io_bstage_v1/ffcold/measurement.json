@@ -1,0 +1,8086 @@
+{
+  "schema_version": 1,
+  "variant": "IO_BC_A_core",
+  "supply_V": 0.99,
+  "scope": "Bit0 NN branch: only B changes from core to native-accepted IO; A remains core, C remains IO; physical original load, not ADC",
+  "source_run": "independent_logic_cell_bench",
+  "source_history_stop_s": 5.2e-08,
+  "diagnostic_start_s": 0.0,
+  "diagnostic_stop_s": 5.2e-08,
+  "voltage_saves": [
+    "CMP_CLK",
+    "GNPDRV",
+    "GPNDRV",
+    "GPPDRV",
+    "PRE",
+    "SAMPLE",
+    "VDD!",
+    "VINN",
+    "VINN_SRC",
+    "VINP",
+    "VINP_SRC",
+    "VREFN",
+    "VREFN_SRC",
+    "VREFP",
+    "VREFP_SRC",
+    "XDUT.COMP_N",
+    "XDUT.COMP_P",
+    "XDUT.GNN0",
+    "XDUT.GNNA",
+    "XDUT.GNNB",
+    "XDUT.GNNDRV",
+    "XDUT.GNNRG",
+    "XDUT.GNP0",
+    "XDUT.GNPRG",
+    "XDUT.GPN0",
+    "XDUT.GPNRG",
+    "XDUT.GPP0",
+    "XDUT.GPPRG",
+    "XDUT.RGNN0_1__dmy0",
+    "XDUT.RGNN0_2__dmy0",
+    "XDUT.RGNN0_3__dmy0",
+    "XDUT.RGNN0_4__dmy0",
+    "XDUT.RGNN1_1__dmy0",
+    "XDUT.RGNN1_2__dmy0",
+    "XDUT.RGNN1_3__dmy0",
+    "XDUT.RGNN1_4__dmy0",
+    "XDUT.RGNP0_1__dmy0",
+    "XDUT.RGNP0_2__dmy0",
+    "XDUT.RGNP0_3__dmy0",
+    "XDUT.RGNP0_4__dmy0",
+    "XDUT.RGNP1_1__dmy0",
+    "XDUT.RGNP1_2__dmy0",
+    "XDUT.RGNP1_3__dmy0",
+    "XDUT.RGNP1_4__dmy0",
+    "XDUT.RGPN0_1__dmy0",
+    "XDUT.RGPN0_2__dmy0",
+    "XDUT.RGPN0_3__dmy0",
+    "XDUT.RGPN0_4__dmy0",
+    "XDUT.RGPN1_1__dmy0",
+    "XDUT.RGPN1_2__dmy0",
+    "XDUT.RGPN1_3__dmy0",
+    "XDUT.RGPN1_4__dmy0",
+    "XDUT.RGPP0_1__dmy0",
+    "XDUT.RGPP0_2__dmy0",
+    "XDUT.RGPP0_3__dmy0",
+    "XDUT.RGPP0_4__dmy0",
+    "XDUT.RGPP1_1__dmy0",
+    "XDUT.RGPP1_2__dmy0",
+    "XDUT.RGPP1_3__dmy0",
+    "XDUT.RGPP1_4__dmy0",
+    "XDUT.TOPN",
+    "XDUT.TOPP",
+    "XDUT.XBOOTN.BBOT",
+    "XDUT.XBOOTN.BTOP",
+    "XDUT.XBOOTN.CLKSB",
+    "XDUT.XBOOTN.CTRL",
+    "XDUT.XBOOTN.G",
+    "XDUT.XBOOTN.GRESET",
+    "XDUT.XBOOTP.BBOT",
+    "XDUT.XBOOTP.BTOP",
+    "XDUT.XBOOTP.CLKSB",
+    "XDUT.XBOOTP.CTRL",
+    "XDUT.XBOOTP.G",
+    "XDUT.XBOOTP.GRESET",
+    "XDUT.XCDAC.BN0",
+    "XDUT.XCDAC.BN1",
+    "XDUT.XCDAC.BN2",
+    "XDUT.XCDAC.BN3",
+    "XDUT.XCDAC.BN4",
+    "XDUT.XCDAC.BN5",
+    "XDUT.XCDAC.BN6",
+    "XDUT.XCDAC.BN7",
+    "XDUT.XCDAC.BP0",
+    "XDUT.XCDAC.BP1",
+    "XDUT.XCDAC.BP2",
+    "XDUT.XCDAC.BP3",
+    "XDUT.XCDAC.BP4",
+    "XDUT.XCDAC.BP5",
+    "XDUT.XCDAC.BP6",
+    "XDUT.XCDAC.BP7",
+    "XDUT.XCOMP.TAIL",
+    "XDUT.XCOMP.X",
+    "XDUT.XCOMP.Y"
+  ],
+  "current_saves": [
+    "CREFN:1",
+    "CREFP:1",
+    "RINN:1",
+    "RINN:2",
+    "RINP:1",
+    "RINP:2",
+    "RREFN:1",
+    "RREFN:2",
+    "RREFP:1",
+    "RREFP:2",
+    "VCMP:1",
+    "VGNP:1",
+    "VGPN:1",
+    "VGPP:1",
+    "VPRE:1",
+    "VREFHIGH:1",
+    "VREFLOW:1",
+    "VSAMPLE:1",
+    "VVDD:1",
+    "VVINN:1",
+    "VVINP:1",
+    "XDUT.CL_CMP_CLK:1",
+    "XDUT.CL_CMP_CLK:2",
+    "XDUT.CL_COMP_N:1",
+    "XDUT.CL_COMP_N:2",
+    "XDUT.CL_COMP_P:1",
+    "XDUT.CL_COMP_P:2",
+    "XDUT.GNNAN:1",
+    "XDUT.GNNAN:2",
+    "XDUT.GNNAN:3",
+    "XDUT.GNNAN:4",
+    "XDUT.GNNAP:1",
+    "XDUT.GNNAP:2",
+    "XDUT.GNNAP:3",
+    "XDUT.GNNAP:4",
+    "XDUT.GNNBN:1",
+    "XDUT.GNNBN:2",
+    "XDUT.GNNBN:3",
+    "XDUT.GNNBN:4",
+    "XDUT.GNNBP:1",
+    "XDUT.GNNBP:2",
+    "XDUT.GNNBP:3",
+    "XDUT.GNNBP:4",
+    "XDUT.GNNCN:1",
+    "XDUT.GNNCN:2",
+    "XDUT.GNNCN:3",
+    "XDUT.GNNCN:4",
+    "XDUT.GNNCP:1",
+    "XDUT.GNNCP:2",
+    "XDUT.GNNCP:3",
+    "XDUT.GNNCP:4",
+    "XDUT.RGNN0:1",
+    "XDUT.RGNN0:2",
+    "XDUT.RGNN0_2__dmy0:1",
+    "XDUT.RGNN0_2__dmy0:2",
+    "XDUT.RGNN0_3__dmy0:1",
+    "XDUT.RGNN0_3__dmy0:2",
+    "XDUT.RGNN0_4__dmy0:1",
+    "XDUT.RGNN0_4__dmy0:2",
+    "XDUT.RGNN0_5__dmy0:1",
+    "XDUT.RGNN0_5__dmy0:2",
+    "XDUT.RGNN1:1",
+    "XDUT.RGNN1:2",
+    "XDUT.RGNN1_2__dmy0:1",
+    "XDUT.RGNN1_2__dmy0:2",
+    "XDUT.RGNN1_3__dmy0:1",
+    "XDUT.RGNN1_3__dmy0:2",
+    "XDUT.RGNN1_4__dmy0:1",
+    "XDUT.RGNN1_4__dmy0:2",
+    "XDUT.RGNN1_5__dmy0:1",
+    "XDUT.RGNN1_5__dmy0:2",
+    "XDUT.RGNP0:1",
+    "XDUT.RGNP0:2",
+    "XDUT.RGNP0_2__dmy0:1",
+    "XDUT.RGNP0_2__dmy0:2",
+    "XDUT.RGNP0_3__dmy0:1",
+    "XDUT.RGNP0_3__dmy0:2",
+    "XDUT.RGNP0_4__dmy0:1",
+    "XDUT.RGNP0_4__dmy0:2",
+    "XDUT.RGNP0_5__dmy0:1",
+    "XDUT.RGNP0_5__dmy0:2",
+    "XDUT.RGNP1:1",
+    "XDUT.RGNP1:2",
+    "XDUT.RGNP1_2__dmy0:1",
+    "XDUT.RGNP1_2__dmy0:2",
+    "XDUT.RGNP1_3__dmy0:1",
+    "XDUT.RGNP1_3__dmy0:2",
+    "XDUT.RGNP1_4__dmy0:1",
+    "XDUT.RGNP1_4__dmy0:2",
+    "XDUT.RGNP1_5__dmy0:1",
+    "XDUT.RGNP1_5__dmy0:2",
+    "XDUT.RGPN0:1",
+    "XDUT.RGPN0:2",
+    "XDUT.RGPN0_2__dmy0:1",
+    "XDUT.RGPN0_2__dmy0:2",
+    "XDUT.RGPN0_3__dmy0:1",
+    "XDUT.RGPN0_3__dmy0:2",
+    "XDUT.RGPN0_4__dmy0:1",
+    "XDUT.RGPN0_4__dmy0:2",
+    "XDUT.RGPN0_5__dmy0:1",
+    "XDUT.RGPN0_5__dmy0:2",
+    "XDUT.RGPN1:1",
+    "XDUT.RGPN1:2",
+    "XDUT.RGPN1_2__dmy0:1",
+    "XDUT.RGPN1_2__dmy0:2",
+    "XDUT.RGPN1_3__dmy0:1",
+    "XDUT.RGPN1_3__dmy0:2",
+    "XDUT.RGPN1_4__dmy0:1",
+    "XDUT.RGPN1_4__dmy0:2",
+    "XDUT.RGPN1_5__dmy0:1",
+    "XDUT.RGPN1_5__dmy0:2",
+    "XDUT.RGPP0:1",
+    "XDUT.RGPP0:2",
+    "XDUT.RGPP0_2__dmy0:1",
+    "XDUT.RGPP0_2__dmy0:2",
+    "XDUT.RGPP0_3__dmy0:1",
+    "XDUT.RGPP0_3__dmy0:2",
+    "XDUT.RGPP0_4__dmy0:1",
+    "XDUT.RGPP0_4__dmy0:2",
+    "XDUT.RGPP0_5__dmy0:1",
+    "XDUT.RGPP0_5__dmy0:2",
+    "XDUT.RGPP1:1",
+    "XDUT.RGPP1:2",
+    "XDUT.RGPP1_2__dmy0:1",
+    "XDUT.RGPP1_2__dmy0:2",
+    "XDUT.RGPP1_3__dmy0:1",
+    "XDUT.RGPP1_3__dmy0:2",
+    "XDUT.RGPP1_4__dmy0:1",
+    "XDUT.RGPP1_4__dmy0:2",
+    "XDUT.RGPP1_5__dmy0:1",
+    "XDUT.RGPP1_5__dmy0:2",
+    "XDUT.XBOOTN.Cboot:1",
+    "XDUT.XBOOTN.Cboot:2",
+    "XDUT.XBOOTN.M2:1",
+    "XDUT.XBOOTN.M2:2",
+    "XDUT.XBOOTN.M2:3",
+    "XDUT.XBOOTN.M2:4",
+    "XDUT.XBOOTN.M4:1",
+    "XDUT.XBOOTN.M4:2",
+    "XDUT.XBOOTN.M4:3",
+    "XDUT.XBOOTN.M4:4",
+    "XDUT.XBOOTN.M4A:1",
+    "XDUT.XBOOTN.M4A:2",
+    "XDUT.XBOOTN.M4A:3",
+    "XDUT.XBOOTN.M4A:4",
+    "XDUT.XBOOTN.M4B:1",
+    "XDUT.XBOOTN.M4B:2",
+    "XDUT.XBOOTN.M4B:3",
+    "XDUT.XBOOTN.M4B:4",
+    "XDUT.XBOOTN.M4C:1",
+    "XDUT.XBOOTN.M4C:2",
+    "XDUT.XBOOTN.M4C:3",
+    "XDUT.XBOOTN.M4C:4",
+    "XDUT.XBOOTN.M8:1",
+    "XDUT.XBOOTN.M8:2",
+    "XDUT.XBOOTN.M8:3",
+    "XDUT.XBOOTN.M8:4",
+    "XDUT.XBOOTN.MNCLK:1",
+    "XDUT.XBOOTN.MNCLK:2",
+    "XDUT.XBOOTN.MNCLK:3",
+    "XDUT.XBOOTN.MNCLK:4",
+    "XDUT.XBOOTN.MPCLK:1",
+    "XDUT.XBOOTN.MPCLK:2",
+    "XDUT.XBOOTN.MPCLK:3",
+    "XDUT.XBOOTN.MPCLK:4",
+    "XDUT.XBOOTN.MRSTG:1",
+    "XDUT.XBOOTN.MRSTG:2",
+    "XDUT.XBOOTN.MRSTG:3",
+    "XDUT.XBOOTN.MRSTG:4",
+    "XDUT.XBOOTN.Maux:1",
+    "XDUT.XBOOTN.Maux:2",
+    "XDUT.XBOOTN.Maux:3",
+    "XDUT.XBOOTN.Maux:4",
+    "XDUT.XBOOTN.Mmain:1",
+    "XDUT.XBOOTN.Mmain:2",
+    "XDUT.XBOOTN.Mmain:3",
+    "XDUT.XBOOTN.Mmain:4",
+    "XDUT.XBOOTN.Mmain_U1:1",
+    "XDUT.XBOOTN.Mmain_U1:2",
+    "XDUT.XBOOTN.Mmain_U1:3",
+    "XDUT.XBOOTN.Mmain_U1:4",
+    "XDUT.XBOOTN.Msin:1",
+    "XDUT.XBOOTN.Msin:2",
+    "XDUT.XBOOTN.Msin:3",
+    "XDUT.XBOOTN.Msin:4",
+    "XDUT.XBOOTP.Cboot:1",
+    "XDUT.XBOOTP.Cboot:2",
+    "XDUT.XBOOTP.M2:1",
+    "XDUT.XBOOTP.M2:2",
+    "XDUT.XBOOTP.M2:3",
+    "XDUT.XBOOTP.M2:4",
+    "XDUT.XBOOTP.M4:1",
+    "XDUT.XBOOTP.M4:2",
+    "XDUT.XBOOTP.M4:3",
+    "XDUT.XBOOTP.M4:4",
+    "XDUT.XBOOTP.M4A:1",
+    "XDUT.XBOOTP.M4A:2",
+    "XDUT.XBOOTP.M4A:3",
+    "XDUT.XBOOTP.M4A:4",
+    "XDUT.XBOOTP.M4B:1",
+    "XDUT.XBOOTP.M4B:2",
+    "XDUT.XBOOTP.M4B:3",
+    "XDUT.XBOOTP.M4B:4",
+    "XDUT.XBOOTP.M4C:1",
+    "XDUT.XBOOTP.M4C:2",
+    "XDUT.XBOOTP.M4C:3",
+    "XDUT.XBOOTP.M4C:4",
+    "XDUT.XBOOTP.M8:1",
+    "XDUT.XBOOTP.M8:2",
+    "XDUT.XBOOTP.M8:3",
+    "XDUT.XBOOTP.M8:4",
+    "XDUT.XBOOTP.MNCLK:1",
+    "XDUT.XBOOTP.MNCLK:2",
+    "XDUT.XBOOTP.MNCLK:3",
+    "XDUT.XBOOTP.MNCLK:4",
+    "XDUT.XBOOTP.MPCLK:1",
+    "XDUT.XBOOTP.MPCLK:2",
+    "XDUT.XBOOTP.MPCLK:3",
+    "XDUT.XBOOTP.MPCLK:4",
+    "XDUT.XBOOTP.MRSTG:1",
+    "XDUT.XBOOTP.MRSTG:2",
+    "XDUT.XBOOTP.MRSTG:3",
+    "XDUT.XBOOTP.MRSTG:4",
+    "XDUT.XBOOTP.Maux:1",
+    "XDUT.XBOOTP.Maux:2",
+    "XDUT.XBOOTP.Maux:3",
+    "XDUT.XBOOTP.Maux:4",
+    "XDUT.XBOOTP.Mmain:1",
+    "XDUT.XBOOTP.Mmain:2",
+    "XDUT.XBOOTP.Mmain:3",
+    "XDUT.XBOOTP.Mmain:4",
+    "XDUT.XBOOTP.Mmain_U1:1",
+    "XDUT.XBOOTP.Mmain_U1:2",
+    "XDUT.XBOOTP.Mmain_U1:3",
+    "XDUT.XBOOTP.Mmain_U1:4",
+    "XDUT.XBOOTP.Msin:1",
+    "XDUT.XBOOTP.Msin:2",
+    "XDUT.XBOOTP.Msin:3",
+    "XDUT.XBOOTP.Msin:4",
+    "XDUT.XCDAC.CMOMN0:1",
+    "XDUT.XCDAC.CMOMN0:2",
+    "XDUT.XCDAC.CMOMN1:1",
+    "XDUT.XCDAC.CMOMN1:2",
+    "XDUT.XCDAC.CMOMN2:1",
+    "XDUT.XCDAC.CMOMN2:2",
+    "XDUT.XCDAC.CMOMN3:1",
+    "XDUT.XCDAC.CMOMN3:2",
+    "XDUT.XCDAC.CMOMN4:1",
+    "XDUT.XCDAC.CMOMN4:2",
+    "XDUT.XCDAC.CMOMN5:1",
+    "XDUT.XCDAC.CMOMN5:2",
+    "XDUT.XCDAC.CMOMN6:1",
+    "XDUT.XCDAC.CMOMN6:2",
+    "XDUT.XCDAC.CMOMN7:1",
+    "XDUT.XCDAC.CMOMN7:2",
+    "XDUT.XCDAC.CMOMN8:1",
+    "XDUT.XCDAC.CMOMN8:2",
+    "XDUT.XCDAC.CMOMP0:1",
+    "XDUT.XCDAC.CMOMP0:2",
+    "XDUT.XCDAC.CMOMP1:1",
+    "XDUT.XCDAC.CMOMP1:2",
+    "XDUT.XCDAC.CMOMP2:1",
+    "XDUT.XCDAC.CMOMP2:2",
+    "XDUT.XCDAC.CMOMP3:1",
+    "XDUT.XCDAC.CMOMP3:2",
+    "XDUT.XCDAC.CMOMP4:1",
+    "XDUT.XCDAC.CMOMP4:2",
+    "XDUT.XCDAC.CMOMP5:1",
+    "XDUT.XCDAC.CMOMP5:2",
+    "XDUT.XCDAC.CMOMP6:1",
+    "XDUT.XCDAC.CMOMP6:2",
+    "XDUT.XCDAC.CMOMP7:1",
+    "XDUT.XCDAC.CMOMP7:2",
+    "XDUT.XCDAC.CMOMP8:1",
+    "XDUT.XCDAC.CMOMP8:2",
+    "XDUT.XCDAC.XSN0.MN_LOW:1",
+    "XDUT.XCDAC.XSN0.MN_LOW:2",
+    "XDUT.XCDAC.XSN0.MN_LOW:3",
+    "XDUT.XCDAC.XSN0.MN_LOW:4",
+    "XDUT.XCDAC.XSN0.MP_HIGH:1",
+    "XDUT.XCDAC.XSN0.MP_HIGH:2",
+    "XDUT.XCDAC.XSN0.MP_HIGH:3",
+    "XDUT.XCDAC.XSN0.MP_HIGH:4",
+    "XDUT.XCDAC.XSN1.MN_LOW:1",
+    "XDUT.XCDAC.XSN1.MN_LOW:2",
+    "XDUT.XCDAC.XSN1.MN_LOW:3",
+    "XDUT.XCDAC.XSN1.MN_LOW:4",
+    "XDUT.XCDAC.XSN1.MP_HIGH:1",
+    "XDUT.XCDAC.XSN1.MP_HIGH:2",
+    "XDUT.XCDAC.XSN1.MP_HIGH:3",
+    "XDUT.XCDAC.XSN1.MP_HIGH:4",
+    "XDUT.XCDAC.XSN2.MN_LOW:1",
+    "XDUT.XCDAC.XSN2.MN_LOW:2",
+    "XDUT.XCDAC.XSN2.MN_LOW:3",
+    "XDUT.XCDAC.XSN2.MN_LOW:4",
+    "XDUT.XCDAC.XSN2.MP_HIGH:1",
+    "XDUT.XCDAC.XSN2.MP_HIGH:2",
+    "XDUT.XCDAC.XSN2.MP_HIGH:3",
+    "XDUT.XCDAC.XSN2.MP_HIGH:4",
+    "XDUT.XCDAC.XSN3.MN_LOW:1",
+    "XDUT.XCDAC.XSN3.MN_LOW:2",
+    "XDUT.XCDAC.XSN3.MN_LOW:3",
+    "XDUT.XCDAC.XSN3.MN_LOW:4",
+    "XDUT.XCDAC.XSN3.MP_HIGH:1",
+    "XDUT.XCDAC.XSN3.MP_HIGH:2",
+    "XDUT.XCDAC.XSN3.MP_HIGH:3",
+    "XDUT.XCDAC.XSN3.MP_HIGH:4",
+    "XDUT.XCDAC.XSN4.MN_LOW:1",
+    "XDUT.XCDAC.XSN4.MN_LOW:2",
+    "XDUT.XCDAC.XSN4.MN_LOW:3",
+    "XDUT.XCDAC.XSN4.MN_LOW:4",
+    "XDUT.XCDAC.XSN4.MP_HIGH:1",
+    "XDUT.XCDAC.XSN4.MP_HIGH:2",
+    "XDUT.XCDAC.XSN4.MP_HIGH:3",
+    "XDUT.XCDAC.XSN4.MP_HIGH:4",
+    "XDUT.XCDAC.XSN5.MN_LOW:1",
+    "XDUT.XCDAC.XSN5.MN_LOW:2",
+    "XDUT.XCDAC.XSN5.MN_LOW:3",
+    "XDUT.XCDAC.XSN5.MN_LOW:4",
+    "XDUT.XCDAC.XSN5.MP_HIGH:1",
+    "XDUT.XCDAC.XSN5.MP_HIGH:2",
+    "XDUT.XCDAC.XSN5.MP_HIGH:3",
+    "XDUT.XCDAC.XSN5.MP_HIGH:4",
+    "XDUT.XCDAC.XSN6.MN_LOW:1",
+    "XDUT.XCDAC.XSN6.MN_LOW:2",
+    "XDUT.XCDAC.XSN6.MN_LOW:3",
+    "XDUT.XCDAC.XSN6.MN_LOW:4",
+    "XDUT.XCDAC.XSN6.MP_HIGH:1",
+    "XDUT.XCDAC.XSN6.MP_HIGH:2",
+    "XDUT.XCDAC.XSN6.MP_HIGH:3",
+    "XDUT.XCDAC.XSN6.MP_HIGH:4",
+    "XDUT.XCDAC.XSN7.MN_LOW:1",
+    "XDUT.XCDAC.XSN7.MN_LOW:2",
+    "XDUT.XCDAC.XSN7.MN_LOW:3",
+    "XDUT.XCDAC.XSN7.MN_LOW:4",
+    "XDUT.XCDAC.XSN7.MP_HIGH:1",
+    "XDUT.XCDAC.XSN7.MP_HIGH:2",
+    "XDUT.XCDAC.XSN7.MP_HIGH:3",
+    "XDUT.XCDAC.XSN7.MP_HIGH:4",
+    "XDUT.XCDAC.XSP0.MN_LOW:1",
+    "XDUT.XCDAC.XSP0.MN_LOW:2",
+    "XDUT.XCDAC.XSP0.MN_LOW:3",
+    "XDUT.XCDAC.XSP0.MN_LOW:4",
+    "XDUT.XCDAC.XSP0.MP_HIGH:1",
+    "XDUT.XCDAC.XSP0.MP_HIGH:2",
+    "XDUT.XCDAC.XSP0.MP_HIGH:3",
+    "XDUT.XCDAC.XSP0.MP_HIGH:4",
+    "XDUT.XCDAC.XSP1.MN_LOW:1",
+    "XDUT.XCDAC.XSP1.MN_LOW:2",
+    "XDUT.XCDAC.XSP1.MN_LOW:3",
+    "XDUT.XCDAC.XSP1.MN_LOW:4",
+    "XDUT.XCDAC.XSP1.MP_HIGH:1",
+    "XDUT.XCDAC.XSP1.MP_HIGH:2",
+    "XDUT.XCDAC.XSP1.MP_HIGH:3",
+    "XDUT.XCDAC.XSP1.MP_HIGH:4",
+    "XDUT.XCDAC.XSP2.MN_LOW:1",
+    "XDUT.XCDAC.XSP2.MN_LOW:2",
+    "XDUT.XCDAC.XSP2.MN_LOW:3",
+    "XDUT.XCDAC.XSP2.MN_LOW:4",
+    "XDUT.XCDAC.XSP2.MP_HIGH:1",
+    "XDUT.XCDAC.XSP2.MP_HIGH:2",
+    "XDUT.XCDAC.XSP2.MP_HIGH:3",
+    "XDUT.XCDAC.XSP2.MP_HIGH:4",
+    "XDUT.XCDAC.XSP3.MN_LOW:1",
+    "XDUT.XCDAC.XSP3.MN_LOW:2",
+    "XDUT.XCDAC.XSP3.MN_LOW:3",
+    "XDUT.XCDAC.XSP3.MN_LOW:4",
+    "XDUT.XCDAC.XSP3.MP_HIGH:1",
+    "XDUT.XCDAC.XSP3.MP_HIGH:2",
+    "XDUT.XCDAC.XSP3.MP_HIGH:3",
+    "XDUT.XCDAC.XSP3.MP_HIGH:4",
+    "XDUT.XCDAC.XSP4.MN_LOW:1",
+    "XDUT.XCDAC.XSP4.MN_LOW:2",
+    "XDUT.XCDAC.XSP4.MN_LOW:3",
+    "XDUT.XCDAC.XSP4.MN_LOW:4",
+    "XDUT.XCDAC.XSP4.MP_HIGH:1",
+    "XDUT.XCDAC.XSP4.MP_HIGH:2",
+    "XDUT.XCDAC.XSP4.MP_HIGH:3",
+    "XDUT.XCDAC.XSP4.MP_HIGH:4",
+    "XDUT.XCDAC.XSP5.MN_LOW:1",
+    "XDUT.XCDAC.XSP5.MN_LOW:2",
+    "XDUT.XCDAC.XSP5.MN_LOW:3",
+    "XDUT.XCDAC.XSP5.MN_LOW:4",
+    "XDUT.XCDAC.XSP5.MP_HIGH:1",
+    "XDUT.XCDAC.XSP5.MP_HIGH:2",
+    "XDUT.XCDAC.XSP5.MP_HIGH:3",
+    "XDUT.XCDAC.XSP5.MP_HIGH:4",
+    "XDUT.XCDAC.XSP6.MN_LOW:1",
+    "XDUT.XCDAC.XSP6.MN_LOW:2",
+    "XDUT.XCDAC.XSP6.MN_LOW:3",
+    "XDUT.XCDAC.XSP6.MN_LOW:4",
+    "XDUT.XCDAC.XSP6.MP_HIGH:1",
+    "XDUT.XCDAC.XSP6.MP_HIGH:2",
+    "XDUT.XCDAC.XSP6.MP_HIGH:3",
+    "XDUT.XCDAC.XSP6.MP_HIGH:4",
+    "XDUT.XCDAC.XSP7.MN_LOW:1",
+    "XDUT.XCDAC.XSP7.MN_LOW:2",
+    "XDUT.XCDAC.XSP7.MN_LOW:3",
+    "XDUT.XCDAC.XSP7.MN_LOW:4",
+    "XDUT.XCDAC.XSP7.MP_HIGH:1",
+    "XDUT.XCDAC.XSP7.MP_HIGH:2",
+    "XDUT.XCDAC.XSP7.MP_HIGH:3",
+    "XDUT.XCDAC.XSP7.MP_HIGH:4",
+    "XDUT.XCOMP.MNINN:1",
+    "XDUT.XCOMP.MNINN:2",
+    "XDUT.XCOMP.MNINN:3",
+    "XDUT.XCOMP.MNINN:4",
+    "XDUT.XCOMP.MNINP:1",
+    "XDUT.XCOMP.MNINP:2",
+    "XDUT.XCOMP.MNINP:3",
+    "XDUT.XCOMP.MNINP:4",
+    "XDUT.XCOMP.MNLATN:1",
+    "XDUT.XCOMP.MNLATN:2",
+    "XDUT.XCOMP.MNLATN:3",
+    "XDUT.XCOMP.MNLATN:4",
+    "XDUT.XCOMP.MNLATP:1",
+    "XDUT.XCOMP.MNLATP:2",
+    "XDUT.XCOMP.MNLATP:3",
+    "XDUT.XCOMP.MNLATP:4",
+    "XDUT.XCOMP.MNTAIL:1",
+    "XDUT.XCOMP.MNTAIL:2",
+    "XDUT.XCOMP.MNTAIL:3",
+    "XDUT.XCOMP.MNTAIL:4",
+    "XDUT.XCOMP.MPLATN:1",
+    "XDUT.XCOMP.MPLATN:2",
+    "XDUT.XCOMP.MPLATN:3",
+    "XDUT.XCOMP.MPLATN:4",
+    "XDUT.XCOMP.MPLATP:1",
+    "XDUT.XCOMP.MPLATP:2",
+    "XDUT.XCOMP.MPLATP:3",
+    "XDUT.XCOMP.MPLATP:4",
+    "XDUT.XCOMP.MPRSTN:1",
+    "XDUT.XCOMP.MPRSTN:2",
+    "XDUT.XCOMP.MPRSTN:3",
+    "XDUT.XCOMP.MPRSTN:4",
+    "XDUT.XCOMP.MPRSTP:1",
+    "XDUT.XCOMP.MPRSTP:2",
+    "XDUT.XCOMP.MPRSTP:3",
+    "XDUT.XCOMP.MPRSTP:4",
+    "XDUT.XCOMP.MPRSTX:1",
+    "XDUT.XCOMP.MPRSTX:2",
+    "XDUT.XCOMP.MPRSTX:3",
+    "XDUT.XCOMP.MPRSTX:4",
+    "XDUT.XCOMP.MPRSTY:1",
+    "XDUT.XCOMP.MPRSTY:2",
+    "XDUT.XCOMP.MPRSTY:3",
+    "XDUT.XCOMP.MPRSTY:4"
+  ],
+  "terminal_current_catalog": {
+    "CREFN:1": {
+      "instance": "CREFN",
+      "node": "VREFN",
+      "port": 1,
+      "model": "capacitor"
+    },
+    "CREFP:1": {
+      "instance": "CREFP",
+      "node": "VREFP",
+      "port": 1,
+      "model": "capacitor"
+    },
+    "RINN:1": {
+      "instance": "RINN",
+      "node": "VINN_SRC",
+      "port": 1,
+      "model": "resistor"
+    },
+    "RINN:2": {
+      "instance": "RINN",
+      "node": "VINN",
+      "port": 2,
+      "model": "resistor"
+    },
+    "RINP:1": {
+      "instance": "RINP",
+      "node": "VINP_SRC",
+      "port": 1,
+      "model": "resistor"
+    },
+    "RINP:2": {
+      "instance": "RINP",
+      "node": "VINP",
+      "port": 2,
+      "model": "resistor"
+    },
+    "RREFN:1": {
+      "instance": "RREFN",
+      "node": "VREFN_SRC",
+      "port": 1,
+      "model": "resistor"
+    },
+    "RREFN:2": {
+      "instance": "RREFN",
+      "node": "VREFN",
+      "port": 2,
+      "model": "resistor"
+    },
+    "RREFP:1": {
+      "instance": "RREFP",
+      "node": "VREFP_SRC",
+      "port": 1,
+      "model": "resistor"
+    },
+    "RREFP:2": {
+      "instance": "RREFP",
+      "node": "VREFP",
+      "port": 2,
+      "model": "resistor"
+    },
+    "VCMP:1": {
+      "instance": "VCMP",
+      "node": "CMP_CLK",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VGNP:1": {
+      "instance": "VGNP",
+      "node": "GNPDRV",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VGPN:1": {
+      "instance": "VGPN",
+      "node": "GPNDRV",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VGPP:1": {
+      "instance": "VGPP",
+      "node": "GPPDRV",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VPRE:1": {
+      "instance": "VPRE",
+      "node": "PRE",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VREFHIGH:1": {
+      "instance": "VREFHIGH",
+      "node": "VREFP_SRC",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VREFLOW:1": {
+      "instance": "VREFLOW",
+      "node": "VREFN_SRC",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VSAMPLE:1": {
+      "instance": "VSAMPLE",
+      "node": "SAMPLE",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VVDD:1": {
+      "instance": "VVDD",
+      "node": "VDD!",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VVINN:1": {
+      "instance": "VVINN",
+      "node": "VINN_SRC",
+      "port": 1,
+      "model": "vsource"
+    },
+    "VVINP:1": {
+      "instance": "VVINP",
+      "node": "VINP_SRC",
+      "port": 1,
+      "model": "vsource"
+    },
+    "XDUT.CL_CMP_CLK:1": {
+      "instance": "XDUT.CL_CMP_CLK",
+      "node": "CMP_CLK",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.CL_CMP_CLK:2": {
+      "instance": "XDUT.CL_CMP_CLK",
+      "node": "0",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.CL_COMP_N:1": {
+      "instance": "XDUT.CL_COMP_N",
+      "node": "XDUT.COMP_N",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.CL_COMP_N:2": {
+      "instance": "XDUT.CL_COMP_N",
+      "node": "0",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.CL_COMP_P:1": {
+      "instance": "XDUT.CL_COMP_P",
+      "node": "XDUT.COMP_P",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.CL_COMP_P:2": {
+      "instance": "XDUT.CL_COMP_P",
+      "node": "0",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.GNNAN:1": {
+      "instance": "XDUT.GNNAN",
+      "node": "XDUT.GNNA",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.GNNAN:2": {
+      "instance": "XDUT.GNNAN",
+      "node": "PRE",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.GNNAN:3": {
+      "instance": "XDUT.GNNAN",
+      "node": "0",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.GNNAN:4": {
+      "instance": "XDUT.GNNAN",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.GNNAP:1": {
+      "instance": "XDUT.GNNAP",
+      "node": "XDUT.GNNA",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.GNNAP:2": {
+      "instance": "XDUT.GNNAP",
+      "node": "PRE",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.GNNAP:3": {
+      "instance": "XDUT.GNNAP",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.GNNAP:4": {
+      "instance": "XDUT.GNNAP",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.GNNBN:1": {
+      "instance": "XDUT.GNNBN",
+      "node": "XDUT.GNNB",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNBN:2": {
+      "instance": "XDUT.GNNBN",
+      "node": "XDUT.GNNA",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNBN:3": {
+      "instance": "XDUT.GNNBN",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNBN:4": {
+      "instance": "XDUT.GNNBN",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNBP:1": {
+      "instance": "XDUT.GNNBP",
+      "node": "XDUT.GNNB",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNBP:2": {
+      "instance": "XDUT.GNNBP",
+      "node": "XDUT.GNNA",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNBP:3": {
+      "instance": "XDUT.GNNBP",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNBP:4": {
+      "instance": "XDUT.GNNBP",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNCN:1": {
+      "instance": "XDUT.GNNCN",
+      "node": "XDUT.GNNDRV",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNCN:2": {
+      "instance": "XDUT.GNNCN",
+      "node": "XDUT.GNNB",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNCN:3": {
+      "instance": "XDUT.GNNCN",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNCN:4": {
+      "instance": "XDUT.GNNCN",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.GNNCP:1": {
+      "instance": "XDUT.GNNCP",
+      "node": "XDUT.GNNDRV",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNCP:2": {
+      "instance": "XDUT.GNNCP",
+      "node": "XDUT.GNNB",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNCP:3": {
+      "instance": "XDUT.GNNCP",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.GNNCP:4": {
+      "instance": "XDUT.GNNCP",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.RGNN0:1": {
+      "instance": "XDUT.RGNN0",
+      "node": "XDUT.GNNDRV",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0:2": {
+      "instance": "XDUT.RGNN0",
+      "node": "XDUT.RGNN0_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_2__dmy0:1": {
+      "instance": "XDUT.RGNN0_2__dmy0",
+      "node": "XDUT.RGNN0_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_2__dmy0:2": {
+      "instance": "XDUT.RGNN0_2__dmy0",
+      "node": "XDUT.RGNN0_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_3__dmy0:1": {
+      "instance": "XDUT.RGNN0_3__dmy0",
+      "node": "XDUT.RGNN0_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_3__dmy0:2": {
+      "instance": "XDUT.RGNN0_3__dmy0",
+      "node": "XDUT.RGNN0_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_4__dmy0:1": {
+      "instance": "XDUT.RGNN0_4__dmy0",
+      "node": "XDUT.RGNN0_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_4__dmy0:2": {
+      "instance": "XDUT.RGNN0_4__dmy0",
+      "node": "XDUT.RGNN0_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_5__dmy0:1": {
+      "instance": "XDUT.RGNN0_5__dmy0",
+      "node": "XDUT.RGNN0_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN0_5__dmy0:2": {
+      "instance": "XDUT.RGNN0_5__dmy0",
+      "node": "XDUT.GNNRG",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1:1": {
+      "instance": "XDUT.RGNN1",
+      "node": "XDUT.GNNRG",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1:2": {
+      "instance": "XDUT.RGNN1",
+      "node": "XDUT.RGNN1_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_2__dmy0:1": {
+      "instance": "XDUT.RGNN1_2__dmy0",
+      "node": "XDUT.RGNN1_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_2__dmy0:2": {
+      "instance": "XDUT.RGNN1_2__dmy0",
+      "node": "XDUT.RGNN1_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_3__dmy0:1": {
+      "instance": "XDUT.RGNN1_3__dmy0",
+      "node": "XDUT.RGNN1_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_3__dmy0:2": {
+      "instance": "XDUT.RGNN1_3__dmy0",
+      "node": "XDUT.RGNN1_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_4__dmy0:1": {
+      "instance": "XDUT.RGNN1_4__dmy0",
+      "node": "XDUT.RGNN1_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_4__dmy0:2": {
+      "instance": "XDUT.RGNN1_4__dmy0",
+      "node": "XDUT.RGNN1_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_5__dmy0:1": {
+      "instance": "XDUT.RGNN1_5__dmy0",
+      "node": "XDUT.RGNN1_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNN1_5__dmy0:2": {
+      "instance": "XDUT.RGNN1_5__dmy0",
+      "node": "XDUT.GNN0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0:1": {
+      "instance": "XDUT.RGNP0",
+      "node": "GNPDRV",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0:2": {
+      "instance": "XDUT.RGNP0",
+      "node": "XDUT.RGNP0_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_2__dmy0:1": {
+      "instance": "XDUT.RGNP0_2__dmy0",
+      "node": "XDUT.RGNP0_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_2__dmy0:2": {
+      "instance": "XDUT.RGNP0_2__dmy0",
+      "node": "XDUT.RGNP0_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_3__dmy0:1": {
+      "instance": "XDUT.RGNP0_3__dmy0",
+      "node": "XDUT.RGNP0_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_3__dmy0:2": {
+      "instance": "XDUT.RGNP0_3__dmy0",
+      "node": "XDUT.RGNP0_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_4__dmy0:1": {
+      "instance": "XDUT.RGNP0_4__dmy0",
+      "node": "XDUT.RGNP0_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_4__dmy0:2": {
+      "instance": "XDUT.RGNP0_4__dmy0",
+      "node": "XDUT.RGNP0_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_5__dmy0:1": {
+      "instance": "XDUT.RGNP0_5__dmy0",
+      "node": "XDUT.RGNP0_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP0_5__dmy0:2": {
+      "instance": "XDUT.RGNP0_5__dmy0",
+      "node": "XDUT.GNPRG",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1:1": {
+      "instance": "XDUT.RGNP1",
+      "node": "XDUT.GNPRG",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1:2": {
+      "instance": "XDUT.RGNP1",
+      "node": "XDUT.RGNP1_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_2__dmy0:1": {
+      "instance": "XDUT.RGNP1_2__dmy0",
+      "node": "XDUT.RGNP1_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_2__dmy0:2": {
+      "instance": "XDUT.RGNP1_2__dmy0",
+      "node": "XDUT.RGNP1_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_3__dmy0:1": {
+      "instance": "XDUT.RGNP1_3__dmy0",
+      "node": "XDUT.RGNP1_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_3__dmy0:2": {
+      "instance": "XDUT.RGNP1_3__dmy0",
+      "node": "XDUT.RGNP1_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_4__dmy0:1": {
+      "instance": "XDUT.RGNP1_4__dmy0",
+      "node": "XDUT.RGNP1_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_4__dmy0:2": {
+      "instance": "XDUT.RGNP1_4__dmy0",
+      "node": "XDUT.RGNP1_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_5__dmy0:1": {
+      "instance": "XDUT.RGNP1_5__dmy0",
+      "node": "XDUT.RGNP1_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGNP1_5__dmy0:2": {
+      "instance": "XDUT.RGNP1_5__dmy0",
+      "node": "XDUT.GNP0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0:1": {
+      "instance": "XDUT.RGPN0",
+      "node": "GPNDRV",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0:2": {
+      "instance": "XDUT.RGPN0",
+      "node": "XDUT.RGPN0_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_2__dmy0:1": {
+      "instance": "XDUT.RGPN0_2__dmy0",
+      "node": "XDUT.RGPN0_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_2__dmy0:2": {
+      "instance": "XDUT.RGPN0_2__dmy0",
+      "node": "XDUT.RGPN0_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_3__dmy0:1": {
+      "instance": "XDUT.RGPN0_3__dmy0",
+      "node": "XDUT.RGPN0_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_3__dmy0:2": {
+      "instance": "XDUT.RGPN0_3__dmy0",
+      "node": "XDUT.RGPN0_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_4__dmy0:1": {
+      "instance": "XDUT.RGPN0_4__dmy0",
+      "node": "XDUT.RGPN0_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_4__dmy0:2": {
+      "instance": "XDUT.RGPN0_4__dmy0",
+      "node": "XDUT.RGPN0_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_5__dmy0:1": {
+      "instance": "XDUT.RGPN0_5__dmy0",
+      "node": "XDUT.RGPN0_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN0_5__dmy0:2": {
+      "instance": "XDUT.RGPN0_5__dmy0",
+      "node": "XDUT.GPNRG",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1:1": {
+      "instance": "XDUT.RGPN1",
+      "node": "XDUT.GPNRG",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1:2": {
+      "instance": "XDUT.RGPN1",
+      "node": "XDUT.RGPN1_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_2__dmy0:1": {
+      "instance": "XDUT.RGPN1_2__dmy0",
+      "node": "XDUT.RGPN1_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_2__dmy0:2": {
+      "instance": "XDUT.RGPN1_2__dmy0",
+      "node": "XDUT.RGPN1_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_3__dmy0:1": {
+      "instance": "XDUT.RGPN1_3__dmy0",
+      "node": "XDUT.RGPN1_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_3__dmy0:2": {
+      "instance": "XDUT.RGPN1_3__dmy0",
+      "node": "XDUT.RGPN1_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_4__dmy0:1": {
+      "instance": "XDUT.RGPN1_4__dmy0",
+      "node": "XDUT.RGPN1_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_4__dmy0:2": {
+      "instance": "XDUT.RGPN1_4__dmy0",
+      "node": "XDUT.RGPN1_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_5__dmy0:1": {
+      "instance": "XDUT.RGPN1_5__dmy0",
+      "node": "XDUT.RGPN1_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPN1_5__dmy0:2": {
+      "instance": "XDUT.RGPN1_5__dmy0",
+      "node": "XDUT.GPN0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0:1": {
+      "instance": "XDUT.RGPP0",
+      "node": "GPPDRV",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0:2": {
+      "instance": "XDUT.RGPP0",
+      "node": "XDUT.RGPP0_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_2__dmy0:1": {
+      "instance": "XDUT.RGPP0_2__dmy0",
+      "node": "XDUT.RGPP0_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_2__dmy0:2": {
+      "instance": "XDUT.RGPP0_2__dmy0",
+      "node": "XDUT.RGPP0_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_3__dmy0:1": {
+      "instance": "XDUT.RGPP0_3__dmy0",
+      "node": "XDUT.RGPP0_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_3__dmy0:2": {
+      "instance": "XDUT.RGPP0_3__dmy0",
+      "node": "XDUT.RGPP0_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_4__dmy0:1": {
+      "instance": "XDUT.RGPP0_4__dmy0",
+      "node": "XDUT.RGPP0_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_4__dmy0:2": {
+      "instance": "XDUT.RGPP0_4__dmy0",
+      "node": "XDUT.RGPP0_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_5__dmy0:1": {
+      "instance": "XDUT.RGPP0_5__dmy0",
+      "node": "XDUT.RGPP0_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP0_5__dmy0:2": {
+      "instance": "XDUT.RGPP0_5__dmy0",
+      "node": "XDUT.GPPRG",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1:1": {
+      "instance": "XDUT.RGPP1",
+      "node": "XDUT.GPPRG",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1:2": {
+      "instance": "XDUT.RGPP1",
+      "node": "XDUT.RGPP1_1__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_2__dmy0:1": {
+      "instance": "XDUT.RGPP1_2__dmy0",
+      "node": "XDUT.RGPP1_1__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_2__dmy0:2": {
+      "instance": "XDUT.RGPP1_2__dmy0",
+      "node": "XDUT.RGPP1_2__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_3__dmy0:1": {
+      "instance": "XDUT.RGPP1_3__dmy0",
+      "node": "XDUT.RGPP1_2__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_3__dmy0:2": {
+      "instance": "XDUT.RGPP1_3__dmy0",
+      "node": "XDUT.RGPP1_3__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_4__dmy0:1": {
+      "instance": "XDUT.RGPP1_4__dmy0",
+      "node": "XDUT.RGPP1_3__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_4__dmy0:2": {
+      "instance": "XDUT.RGPP1_4__dmy0",
+      "node": "XDUT.RGPP1_4__dmy0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_5__dmy0:1": {
+      "instance": "XDUT.RGPP1_5__dmy0",
+      "node": "XDUT.RGPP1_4__dmy0",
+      "port": 1,
+      "model": "rupolym"
+    },
+    "XDUT.RGPP1_5__dmy0:2": {
+      "instance": "XDUT.RGPP1_5__dmy0",
+      "node": "XDUT.GPP0",
+      "port": 2,
+      "model": "rupolym"
+    },
+    "XDUT.XBOOTN.Cboot:1": {
+      "instance": "XDUT.XBOOTN.Cboot",
+      "node": "XDUT.XBOOTN.BTOP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XBOOTN.Cboot:2": {
+      "instance": "XDUT.XBOOTN.Cboot",
+      "node": "XDUT.XBOOTN.BBOT",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XBOOTN.M2:1": {
+      "instance": "XDUT.XBOOTN.M2",
+      "node": "XDUT.XBOOTN.BTOP",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M2:2": {
+      "instance": "XDUT.XBOOTN.M2",
+      "node": "XDUT.XBOOTN.G",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M2:3": {
+      "instance": "XDUT.XBOOTN.M2",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M2:4": {
+      "instance": "XDUT.XBOOTN.M2",
+      "node": "XDUT.XBOOTN.BTOP",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4:1": {
+      "instance": "XDUT.XBOOTN.M4",
+      "node": "XDUT.XBOOTN.G",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4:2": {
+      "instance": "XDUT.XBOOTN.M4",
+      "node": "XDUT.XBOOTN.CTRL",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4:3": {
+      "instance": "XDUT.XBOOTN.M4",
+      "node": "XDUT.XBOOTN.BTOP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4:4": {
+      "instance": "XDUT.XBOOTN.M4",
+      "node": "XDUT.XBOOTN.BTOP",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4A:1": {
+      "instance": "XDUT.XBOOTN.M4A",
+      "node": "XDUT.XBOOTN.CTRL",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4A:2": {
+      "instance": "XDUT.XBOOTN.M4A",
+      "node": "XDUT.XBOOTN.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4A:3": {
+      "instance": "XDUT.XBOOTN.M4A",
+      "node": "XDUT.XBOOTN.BBOT",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4A:4": {
+      "instance": "XDUT.XBOOTN.M4A",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4B:1": {
+      "instance": "XDUT.XBOOTN.M4B",
+      "node": "XDUT.XBOOTN.CTRL",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4B:2": {
+      "instance": "XDUT.XBOOTN.M4B",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4B:3": {
+      "instance": "XDUT.XBOOTN.M4B",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4B:4": {
+      "instance": "XDUT.XBOOTN.M4B",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.M4C:1": {
+      "instance": "XDUT.XBOOTN.M4C",
+      "node": "XDUT.XBOOTN.CTRL",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4C:2": {
+      "instance": "XDUT.XBOOTN.M4C",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4C:3": {
+      "instance": "XDUT.XBOOTN.M4C",
+      "node": "XDUT.XBOOTN.BBOT",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M4C:4": {
+      "instance": "XDUT.XBOOTN.M4C",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M8:1": {
+      "instance": "XDUT.XBOOTN.M8",
+      "node": "XDUT.XBOOTN.BBOT",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M8:2": {
+      "instance": "XDUT.XBOOTN.M8",
+      "node": "XDUT.XBOOTN.CLKSB",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M8:3": {
+      "instance": "XDUT.XBOOTN.M8",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.M8:4": {
+      "instance": "XDUT.XBOOTN.M8",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MNCLK:1": {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "node": "XDUT.XBOOTN.CLKSB",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MNCLK:2": {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MNCLK:3": {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MNCLK:4": {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MPCLK:1": {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "node": "XDUT.XBOOTN.CLKSB",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.MPCLK:2": {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.MPCLK:3": {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.MPCLK:4": {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTN.MRSTG:1": {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "node": "XDUT.XBOOTN.GRESET",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MRSTG:2": {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "node": "XDUT.XBOOTN.CLKSB",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MRSTG:3": {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.MRSTG:4": {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Maux:1": {
+      "instance": "XDUT.XBOOTN.Maux",
+      "node": "XDUT.XBOOTN.G",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Maux:2": {
+      "instance": "XDUT.XBOOTN.Maux",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Maux:3": {
+      "instance": "XDUT.XBOOTN.Maux",
+      "node": "XDUT.XBOOTN.GRESET",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Maux:4": {
+      "instance": "XDUT.XBOOTN.Maux",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain:1": {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain:2": {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "node": "XDUT.XBOOTN.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain:3": {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "node": "VINN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain:4": {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain_U1:1": {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain_U1:2": {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "node": "XDUT.XBOOTN.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain_U1:3": {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "node": "VINN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Mmain_U1:4": {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Msin:1": {
+      "instance": "XDUT.XBOOTN.Msin",
+      "node": "XDUT.XBOOTN.BBOT",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Msin:2": {
+      "instance": "XDUT.XBOOTN.Msin",
+      "node": "XDUT.XBOOTN.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Msin:3": {
+      "instance": "XDUT.XBOOTN.Msin",
+      "node": "VINN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTN.Msin:4": {
+      "instance": "XDUT.XBOOTN.Msin",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Cboot:1": {
+      "instance": "XDUT.XBOOTP.Cboot",
+      "node": "XDUT.XBOOTP.BTOP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XBOOTP.Cboot:2": {
+      "instance": "XDUT.XBOOTP.Cboot",
+      "node": "XDUT.XBOOTP.BBOT",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XBOOTP.M2:1": {
+      "instance": "XDUT.XBOOTP.M2",
+      "node": "XDUT.XBOOTP.BTOP",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M2:2": {
+      "instance": "XDUT.XBOOTP.M2",
+      "node": "XDUT.XBOOTP.G",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M2:3": {
+      "instance": "XDUT.XBOOTP.M2",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M2:4": {
+      "instance": "XDUT.XBOOTP.M2",
+      "node": "XDUT.XBOOTP.BTOP",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4:1": {
+      "instance": "XDUT.XBOOTP.M4",
+      "node": "XDUT.XBOOTP.G",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4:2": {
+      "instance": "XDUT.XBOOTP.M4",
+      "node": "XDUT.XBOOTP.CTRL",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4:3": {
+      "instance": "XDUT.XBOOTP.M4",
+      "node": "XDUT.XBOOTP.BTOP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4:4": {
+      "instance": "XDUT.XBOOTP.M4",
+      "node": "XDUT.XBOOTP.BTOP",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4A:1": {
+      "instance": "XDUT.XBOOTP.M4A",
+      "node": "XDUT.XBOOTP.CTRL",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4A:2": {
+      "instance": "XDUT.XBOOTP.M4A",
+      "node": "XDUT.XBOOTP.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4A:3": {
+      "instance": "XDUT.XBOOTP.M4A",
+      "node": "XDUT.XBOOTP.BBOT",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4A:4": {
+      "instance": "XDUT.XBOOTP.M4A",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4B:1": {
+      "instance": "XDUT.XBOOTP.M4B",
+      "node": "XDUT.XBOOTP.CTRL",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4B:2": {
+      "instance": "XDUT.XBOOTP.M4B",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4B:3": {
+      "instance": "XDUT.XBOOTP.M4B",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4B:4": {
+      "instance": "XDUT.XBOOTP.M4B",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.M4C:1": {
+      "instance": "XDUT.XBOOTP.M4C",
+      "node": "XDUT.XBOOTP.CTRL",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4C:2": {
+      "instance": "XDUT.XBOOTP.M4C",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4C:3": {
+      "instance": "XDUT.XBOOTP.M4C",
+      "node": "XDUT.XBOOTP.BBOT",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M4C:4": {
+      "instance": "XDUT.XBOOTP.M4C",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M8:1": {
+      "instance": "XDUT.XBOOTP.M8",
+      "node": "XDUT.XBOOTP.BBOT",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M8:2": {
+      "instance": "XDUT.XBOOTP.M8",
+      "node": "XDUT.XBOOTP.CLKSB",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M8:3": {
+      "instance": "XDUT.XBOOTP.M8",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.M8:4": {
+      "instance": "XDUT.XBOOTP.M8",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MNCLK:1": {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "node": "XDUT.XBOOTP.CLKSB",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MNCLK:2": {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MNCLK:3": {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MNCLK:4": {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MPCLK:1": {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "node": "XDUT.XBOOTP.CLKSB",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.MPCLK:2": {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "node": "SAMPLE",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.MPCLK:3": {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.MPCLK:4": {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XBOOTP.MRSTG:1": {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "node": "XDUT.XBOOTP.GRESET",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MRSTG:2": {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "node": "XDUT.XBOOTP.CLKSB",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MRSTG:3": {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "node": "0",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.MRSTG:4": {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Maux:1": {
+      "instance": "XDUT.XBOOTP.Maux",
+      "node": "XDUT.XBOOTP.G",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Maux:2": {
+      "instance": "XDUT.XBOOTP.Maux",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Maux:3": {
+      "instance": "XDUT.XBOOTP.Maux",
+      "node": "XDUT.XBOOTP.GRESET",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Maux:4": {
+      "instance": "XDUT.XBOOTP.Maux",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain:1": {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain:2": {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "node": "XDUT.XBOOTP.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain:3": {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "node": "VINP",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain:4": {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain_U1:1": {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain_U1:2": {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "node": "XDUT.XBOOTP.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain_U1:3": {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "node": "VINP",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Mmain_U1:4": {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Msin:1": {
+      "instance": "XDUT.XBOOTP.Msin",
+      "node": "XDUT.XBOOTP.BBOT",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Msin:2": {
+      "instance": "XDUT.XBOOTP.Msin",
+      "node": "XDUT.XBOOTP.G",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Msin:3": {
+      "instance": "XDUT.XBOOTP.Msin",
+      "node": "VINP",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XBOOTP.Msin:4": {
+      "instance": "XDUT.XBOOTP.Msin",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.CMOMN0:1": {
+      "instance": "XDUT.XCDAC.CMOMN0",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN0:2": {
+      "instance": "XDUT.XCDAC.CMOMN0",
+      "node": "XDUT.XCDAC.BN0",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN1:1": {
+      "instance": "XDUT.XCDAC.CMOMN1",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN1:2": {
+      "instance": "XDUT.XCDAC.CMOMN1",
+      "node": "XDUT.XCDAC.BN1",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN2:1": {
+      "instance": "XDUT.XCDAC.CMOMN2",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN2:2": {
+      "instance": "XDUT.XCDAC.CMOMN2",
+      "node": "XDUT.XCDAC.BN2",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN3:1": {
+      "instance": "XDUT.XCDAC.CMOMN3",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN3:2": {
+      "instance": "XDUT.XCDAC.CMOMN3",
+      "node": "XDUT.XCDAC.BN3",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN4:1": {
+      "instance": "XDUT.XCDAC.CMOMN4",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN4:2": {
+      "instance": "XDUT.XCDAC.CMOMN4",
+      "node": "XDUT.XCDAC.BN4",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN5:1": {
+      "instance": "XDUT.XCDAC.CMOMN5",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN5:2": {
+      "instance": "XDUT.XCDAC.CMOMN5",
+      "node": "XDUT.XCDAC.BN5",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN6:1": {
+      "instance": "XDUT.XCDAC.CMOMN6",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN6:2": {
+      "instance": "XDUT.XCDAC.CMOMN6",
+      "node": "XDUT.XCDAC.BN6",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN7:1": {
+      "instance": "XDUT.XCDAC.CMOMN7",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN7:2": {
+      "instance": "XDUT.XCDAC.CMOMN7",
+      "node": "XDUT.XCDAC.BN7",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN8:1": {
+      "instance": "XDUT.XCDAC.CMOMN8",
+      "node": "XDUT.TOPN",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMN8:2": {
+      "instance": "XDUT.XCDAC.CMOMN8",
+      "node": "VREFN",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP0:1": {
+      "instance": "XDUT.XCDAC.CMOMP0",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP0:2": {
+      "instance": "XDUT.XCDAC.CMOMP0",
+      "node": "XDUT.XCDAC.BP0",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP1:1": {
+      "instance": "XDUT.XCDAC.CMOMP1",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP1:2": {
+      "instance": "XDUT.XCDAC.CMOMP1",
+      "node": "XDUT.XCDAC.BP1",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP2:1": {
+      "instance": "XDUT.XCDAC.CMOMP2",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP2:2": {
+      "instance": "XDUT.XCDAC.CMOMP2",
+      "node": "XDUT.XCDAC.BP2",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP3:1": {
+      "instance": "XDUT.XCDAC.CMOMP3",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP3:2": {
+      "instance": "XDUT.XCDAC.CMOMP3",
+      "node": "XDUT.XCDAC.BP3",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP4:1": {
+      "instance": "XDUT.XCDAC.CMOMP4",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP4:2": {
+      "instance": "XDUT.XCDAC.CMOMP4",
+      "node": "XDUT.XCDAC.BP4",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP5:1": {
+      "instance": "XDUT.XCDAC.CMOMP5",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP5:2": {
+      "instance": "XDUT.XCDAC.CMOMP5",
+      "node": "XDUT.XCDAC.BP5",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP6:1": {
+      "instance": "XDUT.XCDAC.CMOMP6",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP6:2": {
+      "instance": "XDUT.XCDAC.CMOMP6",
+      "node": "XDUT.XCDAC.BP6",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP7:1": {
+      "instance": "XDUT.XCDAC.CMOMP7",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP7:2": {
+      "instance": "XDUT.XCDAC.CMOMP7",
+      "node": "XDUT.XCDAC.BP7",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP8:1": {
+      "instance": "XDUT.XCDAC.CMOMP8",
+      "node": "XDUT.TOPP",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.CMOMP8:2": {
+      "instance": "XDUT.XCDAC.CMOMP8",
+      "node": "VREFP",
+      "port": 2,
+      "model": "cfmom_2t"
+    },
+    "XDUT.XCDAC.XSN0.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "node": "XDUT.XCDAC.BN0",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "node": "XDUT.GNN0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "node": "XDUT.XCDAC.BN0",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "node": "XDUT.GNP0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN0.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "node": "XDUT.XCDAC.BN1",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "node": "XDUT.XCDAC.BN1",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN1.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "node": "XDUT.XCDAC.BN2",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "node": "XDUT.XCDAC.BN2",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN2.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "node": "XDUT.XCDAC.BN3",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "node": "XDUT.XCDAC.BN3",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN3.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "node": "XDUT.XCDAC.BN4",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "node": "XDUT.XCDAC.BN4",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN4.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "node": "XDUT.XCDAC.BN5",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "node": "XDUT.XCDAC.BN5",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN5.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "node": "XDUT.XCDAC.BN6",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "node": "XDUT.XCDAC.BN6",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN6.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "node": "XDUT.XCDAC.BN7",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "node": "VDD!",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "node": "XDUT.XCDAC.BN7",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "node": "VDD!",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSN7.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "node": "XDUT.XCDAC.BP0",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "node": "XDUT.GPN0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "node": "XDUT.XCDAC.BP0",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "node": "XDUT.GPP0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP0.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "node": "XDUT.XCDAC.BP1",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "node": "XDUT.XCDAC.BP1",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP1.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "node": "XDUT.XCDAC.BP2",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "node": "XDUT.XCDAC.BP2",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP2.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "node": "XDUT.XCDAC.BP3",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "node": "XDUT.XCDAC.BP3",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP3.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "node": "XDUT.XCDAC.BP4",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "node": "XDUT.XCDAC.BP4",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP4.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "node": "XDUT.XCDAC.BP5",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "node": "XDUT.XCDAC.BP5",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP5.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "node": "XDUT.XCDAC.BP6",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "node": "XDUT.XCDAC.BP6",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP6.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MN_LOW:1": {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "node": "XDUT.XCDAC.BP7",
+      "port": 1,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MN_LOW:2": {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "node": "0",
+      "port": 2,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MN_LOW:3": {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "node": "VREFN",
+      "port": 3,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MN_LOW:4": {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "node": "0",
+      "port": 4,
+      "model": "nch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MP_HIGH:1": {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "node": "XDUT.XCDAC.BP7",
+      "port": 1,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MP_HIGH:2": {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "node": "0",
+      "port": 2,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MP_HIGH:3": {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "node": "VREFP",
+      "port": 3,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCDAC.XSP7.MP_HIGH:4": {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_18_mac"
+    },
+    "XDUT.XCOMP.MNINN:1": {
+      "instance": "XDUT.XCOMP.MNINN",
+      "node": "XDUT.XCOMP.X",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINN:2": {
+      "instance": "XDUT.XCOMP.MNINN",
+      "node": "XDUT.TOPN",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINN:3": {
+      "instance": "XDUT.XCOMP.MNINN",
+      "node": "XDUT.XCOMP.TAIL",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINN:4": {
+      "instance": "XDUT.XCOMP.MNINN",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINP:1": {
+      "instance": "XDUT.XCOMP.MNINP",
+      "node": "XDUT.XCOMP.Y",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINP:2": {
+      "instance": "XDUT.XCOMP.MNINP",
+      "node": "XDUT.TOPP",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINP:3": {
+      "instance": "XDUT.XCOMP.MNINP",
+      "node": "XDUT.XCOMP.TAIL",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNINP:4": {
+      "instance": "XDUT.XCOMP.MNINP",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATN:1": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "node": "XDUT.COMP_N",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATN:2": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "node": "XDUT.COMP_P",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATN:3": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "node": "XDUT.XCOMP.Y",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATN:4": {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATP:1": {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "node": "XDUT.COMP_P",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATP:2": {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "node": "XDUT.COMP_N",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATP:3": {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "node": "XDUT.XCOMP.X",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNLATP:4": {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNTAIL:1": {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "node": "XDUT.XCOMP.TAIL",
+      "port": 1,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNTAIL:2": {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "node": "CMP_CLK",
+      "port": 2,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNTAIL:3": {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "node": "0",
+      "port": 3,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MNTAIL:4": {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "node": "0",
+      "port": 4,
+      "model": "nch_mac"
+    },
+    "XDUT.XCOMP.MPLATN:1": {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "node": "XDUT.COMP_N",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATN:2": {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "node": "XDUT.COMP_P",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATN:3": {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATN:4": {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATP:1": {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "node": "XDUT.COMP_P",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATP:2": {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "node": "XDUT.COMP_N",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATP:3": {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPLATP:4": {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTN:1": {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "node": "XDUT.COMP_N",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTN:2": {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "node": "CMP_CLK",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTN:3": {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTN:4": {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTP:1": {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "node": "XDUT.COMP_P",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTP:2": {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "node": "CMP_CLK",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTP:3": {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTP:4": {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTX:1": {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "node": "XDUT.XCOMP.X",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTX:2": {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "node": "CMP_CLK",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTX:3": {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTX:4": {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTY:1": {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "node": "XDUT.XCOMP.Y",
+      "port": 1,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTY:2": {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "node": "CMP_CLK",
+      "port": 2,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTY:3": {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "node": "VDD!",
+      "port": 3,
+      "model": "pch_mac"
+    },
+    "XDUT.XCOMP.MPRSTY:4": {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "node": "VDD!",
+      "port": 4,
+      "model": "pch_mac"
+    }
+  },
+  "kcl_terms": {
+    "XDUT.GNNA": [
+      "XDUT.GNNAN:1",
+      "XDUT.GNNAP:1",
+      "XDUT.GNNBN:2",
+      "XDUT.GNNBP:2"
+    ],
+    "XDUT.GNNB": [
+      "XDUT.GNNBN:1",
+      "XDUT.GNNBP:1",
+      "XDUT.GNNCN:2",
+      "XDUT.GNNCP:2"
+    ],
+    "XDUT.GNNDRV": [
+      "XDUT.GNNCN:1",
+      "XDUT.GNNCP:1",
+      "XDUT.RGNN0:1"
+    ],
+    "XDUT.GNN0": [
+      "XDUT.RGNN1_5__dmy0:2",
+      "XDUT.XCDAC.XSN0.MN_LOW:2"
+    ],
+    "XDUT.XCDAC.BN0": [
+      "XDUT.XCDAC.CMOMN0:2",
+      "XDUT.XCDAC.XSN0.MN_LOW:1",
+      "XDUT.XCDAC.XSN0.MP_HIGH:1"
+    ],
+    "XDUT.TOPN": [
+      "XDUT.XBOOTN.Mmain:1",
+      "XDUT.XBOOTN.Mmain_U1:1",
+      "XDUT.XCDAC.CMOMN0:1",
+      "XDUT.XCDAC.CMOMN1:1",
+      "XDUT.XCDAC.CMOMN2:1",
+      "XDUT.XCDAC.CMOMN3:1",
+      "XDUT.XCDAC.CMOMN4:1",
+      "XDUT.XCDAC.CMOMN5:1",
+      "XDUT.XCDAC.CMOMN6:1",
+      "XDUT.XCDAC.CMOMN7:1",
+      "XDUT.XCDAC.CMOMN8:1",
+      "XDUT.XCOMP.MNINN:2"
+    ],
+    "XDUT.TOPP": [
+      "XDUT.XBOOTP.Mmain:1",
+      "XDUT.XBOOTP.Mmain_U1:1",
+      "XDUT.XCDAC.CMOMP0:1",
+      "XDUT.XCDAC.CMOMP1:1",
+      "XDUT.XCDAC.CMOMP2:1",
+      "XDUT.XCDAC.CMOMP3:1",
+      "XDUT.XCDAC.CMOMP4:1",
+      "XDUT.XCDAC.CMOMP5:1",
+      "XDUT.XCDAC.CMOMP6:1",
+      "XDUT.XCDAC.CMOMP7:1",
+      "XDUT.XCDAC.CMOMP8:1",
+      "XDUT.XCOMP.MNINP:2"
+    ]
+  },
+  "selected_mos_pair_screens": [
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNDRV",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNNB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNNB",
+        "XDUT.GNNDRV"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNNB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.GNNDRV"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCN",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNNA",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNNA",
+        "XDUT.GNNB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNNA",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.GNNB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBN",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNA",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "PRE",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "PRE",
+        "XDUT.GNNA"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "PRE",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.GNNA"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAN",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNDRV",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNNB",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNNB",
+        "XDUT.GNNDRV"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNNB",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.GNNDRV"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNCP",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNB",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNNA",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNNA",
+        "XDUT.GNNB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNNA",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.GNNB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNBP",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.GNNA",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "PRE",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "PRE",
+        "XDUT.GNNA"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "PRE",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.GNNA"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.GNNAP",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.TOPN",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.TOPN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.TOPN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.TOPN",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.TOPN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.TOPN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4C",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.BBOT",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Msin",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTN.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTN.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.Maux",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.GRESET",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "XDUT.XBOOTN.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4A",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.BBOT",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M8",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTN.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTN.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.BTOP",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "XDUT.XBOOTN.BTOP",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M2",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "XDUT.XBOOTN.BTOP",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.G",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "XDUT.XBOOTN.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "XDUT.XBOOTN.BTOP",
+        "XDUT.XBOOTN.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "XDUT.XBOOTN.BTOP",
+        "XDUT.XBOOTN.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.CTRL",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTN.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.M4B",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTN.CLKSB",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTN.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTN.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTN.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.TOPP",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.TOPP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.TOPP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.TOPP",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.TOPP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.TOPP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Mmain_U1",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4C",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.BBOT",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Msin",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VINP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTP.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTP.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.Maux",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.GRESET",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "XDUT.XBOOTP.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.GRESET"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MRSTG",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4A",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.BBOT",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.BBOT"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M8",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTP.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XBOOTP.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MNCLK",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.BTOP",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "XDUT.XBOOTP.BTOP",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M2",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "XDUT.XBOOTP.BTOP",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.G",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "XDUT.XBOOTP.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "XDUT.XBOOTP.BTOP",
+        "XDUT.XBOOTP.G"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "XDUT.XBOOTP.BTOP",
+        "XDUT.XBOOTP.BTOP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.CTRL",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTP.CTRL"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.M4B",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XBOOTP.CLKSB",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "SAMPLE",
+        "XDUT.XBOOTP.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "SAMPLE",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XBOOTP.CLKSB"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XBOOTP.MPCLK",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNP0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNP0",
+        "XDUT.XCDAC.BN0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNP0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GNN0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GNN0",
+        "XDUT.XCDAC.BN0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GNN0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GPP0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GPP0",
+        "XDUT.XCDAC.BP0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GPP0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.GPN0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.GPN0",
+        "XDUT.XCDAC.BP0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.GPN0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP0.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN1",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN1",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP1",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP1",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP1"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP1.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN2",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN2",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP2",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP2",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP2"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP2.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN3",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN3",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP3",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP3",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP3"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP3.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN4",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN4",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP4",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP4",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP4"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP4.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN5",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN5",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP5",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP5",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP5"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP5.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN6",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN6",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP6",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP6",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP6"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP6.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN7",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BN7",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "VDD!",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BN7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "VDD!",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BN7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSN7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP7",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "VDD!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCDAC.BP7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MP_HIGH",
+      "model": "pch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VREFP"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCDAC.BP7",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCDAC.BP7"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCDAC.XSP7.MN_LOW",
+      "model": "nch_18_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "VREFN"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_N",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.COMP_P",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.COMP_P",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.COMP_P",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATN",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_P",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.COMP_N",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.COMP_N",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.COMP_N",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNLATP",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCOMP.X",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.TOPN",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.TOPN",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.TOPN",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINN",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCOMP.Y",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.TOPP",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.TOPP",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.TOPP",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNINP",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCOMP.TAIL",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "CMP_CLK",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "CMP_CLK",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "CMP_CLK",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "XDUT.XCOMP.TAIL"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MNTAIL",
+      "model": "nch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_N",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "CMP_CLK",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTN",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_P",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "CMP_CLK",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTP",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCOMP.Y",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "CMP_CLK",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCOMP.Y"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTY",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.XCOMP.X",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "CMP_CLK",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "CMP_CLK",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.XCOMP.X"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPRSTX",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_N",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.COMP_P",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.COMP_P",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.COMP_P",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.COMP_N"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATN",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "ds",
+      "nodes": [
+        "XDUT.COMP_P",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "gs",
+      "nodes": [
+        "XDUT.COMP_N",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "gd",
+      "nodes": [
+        "XDUT.COMP_N",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "gb",
+      "nodes": [
+        "XDUT.COMP_N",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "bd",
+      "nodes": [
+        "VDD!",
+        "XDUT.COMP_P"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "XDUT.XCOMP.MPLATP",
+      "model": "pch_mac",
+      "terminal": "bs",
+      "nodes": [
+        "VDD!",
+        "VDD!"
+      ],
+      "screen_v": 0.99
+    }
+  ],
+  "mos_pair_scope": "All affected physical MOS in branch, complete CDAC, Bootstrap and reset comparator",
+  "diagnostic_voltage_columns": [
+    "vdd!",
+    "pre",
+    "sample",
+    "cmp_clk",
+    "gnpdrv",
+    "gpndrv",
+    "gppdrv",
+    "vinn",
+    "vinp",
+    "vrefp",
+    "vrefn",
+    "xdut.gnna",
+    "xdut.gnnb",
+    "xdut.gnndrv",
+    "xdut.gnn0",
+    "xdut.gnp0",
+    "xdut.gpn0",
+    "xdut.gpp0",
+    "xdut.topn",
+    "xdut.topp",
+    "xdut.xcdac.bn0",
+    "xdut.xcdac.bp0",
+    "xdut.comp_n",
+    "xdut.comp_p"
+  ],
+  "diagnostic_current_columns": [
+    "rrefn:1",
+    "rrefn:2",
+    "rrefp:1",
+    "rrefp:2",
+    "vpre:1",
+    "vrefhigh:1",
+    "vreflow:1",
+    "vvdd:1",
+    "xdut.gnnan:1",
+    "xdut.gnnan:2",
+    "xdut.gnnan:3",
+    "xdut.gnnan:4",
+    "xdut.gnnap:1",
+    "xdut.gnnap:2",
+    "xdut.gnnap:3",
+    "xdut.gnnap:4",
+    "xdut.gnnbn:1",
+    "xdut.gnnbn:2",
+    "xdut.gnnbn:3",
+    "xdut.gnnbn:4",
+    "xdut.gnnbp:1",
+    "xdut.gnnbp:2",
+    "xdut.gnnbp:3",
+    "xdut.gnnbp:4",
+    "xdut.gnncn:1",
+    "xdut.gnncn:2",
+    "xdut.gnncn:3",
+    "xdut.gnncn:4",
+    "xdut.gnncp:1",
+    "xdut.gnncp:2",
+    "xdut.gnncp:3",
+    "xdut.gnncp:4",
+    "xdut.rgnn0:1",
+    "xdut.rgnn1_5__dmy0:2",
+    "xdut.xbootn.mmain:1",
+    "xdut.xbootn.mmain_u1:1",
+    "xdut.xbootp.mmain:1",
+    "xdut.xbootp.mmain_u1:1",
+    "xdut.xcdac.cmomn0:1",
+    "xdut.xcdac.cmomn0:2",
+    "xdut.xcdac.cmomn1:1",
+    "xdut.xcdac.cmomn2:1",
+    "xdut.xcdac.cmomn3:1",
+    "xdut.xcdac.cmomn4:1",
+    "xdut.xcdac.cmomn5:1",
+    "xdut.xcdac.cmomn6:1",
+    "xdut.xcdac.cmomn7:1",
+    "xdut.xcdac.cmomn8:1",
+    "xdut.xcdac.cmomp0:1",
+    "xdut.xcdac.cmomp1:1",
+    "xdut.xcdac.cmomp2:1",
+    "xdut.xcdac.cmomp3:1",
+    "xdut.xcdac.cmomp4:1",
+    "xdut.xcdac.cmomp5:1",
+    "xdut.xcdac.cmomp6:1",
+    "xdut.xcdac.cmomp7:1",
+    "xdut.xcdac.cmomp8:1",
+    "xdut.xcdac.xsn0.mn_low:1",
+    "xdut.xcdac.xsn0.mn_low:2",
+    "xdut.xcdac.xsn0.mp_high:1",
+    "xdut.xcomp.mninn:2",
+    "xdut.xcomp.mninp:2"
+  ],
+  "edge_nodes": [
+    "vdd!",
+    "pre",
+    "sample",
+    "cmp_clk",
+    "gnpdrv",
+    "gpndrv",
+    "gppdrv",
+    "vinn",
+    "vinp",
+    "vrefp",
+    "vrefn",
+    "xdut.gnna",
+    "xdut.gnnb",
+    "xdut.gnndrv",
+    "xdut.gnn0",
+    "xdut.gnp0",
+    "xdut.gpn0",
+    "xdut.gpp0",
+    "xdut.topn",
+    "xdut.topp",
+    "xdut.xcdac.bn0",
+    "xdut.xcdac.bp0",
+    "xdut.comp_n",
+    "xdut.comp_p"
+  ],
+  "initial_witness_v": {
+    "vdd!": 0.99,
+    "pre": 0.0,
+    "sample": 0.99,
+    "cmp_clk": 0.0
+  },
+  "initial_unavailable_from_source": "No invented internal t=0 analog witnesses; startup is measured",
+  "source_peaks": [],
+  "current_interpretation": "Total native port currents positive into components; multiplicity already included; no intrinsic channel/capacitance split",
+  "boundary_provenance": {
+    "approximate": false,
+    "independent_logical_commands": true,
+    "no_FF_analog_replay": true
+  },
+  "proposed_contract": {
+    "status": "feasibility_diagnostic_only"
+  },
+  "acceptance_pass": null,
+  "max_edge_events": 10000,
+  "max_total_output_bytes": 31457280,
+  "static_observations": [
+    "vdd!",
+    "pre",
+    "sample",
+    "cmp_clk",
+    "gnpdrv",
+    "gpndrv",
+    "gppdrv",
+    "vinn",
+    "vinp",
+    "vrefp",
+    "vrefn",
+    "xdut.gnna",
+    "xdut.gnnb",
+    "xdut.gnndrv",
+    "xdut.gnn0",
+    "xdut.gnp0",
+    "xdut.gpn0",
+    "xdut.gpp0",
+    "xdut.topn",
+    "xdut.topp",
+    "xdut.xcdac.bn0",
+    "xdut.xcdac.bp0",
+    "xdut.comp_n",
+    "xdut.comp_p",
+    "vvdd:1",
+    "rrefn:1",
+    "rrefp:1",
+    "xdut.gnncn:1",
+    "xdut.gnncp:1",
+    "xdut.gnnap:3",
+    "xdut.gnnap:4",
+    "xdut.gnnbp:3",
+    "xdut.gnnbp:4",
+    "xdut.gnncp:3",
+    "xdut.gnncp:4"
+  ],
+  "static_windows": [
+    {
+      "name": "low_before",
+      "start_s": 4.15e-08,
+      "stop_s": 4.25e-08,
+      "expected_logic": {
+        "pre": 0,
+        "xdut.gnna": 1,
+        "xdut.gnnb": 0,
+        "xdut.gnndrv": 1,
+        "xdut.gnn0": 1
+      }
+    },
+    {
+      "name": "high",
+      "start_s": 4.5e-08,
+      "stop_s": 4.6e-08,
+      "expected_logic": {
+        "pre": 1,
+        "xdut.gnna": 0,
+        "xdut.gnnb": 1,
+        "xdut.gnndrv": 0,
+        "xdut.gnn0": 0
+      }
+    },
+    {
+      "name": "low_after",
+      "start_s": 5e-08,
+      "stop_s": 5.15e-08,
+      "expected_logic": {
+        "pre": 0,
+        "xdut.gnna": 1,
+        "xdut.gnnb": 0,
+        "xdut.gnndrv": 1,
+        "xdut.gnn0": 1
+      }
+    }
+  ],
+  "logic_events": [
+    {
+      "name": "disable_low",
+      "start_s": 4.3e-08,
+      "stop_s": 4.5e-08,
+      "edge_directions": {
+        "xdut.gnnb": "rising",
+        "xdut.gnndrv": "falling",
+        "xdut.gnn0": "falling"
+      }
+    },
+    {
+      "name": "enable_low",
+      "start_s": 4.8e-08,
+      "stop_s": 5.1e-08,
+      "edge_directions": {
+        "xdut.gnnb": "falling",
+        "xdut.gnndrv": "rising",
+        "xdut.gnn0": "rising"
+      }
+    }
+  ],
+  "load_windows": [
+    {
+      "name": "high_reference",
+      "start_s": 4.4e-08,
+      "stop_s": 4.7e-08,
+      "select_high": true
+    },
+    {
+      "name": "low_reference",
+      "start_s": 4.8e-08,
+      "stop_s": 5.2e-08,
+      "select_high": false
+    }
+  ],
+  "stimulus_contract": {
+    "PRE_rise_ns": 43,
+    "PRE_fall_ns": 48,
+    "logical_edge_ps": 10,
+    "corner_normalized_0_VDD": true,
+    "PRE_boundary": "Independent ideal logic; not claimed actual SS preceding-stage waveform. Physical core A/B resolve their own corner-specific edge.",
+    "companion_guard_ns": 1,
+    "guard_is_unit_fixture_not_new_ADC_timing": true,
+    "sampling_source": "VSAMPLE (SAMPLE 0) vsource type=pulse val0=SUP val1=0 delay=41n rise=100p fall=100p width=59.9n period=100n",
+    "comparator": "Physical comparator reset-held; no decisions",
+    "other_bits": "Full physical CDAC/IO reference MOS; seven other bits held by explicit ideal logic boundaries",
+    "bootstrap_clock": "Original external SAMPLE directly drives physical Bootstrap as load-fixture boundary; no actual internal SS sampler latency claimed"
+  },
+  "required_input_sha256": {
+    "dut.scs": "2381b1d49e7df33d5b5af6755c75cc08aa05b8df40a9b7126c46163fc4fc7906",
+    "test.scs": "7cdc323100b5c7911956e12c483cfe8047f91b48db9b415f5ce1e5ed1ad82645",
+    "reference_current_analyze.py": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e",
+    "io_cell_analyze.py": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9",
+    "io_bstage_analyze.py": "953c73bbd99f649d8ec36801c4148794ee77d96f3f0f90ebb209ceaf28bdfe6b"
+  },
+  "B_input_charge_windows": [
+    {
+      "name": "disable_low",
+      "start_s": 4.298e-08,
+      "stop_s": 4.5e-08
+    },
+    {
+      "name": "enable_low",
+      "start_s": 4.798e-08,
+      "stop_s": 5.1e-08
+    }
+  ],
+  "comparison_baseline": {
+    "run": "sar8audit-refcell-io-ffcold",
+    "result_sha256": "ed6840fd4d6427a5005193474b71e55c2e495eba3c8d79acf499ca44a7db4e9d",
+    "dut_sha256": "7a26aefbc778d752df6ddc07ec244536da02e1a024d2e0f989bc308916c7f297",
+    "only_changed_flat_instances": [
+      "XDUT.GNNBN",
+      "XDUT.GNNBP"
+    ],
+    "all_commands_and_sampling_edges_identical": true
+  }
+}

@@ -1,0 +1,96 @@
+managed: true
+recipe_hash: f869e8e27fe6a0d9095e4a57672eb25c873c136d2d533efbbcf0ddc1df3254f9
+recipe:
+  schema_version: 1
+  run_id: manual8-sar-a-tt-v1
+  design_id: manual8_sar_isolation_v1
+  entry: test.scs
+  analyzer: sar_isolation_reduce.py
+  files:
+  - name: dut.scs
+    source: verification/manual_adc/sar_isolation_v1/tb_a_v1/dut.scs
+    bytes: 4080
+    sha256: 455b53b5e64febdea1244b52ee07339dfab525c834e7c62c16f35837a7fdbd66
+  - name: models.scs
+    source: verification/manual_adc/sar_isolation_v1/tb_a_v1/models.scs
+    bytes: 1569
+    sha256: 821480b30b163abbe0117a770ab275a285e27b533ccec9b9cbad8934bea505af
+  - name: test.scs
+    source: verification/manual_adc/sar_isolation_v1/tb_a_v1/test.scs
+    bytes: 17545
+    sha256: fa3089aa410b17aa15d25e8e5ae08c64602362851e17f67d05dcc71830638b37
+  - name: measure.json
+    source: verification/manual_adc/sar_isolation_v1/tb_a_v1/measure.json
+    bytes: 61507
+    sha256: 993fa13dac4e5cec62ced02651ec64be84879f0d687212c282565937183fedbb
+  - name: response.va
+    source: verification/manual_adc/sar_isolation_v1/response.va
+    bytes: 1396
+    sha256: f6bef1345686a1c197413340a7152547d508d553489a08b71023a3ee9eb053c2
+  - name: sar_isolation_reduce.py
+    source: scripts/manual_adc/sar_isolation_reduce.py
+    bytes: 7459
+    sha256: f12a03073910bdf627eadf136762c97da434792d06df88574a5a38a040df1833
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 2048
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - clks
+  - cmpck
+  - xdut.valid
+  expected_stop_s: 1.62e-06
+  qualification_scope: All 32 DFF external pins; ten representative DFF internals
+    only. Static gate replicas exclude bottom-plate Miller; ideal source/delay power
+    excluded.
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; behavioral reference only; OA untouched
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ttmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-sar-a-tt-v1

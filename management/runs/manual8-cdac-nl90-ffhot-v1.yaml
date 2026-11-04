@@ -1,0 +1,132 @@
+managed: true
+recipe_hash: 5fcf792be21456f126b23c054d8f51c2e3f21f19df6457700342428152e5d1dd
+recipe:
+  schema_version: 1
+  run_id: manual8-cdac-nl90-ffhot-v1
+  design_id: manual8_cdac_nlength_v1
+  entry: test.scs
+  analyzer: cdac_leak_reduce.py
+  files:
+  - name: manual8_sample.va
+    source: verification/manual_adc/cdac_nlength_v1/l90/manual8_sample.va
+    bytes: 1607
+    sha256: 0a8080f311bcd84cbb042cd525f119b0a058200d3f9a534a2f0668417410c57d
+  - name: manual8_cmp.va
+    source: verification/manual_adc/cdac_nlength_v1/l90/manual8_cmp.va
+    bytes: 2269
+    sha256: b374810880e1f6b7aa213b07c0ab2de7996ca2d32f3851282c633aaf5dd9cf63
+  - name: manual8_sar.va
+    source: verification/manual_adc/cdac_nlength_v1/l90/manual8_sar.va
+    bytes: 9270
+    sha256: 24f19076d2d059b22862336dcf9a74159888c406b1b3573b9b18a7b1376a76ec
+  - name: models.scs
+    source: verification/manual_adc/cdac_nlength_v1/l90/models.scs
+    bytes: 1340
+    sha256: de740781988662dcd9eaf59899b31dee56e46cdfd7cff229035f107ad2ae3264
+  - name: cdac_core.scs
+    source: verification/manual_adc/cdac_nlength_v1/l90/cdac_core.scs
+    bytes: 7594
+    sha256: 013b7033260c8ecf991930ac8602bb9497688ffe67cab0c65b931fe5981bd095
+  - name: wrappers.scs
+    source: verification/manual_adc/cdac_nlength_v1/l90/wrappers.scs
+    bytes: 2183
+    sha256: 97e01435f2414d6a42dd04f4899233d6303eaa4e2ccf824a3ea0c3454f2ccceb
+  - name: test.scs
+    source: verification/manual_adc/cdac_nlength_v1/l90/test.scs
+    bytes: 3993
+    sha256: bae635c224d0d6c06d71329cc9c343c8e046d1d78fdd1226ce2178be2e7d0b9f
+  - name: measure.json
+    source: verification/manual_adc/cdac_nlength_v1/l90/measure.json
+    bytes: 18587
+    sha256: 68ecf3829d14811ad81e9ffaa722e015b138c64540b1b6c22b8f073bc8c7966e
+  - name: cdac_edge_reduce.py
+    source: scripts/manual_adc/cdac_edge_reduce.py
+    bytes: 16053
+    sha256: 58e79bbac484ec2c848879bf4eece99313a9ec2109d7cff2abcfd99615243a0a
+  - name: reduce.py
+    source: scripts/manual_adc/reduce.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: cdac_leak_reduce.py
+    source: scripts/manual_adc/cdac_leak_reduce.py
+    bytes: 7377
+    sha256: 912a820a3647f079a8c2b56de64d893bf6dac6f10aefc3164b8d8396fc5e6a41
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 768
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - -preset_override
+  summary_signals:
+  - clks
+  - xadc.topp
+  - xadc.topn
+  - xadc.cmpck
+  - eoc
+  - fault
+  expected_stop_s: 8.2e-07
+  qualification_scope: CDAC reference MOS process/temperature screen at fixed 0.9
+    V; ideal capacitors, sampling conductance and other blocks. Not full-voltage PVT
+    or ADC qualification.
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: none; OA untouched
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: ffmacro_mos_moscap
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_res_bip_dio_disres
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_mom
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_ind_jvar
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    corner: ff
+    vdd: 0.9
+    temperature_c: 125
+    noise: false
+    mismatch: false
+    PEX: false
+    single_variable:
+      case: ffhot
+      sample_rise_s: 1e-10
+      sample_fall_s: 1e-11
+      sample_start_s: 9.979999999999999e-09
+      sample_center_s: 1.003e-08
+      ref_advance_s: 0.0
+      next_boundary_s: 9.979999999999999e-09
+      period_s: 1e-07
+      scope: Native CDAC ref MOS; ideal capacitors and surroundings. Same external
+        clock and sampling 50% midpoint/falling edge.
+      corner: ff
+      temperature_c: 125
+      reference_nmos_length_nm: 90
+    measurement_only: false
+    reference_nmos_length_nm: 90
+    baseline_run: manual8-cdac-leak-ffhot-v1
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/manual8-cdac-nl90-ffhot-v1

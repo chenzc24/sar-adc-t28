@@ -1,0 +1,90 @@
+managed: true
+recipe_hash: 457deb673038571e749bc2f8138e7b39f48ec1b7b68b7878b3f97c8537da1bfd
+recipe:
+  schema_version: 2
+  run_id: cmpdesign-fall50-a4-review-v1
+  design_id: manual8_comparator_design
+  entry: fall_reduce.py
+  analyzer: fall_reduce.py
+  files:
+  - name: fall_reduce.py
+    source: comparator_design/scripts/fall_reduce.py
+    bytes: 11103
+    sha256: 7c834436fa35f88ae7d41bff74a841155194627ece19fe4c9e2273b385792bba
+  - name: native_frames.py
+    source: comparator_design/scripts/native_frames.py
+    bytes: 4664
+    sha256: 9db63cdf3183163563363f14fe07e6437ea39ae03add8a5999083cfebbe03752
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 1
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 32
+    simulation_wall_seconds: 900
+    analysis_wall_seconds: 600
+    queue_timeout_seconds: 600
+  spectre_args:
+  - +preset=cx
+  - +mt=1
+  - +lqtimeout
+  - '60'
+  - -preset_override
+  summary_signals:
+  - ck
+  - in
+  - ip
+  - na4_held
+  - ona4_driven
+  - ona4_held
+  - opa4_driven
+  - opa4_held
+  - pa4_held
+  - track
+  - ua4_driven
+  - ua4_held
+  - vck:1
+  - vsa4_driven:1
+  - vsa4_held:1
+  - xa4_driven.ln
+  - xa4_driven.lp
+  - xa4_driven.net1
+  - xa4_driven.net2
+  - xa4_driven.net3
+  - xa4_held.ln
+  - xa4_held.lp
+  - xa4_held.net1
+  - xa4_held.net2
+  - xa4_held.net3
+  - xa4_held.m6:2
+  - xa4_held.m0:2
+  - xa4_held.m7:1
+  - xa4_held.m1:1
+  - xa4_held.m4:1
+  - xa4_held.m13:2
+  - xa4_held.m14:2
+  expected_stop_s: 4.0e-07
+  qualification_scope: Read-only rise200 fall50 A4 waveforms; common native reset
+    pulse measurement
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist only; user OA read-only
+  kind: analysis_only
+  source:
+    run_id: cmpdesign-rise200-a4-ff-hot-v1
+    recipe_hash: f48f4bd86a1086a47062ee443c8acb882d3cee21681b9ff2a432b7ea4d5b2dc5
+  test_conditions:
+    corner: ff
+    vdd: 0.99
+    temperature_c: 125
+    clock_rise_ps: 200
+    clock_fall_ps: 50
+    noise: false
+    mismatch: false
+    PEX: false
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/cmpdesign-fall50-a4-review-v1

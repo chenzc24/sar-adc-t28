@@ -1,0 +1,276 @@
+{
+  "base_analysis": "sar8audit-ref-current-v2-reduce1",
+  "R1k_run": "sar8audit-ref-cinput-r1k-v1",
+  "scope": "Local FF-cold replayed-boundary block experiment only",
+  "same_fault_window_s": [
+    6.4e-08,
+    6.599650423427016e-08
+  ],
+  "no_peak_alignment_or_time_shift": true,
+  "native_effective_settings_equal": true,
+  "external_PWL_provenance_equal": true,
+  "same_window_peaks": [
+    {
+      "node": "xdut.xref.xdrv0.gnna",
+      "base_peak_V": 1.034989438119328,
+      "R1k_peak_V": 1.034877797595158,
+      "base_peak_ns": 65.24056656945014,
+      "R1k_peak_ns": 65.24056668576203,
+      "base_rail_excursion_mV": 44.9894381193281,
+      "R1k_rail_excursion_mV": 44.87779759515797,
+      "peak_change_mV": -0.11164052417012016,
+      "peak_time_change_ps": 0.00011631190410411055
+    },
+    {
+      "node": "xdut.xref.xdrv0.gnnb",
+      "base_peak_V": -0.04254237964579274,
+      "R1k_peak_V": -0.04429980816418657,
+      "base_peak_ns": 65.24323899487334,
+      "R1k_peak_ns": 65.24309835282354,
+      "base_rail_excursion_mV": -42.542379645792735,
+      "R1k_rail_excursion_mV": -44.29980816418657,
+      "peak_change_mV": -1.7574285183938332,
+      "peak_time_change_ps": -0.14064204980103687
+    },
+    {
+      "node": "xdut.xref.xdrv0.gnndrv",
+      "base_peak_V": 1.057986484275964,
+      "R1k_peak_V": 1.047580099195717,
+      "base_peak_ns": 65.24611947828197,
+      "R1k_peak_ns": 65.24651904748924,
+      "base_rail_excursion_mV": 67.9864842759641,
+      "R1k_rail_excursion_mV": 57.58009919571694,
+      "peak_change_mV": -10.40638508024716,
+      "peak_time_change_ps": 0.3995692072835224
+    },
+    {
+      "node": "xdut.gnn0",
+      "base_peak_V": 0.9912081233606775,
+      "R1k_peak_V": 0.9911109488860961,
+      "base_peak_ns": 65.2468600706847,
+      "R1k_peak_ns": 65.24737476771247,
+      "base_rail_excursion_mV": 1.2081233606775488,
+      "R1k_rail_excursion_mV": 1.1109488860960859,
+      "peak_change_mV": -0.09717447458146289,
+      "peak_time_change_ps": 0.5146970277782215
+    }
+  ],
+  "half_vdd_delays": {
+    "xdut.xref.xdrv0.gnnb": {
+      "base_ns": 65.24608135459121,
+      "R1k_ns": 65.24571711261667,
+      "change_ps": -0.36424197453270396
+    },
+    "xdut.xref.xdrv0.gnndrv": {
+      "base_ns": 65.24806978562646,
+      "R1k_ns": 65.24890740054305,
+      "change_ps": 0.8376149165966134
+    },
+    "xdut.gnn0": {
+      "base_ns": 65.31345870338902,
+      "R1k_ns": 65.31431149520881,
+      "change_ps": 0.8527918197996971
+    },
+    "xdut.xcdac.bn0": {
+      "base_ns": 65.53866302626729,
+      "R1k_ns": 65.53866038082789,
+      "change_ps": -0.0026454393909954503
+    },
+    "xdut.xcdac.bp0": {
+      "base_ns": 65.47675785573993,
+      "R1k_ns": 65.47675796854583,
+      "change_ps": 0.0001128058891516372
+    }
+  },
+  "global_GNN0": {
+    "base": {
+      "max": 1.00663563922445,
+      "max_time_s": 4.53797303332602e-08,
+      "min": 3.443831993017451e-05,
+      "min_time_s": 6.599650423427016e-08
+    },
+    "R1k": {
+      "max": 1.006635639279177,
+      "max_time_s": 4.53797298956188e-08,
+      "min": 3.443945090788556e-05,
+      "min_time_s": 6.599650423427016e-08
+    },
+    "note": "Same~1.006636V global maximum at45.37973ns exists in BOTH. Do not compare it to the65ns local peaks."
+  },
+  "new_gate_fault_range_V": [
+    -0.03058246309491857,
+    0.9900011436755718
+  ],
+  "current_gate_input": {
+    "base": {
+      "max_positive_gate_sum_A": 0.0003154852760114598,
+      "at_s": 6.52462205491545e-08
+    },
+    "R1k": {
+      "max_positive_gate_sum_A": 0.00026336207834020775,
+      "at_s": 6.524637757686764e-08
+    }
+  },
+  "R_port_charge_native": {
+    "xdut.xref.xdrv0.r_cin:1": {
+      "abs_C": 1.300832319372094e-15,
+      "fault_abs_C": 1.2996840318223059e-15,
+      "fault_signed_C": 1.2319014535957145e-15,
+      "signed_C": 1.2308577327708687e-15
+    },
+    "xdut.xref.xdrv0.r_cin:2": {
+      "abs_C": 1.300832319372094e-15,
+      "fault_abs_C": 1.2996840318223059e-15,
+      "fault_signed_C": -1.2319014535957145e-15,
+      "signed_C": -1.2308577327708687e-15
+    }
+  },
+  "R_fault_charge_sum_C": 0.0,
+  "R_full_charge_sum_C": 0.0,
+  "R_Ohm_law_max_residual_V": 1.3877787807814457e-16,
+  "R_port_sum_max_A": 0.0,
+  "baseline_Cgate_fault_net_charge_C": 1.2319166992285344e-15,
+  "R1k_Cgate_fault_net_charge_C": 1.231901453309988e-15,
+  "R1k_R_to_gate_charge_residual_C": 2.85726405947182e-25,
+  "R_fault_dissipated_J": 2.2738562033883985e-16,
+  "R_full_dissipated_J": 2.2738562037392804e-16,
+  "R_full_port_sum_max_A": 0.0,
+  "R_full_native_charge_port1_C": 1.2308577327708657e-15,
+  "R_full_native_charge_port2_C": -1.2308577327708657e-15,
+  "KCL": {
+    "base_full_max_A": 3.7796668560638595e-12,
+    "R1k_full_max_A": 1.6596248030367744e-12,
+    "base_fault_max_A": 1.3044164273029457e-12,
+    "R1k_fault_max_A": 1.6596248030367744e-12,
+    "new_gate": {
+      "abs_integral_C": 6.623589617399673e-25,
+      "fault_max_abs_a": 1.6596248030367744e-12,
+      "incident_at_max_a": {
+        "xdut.xref.xdrv0.gnncn:2": 7.532728022451172e-05,
+        "xdut.xref.xdrv0.gnncp:2": 0.0001507923584498924,
+        "xdut.xref.xdrv0.r_cin:2": -0.0002261196403340289
+      },
+      "max_abs_a": 1.6596248030367744e-12,
+      "max_l1_incident_a": 0.0005267241566804113,
+      "max_residual_over_l1": 7.890643187029328e-05,
+      "max_residual_over_l1_time_s": 4.109998607170373e-08,
+      "signed_integral_C": -2.857168411524542e-25,
+      "time_s": 6.524728740407665e-08
+    }
+  },
+  "terminal_screen_summary": {
+    "full_history_pairs": 228,
+    "fault_window_pair_coverage": 110,
+    "unavailable_fault_pairs_not_fabricated": 118,
+    "base_strict_exceed_pairs": 111,
+    "R1k_strict_exceed_pairs": 111,
+    "base_exceed_by_more_than1mV_pairs": 87,
+    "R1k_exceed_by_more_than1mV_pairs": 87,
+    "count_note": "Counts are terminal-pair records, not transistor counts;1mV grouping is not relaxation of the screen limit",
+    "base_worst": "XDUT.XREF.XDRV0.GNNCN:bd",
+    "R1k_worst": "XDUT.XREF.XDRV0.GNPCN:bd",
+    "R1k_worst_excess_mV": 65.369783588477
+  },
+  "settling": {
+    "base": {
+      "independent_command_time_s": 6.519328075902337e-08,
+      "expected_Q0": 1,
+      "target": "BN0->VREFP, BP0->VREFN from independent CODE243",
+      "tolerance_V": 0.001,
+      "diagnostic_only": true,
+      "observed_until_s": 6.599650423427016e-08,
+      "nodes": {
+        "xdut.xcdac.bn0": {
+          "final_error_mV": -0.10345724500748776,
+          "last_outside_1mV_native_s": 6.57914029029615e-08,
+          "first_remained_inside_1mV_native_s": 6.579720599836134e-08,
+          "native_crossing_bracket_width_ps": 5.803095399845413,
+          "min_voltage_V": -0.04622173781041709,
+          "max_voltage_V": 0.8998533442654959
+        },
+        "xdut.xcdac.bp0": {
+          "final_error_mV": 0.015431966688862661,
+          "last_outside_1mV_native_s": 6.561134977561641e-08,
+          "first_remained_inside_1mV_native_s": 6.56127810224758e-08,
+          "native_crossing_bracket_width_ps": 1.4312468593908936,
+          "min_voltage_V": 5.801127455944211e-05,
+          "max_voltage_V": 0.9568239472791682
+        }
+      }
+    },
+    "R1k": {
+      "independent_command_time_s": 6.519328075902337e-08,
+      "expected_Q0": 1,
+      "target": "BN0->VREFP, BP0->VREFN from independent CODE243",
+      "tolerance_V": 0.001,
+      "diagnostic_only": true,
+      "observed_until_s": 6.599650423427016e-08,
+      "nodes": {
+        "xdut.xcdac.bn0": {
+          "final_error_mV": -0.10345455285465377,
+          "last_outside_1mV_native_s": 6.579140297067996e-08,
+          "first_remained_inside_1mV_native_s": 6.579720603939231e-08,
+          "native_crossing_bracket_width_ps": 5.803068712351874,
+          "min_voltage_V": -0.04617925794993662,
+          "max_voltage_V": 0.8998533417987968
+        },
+        "xdut.xcdac.bp0": {
+          "final_error_mV": 0.015431884582133713,
+          "last_outside_1mV_native_s": 6.561144508692186e-08,
+          "first_remained_inside_1mV_native_s": 6.561287390713804e-08,
+          "native_crossing_bracket_width_ps": 1.428820216180531,
+          "min_voltage_V": 5.799116983742561e-05,
+          "max_voltage_V": 0.9568230314989619
+        }
+      }
+    }
+  },
+  "energy": {
+    "same_interval_s": [
+      0,
+      6.599650423427016e-08
+    ],
+    "base_VDD_J": 7.613664865144308e-12,
+    "R1k_VDD_J": 7.61364289065148e-12,
+    "change_J": -2.1974492827377492e-17,
+    "relative_change": -2.8861912385949222e-06,
+    "note": "Partial ideal-VDD energy almost unchanged; small difference is not meaningful power optimization or whole-ADC power qualification"
+  },
+  "original_warning_summary": {
+    "base": {
+      "CMI_code_occurrences": {
+        "CMI-2751": 5,
+        "CMI-2752": 5,
+        "CMI-2753": 5,
+        "CMI-2754": 5,
+        "CMI-2755": 5,
+        "CMI-2756": 5
+      },
+      "CMI_present": true,
+      "bytes": 27510,
+      "file": "spectre.original.log",
+      "sha256": "7d41e11bcc675592d82a1b0a838883025df07a4f9bb85048423b7970893bdd3a",
+      "unmodified_complete_log": true,
+      "warning_count_scope": "Logged occurrences only; simulator maxwarns/maxw may suppress repeats. No electrical PASS inferred from absent CMI text."
+    },
+    "R1k": {
+      "CMI_code_occurrences": {
+        "CMI-2751": 5,
+        "CMI-2752": 5,
+        "CMI-2753": 5,
+        "CMI-2754": 5,
+        "CMI-2755": 5,
+        "CMI-2756": 5
+      },
+      "CMI_present": true,
+      "bytes": 27812,
+      "file": "spectre.original.log",
+      "sha256": "2cde106bd15b66ee64d62f86f926394e613a924180e33709c20da95c29c0555e",
+      "unmodified_complete_log": true,
+      "warning_count_scope": "Logged occurrences only; simulator maxwarns/maxw may suppress repeats. No electrical PASS inferred from absent CMI text."
+    }
+  },
+  "candidate_adoption_supported": false,
+  "acceptance_pass": null,
+  "next_step": "Characterize a1.8V-rated T28 inverter/driver cell with the actual downstream/Rgate/reference load over retained0.81..0.99V supply range, including SS0.81V cold risk. Establish delay/stress before a driver-chain replacement; do not continue blind shared-R increases. No new candidate generated."
+}

@@ -1,0 +1,162 @@
+{
+  "status": "local_prepared_HD_clear_gate_R_native_not_executed",
+  "registered": false,
+  "simulation_started": false,
+  "full_ADC_candidate": false,
+  "source": "verification/sar8_module_audit/reference/standard_cell_bbm_hlswap_v1",
+  "single_variable_delta": {
+    "target": "XDUT.XBBM0.XD_HD.MP_CLEAR",
+    "new_resistor": "XDUT.XBBM0.XD_HD.R_CLEAR_GATE",
+    "old_gate_node": "CODE",
+    "new_gate_node": "XDUT.XBBM0.XD_HD.CLEAR_G",
+    "LD_and_all_other_existing_leaf_records_exact": true,
+    "unchanged_existing_leaf_records": 193,
+    "original_primitives": 194,
+    "candidate_primitives": 195,
+    "all123_MOS_models_dimensions_DSB_exact": true,
+    "changed_existing": {
+      "XDUT.XBBM0.XD_HD.MP_CLEAR": {
+        "old": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XBBM0.XD_HD.RC1",
+            "CODE",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=3u multi=1 nf=1 sd=100n ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        },
+        "new": {
+          "model": "pch_mac",
+          "nodes": [
+            "XDUT.XBBM0.XD_HD.RC1",
+            "XDUT.XBBM0.XD_HD.CLEAR_G",
+            "VDD!",
+            "VDD!"
+          ],
+          "parameters": "l=30n w=3u multi=1 nf=1 sd=100n ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60"
+        }
+      }
+    },
+    "added_passive": {
+      "instance": "XDUT.XBBM0.XD_HD.R_CLEAR_GATE",
+      "model": "rupolym",
+      "nodes": [
+        "CODE",
+        "XDUT.XBBM0.XD_HD.CLEAR_G"
+      ],
+      "parameters": "l=17.13u w=1u m=1 multi=(1)"
+    },
+    "resistor_geometry_source": "XDUT.XBBM0.XD_HD.R0",
+    "resistor_parameters_identical_to_existing_native_passed_R0": true,
+    "native_library_and_BBM_boolean_cells_exact": true,
+    "cloned_only_HD_delay_master": "sar8audit_delay_bbm_HD_clear_gate_R",
+    "no_supply_or_sampling_clock_change": true,
+    "baseline_dut_sha256": "3821c79b8cbae113c8bf327c8c39bba4a808c174899a6bdc275f093a9329876a",
+    "baseline_recipe_proposal_sha256": "739a937ac526501d15922f09de3babc87a4dc9270e9845a5731bfe50d26874e4",
+    "rationale": "Existing HL native RC1 charge closure identifies MP_CLEAR D as dominant source/sink for both polarities. One existing-R0-geometry gate resistor slows only HD analog clear edge, keeps DC strength; LD untouched control. MeasuredR1~9790.7ohm and eventQg/0.99~1.99fF imply~19.5ps first estimate, not a pass prediction.",
+    "candidate_dut_sha256": "790321313eb64b556bad42b64f4d9a7142574f1ab471ddcc2fa19a5909545dd3"
+  },
+  "cases": [
+    {
+      "run_id": "sar8audit-ref-rc1-hd-cleargater-ff-v1",
+      "recipe": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/ffcold/recipe_proposal.json",
+      "recipe_sha256": "3805b0f88e1face70a166ecc407746bb6ce41d86c6359eacc5634de5dfc3f32b",
+      "staged_bytes": 496535,
+      "files": [
+        {
+          "name": "dut.scs",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/dut.scs",
+          "bytes": 34739,
+          "sha256": "790321313eb64b556bad42b64f4d9a7142574f1ab471ddcc2fa19a5909545dd3"
+        },
+        {
+          "name": "test.scs",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/ffcold/test.scs",
+          "bytes": 24238,
+          "sha256": "5f7da0833a0ac7ed0ff0ff840b63b69c7bb3b056f355c7666fa6d328711abc16"
+        },
+        {
+          "name": "reference_current_analyze.py",
+          "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+          "bytes": 29142,
+          "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+        },
+        {
+          "name": "io_cell_analyze.py",
+          "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+          "bytes": 10327,
+          "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+        },
+        {
+          "name": "standard_cell_bbm_analyze.py",
+          "source": "verification/sar8_module_audit/reference/standard_cell_bbm_analyze.py",
+          "bytes": 19879,
+          "sha256": "297536a139b1bb2b17310d51bf4b0ed215c9c044a51265844fef1349a2875fef"
+        },
+        {
+          "name": "standard_cell_bbm_lswap_analyze.py",
+          "source": "verification/sar8_module_audit/reference/standard_cell_bbm_lswap_analyze.py",
+          "bytes": 2274,
+          "sha256": "c53ce801f34bbba6d3554c2750e6e8e14a5dc0fb77dbebb2cb594a09a25a83a8"
+        },
+        {
+          "name": "standard_cell_bbm_hlswap_analyze.py",
+          "source": "verification/sar8_module_audit/reference/standard_cell_bbm_hlswap_v1/standard_cell_bbm_hlswap_analyze.py",
+          "bytes": 7298,
+          "sha256": "e027435d6adb4ec87138544a6d11a5f6710b6e16100917500fc3a4f3c585c0ed"
+        },
+        {
+          "name": "rc1_event_measure.py",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/rc1_event_measure.py",
+          "bytes": 5972,
+          "sha256": "d03ce74019187a32be3c9846e33bd308f4b1f7ed3fb6972e1fe98be2f33042dc"
+        },
+        {
+          "name": "rc1_analyze.py",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/rc1_analyze.py",
+          "bytes": 2862,
+          "sha256": "f687032364c43d3602e81c5f58c7ff0a662ceb1508c3982f7393ea9e25f3f334"
+        },
+        {
+          "name": "migration.json",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/migration.json",
+          "bytes": 16556,
+          "sha256": "eaa7d0813e03f0d773262b604bc1275d229543cf9e92cef756650d790c4689da"
+        },
+        {
+          "name": "library_metadata.json",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/library_metadata.json",
+          "bytes": 4177,
+          "sha256": "cd3aaca173eb2c3960f889fe18f310607889ab06e30d382ab6faaaa8ca4f9b80"
+        },
+        {
+          "name": "single_variable_delta.json",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/single_variable_delta.json",
+          "bytes": 2806,
+          "sha256": "f3534ab7343c9c98f6b360bebee00c1ab3a0f6bb8038a6fe14e813d1548160f0"
+        },
+        {
+          "name": "measurement.json",
+          "source": "verification/sar8_module_audit/reference/standard_cell_rc1_v1/ffcold/measurement.json",
+          "bytes": 336265,
+          "sha256": "68dfedf9cde4d09de0fb9597f7f6ea02d90baf1416672ab85f868a7f9bf330ee"
+        }
+      ],
+      "signals": {
+        "voltages": 117,
+        "currents": 654,
+        "terminal_screens": 738,
+        "KCL": 37,
+        "native_columns": 445
+      }
+    }
+  ],
+  "resources": {
+    "simulation_threads": 4,
+    "simulation_RSS_MiB": 1024,
+    "analysis_RSS_MiB": 256,
+    "derived_budget_MiB": 30,
+    "expected_collection_MiB_max": 32
+  }
+}

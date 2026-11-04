@@ -1,0 +1,52 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Pin-compatible with manual_cmp. Both outputs low during reset; one high
+// after evaluation. Sign is latched at CLK rising threshold, not at td expiry.
+module manual8_cmp(CLK, VINP, VINN, VDD, GND, DCMPP, DCMPN);
+    input CLK, VDD;
+    inout VINP, VINN, GND;
+    output DCMPP, DCMPN;
+    electrical CLK, VINP, VINN, VDD, GND, DCMPP, DCMPN;
+    parameter real td = 200p from (0:inf);
+    parameter real trf = 50p from (0:inf);
+    parameter real rout = 1 from (0:inf);
+    parameter real vos = 0;
+    parameter real cin = 0 from [0:inf);
+    // Optional small-input delay: td + treg*ln(1+vscale/max(|vd|,vfloor)).
+    // Disabled by default; this is NOT a calibrated metastability/noise model.
+    parameter real treg = 0 from [0:inf);
+    parameter real vscale = 1m from (0:inf);
+    parameter real vfloor = 1u from (0:inf);
+    // Positive qkick draws charge from input on CLK rise; returns it on fall.
+    parameter real qkickp = 0;
+    parameter real qkickn = 0;
+    parameter real vlogic = 0.9 from (0:inf);
+    parameter real threshold = 0.5 from (0:1);
+    integer pending, decision, op, on;
+    real due, vd;
+    analog begin
+        @(initial_step) begin
+            pending=0; decision=0; op=0; on=0; due=1e9;
+        end
+        @(cross(V(CLK,GND)-threshold*V(VDD,GND), +1)) begin
+            vd=V(VINP,VINN)-vos;
+            decision=(vd>=0); // Explicit deterministic positive tie break.
+            op=0; on=0; pending=1;
+            due=$abstime+td+treg*ln(1+vscale/max(abs(vd),vfloor));
+        end
+        @(cross(V(CLK,GND)-threshold*V(VDD,GND), -1)) begin
+            pending=0; op=0; on=0; due=1e9;
+        end
+        @(timer(due)) begin
+            if (pending && V(CLK,GND)>threshold*V(VDD,GND)) begin
+                op=decision; on=1-decision; pending=0;
+            end
+            due=1e9;
+        end
+        I(DCMPP,GND) <+ (V(DCMPP,GND)-V(VDD,GND)*transition(op,0,trf,trf))/rout;
+        I(DCMPN,GND) <+ (V(DCMPN,GND)-V(VDD,GND)*transition(on,0,trf,trf))/rout;
+        I(VINP,GND) <+ cin*ddt(V(VINP,GND))+qkickp*ddt(V(CLK,GND)/vlogic);
+        I(VINN,GND) <+ cin*ddt(V(VINN,GND))+qkickn*ddt(V(CLK,GND)/vlogic);
+    end
+endmodule

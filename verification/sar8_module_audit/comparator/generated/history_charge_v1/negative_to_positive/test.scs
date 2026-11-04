@@ -1,0 +1,192 @@
+// TT native completion feedback; conditional reference output cut; NOT SPECTRE COMPILED.
+simulator lang=spectre
+global 0 VDD!
+parameters SUP=0.9 HSIGN=-1
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=pre_simu
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=noise_worst
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=ttmacro_mos_moscap
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_res_bip_dio_disres
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_mom
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_ind_jvar
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_r_metal
+include "cells.scs"
+include "history_interface.scs"
+include "cdac_load.scs"
+ahdl_include "initializer.va"
+ahdl_include "history_charge.va"
+    XDUT (TOPP TOPN SAMPLE_INT VDD! 0 D0 D1 D2 D3 D4 D5 D6 D7 CMP_CLK PHI_U) audit_history_feedback
+    XCDAC (TOPN TOPP BOT_N BOT_P VREFN VREFP) audit_cdac_hold
+VVDD (VDD! 0) vsource dc=SUP
+VSAMPLE (SAMPLE_INT 0) vsource type=pwl wave=[0n SUP 20n SUP 20.1n 0 100n 0]
+VINIT (CINIT 0) vsource type=pwl wave=[0n SUP 18n SUP 18.1n 0 100n 0]
+VPREP (PREP 0) vsource dc=(0.45+HSIGN*0.028125)
+VPREN (PREN 0) vsource dc=(0.45-HSIGN*0.028125)
+VVCM (VCM 0) vsource dc=0.45
+VREFLOW (VREFN 0) vsource dc=0
+VREFHIGH (VREFP 0) vsource dc=0.9
+VSENSE_P (TOPP HOLD_P) vsource dc=0
+XINIT_P (HOLD_P PREP CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+VSENSE_N (TOPN HOLD_N) vsource dc=0
+XINIT_N (HOLD_N PREN CINIT 0) cmp_charge_initializer ron=10 control_high=0.9
+COUT0 (D0 0) capacitor c=5f
+COUT1 (D1 0) capacitor c=5f
+COUT2 (D2 0) capacitor c=5f
+COUT3 (D3 0) capacitor c=5f
+COUT4 (D4 0) capacitor c=5f
+COUT5 (D5 0) capacitor c=5f
+COUT6 (D6 0) capacitor c=5f
+COUT7 (D7 0) capacitor c=5f
+simulatorOptions options temp=27 tnom=27 reltol=1e-6 vabstol=1e-8 iabstol=1e-13 method=gear2only
+tran_feedback tran stop=100n maxstep=5p errpreset=conservative
+saveOptions options save=selected currents=selected subcktiprobes=no useprobes=no
+XHISTORY (BOT_P BOT_N HIST_MARK CMP_CLK PHI_U VDD! VCM 0) cmp_history_charge step_sign=(-HSIGN) amp_v=0.02911764705882353 delay_s=900p slew_s=200p
+save BOT_N
+save BOT_P
+save CINIT
+save CMP_CLK
+save D0
+save D1
+save D2
+save D3
+save D4
+save D5
+save D6
+save D7
+save HIST_MARK
+save PHI_U
+save PREN
+save PREP
+save SAMPLE_INT
+save TOPN
+save TOPP
+save VCM
+save VDD!
+save VREFN
+save VREFP
+save XDUT.ACTIVE
+save XDUT.COMP_N
+save XDUT.COMP_P
+save XDUT.XCOMP.TAIL
+save XDUT.XCOMP.X
+save XDUT.XCOMP.Y
+save XDUT.XCTRL.DATA
+save XDUT.XCTRL.PHI_W
+save XDUT.XCTRL.T0
+save XDUT.XCTRL.T1
+save XDUT.XCTRL.T2
+save XDUT.XCTRL.T3
+save XDUT.XCTRL.T4
+save XDUT.XCTRL.T5
+save XDUT.XCTRL.T6
+save XDUT.XCTRL.T7
+save XDUT.XCTRL.XTIM.CLOCK_Q
+save XDUT.XCTRL.XTIM.CLOCK_RESET
+save XDUT.XCTRL.XTIM.CLOCK_SET
+save XDUT.XCTRL.XTIM.CN
+save XDUT.XCTRL.XTIM.DEC
+save XDUT.XCTRL.XTIM.LIVE
+save XDUT.XCTRL.XTIM.NR
+save XDUT.XCTRL.XTIM.NRB
+save XDUT.XCTRL.XTIM.PR
+save XDUT.XCTRL.XTIM.Q0
+save XDUT.XCTRL.XTIM.Q1
+save XDUT.XCTRL.XTIM.QUIET
+save XDUT.XCTRL.XTIM.QUIET_D
+save XDUT.XCTRL.XTIM.RAW
+save XDUT.XCTRL.XTIM.RAW_D
+save XDUT.XCTRL.XTIM.SN
+save XDUT.XCTRL.XTIM.UD
+save XDUT.XCTRL.XTIM.UN
+save XDUT.XCTRL.XTIM.WD
+save XDUT.XCTRL.XTIM.WN
+save XDUT.XCTRL.XTIM.WRITE_D
+save XDUT.XCTRL.XTIM.WRITE_REQ
+save XDUT.XCTRL.XTIM.X001.N
+save XDUT.XCTRL.XTIM.X001.X000.MID
+save XDUT.XCTRL.XTIM.X002.N
+save XDUT.XCTRL.XTIM.X003.N
+save XDUT.XCTRL.XTIM.X005.N
+save XDUT.XCTRL.XTIM.X005.X000.MID
+save XDUT.XCTRL.XTIM.X006.N
+save XDUT.XCTRL.XTIM.X006.NA
+save XDUT.XCTRL.XTIM.X006.NB
+save XDUT.XCTRL.XTIM.X006.X000.MID
+save XDUT.XCTRL.XTIM.X006.X001.MID
+save XDUT.XCTRL.XTIM.X006.X002.MID
+save XDUT.XCTRL.XTIM.X006.X003.MID
+save XDUT.XCTRL.XTIM.X008.N
+save XDUT.XCTRL.XTIM.X008.X000.MID
+save XDUT.XCTRL.XTIM.X009.N
+save XDUT.XCTRL.XTIM.X009.X000.MID
+save XDUT.XCTRL.XTIM.X010.N
+save XDUT.XCTRL.XTIM.X010.X000.MID
+save XDUT.XCTRL.XTIM.X011.AB
+save XDUT.XCTRL.XTIM.X013.N
+save XDUT.XCTRL.XTIM.X013.X000.MID
+save XDUT.XCTRL.XTIM.X014.N
+save XDUT.XCTRL.XTIM.X014.X000.MID
+save XDUT.XCTRL.XTIM.X018.N
+save XDUT.XCTRL.XTIM.X018.X000.MID
+save XDUT.XCTRL.XTIM.X019.N
+save XDUT.XCTRL.XTIM.X019.X000.MID
+save XDUT.XCTRL.XTIM.X020.N
+save XDUT.XCTRL.XTIM.X020.X000.MID
+save XDUT.XCTRL.XTIM.X022.N
+save XDUT.XCTRL.XTIM.X022.X000.MID
+save XDUT.XCTRL.XTIM.X023.AB
+save XDUT.XCTRL.XTIM.X023.BB
+save XDUT.XCTRL.XTIM.X023.X002.MID
+save XDUT.XCTRL.XTIM.X025.N
+save XDUT.XCTRL.XTIM.XCLOCK.QB
+save XDUT.XCTRL.XTIM.XCLOCK.RB
+save XDUT.XCTRL.XTIM.XCLOCK.SN
+save XDUT.XCTRL.XTIM.XCLOCK.X001.MID
+save XDUT.XCTRL.XTIM.XCLOCK.X002.MID
+save XDUT.XCTRL.XTIM.XCLOCK.X003.MID
+save XDUT.XCTRL.XTIM.XD_QUIET_D.AB
+save XDUT.XCTRL.XTIM.XD_QUIET_D.B
+save XDUT.XCTRL.XTIM.XD_QUIET_D.RC0
+save XDUT.XCTRL.XTIM.XD_QUIET_D.RC1
+save XDUT.XCTRL.XTIM.XD_RAW_D.AB
+save XDUT.XCTRL.XTIM.XD_RAW_D.B
+save XDUT.XCTRL.XTIM.XD_RAW_D.RC0
+save XDUT.XCTRL.XTIM.XD_RAW_D.RC1
+save XDUT.XCTRL.XTIM.XD_WRITE_D.AB
+save XDUT.XCTRL.XTIM.XD_WRITE_D.B
+save XDUT.XCTRL.XTIM.XD_WRITE_D.RC0
+save XDUT.XCTRL.XTIM.XD_WRITE_D.RC1
+save XDUT.XREF.ACK
+save XDUT.XREF.CAP_CLK
+save XDUT.XREF.LATE_CLK
+save XDUT.XREF.Q0
+save XDUT.XREF.Q1
+save XDUT.XREF.Q2
+save XDUT.XREF.Q3
+save XDUT.XREF.Q4
+save XDUT.XREF.Q5
+save XDUT.XREF.Q6
+save XDUT.XREF.Q7
+save XDUT.XREF.REQ_Q
+save VSENSE_N:1
+save VSENSE_P:1
+save VVDD:1
+save XCDAC.CMOMN0:1
+save XCDAC.CMOMN1:1
+save XCDAC.CMOMN2:1
+save XCDAC.CMOMN3:1
+save XCDAC.CMOMN4:1
+save XCDAC.CMOMN5:1
+save XCDAC.CMOMN6:1
+save XCDAC.CMOMN7:1
+save XCDAC.CMOMN8:1
+save XCDAC.CMOMP0:1
+save XCDAC.CMOMP1:1
+save XCDAC.CMOMP2:1
+save XCDAC.CMOMP3:1
+save XCDAC.CMOMP4:1
+save XCDAC.CMOMP5:1
+save XCDAC.CMOMP6:1
+save XCDAC.CMOMP7:1
+save XCDAC.CMOMP8:1
+save XDUT.XCOMP.MNINN:2
+save XDUT.XCOMP.MNINP:2

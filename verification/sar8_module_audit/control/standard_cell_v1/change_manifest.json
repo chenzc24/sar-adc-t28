@@ -1,0 +1,198 @@
+{
+  "base_run": "sar8audit-ctrl-snload-both-v1",
+  "base_recipe_sha256": "66cda5e5a9c65de39abee30125b33fe39f8926729145adbe5d25999b0bcc802c",
+  "base_proof": {
+    "run": "sar8audit-ctrl-snload-both-v1",
+    "recipe_sha256": "66cda5e5a9c65de39abee30125b33fe39f8926729145adbe5d25999b0bcc802c",
+    "receipt_files": 9,
+    "receipt_bytes": 1725886,
+    "required_currents": 436,
+    "native_points": 6041,
+    "local_diagnostic_points": 1960,
+    "END": true,
+    "all_receipt_and_input_hashes_match": true,
+    "critical_kcl_max_a": 3.653740843407617e-12,
+    "native_warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "SFE-1131",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "replacement": {
+    "removed": [
+      "XDUT.XCTRL.XTIM.X020.X000.CMID",
+      "XDUT.XCTRL.XTIM.X020.X000.MN0",
+      "XDUT.XCTRL.XTIM.X020.X000.MN1",
+      "XDUT.XCTRL.XTIM.X020.X000.MP0",
+      "XDUT.XCTRL.XTIM.X020.X000.MP1",
+      "XDUT.XCTRL.XTIM.X020.X001.MN",
+      "XDUT.XCTRL.XTIM.X020.X001.MP"
+    ],
+    "added": [
+      "XDUT.XCTRL.XTIM.X020.X000.MM1",
+      "XDUT.XCTRL.XTIM.X020.X000.MM2",
+      "XDUT.XCTRL.XTIM.X020.X000.MM4",
+      "XDUT.XCTRL.XTIM.X020.X000.MM9",
+      "XDUT.XCTRL.XTIM.X020.X001.MM0",
+      "XDUT.XCTRL.XTIM.X020.X001.MM1"
+    ],
+    "unchanged_leaf_count": 123
+  },
+  "foundry_reference": {
+    "file": "/home/process/tsmc28n/STD_CELL/tcbn28hpcplusbwp12t30p140_190a/tcbn28hpcplusbwp12t30p140_170a_spi/TSMCHOME/digital/Back_End/spice/tcbn28hpcplusbwp12t30p140_170a/tcbn28hpcplusbwp12t30p140_170a.spi",
+    "sha256": "b7b366bff01b86fbe6c9728426a1643255476f5e5e63f79b9ff14ffaa2b2fc0e",
+    "bytes": 2452584,
+    "parser_mode": "spice include then restore spectre",
+    "identity_timing": "Analyzer verifies post-simulation. Parent must verify same SHA/size read-only before managed dispatch; not a TOCTOU proof.",
+    "metadata_inputs": {
+      "probe_metadata.json": {
+        "sha256": "da38e90d38fe9575fcdf1f1a0d1e5cb107b07a259d6a6a58d8b6c83e0bab0b85",
+        "bytes": 3135
+      },
+      "master_metadata.json": {
+        "sha256": "0fc1c703aeca5aa4cb9f0a0c6f3930f4707f081c4d3fd0733ea446cd7f834436",
+        "bytes": 4689
+      }
+    },
+    "current_probe_compatibility": "Untested SPICE-M inline binding; require all declared native traces. Missing traces fail. Do not rewrite original file or M prefix.",
+    "external_model_child": "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/cln28ull_1d8_elk_v1d8_3.scs",
+    "model_file_body_copied": false
+  },
+  "library_mos": {
+    "XDUT.XCTRL.XTIM.X020.X000.MM4": {
+      "cell": "ND2D1BWP12T30P140",
+      "master": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.LIVE",
+        "XDUT.XCTRL.XTIM.X020.X000.net10",
+        "0"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X000.MM4:1",
+        "XDUT.XCTRL.XTIM.X020.X000.MM4:2",
+        "XDUT.XCTRL.XTIM.X020.X000.MM4:3",
+        "XDUT.XCTRL.XTIM.X020.X000.MM4:4"
+      ],
+      "known_inline_primitive": "nch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X000.MM4.nch_mac"
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MM9": {
+      "cell": "ND2D1BWP12T30P140",
+      "master": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.X000.net10",
+        "XDUT.XCTRL.XTIM.Q1",
+        "0",
+        "0"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X000.MM9:1",
+        "XDUT.XCTRL.XTIM.X020.X000.MM9:2",
+        "XDUT.XCTRL.XTIM.X020.X000.MM9:3",
+        "XDUT.XCTRL.XTIM.X020.X000.MM9:4"
+      ],
+      "known_inline_primitive": "nch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X000.MM9.nch_mac"
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MM1": {
+      "cell": "ND2D1BWP12T30P140",
+      "master": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.LIVE",
+        "VDD!",
+        "VDD!"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X000.MM1:1",
+        "XDUT.XCTRL.XTIM.X020.X000.MM1:2",
+        "XDUT.XCTRL.XTIM.X020.X000.MM1:3",
+        "XDUT.XCTRL.XTIM.X020.X000.MM1:4"
+      ],
+      "known_inline_primitive": "pch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X000.MM1.pch_mac"
+    },
+    "XDUT.XCTRL.XTIM.X020.X000.MM2": {
+      "cell": "ND2D1BWP12T30P140",
+      "master": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.X020.N",
+        "XDUT.XCTRL.XTIM.Q1",
+        "VDD!",
+        "VDD!"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X000.MM2:1",
+        "XDUT.XCTRL.XTIM.X020.X000.MM2:2",
+        "XDUT.XCTRL.XTIM.X020.X000.MM2:3",
+        "XDUT.XCTRL.XTIM.X020.X000.MM2:4"
+      ],
+      "known_inline_primitive": "pch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X000.MM2.pch_mac"
+    },
+    "XDUT.XCTRL.XTIM.X020.X001.MM1": {
+      "cell": "INVD1BWP12T30P140",
+      "master": "nch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET",
+        "XDUT.XCTRL.XTIM.X020.N",
+        "0",
+        "0"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X001.MM1:1",
+        "XDUT.XCTRL.XTIM.X020.X001.MM1:2",
+        "XDUT.XCTRL.XTIM.X020.X001.MM1:3",
+        "XDUT.XCTRL.XTIM.X020.X001.MM1:4"
+      ],
+      "known_inline_primitive": "nch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X001.MM1.nch_mac"
+    },
+    "XDUT.XCTRL.XTIM.X020.X001.MM0": {
+      "cell": "INVD1BWP12T30P140",
+      "master": "pch_mac",
+      "nodes": [
+        "XDUT.XCTRL.XTIM.QUIET",
+        "XDUT.XCTRL.XTIM.X020.N",
+        "VDD!",
+        "VDD!"
+      ],
+      "requested_numeric_terminal_currents": [
+        "XDUT.XCTRL.XTIM.X020.X001.MM0:1",
+        "XDUT.XCTRL.XTIM.X020.X001.MM0:2",
+        "XDUT.XCTRL.XTIM.X020.X001.MM0:3",
+        "XDUT.XCTRL.XTIM.X020.X001.MM0:4"
+      ],
+      "known_inline_primitive": "pch_mac",
+      "primitive_probe_path_not_assumed": "XDUT.XCTRL.XTIM.X020.X001.MM0.pch_mac"
+    }
+  },
+  "total_MOS": 101,
+  "total_passive": 17,
+  "voltage_saves": 61,
+  "current_saves": 435,
+  "critical_KCL": 60,
+  "simultaneous_pairs": 609,
+  "original_PWL_byte_identical": 11,
+  "non_save_deck_only_external_include_changed": true,
+  "frozen_observer_sha256": "fc57a31dac441f84dfcc8587a17c1247740ad6d40d2c43c04aaaf76b2daee2f6",
+  "metadata_sources": {
+    "two_cell_probe_metadata.json": "da38e90d38fe9575fcdf1f1a0d1e5cb107b07a259d6a6a58d8b6c83e0bab0b85",
+    "model_master_metadata.json": "0fc1c703aeca5aa4cb9f0a0c6f3930f4707f081c4d3fd0733ea446cd7f834436",
+    "package_metadata.json": "a30bddae269118867568847ab25c408c042e9dd1e3a65ae3881b1df649012bfb",
+    "two_cell_logic_check.json": "936f12600b87543666909babe1602edcfcd42f2e0cdcdc43d8c0a8726b04d794"
+  },
+  "declared_input_files": 19,
+  "declared_package_bytes": 4589068,
+  "recipe_file_sha256": "1ca7c5ffb2b246ce8254f608453836b54c1286b2fd4d6bbefcf087daa3f3e681",
+  "local_preparation_only": true,
+  "remote_operations": false,
+  "simulation_completed": false,
+  "qualification_pass_inferred": false
+}

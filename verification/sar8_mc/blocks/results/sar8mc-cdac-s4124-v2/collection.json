@@ -1,0 +1,176 @@
+{
+  "collected_files": 7,
+  "bytes": 40699,
+  "skipped": [],
+  "local_path": "output/managed_execution/runs/sar8mc-cdac-s4124-v2/collected",
+  "state": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8mc-cdac-s4124-v2",
+    "registered": {
+      "epoch": 1793723045.286843,
+      "files_complete": true,
+      "recipe_hash": "2a0ee0a49414b5be71bebe2c3083c30c04138df9c391b5d97e32071c84113cfe"
+    },
+    "simulation": {
+      "status": "complete",
+      "rss_bytes": 206417920,
+      "started_epoch": 1793723805.677802,
+      "updated_epoch": 1793723819.211895,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 13.527645826339722,
+      "submitted_epoch": 1793723805.326541,
+      "output_bytes": 155583,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 3,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 47262642176,
+              "limit": 51539607552,
+              "used": 4276965376
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 14629965824,
+          "cgroup_headroom": 47262642176,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8mc-comp-s4123-v2"
+              },
+              "pid": 212409,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8mc-comp-s4122-v2"
+              },
+              "pid": 213370,
+              "comm": "python"
+            }
+          ],
+          "epoch": 1793723805.6562,
+          "disk_free": 844417183744,
+          "load1": 50.0,
+          "mem_available": 44188684288
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "69874404",
+        "pid": 213408,
+        "state": "R",
+        "pgid": 213408,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 283484160,
+      "worker_identity": {
+        "start_ticks": "69874370",
+        "pid": 213377,
+        "state": "R",
+        "pgid": 213377,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": true,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 0,
+        "effective_settings": {
+          "reltol": "1e-06",
+          "abstol(V)": null,
+          "maxstep": null,
+          "abstol(I)": null,
+          "method": "standard"
+        },
+        "native_analysis_pass": true,
+        "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is 1, consider adding +mt=1 on command line.",
+        "warning_codes": [
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "complete",
+      "rss_bytes": 0,
+      "started_epoch": 1793723821.3555,
+      "updated_epoch": 1793723821.961612,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 0.6056349277496338,
+      "submitted_epoch": 1793723821.009757,
+      "output_bytes": 181784,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 1,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 47539138560,
+              "limit": 51539607552,
+              "used": 4000468992
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 14629965824,
+          "cgroup_headroom": 47539138560,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8mc-comp-s4123-v2"
+              },
+              "pid": 214252,
+              "comm": "python"
+            }
+          ],
+          "epoch": 1793723821.334608,
+          "disk_free": 844403777536,
+          "load1": 50.12,
+          "mem_available": 42431918080
+        },
+        "phase": "analysis"
+      },
+      "phase": "analysis",
+      "child_identity": {
+        "start_ticks": "69875972",
+        "pid": 214256,
+        "state": "R",
+        "pgid": 214256,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 8409088,
+      "worker_identity": {
+        "start_ticks": "69875939",
+        "pid": 214250,
+        "state": "R",
+        "pgid": 214250,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true
+    },
+    "run_id": "sar8mc-cdac-s4124-v2"
+  }
+}

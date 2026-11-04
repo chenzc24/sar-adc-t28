@@ -1,0 +1,203 @@
+managed: true
+recipe_hash: 5765e5e62f96cec40ac6c83a7d4f48d88200f7c68d8dc017f79d739eac5a4dce
+recipe:
+  schema_version: 1
+  run_id: sar8mc-b-tt-s3130-v1
+  design_id: sar8_l90_mmain2_stdcell_v1
+  entry: test.scs
+  analyzer: reduce_mc.py
+  files:
+  - name: dut.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/dut.scs
+    bytes: 94100
+    sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+  - name: test.scs
+    source: verification/sar8_mc/sar8mc-b-tt-s3130-v1/test.scs
+    bytes: 2711
+    sha256: 1b996cf39f0457b8a73c94d431452a2b36ab065480461e37c52440ec17a7ff45
+  - name: tb.scs
+    source: verification/sar8_ab_phase60/b/tb.scs
+    bytes: 1844
+    sha256: 4ba6135e471f76411967e7c49f231c4747adca07b840a32576e22f5390faefef
+  - name: context.json
+    source: verification/sar8_mc/sar8mc-b-tt-s3130-v1/context.json
+    bytes: 1821
+    sha256: a927917e9a8897dbe6bd6904713a6df4795ea5b0af95fd977a1fb648447e369a
+  - name: library_include.scs
+    source: netlist/sar8_l90_mmain2_stdcell_v1/library_include.scs
+    bytes: 253
+    sha256: 4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe
+  - name: r4_perf_monitor.va
+    source: scripts/sar8_ab_phase60/r4_perf_monitor.va
+    bytes: 3231
+    sha256: bea998b89d59f8c55413c5664c12b55354714f0b69bb45165de1885e512c2eb3
+  - name: reduce_mc.py
+    source: scripts/sar8_mc/reduce.py
+    bytes: 3711
+    sha256: 6b53e94aa171d93e5504e56a222f5fcb44e581daa20613e610bcea569df6c881
+  - name: baseline_reduce.py
+    source: scripts/sar8_ab_phase60/reduce.py
+    bytes: 8802
+    sha256: a4b65265c6a95c9e802384b7dc24b1128e57ca4399021e69c54801adfd3ad7f1
+  - name: native_summary.py
+    source: scripts/management/native_summary.py
+    bytes: 2972
+    sha256: 6d64b9ccfd212a2960b942583ae4e2130af2303d68157737165664ac77e51e57
+  resources:
+    threads: 4
+    simulation_rss_mib: 1024
+    simulation_virtual_mib: 8192
+    analysis_rss_mib: 256
+    analysis_virtual_mib: 1024
+    max_output_mib: 1536
+    simulation_wall_seconds: 21600
+    analysis_wall_seconds: 1200
+    queue_timeout_seconds: 86400
+  spectre_args:
+  - +preset=mx
+  - +mt=4
+  - -preset_override
+  - +lqtimeout
+  - '60'
+  summary_signals:
+  - d0
+  - d1
+  - d2
+  - d3
+  - d4
+  - d5
+  - d6
+  - d7
+  - sample
+  - vdd!
+  - vinp_src
+  - vinn_src
+  - vinp
+  - vinn
+  - vrefp
+  - vrefn
+  - xdut.sample_int
+  - xdut.seq_sample
+  - xdut.cmp_clk
+  - xdut.xctrl.phi_w
+  - xdut.phi_u
+  - xdut.xref.cap_clk
+  - xdut.topp
+  - xdut.topn
+  - xdut.xbootp.g
+  - xdut.xbootn.g
+  - xdut.active
+  - xdut.comp_p
+  - xdut.comp_n
+  - xdut.xbootp.btop
+  - xdut.xbootp.bbot
+  - xdut.xbootn.btop
+  - xdut.xbootn.bbot
+  expected_stop_s: 1.059e-06
+  qualification_scope: TT local mismatch only; ten key-code frames, not full static/yield/FFT/electrical
+    qualification
+  source_commit: d699b8ac0139de2b13f3f76ea11788508bc1f1e0
+  oa: null
+  oa_parity: netlist_only
+  model_dependencies:
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: pre_simu
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: noise_worst
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_MOS_MOSCAP
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_RES_BIP_DIO_DISRES
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_MOM
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: TTGlobalCorner_LocalMC_IND_JVAR
+    content: remote_read_only_not_copied
+  - path: /home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs
+    section: tt_r_metal
+    content: remote_read_only_not_copied
+  test_conditions:
+    label: b
+    expected_codes:
+    - 0
+    - 0
+    - 12
+    - 127
+    - 128
+    - 243
+    - 255
+    - 255
+    - 0
+    - 128
+    frames: 10
+    corner: tt
+    vdd: 0.9
+    temperature_c: 27
+    reference_v: 0.9
+    LSB: 0.00703125
+    period_s: 1e-07
+    dut_sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+    signals:
+    - d0
+    - d1
+    - d2
+    - d3
+    - d4
+    - d5
+    - d6
+    - d7
+    - sample
+    - vdd!
+    - vinp_src
+    - vinn_src
+    - vinp
+    - vinn
+    - vrefp
+    - vrefn
+    - xdut.sample_int
+    - xdut.seq_sample
+    - xdut.cmp_clk
+    - xdut.xctrl.phi_w
+    - xdut.phi_u
+    - xdut.xref.cap_clk
+    - xdut.topp
+    - xdut.topn
+    - xdut.xbootp.g
+    - xdut.xbootn.g
+    - xdut.active
+    - xdut.comp_p
+    - xdut.comp_n
+    - xdut.xbootp.btop
+    - xdut.xbootp.bbot
+    - xdut.xbootn.btop
+    - xdut.xbootn.bbot
+    startup_frames:
+    - 0
+    settling_band_lsb: 0.25
+    noise: false
+    mismatch: true
+    PEX: false
+    frame_origin_s: 5.9e-08
+    expected_stop_s: 1.059e-06
+    initial_low_until_s: 6e-08
+    startup_method: External clock low-first phase; no forced internal nodes; DC initialized
+    unscored_interval_s:
+    - 0
+    - 5.9e-08
+    first_valid_frame_must_pass: true
+    run_id: sar8mc-b-tt-s3130-v1
+    solver_profile: mm
+    solver_reference: sar8ab-phase60-b-tt-v1
+    kind: local_mismatch_key_code
+    seed: 3130
+    statistical_sections: true
+    process_variation: false
+    nominal_code_is_reference_not_random_oracle: true
+    parent_dut_sha256: f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea
+    original_nominal_source: sar8camp-b-mm-bench-v1
+remote_path: /server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8mc-b-tt-s3130-v1

@@ -1,0 +1,34 @@
+kind: analysis_only
+source_run_id: sar8fix-loaded-both-ffcold
+run_id: sar8audit-ctrl-native-v1
+design_id: sar8_control_boundary_recovery
+analyzer: native_boundary_export.py
+inputs:
+- source: verification/sar8_module_audit/control/native_boundary_export.py
+  name: native_boundary_export.py
+- source: verification/sar8_module_audit/control/stream_native_boundary.cpp
+  name: stream_native_boundary.cpp
+- source: verification/sar8_module_audit/control/native_export_manifest.json
+  name: native_export_manifest.json
+summary_signals:
+- xdut.xctrl.xtim.x020.n
+expected_stop_s: 4.16e-08
+qualification_scope: Saved native voltage recovery only; no simulation or electrical
+  qualification
+oa_parity: source_netlist_only_no_OA_change
+test_conditions:
+  source_corner: ff
+  source_vdd: 0.99
+  source_temp_c: -40
+  history_end_ns: 41.6
+  diagnostic_start_ns: 40.8
+resources:
+  threads: 1
+  simulation_rss_mib: 1024
+  simulation_virtual_mib: 8192
+  simulation_wall_seconds: 1
+  analysis_rss_mib: 256
+  analysis_virtual_mib: 1024
+  analysis_wall_seconds: 900
+  max_output_mib: 64
+  queue_timeout_seconds: 600

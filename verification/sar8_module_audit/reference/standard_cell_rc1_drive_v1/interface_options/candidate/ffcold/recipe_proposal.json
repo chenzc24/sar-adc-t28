@@ -1,0 +1,104 @@
+{
+  "run_id": "sar8audit-ref-hd-io-guard-ff-v1",
+  "design_id": "sar8_HD_RC1_IO_receiver_clear_passive_guard_interface",
+  "entry": "test.scs",
+  "analyzer": "interface_analyze.py",
+  "inputs": [
+    {
+      "name": "dut.scs",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/dut.scs",
+      "sha256": "586b02482fc42911a4c80eb47c0a9d5f5581d87d204ebc3012d20c936869a5a5"
+    },
+    {
+      "name": "test.scs",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/ffcold/test.scs",
+      "sha256": "1b7de314f9eae6b555e015a0f67f398c362d1f5d506ce130e09009b77af11392"
+    },
+    {
+      "name": "interface_analyze.py",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/interface_analyze.py",
+      "sha256": "6cbe653eb5b51a375ca2f6cfa53a4504a14be7cbfdd59d2fb5f7544b956070b3"
+    },
+    {
+      "name": "reference_current_analyze.py",
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "name": "io_cell_analyze.py",
+      "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+      "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+    },
+    {
+      "name": "standard_cell_bbm_analyze.py",
+      "source": "verification/sar8_module_audit/reference/standard_cell_bbm_analyze.py",
+      "sha256": "297536a139b1bb2b17310d51bf4b0ed215c9c044a51265844fef1349a2875fef"
+    },
+    {
+      "name": "standard_cell_bbm_lswap_analyze.py",
+      "source": "verification/sar8_module_audit/reference/standard_cell_bbm_lswap_analyze.py",
+      "sha256": "c53ce801f34bbba6d3554c2750e6e8e14a5dc0fb77dbebb2cb594a09a25a83a8"
+    },
+    {
+      "name": "standard_cell_bbm_hlswap_analyze.py",
+      "source": "verification/sar8_module_audit/reference/standard_cell_bbm_hlswap_v1/standard_cell_bbm_hlswap_analyze.py",
+      "sha256": "e027435d6adb4ec87138544a6d11a5f6710b6e16100917500fc3a4f3c585c0ed"
+    },
+    {
+      "name": "migration.json",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/migration.json",
+      "sha256": "398ba292b56640fac7135bb45f3257f746855676e43f6837dda96e25db8a7dd8"
+    },
+    {
+      "name": "library_metadata.json",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/library_metadata.json",
+      "sha256": "0f7454c7255b42ec9eef47c57b943327cec564980af89af7ed793025a3e069b6"
+    },
+    {
+      "name": "delta.json",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/delta.json",
+      "sha256": "2a41686c859e0bd3adaeb2dc6f480b2055871cfa75e0552da75a0a5fc8ace794"
+    },
+    {
+      "name": "measurement.json",
+      "source": "verification/sar8_module_audit/reference/standard_cell_rc1_drive_v1/interface_options/candidate/ffcold/measurement.json",
+      "sha256": "f732db68dcda034247b812e550f4139101e0bd0b740bcd75c892c0e86806176e"
+    }
+  ],
+  "summary_signals": [
+    "CODE",
+    "XDUT.H0",
+    "XDUT.L0",
+    "XDUT.GNN0",
+    "XDUT.GNP0",
+    "XDUT.GPN0",
+    "XDUT.GPP0",
+    "XDUT.XCDAC.BN0",
+    "XDUT.XCDAC.BP0"
+  ],
+  "expected_stop_s": 5.2e-08,
+  "qualification_scope": "Single composite HD RC1 analog interface topology: IO clear/receiver plus passive guard, all other leaves/clocks/loads retained; no qualification",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "ffcold",
+    "supply_V": 0.99,
+    "temperature_C": -40,
+    "variant": "HD_RC1_IO_clear_receiver_passive_guard_topology_v1",
+    "logical_stimulus": true,
+    "FF_waveform_replay": false,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}

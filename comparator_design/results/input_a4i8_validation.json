@@ -1,0 +1,49 @@
+{
+  "run_id": "cmpdesign-input-a4i8-ff-hot-v1",
+  "only_M8_M9_multi4_to8": true,
+  "metadata_matches_netlist": true,
+  "baseline_reused": true,
+  "complete400ns": true,
+  "all64_decision_and_reset_pass": true,
+  "electrical_pass": false,
+  "effective_settings": {
+    "abstol(I)": "10 fA, default 1 pA",
+    "abstol(V)": "10 nV, default 1 uV",
+    "maxstep": "20 ps, default 4 ns (conservative)",
+    "method": "gear2only",
+    "reltol": "100e-09, default 100e-06 (conservative)"
+  },
+  "warnings": [
+    "CMI-2751",
+    "CMI-2752",
+    "CMI-2753",
+    "CMI-2754",
+    "CMI-2755",
+    "CMI-2756",
+    "SFE-1131",
+    "SPECTRE-16780"
+  ],
+  "LTE_relaxation_events": [
+    {
+      "preceding_time_header": "Warning from spectre at time = 364.15 ns during transient analysis `tran_test'.",
+      "message": "WARNING (SPECTRE-16780): LTE tolerance was temporarily relaxed to step over a discontinuity in the signal: IP. Check the design or use '+diagnose' to get more information."
+    },
+    {
+      "preceding_time_header": "Warning from spectre at time = 372.15 ns during transient analysis `tran_test'.",
+      "message": "WARNING (SPECTRE-16780): LTE tolerance was temporarily relaxed to step over a discontinuity in the signal: IP. Check the design or use '+diagnose' to get more information."
+    }
+  ],
+  "simulation_seconds": 25.286251068115234,
+  "simulation_RSS_MiB": 287.8203125,
+  "analysis_RSS_MiB": 8.83984375,
+  "kcl_max_A": {
+    "ln": 1.0999569853044344e-16,
+    "net2": 1.0001087414820975e-16
+  },
+  "input_sha256": {
+    "dut.scs": "c6df219310b747b432b5acd1a22333f914bffc96e7c9597517a5147db95bad0c",
+    "models.scs": "49c0360ef696a9c8d24b5e8ce5eac7a86a36db4586bb0caebc20e91d948ad056",
+    "test.scs": "7e0c139eaa3c92ac5bb74464c2e0870a93c97a687f1585e726953a1b4a4a3894",
+    "measure.json": "67655c13e49e20b3ba56d0e3eb4be0648de7676131046ebcc7a1a33cf543481e"
+  }
+}

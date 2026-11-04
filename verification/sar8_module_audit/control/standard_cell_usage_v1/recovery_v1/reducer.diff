@@ -1,0 +1,41 @@
+--- frozen_source
++++ independent_gzip_recovery
+@@ -9,6 +9,7 @@
+ import re
+ import struct
+ import sys
++from stream_gzip import GzipWriter
+ 
+ 
+ def norm(name):
+@@ -71,10 +72,10 @@
+     peak_snapshot = None
+     ended = False
+     raw_hash = hashlib.sha256()
+-    native_path = os.path.join(output, 'peak.native.bin')
++    native_path = os.path.join(output, 'peak.native.bin.gz')
+     if os.path.exists(native_path):
+         raise ValueError('Preserve existing native table')
+-    binary = open(native_path, 'wb')
++    binary = GzipWriter(native_path,cfg['max_derived_binary_bytes'])
+ 
+     def snapshot(t):
+         missing = selected - set(values)
+@@ -216,8 +217,6 @@
+                     if window_start <= current_time <= window_stop:
+                         row = [current_time] + [values[n] for n in diagnostic] + [row_residual[n] for n in critical]
+                         blob = struct.pack('<' + 'd' * len(row), *row)
+-                        if binary_bytes + len(blob) > cfg['max_derived_binary_bytes']:
+-                            raise ValueError('Native current export exceeds 30 MiB cap')
+                         binary.write(blob); binary_bytes += len(blob); window_points += 1
+                         node = norm(cfg['expected_native_peak']['node'])
+                         if peak_snapshot is None or values[node] > peak_snapshot['voltage_v']:
+@@ -238,7 +237,7 @@
+     expected_initial = cfg['expected_initial_state']['values_v']
+     initial_errors = dict((norm(name), initial[norm(name)] - v) for name, v in expected_initial.items())
+     expected_peak = cfg['expected_native_peak']
+-    result = dict(analysis_complete=True, scope=cfg['scope'], native_points=points,
++    result = dict(analysis_complete=True, streaming_export=binary.proof(), scope=cfg['scope'], native_points=points,
+         diagnostic_points=window_points, native_PSF_END=True, raw_sha256=raw_hash.hexdigest(),
+         raw_bytes=os.path.getsize(path), held_values_from_sparse_updates=held,
+         max_native_gap_s=max_gap, trace_bindings=dict((n, native_binding[n]) for n in selected),

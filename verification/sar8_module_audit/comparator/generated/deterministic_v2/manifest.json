@@ -1,0 +1,87 @@
+{
+  "status": "not_Spectre_compiled",
+  "simulation_pass": null,
+  "source_run": "sar8fix-loaded-both-rx2-end210-sscold",
+  "source_DUT_sha256": "c10982b40a9cf4a8aa861852f454b2a26e45ca0988fecd9a26f83c617887cd36",
+  "fixture_spec_sha256": "0dd51a855c80a2875013b0705deb6cba96bd24e53d9490fc1308b630d960deeb",
+  "builder_sha256": "4ba3974cc37ee4ba6fa787402883dc54892ff23cf148b9156e082d0fb86d169f",
+  "native_cell_policy": "Exact LF-normalized source text; wrapper changes explicitly audited",
+  "files": {
+    "cells.scs": "f6189e388fc36d590510215e0434755fafd451c4087af9c75af7bbfa0112ddb3",
+    "boundary_audit.json": "1c8e0a2983e64121b64cbdebca7598409e7479f2c87f6bf2ae4172ce0413fa35",
+    "tt.scs": "d76c5973e60b7baf3628279028c9d3968eeaf81778f850a8e4dc5f99f3ca6cd0",
+    "sscold.scs": "850c9c300afeaaf3975be3b9bfcb297ad7f36ca27afef75987acf1bf91b60488"
+  },
+  "cases": [
+    {
+      "id": "tt",
+      "entry": "tt.scs",
+      "corner": "tt",
+      "vdd_v": 0.9,
+      "temperature_c": 27,
+      "only_environment_differs": true,
+      "pass": null,
+      "spectre_compiled": false
+    },
+    {
+      "id": "sscold",
+      "entry": "sscold.scs",
+      "corner": "ss",
+      "vdd_v": 0.81,
+      "temperature_c": -40,
+      "only_environment_differs": true,
+      "pass": null,
+      "spectre_compiled": false
+    }
+  ],
+  "stimulus": {
+    "start_events_ns": [
+      20,
+      60,
+      100,
+      140,
+      180,
+      220
+    ],
+    "input_signs": [
+      1,
+      1,
+      -1,
+      1,
+      -1,
+      -1
+    ],
+    "differential_input_abs_v": 0.0017578125,
+    "CM_v": 0.45,
+    "input_update_before_start_ns": 8,
+    "input_edge_ns": 0.1,
+    "clock_rise_fall_ns": 0.1,
+    "clock_half_level_high_ns": 12.0,
+    "register_reset": "independent initial high until10ns, low after10.1ns",
+    "token": "independent fixed onehot TOKEN0, no token chain",
+    "observation_stop_ns": 260,
+    "timing_budget_allocated": false
+  },
+  "required_future_checks": [
+    "physical comparator reset before every input update/start",
+    "correct resolved sign and stable DATA before actual write aperture",
+    "no accepted reset/false/duplicate write",
+    "all relevant MOS terminal peaks at native points",
+    "no re-use of these ideal-input traces as charge-kickback evidence"
+  ],
+  "unknown_budgets": {
+    "comparator_actual_CM_and_differential_envelope": null,
+    "receiver_input_voltage_and_slew_envelope": null,
+    "data_setup_and_hold_s": null,
+    "reset_recovery_margin_s": null,
+    "decision_plus_receiver_max_delay_s": null,
+    "allowed_unresolved_probability_or_BER": null,
+    "random_mismatch_yield_and_offset_limit": null,
+    "allowed_input_capacitance_and_charge_kickback": null,
+    "module_power_allocation_w": null,
+    "policy": "Parent must allocate before pass/fail qualification. ADC full-scale is not the instantaneous comparator-input envelope; 0.25LSB is not an independent full budget for every error source."
+  },
+  "extraction_scope": "Comparator and exact receiver/write fanout; excluded outer boundary loads are a declared limitation requiring parent review",
+  "remote_submission": false,
+  "managed_recipe_created": false
+}

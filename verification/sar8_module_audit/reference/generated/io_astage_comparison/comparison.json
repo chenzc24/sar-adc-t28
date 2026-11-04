@@ -1,0 +1,2696 @@
+{
+  "status": "completed_BC_to_ABC_both_cold_corners_ideal_PRE",
+  "source_runs": {
+    "ffcold": {
+      "BC": {
+        "run": "sar8audit-refcell-iob-ffcold",
+        "source_result_sha256": "4649c24b554d1300011cfa1574e7861bf376343bcbe6baa2ea08e1d62eeec0aa",
+        "native_points": 8496,
+        "A_class": "core",
+        "stage_screens": {
+          "A": {
+            "worst": 1.009099035793955,
+            "strict_exceed_pairs": 6,
+            "models": [
+              "nch_mac",
+              "pch_mac"
+            ],
+            "limit_V": 0.99
+          },
+          "B": {
+            "worst": 1.199117944442343,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "C": {
+            "worst": 1.199117944442343,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          }
+        },
+        "all450_strict_records": [
+          {
+            "pair": "XDUT.GNNAN:ds",
+            "excess_V": 0.01909903579395511
+          },
+          {
+            "pair": "XDUT.GNNAN:gd",
+            "excess_V": 2.7065905117140687e-07
+          },
+          {
+            "pair": "XDUT.GNNAN:bd",
+            "excess_V": 0.01909903579395511
+          },
+          {
+            "pair": "XDUT.GNNAP:ds",
+            "excess_V": 0.017968932180672414
+          },
+          {
+            "pair": "XDUT.GNNAP:gd",
+            "excess_V": 2.7065905117140687e-07
+          },
+          {
+            "pair": "XDUT.GNNAP:bd",
+            "excess_V": 0.017968932180672414
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATN:gb",
+            "excess_V": 6.8093370941824105e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATN:bd",
+            "excess_V": 5.395601521129834e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATN:bs",
+            "excess_V": 1.961562050012411e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:gb",
+            "excess_V": 5.395601521129834e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:bd",
+            "excess_V": 6.8093370941824105e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:bs",
+            "excess_V": 2.9326702043475095e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNINN:bd",
+            "excess_V": 2.9326702043475095e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNINP:bd",
+            "excess_V": 1.961562050012411e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTN:gd",
+            "excess_V": 5.395601521129834e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTP:gd",
+            "excess_V": 6.8093370941824105e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTY:gd",
+            "excess_V": 1.961562050012411e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTX:gd",
+            "excess_V": 2.9326702043475095e-06
+          }
+        ],
+        "reference_chain_strict_pairs": 6,
+        "PRE_gate_load": {
+          "min_A": -0.00017851627571423062,
+          "max_A": 0.0001276543888361836,
+          "min_time_s": 4.8005e-08,
+          "max_time_s": 4.300442448184637e-08,
+          "full_signed_charge_C": -3.3875492979386455e-19,
+          "event_native_charge": {
+            "disable_low": {
+              "samples": 1518,
+              "first_native_s": 4.298064228248604e-08,
+              "last_native_s": 4.499415151623826e-08,
+              "signed_charge_C": 1.2319947701546957e-15,
+              "absolute_charge_C": 1.2332667130441732e-15
+            },
+            "enable_low": {
+              "samples": 1237,
+              "first_native_s": 4.798378400073044e-08,
+              "last_native_s": 5.099936784235891e-08,
+              "signed_charge_C": -1.2318765859969252e-15,
+              "absolute_charge_C": 1.2322379274855913e-15
+            }
+          },
+          "interpretation": "Total N/P gate currents entering A at ideal PRE; not intrinsic capacitance decomposition."
+        },
+        "ideal_PRE_source_work": {
+          "net_delivered_J": 2.3576828335751966e-16,
+          "positive_delivered_J": 7.051082825303466e-16,
+          "returned_to_source_J": 4.693399991728272e-16,
+          "A_gate_port_work_J": 2.3576828341173703e-16,
+          "interval_s": [
+            0,
+            5.2e-08
+          ],
+          "max_PRE_node_KCL_A": 5.397135169338263e-11,
+          "max_PRE_node_KCL_time_s": 4.800500065686724e-08,
+          "source_work_minus_A_gate_work_J": -5.421737463590204e-26,
+          "sign": "VPRE current positive into source; delivered work is integral(-VPRE*IPRE), returned work is separately positive.",
+          "accounting": "Reported separately from ideal VDD energy; not added to it and not a fullADC power figure. Signed native trapezoids, ideal-source boundary only."
+        },
+        "complete_delays": {
+          "disable_low": {
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.300003369050165e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4983353596633134,
+                "before_time_s": 4.299998310680173e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4933275733716359,
+                "direction": "rising",
+                "estimated_time_s": 4.2999999999999995e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.300482640104151e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4898887210474264,
+                "before_time_s": 4.300477635061814e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.498439989193231,
+                "direction": "falling",
+                "estimated_time_s": 4.300479648481491e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.30230041263176e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4959624695577072,
+                "before_time_s": 4.302288070404857e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4912438141776013,
+                "direction": "rising",
+                "estimated_time_s": 4.3022978951735623e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.303812668793974e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4927691088697042,
+                "before_time_s": 4.303801684889165e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.5023040605991846,
+                "direction": "falling",
+                "estimated_time_s": 4.303810098891523e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.31060439878151e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4940417220102222,
+                "before_time_s": 4.310504170397545e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.5000047108417057,
+                "direction": "falling",
+                "estimated_time_s": 4.31058829164849e-08
+              }
+            },
+            "PRE_to_A_s": 4.796484814918111e-12,
+            "A_to_B_s": 1.8182466920710646e-11,
+            "B_to_C_s": 1.512203717960759e-11,
+            "C_to_GNN0_s": 6.778192756967105e-11,
+            "PRE_to_GNN0_s": 1.0588291648490739e-10
+          },
+          "enable_low": {
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.800004922378338e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.490126845444986,
+                "before_time_s": 4.799999839063473e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4951593271613948,
+                "direction": "falling",
+                "estimated_time_s": 4.8e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.800383012512227e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.501174219288704,
+                "before_time_s": 4.80037846431444e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4923305452858421,
+                "direction": "rising",
+                "estimated_time_s": 4.800379837183682e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.801687607830074e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4933972318655826,
+                "before_time_s": 4.801679127092755e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4986367275563029,
+                "direction": "falling",
+                "estimated_time_s": 4.8016850135621646e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.803093146950564e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4997535502595756,
+                "before_time_s": 4.803082597080479e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4912454541751436,
+                "direction": "rising",
+                "estimated_time_s": 4.8030872526426974e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.806468667626678e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.497260768371517,
+                "before_time_s": 4.806415623171584e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4935789660590942,
+                "direction": "rising",
+                "estimated_time_s": 4.8064360962890056e-08
+              }
+            },
+            "PRE_to_A_s": 3.798371836822694e-12,
+            "A_to_B_s": 1.3051763784823265e-11,
+            "B_to_C_s": 1.4022390805328172e-11,
+            "C_to_GNN0_s": 3.348843646308213e-11,
+            "PRE_to_GNN0_s": 6.436096289005626e-11
+          }
+        },
+        "correct_ON_settling": {
+          "high_before_turnoff": {
+            "xdut.xcdac.bn0": {
+              "samples": 711,
+              "last_outside_1mV_s": 4.442197886432033e-08,
+              "remained_inside_from_native_s": 4.442655933425602e-08,
+              "last_native_s": 4.699415151623788e-08,
+              "final_error_V": -1.108453284714983e-08
+            },
+            "xdut.xcdac.bp0": {
+              "samples": 711,
+              "last_outside_1mV_s": 4.423220531518245e-08,
+              "remained_inside_from_native_s": 4.423365720686119e-08,
+              "last_native_s": 4.699415151623788e-08,
+              "final_error_V": 2.3353789947513396e-09
+            }
+          },
+          "low_after_turnon": {
+            "xdut.xcdac.bn0": {
+              "samples": 1161,
+              "last_outside_1mV_s": 4.826635308198785e-08,
+              "remained_inside_from_native_s": 4.826778178905531e-08,
+              "last_native_s": 5.2e-08,
+              "final_error_V": 2.0377722334167385e-09
+            },
+            "xdut.xcdac.bp0": {
+              "samples": 1161,
+              "last_outside_1mV_s": 4.84111502507892e-08,
+              "remained_inside_from_native_s": 4.84156536029992e-08,
+              "last_native_s": 5.2e-08,
+              "final_error_V": -9.485554341992497e-09
+            }
+          }
+        },
+        "supply_rail_excursions": {
+          "pre": {
+            "min_V": 0.0,
+            "max_V": 0.99,
+            "below_ground_V": 0.0,
+            "above_VDD_V": 0.0,
+            "min_time_s": 0.0,
+            "max_time_s": 4.300500019909953e-08
+          },
+          "xdut.gnna": {
+            "min_V": -0.01796893218067238,
+            "max_V": 1.009099035793955,
+            "below_ground_V": 0.01796893218067238,
+            "above_VDD_V": 0.01909903579395511,
+            "min_time_s": 4.799803055519508e-08,
+            "max_time_s": 4.29985630514535e-08
+          },
+          "xdut.gnnb": {
+            "min_V": -0.1406128831138836,
+            "max_V": 1.199117944442343,
+            "below_ground_V": 0.1406128831138836,
+            "above_VDD_V": 0.209117944442343,
+            "min_time_s": 4.300670731739651e-08,
+            "max_time_s": 4.800543324683018e-08
+          },
+          "xdut.gnndrv": {
+            "min_V": -0.160074745830556,
+            "max_V": 1.1472907944122,
+            "below_ground_V": 0.160074745830556,
+            "above_VDD_V": 0.15729079441219995,
+            "min_time_s": 4.801991185890227e-08,
+            "max_time_s": 4.302541401856626e-08
+          },
+          "xdut.gnn0": {
+            "min_V": -0.03280339538818457,
+            "max_V": 1.009424674707647,
+            "below_ground_V": 0.03280339538818457,
+            "above_VDD_V": 0.01942467470764697,
+            "min_time_s": 4.802409048018909e-08,
+            "max_time_s": 4.303102345327661e-08
+          }
+        },
+        "logic_junction_forward_polarity": [
+          {
+            "pair": "XDUT.GNNCN:bd",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNDRV"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -1.1472907944122,
+            "signed_forward_max_V": 0.160074745830556,
+            "positive_forward_polarity_peak_V": 0.160074745830556,
+            "peak_time_s": 4.801991185890227e-08,
+            "body_current_extrema": {
+              "max": 2.096497261343838e-05,
+              "max_time_s": 4.303905557799072e-08,
+              "min": -1.992652193773333e-05,
+              "min_time_s": 4.802858381665567e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.426846341141641e-16,
+              "fault_abs_C": 7.426846341141641e-16,
+              "fault_signed_C": -1.0230850219754423e-20,
+              "signed_C": -1.0230850219754423e-20
+            },
+            "body_current_at_polarity_peak_A": 1.860743104556088e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCN:bs",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 2.096497261343838e-05,
+              "max_time_s": 4.303905557799072e-08,
+              "min": -1.992652193773333e-05,
+              "min_time_s": 4.802858381665567e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.426846341141641e-16,
+              "fault_abs_C": 7.426846341141641e-16,
+              "fault_signed_C": -1.0230850219754423e-20,
+              "signed_C": -1.0230850219754423e-20
+            },
+            "body_current_at_polarity_peak_A": -6.775116292123491e-17,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBN:bd",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNB"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -1.199117944442343,
+            "signed_forward_max_V": 0.1406128831138836,
+            "positive_forward_polarity_peak_V": 0.1406128831138836,
+            "peak_time_s": 4.300670731739651e-08,
+            "body_current_extrema": {
+              "max": 1.845879288476386e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -2.353895791629519e-05,
+              "min_time_s": 4.800299766334195e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.203213801260777e-16,
+              "fault_abs_C": 7.203213801260777e-16,
+              "fault_signed_C": -1.0474002984373472e-20,
+              "signed_C": -1.0474002984373472e-20
+            },
+            "body_current_at_polarity_peak_A": 8.903815396196572e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBN:bs",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 1.845879288476386e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -2.353895791629519e-05,
+              "min_time_s": 4.800299766334195e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.203213801260777e-16,
+              "fault_abs_C": 7.203213801260777e-16,
+              "fault_signed_C": -1.0474002984373472e-20,
+              "signed_C": -1.0474002984373472e-20
+            },
+            "body_current_at_polarity_peak_A": -8.328351675216519e-25,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAN:bd",
+            "model": "nch_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNA"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -1.009099035793955,
+            "signed_forward_max_V": 0.01796893218067238,
+            "positive_forward_polarity_peak_V": 0.01796893218067238,
+            "peak_time_s": 4.799803055519508e-08,
+            "body_current_extrema": {
+              "max": 3.033982480519092e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -3.047112084269992e-05,
+              "min_time_s": 4.80050069084801e-08
+            },
+            "body_native_charge": {
+              "abs_C": 3.321562739465552e-16,
+              "fault_abs_C": 3.321562739465552e-16,
+              "fault_signed_C": -5.347616133333107e-20,
+              "signed_C": -5.347616133333107e-20
+            },
+            "body_current_at_polarity_peak_A": 1.990959833756485e-07,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAN:bs",
+            "model": "nch_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 3.033982480519092e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -3.047112084269992e-05,
+              "min_time_s": 4.80050069084801e-08
+            },
+            "body_native_charge": {
+              "abs_C": 3.321562739465552e-16,
+              "fault_abs_C": 3.321562739465552e-16,
+              "fault_signed_C": -5.347616133333107e-20,
+              "signed_C": -5.347616133333107e-20
+            },
+            "body_current_at_polarity_peak_A": -9.944143846630228e-13,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCP:bd",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNDRV"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -1.150074745830556,
+            "signed_forward_max_V": 0.15729079441219995,
+            "positive_forward_polarity_peak_V": 0.15729079441219995,
+            "peak_time_s": 4.302541401856626e-08,
+            "body_current_extrema": {
+              "max": 3.234623290958584e-05,
+              "max_time_s": 4.303744963365261e-08,
+              "min": -3.151361355781108e-05,
+              "min_time_s": 4.803017699664301e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2874119494881805e-15,
+              "fault_abs_C": 1.2874119494881805e-15,
+              "fault_signed_C": 1.538510278471656e-20,
+              "signed_C": 1.538510278471656e-20
+            },
+            "body_current_at_polarity_peak_A": -2.429341230791505e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCP:bs",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 3.234623290958584e-05,
+              "max_time_s": 4.303744963365261e-08,
+              "min": -3.151361355781108e-05,
+              "min_time_s": 4.803017699664301e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2874119494881805e-15,
+              "fault_abs_C": 1.2874119494881805e-15,
+              "fault_signed_C": 1.538510278471656e-20,
+              "signed_C": 1.538510278471656e-20
+            },
+            "body_current_at_polarity_peak_A": 4.887151080025212e-26,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBP:bd",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNB"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -1.1306128831138835,
+            "signed_forward_max_V": 0.209117944442343,
+            "positive_forward_polarity_peak_V": 0.209117944442343,
+            "peak_time_s": 4.800543324683018e-08,
+            "body_current_extrema": {
+              "max": 3.7643988608659e-05,
+              "max_time_s": 4.300420615114317e-08,
+              "min": -4.639064089298736e-05,
+              "min_time_s": 4.800425605314911e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2551753797951011e-15,
+              "fault_abs_C": 1.2551753797951011e-15,
+              "fault_signed_C": 2.6735085484755628e-20,
+              "signed_C": 2.6735085484755628e-20
+            },
+            "body_current_at_polarity_peak_A": -2.805661245715786e-05,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBP:bs",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 3.7643988608659e-05,
+              "max_time_s": 4.300420615114317e-08,
+              "min": -4.639064089298736e-05,
+              "min_time_s": 4.800425605314911e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2551753797951011e-15,
+              "fault_abs_C": 1.2551753797951011e-15,
+              "fault_signed_C": 2.6735085484755628e-20,
+              "signed_C": 2.6735085484755628e-20
+            },
+            "body_current_at_polarity_peak_A": 6.692559105656844e-16,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAP:bd",
+            "model": "pch_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNA"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -1.0079689321806724,
+            "signed_forward_max_V": 0.01909903579395511,
+            "positive_forward_polarity_peak_V": 0.01909903579395511,
+            "peak_time_s": 4.29985630514535e-08,
+            "body_current_extrema": {
+              "max": 6.63559206428656e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -8.311430553368181e-05,
+              "min_time_s": 4.800500065686724e-08
+            },
+            "body_native_charge": {
+              "abs_C": 5.842565992546228e-16,
+              "fault_abs_C": 5.842565992546228e-16,
+              "fault_signed_C": 4.5315642702049056e-20,
+              "signed_C": 4.5315642702049056e-20
+            },
+            "body_current_at_polarity_peak_A": -4.552910843475212e-07,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAP:bs",
+            "model": "pch_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 6.63559206428656e-05,
+              "max_time_s": 4.300500100473078e-08,
+              "min": -8.311430553368181e-05,
+              "min_time_s": 4.800500065686724e-08
+            },
+            "body_native_charge": {
+              "abs_C": 5.842565992546228e-16,
+              "fault_abs_C": 5.842565992546228e-16,
+              "fault_signed_C": 4.5315642702049056e-20,
+              "signed_C": 4.5315642702049056e-20
+            },
+            "body_current_at_polarity_peak_A": 4.695215400444834e-16,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          }
+        ],
+        "body_note": "All150 junctions/body statistics retained in ABC original result; this comparison lists12 A/B/C junction records. Total port currents do not identify diode-current fraction.",
+        "off_gap": {
+          "xdut.xcdac.bn0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -1.1078353234772464e-05,
+            "max_mV": 44.36670905985185,
+            "min_time_ns": 46.995,
+            "max_time_ns": 47.993784000730436,
+            "last_native_ns": 47.993784000730436,
+            "last_error_mV": 44.36670905985185
+          },
+          "xdut.xcdac.bp0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -35.374354910519976,
+            "max_mV": 2.334018200992513e-06,
+            "min_time_ns": 47.993784000730436,
+            "max_time_ns": 46.995,
+            "last_native_ns": 47.993784000730436,
+            "last_error_mV": -35.374354910519976
+          }
+        },
+        "direct_stage_VDD_energy_J": {
+          "A": 3.3973614150323175e-15,
+          "B": 4.2105559691719574e-15,
+          "C": 2.2481123806364286e-15
+        },
+        "ideal_VDD_energy_J": 9.225449812216726e-13,
+        "source_power_not_added_to_VDD": true,
+        "warning_codes": [
+          "CMI-2751",
+          "CMI-2754",
+          "CMI-2755",
+          "CMI-2756",
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      },
+      "ABC": {
+        "run": "sar8audit-refcell-ioa-ffcold",
+        "source_result_sha256": "55f19e26095bc7206993a929d931bb7140f8b57eb2b30b6b19a9deffe3c36835",
+        "native_points": 8410,
+        "A_class": "IO",
+        "stage_screens": {
+          "A": {
+            "worst": 1.16282842209135,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "B": {
+            "worst": 1.16282842209135,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "C": {
+            "worst": 1.140901463593377,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          }
+        },
+        "all450_strict_records": [
+          {
+            "pair": "XDUT.XCOMP.MNLATN:gb",
+            "excess_V": 6.809346864145027e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATN:bd",
+            "excess_V": 5.395636604177412e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATN:bs",
+            "excess_V": 1.9611777963834953e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:gb",
+            "excess_V": 5.395636604177412e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:bd",
+            "excess_V": 6.809346864145027e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MNLATP:bs",
+            "excess_V": 2.9327120659727868e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNINN:bd",
+            "excess_V": 2.9327120659727868e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MNINP:bd",
+            "excess_V": 1.9611777963834953e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTN:gd",
+            "excess_V": 5.395636604177412e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTP:gd",
+            "excess_V": 6.809346864145027e-09
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTY:gd",
+            "excess_V": 1.9611777963834953e-06
+          },
+          {
+            "pair": "XDUT.XCOMP.MPRSTX:gd",
+            "excess_V": 2.9327120659727868e-06
+          }
+        ],
+        "reference_chain_strict_pairs": 0,
+        "PRE_gate_load": {
+          "event_native_charge": {
+            "disable_low": {
+              "absolute_charge_C": 2.430828967519354e-15,
+              "first_native_s": 4.298050522391692e-08,
+              "last_native_s": 4.499466239967686e-08,
+              "samples": 1474,
+              "signed_charge_C": 2.429004384243834e-15
+            },
+            "enable_low": {
+              "absolute_charge_C": 2.429074593811544e-15,
+              "first_native_s": 4.798338361138887e-08,
+              "last_native_s": 5.099121919397694e-08,
+              "samples": 1195,
+              "signed_charge_C": -2.4290669194761317e-15
+            }
+          },
+          "full_signed_charge_C": -6.253515039782866e-20,
+          "interpretation": "Total N/P gate currents entering A at ideal PRE; not intrinsic capacitance decomposition.",
+          "max_A": 0.000199408374067189,
+          "max_time_s": 4.299642464390514e-08,
+          "min_A": -0.0002083951218558811,
+          "min_time_s": 4.8005e-08
+        },
+        "ideal_PRE_source_work": {
+          "A_gate_port_work_J": 6.302169875369072e-16,
+          "accounting": "Reported separately from ideal VDD energy; not added to it and not a fullADC power figure. Signed native trapezoids, ideal-source boundary only.",
+          "interval_s": [
+            0,
+            5.2e-08
+          ],
+          "max_PRE_node_KCL_A": 9.768584433109823e-12,
+          "max_PRE_node_KCL_time_s": 4.300500050773918e-08,
+          "net_delivered_J": 6.302169876385533e-16,
+          "positive_delivered_J": 1.4473086434625948e-15,
+          "returned_to_source_J": 8.170916558240458e-16,
+          "sign": "VPRE current positive into source; delivered work is integral(-VPRE*IPRE), returned work is separately positive.",
+          "source_work_minus_A_gate_work_J": 1.0164610814431151e-25
+        },
+        "complete_delays": {
+          "disable_low": {
+            "A_to_B_s": 2.2510346615658214e-11,
+            "B_to_C_s": 1.525038086345203e-11,
+            "C_to_GNN0_s": 6.775279780292719e-11,
+            "PRE_to_A_s": 1.404847883637879e-11,
+            "PRE_to_GNN0_s": 1.1956200411841622e-10,
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.30000531705038e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.5002638798763863,
+                "before_time_s": 4.299997680270396e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4927034676920395,
+                "direction": "rising",
+                "estimated_time_s": 4.3e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.312039597478523e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4900467356610471,
+                "before_time_s": 4.311940249779556e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4959473678299367,
+                "direction": "falling",
+                "estimated_time_s": 4.311956200411842e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.30141255923218e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4903556585915973,
+                "before_time_s": 4.301401736124196e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4968741304648395,
+                "direction": "falling",
+                "estimated_time_s": 4.301404847883638e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.303658267156162e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4958800955468163,
+                "before_time_s": 4.303645497864374e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.491167294575066,
+                "direction": "rising",
+                "estimated_time_s": 4.303655882545204e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.30518990642704e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4873144691660454,
+                "before_time_s": 4.305178780688825e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4968302882365016,
+                "direction": "falling",
+                "estimated_time_s": 4.305180920631549e-08
+              }
+            }
+          },
+          "enable_low": {
+            "A_to_B_s": 2.1233801374333197e-11,
+            "B_to_C_s": 1.4890848538748638e-11,
+            "C_to_GNN0_s": 3.339613518161263e-11,
+            "PRE_to_A_s": 1.852753769789777e-11,
+            "PRE_to_GNN0_s": 8.804832279259223e-11,
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.800004955876304e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4900936824586475,
+                "before_time_s": 4.799992789471883e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.5021384228357506,
+                "direction": "falling",
+                "estimated_time_s": 4.799999999999999e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.8088188218925e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4959763669755547,
+                "before_time_s": 4.808766773084254e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4923437620843679,
+                "direction": "rising",
+                "estimated_time_s": 4.8088048322792585e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.801854015076846e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4954907758255478,
+                "before_time_s": 4.801838624041378e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4895021086741753,
+                "direction": "rising",
+                "estimated_time_s": 4.801852753769789e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.80398336591588e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4914489181166858,
+                "before_time_s": 4.803973336650465e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4963735171325734,
+                "direction": "falling",
+                "estimated_time_s": 4.8039761339072224e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.805471698578847e-08,
+                "after_vdd_v": 0.99,
+                "after_voltage_v": 0.4999777667540448,
+                "before_time_s": 4.805460952241711e-08,
+                "before_vdd_v": 0.99,
+                "before_voltage_v": 0.4917224790607236,
+                "direction": "rising",
+                "estimated_time_s": 4.805465218761097e-08
+              }
+            }
+          }
+        },
+        "correct_ON_settling": {
+          "high_before_turnoff": {
+            "xdut.xcdac.bn0": {
+              "final_error_V": -1.1080681483477406e-08,
+              "last_native_s": 4.699466239967648e-08,
+              "last_outside_1mV_s": 4.442221296189459e-08,
+              "remained_inside_from_native_s": 4.442679508681053e-08,
+              "samples": 711
+            },
+            "xdut.xcdac.bp0": {
+              "final_error_V": 2.3345553748667338e-09,
+              "last_native_s": 4.699466239967648e-08,
+              "last_outside_1mV_s": 4.423223299302594e-08,
+              "remained_inside_from_native_s": 4.423368411674341e-08,
+              "samples": 711
+            }
+          },
+          "low_after_turnon": {
+            "xdut.xcdac.bn0": {
+              "final_error_V": 2.0377811258626715e-09,
+              "last_native_s": 5.2e-08,
+              "last_outside_1mV_s": 4.828980386978885e-08,
+              "remained_inside_from_native_s": 4.829149536945829e-08,
+              "samples": 1188
+            },
+            "xdut.xcdac.bp0": {
+              "final_error_V": -9.485480179094452e-09,
+              "last_native_s": 5.2e-08,
+              "last_outside_1mV_s": 4.841470127151095e-08,
+              "remained_inside_from_native_s": 4.841890835572925e-08,
+              "samples": 1188
+            }
+          }
+        },
+        "supply_rail_excursions": {
+          "pre": {
+            "above_VDD_V": 0.0,
+            "below_ground_V": 0.0,
+            "max_V": 0.99,
+            "max_time_s": 4.3005e-08,
+            "min_V": 0.0,
+            "min_time_s": 0.0
+          },
+          "xdut.gnn0": {
+            "above_VDD_V": 0.019141201139543984,
+            "below_ground_V": 0.03056530249223606,
+            "max_V": 1.009141201139544,
+            "max_time_s": 4.304468138475608e-08,
+            "min_V": -0.03056530249223606,
+            "min_time_s": 4.804721168613657e-08
+          },
+          "xdut.gnna": {
+            "above_VDD_V": 0.17282842209135008,
+            "below_ground_V": 0.1196184956472902,
+            "max_V": 1.16282842209135,
+            "max_time_s": 4.300238749277407e-08,
+            "min_V": -0.1196184956472902,
+            "min_time_s": 4.800282129854189e-08
+          },
+          "xdut.gnnb": {
+            "above_VDD_V": 0.12292710684684294,
+            "below_ground_V": 0.09712788297929971,
+            "max_V": 1.112927106846843,
+            "max_time_s": 4.802137373092419e-08,
+            "min_V": -0.09712788297929971,
+            "min_time_s": 4.301705034317576e-08
+          },
+          "xdut.gnndrv": {
+            "above_VDD_V": 0.15090146359337697,
+            "below_ground_V": 0.1347593329868915,
+            "max_V": 1.140901463593377,
+            "max_time_s": 4.303904756074922e-08,
+            "min_V": -0.1347593329868915,
+            "min_time_s": 4.804304983027325e-08
+          }
+        },
+        "logic_junction_forward_polarity": [
+          {
+            "body_current_at_polarity_peak_A": 1.443771964998363e-06,
+            "body_current_extrema": {
+              "max": 2.066523826738681e-05,
+              "max_time_s": 4.30528384106148e-08,
+              "min": -1.845233937223489e-05,
+              "min_time_s": 4.805278506582552e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.88567900831149e-16,
+              "fault_abs_C": 6.88567900831149e-16,
+              "fault_signed_C": -9.43800339702653e-21,
+              "signed_C": -9.43800339702653e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNDRV"
+            ],
+            "pair": "XDUT.GNNCN:bd",
+            "peak_time_s": 4.804304983027325e-08,
+            "positive_forward_polarity_peak_V": 0.1347593329868915,
+            "signed_forward_max_V": 0.1347593329868915,
+            "signed_forward_min_V": -1.140901463593377
+          },
+          {
+            "body_current_at_polarity_peak_A": -6.775116292123491e-17,
+            "body_current_extrema": {
+              "max": 2.066523826738681e-05,
+              "max_time_s": 4.30528384106148e-08,
+              "min": -1.845233937223489e-05,
+              "min_time_s": 4.805278506582552e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.88567900831149e-16,
+              "fault_abs_C": 6.88567900831149e-16,
+              "fault_signed_C": -9.43800339702653e-21,
+              "signed_C": -9.43800339702653e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNCN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": 2.543409353753435e-06,
+            "body_current_extrema": {
+              "max": 1.231839023911136e-05,
+              "max_time_s": 4.803844261594616e-08,
+              "min": -9.584252315747058e-06,
+              "min_time_s": 4.303241581784925e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.644333652402729e-16,
+              "fault_abs_C": 6.644333652402729e-16,
+              "fault_signed_C": 2.190203313758972e-22,
+              "signed_C": 2.190203313758972e-22
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNB"
+            ],
+            "pair": "XDUT.GNNBN:bd",
+            "peak_time_s": 4.301705034317576e-08,
+            "positive_forward_polarity_peak_V": 0.09712788297929971,
+            "signed_forward_max_V": 0.09712788297929971,
+            "signed_forward_min_V": -1.112927106846843
+          },
+          {
+            "body_current_at_polarity_peak_A": -8.328351675216519e-25,
+            "body_current_extrema": {
+              "max": 1.231839023911136e-05,
+              "max_time_s": 4.803844261594616e-08,
+              "min": -9.584252315747058e-06,
+              "min_time_s": 4.303241581784925e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.644333652402729e-16,
+              "fault_abs_C": 6.644333652402729e-16,
+              "fault_signed_C": 2.190203313758972e-22,
+              "signed_C": 2.190203313758972e-22
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNBN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": 7.917398904741652e-06,
+            "body_current_extrema": {
+              "max": 1.581157440272104e-05,
+              "max_time_s": 4.301243323277032e-08,
+              "min": -1.700615717800651e-05,
+              "min_time_s": 4.299500172258896e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.973630834339885e-16,
+              "fault_abs_C": 6.973630834339885e-16,
+              "fault_signed_C": 1.2506366839854401e-20,
+              "signed_C": 1.2506366839854401e-20
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNA"
+            ],
+            "pair": "XDUT.GNNAN:bd",
+            "peak_time_s": 4.800282129854189e-08,
+            "positive_forward_polarity_peak_V": 0.1196184956472902,
+            "signed_forward_max_V": 0.1196184956472902,
+            "signed_forward_min_V": -1.16282842209135
+          },
+          {
+            "body_current_at_polarity_peak_A": -6.775116293663348e-17,
+            "body_current_extrema": {
+              "max": 1.581157440272104e-05,
+              "max_time_s": 4.301243323277032e-08,
+              "min": -1.700615717800651e-05,
+              "min_time_s": 4.299500172258896e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.973630834339885e-16,
+              "fault_abs_C": 6.973630834339885e-16,
+              "fault_signed_C": 1.2506366839854401e-20,
+              "signed_C": 1.2506366839854401e-20
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNAN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -2.384661230767804e-06,
+            "body_current_extrema": {
+              "max": 3.181636260631278e-05,
+              "max_time_s": 4.305121272839153e-08,
+              "min": -2.97995338382871e-05,
+              "min_time_s": 4.805439203135609e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.184033013821797e-15,
+              "fault_abs_C": 1.184033013821797e-15,
+              "fault_signed_C": 2.0262141191662148e-20,
+              "signed_C": 2.0262141191662148e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNDRV"
+            ],
+            "pair": "XDUT.GNNCP:bd",
+            "peak_time_s": 4.303904756074922e-08,
+            "positive_forward_polarity_peak_V": 0.15090146359337697,
+            "signed_forward_max_V": 0.15090146359337697,
+            "signed_forward_min_V": -1.1247593329868915
+          },
+          {
+            "body_current_at_polarity_peak_A": 4.887151080025212e-26,
+            "body_current_extrema": {
+              "max": 3.181636260631278e-05,
+              "max_time_s": 4.305121272839153e-08,
+              "min": -2.97995338382871e-05,
+              "min_time_s": 4.805439203135609e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.184033013821797e-15,
+              "fault_abs_C": 1.184033013821797e-15,
+              "fault_signed_C": 2.0262141191662148e-20,
+              "signed_C": 2.0262141191662148e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNCP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -3.326197524863783e-06,
+            "body_current_extrema": {
+              "max": 2.031731416221565e-05,
+              "max_time_s": 4.300500050773918e-08,
+              "min": -1.487148619306369e-05,
+              "min_time_s": 4.30334398256423e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.1443302937505535e-15,
+              "fault_abs_C": 1.1443302937505535e-15,
+              "fault_signed_C": 2.4611484635542295e-20,
+              "signed_C": 2.4611484635542295e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNB"
+            ],
+            "pair": "XDUT.GNNBP:bd",
+            "peak_time_s": 4.802137373092419e-08,
+            "positive_forward_polarity_peak_V": 0.12292710684684294,
+            "signed_forward_max_V": 0.12292710684684294,
+            "signed_forward_min_V": -1.0871278829792996
+          },
+          {
+            "body_current_at_polarity_peak_A": 6.692576381972191e-16,
+            "body_current_extrema": {
+              "max": 2.031731416221565e-05,
+              "max_time_s": 4.300500050773918e-08,
+              "min": -1.487148619306369e-05,
+              "min_time_s": 4.30334398256423e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.1443302937505535e-15,
+              "fault_abs_C": 1.1443302937505535e-15,
+              "fault_signed_C": 2.4611484635542295e-20,
+              "signed_C": 2.4611484635542295e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNBP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -1.402870719409024e-05,
+            "body_current_extrema": {
+              "max": 3.427293931122869e-05,
+              "max_time_s": 4.300500050773918e-08,
+              "min": -1.992345836388987e-05,
+              "min_time_s": 4.30004475883819e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.1842929926086804e-15,
+              "fault_abs_C": 1.1842929926086804e-15,
+              "fault_signed_C": -1.2830304913722403e-20,
+              "signed_C": -1.2830304913722403e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNA"
+            ],
+            "pair": "XDUT.GNNAP:bd",
+            "peak_time_s": 4.300238749277407e-08,
+            "positive_forward_polarity_peak_V": 0.17282842209135008,
+            "signed_forward_max_V": 0.17282842209135008,
+            "signed_forward_min_V": -1.10961849564729
+          },
+          {
+            "body_current_at_polarity_peak_A": 4.887151080025212e-26,
+            "body_current_extrema": {
+              "max": 3.427293931122869e-05,
+              "max_time_s": 4.300500050773918e-08,
+              "min": -1.992345836388987e-05,
+              "min_time_s": 4.30004475883819e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.1842929926086804e-15,
+              "fault_abs_C": 1.1842929926086804e-15,
+              "fault_signed_C": -1.2830304913722403e-20,
+              "signed_C": -1.2830304913722403e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNAP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          }
+        ],
+        "body_note": "All150 junctions/body statistics retained in ABC original result; this comparison lists12 A/B/C junction records. Total port currents do not identify diode-current fraction.",
+        "off_gap": {
+          "xdut.xcdac.bn0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -1.1078228334682194e-05,
+            "max_mV": 44.366728959400525,
+            "min_time_ns": 46.995,
+            "max_time_ns": 47.99338361138887,
+            "last_native_ns": 47.99338361138887,
+            "last_error_mV": 44.366728959400525
+          },
+          "xdut.xcdac.bp0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -35.374351026581024,
+            "max_mV": 2.333959299242079e-06,
+            "min_time_ns": 47.99338361138887,
+            "max_time_ns": 46.995,
+            "last_native_ns": 47.99338361138887,
+            "last_error_mV": -35.374351026581024
+          }
+        },
+        "direct_stage_VDD_energy_J": {
+          "A": 4.156702329441847e-15,
+          "B": 4.074167050779154e-15,
+          "C": 2.22434995444523e-15
+        },
+        "ideal_VDD_energy_J": 9.22878618959341e-13,
+        "source_power_not_added_to_VDD": true,
+        "warning_codes": [
+          "CMI-2754",
+          "CMI-2755",
+          "CMI-2756",
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "sscold": {
+      "BC": {
+        "run": "sar8audit-refcell-iob-sscold",
+        "source_result_sha256": "dd4e267dc6e571026ca19b323e789d718e9ea1f1615f590380450de2cfdebcbe",
+        "native_points": 8087,
+        "A_class": "core",
+        "stage_screens": {
+          "A": {
+            "worst": 0.8631654835253502,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_mac",
+              "pch_mac"
+            ],
+            "limit_V": 0.99
+          },
+          "B": {
+            "worst": 0.9590648460041323,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "C": {
+            "worst": 0.9711066518531142,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          }
+        },
+        "all450_strict_records": [],
+        "reference_chain_strict_pairs": 0,
+        "PRE_gate_load": {
+          "min_A": -0.00011545597437957599,
+          "max_A": 8.506851045169732e-05,
+          "min_time_s": 4.8005e-08,
+          "max_time_s": 4.3005e-08,
+          "full_signed_charge_C": -9.832204368919176e-20,
+          "event_native_charge": {
+            "disable_low": {
+              "samples": 1346,
+              "first_native_s": 4.29899537825229e-08,
+              "last_native_s": 4.499844257225337e-08,
+              "signed_charge_C": 8.696363699444334e-16,
+              "absolute_charge_C": 8.701529504763443e-16
+            },
+            "enable_low": {
+              "samples": 1147,
+              "first_native_s": 4.798630684588609e-08,
+              "last_native_s": 5.099156115445894e-08,
+              "signed_charge_C": -8.696272720009439e-16,
+              "absolute_charge_C": 8.69739230811016e-16
+            }
+          },
+          "interpretation": "Total N/P gate currents entering A at ideal PRE; not intrinsic capacitance decomposition."
+        },
+        "ideal_PRE_source_work": {
+          "net_delivered_J": 1.7477108947906713e-16,
+          "positive_delivered_J": 4.22629300722532e-16,
+          "returned_to_source_J": 2.4785821124346485e-16,
+          "A_gate_port_work_J": 1.747710896041345e-16,
+          "interval_s": [
+            0,
+            5.2e-08
+          ],
+          "max_PRE_node_KCL_A": 1.8176176092932293e-11,
+          "max_PRE_node_KCL_time_s": 4.799500204584771e-08,
+          "source_work_minus_A_gate_work_J": -1.2506736376842006e-25,
+          "sign": "VPRE current positive into source; delivered work is integral(-VPRE*IPRE), returned work is separately positive.",
+          "accounting": "Reported separately from ideal VDD energy; not added to it and not a fullADC power figure. Signed native trapezoids, ideal-source boundary only."
+        },
+        "complete_delays": {
+          "disable_low": {
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.300006473994668e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.41024393568122,
+                "before_time_s": 4.299999812602657e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4048482081522236,
+                "direction": "rising",
+                "estimated_time_s": 4.3e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.300743359242407e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4024818848625752,
+                "before_time_s": 4.300736710970494e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.410640180668252,
+                "direction": "falling",
+                "estimated_time_s": 4.3007413072067196e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.308098670425866e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4092444689319116,
+                "before_time_s": 4.308012454671242e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4019861395159395,
+                "direction": "rising",
+                "estimated_time_s": 4.3080482538532676e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.320438786014153e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4024539553136539,
+                "before_time_s": 4.320263206649186e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4151670157409721,
+                "direction": "falling",
+                "estimated_time_s": 4.320403622733701e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.325340815563381e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.3987251249456739,
+                "before_time_s": 4.325263457891167e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4053423050130432,
+                "direction": "falling",
+                "estimated_time_s": 4.3252674595835386e-08
+              }
+            },
+            "PRE_to_A_s": 7.413072067194976e-12,
+            "A_to_B_s": 7.306946646547994e-11,
+            "B_to_C_s": 1.235536888043354e-10,
+            "C_to_GNN0_s": 4.8638368498374704e-11,
+            "PRE_to_GNN0_s": 2.52674595835385e-10
+          },
+          "enable_low": {
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.800000591763465e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4045206715933118,
+                "before_time_s": 4.799994026158697e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4098388114555134,
+                "direction": "falling",
+                "estimated_time_s": 4.8e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.800577954369158e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4126737002917719,
+                "before_time_s": 4.800573256595575e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4037862332885724,
+                "direction": "rising",
+                "estimated_time_s": 4.8005738981733377e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.80883848003666e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4044128686124575,
+                "before_time_s": 4.808729972272096e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4123449692897622,
+                "direction": "falling",
+                "estimated_time_s": 4.8088304483289244e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.820177986557874e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4075279398362305,
+                "before_time_s": 4.820081194755543e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.3987297043580942,
+                "direction": "rising",
+                "estimated_time_s": 4.820150175998184e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.823450503197441e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4090304950151126,
+                "before_time_s": 4.823390566761547e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4042732214230568,
+                "direction": "rising",
+                "estimated_time_s": 4.823399723375465e-08
+              }
+            },
+            "PRE_to_A_s": 5.738981733376855e-12,
+            "A_to_B_s": 8.256550155586745e-11,
+            "B_to_C_s": 1.1319727669259883e-10,
+            "C_to_GNN0_s": 3.249547377280999e-11,
+            "PRE_to_GNN0_s": 2.339972337546531e-10
+          }
+        },
+        "correct_ON_settling": {
+          "high_before_turnoff": {
+            "xdut.xcdac.bn0": {
+              "samples": 613,
+              "last_outside_1mV_s": 4.465900956646131e-08,
+              "remained_inside_from_native_s": 4.466236897471414e-08,
+              "last_native_s": 4.6988442572253e-08,
+              "final_error_V": -2.401693433018437e-08
+            },
+            "xdut.xcdac.bp0": {
+              "samples": 613,
+              "last_outside_1mV_s": 4.473744962227686e-08,
+              "remained_inside_from_native_s": 4.474294971975504e-08,
+              "last_native_s": 4.6988442572253e-08,
+              "final_error_V": 1.792099273711093e-08
+            }
+          },
+          "low_after_turnon": {
+            "xdut.xcdac.bn0": {
+              "samples": 1100,
+              "last_outside_1mV_s": 4.896975378484192e-08,
+              "remained_inside_from_native_s": 4.897526858525952e-08,
+              "last_native_s": 5.2e-08,
+              "final_error_V": 1.221330207723641e-08
+            },
+            "xdut.xcdac.bp0": {
+              "samples": 1100,
+              "last_outside_1mV_s": 4.864637868863352e-08,
+              "remained_inside_from_native_s": 4.865101592109078e-08,
+              "last_native_s": 5.2e-08,
+              "final_error_V": -1.6028954052949018e-08
+            }
+          }
+        },
+        "supply_rail_excursions": {
+          "pre": {
+            "min_V": 0.0,
+            "max_V": 0.81,
+            "below_ground_V": 0.0,
+            "above_VDD_V": 0.0,
+            "min_time_s": 0.0,
+            "max_time_s": 4.3005e-08
+          },
+          "xdut.gnna": {
+            "min_V": -0.03712100820451356,
+            "max_V": 0.8631654835253502,
+            "below_ground_V": 0.03712100820451356,
+            "above_VDD_V": 0.05316548352535011,
+            "min_time_s": 4.800052783638247e-08,
+            "max_time_s": 4.300106641989241e-08
+          },
+          "xdut.gnnb": {
+            "min_V": -0.1101413724623856,
+            "max_V": 0.9590648460041323,
+            "below_ground_V": 0.1101413724623856,
+            "above_VDD_V": 0.14906484600413228,
+            "min_time_s": 4.301185266013421e-08,
+            "max_time_s": 4.800920031439982e-08
+          },
+          "xdut.gnndrv": {
+            "min_V": -0.1566895066884521,
+            "max_V": 0.9711066518531142,
+            "below_ground_V": 0.1566895066884521,
+            "above_VDD_V": 0.16110665185311412,
+            "min_time_s": 4.812062855606625e-08,
+            "max_time_s": 4.311516791425077e-08
+          },
+          "xdut.gnn0": {
+            "min_V": -0.1218807742544038,
+            "max_V": 0.8937436718846863,
+            "below_ground_V": 0.1218807742544038,
+            "above_VDD_V": 0.08374367188468623,
+            "min_time_s": 4.813825745144773e-08,
+            "max_time_s": 4.313947160355627e-08
+          }
+        },
+        "logic_junction_forward_polarity": [
+          {
+            "pair": "XDUT.GNNCN:bd",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNDRV"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -0.9711066518531142,
+            "signed_forward_max_V": 0.1566895066884521,
+            "positive_forward_polarity_peak_V": 0.1566895066884521,
+            "peak_time_s": 4.812062855606625e-08,
+            "body_current_extrema": {
+              "max": 5.641237876132877e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -4.911370584609334e-06,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 8.114237614640592e-16,
+              "fault_abs_C": 8.114237614640592e-16,
+              "fault_signed_C": -2.0150988779335316e-21,
+              "signed_C": -2.0150988779335316e-21
+            },
+            "body_current_at_polarity_peak_A": 5.493063391502052e-07,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCN:bs",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 5.641237876132877e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -4.911370584609334e-06,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 8.114237614640592e-16,
+              "fault_abs_C": 8.114237614640592e-16,
+              "fault_signed_C": -2.0150988779335316e-21,
+              "signed_C": -2.0150988779335316e-21
+            },
+            "body_current_at_polarity_peak_A": -6.002211623980392e-17,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBN:bd",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNB"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -0.9590648460041323,
+            "signed_forward_max_V": 0.1101413724623856,
+            "positive_forward_polarity_peak_V": 0.1101413724623856,
+            "peak_time_s": 4.301185266013421e-08,
+            "body_current_extrema": {
+              "max": 1.537907945419359e-05,
+              "max_time_s": 4.300706800168771e-08,
+              "min": -2.835479541105213e-05,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.451550793511416e-16,
+              "fault_abs_C": 7.451550793511416e-16,
+              "fault_signed_C": 7.424000826465565e-22,
+              "signed_C": 7.424000826465565e-22
+            },
+            "body_current_at_polarity_peak_A": 3.145359480684123e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBN:bs",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 1.537907945419359e-05,
+              "max_time_s": 4.300706800168771e-08,
+              "min": -2.835479541105213e-05,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.451550793511416e-16,
+              "fault_abs_C": 7.451550793511416e-16,
+              "fault_signed_C": 7.424000826465565e-22,
+              "signed_C": 7.424000826465565e-22
+            },
+            "body_current_at_polarity_peak_A": -3.816016810254397e-24,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAN:bd",
+            "model": "nch_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNA"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": -0.8631654835253502,
+            "signed_forward_max_V": 0.03712100820451356,
+            "positive_forward_polarity_peak_V": 0.03712100820451356,
+            "peak_time_s": 4.800052783638247e-08,
+            "body_current_extrema": {
+              "max": 2.325922924279114e-05,
+              "max_time_s": 4.300701546209428e-08,
+              "min": -3.898306573460188e-05,
+              "min_time_s": 4.800514895922455e-08
+            },
+            "body_native_charge": {
+              "abs_C": 3.5171850194991994e-16,
+              "fault_abs_C": 3.5171850194991994e-16,
+              "fault_signed_C": -1.876984610291687e-20,
+              "signed_C": -1.876984610291687e-20
+            },
+            "body_current_at_polarity_peak_A": 1.823407308969015e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAN:bs",
+            "model": "nch_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "forward_polarity": "Vbody-Vdiffusion",
+            "signed_forward_min_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 2.325922924279114e-05,
+              "max_time_s": 4.300701546209428e-08,
+              "min": -3.898306573460188e-05,
+              "min_time_s": 4.800514895922455e-08
+            },
+            "body_native_charge": {
+              "abs_C": 3.5171850194991994e-16,
+              "fault_abs_C": 3.5171850194991994e-16,
+              "fault_signed_C": -1.876984610291687e-20,
+              "signed_C": -1.876984610291687e-20
+            },
+            "body_current_at_polarity_peak_A": -4.404262986336222e-13,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCP:bd",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNDRV"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.9666895066884522,
+            "signed_forward_max_V": 0.16110665185311412,
+            "positive_forward_polarity_peak_V": 0.16110665185311412,
+            "peak_time_s": 4.311516791425077e-08,
+            "body_current_extrema": {
+              "max": 7.456647874771144e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -1.504508478871071e-05,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.4086121735064402e-15,
+              "fault_abs_C": 1.4086121735064402e-15,
+              "fault_signed_C": -3.39761724948567e-23,
+              "signed_C": -3.39761724948567e-23
+            },
+            "body_current_at_polarity_peak_A": -1.122393558487244e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNCP:bs",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 7.456647874771144e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -1.504508478871071e-05,
+              "min_time_s": 4.800500066018548e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.4086121735064402e-15,
+              "fault_abs_C": 1.4086121735064402e-15,
+              "fault_signed_C": -3.39761724948567e-23,
+              "signed_C": -3.39761724948567e-23
+            },
+            "body_current_at_polarity_peak_A": 1.149086348981135e-25,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBP:bd",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNB"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.9201413724623857,
+            "signed_forward_max_V": 0.14906484600413228,
+            "positive_forward_polarity_peak_V": 0.14906484600413228,
+            "peak_time_s": 4.800920031439982e-08,
+            "body_current_extrema": {
+              "max": 3.321161151562641e-05,
+              "max_time_s": 4.300500078125e-08,
+              "min": -5.005158724782726e-05,
+              "min_time_s": 4.800547580924527e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.3015253840063545e-15,
+              "fault_abs_C": 1.3015253840063545e-15,
+              "fault_signed_C": 6.599435402114179e-21,
+              "signed_C": 6.599435402114179e-21
+            },
+            "body_current_at_polarity_peak_A": -6.787562599014746e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNBP:bs",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 3.321161151562641e-05,
+              "max_time_s": 4.300500078125e-08,
+              "min": -5.005158724782726e-05,
+              "min_time_s": 4.800547580924527e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.3015253840063545e-15,
+              "fault_abs_C": 1.3015253840063545e-15,
+              "fault_signed_C": 6.599435402114179e-21,
+              "signed_C": 6.599435402114179e-21
+            },
+            "body_current_at_polarity_peak_A": 2.113037502003592e-17,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAP:bd",
+            "model": "pch_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNA"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.8471210082045136,
+            "signed_forward_max_V": 0.05316548352535011,
+            "positive_forward_polarity_peak_V": 0.05316548352535011,
+            "peak_time_s": 4.300106641989241e-08,
+            "body_current_extrema": {
+              "max": 4.419162490856981e-05,
+              "max_time_s": 4.300643120152371e-08,
+              "min": -6.401811368757107e-05,
+              "min_time_s": 4.800541840982612e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.322827334528176e-16,
+              "fault_abs_C": 6.322827334528176e-16,
+              "fault_signed_C": 1.1346047023219924e-20,
+              "signed_C": 1.1346047023219924e-20
+            },
+            "body_current_at_polarity_peak_A": -3.562929542278419e-06,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          },
+          {
+            "pair": "XDUT.GNNAP:bs",
+            "model": "pch_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "forward_polarity": "Vdiffusion-Vbody",
+            "signed_forward_min_V": -0.0,
+            "signed_forward_max_V": -0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "peak_time_s": 0.0,
+            "body_current_extrema": {
+              "max": 4.419162490856981e-05,
+              "max_time_s": 4.300643120152371e-08,
+              "min": -6.401811368757107e-05,
+              "min_time_s": 4.800541840982612e-08
+            },
+            "body_native_charge": {
+              "abs_C": 6.322827334528176e-16,
+              "fault_abs_C": 6.322827334528176e-16,
+              "fault_signed_C": 1.1346047023219924e-20,
+              "signed_C": 1.1346047023219924e-20
+            },
+            "body_current_at_polarity_peak_A": 1.800577087341587e-16,
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4."
+          }
+        ],
+        "body_note": "All150 junctions/body statistics retained in ABC original result; this comparison lists12 A/B/C junction records. Total port currents do not identify diode-current fraction.",
+        "off_gap": {
+          "xdut.xcdac.bn0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -2.379110897177128e-05,
+            "max_mV": 33.77510576077014,
+            "min_time_ns": 46.995,
+            "max_time_ns": 47.98630684588609,
+            "last_native_ns": 47.98630684588609,
+            "last_error_mV": 33.77510576077014
+          },
+          "xdut.xcdac.bp0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -32.38746906357516,
+            "max_mV": 1.7759636107235334e-05,
+            "min_time_ns": 47.98630684588609,
+            "max_time_ns": 46.995,
+            "last_native_ns": 47.98630684588609,
+            "last_error_mV": -32.38746906357516
+          }
+        },
+        "direct_stage_VDD_energy_J": {
+          "A": 1.7816588144301202e-15,
+          "B": 2.1855215795328442e-15,
+          "C": 1.3757604326355496e-15
+        },
+        "ideal_VDD_energy_J": 2.66212286464223e-13,
+        "source_power_not_added_to_VDD": true,
+        "warning_codes": [
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      },
+      "ABC": {
+        "run": "sar8audit-refcell-ioa-sscold",
+        "source_result_sha256": "43cbc3dca29fa999f45823ccd161826f8bf5e85574873810b98270b53ccbeba8",
+        "native_points": 7915,
+        "A_class": "IO",
+        "stage_screens": {
+          "A": {
+            "worst": 0.9600769893621366,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "B": {
+            "worst": 0.9600769893621366,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          },
+          "C": {
+            "worst": 0.9608069022620901,
+            "strict_exceed_pairs": 0,
+            "models": [
+              "nch_18_mac",
+              "pch_18_mac"
+            ],
+            "limit_V": 1.98
+          }
+        },
+        "all450_strict_records": [],
+        "reference_chain_strict_pairs": 0,
+        "PRE_gate_load": {
+          "event_native_charge": {
+            "disable_low": {
+              "absolute_charge_C": 1.3651195493948939e-15,
+              "first_native_s": 4.298942196354935e-08,
+              "last_native_s": 4.499153930372696e-08,
+              "samples": 1270,
+              "signed_charge_C": 1.3646728048257503e-15
+            },
+            "enable_low": {
+              "absolute_charge_C": 1.3653459961372157e-15,
+              "first_native_s": 4.79825829274875e-08,
+              "last_native_s": 5.099340717620961e-08,
+              "samples": 1050,
+              "signed_charge_C": -1.3646928665086633e-15
+            }
+          },
+          "full_signed_charge_C": -2.0062032455345667e-20,
+          "interpretation": "Total N/P gate currents entering A at ideal PRE; not intrinsic capacitance decomposition.",
+          "max_A": 0.00013916789341172778,
+          "max_time_s": 4.299500192652261e-08,
+          "min_A": -0.00012982837848846322,
+          "min_time_s": 4.8005e-08
+        },
+        "ideal_PRE_source_work": {
+          "A_gate_port_work_J": 2.9857277730957226e-16,
+          "accounting": "Reported separately from ideal VDD energy; not added to it and not a fullADC power figure. Signed native trapezoids, ideal-source boundary only.",
+          "interval_s": [
+            0,
+            5.2e-08
+          ],
+          "max_PRE_node_KCL_A": 3.483646341230842e-13,
+          "max_PRE_node_KCL_time_s": 4.299838641982707e-08,
+          "net_delivered_J": 2.985727770261233e-16,
+          "positive_delivered_J": 6.807560643443003e-16,
+          "returned_to_source_J": 3.821832873181753e-16,
+          "sign": "VPRE current positive into source; delivered work is integral(-VPRE*IPRE), returned work is separately positive.",
+          "source_work_minus_A_gate_work_J": -2.8344896451380894e-25
+        },
+        "complete_delays": {
+          "disable_low": {
+            "A_to_B_s": 1.3945564654124944e-10,
+            "B_to_C_s": 1.3207441265876315e-10,
+            "C_to_GNN0_s": 4.833835718199169e-11,
+            "PRE_to_A_s": 8.308761808573792e-11,
+            "PRE_to_GNN0_s": 4.029560344677422e-10,
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.300006356423366e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4101487029262204,
+                "before_time_s": 4.299991317468719e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.3979671496621291,
+                "direction": "rising",
+                "estimated_time_s": 4.3e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.340345590879942e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4007477619352545,
+                "before_time_s": 4.340271005935352e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4070924153880053,
+                "direction": "falling",
+                "estimated_time_s": 4.3402956034467743e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.30836554858988e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4008845540615077,
+                "before_time_s": 4.308276192286548e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4073603751446845,
+                "direction": "falling",
+                "estimated_time_s": 4.308308761808574e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.322369352492057e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4132110699714129,
+                "before_time_s": 4.322233858837257e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4035389297918738,
+                "direction": "rising",
+                "estimated_time_s": 4.322254326462699e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.335496183542761e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4025545326171279,
+                "before_time_s": 4.335335662097575e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4139606250703726,
+                "direction": "falling",
+                "estimated_time_s": 4.335461767728575e-08
+              }
+            }
+          },
+          "enable_low": {
+            "A_to_B_s": 1.4969829635318514e-10,
+            "B_to_C_s": 1.2245837915817853e-10,
+            "C_to_GNN0_s": 3.233148999239971e-11,
+            "PRE_to_A_s": 7.141985969458004e-11,
+            "PRE_to_GNN0_s": 3.759080251983434e-10,
+            "native_edge_witnesses": {
+              "pre": {
+                "after_time_s": 4.800003262750102e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4023571724171504,
+                "before_time_s": 4.799985497897823e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4167467027635969,
+                "direction": "falling",
+                "estimated_time_s": 4.8e-08
+              },
+              "xdut.gnn0": {
+                "after_time_s": 4.837641450908256e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4089616172832727,
+                "before_time_s": 4.837583086029407e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4043964313022433,
+                "direction": "rising",
+                "estimated_time_s": 4.837590802519834e-08
+              },
+              "xdut.gnna": {
+                "after_time_s": 4.807144422340225e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4052070863216904,
+                "before_time_s": 4.807032597576136e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.3957022197472259,
+                "direction": "rising",
+                "estimated_time_s": 4.807141985969458e-08
+              },
+              "xdut.gnnb": {
+                "after_time_s": 4.822162016698101e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.40190499215069,
+                "before_time_s": 4.822024849536664e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.4103616494304848,
+                "direction": "falling",
+                "estimated_time_s": 4.8221118156047765e-08
+              },
+              "xdut.gnndrv": {
+                "after_time_s": 4.83441211953946e-08,
+                "after_vdd_v": 0.81,
+                "after_voltage_v": 0.4098328840967155,
+                "before_time_s": 4.834311679593385e-08,
+                "before_vdd_v": 0.81,
+                "before_voltage_v": 0.400920637008188,
+                "direction": "rising",
+                "estimated_time_s": 4.8343576535205943e-08
+              }
+            }
+          }
+        },
+        "correct_ON_settling": {
+          "high_before_turnoff": {
+            "xdut.xcdac.bn0": {
+              "final_error_V": -2.3907387736166186e-08,
+              "last_native_s": 4.699153930372658e-08,
+              "last_outside_1mV_s": 4.465714895148773e-08,
+              "remained_inside_from_native_s": 4.46604691542601e-08,
+              "samples": 615
+            },
+            "xdut.xcdac.bp0": {
+              "final_error_V": 1.784310985415477e-08,
+              "last_native_s": 4.699153930372658e-08,
+              "last_outside_1mV_s": 4.473950564787443e-08,
+              "remained_inside_from_native_s": 4.474507270262662e-08,
+              "samples": 615
+            }
+          },
+          "low_after_turnon": {
+            "xdut.xcdac.bn0": {
+              "final_error_V": 1.2215770017492555e-08,
+              "last_native_s": 5.2e-08,
+              "last_outside_1mV_s": 4.911214392048954e-08,
+              "remained_inside_from_native_s": 4.911764798460028e-08,
+              "samples": 1064
+            },
+            "xdut.xcdac.bp0": {
+              "final_error_V": -1.6028877114493412e-08,
+              "last_native_s": 5.2e-08,
+              "last_outside_1mV_s": 4.864820099904702e-08,
+              "remained_inside_from_native_s": 4.865285155990835e-08,
+              "samples": 1064
+            }
+          }
+        },
+        "supply_rail_excursions": {
+          "pre": {
+            "above_VDD_V": 0.0,
+            "below_ground_V": 0.0,
+            "max_V": 0.81,
+            "max_time_s": 4.3005e-08,
+            "min_V": 0.0,
+            "min_time_s": 0.0
+          },
+          "xdut.gnn0": {
+            "above_VDD_V": 0.08340571081440129,
+            "below_ground_V": 0.1200835919644686,
+            "max_V": 0.8934057108144013,
+            "max_time_s": 4.328700251134088e-08,
+            "min_V": -0.1200835919644686,
+            "min_time_s": 4.827599926896744e-08
+          },
+          "xdut.gnna": {
+            "above_VDD_V": 0.15007698936213654,
+            "below_ground_V": 0.115709132835462,
+            "max_V": 0.9600769893621366,
+            "max_time_s": 4.3005e-08,
+            "min_V": -0.115709132835462,
+            "min_time_s": 4.8005e-08
+          },
+          "xdut.gnnb": {
+            "above_VDD_V": 0.10975936839609413,
+            "below_ground_V": 0.07999124572875589,
+            "max_V": 0.9197593683960942,
+            "max_time_s": 4.810952309067643e-08,
+            "min_V": -0.07999124572875589,
+            "min_time_s": 4.311782096367724e-08
+          },
+          "xdut.gnndrv": {
+            "above_VDD_V": 0.15080690226209004,
+            "below_ground_V": 0.1490735576255304,
+            "max_V": 0.9608069022620901,
+            "max_time_s": 4.326225174370281e-08,
+            "min_V": -0.1490735576255304,
+            "min_time_s": 4.825795398136076e-08
+          }
+        },
+        "logic_junction_forward_polarity": [
+          {
+            "body_current_at_polarity_peak_A": 4.757817385986407e-07,
+            "body_current_extrema": {
+              "max": 2.083524173246995e-06,
+              "max_time_s": 4.332895563309451e-08,
+              "min": -2.551085270237242e-06,
+              "min_time_s": 4.832418522287765e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.527192039122316e-16,
+              "fault_abs_C": 7.527192039122316e-16,
+              "fault_signed_C": -2.4721773853580986e-21,
+              "signed_C": -2.4721773853580986e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNDRV"
+            ],
+            "pair": "XDUT.GNNCN:bd",
+            "peak_time_s": 4.825795398136076e-08,
+            "positive_forward_polarity_peak_V": 0.1490735576255304,
+            "signed_forward_max_V": 0.1490735576255304,
+            "signed_forward_min_V": -0.9608069022620901
+          },
+          {
+            "body_current_at_polarity_peak_A": -6.002211623980392e-17,
+            "body_current_extrema": {
+              "max": 2.083524173246995e-06,
+              "max_time_s": 4.332895563309451e-08,
+              "min": -2.551085270237242e-06,
+              "min_time_s": 4.832418522287765e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.527192039122316e-16,
+              "fault_abs_C": 7.527192039122316e-16,
+              "fault_signed_C": -2.4721773853580986e-21,
+              "signed_C": -2.4721773853580986e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNCN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": 5.193589895473869e-07,
+            "body_current_extrema": {
+              "max": 3.34037093380919e-06,
+              "max_time_s": 4.799500190657129e-08,
+              "min": -2.404314233865437e-06,
+              "min_time_s": 4.800500083326371e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.134215277731463e-16,
+              "fault_abs_C": 7.134215277731463e-16,
+              "fault_signed_C": 8.308430708806199e-22,
+              "signed_C": 8.308430708806199e-22
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNB"
+            ],
+            "pair": "XDUT.GNNBN:bd",
+            "peak_time_s": 4.311782096367724e-08,
+            "positive_forward_polarity_peak_V": 0.07999124572875589,
+            "signed_forward_max_V": 0.07999124572875589,
+            "signed_forward_min_V": -0.9197593683960942
+          },
+          {
+            "body_current_at_polarity_peak_A": -3.816016810254397e-24,
+            "body_current_extrema": {
+              "max": 3.34037093380919e-06,
+              "max_time_s": 4.799500190657129e-08,
+              "min": -2.404314233865437e-06,
+              "min_time_s": 4.800500083326371e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.134215277731463e-16,
+              "fault_abs_C": 7.134215277731463e-16,
+              "fault_signed_C": 8.308430708806199e-22,
+              "signed_C": 8.308430708806199e-22
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNBN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": 1.243206815044503e-05,
+            "body_current_extrema": {
+              "max": 1.264341239895551e-05,
+              "max_time_s": 4.800419954000883e-08,
+              "min": -1.58471576830142e-05,
+              "min_time_s": 4.299500192652261e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.395226587259911e-16,
+              "fault_abs_C": 7.395226587259911e-16,
+              "fault_signed_C": 4.380176948094853e-21,
+              "signed_C": 4.380176948094853e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "XDUT.GNNA"
+            ],
+            "pair": "XDUT.GNNAN:bd",
+            "peak_time_s": 4.8005e-08,
+            "positive_forward_polarity_peak_V": 0.115709132835462,
+            "signed_forward_max_V": 0.115709132835462,
+            "signed_forward_min_V": -0.9600769893621366
+          },
+          {
+            "body_current_at_polarity_peak_A": -6.002211623980389e-17,
+            "body_current_extrema": {
+              "max": 1.264341239895551e-05,
+              "max_time_s": 4.800419954000883e-08,
+              "min": -1.58471576830142e-05,
+              "min_time_s": 4.299500192652261e-08
+            },
+            "body_native_charge": {
+              "abs_C": 7.395226587259911e-16,
+              "fault_abs_C": 7.395226587259911e-16,
+              "fault_signed_C": 4.380176948094853e-21,
+              "signed_C": 4.380176948094853e-21
+            },
+            "forward_polarity": "Vbody-Vdiffusion",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "nch_18_mac",
+            "nodes": [
+              "0",
+              "0"
+            ],
+            "pair": "XDUT.GNNAN:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": 0.0,
+            "signed_forward_min_V": 0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -9.779658823663999e-07,
+            "body_current_extrema": {
+              "max": 3.73896838701985e-06,
+              "max_time_s": 4.331730857940036e-08,
+              "min": -4.034066422823624e-06,
+              "min_time_s": 4.83441211953946e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.3075258491245053e-15,
+              "fault_abs_C": 1.3075258491245053e-15,
+              "fault_signed_C": 1.2485992062121336e-20,
+              "signed_C": 1.2485992062121336e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNDRV"
+            ],
+            "pair": "XDUT.GNNCP:bd",
+            "peak_time_s": 4.326225174370281e-08,
+            "positive_forward_polarity_peak_V": 0.15080690226209004,
+            "signed_forward_max_V": 0.15080690226209004,
+            "signed_forward_min_V": -0.9590735576255305
+          },
+          {
+            "body_current_at_polarity_peak_A": 1.149086348981135e-25,
+            "body_current_extrema": {
+              "max": 3.73896838701985e-06,
+              "max_time_s": 4.331730857940036e-08,
+              "min": -4.034066422823624e-06,
+              "min_time_s": 4.83441211953946e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.3075258491245053e-15,
+              "fault_abs_C": 1.3075258491245053e-15,
+              "fault_signed_C": 1.2485992062121336e-20,
+              "signed_C": 1.2485992062121336e-20
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNCP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -1.023563220360075e-06,
+            "body_current_extrema": {
+              "max": 3.901021939957349e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -8.277638563797406e-06,
+              "min_time_s": 4.299500192652261e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2585969170324661e-15,
+              "fault_abs_C": 1.2585969170324661e-15,
+              "fault_signed_C": 6.991633854982129e-21,
+              "signed_C": 6.991633854982129e-21
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNB"
+            ],
+            "pair": "XDUT.GNNBP:bd",
+            "peak_time_s": 4.810952309067643e-08,
+            "positive_forward_polarity_peak_V": 0.10975936839609413,
+            "signed_forward_max_V": 0.10975936839609413,
+            "signed_forward_min_V": -0.889991245728756
+          },
+          {
+            "body_current_at_polarity_peak_A": 2.11303749522532e-17,
+            "body_current_extrema": {
+              "max": 3.901021939957349e-06,
+              "max_time_s": 4.300500078125e-08,
+              "min": -8.277638563797406e-06,
+              "min_time_s": 4.299500192652261e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2585969170324661e-15,
+              "fault_abs_C": 1.2585969170324661e-15,
+              "fault_signed_C": 6.991633854982129e-21,
+              "signed_C": 6.991633854982129e-21
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNBP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          },
+          {
+            "body_current_at_polarity_peak_A": -2.429505604146348e-05,
+            "body_current_extrema": {
+              "max": 2.585539208756067e-05,
+              "max_time_s": 4.799500190657129e-08,
+              "min": -2.524158899691223e-05,
+              "min_time_s": 4.30039671898995e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2789123114931939e-15,
+              "fault_abs_C": 1.2789123114931939e-15,
+              "fault_signed_C": 1.6179320806661392e-21,
+              "signed_C": 1.6179320806661392e-21
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "XDUT.GNNA"
+            ],
+            "pair": "XDUT.GNNAP:bd",
+            "peak_time_s": 4.3005e-08,
+            "positive_forward_polarity_peak_V": 0.15007698936213654,
+            "signed_forward_max_V": 0.15007698936213654,
+            "signed_forward_min_V": -0.9257091328354621
+          },
+          {
+            "body_current_at_polarity_peak_A": 1.149086348981135e-25,
+            "body_current_extrema": {
+              "max": 2.585539208756067e-05,
+              "max_time_s": 4.799500190657129e-08,
+              "min": -2.524158899691223e-05,
+              "min_time_s": 4.30039671898995e-08
+            },
+            "body_native_charge": {
+              "abs_C": 1.2789123114931939e-15,
+              "fault_abs_C": 1.2789123114931939e-15,
+              "fault_signed_C": 1.6179320806661392e-21,
+              "signed_C": 1.6179320806661392e-21
+            },
+            "forward_polarity": "Vdiffusion-Vbody",
+            "interpretation": "Positive junction voltage is forward polarity; no assumed diode threshold or proof of channel/diode-current fraction. Body current is total native port4.",
+            "model": "pch_18_mac",
+            "nodes": [
+              "VDD!",
+              "VDD!"
+            ],
+            "pair": "XDUT.GNNAP:bs",
+            "peak_time_s": 0.0,
+            "positive_forward_polarity_peak_V": 0.0,
+            "signed_forward_max_V": -0.0,
+            "signed_forward_min_V": -0.0
+          }
+        ],
+        "body_note": "All150 junctions/body statistics retained in ABC original result; this comparison lists12 A/B/C junction records. Total port currents do not identify diode-current fraction.",
+        "off_gap": {
+          "xdut.xcdac.bn0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -2.3789054170997304e-05,
+            "max_mV": 33.77508840408938,
+            "min_time_ns": 46.995,
+            "max_time_ns": 47.992582927487504,
+            "last_native_ns": 47.992582927487504,
+            "last_error_mV": 33.77508840408938
+          },
+          "xdut.xcdac.bp0": {
+            "interval_s": [
+              4.6995e-08,
+              4.7995e-08
+            ],
+            "stop_exclusive": true,
+            "min_mV": -32.38757829625007,
+            "max_mV": 1.7758562617394525e-05,
+            "min_time_ns": 47.992582927487504,
+            "max_time_ns": 46.995,
+            "last_native_ns": 47.992582927487504,
+            "last_error_mV": -32.38757829625007
+          }
+        },
+        "direct_stage_VDD_energy_J": {
+          "A": 2.1723875287706867e-15,
+          "B": 2.149497095655876e-15,
+          "C": 1.3632888861717072e-15
+        },
+        "ideal_VDD_energy_J": 2.665826597428177e-13,
+        "source_power_not_added_to_VDD": true,
+        "warning_codes": [
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      }
+    }
+  },
+  "actual_PRE_driver": "Omitted core XREF.XDRV0.X025; exact topology in pre_driver_boundary.json",
+  "source_work_accounting": "PRE delivered/returned/net work reported separately; never added to ideal VDD energy.",
+  "screen_and_junction_polarity_are_separate": true,
+  "acceptance_pass": null,
+  "whole_chain_qualified": false,
+  "new_fixture_generated": false
+}

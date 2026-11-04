@@ -1,0 +1,286 @@
+subckt sar8audit_std_storage VDD VSS SR_R SR_S FF_CK FF_D FF_RST CONTEXT
+    XRU00 (SR_R VSS VDD VSS U00_R) sar8p_or2
+    XSU00 (SR_S VDD VDD VSS U00_S) sar8p_and2
+    XU00 (U00_Q U00_R U00_S VDD VSS) sar8p_sr
+    XLU00_0 (U00_Q VDD VSS U00_L0_Y) sar8p_buf
+    XCU01 (FF_CK VDD VSS U01_CK) sar8p_clkbuf
+    XDU01 (FF_D VDD VSS U01_D) sar8p_buf
+    XRU01 (FF_RST VDD VSS U01_RST) sar8p_buf
+    XU01 (U01_CK U01_D U01_Q U01_RST VDD VSS) sar8p_dffr
+    XLU01_0 (CONTEXT CONTEXT U01_Q VDD VSS U01_L0_Y) sar8p_mux2
+    XLU01_1 (CONTEXT U01_Q VDD VSS U01_L1_Y) sar8p_or2
+    XLU01_2 (U01_Q CONTEXT VDD VSS U01_L2_Y) sar8p_or2
+    XCU02 (FF_CK VDD VSS U02_CK) sar8p_clkbuf
+    XDU02 (FF_D VDD VSS U02_D) sar8p_buf
+    XRU02 (FF_RST VDD VSS U02_RST) sar8p_buf
+    XU02 (U02_CK U02_D U02_Q U02_RST VDD VSS) sar8p_dffr
+    XLU02_0 (VSS U02_Q U02_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU02_1 (CONTEXT CONTEXT U02_Q VDD VSS U02_L1_Y) sar8p_mux2
+    XLU02_2 (CONTEXT U02_Q VDD VSS U02_L2_Y) sar8p_or2
+    XLU02_3 (CONTEXT U02_Q VDD VSS U02_L3_Y) sar8p_or2
+    XCU03 (FF_CK VDD VSS U03_CK) sar8p_clkbuf
+    XDU03 (FF_D VDD VSS U03_D) sar8p_buf
+    XRU03 (FF_RST VDD VSS U03_RST) sar8p_buf
+    XU03 (U03_CK U03_D U03_Q U03_RST VDD VSS) sar8p_dffr
+    XLU03_0 (VSS U03_Q U03_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU03_1 (CONTEXT CONTEXT U03_Q VDD VSS U03_L1_Y) sar8p_mux2
+    XLU03_2 (CONTEXT U03_Q VDD VSS U03_L2_Y) sar8p_or2
+    XLU03_3 (U03_Q CONTEXT VDD VSS U03_L3_Y) sar8p_or2
+    XCU04 (FF_CK VDD VSS U04_CK) sar8p_clkbuf
+    XDU04 (FF_D VDD VSS U04_D) sar8p_buf
+    XRU04 (FF_RST VDD VSS U04_RST) sar8p_buf
+    XU04 (U04_CK U04_D U04_Q U04_RST VDD VSS) sar8p_dffr
+    XLU04_0 (VSS U04_Q U04_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU04_1 (CONTEXT CONTEXT U04_Q VDD VSS U04_L1_Y) sar8p_mux2
+    XLU04_2 (CONTEXT U04_Q VDD VSS U04_L2_Y) sar8p_or2
+    XLU04_3 (CONTEXT U04_Q VDD VSS U04_L3_Y) sar8p_or2
+    XCU05 (FF_CK VDD VSS U05_CK) sar8p_clkbuf
+    XDU05 (FF_D VDD VSS U05_D) sar8p_buf
+    XRU05 (FF_RST VDD VSS U05_RST) sar8p_buf
+    XU05 (U05_CK U05_D U05_Q U05_RST VDD VSS) sar8p_dffr
+    XLU05_0 (VSS U05_Q U05_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU05_1 (CONTEXT CONTEXT U05_Q VDD VSS U05_L1_Y) sar8p_mux2
+    XLU05_2 (CONTEXT U05_Q VDD VSS U05_L2_Y) sar8p_or2
+    XLU05_3 (U05_Q CONTEXT VDD VSS U05_L3_Y) sar8p_or2
+    XCU06 (FF_CK VDD VSS U06_CK) sar8p_clkbuf
+    XDU06 (FF_D VDD VSS U06_D) sar8p_buf
+    XRU06 (FF_RST VDD VSS U06_RST) sar8p_buf
+    XU06 (U06_CK U06_D U06_Q U06_RST VDD VSS) sar8p_dffr
+    XLU06_0 (VSS U06_Q U06_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU06_1 (CONTEXT CONTEXT U06_Q VDD VSS U06_L1_Y) sar8p_mux2
+    XLU06_2 (CONTEXT U06_Q VDD VSS U06_L2_Y) sar8p_or2
+    XLU06_3 (CONTEXT U06_Q VDD VSS U06_L3_Y) sar8p_or2
+    XCU07 (FF_CK VDD VSS U07_CK) sar8p_clkbuf
+    XDU07 (FF_D VDD VSS U07_D) sar8p_buf
+    XRU07 (FF_RST VDD VSS U07_RST) sar8p_buf
+    XU07 (U07_CK U07_D U07_Q U07_RST VDD VSS) sar8p_dffr
+    XLU07_0 (VSS U07_Q U07_L0_Q VDD VDD VSS) sar8p_dffr
+    XLU07_1 (CONTEXT CONTEXT U07_Q VDD VSS U07_L1_Y) sar8p_mux2
+    XLU07_2 (CONTEXT U07_Q VDD VSS U07_L2_Y) sar8p_or2
+    XLU07_3 (U07_Q CONTEXT VDD VSS U07_L3_Y) sar8p_or2
+    XCU08 (FF_CK VDD VSS U08_CK) sar8p_clkbuf
+    XDU08 (FF_D VDD VSS U08_D) sar8p_buf
+    XRU08 (FF_RST VDD VSS U08_RST) sar8p_buf
+    XU08 (U08_CK U08_D U08_Q U08_RST VDD VSS) sar8p_dffr
+    XLU08_0 (U08_Q VDD VSS U08_L0_Y) sar8p_inv
+    XCU09 (FF_CK VDD VSS U09_CK) sar8p_clkbuf
+    XDU09 (FF_D VDD VSS U09_D) sar8p_buf
+    XRU09 (FF_RST VDD VSS U09_RST) sar8p_buf
+    XU09 (U09_CK U09_D U09_Q U09_RST VDD VSS) sar8p_dffr
+    XLU09_0 (U09_Q CONTEXT CONTEXT VDD VSS U09_L0_Y) sar8p_mux2
+    XLU09_1 (U09_Q CONTEXT VDD VSS U09_L1_Y) sar8p_or2
+    XLU09_2 (CONTEXT U09_Q CONTEXT VDD VSS U09_L2_Y) sar8p_mux2
+    XCU10 (FF_CK VDD VSS U10_CK) sar8p_clkbuf
+    XDU10 (FF_D VDD VSS U10_D) sar8p_buf
+    XRU10 (FF_RST VDD VSS U10_RST) sar8p_buf
+    XU10 (U10_CK U10_D U10_Q U10_RST VDD VSS) sar8p_dffr
+    XLU10_0 (U10_Q CONTEXT CONTEXT VDD VSS U10_L0_Y) sar8p_mux2
+    XLU10_1 (U10_Q CONTEXT VDD VSS U10_L1_Y) sar8p_or2
+    XLU10_2 (CONTEXT U10_Q CONTEXT VDD VSS U10_L2_Y) sar8p_mux2
+    XCU11 (FF_CK VDD VSS U11_CK) sar8p_clkbuf
+    XDU11 (FF_D VDD VSS U11_D) sar8p_buf
+    XRU11 (FF_RST VDD VSS U11_RST) sar8p_buf
+    XU11 (U11_CK U11_D U11_Q U11_RST VDD VSS) sar8p_dffr
+    XLU11_0 (U11_Q CONTEXT CONTEXT VDD VSS U11_L0_Y) sar8p_mux2
+    XLU11_1 (U11_Q CONTEXT VDD VSS U11_L1_Y) sar8p_or2
+    XLU11_2 (CONTEXT U11_Q CONTEXT VDD VSS U11_L2_Y) sar8p_mux2
+    XCU12 (FF_CK VDD VSS U12_CK) sar8p_clkbuf
+    XDU12 (FF_D VDD VSS U12_D) sar8p_buf
+    XRU12 (FF_RST VDD VSS U12_RST) sar8p_buf
+    XU12 (U12_CK U12_D U12_Q U12_RST VDD VSS) sar8p_dffr
+    XLU12_0 (U12_Q CONTEXT CONTEXT VDD VSS U12_L0_Y) sar8p_mux2
+    XLU12_1 (U12_Q CONTEXT VDD VSS U12_L1_Y) sar8p_or2
+    XLU12_2 (CONTEXT U12_Q CONTEXT VDD VSS U12_L2_Y) sar8p_mux2
+    XCU13 (FF_CK VDD VSS U13_CK) sar8p_clkbuf
+    XDU13 (FF_D VDD VSS U13_D) sar8p_buf
+    XRU13 (FF_RST VDD VSS U13_RST) sar8p_buf
+    XU13 (U13_CK U13_D U13_Q U13_RST VDD VSS) sar8p_dffr
+    XLU13_0 (U13_Q CONTEXT CONTEXT VDD VSS U13_L0_Y) sar8p_mux2
+    XLU13_1 (U13_Q CONTEXT VDD VSS U13_L1_Y) sar8p_or2
+    XLU13_2 (CONTEXT U13_Q CONTEXT VDD VSS U13_L2_Y) sar8p_mux2
+    XCU14 (FF_CK VDD VSS U14_CK) sar8p_clkbuf
+    XDU14 (FF_D VDD VSS U14_D) sar8p_buf
+    XRU14 (FF_RST VDD VSS U14_RST) sar8p_buf
+    XU14 (U14_CK U14_D U14_Q U14_RST VDD VSS) sar8p_dffr
+    XLU14_0 (U14_Q CONTEXT CONTEXT VDD VSS U14_L0_Y) sar8p_mux2
+    XLU14_1 (U14_Q CONTEXT VDD VSS U14_L1_Y) sar8p_or2
+    XLU14_2 (CONTEXT U14_Q CONTEXT VDD VSS U14_L2_Y) sar8p_mux2
+    XCU15 (FF_CK VDD VSS U15_CK) sar8p_clkbuf
+    XDU15 (FF_D VDD VSS U15_D) sar8p_buf
+    XRU15 (FF_RST VDD VSS U15_RST) sar8p_buf
+    XU15 (U15_CK U15_D U15_Q U15_RST VDD VSS) sar8p_dffr
+    XLU15_0 (U15_Q CONTEXT CONTEXT VDD VSS U15_L0_Y) sar8p_mux2
+    XLU15_1 (U15_Q CONTEXT VDD VSS U15_L1_Y) sar8p_or2
+    XLU15_2 (CONTEXT U15_Q CONTEXT VDD VSS U15_L2_Y) sar8p_mux2
+    XCU16 (FF_CK VDD VSS U16_CK) sar8p_clkbuf
+    XDU16 (FF_D VDD VSS U16_D) sar8p_buf
+    XRU16 (FF_RST VDD VSS U16_RST) sar8p_buf
+    XU16 (U16_CK U16_D U16_Q U16_RST VDD VSS) sar8p_dffr
+    XLU16_0 (U16_Q CONTEXT CONTEXT VDD VSS U16_L0_Y) sar8p_mux2
+    XLU16_1 (U16_Q CONTEXT VDD VSS U16_L1_Y) sar8p_or2
+    XLU16_2 (CONTEXT U16_Q CONTEXT VDD VSS U16_L2_Y) sar8p_mux2
+    XRU17 (SR_R VSS VDD VSS U17_R) sar8p_or2
+    XSU17 (SR_S VDD VDD VSS U17_S) sar8p_and2
+    XU17 (U17_Q U17_R U17_S VDD VSS) sar8p_sr
+    XLU17_0 (U17_Q VDD VSS U17_L0_Y) sar8p_delay_capture
+    XCU18 (FF_CK VDD VSS U18_CK) sar8p_clkbuf
+    XDU18 (FF_D VDD VSS U18_D) sar8p_buf
+    XRU18 (FF_RST VDD VSS U18_RST) sar8p_buf
+    XU18 (U18_CK U18_D U18_Q U18_RST VDD VSS) sar8p_dffr
+    XLU18_0 (U18_Q VDD VSS U18_L0_Y) sar8p_inv
+    XCU19 (FF_CK VDD VSS U19_CK) sar8p_clkbuf
+    XDU19 (FF_D VDD VSS U19_D) sar8p_buf
+    XRU19 (FF_RST VDD VSS U19_RST) sar8p_buf
+    XU19 (U19_CK U19_D U19_Q U19_RST VDD VSS) sar8p_dffr
+    XLU19_0 (U19_Q VDD VSS U19_L0_Y) sar8p_inv
+    XLU19_1 (U19_Q VDD VSS U19_L1_Y) sar8p_delay_bbm
+    XLU19_2 (U19_Q CONTEXT VDD VSS U19_L2_Y) sar8p_and2
+    XCU20 (FF_CK VDD VSS U20_CK) sar8p_clkbuf
+    XDU20 (FF_D VDD VSS U20_D) sar8p_buf
+    XRU20 (FF_RST VDD VSS U20_RST) sar8p_buf
+    XU20 (U20_CK U20_D U20_Q U20_RST VDD VSS) sar8p_dffr
+    XLU20_0 (U20_Q VDD VSS U20_L0_Y) sar8p_inv
+    XLU20_1 (U20_Q VDD VSS U20_L1_Y) sar8p_delay_bbm
+    XLU20_2 (U20_Q CONTEXT VDD VSS U20_L2_Y) sar8p_and2
+    XCU21 (FF_CK VDD VSS U21_CK) sar8p_clkbuf
+    XDU21 (FF_D VDD VSS U21_D) sar8p_buf
+    XRU21 (FF_RST VDD VSS U21_RST) sar8p_buf
+    XU21 (U21_CK U21_D U21_Q U21_RST VDD VSS) sar8p_dffr
+    XLU21_0 (U21_Q VDD VSS U21_L0_Y) sar8p_inv
+    XLU21_1 (U21_Q VDD VSS U21_L1_Y) sar8p_delay_bbm
+    XLU21_2 (U21_Q CONTEXT VDD VSS U21_L2_Y) sar8p_and2
+    XCU22 (FF_CK VDD VSS U22_CK) sar8p_clkbuf
+    XDU22 (FF_D VDD VSS U22_D) sar8p_buf
+    XRU22 (FF_RST VDD VSS U22_RST) sar8p_buf
+    XU22 (U22_CK U22_D U22_Q U22_RST VDD VSS) sar8p_dffr
+    XLU22_0 (U22_Q VDD VSS U22_L0_Y) sar8p_inv
+    XLU22_1 (U22_Q VDD VSS U22_L1_Y) sar8p_delay_bbm
+    XLU22_2 (U22_Q CONTEXT VDD VSS U22_L2_Y) sar8p_and2
+    XCU23 (FF_CK VDD VSS U23_CK) sar8p_clkbuf
+    XDU23 (FF_D VDD VSS U23_D) sar8p_buf
+    XRU23 (FF_RST VDD VSS U23_RST) sar8p_buf
+    XU23 (U23_CK U23_D U23_Q U23_RST VDD VSS) sar8p_dffr
+    XLU23_0 (U23_Q VDD VSS U23_L0_Y) sar8p_inv
+    XLU23_1 (U23_Q VDD VSS U23_L1_Y) sar8p_delay_bbm
+    XLU23_2 (U23_Q CONTEXT VDD VSS U23_L2_Y) sar8p_and2
+    XCU24 (FF_CK VDD VSS U24_CK) sar8p_clkbuf
+    XDU24 (FF_D VDD VSS U24_D) sar8p_buf
+    XRU24 (FF_RST VDD VSS U24_RST) sar8p_buf
+    XU24 (U24_CK U24_D U24_Q U24_RST VDD VSS) sar8p_dffr
+    XLU24_0 (U24_Q VDD VSS U24_L0_Y) sar8p_inv
+    XLU24_1 (U24_Q VDD VSS U24_L1_Y) sar8p_delay_bbm
+    XLU24_2 (U24_Q CONTEXT VDD VSS U24_L2_Y) sar8p_and2
+    XCU25 (FF_CK VDD VSS U25_CK) sar8p_clkbuf
+    XDU25 (FF_D VDD VSS U25_D) sar8p_buf
+    XRU25 (FF_RST VDD VSS U25_RST) sar8p_buf
+    XU25 (U25_CK U25_D U25_Q U25_RST VDD VSS) sar8p_dffr
+    XLU25_0 (U25_Q VDD VSS U25_L0_Y) sar8p_inv
+    XLU25_1 (U25_Q VDD VSS U25_L1_Y) sar8p_delay_bbm
+    XLU25_2 (U25_Q CONTEXT VDD VSS U25_L2_Y) sar8p_and2
+ends sar8audit_std_storage
+
+subckt sar8p_and2 A B VDD VSS Y
+    X000 (A B VDD VSS N) sar8p_nand2
+    X001 (N VDD VSS Y) sar8p_inv
+ends sar8p_and2
+
+subckt sar8p_buf A VDD VSS Y
+    X001 (N VDD VSS Y) sar8p_inv
+    X000 (A VDD VSS N) sar8p_inv
+ends sar8p_buf
+
+subckt sar8p_clkbuf A VDD VSS Y
+    X000 (A VDD VSS AB) sar8p_inv
+    XFINAL (AB VDD VSS Y) sar8p_inv
+ends sar8p_clkbuf
+
+subckt sar8p_delay_bbm A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_bbm
+
+subckt sar8p_delay_capture A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+ends sar8p_delay_capture
+
+subckt sar8p_dffr CK D Q RST VDD VSS
+    XRESET (RST RN VDD VSS) INVD1BWP12T30P140
+    XFF (D CK RN Q VDD VSS) DFCNQD1BWP12T30P140
+ends sar8p_dffr
+
+subckt sar8p_inv A VDD VSS Y
+    XLIB (A Y VDD VSS) INVD1BWP12T30P140
+ends sar8p_inv
+
+subckt sar8p_mux2 D0 D1 SEL VDD VSS Y
+    X000 (SEL VDD VSS SB) sar8p_inv
+    X003 (N0 N1 VDD VSS Y) sar8p_nand2
+    X002 (D1 SEL VDD VSS N1) sar8p_nand2
+    X001 (D0 SB VDD VSS N0) sar8p_nand2
+ends sar8p_mux2
+
+subckt sar8p_nand2 A B VDD VSS Y
+    XLIB (A B Y VDD VSS) ND2D1BWP12T30P140
+ends sar8p_nand2
+
+subckt sar8p_or2 A B VDD VSS Y
+    X001 (B VDD VSS BB) sar8p_inv
+    X000 (A VDD VSS AB) sar8p_inv
+    X002 (AB BB VDD VSS Y) sar8p_nand2
+ends sar8p_or2
+
+subckt sar8p_sr Q R S VDD VSS
+    X000 (R VDD VSS RB) sar8p_inv
+    X003 (RB Q VDD VSS QB) sar8p_nand2
+    X002 (SN QB VDD VSS Q) sar8p_nand2
+    X001 (S RB VDD VSS SN) sar8p_nand2
+    CQB (QB VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+ends sar8p_sr

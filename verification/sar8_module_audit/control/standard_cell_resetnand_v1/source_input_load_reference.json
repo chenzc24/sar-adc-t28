@@ -1,0 +1,159 @@
+{
+  "source_run": "sar8audit-ctrl-stdcell-rb-ff-v1",
+  "source_recipe_sha256": "745d10a01ded0cc487e7d2e5ff4ba57d130f7de2ec4e2959979f937375524bc4",
+  "source_proof": {
+    "run": "sar8audit-ctrl-stdcell-rb-ff-v1",
+    "recipe_sha256": "745d10a01ded0cc487e7d2e5ff4ba57d130f7de2ec4e2959979f937375524bc4",
+    "receipt_files": 9,
+    "receipt_bytes": 9487824,
+    "required_currents": 436,
+    "native_points": 6065,
+    "local_diagnostic_points": 1984,
+    "END": true,
+    "all_receipt_and_input_hashes_match": true,
+    "critical_kcl_max_a": 3.936502649877001e-12,
+    "native_warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "SFE-1131",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "input_loads": {
+    "AB": {
+      "node": "xdut.xctrl.xtim.x023.ab",
+      "native_points": 1984,
+      "diagnostic_window_extrema": {
+        "NM_gate": {
+          "min": -6.71903991129682e-07,
+          "max": 9.90495837282559e-05,
+          "min_time_s": 4.106564351102586e-08,
+          "max_time_s": 4.107775023720697e-08
+        },
+        "PM_gate": {
+          "min": -1.505325460887257e-06,
+          "max": 0.0001054556042957431,
+          "min_time_s": 4.106564351102586e-08,
+          "max_time_s": 4.107604876858683e-08
+        },
+        "total_gate": {
+          "min": -2.177229452016939e-06,
+          "max": 0.00018555352827304074,
+          "min_time_s": 4.106564351102586e-08,
+          "max_time_s": 4.107775023720697e-08
+        },
+        "input_voltage": {
+          "min": -0.01077869995458646,
+          "max": 0.9899998052954743,
+          "min_time_s": 4.106760750656343e-08,
+          "max_time_s": 4.124813918698204e-08
+        }
+      },
+      "native_KCL_max_a": 1.0114089646474483e-12,
+      "threshold_events": [
+        {
+          "fraction": 0.1,
+          "direction": 1,
+          "time_s": 4.107217059942965e-08
+        },
+        {
+          "fraction": 0.5,
+          "direction": 1,
+          "time_s": 4.1075848079098426e-08
+        },
+        {
+          "fraction": 0.9,
+          "direction": 1,
+          "time_s": 4.107965194240545e-08
+        }
+      ],
+      "rise_10_90_s": [
+        7.481342975795729e-12
+      ],
+      "fall_90_10_s": [],
+      "rising_halfrail_s": [
+        4.1075848079098426e-08
+      ],
+      "falling_halfrail_s": [],
+      "event_exchange": {
+        "requested_start_s": 4.1e-08,
+        "first_native_s": 4.100014207276235e-08,
+        "last_native_s": 4.159078565059045e-08,
+        "native_points": 1964,
+        "into_gate_devices_c": {
+          "NM_gate": 7.760374954018504e-16,
+          "PM_gate": 8.392336245737563e-16
+        },
+        "total_into_gate_devices_c": 1.6152711199756068e-15,
+        "into_gate_terminal_work_j": {
+          "NM_gate": 5.232400296104285e-16,
+          "PM_gate": 4.304717246596804e-16
+        },
+        "total_into_gate_terminal_work_j": 9.53711754270109e-16
+      },
+      "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+      "full_settling_pass": null,
+      "role": "Actual SAMPLE inverter output; output-adjacent NAND input A1"
+    },
+    "BB": {
+      "node": "xdut.xctrl.xtim.x023.bb",
+      "native_points": 1984,
+      "diagnostic_window_extrema": {
+        "NM_gate": {
+          "min": -1.285028439794129e-05,
+          "max": 7.407955269489285e-06,
+          "min_time_s": 4.107795680922908e-08,
+          "max_time_s": 4.108172302923508e-08
+        },
+        "PM_gate": {
+          "min": -1.33983291233658e-06,
+          "max": 4.02820473776076e-05,
+          "min_time_s": 4.107380382774911e-08,
+          "max_time_s": 4.107910311265e-08
+        },
+        "total_gate": {
+          "min": -1.8062342069807201e-06,
+          "max": 3.2001882402156674e-05,
+          "min_time_s": 4.107432487740641e-08,
+          "max_time_s": 4.107974605427435e-08
+        },
+        "input_voltage": {
+          "min": 0.9802984758472488,
+          "max": 0.9905466074890495,
+          "min_time_s": 4.107994299270421e-08,
+          "max_time_s": 4.107456460754426e-08
+        }
+      },
+      "native_KCL_max_a": 9.996516783744735e-13,
+      "threshold_events": [],
+      "rise_10_90_s": [],
+      "fall_90_10_s": [],
+      "rising_halfrail_s": [],
+      "falling_halfrail_s": [],
+      "event_exchange": {
+        "requested_start_s": 4.1e-08,
+        "first_native_s": 4.100014207276235e-08,
+        "last_native_s": 4.159078565059045e-08,
+        "native_points": 1964,
+        "into_gate_devices_c": {
+          "NM_gate": 1.4086764893088444e-19,
+          "PM_gate": 1.755433430935271e-16
+        },
+        "total_into_gate_devices_c": 1.7568421074245797e-16,
+        "into_gate_terminal_work_j": {
+          "NM_gate": 2.185244419681851e-19,
+          "PM_gate": 1.7268520007248525e-16
+        },
+        "total_into_gate_terminal_work_j": 1.7290372451445343e-16
+      },
+      "current_policy": "Actual returned native gate terminal currents, already containing model multiplicity; no second factor2. Signed terminal exchange/work, not pure Cgd, fixed input capacitance or dissipation. No waveform endpoint interpolation.",
+      "full_settling_pass": null,
+      "role": "Actual PHI_U inverter output; lower NAND input A2"
+    }
+  },
+  "scope": "Read-only existing native RB source; no new simulation or candidate result."
+}

@@ -1,0 +1,57 @@
+{
+  "status": "local_only_not_Spectre_compiled",
+  "parent_run": "sar8audit-comp-feedback-tt-v1",
+  "parent_managed_recipe_sha256": "f8fc3ef1e8edbfb22c81215cc4ee066884ca6af8d934bad9f918bab5ee3062ea",
+  "parent_proposal_sha256": "f91d2132d664eacb0f50e1bb0b14f970f7c61b659a49d94ce34db00aeb86e6b8",
+  "parent_failure_log_sha256": "4d71b9a4cf2fb6856c6c759d12a282632024ff9686425b75e0a7e16e3614af4b",
+  "failure_receipt_bytes": 20761,
+  "failure_native_PASS": false,
+  "failure_time_s": 3.80381e-08,
+  "failure_type": "SPECTRE-27/output_size_limit, not demonstrated memory exhaustion",
+  "circuit_MOS": 1457,
+  "selected_MOS": 165,
+  "selected_pairs": 990,
+  "deferred_MOS": 1292,
+  "deferred_pairs": 7752,
+  "voltage_saves": 124,
+  "current_saves": 23,
+  "unchanged_returned_columns": 57,
+  "unchanged_payloads": [
+    "cells.scs",
+    "cdac_load.scs",
+    "initializer.va",
+    "native_support.py"
+  ],
+  "measurement_only_changes": [
+    "test.scs save statements",
+    "measurement.json required signals/screen scope",
+    "feedback_analyze.py selected/deferred stress labels only"
+  ],
+  "ascii_output_estimate": {
+    "v1_limit_MiB": 2048,
+    "v1_failure_time_ns": 38.0381,
+    "stop_ns": 100,
+    "old_row_cost": 39451,
+    "new_row_cost": 7383,
+    "same_density_MiB": 1007.5949652640827,
+    "density_factor_allowance": 1.5,
+    "allowance_MiB": 1511.392447896124,
+    "hard_gate_MiB": 2048,
+    "assumption": "Bytes proportional to requested TRACE name/field cost times native point count;1.5x density is an assumption, no accepted-step footer after abort"
+  },
+  "input_hashes": {
+    "cells.scs": "6ccf52aed46f235896aeea29868f0f02bc28a7c4fed19ffa53bf83a65ba5cc3e",
+    "cdac_load.scs": "3268101c6eadefd664d620f392c6ed5d95de86e8d29ab97742db75fc3ef22190",
+    "initializer.va": "03b5823fc7d101f5237472ab46cd578bf7a341d1337684f5a525d6f07ba79401",
+    "native_support.py": "1a4f6a077402a9dfc1de5c79635f09ddba919884bf7c4aeecb0cd31187835803",
+    "test.scs": "ca713dd1330aadc38a4534ed08eb5cef2138bc01c422d586e2cd6cc7ad43e121",
+    "feedback_analyze.py": "64405f6b3b6685f65a18ceae90cd272e89b9595403a0656c41fff9fb0d2d2a12",
+    "measurement.json": "a0e884489a0334281a8e4d79d210177408d1b8852aa56a52acd7779abc2baaae"
+  },
+  "input_bytes": 285712,
+  "physical_cut_manifest_relative": "../feedback_tt_v1/manifest.json",
+  "physical_cut_manifest_sha256": "16d41b0ffd2ebae80e7d8dce566ed5fbb1157050c2fb0343b9ca7b7355f10dc6",
+  "builder_sha256": "b1c9d65e57be4a2932034c63b21529470a6bfec693ddce9af4b9133a0d945db5",
+  "baseline_adopted": false,
+  "remote_submitted": false
+}

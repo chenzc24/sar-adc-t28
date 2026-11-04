@@ -1,0 +1,187 @@
+{
+  "collected_files": 7,
+  "bytes": 1858982,
+  "skipped": [],
+  "local_path": "output/managed_execution/runs/sar8phys-s4124-regenn-v1/collected",
+  "state": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8phys-s4124-regenn-v1",
+    "registered": {
+      "epoch": 1793759639.723308,
+      "files_complete": true,
+      "recipe_hash": "15abfd93174325c1bc0c4d861e777eab85fbcfcfbfd747f27e8a4dac03a2bb36"
+    },
+    "simulation": {
+      "status": "complete",
+      "rss_bytes": 384499712,
+      "started_epoch": 1793759659.12735,
+      "updated_epoch": 1793759855.257798,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 196.1186180114746,
+      "submitted_epoch": 1793759658.772829,
+      "output_bytes": 448115904,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 2,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 42479345664,
+              "limit": 51539607552,
+              "used": 9060261888
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 16842235904,
+          "cgroup_headroom": 42479345664,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8phys-s4121-regenn-v1"
+              },
+              "pid": 270247,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8phys-s4121-regenp-v1"
+              },
+              "pid": 270652,
+              "comm": "spectre"
+            }
+          ],
+          "epoch": 1793759659.073509,
+          "disk_free": 861435523072,
+          "load1": 42.17,
+          "mem_available": 60537470976
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "73459870",
+        "pid": 271005,
+        "state": "R",
+        "pgid": 271005,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 385994752,
+      "worker_identity": {
+        "start_ticks": "73459835",
+        "pid": 271001,
+        "state": "R",
+        "pgid": 271001,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": true,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 0,
+        "effective_settings": {
+          "reltol": "1e-06, default 1e-03",
+          "abstol(V)": "10 nV, default 1 uV",
+          "maxstep": "5 ps, default 45.18 ns",
+          "abstol(I)": "100 fA, default 1 pA",
+          "method": "trap"
+        },
+        "native_analysis_pass": true,
+        "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+        "warning_codes": [
+          "CMI-2732",
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "complete",
+      "rss_bytes": 13172736,
+      "started_epoch": 1793759867.632678,
+      "updated_epoch": 1793759897.056883,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 0,
+      "waiting_reasons": [],
+      "elapsed_seconds": 29.423999071121216,
+      "submitted_epoch": 1793759867.277527,
+      "output_bytes": 449946396,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 2,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 40913580032,
+              "limit": 51539607552,
+              "used": 10626027520
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 16842235904,
+          "cgroup_headroom": 40913580032,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8phys-s4121-regenn-v1"
+              },
+              "pid": 280149,
+              "comm": "python"
+            },
+            {
+              "managed": {
+                "phase": "analysis",
+                "reserved_rss_mib": 256,
+                "threads": 1,
+                "run_id": "sar8phys-s4121-regenp-v1"
+              },
+              "pid": 280481,
+              "comm": "python"
+            }
+          ],
+          "epoch": 1793759867.593287,
+          "disk_free": 859102248960,
+          "load1": 38.95,
+          "mem_available": 64479842304
+        },
+        "phase": "analysis"
+      },
+      "phase": "analysis",
+      "child_identity": {
+        "start_ticks": "73480721",
+        "pid": 280810,
+        "state": "R",
+        "pgid": 280810,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 13258752,
+      "worker_identity": {
+        "start_ticks": "73480686",
+        "pid": 280805,
+        "state": "R",
+        "pgid": 280805,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true
+    },
+    "run_id": "sar8phys-s4124-regenn-v1"
+  }
+}

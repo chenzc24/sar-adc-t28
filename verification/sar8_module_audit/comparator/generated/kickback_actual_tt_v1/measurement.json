@@ -1,0 +1,2610 @@
+{
+  "schema_version": 1,
+  "scope": "TT measured-minimum-interval comparator/CDAC diagnostic; conditional forced-clock test, not full SAR qualification",
+  "stop_s": 2.6e-07,
+  "arms": {
+    "evaluate": {
+      "prefix": "XACTIVE",
+      "topp": "topp_a",
+      "topn": "topn_a",
+      "comp_p": "xactive.comp_p",
+      "comp_n": "xactive.comp_n",
+      "data": "xactive.xctrl.data",
+      "write": "xactive.xctrl.phi_w",
+      "d0": "d0_a",
+      "gate_p": "xactive.xcomp.mninp:2",
+      "gate_n": "xactive.xcomp.mninn:2"
+    },
+    "reset": {
+      "prefix": "XRESET",
+      "topp": "topp_b",
+      "topn": "topn_b",
+      "comp_p": "xreset.comp_p",
+      "comp_n": "xreset.comp_n",
+      "data": "xreset.xctrl.data",
+      "write": "xreset.xctrl.phi_w",
+      "d0": "d0_b",
+      "gate_p": "xreset.xcomp.mninp:2",
+      "gate_n": "xreset.xcomp.mninn:2"
+    }
+  },
+  "cycles": [
+    {
+      "index": 0,
+      "start_s": 2e-08,
+      "clock_fall_end_s": 2.127935673159584e-08,
+      "release_start_s": 1.8000000000000002e-08,
+      "release_end_s": 1.8100000000000003e-08,
+      "next_acquire_s": 8.400000000000001e-08,
+      "target_diff_v": 0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 1,
+      "clock_fall_start_s": 2.1179356731595838e-08
+    },
+    {
+      "index": 1,
+      "start_s": 2.395584293818658e-08,
+      "clock_fall_end_s": 2.526854432730367e-08,
+      "release_start_s": 1.8000000000000002e-08,
+      "release_end_s": 1.8100000000000003e-08,
+      "next_acquire_s": 8.400000000000001e-08,
+      "target_diff_v": 0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 1,
+      "clock_fall_start_s": 2.5168544327303668e-08
+    },
+    {
+      "index": 2,
+      "start_s": 1.0000000000000001e-07,
+      "clock_fall_end_s": 1.121e-07,
+      "release_start_s": 9.8e-08,
+      "release_end_s": 9.81e-08,
+      "next_acquire_s": 1.24e-07,
+      "target_diff_v": -0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 0,
+      "clock_fall_start_s": 1.1200000000000001e-07
+    },
+    {
+      "index": 3,
+      "start_s": 1.4e-07,
+      "clock_fall_end_s": 1.521e-07,
+      "release_start_s": 1.3800000000000002e-07,
+      "release_end_s": 1.381e-07,
+      "next_acquire_s": 1.64e-07,
+      "target_diff_v": 0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 1,
+      "clock_fall_start_s": 1.52e-07
+    },
+    {
+      "index": 4,
+      "start_s": 1.8000000000000002e-07,
+      "clock_fall_end_s": 1.921e-07,
+      "release_start_s": 1.78e-07,
+      "release_end_s": 1.781e-07,
+      "next_acquire_s": 2.04e-07,
+      "target_diff_v": -0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 0,
+      "clock_fall_start_s": 1.9200000000000003e-07
+    },
+    {
+      "index": 5,
+      "start_s": 2.2e-07,
+      "clock_fall_end_s": 2.3210000000000002e-07,
+      "release_start_s": 2.1800000000000002e-07,
+      "release_end_s": 2.181e-07,
+      "next_acquire_s": 2.6e-07,
+      "target_diff_v": -0.0017578125,
+      "target_cm_v": 0.45,
+      "expected_DATA": 0,
+      "clock_fall_start_s": 2.32e-07
+    }
+  ],
+  "voltage_saves": [
+    "cinit",
+    "cmp_clk",
+    "d0_a",
+    "d0_b",
+    "pren",
+    "prep",
+    "topn_a",
+    "topn_b",
+    "topp_a",
+    "topp_b",
+    "vcm",
+    "vdd!",
+    "vrefn",
+    "vrefp",
+    "xactive.comp_n",
+    "xactive.comp_p",
+    "xactive.xcomp.tail",
+    "xactive.xcomp.x",
+    "xactive.xcomp.y",
+    "xactive.xctrl.data",
+    "xactive.xctrl.phi_w",
+    "xactive.xctrl.xtim.nr",
+    "xactive.xctrl.xtim.pr",
+    "xactive.xctrl.xtim.x002.n",
+    "xactive.xctrl.xtim.x003.n",
+    "xreset.comp_n",
+    "xreset.comp_p",
+    "xreset.xcomp.tail",
+    "xreset.xcomp.x",
+    "xreset.xcomp.y",
+    "xreset.xctrl.data",
+    "xreset.xctrl.phi_w",
+    "xreset.xctrl.xtim.nr",
+    "xreset.xctrl.xtim.pr",
+    "xreset.xctrl.xtim.x002.n",
+    "xreset.xctrl.xtim.x003.n"
+  ],
+  "current_saves": [
+    "vsense_an:1",
+    "vsense_ap:1",
+    "vsense_bn:1",
+    "vsense_bp:1",
+    "vvdd:1",
+    "xactive.xcomp.mninn:2",
+    "xactive.xcomp.mninp:2",
+    "xactive_cdac.cmomn0:1",
+    "xactive_cdac.cmomn1:1",
+    "xactive_cdac.cmomn2:1",
+    "xactive_cdac.cmomn3:1",
+    "xactive_cdac.cmomn4:1",
+    "xactive_cdac.cmomn5:1",
+    "xactive_cdac.cmomn6:1",
+    "xactive_cdac.cmomn7:1",
+    "xactive_cdac.cmomn8:1",
+    "xactive_cdac.cmomp0:1",
+    "xactive_cdac.cmomp1:1",
+    "xactive_cdac.cmomp2:1",
+    "xactive_cdac.cmomp3:1",
+    "xactive_cdac.cmomp4:1",
+    "xactive_cdac.cmomp5:1",
+    "xactive_cdac.cmomp6:1",
+    "xactive_cdac.cmomp7:1",
+    "xactive_cdac.cmomp8:1",
+    "xreset.xcomp.mninn:2",
+    "xreset.xcomp.mninp:2",
+    "xreset_cdac.cmomn0:1",
+    "xreset_cdac.cmomn1:1",
+    "xreset_cdac.cmomn2:1",
+    "xreset_cdac.cmomn3:1",
+    "xreset_cdac.cmomn4:1",
+    "xreset_cdac.cmomn5:1",
+    "xreset_cdac.cmomn6:1",
+    "xreset_cdac.cmomn7:1",
+    "xreset_cdac.cmomn8:1",
+    "xreset_cdac.cmomp0:1",
+    "xreset_cdac.cmomp1:1",
+    "xreset_cdac.cmomp2:1",
+    "xreset_cdac.cmomp3:1",
+    "xreset_cdac.cmomp4:1",
+    "xreset_cdac.cmomp5:1",
+    "xreset_cdac.cmomp6:1",
+    "xreset_cdac.cmomp7:1",
+    "xreset_cdac.cmomp8:1"
+  ],
+  "kcl_terms": {
+    "topp_a": [
+      "xactive.xcomp.mninp:2",
+      "xactive_cdac.cmomp8:1",
+      "xactive_cdac.cmomp7:1",
+      "xactive_cdac.cmomp6:1",
+      "xactive_cdac.cmomp5:1",
+      "xactive_cdac.cmomp4:1",
+      "xactive_cdac.cmomp3:1",
+      "xactive_cdac.cmomp2:1",
+      "xactive_cdac.cmomp1:1",
+      "xactive_cdac.cmomp0:1",
+      "vsense_ap:1"
+    ],
+    "topn_a": [
+      "xactive.xcomp.mninn:2",
+      "xactive_cdac.cmomn8:1",
+      "xactive_cdac.cmomn7:1",
+      "xactive_cdac.cmomn6:1",
+      "xactive_cdac.cmomn5:1",
+      "xactive_cdac.cmomn4:1",
+      "xactive_cdac.cmomn3:1",
+      "xactive_cdac.cmomn2:1",
+      "xactive_cdac.cmomn1:1",
+      "xactive_cdac.cmomn0:1",
+      "vsense_an:1"
+    ],
+    "topp_b": [
+      "xreset.xcomp.mninp:2",
+      "xreset_cdac.cmomp8:1",
+      "xreset_cdac.cmomp7:1",
+      "xreset_cdac.cmomp6:1",
+      "xreset_cdac.cmomp5:1",
+      "xreset_cdac.cmomp4:1",
+      "xreset_cdac.cmomp3:1",
+      "xreset_cdac.cmomp2:1",
+      "xreset_cdac.cmomp1:1",
+      "xreset_cdac.cmomp0:1",
+      "vsense_bp:1"
+    ],
+    "topn_b": [
+      "xreset.xcomp.mninn:2",
+      "xreset_cdac.cmomn8:1",
+      "xreset_cdac.cmomn7:1",
+      "xreset_cdac.cmomn6:1",
+      "xreset_cdac.cmomn5:1",
+      "xreset_cdac.cmomn4:1",
+      "xreset_cdac.cmomn3:1",
+      "xreset_cdac.cmomn2:1",
+      "xreset_cdac.cmomn1:1",
+      "xreset_cdac.cmomn0:1",
+      "vsense_bn:1"
+    ]
+  },
+  "terminal_catalog": {
+    "xactive.xcomp.mninp:2": {
+      "node": "topp_a",
+      "port": 2,
+      "model": "nch_na18_mac"
+    },
+    "xactive_cdac.cmomp8:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp7:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp6:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp5:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp4:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp3:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp2:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp1:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomp0:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "vsense_ap:1": {
+      "node": "topp_a",
+      "port": 1,
+      "model": "vsource"
+    },
+    "xactive.xcomp.mninn:2": {
+      "node": "topn_a",
+      "port": 2,
+      "model": "nch_na18_mac"
+    },
+    "xactive_cdac.cmomn8:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn7:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn6:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn5:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn4:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn3:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn2:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn1:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xactive_cdac.cmomn0:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "vsense_an:1": {
+      "node": "topn_a",
+      "port": 1,
+      "model": "vsource"
+    },
+    "xreset.xcomp.mninp:2": {
+      "node": "topp_b",
+      "port": 2,
+      "model": "nch_na18_mac"
+    },
+    "xreset_cdac.cmomp8:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp7:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp6:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp5:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp4:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp3:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp2:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp1:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomp0:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "vsense_bp:1": {
+      "node": "topp_b",
+      "port": 1,
+      "model": "vsource"
+    },
+    "xreset.xcomp.mninn:2": {
+      "node": "topn_b",
+      "port": 2,
+      "model": "nch_na18_mac"
+    },
+    "xreset_cdac.cmomn8:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn7:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn6:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn5:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn4:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn3:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn2:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn1:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "xreset_cdac.cmomn0:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "cfmom_2t"
+    },
+    "vsense_bn:1": {
+      "node": "topn_b",
+      "port": 1,
+      "model": "vsource"
+    }
+  },
+  "mos_pairs": [
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.nr",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "xactive.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.nr",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "xactive.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x001.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x003.x000.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.pr",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "xactive.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.pr",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "xactive.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x001.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xctrl.xtim.x002.x000.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mnlatp",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xcomp.x",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "gs",
+      "nodes": [
+        "topn_a",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "gd",
+      "nodes": [
+        "topn_a",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "gb",
+      "nodes": [
+        "topn_a",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xcomp.y",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "gs",
+      "nodes": [
+        "topp_a",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "gd",
+      "nodes": [
+        "topp_a",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "gb",
+      "nodes": [
+        "topp_a",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mninp",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xcomp.tail",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "gs",
+      "nodes": [
+        "cmp_clk",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "gd",
+      "nodes": [
+        "cmp_clk",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "gb",
+      "nodes": [
+        "cmp_clk",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xactive.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mntail",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "gs",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "gd",
+      "nodes": [
+        "cmp_clk",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "gb",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstn",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "gs",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "gd",
+      "nodes": [
+        "cmp_clk",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "gb",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xcomp.y",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "gs",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "gd",
+      "nodes": [
+        "cmp_clk",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "gb",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprsty",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.xcomp.x",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "gs",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "gd",
+      "nodes": [
+        "cmp_clk",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "gb",
+      "nodes": [
+        "cmp_clk",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mprstx",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_p",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatn",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "ds",
+      "nodes": [
+        "xactive.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "gs",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "gd",
+      "nodes": [
+        "xactive.comp_n",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "gb",
+      "nodes": [
+        "xactive.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xactive.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xactive.xcomp.mplatp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.nr",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "xreset.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.nr",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "xreset.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xctrl.xtim.nr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x001.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.x003.n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xctrl.xtim.x003.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x003.x000.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.pr",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "xreset.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.pr",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "xreset.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xctrl.xtim.pr"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x001.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 0.99
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xctrl.xtim.x002.n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xctrl.xtim.x002.n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xctrl.xtim.x002.x000.mn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_p",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_n",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mnlatp",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xcomp.x",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "gs",
+      "nodes": [
+        "topn_b",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "gd",
+      "nodes": [
+        "topn_b",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "gb",
+      "nodes": [
+        "topn_b",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninn",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xcomp.y",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "gs",
+      "nodes": [
+        "topp_b",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "gd",
+      "nodes": [
+        "topp_b",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "gb",
+      "nodes": [
+        "topp_b",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mninp",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xcomp.tail",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "bd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.tail"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mntail",
+      "terminal": "bs",
+      "nodes": [
+        "0",
+        "0"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstn",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xcomp.y",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xcomp.y"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprsty",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.xcomp.x",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "gs",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "gd",
+      "nodes": [
+        "0",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "gb",
+      "nodes": [
+        "0",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.xcomp.x"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mprstx",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_p",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.comp_n"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatn",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "ds",
+      "nodes": [
+        "xreset.comp_p",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "gs",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "gd",
+      "nodes": [
+        "xreset.comp_n",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "gb",
+      "nodes": [
+        "xreset.comp_n",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "bd",
+      "nodes": [
+        "vdd!",
+        "xreset.comp_p"
+      ],
+      "screen_v": 1.98
+    },
+    {
+      "instance": "xreset.xcomp.mplatp",
+      "terminal": "bs",
+      "nodes": [
+        "vdd!",
+        "vdd!"
+      ],
+      "screen_v": 1.98
+    }
+  ],
+  "pair_scope": "N4 plus both rx2 buffers only; attached storage/forward logic not requalified here",
+  "required_input_sha256": {
+    "test.scs": "25be74174c4669f32e4bb7d5b1bd981ba3f71eb136947bd08d03c439f0a2c411",
+    "cells.scs": "f6189e388fc36d590510215e0434755fafd451c4087af9c75af7bbfa0112ddb3",
+    "cdac_load.scs": "3268101c6eadefd664d620f392c6ed5d95de86e8d29ab97742db75fc3ef22190",
+    "initializer.va": "03b5823fc7d101f5237472ab46cd578bf7a341d1337684f5a525d6f07ba79401",
+    "kickback_analyze.py": "1a4f6a077402a9dfc1de5c79635f09ddba919884bf7c4aeecb0cd31187835803"
+  },
+  "charge_current_sign": "Native current positive from node into component; native multiplicity already included",
+  "max_output_bytes": 31457280,
+  "max_events": 1000,
+  "acceptance_pass": null,
+  "boundaries": {
+    "bottom_bit_plates_v": 0.45,
+    "dummy_n_v": 0.0,
+    "dummy_p_v": 0.9,
+    "initializer_ron_ohm": 10.0,
+    "initializer_off_conductance_s": 0.0,
+    "retained_sampler": false,
+    "retained_reference_driver": false,
+    "external_clocks_and_rails": "ideal",
+    "simultaneous_bottom_switching": false
+  },
+  "numerical_policy": "Frozen D2 deck options and clocks; inspect actual native Spectre settings after run",
+  "diagnostic_history": {
+    "variable": "Second acquisition enable only",
+    "omitted_pulse_s": [
+      4.4e-08,
+      5.81e-08
+    ],
+    "continuous_hold_interval_s": [
+      1.81e-08,
+      8.4e-08
+    ],
+    "first_two_nominal_differential_v": [
+      0.0017578125,
+      0.0017578125
+    ],
+    "measurement": "Compare2 initialized/after_release refer to original first acquisition; inspect its actual pre_compare residual/CM and write delay",
+    "phase_note": "First two comparisons now use the selected measured half-level intervals; use explicit fall-start/end fields, not20/60ns or a12ns high assumption."
+  },
+  "actual_interval_replay": {
+    "source_run": "sar8fix-loaded-both-rx2-tt",
+    "source_pair": {
+      "frame": 1,
+      "from_bit": 6,
+      "to_bit": 5,
+      "rise1_s": 1.4767096540232427e-07,
+      "fall1_s": 1.488503221339201e-07,
+      "rise2_s": 1.5162680834051085e-07,
+      "fall2_s": 1.5283950972962794e-07,
+      "rise_interval_s": 3.955842938186578e-09,
+      "high1_s": 1.1793567315958374e-09,
+      "low_s": 2.776486206590741e-09,
+      "high2_s": 1.2127013891170889e-09
+    },
+    "fixture_edges": {
+      "rise1_half_s": 2.005e-08,
+      "fall1_half_s": 2.1229356731595838e-08,
+      "rise2_half_s": 2.400584293818658e-08,
+      "fall2_half_s": 2.5218544327303668e-08,
+      "rise2_start_s": 2.395584293818658e-08,
+      "fall1_start_s": 2.1179356731595838e-08,
+      "fall1_end_s": 2.127935673159584e-08,
+      "fall2_start_s": 2.5168544327303668e-08,
+      "fall2_end_s": 2.526854432730367e-08,
+      "fixture_zero_to_next_rise_start_s": 2.67648620659074e-09,
+      "ideal_ramp_s": 1e-10
+    },
+    "affected_cycle_indices": [
+      0,
+      1
+    ],
+    "later_cycles": "Original long-interval +/-0.25LSB controls, not short-negative-input qualification",
+    "edge_shape": "Original0.1ns ideal ramps retained; this replays native0.5VDD intervals, not the full native clock voltage waveform",
+    "source_input_context": [
+      {
+        "bit": 6,
+        "preclock_diff_mv_compact_estimate": -362.0463413149402,
+        "source_write_delay_ns": 0.610301034929563
+      },
+      {
+        "bit": 5,
+        "preclock_diff_mv_compact_estimate": -137.92952249846965,
+        "source_write_delay_ns": 0.6436339434463889
+      }
+    ],
+    "interpretation": "Source asynchronous pulses were produced with large input residues. Applying them to fixed+0.25LSB may force reset before completion; missing/late write is not automatically an async SAR defect.",
+    "CDAC_boundary": "Bottoms fixed; no reference update/capture switching; no actual clock/DEC feedback; not a complete SAR bit sequence"
+  }
+}

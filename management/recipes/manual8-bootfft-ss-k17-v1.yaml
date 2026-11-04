@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "run_id": "manual8-bootfft-ss-k17-v1",
+  "design_id": "manual8_bootstrap_m6_fft_v1",
+  "entry": "test.scs",
+  "analyzer": "bootstrap_fft_reduce.py",
+  "inputs": [
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/boot.scs",
+      "name": "boot.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/bootfft_observer.va",
+      "name": "bootfft_observer.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/manual8_cdac.va",
+      "name": "manual8_cdac.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/manual8_cmp.va",
+      "name": "manual8_cmp.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/manual8_sample.va",
+      "name": "manual8_sample.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/manual8_sar.va",
+      "name": "manual8_sar.va"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/measure.json",
+      "name": "measure.json"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/models.scs",
+      "name": "models.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/test.scs",
+      "name": "test.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/wrappers_hybrid.scs",
+      "name": "wrappers_hybrid.scs"
+    },
+    {
+      "source": "verification/manual_adc/bootstrap_fft_v1/ss-k17/wrappers_ideal.scs",
+      "name": "wrappers_ideal.scs"
+    },
+    {
+      "source": "scripts/manual_adc/bootstrap_fft_reduce.py",
+      "name": "bootstrap_fft_reduce.py"
+    },
+    {
+      "source": "scripts/manual_adc/reduce.py",
+      "name": "reduce.py"
+    }
+  ],
+  "expected_stop_s": 0.00010572000000000001,
+  "summary_signals": [
+    "CLKS",
+    "VDD",
+    "VINP",
+    "VINN",
+    "XADC.TOPP",
+    "XADC.TOPN",
+    "FAULT"
+  ],
+  "qualification_scope": "Bootstrap-only MOS hybrid FFT; ideal remaining blocks/external sources; no whole ADC or reliability qualification",
+  "oa_parity": "netlist_only; OA unchanged",
+  "test_conditions": {
+    "corner": "ss",
+    "vdd": 0.81,
+    "temperature_c": -40,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false,
+    "startup_supply_ramp_s": 1e-09,
+    "first_clock_delay_s": 1.1e-07,
+    "M0_total_width_um": 6,
+    "reference_v": 0.9,
+    "input_cm_v": 0.45,
+    "frequency_hz": 166015.625,
+    "fft_samples": 1024,
+    "warmup_frames": 32
+  },
+  "spectre_args": [
+    "+preset=cx",
+    "+mt=1",
+    "-preset_override"
+  ],
+  "resources": {
+    "threads": 1,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 512,
+    "simulation_wall_seconds": 7200,
+    "analysis_wall_seconds": 900,
+    "queue_timeout_seconds": 7200
+  }
+}

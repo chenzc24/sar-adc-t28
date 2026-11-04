@@ -1,0 +1,65 @@
+{
+  "run_id": "sar8audit-refcell-io-sscold",
+  "design_id": "sar8_reference_loaded_IO_cell_feasibility",
+  "entry": "test.scs",
+  "analyzer": "io_cell_analyze.py",
+  "inputs": [
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_cell_v1/io_dut.scs",
+      "name": "dut.scs",
+      "sha256": "7a26aefbc778d752df6ddc07ec244536da02e1a024d2e0f989bc308916c7f297"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_cell_v1/io_sscold/test.scs",
+      "name": "test.scs",
+      "sha256": "7fd13138fbb580f2b23649dd63e3d4f66c1cfa53933c5125c5ca03cd0a2c729d"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/reference_current_analyze.py",
+      "name": "reference_current_analyze.py",
+      "sha256": "96689ee7afd0193a6037f66167a5daedf2f638aa43f52f25a16d7d52dc9ebe7e"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/io_cell_analyze.py",
+      "name": "io_cell_analyze.py",
+      "sha256": "a0af7228d0da72766e8ffed5b5bb70a10f2a3b54a8276d784e66469d63ccd3a9"
+    },
+    {
+      "source": "verification/sar8_module_audit/reference/generated/io_cell_v1/io_sscold/measurement.json",
+      "name": "measurement.json",
+      "sha256": "c9fce2ac45ac6d8fb62e676b80c050fc45d6c5dafcac39715184f09977e9834c"
+    }
+  ],
+  "summary_signals": [
+    "PRE",
+    "XDUT.GNNB",
+    "XDUT.GNNDRV",
+    "XDUT.GNN0",
+    "XDUT.XCDAC.BN0"
+  ],
+  "expected_stop_s": 5.2e-08,
+  "qualification_scope": "Local three-stage bit0 NN branch, only final cell class differs; not integrated ADC",
+  "oa_parity": "netlist_only",
+  "test_conditions": {
+    "corner": "sscold",
+    "supply_V": 0.81,
+    "temperature_C": -40,
+    "variant": "io",
+    "logical_stimulus": true,
+    "FF_waveform_replay": false,
+    "noise": false,
+    "mismatch": false,
+    "PEX": false
+  },
+  "resources": {
+    "threads": 4,
+    "simulation_rss_mib": 512,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 512,
+    "max_output_mib": 2048,
+    "simulation_wall_seconds": 900,
+    "analysis_wall_seconds": 1200,
+    "queue_timeout_seconds": 600
+  }
+}
