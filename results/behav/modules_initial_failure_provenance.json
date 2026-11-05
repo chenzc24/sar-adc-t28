@@ -1,0 +1,167 @@
+{
+  "run_id": "sar8-modules-v1",
+  "recipe_hash": "e56e6528df11bf71284d43f53f5d21b865fd3d7228ba023a3b50dd5a8a713143",
+  "simulation": {
+    "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+    "child_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 53630,
+      "pid": 53630,
+      "start_ticks": "81833571",
+      "state": "S"
+    },
+    "elapsed_seconds": 434.2252290248871,
+    "exit_code": 0,
+    "gate": {
+      "pass_gate": true,
+      "phase": "simulation",
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "reasons": [],
+      "snapshot": {
+        "cgroup_headroom": 20289044480,
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 20289044480,
+            "limit": 51539607552,
+            "used": 31250563072
+          }
+        },
+        "conflicting_processes": [
+          {
+            "comm": "spectre",
+            "managed": {
+              "phase": "simulation",
+              "reserved_rss_mib": 1024,
+              "run_id": "sar8tm-ref-ssc-s5131-q38-v1",
+              "threads": 4
+            },
+            "pid": 46709
+          }
+        ],
+        "cpu_capacity": 48.0,
+        "disk_free": 603732082688,
+        "epoch": 1793843394.879899,
+        "host": "thu-wei",
+        "load1": 47.74,
+        "mem_available": 63738736640,
+        "swap_free": 10001539072,
+        "swap_rate_bytes_s": 0.0
+      },
+      "workload_slot": 1
+    },
+    "native": {
+      "effective_settings": {
+        "abstol(I)": "100 fA, default 1 pA",
+        "abstol(V)": "10 nV, default 1 uV",
+        "maxstep": "100 ps, default 13.3 ns",
+        "method": "trap",
+        "reltol": "10e-06, default 1e-03"
+      },
+      "electrical_verdict": "not_inferred",
+      "native_analysis_pass": true,
+      "native_exit": 0,
+      "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [4, 8], consider adding +mt=4 or +mt=8 on command line.",
+      "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-16780",
+        "SPECTRE-16881",
+        "SPECTRE-8281",
+        "SPECTRE-8286",
+        "VACOMP-2435"
+      ],
+      "zero_error_footer": true
+    },
+    "output_bytes": 578060263,
+    "peak_rss_bytes": 547721216,
+    "phase": "simulation",
+    "queued": true,
+    "rss_bytes": 423268352,
+    "started_epoch": 1793843394.897075,
+    "status": "complete",
+    "submitted_epoch": 1793843394.567606,
+    "updated_epoch": 1793843829.136007,
+    "waiting_reasons": [],
+    "worker_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 53623,
+      "pid": 53623,
+      "start_ticks": "81833538",
+      "state": "R"
+    }
+  },
+  "analysis": {
+    "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+    "child_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 68450,
+      "pid": 68450,
+      "start_ticks": "81882053",
+      "state": "R"
+    },
+    "elapsed_seconds": 33.50296401977539,
+    "exit_code": 1,
+    "gate": {
+      "pass_gate": true,
+      "phase": "analysis",
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "reasons": [],
+      "snapshot": {
+        "cgroup_headroom": 19348172800,
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 19348172800,
+            "limit": 51539607552,
+            "used": 32191434752
+          }
+        },
+        "conflicting_processes": [
+          {
+            "comm": "python",
+            "managed": {
+              "phase": "analysis",
+              "reserved_rss_mib": 256,
+              "run_id": "sar8tm-ref-ssc-s5131-q38-v1",
+              "threads": 1
+            },
+            "pid": 67990
+          }
+        ],
+        "cpu_capacity": 48.0,
+        "disk_free": 599477719040,
+        "epoch": 1793843879.709297,
+        "host": "thu-wei",
+        "load1": 44.02,
+        "mem_available": 69960323072,
+        "swap_free": 10002063360,
+        "swap_rate_bytes_s": 0.0
+      },
+      "workload_slot": 1
+    },
+    "output_bytes": 578089470,
+    "peak_rss_bytes": 6557696,
+    "phase": "analysis",
+    "queued": true,
+    "rss_bytes": 6533120,
+    "started_epoch": 1793843879.724044,
+    "status": "failed",
+    "submitted_epoch": 1793843879.408959,
+    "updated_epoch": 1793843913.227267,
+    "waiting_reasons": [],
+    "worker_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 68425,
+      "pid": 68425,
+      "start_ticks": "81882023",
+      "state": "R"
+    }
+  },
+  "reason": "Saved hierarchy used x0 instead of X0, losing internal traces; negative comparator probe fell in reset at 180 ns. Pin-code comparisons all matched. Original failures and warnings retained.",
+  "result_sha256": "5cc60f13bf42cb224a0f875c8af563119f8b3e296a15628c453faca89a3fb266"
+}

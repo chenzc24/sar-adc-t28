@@ -28,8 +28,9 @@
   "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "qualification": {
     "terminal_voltage": "open",
-    "oa": "not_synchronized",
-    "pex": "not_included"
+    "oa": "Text model work does not assert OA synchronization or modify OA",
+    "pex": "not_included",
+    "virtuoso_connection": "existing_integration_reused"
   },
   "schema_version": 2,
   "authority": {
@@ -421,6 +422,39 @@
         "old": "models/veriloga/sar_macro_controller_8b.va",
         "action": "keep external-trial/latch macro controller historical"
       }
-    ]
+    ],
+    "structure": {
+      "python": {
+        "top": "design/behav/python/sar_adc.py",
+        "config": "design/behav/python/config.py",
+        "sampler": "design/behav/python/sampler.py",
+        "cdac": "design/behav/python/cdac.py",
+        "comparator": "design/behav/python/comparator.py",
+        "sar": "design/behav/python/sar.py",
+        "reference": "design/behav/python/reference.py"
+      },
+      "veriloga": {
+        "top": "design/behav/veriloga/sar_adc_b.va",
+        "sampler": "design/behav/veriloga/sampler.va",
+        "cdac": "design/behav/veriloga/cdac.va",
+        "comparator": "design/behav/veriloga/comparator.va",
+        "sar": "design/behav/veriloga/sar.va",
+        "reference": "design/behav/veriloga/reference.va"
+      }
+    },
+    "view_selection": "specs/views.json",
+    "numerical_scope": "Effective trial thresholds and median TT phase timing; injected modules preserve the prior deterministic oracle",
+    "electrical_scope": "Connected finite-R/C VA leaves with comparator input C, finite output R, real handshake and break-before-make reference gates; nominal functional approximation, not transistor timing/analog precision",
+    "reference_noise_scope": "Per-decision Gaussian reference noise is Python-only. VA reference noise belongs in the external reference source.",
+    "module_defaults": {
+      "sampler_ron_ohm": 50,
+      "off_resistance_ohm": 1000000000000.0,
+      "cdac_unit_c_f": 4.00407e-15,
+      "cdac_unit_ron_ohm": 10000,
+      "comparator_input_c_f": 2e-15,
+      "behavioral_output_r_ohm": 100,
+      "reference_deadtime_s": 1e-10,
+      "qualification": "Engineering behavioral defaults; unit C uses the existing nominal characterization, remaining values are not extracted physical B parameters"
+    }
   }
 }

@@ -48,28 +48,37 @@ def check():
             if match.group(1) in parsed:
                 raise ValueError('Duplicate subcircuit ' + match.group(1))
             parsed[match.group(1)] = match.group()
-    if parsed != originals or set(parsed) != set(manifest['subcircuits']):
-        raise ValueError('Subcircuit partition differs from measured B')
+    if set(parsed) != set(manifest['subcircuits']):
+        raise ValueError('Current subcircuit set differs from the declared manifest')
+    matches=0
     for name, row in manifest['subcircuits'].items():
         actual = hashlib.sha256(parsed[name].encode()).hexdigest()
-        if actual != row['text_sha256']:
-            raise ValueError('Subcircuit changed: ' + name)
+        matches+=actual==row['text_sha256']
+        header=parsed[name].replace('\\\n',' ').splitlines()[0].split()[2:]
+        if header!=row['ports']:raise ValueError('Current interface differs from manifest: '+name)
     cases = read('specs/tests.json')
     for case in cases.values():
         for row in case['inputs']:
             checked_source(row)
     from .behavioral import check_generated
     behavior=check_generated()
-    return dict(pass_check=True, exact_subcircuits=len(parsed), locked_cases=len(cases),
+    return dict(pass_check=True, exact_subcircuits=matches,current_subcircuits=len(parsed),matches_frozen_b=parsed==originals,locked_cases=len(cases),
                 frozen_b_sha256=manifest['source_sha256'],behavioral_spec=behavior)
 
 
-def prepare(case_name, run_id=None, seed=None, split_design=False):
+def prepare(case_name, run_id=None, seed=None, split_design=None, view=None):
     cases = read('specs/tests.json')
     if case_name not in cases:
         raise ValueError('Unknown case: ' + case_name)
     case = cases[case_name]
-    run_id = run_id or ('sar8-next-' + case_name.replace('_', '-') + ('-s%d' % seed if seed is not None else '-v1'))
+    from . import views
+    view=view or views.registry(ROOT)['default']
+    if split_design is True and view!='current':
+        raise ValueError('The legacy --split-design alias cannot be combined with another --view')
+    profile=views.resolve(view,ROOT)
+    if view not in {'current','frozen-b'} and case_name!='tt_short':
+        raise ValueError('Mixed views support TT short verification, not frozen MC/PVT measurements')
+    run_id = run_id or ('sar8-next-' + (view+'-' if view!='current' else '') + case_name.replace('_', '-') + ('-s%d' % seed if seed is not None else '-v1'))
     # Validate identity before writing any input.
     engine().valid_id(run_id)
     if seed is not None and (not case_name.startswith('mc_') or not 1 <= seed <= 2147483647):
@@ -81,22 +90,42 @@ def prepare(case_name, run_id=None, seed=None, split_design=False):
         if member.is_absolute() or any(p in {'.', '..'} for p in member.parts) or '\\' in row['name']:
             raise ValueError('Unsafe case member')
         blobs[row['name']] = checked_source(row).read_bytes()
-    if split_design:
-        if 'dut.scs' not in blobs:
-            raise ValueError('This module template does not instantiate the whole ADC')
-        blobs['dut.scs'] = (ROOT / 'design/dut.scs').read_bytes()
-        manifest = read('design/manifest.json')
-        for path in sorted({row['file'] for row in manifest['subcircuits'].values()}):
-            blobs[path] = (ROOT / 'design' / path).read_bytes()
+    if 'dut.scs' in blobs:
+        blobs.update(views.build(view,ROOT))
+    elif view=='current' and case_name=='mc_comparator_tt':
+        # This frozen module fixture embeds its comparator; replace that one
+        # definition with the current leaf, retaining receiver/load conditions.
+        leaf=(ROOT/'design/xtor/comparator/comparator.scs').read_text(encoding='utf-8')
+        replacement=next(m.group() for m in SUBCKT.finditer(leaf) if m.group(1)=='sar_strongarm_t28')
+        original=blobs['test.scs'].decode('utf-8')
+        blobs['test.scs']=SUBCKT.sub(lambda m:replacement if m.group(1)=='sar_strongarm_t28' else m.group(),original).encode('utf-8')
+    elif view=='current' and case_name=='mc_cdac_tt':
+        # Preserve the characterization connections and draw identities while
+        # taking geometry/multiplicity from the actual current MOM instances.
+        caps=re.compile(r'(?m)^[ \t]*(CMOM[NP][0-8])\s+\(([^)]*)\)\s+(cfmom_2t[^\n]*)')
+        current=(ROOT/'design/xtor/cdac/cdac.scs').read_text(encoding='utf-8').replace('\\\n',' ')
+        parameters={m.group(1):m.group(3) for m in caps.finditer(current)}
+        original=blobs['test.scs'].decode('utf-8')
+        if len(parameters)!=18 or set(parameters)!={m.group(1) for m in caps.finditer(original)}:
+            raise ValueError('The CDAC characterization template must match the current 18-instance MOM interface')
+        blobs['test.scs']=caps.sub(lambda m:m.group(1)+' ('+m.group(2)+') '+parameters[m.group(1)],original).encode('utf-8')
     context = json.loads(blobs['context.json'].decode('utf-8'))
     context['run_id'] = run_id
-    if split_design:
+    if view!='frozen-b' and 'dut.scs' in blobs:
         # The aggregate hash and input manifest bind the actual split source.
         # Preserve the measured ancestor separately instead of relabelling it.
         manifest = read('design/manifest.json')
         context['parent_dut_sha256'] = manifest['source_sha256']
         context['dut_sha256'] = hashlib.sha256(blobs['dut.scs']).hexdigest()
-        context['design_view'] = 'split'
+    context['design_view']=view
+    context['module_views']=profile
+    if view=='current' and case_name in {'mc_comparator_tt','mc_cdac_tt'}:
+        name='comparator' if case_name=='mc_comparator_tt' else 'cdac'
+        context['characterized_source']='design/xtor/'+name+'/'+name+'.scs'
+        context['characterized_source_sha256']=digest(ROOT/context['characterized_source'])
+    if view not in {'current','frozen-b'}:
+        from .modular import adapt_short
+        adapt_short(blobs,context,ROOT)
     if seed is not None:
         original_seed = context['seed']
         needle = re.compile(rb'\bseed=' + str(original_seed).encode() + rb'\b')
@@ -117,13 +146,13 @@ def prepare(case_name, run_id=None, seed=None, split_design=False):
         target.write_bytes(blob)
     recipe = dict(schema_version=1, run_id=run_id,
                   design_id=read('specs/arch.json')['design_id'],
-                  entry=case['entry'], analyzer=case['analyzer'],
+                  entry=case['entry'], analyzer='analyze_modules.py' if view not in {'current','frozen-b'} else case['analyzer'],
                   inputs=[dict(name=member,source=(dest/member).relative_to(ROOT).as_posix(),
                                sha256=hashlib.sha256(blob).hexdigest()) for member,blob in blobs.items()],
                   resources=case['resources'], spectre_args=case['spectre_args'],
                   summary_signals=case['summary_signals'], expected_stop_s=case['expected_stop_s'],
-                  qualification_scope=case['qualification_scope'],
-                  test_conditions=dict(context, directory_migration=split_design,
+                  qualification_scope=case['qualification_scope'] if view in {'current','frozen-b'} else 'TT mixed public-pin function and event timing only; no native MC, analog precision or terminal qualification',
+                  test_conditions=dict(context, current_design=view!='frozen-b',
                                        template_run_id=case['run_id']))
     text = json.dumps(recipe, indent=2) + '\n'
     path = dest / 'recipe.yaml'
@@ -134,18 +163,20 @@ def prepare(case_name, run_id=None, seed=None, split_design=False):
 
 
 def main():
+    from .views import registry
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='action', required=True)
     sub.add_parser('check')
     p = sub.add_parser('behav')
-    p.add_argument('operation',choices=['generate','check','prepare','sim','collect'])
-    p.add_argument('--run-id',default='sar8-behav-cross-v1')
+    p.add_argument('operation',choices=['generate','check','prepare','sim','collect','follow'])
+    p.add_argument('--run-id',default='sar8-modules-v3')
     for action in ['prepare', 'sim']:
         p = sub.add_parser(action)
         p.add_argument('case', choices=sorted(read('specs/tests.json')))
         p.add_argument('--run-id')
         p.add_argument('--seed', type=int)
-        p.add_argument('--split-design', action='store_true')
+        p.add_argument('--view',choices=sorted(registry()['profiles']),default=registry()['default'])
+        p.add_argument('--split-design', action='store_true',default=None,help=argparse.SUPPRESS)
     for action in ['status','analyze','collect','gate','register']:
         p = sub.add_parser(action)
         p.add_argument('target')
@@ -168,9 +199,17 @@ def main():
             result=dict(recipe=behavioral.prepare(args.run_id))
         elif args.operation=='collect':
             result=behavioral.collect(args.run_id)
+        elif args.operation=='follow':
+            from .modular import follow
+            result=follow(args.run_id)
         else:
             path='work/behav/'+args.run_id+'/recipe.yaml'
             if not (ROOT/path).exists():path=behavioral.prepare(args.run_id)
+            context=read('work/behav/'+args.run_id+'/context.json')
+            sources=context.get('source_hashes',context.get('source_files',{}))
+            for name,expected in sources.items():
+                if digest(ROOT/name.replace('\\','/'))!=expected:
+                    raise ValueError('This ID freezes an earlier model source; choose a new run ID after the input change: '+name)
             for row in read(path)['inputs']:
                 checked_source(row)
             result=dict(registration=engine().register(path))
@@ -179,7 +218,7 @@ def main():
         result = check()
     elif args.action in {'prepare','sim'}:
         check()
-        path = prepare(args.case,args.run_id,args.seed,args.split_design)
+        path = prepare(args.case,args.run_id,args.seed,args.split_design,args.view)
         if args.action == 'prepare':
             result = dict(recipe=path)
         else:

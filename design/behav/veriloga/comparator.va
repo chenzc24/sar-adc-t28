@@ -1,0 +1,44 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+module b_comparator(CLK,OUTN,OUTP,VDD,VINN,VINP,VSS);
+    input CLK,VDD;
+    output OUTN,OUTP;
+    inout VINN,VINP,VSS;
+    electrical CLK,OUTN,OUTP,VDD,VINN,VINP,VSS;
+
+    parameter real offset_v=0;
+    parameter real noise_rms_v=0 from [0:inf);
+    parameter real decision_s=200p from (0:inf);
+    parameter real tau_s=0 from [0:inf);
+    parameter real floor_v=1n from (0:inf);
+    parameter real input_c=2f from [0:inf);
+    parameter real rout=100 from (0:inf);
+    parameter real edge_s=`B_TRANSITION_S from (0:inf);
+    parameter integer force_stuck=0 from [0:1];
+    parameter integer noise_seed=271828;
+    integer pn,pp,pending,armed,rng;
+    real ready_at,residual;
+    analog begin
+        @(initial_step) begin pn=1;pp=1;armed=0;ready_at=1e30;rng=noise_seed;end
+        @(cross(V(CLK,VSS)-0.5*V(VDD,VSS),+1)) begin
+            residual=V(VINP,VINN)-offset_v;
+            if (noise_rms_v>0) residual=residual+$rdist_normal(rng,0.0,noise_rms_v);
+            pending=(residual>=-`B_DECISION_EPSILON_V);
+            armed=1;ready_at=$abstime+decision_s+tau_s*max(0,ln(1.8/max(abs(residual),floor_v)));
+        end
+        @(cross(V(CLK,VSS)-0.5*V(VDD,VSS),-1)) begin
+            armed=0;ready_at=1e30;pn=1;pp=1;
+        end
+        @(timer(ready_at)) begin
+            if (armed && !force_stuck && abs($abstime-ready_at)<1e-15 && V(CLK,VSS)>0.5*V(VDD,VSS)) begin
+                pn=1-pending;pp=pending;armed=0;ready_at=1e30;
+            end
+        end
+        I(VINN,VSS) <+ input_c*ddt(V(VINN,VSS));
+        I(VINP,VSS) <+ input_c*ddt(V(VINP,VSS));
+        I(OUTN,VSS) <+ (V(OUTN,VSS)-transition(pn,0,edge_s)*V(VDD,VSS))/rout;
+        I(OUTP,VSS) <+ (V(OUTP,VSS)-transition(pp,0,edge_s)*V(VDD,VSS))/rout;
+    end
+endmodule

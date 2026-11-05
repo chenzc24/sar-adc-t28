@@ -1,0 +1,32 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+module b_sampler(CLKS,VOUT,VIN,VDD,VSS);
+    input CLKS,VDD;
+    inout VOUT,VIN,VSS;
+    electrical CLKS,VOUT,VIN,VDD,VSS;
+
+    parameter real ron=50 from (0:inf);
+    parameter real roff=1e12 from (0:inf);
+    parameter real gain=1;
+    parameter real offset_v=0;
+    parameter real noise_rms_v=0 from [0:inf);
+    parameter real injection_cap_f=1.02504192e-12 from (0:inf);
+    parameter integer noise_seed=271828;
+    integer rng;
+    real fraction,noise_v,closed_at;
+    analog begin
+        @(initial_step) begin rng=noise_seed;noise_v=0;closed_at=-1;end
+        @(cross(V(CLKS,VSS)-0.5*V(VDD,VSS),-1)) begin
+            closed_at=$abstime;
+            if (noise_rms_v>0) noise_v=$rdist_normal(rng,0.0,noise_rms_v);
+        end
+        fraction=0.5*(1+tanh((V(CLKS,VSS)-0.5*V(VDD,VSS))/0.01));
+        I(VOUT,VIN) <+ (fraction/ron+(1-fraction)/roff)*(V(VOUT,VIN)-(gain-1)*V(VIN,VSS)-offset_v);
+        // A bounded charge pulse approximates sampling noise; no voltage clamp
+        // is attached to the held node. Capacitance is supplied by the CDAC/TB.
+        if (closed_at>=0 && $abstime>=closed_at)
+            I(VOUT,VSS) <+ -injection_cap_f*noise_v/20p*exp(-($abstime-closed_at)/20p);
+    end
+endmodule

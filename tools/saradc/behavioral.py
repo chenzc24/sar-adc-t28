@@ -4,6 +4,7 @@ import csv
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 import shutil
 
@@ -104,7 +105,24 @@ def check_generated():
     a=load('specs/arch.json');manifest=load('design/manifest.json')
     if a['interface']['port_order']!=manifest['subcircuits'][manifest['top']]['ports']:
         raise ValueError('System interface differs from the physical B top')
-    return {'shared_spec':'specs/arch.json','generated_defaults_match':True,'physical_ports_match':True}
+    defaults=a['behavior_models'].get('module_defaults',{})
+    declarations={
+        'sampler_ron_ohm':[('sampler.va','ron')],
+        'off_resistance_ohm':[('sampler.va','roff')],
+        'cdac_unit_c_f':[('cdac.va','unit_c')],
+        'cdac_unit_ron_ohm':[('cdac.va','unit_ron')],
+        'comparator_input_c_f':[('comparator.va','input_c')],
+        'behavioral_output_r_ohm':[(p,'rout') for p in ['comparator.va','sar.va','reference.va']],
+        'reference_deadtime_s':[('reference.va','deadtime_s')]}
+    scales={'':1,'f':1e-15,'p':1e-12,'n':1e-9,'u':1e-6,'m':1e-3,'k':1e3}
+    for key,rows in declarations.items():
+        if key not in defaults:continue
+        for filename,param in rows:
+            source=(ROOT/'design/behav/veriloga'/filename).read_text(encoding='utf-8')
+            tokens=re.findall(r'parameter real '+param+r'=([0-9.eE+-]+)([fpnumk]?)\s',source)
+            if not tokens or any(not math.isclose(float(n)*scales[s],defaults[key],rel_tol=1e-12,abs_tol=1e-25) for n,s in tokens):
+                raise ValueError('VA default differs from the declared model specification: '+filename+' '+param)
+    return {'shared_spec':'specs/arch.json','generated_defaults_match':True,'physical_ports_match':True,'electrical_defaults_match':True}
 
 
 def stimuli():
@@ -169,89 +187,30 @@ def local_report():
     return report
 
 
-def prepare(run_id='sar8-behav-cross-v1'):
-    from tools.saradc.__main__ import engine
-    engine().valid_id(run_id);check_generated();values=stimuli()
-    dest=ROOT/'work/behav'/run_id
-    if dest.exists():
-        raise ValueError('Prepared behavioral identity already exists; use its frozen recipe or select a new ID after an actual input change')
-    dest.mkdir(parents=True)
-    period=1e-7;first_close=100.05e-9
-    stop=first_close+(len(values)-1)*period+65e-9
-    context=dict(run_id=run_id,frames=len(values),scenario_names=[s['name'] for s in SCENARIOS],
-                 expected_records=len(values)*len(SCENARIOS),time_tolerance_s=2e-12,
-                 first_close_s=first_close,period_s=period,probe_delay_s=55e-9,
-                 expected_stop_s=stop,scope='behavioral algorithm and protocol; no PDK or device qualification',
-                 source_files={str(p.relative_to(ROOT)):sha(p) for p in [ROOT/'specs/arch.json',ROOT/'design/behav/python/sar_adc.py',ROOT/'design/behav/veriloga/sar_adc_b.va',ROOT/'design/behav/veriloga/b_defaults.vh',ROOT/'tb/behav/observer.va']})
-    (dest/'context.json').write_text(json.dumps(context,indent=2)+'\n',encoding='utf-8')
-    shutil.copyfile(ROOT/'specs/arch.json',dest/'source_spec.json')
-    shutil.copyfile(ROOT/'design/behav/python/sar_adc.py',dest/'source_model.py')
-    fields=['id','frame','held','code','cmp','write','update','cap','sample_close','seq_close','last_update','finished','problem','issue_bit','pin_code']
-    with (dest/'expected.csv').open('w',newline='',encoding='utf-8') as out:
-        writer=csv.writer(out);writer.writerow(fields)
-        for ident,scenario in enumerate(SCENARIOS):
-            m=SarAdcModel(analog=AnalogConfig(**scenario['analog']),timing=scenario['timing'])
-            for i,(v,_) in enumerate(values):
-                close=first_close+i*period;r=m.convert(v,close_s=close)
-                code_at_probe=0
-                for event in r.trace:
-                    if event['event']=='write' and event['time_s']<=close+55e-9:code_at_probe=event['word']
-                problem=0 if r.completed else (2 if r.issue=='unresolved_comparator' else 1)
-                held=m.analog.gain*v+m.analog.sampling_offset_v
-                writer.writerow([ident,i,held,r.code,*r.counts,r.sample_close_s,r.seq_close_s,
-                    r.last_update_s if r.last_update_s is not None else -1,
-                    r.finished_s if r.completed else close+60e-9,problem,
-                    -1 if r.issue_bit is None else r.issue_bit,code_at_probe])
-    wavep=['0 %.17g'%(.45+values[0][0]/2)];waven=['0 %.17g'%(.45-values[0][0]/2)]
-    for i in range(1,len(values)):
-        start=i*period+59.7e-9
-        for wave,sign in [(wavep,1),(waven,-1)]:
-            wave.extend(['%.17g %.17g'%(start,.45+sign*values[i-1][0]/2),
-                         '%.17g %.17g'%(start+.1e-9,.45+sign*values[i][0]/2)])
-    deck=['simulator lang=spectre','global 0',
-          'VVDD (vdd 0) vsource dc=0.9','VREFP (refp 0) vsource dc=0.9','VREFN (refn 0) vsource dc=0',
-          'VSAMPLE (sample 0) vsource type=pulse val0=0 val1=0.9 delay=60n rise=100p fall=100p width=39.9n period=100n',
-          'VINP (vinp 0) vsource type=pwl wave=['+' '.join(wavep)+']',
-          'VINN (vinn 0) vsource type=pwl wave=['+' '.join(waven)+']',
-          'ahdl_include "sar_adc_b.va"','ahdl_include "observer.va"']
-    for ident,scenario in enumerate(SCENARIOS):
-        pins=' '.join('d%d_%d'%(ident,k) for k in range(8))
-        deck.append('X%d (%s sample vdd vinn vinp refn refp 0) sar_adc_b model_id=%d %s'%(ident,pins,ident,scenario['va']))
-        deck.append('XM%d (%s sample vdd 0) b_behavior_observer model_id=%d'%(ident,pins,ident))
-        for bit in range(8):deck.append('C%d_%d (d%d_%d 0) capacitor c=5f'%(ident,bit,ident,bit))
-    deck+=['simulatorOptions options reltol=1e-6 vabstol=1e-9 iabstol=1e-12 temp=27',
-           'saveOptions options save=selected','save sample',
-           'tran_behav tran stop=%.17g maxstep=5n errpreset=conservative'%stop]
-    (dest/'test.scs').write_text('\n'.join(deck)+'\n',encoding='utf-8')
-    items=[('test.scs',dest/'test.scs'),('context.json',dest/'context.json'),('expected.csv',dest/'expected.csv'),
-           ('source_spec.json',dest/'source_spec.json'),
-           ('source_model.py',dest/'source_model.py'),
-           ('sar_adc_b.va',ROOT/'design/behav/veriloga/sar_adc_b.va'),
-           ('b_defaults.vh',ROOT/'design/behav/veriloga/b_defaults.vh'),
-           ('observer.va',ROOT/'tb/behav/observer.va'),
-           ('analyze_behavioral.py',ROOT/'tools/saradc/measure/analyze_behavioral.py')]
-    recipe=dict(schema_version=1,run_id=run_id,design_id='sar8_b_behavioral_v1',entry='test.scs',analyzer='analyze_behavioral.py',
-        inputs=[dict(name=name,source=str(p.relative_to(ROOT)).replace('\\','/'),sha256=sha(p)) for name,p in items],
-        resources=dict(threads=4,simulation_rss_mib=1024,simulation_virtual_mib=8192,
-                       analysis_rss_mib=256,analysis_virtual_mib=1024,max_output_mib=128,
-                       simulation_wall_seconds=1800,analysis_wall_seconds=1200,queue_timeout_seconds=86400),
-        spectre_args=['+preset=mx','+mt=4','-preset_override','+lqtimeout','60'],
-        summary_signals=['sample'],expected_stop_s=stop,qualification_scope=context['scope'],test_conditions=context)
-    p=dest/'recipe.yaml';p.write_text(json.dumps(recipe,indent=2)+'\n',encoding='utf-8')
-    return str(p.relative_to(ROOT)).replace('\\','/')
+def prepare(run_id='sar8-modules-v3'):
+    from .modular import prepare as prepare_modules
+    check_generated()
+    return prepare_modules(run_id)
 
 
 def collect(run_id):
     from tools.saradc.__main__ import engine
     e=engine();status=e.phase('status',run_id)
     out=ROOT/'results/behav'
-    (out/'native_status.json').write_text(json.dumps(status,indent=2)+'\n',encoding='utf-8')
+    state=ROOT/'work/state/behav'/run_id
+    state.mkdir(parents=True,exist_ok=True)
+    (state/'status.json').write_text(json.dumps(status,indent=2)+'\n',encoding='utf-8')
     if status['simulation'].get('status')!='complete' or status['analysis'].get('status')!='complete':
         raise ValueError('Native simulation and analysis must complete before publishing a verdict')
     transfer=e.collect(run_id)
     folder=ROOT/transfer['local_path']
     source=folder/'derived/result.json'
     result=json.loads(source.read_text(encoding='utf-8'))
+    if result.get('module_validation'):
+        from .modular import publish
+        (out/'modules_status.json').write_text(json.dumps(status,indent=2)+'\n',encoding='utf-8')
+        return publish(source,transfer,status)
+    (out/'native_status.json').write_text(json.dumps(status,indent=2)+'\n',encoding='utf-8')
     if not result.get('analysis_complete') or not result.get('python_VA_crosscheck_pass'):
         raise ValueError('Native behavioral crosscheck failed; retain the collected evidence')
     files={k.replace('\\','/'):v for k,v in result['context']['source_files'].items()}

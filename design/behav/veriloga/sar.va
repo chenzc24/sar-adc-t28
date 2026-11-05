@@ -1,0 +1,93 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+module b_sar(CMP_CLK,CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,COMP_N,COMP_P,D0,D1,D2,D3,D4,D5,D6,D7,PHI_U,SAMPLE,VDD,VSS,ACTIVE);
+    input COMP_N,COMP_P,SAMPLE,VDD;
+    output CMP_CLK,CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,D0,D1,D2,D3,D4,D5,D6,D7,PHI_U,ACTIVE;
+    inout VSS;
+    electrical CMP_CLK,CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,COMP_N,COMP_P,D0,D1,D2,D3,D4,D5,D6,D7,PHI_U,SAMPLE,VDD,VSS,ACTIVE;
+
+    parameter integer model_id=0;
+    parameter integer fault_bit=-1 from [-1:7];
+    parameter real first_s=`B_FIRST_COMPARE_S from (0:inf);
+    parameter real receiver_s=182.55767340487p from (0:inf);
+    parameter real write_to_update_s=`B_WRITE_TO_UPDATE_S from (0:inf);
+    parameter real capture_s=`B_UPDATE_TO_CAPTURE_S from (0:inf);
+    parameter real capture_gap_s=`B_CAPTURE_GAP_S from (0:inf);
+    parameter real next_compare_s=`B_CAPTURE_TO_NEXT_COMPARE_S from (0:inf);
+    parameter real edge_s=`B_TRANSITION_S from (0:inf);
+    parameter real rout=100 from (0:inf);
+    integer word,code_word,bit_index,phase,active,clk,phi,pending,frame;
+    integer comparisons,writes,updates,captures;
+    real next_at,last_update,close_at;
+    analog begin
+        @(initial_step) begin
+            word=0;code_word=128;bit_index=7;phase=0;active=0;clk=0;phi=0;frame=-1;
+            comparisons=0;writes=0;updates=0;captures=0;next_at=1e30;last_update=-1;
+        end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),+1)) begin
+            if (active)
+                $display("BSAR,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%.16e,%.16e,%.16e,%0d,%0d",model_id,frame,word,comparisons,writes,updates,captures,close_at,last_update,$abstime,1,bit_index);
+            word=0;code_word=128;active=0;clk=0;phi=0;next_at=1e30;phase=0;
+        end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            frame=frame+1;word=0;code_word=128;bit_index=7;phase=0;active=1;clk=0;phi=0;
+            comparisons=0;writes=0;updates=0;captures=0;last_update=-1;close_at=$abstime;
+            next_at=$abstime+first_s;
+        end
+        @(cross(V(COMP_N,VSS)-0.5*V(VDD,VSS),-1) or cross(V(COMP_P,VSS)-0.5*V(VDD,VSS),-1)) begin
+            if (active && phase==1 && bit_index!=fault_bit && V(SAMPLE,VSS)<0.5*V(VDD,VSS)) begin
+                pending=(V(COMP_P,VSS)>V(COMP_N,VSS));
+                phase=2;next_at=$abstime+receiver_s;
+            end
+        end
+        @(timer(next_at)) begin
+            if (active && abs($abstime-next_at)<1e-15 && V(SAMPLE,VSS)<0.5*V(VDD,VSS)-1e-10) begin
+                case (phase)
+                    0: begin clk=1;comparisons=comparisons+1;phase=1;next_at=1e30;end
+                    2: begin
+                        if (pending) word=word|(1<<bit_index);
+                        writes=writes+1;clk=0;phase=3;next_at=$abstime+write_to_update_s;
+                    end
+                    3: begin
+                        updates=updates+1;last_update=$abstime;phi=1;
+                        phase=4;next_at=$abstime+capture_s+edge_s;
+                    end
+                    4: begin
+                        captures=captures+1;phi=0;
+                        if (bit_index>0) code_word=word|(1<<(bit_index-1));
+                        else code_word=word;
+                        phase=5;next_at=$abstime+capture_gap_s;
+                    end
+                    5: begin
+                        captures=captures+1;
+                        if (bit_index==0) begin
+                            $display("BSAR,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%.16e,%.16e,%.16e,%0d,%0d",model_id,frame,word,comparisons,writes,updates,captures,close_at,last_update,$abstime,0,-1);
+                            active=0;next_at=1e30;
+                        end else begin bit_index=bit_index-1;phase=0;next_at=$abstime+next_compare_s;end
+                    end
+                endcase
+            end
+        end
+        I(D0,VSS) <+ (V(D0,VSS)-transition((word>>0)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE0,VSS) <+ (V(CODE0,VSS)-transition((code_word>>0)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D1,VSS) <+ (V(D1,VSS)-transition((word>>1)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE1,VSS) <+ (V(CODE1,VSS)-transition((code_word>>1)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D2,VSS) <+ (V(D2,VSS)-transition((word>>2)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE2,VSS) <+ (V(CODE2,VSS)-transition((code_word>>2)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D3,VSS) <+ (V(D3,VSS)-transition((word>>3)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE3,VSS) <+ (V(CODE3,VSS)-transition((code_word>>3)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D4,VSS) <+ (V(D4,VSS)-transition((word>>4)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE4,VSS) <+ (V(CODE4,VSS)-transition((code_word>>4)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D5,VSS) <+ (V(D5,VSS)-transition((word>>5)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE5,VSS) <+ (V(CODE5,VSS)-transition((code_word>>5)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D6,VSS) <+ (V(D6,VSS)-transition((word>>6)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE6,VSS) <+ (V(CODE6,VSS)-transition((code_word>>6)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(D7,VSS) <+ (V(D7,VSS)-transition((word>>7)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CODE7,VSS) <+ (V(CODE7,VSS)-transition((code_word>>7)&1,0,edge_s)*V(VDD,VSS))/rout;
+        I(CMP_CLK,VSS) <+ (V(CMP_CLK,VSS)-transition(clk,0,edge_s)*V(VDD,VSS))/rout;
+        I(PHI_U,VSS) <+ (V(PHI_U,VSS)-transition(phi,0,edge_s)*V(VDD,VSS))/rout;
+        I(ACTIVE,VSS) <+ (V(ACTIVE,VSS)-transition(active,0,edge_s)*V(VDD,VSS))/rout;
+    end
+endmodule

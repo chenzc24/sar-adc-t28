@@ -1,0 +1,112 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+module b_reference(CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,D0,D1,D2,D3,D4,D5,D6,D7,GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,PHI_U,SAMPLE,VDD,VSS,RST_DONE,PRESET);
+    input CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,D0,D1,D2,D3,D4,D5,D6,D7,PHI_U,SAMPLE,VDD,PRESET;
+    output GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,RST_DONE;
+    inout VSS;
+    electrical CODE0,CODE1,CODE2,CODE3,CODE4,CODE5,CODE6,CODE7,D0,D1,D2,D3,D4,D5,D6,D7,GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,PHI_U,SAMPLE,VDD,VSS,RST_DONE,PRESET;
+
+    parameter real deadtime_s=100p from (0:inf);
+    parameter real capture_s=`B_UPDATE_TO_CAPTURE_S from (0:inf);
+    parameter real capture_gap_s=`B_CAPTURE_GAP_S from (0:inf);
+    parameter real edge_s=`B_TRANSITION_S from (0:inf);
+    parameter real rout=100 from (0:inf);
+    integer q,pending_q,enabled,capture_phase;
+    real apply_at,capture_at;
+    analog begin
+        @(initial_step) begin q=128;pending_q=128;enabled=1;apply_at=1e30;capture_at=1e30;capture_phase=0;end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),+1) or cross(V(PRESET,VSS)-0.5*V(VDD,VSS),+1)) begin
+            pending_q=128;enabled=0;apply_at=$abstime+deadtime_s;capture_at=1e30;
+        end
+        @(cross(V(PHI_U,VSS)-0.5*V(VDD,VSS),+1)) begin
+            if (V(SAMPLE,VSS)<0.5*V(VDD,VSS) && V(PRESET,VSS)<0.5*V(VDD,VSS)) begin
+                capture_phase=0;capture_at=$abstime+capture_s;
+            end
+        end
+        @(timer(capture_at)) begin
+            if (abs($abstime-capture_at)<1e-15 && V(SAMPLE,VSS)<0.5*V(VDD,VSS) && V(PRESET,VSS)<0.5*V(VDD,VSS)) begin
+                if (capture_phase==0) pending_q=1*(V(D0,VSS)>0.5*V(VDD,VSS))+2*(V(D1,VSS)>0.5*V(VDD,VSS))+4*(V(D2,VSS)>0.5*V(VDD,VSS))+8*(V(D3,VSS)>0.5*V(VDD,VSS))+16*(V(D4,VSS)>0.5*V(VDD,VSS))+32*(V(D5,VSS)>0.5*V(VDD,VSS))+64*(V(D6,VSS)>0.5*V(VDD,VSS))+128*(V(D7,VSS)>0.5*V(VDD,VSS));
+                else pending_q=1*(V(CODE0,VSS)>0.5*V(VDD,VSS))+2*(V(CODE1,VSS)>0.5*V(VDD,VSS))+4*(V(CODE2,VSS)>0.5*V(VDD,VSS))+8*(V(CODE3,VSS)>0.5*V(VDD,VSS))+16*(V(CODE4,VSS)>0.5*V(VDD,VSS))+32*(V(CODE5,VSS)>0.5*V(VDD,VSS))+64*(V(CODE6,VSS)>0.5*V(VDD,VSS))+128*(V(CODE7,VSS)>0.5*V(VDD,VSS));
+                enabled=0;apply_at=$abstime+deadtime_s;
+                if (capture_phase==0) begin capture_phase=1;capture_at=$abstime+capture_gap_s;end
+                else capture_at=1e30;
+            end
+        end
+        @(timer(apply_at)) begin
+            if (abs($abstime-apply_at)<1e-15) begin q=pending_q;enabled=1;apply_at=1e30;end
+        end
+        I(GNN0,VSS) <+ (V(GNN0,VSS)-transition(enabled && !((q>>0)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP0,VSS) <+ (V(GNP0,VSS)-transition(!enabled || !((q>>0)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN0,VSS) <+ (V(GPN0,VSS)-transition(enabled && ((q>>0)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP0,VSS) <+ (V(GPP0,VSS)-transition(!enabled || ((q>>0)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN1,VSS) <+ (V(GNN1,VSS)-transition(enabled && !((q>>1)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP1,VSS) <+ (V(GNP1,VSS)-transition(!enabled || !((q>>1)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN1,VSS) <+ (V(GPN1,VSS)-transition(enabled && ((q>>1)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP1,VSS) <+ (V(GPP1,VSS)-transition(!enabled || ((q>>1)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN2,VSS) <+ (V(GNN2,VSS)-transition(enabled && !((q>>2)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP2,VSS) <+ (V(GNP2,VSS)-transition(!enabled || !((q>>2)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN2,VSS) <+ (V(GPN2,VSS)-transition(enabled && ((q>>2)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP2,VSS) <+ (V(GPP2,VSS)-transition(!enabled || ((q>>2)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN3,VSS) <+ (V(GNN3,VSS)-transition(enabled && !((q>>3)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP3,VSS) <+ (V(GNP3,VSS)-transition(!enabled || !((q>>3)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN3,VSS) <+ (V(GPN3,VSS)-transition(enabled && ((q>>3)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP3,VSS) <+ (V(GPP3,VSS)-transition(!enabled || ((q>>3)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN4,VSS) <+ (V(GNN4,VSS)-transition(enabled && !((q>>4)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP4,VSS) <+ (V(GNP4,VSS)-transition(!enabled || !((q>>4)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN4,VSS) <+ (V(GPN4,VSS)-transition(enabled && ((q>>4)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP4,VSS) <+ (V(GPP4,VSS)-transition(!enabled || ((q>>4)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN5,VSS) <+ (V(GNN5,VSS)-transition(enabled && !((q>>5)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP5,VSS) <+ (V(GNP5,VSS)-transition(!enabled || !((q>>5)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN5,VSS) <+ (V(GPN5,VSS)-transition(enabled && ((q>>5)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP5,VSS) <+ (V(GPP5,VSS)-transition(!enabled || ((q>>5)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN6,VSS) <+ (V(GNN6,VSS)-transition(enabled && !((q>>6)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP6,VSS) <+ (V(GNP6,VSS)-transition(!enabled || !((q>>6)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN6,VSS) <+ (V(GPN6,VSS)-transition(enabled && ((q>>6)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP6,VSS) <+ (V(GPP6,VSS)-transition(!enabled || ((q>>6)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNN7,VSS) <+ (V(GNN7,VSS)-transition(enabled && !((q>>7)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GNP7,VSS) <+ (V(GNP7,VSS)-transition(!enabled || !((q>>7)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPN7,VSS) <+ (V(GPN7,VSS)-transition(enabled && ((q>>7)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(GPP7,VSS) <+ (V(GPP7,VSS)-transition(!enabled || ((q>>7)&1),0,edge_s)*V(VDD,VSS))/rout;
+        I(RST_DONE,VSS) <+ (V(RST_DONE,VSS)-V(PRESET,VSS))/rout;
+    end
+endmodule
+
+module b_edge(A,VDD,VSS,Y);
+    input A,VDD;inout VSS;output Y;
+    electrical A,VDD,VSS,Y;
+    parameter real delay_s=`B_SEQ_BUFFER_S from [0:inf);
+    parameter real rout=100 from (0:inf);
+    integer value;
+    analog begin
+        @(initial_step) value=(V(A,VSS)>0.5*V(VDD,VSS));
+        @(cross(V(A,VSS)-0.5*V(VDD,VSS),+1)) value=1;
+        @(cross(V(A,VSS)-0.5*V(VDD,VSS),-1)) value=0;
+        I(Y,VSS) <+ (V(Y,VSS)-transition(value,delay_s,`B_TRANSITION_S)*V(VDD,VSS))/rout;
+    end
+endmodule
+
+module b_idle(ACTIVE,SAMPLE,VDD,VSS,PRESET,SAMPLE_MATCH);
+    input ACTIVE,SAMPLE,VDD;inout VSS;output PRESET,SAMPLE_MATCH;
+    electrical ACTIVE,SAMPLE,VDD,VSS,PRESET,SAMPLE_MATCH;
+    parameter real rout=100 from (0:inf);
+    integer sample_level,idle_level,active_level;
+    analog begin
+        @(initial_step) begin sample_level=0;idle_level=1;active_level=0;end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),+1)) begin
+            sample_level=1;idle_level=1;
+        end
+        @(cross(V(SAMPLE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            sample_level=0;idle_level=!active_level;
+        end
+        @(cross(V(ACTIVE,VSS)-0.5*V(VDD,VSS),+1)) begin
+            active_level=1;idle_level=sample_level;
+        end
+        @(cross(V(ACTIVE,VSS)-0.5*V(VDD,VSS),-1)) begin
+            active_level=0;idle_level=1;
+        end
+        I(SAMPLE_MATCH,VSS) <+ (V(SAMPLE_MATCH,VSS)-transition(sample_level,0,`B_TRANSITION_S)*V(VDD,VSS))/rout;
+        I(PRESET,VSS) <+ (V(PRESET,VSS)-transition(idle_level,200p,`B_TRANSITION_S)*V(VDD,VSS))/rout;
+    end
+endmodule

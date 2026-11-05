@@ -1,6 +1,6 @@
 # 测试台
 
-VA/Python 的算法与协议交叉测试见 [behav/README.md](behav/README.md)。下表继续描述已完成晶体管级验证的冻结输入。
+VA/Python 的模块与混合层次测试见 [behav/README.md](behav/README.md)。下表提供已验证测试条件的模板，日常运行默认接入当前晶体管设计；冻结 B 用于显式回归。
 
 实际文件直接位于本目录，各用例的输入散列、历史身份、条件和预算由 [specs/tests.json](../specs/tests.json) 记录。
 
@@ -20,4 +20,6 @@ VA/Python 的算法与协议交叉测试见 [behav/README.md](behav/README.md)�
 
 `tt_static_low` 保留已验证的前三个边界测试。已完成全码结果包含 255 个边界和 256 个中心码；后续分段由工作区中的历史运行定义追溯，当前模板不复制数百份生成 deck。
 
-`prepare CASE --seed N` 从单个 MC 模板生成指定种子；闭环局部失配只覆盖比较器和 CDAC。原生 MOS/MOM 统计模型由 deck 指定。历史用例默认打包冻结 B；`--split-design` 显式验证当前分模块入口。
+`prepare CASE --seed N` 从单个 MC 模板生成指定种子；闭环局部失配只覆盖比较器和 CDAC。原生 MOS/MOM 统计模型由 deck 指定。默认 `--view current` 接入当前设计，`--view frozen-b` 保留原输入用于回归。独立比较器模板替换其嵌入的当前比较器定义；CDAC 位权模板读取当前 18 个 MOM 的几何与 multiplicity，仍是独立统计表征，不包含完整开关及整机建立时序。
+
+`tt_short --view comparator_xtor` 等视图只保留指定模块为管级实现，其余核心模块使用电气 VA 模型；具体选择见 [views.json](../specs/views.json)。

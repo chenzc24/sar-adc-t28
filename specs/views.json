@@ -1,0 +1,21 @@
+{
+  "default": "current",
+  "modules": {
+    "sampler": {"master": "sar_bootstrap_flat_8b_p", "va": "b_sampler_bridge", "file": "sampler.va"},
+    "cdac": {"master": "sar8j_r1_cdac", "va": "b_cdac", "file": "cdac.va"},
+    "comparator": {"master": "sar_strongarm_t28", "va": "b_comparator", "file": "comparator.va"},
+    "sar": {"master": "sar8i_ctrl", "va": "b_sar", "file": "sar.va"},
+    "reference": {"master": "sar8i_refword", "va": "b_reference", "file": "reference.va"}
+  },
+  "profiles": {
+    "current": {"sampler":"xtor", "cdac":"xtor", "comparator":"xtor", "sar":"xtor", "reference":"xtor", "timing":"xtor"},
+    "frozen-b": {"regression_only":true},
+    "behavioral": {"sampler":"va", "cdac":"va", "comparator":"va", "sar":"va", "reference":"va", "timing":"va"},
+    "comparator_xtor": {"base":"behavioral", "comparator":"xtor"},
+    "cdac_xtor": {"base":"behavioral", "cdac":"xtor"},
+    "sampler_xtor": {"base":"behavioral", "sampler":"xtor"},
+    "control_xtor": {"base":"behavioral", "sar":"xtor", "reference":"xtor", "timing":"xtor"}
+  },
+  "scope": "Current and frozen-b support the declared physical cases. Mixed profiles are TT short tests; native local MC and terminal qualification do not transfer to behavioral cells.",
+  "virtuoso": "Use the existing bridge and ADE setup. These profiles select netlist/VA cell implementations; they do not replace or modify an OA database."
+}

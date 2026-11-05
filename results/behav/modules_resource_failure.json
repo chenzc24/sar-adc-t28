@@ -1,0 +1,128 @@
+{
+  "run": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-modules-v2",
+    "registered": {
+      "epoch": 1793844101.997482,
+      "files_complete": true,
+      "recipe_hash": "8c9bc6e7f58c9fb443e47e0bcd22ba40a7c68c9f091515831c9eba928f61cc58"
+    },
+    "simulation": {
+      "status": "limit_exceeded",
+      "rss_bytes": 423043072,
+      "started_epoch": 1793845257.083561,
+      "updated_epoch": 1793845709.661478,
+      "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+      "exit_code": 2,
+      "waiting_reasons": [],
+      "elapsed_seconds": 452.5684630870819,
+      "reason": "output_size_limit",
+      "output_bytes": 809697755,
+      "submitted_epoch": 1793844103.629329,
+      "gate": {
+        "pass_gate": true,
+        "workload_slot": 0,
+        "reasons": [],
+        "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+        "snapshot": {
+          "cgroups": {
+            "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+              "headroom": 11623636992,
+              "limit": 51539607552,
+              "used": 39915970560
+            }
+          },
+          "cpu_capacity": 48.0,
+          "swap_rate_bytes_s": 0.0,
+          "swap_free": 9535447040,
+          "cgroup_headroom": 11623636992,
+          "host": "thu-wei",
+          "conflicting_processes": [
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8tm-ffc-s5133-v1"
+              },
+              "pid": 72158,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8tm-ffc-s5134-v1"
+              },
+              "pid": 72472,
+              "comm": "spectre"
+            },
+            {
+              "managed": {
+                "phase": "simulation",
+                "reserved_rss_mib": 1024,
+                "threads": 4,
+                "run_id": "sar8tm-ffc-s5135-v1"
+              },
+              "pid": 72795,
+              "comm": "spectre"
+            }
+          ],
+          "epoch": 1793845257.066335,
+          "disk_free": 583426768896,
+          "load1": 57.66,
+          "mem_available": 68161417216
+        },
+        "phase": "simulation"
+      },
+      "phase": "simulation",
+      "child_identity": {
+        "start_ticks": "82019789",
+        "pid": 112776,
+        "state": "R",
+        "pgid": 112776,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "peak_rss_bytes": 576323584,
+      "worker_identity": {
+        "start_ticks": "81904445",
+        "pid": 75363,
+        "state": "R",
+        "pgid": 75363,
+        "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59"
+      },
+      "queued": true,
+      "native": {
+        "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+        "zero_error_footer": false,
+        "electrical_verdict": "not_inferred",
+        "native_exit": 2,
+        "effective_settings": {
+          "reltol": "10e-06",
+          "abstol(V)": "10 nV",
+          "maxstep": "100 ps",
+          "abstol(I)": "100 fA",
+          "method": "trap"
+        },
+        "native_analysis_pass": false,
+        "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [4, 8], consider adding +mt=4 or +mt=8 on command line.",
+        "warning_codes": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "SFE-1131",
+          "SFE-2453",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "analysis": {
+      "status": "not_started"
+    },
+    "run_id": "sar8-modules-v2"
+  },
+  "reason": "Full saved traces exceeded 768 MiB. In v3 unused digital traces are omitted, independent pin probes are retained, and the raw-output disk budget is 1536 MiB; simulation RSS stays 1024 MiB."
+}

@@ -1,0 +1,49 @@
+`include "constants.vams"
+`include "disciplines.vams"
+`include "b_defaults.vh"
+
+module b_cdac(GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,TOPN,TOPP,VDD,VREFN,VREFP,VSS);
+    input GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,VDD;
+    inout TOPN,TOPP,VREFN,VREFP,VSS;
+    electrical GNN0,GNN1,GNN2,GNN3,GNN4,GNN5,GNN6,GNN7,GNP0,GNP1,GNP2,GNP3,GNP4,GNP5,GNP6,GNP7,GPN0,GPN1,GPN2,GPN3,GPN4,GPN5,GPN6,GPN7,GPP0,GPP1,GPP2,GPP3,GPP4,GPP5,GPP6,GPP7,TOPN,TOPP,VDD,VREFN,VREFP,VSS;
+
+    parameter real unit_c=4.00407f from (0:inf);
+    parameter real unit_ron=10000 from (0:inf);
+    parameter real weight_error0=0 from (-1:inf);
+    parameter real weight_error1=0 from (-1:inf);
+    parameter real weight_error2=0 from (-1:inf);
+    parameter real weight_error3=0 from (-1:inf);
+    parameter real weight_error4=0 from (-1:inf);
+    parameter real weight_error5=0 from (-1:inf);
+    parameter real weight_error6=0 from (-1:inf);
+    parameter real weight_error7=0 from (-1:inf);
+    b_cdac_bit #(.c(unit_c*1*(1+weight_error0)),.ron(unit_ron/1)) C0 (GNN0,GNP0,GPN0,GPP0,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*2*(1+weight_error1)),.ron(unit_ron/2)) C1 (GNN1,GNP1,GPN1,GPP1,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*4*(1+weight_error2)),.ron(unit_ron/4)) C2 (GNN2,GNP2,GPN2,GPP2,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*8*(1+weight_error3)),.ron(unit_ron/8)) C3 (GNN3,GNP3,GPN3,GPP3,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*16*(1+weight_error4)),.ron(unit_ron/16)) C4 (GNN4,GNP4,GPN4,GPP4,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*32*(1+weight_error5)),.ron(unit_ron/32)) C5 (GNN5,GNP5,GPN5,GPP5,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*64*(1+weight_error6)),.ron(unit_ron/64)) C6 (GNN6,GNP6,GPN6,GPP6,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    b_cdac_bit #(.c(unit_c*128*(1+weight_error7)),.ron(unit_ron/128)) C7 (GNN7,GNP7,GPN7,GPP7,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+
+    analog begin
+        I(TOPN,VREFN) <+ unit_c*ddt(V(TOPN,VREFN));
+        I(TOPP,VREFP) <+ unit_c*ddt(V(TOPP,VREFP));
+    end
+endmodule
+
+module b_cdac_bit(GNN,GNP,GPN,GPP,TOPN,TOPP,VREFN,VREFP,VDD,VSS);
+    input GNN,GNP,GPN,GPP,VDD;
+    inout TOPN,TOPP,VREFN,VREFP,VSS;
+    electrical GNN,GNP,GPN,GPP,TOPN,TOPP,VREFN,VREFP,VDD,VSS,BN,BP;
+    parameter real c=4.00407f from (0:inf);
+    parameter real ron=10000 from (0:inf);
+    analog begin
+        I(TOPN,BN) <+ c*ddt(V(TOPN,BN));
+        I(TOPP,BP) <+ c*ddt(V(TOPP,BP));
+        I(BN,VREFN) <+ (1e-12+0.5*(1+tanh((V(GNN,VSS)-0.5*V(VDD,VSS))/0.01))/ron)*V(BN,VREFN);
+        I(BN,VREFP) <+ (1e-12+0.5*(1-tanh((V(GNP,VSS)-0.5*V(VDD,VSS))/0.01))/ron)*V(BN,VREFP);
+        I(BP,VREFN) <+ (1e-12+0.5*(1+tanh((V(GPN,VSS)-0.5*V(VDD,VSS))/0.01))/ron)*V(BP,VREFN);
+        I(BP,VREFP) <+ (1e-12+0.5*(1-tanh((V(GPP,VSS)-0.5*V(VDD,VSS))/0.01))/ron)*V(BP,VREFP);
+    end
+endmodule
