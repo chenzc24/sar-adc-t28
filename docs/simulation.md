@@ -17,6 +17,21 @@ VA/Python 行为视图使用 `python -m tools.saradc behav generate` 同步总�
 
 混合视图由 [specs/views.json](../specs/views.json) 选择。目前支持 `tt_short --view behavioral|comparator_xtor|cdac_xtor|sampler_xtor|control_xtor`；其余用例继续使用当前管级设计或显式冻结回归。混合短测使用公开端口观察器，不套用依赖管级内部节点的历史分析器，不把行为模型当作原生 MC 或端压验证。
 
+现在也支持逐模块覆盖及物理候选：
+
+```powershell
+python -m tools.saradc prepare tt_short --view current --view reference=va --view comparator=va --view timing=va --run-id NEW_ID
+python -m tools.saradc prepare tt_short --view behavioral --view sar=xtor --view timing=xtor --candidate sar=b --run-id OTHER_ID
+python -m tools.saradc block list
+python -m tools.saradc block sim --module cdac --run-id NEW_BLOCK_ID
+python -m tools.saradc block follow --run-id NEW_BLOCK_ID
+python -m tools.saradc draw --check
+```
+
+原理图使用源网表内的 RNL 注释。`draw` 生成展示，`draw --serve` 打开本机官方查看器服务；这两项不提交仿真。编辑与导出见 [RNL 原理图](schematics/README.md)。
+
+六项选择为 `sampler / cdac / comparator / sar / reference / timing`，每项可选 `xtor` 或 `va`。不修改源网表的拓扑连接；RC/clear 模型使用明确的非对称上升/下降延时。候选为 VA 时拒绝同时指定该模块的物理候选。冻结回归拒绝模块覆盖。完整说明见 [独立模块测试](../tb/blocks/README.md) 和 [候选约定](../design/xtor/README.md)。
+
 Virtuoso 沿用工作区已经接入的 bridge/ADE 环境。本次不重建连接、不修改 OA；相同模块选择通过生成的 Spectre/VA 网表实现。连接可用与 OA 是否同步当前文本设计分别记录。
 
 `sim` 登记后提交一次仿真，分析与回收显式执行。相同 ID 的不同输入会被拒绝；网络不确定时先查询该 ID，不改 ID 重提。运行记录和冻结包在 `work/state/runs/` 与 `work/output/managed_execution/`。

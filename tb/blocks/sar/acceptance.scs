@@ -1,0 +1,41 @@
+// Native SAR and native delays; electrical VA sampler/CDAC/reference/comparator provide the environment.
+VSCLOCK (s_clock 0) vsource type=pulse val0=0 val1=0.9 delay=60n rise=100p fall=100p width=39.9n period=100n
+VSs_ps (s_ps 0) vsource type=pwl wave=[0 0.0017578125000000111 1.5980000000000001e-07 0.0017578125000000111 1.5990000000000002e-07 0.0439453125 2.5979999999999998e-07 0.0439453125 2.5989999999999999e-07 0.4482421875 3.5979999999999998e-07 0.4482421875 3.5989999999999999e-07 0.45175781250000002 4.5979999999999997e-07 0.45175781250000002 4.5989999999999998e-07 0.85605468750000002 5.5980000000000002e-07 0.85605468750000002 5.5990000000000003e-07 0.89824218750000007]
+VSs_ns (s_ns 0) vsource type=pwl wave=[0 0.89824218749999996 1.5980000000000001e-07 0.89824218749999996 1.5990000000000002e-07 0.85605468750000002 2.5979999999999998e-07 0.85605468750000002 2.5989999999999999e-07 0.45175781250000002 3.5979999999999998e-07 0.45175781250000002 3.5989999999999999e-07 0.4482421875 4.5979999999999997e-07 0.4482421875 4.5989999999999998e-07 0.0439453125 5.5980000000000002e-07 0.0439453125 5.5990000000000003e-07 0.0017578124999999556]
+XSAR (s_d0 s_d1 s_d2 s_d3 s_d4 s_d5 s_d6 s_d7 s_clock VDD! s_n s_p s_rn s_rp 0) tb_sar_top
+RSIN (s_ns s_n) resistor r=50
+RSIP (s_ps s_p) resistor r=50
+VSRN (s_rns 0) vsource dc=0
+VSRP (s_rps 0) vsource dc=0.9
+RSRN (s_rns s_rn) resistor r=50
+RSRP (s_rps s_rp) resistor r=50
+CSRN (s_rn 0) capacitor c=4p
+CSRP (s_rp 0) capacitor c=4p
+XSPROBE (s_d0 s_d1 s_d2 s_d3 s_d4 s_d5 s_d6 s_d7 s_clock VDD! 0) b_behavior_observer model_id=901
+CSL0 (s_d0 0) capacitor c=5f
+CSL1 (s_d1 0) capacitor c=5f
+CSL2 (s_d2 0) capacitor c=5f
+CSL3 (s_d3 0) capacitor c=5f
+CSL4 (s_d4 0) capacitor c=5f
+CSL5 (s_d5 0) capacitor c=5f
+CSL6 (s_d6 0) capacitor c=5f
+CSL7 (s_d7 0) capacitor c=5f
+// A second real SAR receives no comparator response. A new acquisition must
+// clear it without a false write/update; this adds no watchdog to the design.
+XSTALLED (f_d0 f_d1 f_d2 f_d3 f_d4 f_d5 f_d6 f_d7 s_clock VDD! f_n f_p f_rn f_rp 0) tb_sar_stalled_top
+RFIN (s_ns f_n) resistor r=50
+RFIP (s_ps f_p) resistor r=50
+VFRN (f_rns 0) vsource dc=0
+VFRP (f_rps 0) vsource dc=0.9
+RFRN (f_rns f_rn) resistor r=50
+RFRP (f_rps f_rp) resistor r=50
+CFRN (f_rn 0) capacitor c=4p
+CFRP (f_rp 0) capacitor c=4p
+CFL0 (f_d0 0) capacitor c=5f
+CFL1 (f_d1 0) capacitor c=5f
+CFL2 (f_d2 0) capacitor c=5f
+CFL3 (f_d3 0) capacitor c=5f
+CFL4 (f_d4 0) capacitor c=5f
+CFL5 (f_d5 0) capacitor c=5f
+CFL6 (f_d6 0) capacitor c=5f
+CFL7 (f_d7 0) capacitor c=5f

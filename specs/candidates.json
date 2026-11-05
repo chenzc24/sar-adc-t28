@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "modules": {
+    "sampler": {
+      "selected": "b",
+      "target": "xtor/bootstrap/bootstrap.scs",
+      "interfaces": {
+        "sar_bootstrap_flat_8b_p": [
+          "CLKS",
+          "VOUT",
+          "Vin"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/bootstrap/bootstrap.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    },
+    "cdac": {
+      "selected": "b",
+      "target": "xtor/cdac/cdac.scs",
+      "interfaces": {
+        "sar8j_r1_cdac": [
+          "GNN0",
+          "GNN1",
+          "GNN2",
+          "GNN3",
+          "GNN4",
+          "GNN5",
+          "GNN6",
+          "GNN7",
+          "GNP0",
+          "GNP1",
+          "GNP2",
+          "GNP3",
+          "GNP4",
+          "GNP5",
+          "GNP6",
+          "GNP7",
+          "GPN0",
+          "GPN1",
+          "GPN2",
+          "GPN3",
+          "GPN4",
+          "GPN5",
+          "GPN6",
+          "GPN7",
+          "GPP0",
+          "GPP1",
+          "GPP2",
+          "GPP3",
+          "GPP4",
+          "GPP5",
+          "GPP6",
+          "GPP7",
+          "TOPN",
+          "TOPP",
+          "VDD",
+          "VREFN",
+          "VREFP",
+          "VSS"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/cdac/cdac.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    },
+    "comparator": {
+      "selected": "b",
+      "target": "xtor/comparator/comparator.scs",
+      "interfaces": {
+        "sar_strongarm_t28": [
+          "CLK",
+          "OUTN",
+          "OUTP",
+          "VDD",
+          "VINN",
+          "VINP",
+          "VSS"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/comparator/comparator.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    },
+    "sar": {
+      "selected": "b",
+      "target": "xtor/sar/sar.scs",
+      "interfaces": {
+        "sar8i_ctrl": [
+          "CMP_CLK",
+          "CODE0",
+          "CODE1",
+          "CODE2",
+          "CODE3",
+          "CODE4",
+          "CODE5",
+          "CODE6",
+          "CODE7",
+          "COMP_N",
+          "COMP_P",
+          "D0",
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "PHI_U",
+          "SAMPLE",
+          "VDD",
+          "VSS",
+          "ACTIVE"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/sar/sar.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    },
+    "reference": {
+      "selected": "b",
+      "target": "xtor/reference/reference.scs",
+      "interfaces": {
+        "sar8i_refword": [
+          "CODE0",
+          "CODE1",
+          "CODE2",
+          "CODE3",
+          "CODE4",
+          "CODE5",
+          "CODE6",
+          "CODE7",
+          "D0",
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "GNN0",
+          "GNN1",
+          "GNN2",
+          "GNN3",
+          "GNN4",
+          "GNN5",
+          "GNN6",
+          "GNN7",
+          "GNP0",
+          "GNP1",
+          "GNP2",
+          "GNP3",
+          "GNP4",
+          "GNP5",
+          "GNP6",
+          "GNP7",
+          "GPN0",
+          "GPN1",
+          "GPN2",
+          "GPN3",
+          "GPN4",
+          "GPN5",
+          "GPN6",
+          "GPN7",
+          "GPP0",
+          "GPP1",
+          "GPP2",
+          "GPP3",
+          "GPP4",
+          "GPP5",
+          "GPP6",
+          "GPP7",
+          "PHI_U",
+          "SAMPLE",
+          "VDD",
+          "VSS",
+          "RST_DONE",
+          "PRESET"
+        ],
+        "sar8i_idle": [
+          "ACTIVE",
+          "SAMPLE",
+          "VDD",
+          "VSS",
+          "PRESET",
+          "SAMPLE_MATCH"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/reference/reference.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    },
+    "timing": {
+      "selected": "b",
+      "target": "xtor/clock/delays.scs",
+      "interfaces": {
+        "sar8p_delay_valid": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8p_delay_write": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8p_delay_quiet": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8p_delay_capture": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8p_delay_bbm": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8r_edge": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8s_step": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ],
+        "sar8i_guard": [
+          "A",
+          "VDD",
+          "VSS",
+          "Y"
+        ]
+      },
+      "candidates": {
+        "b": {
+          "file": "design/xtor/clock/delays.scs",
+          "status": "current_implementation",
+          "evidence": "results/README.md; individual records remain bound to their source hashes"
+        }
+      }
+    }
+  },
+  "policy": "Registration does not promote a candidate or transfer acceptance. Frozen B is independent."
+}

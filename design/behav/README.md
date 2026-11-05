@@ -10,6 +10,7 @@
 | 比较器 | [comparator.py](python/comparator.py) | [comparator.va](veriloga/comparator.va) |
 | 异步 SAR | [sar.py](python/sar.py) | [sar.va](veriloga/sar.va) |
 | 参考控制与延时 | [reference.py](python/reference.py) | [reference.va](veriloga/reference.va) |
+| RC / clear 非对称延时 | 独立表征配置 | [timing.va](veriloga/timing.va) |
 | 整机组合 | [sar_adc.py](python/sar_adc.py) | [sar_adc_b.va](veriloga/sar_adc_b.va) |
 
 Python 顶层接收独立的 `sampler/cdac/comparator/sar/reference` 实现，默认使用上表模块。公开的 `AdcSpec`、`AnalogConfig`、`FrameResult`、`SarAdcModel` 导入方式保留。数值模型采用有效位权和一阶 trial 建立近似，保留原 8 种情形的事件/码字定义；它适合算法、误差分配和校准研究。
@@ -70,3 +71,7 @@ Python `weight_errors` 修改折合后的有效阈值系数；VA `weight_error0.
 `follow` 是一次性的等待、分析、回收流程：只接续已经登记的运行，仿真成功后才启动分析，失败则保留并退出，不重提仿真。也可继续分别使用 `status / analyze / collect`。
 
 模块测试条件见 [tb/behav](../../tb/behav/README.md)，实际证据见 [results/behav](../../results/behav/README.md)。旧 10-bit、旧外部位时钟及专用实验模型继续留在历史区，审查索引见 [model_audit.json](../../results/behav/model_audit.json)。
+
+六模块可在命名视图后逐项覆盖：`--view current --view comparator=va --view reference=va`。`sar_xtor / reference_xtor / timing_xtor` 提供相应独立视图；完整六类模块测试见 [tb/blocks](../../tb/blocks/README.md)。
+
+`timing.va` 的 RC/clear 近似分别保留上升与快速复位延时，来源与数值由 `specs/views.json` 的 `timing_approximations` 给出。其来源是独立 TT 接收门负载表征，不代表实际 SAR 全扇出或 PVT 拟合。旧 `sar8-modules-v3` 证据仍绑定其原模型/选择配置；本轮新测试以各自运行回执为准。

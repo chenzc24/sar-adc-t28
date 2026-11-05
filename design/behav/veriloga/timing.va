@@ -1,0 +1,21 @@
+`include "disciplines.vams"
+// Asymmetric inertial delay for RC/clear interfaces. TT approximations only.
+module b_delay(A,VDD,VSS,Y);
+    input A,VDD; inout VSS; output Y;
+    electrical A,VDD,VSS,Y;
+    parameter real rise_s=200p from [0:inf);
+    parameter real fall_s=20p from [0:inf);
+    parameter real edge_s=20p from (0:inf);
+    parameter real rout=100 from (0:inf);
+    integer state,pending;
+    real ready_at;
+    analog begin
+        @(initial_step) begin state=0;pending=0;ready_at=1e30;end
+        @(cross(V(A,VSS)-0.5*V(VDD,VSS),+1)) begin pending=1;ready_at=$abstime+rise_s;end
+        @(cross(V(A,VSS)-0.5*V(VDD,VSS),-1)) begin pending=0;ready_at=$abstime+fall_s;end
+        @(timer(ready_at)) begin
+            if (abs($abstime-ready_at)<1e-15) begin state=pending;ready_at=1e30;end
+        end
+        I(Y,VSS) <+ (V(Y,VSS)-transition(state,0,edge_s)*V(VDD,VSS))/rout;
+    end
+endmodule

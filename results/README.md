@@ -7,6 +7,7 @@
 | TT 全码：255 边界、256 中心码 | [static/results.json](static/results.json) |
 | TT 1024 点 FFT 与 ADCtoolbox | [fft/results.json](fft/results.json)、[A/B 频谱](fft/ab_spectrum.png)、[B 版 12 图](fft/b_toolbox_panel.png) |
 | B 版单种子 TT 瞬态噪声 | [noise/comparison.json](noise/comparison.json)，带宽与统计收敛未完成 |
+| 独立模块与混合层次 | [六模块、逐项混合及 SAR 挂起/重启](blocks/README.md) |
 | VA/Python 行为模型 | [行为交叉验证](behav/README.md)，与晶体管性能资格分别记录 |
 | A/B 五点关键码 | [pvt/results.json](pvt/results.json) |
 | 比较器、CDAC 各 200 种子 | [mc/modules_200.json](mc/modules_200.json) |

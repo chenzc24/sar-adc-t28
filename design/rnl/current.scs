@@ -1,0 +1,17 @@
+// RNL workspace entry. DISPLAY ONLY: use design/dut.scs for simulation.
+// BEGIN SARADC RNL
+// @RNL(type="header") { @VERSION("0.3");
+// @USE-PACKAGE(name="sar8",version="0.1",path="sar8.rnl");
+// @USE-PACKAGE(name="rnl-std-fill") {}; }
+// END SARADC RNL
+
+simulator lang=spectre
+include "../top/adc_top.scs"
+include "../xtor/bootstrap/bootstrap.scs"
+include "../xtor/cdac/cdac.scs"
+include "../xtor/clock/delays.scs"
+include "../xtor/common/standard_cells.scs"
+include "../xtor/comparator/comparator.scs"
+include "../xtor/reference/reference.scs"
+include "../xtor/sar/sar.scs"
+include "testbenches.scs"

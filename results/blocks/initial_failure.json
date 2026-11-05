@@ -1,0 +1,60 @@
+{
+  "run_id": "sar8-blocks-tt-v1",
+  "analysis_state": {
+    "agent_sha256": "c63a3f6c69eb3839faedba247aa0764a18c98815297b6863662b5429ce0e23f6",
+    "child_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 233208,
+      "pid": 233208,
+      "start_ticks": "83480210",
+      "state": "R"
+    },
+    "elapsed_seconds": 0.5928959846496582,
+    "exit_code": 1,
+    "gate": {
+      "pass_gate": true,
+      "phase": "analysis",
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "reasons": [],
+      "snapshot": {
+        "cgroup_headroom": 4788424704,
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 4788424704,
+            "limit": 51539607552,
+            "used": 46751182848
+          }
+        },
+        "conflicting_processes": [],
+        "cpu_capacity": 48.0,
+        "disk_free": 527889600512,
+        "epoch": 1793859861.273033,
+        "host": "thu-wei",
+        "load1": 38.66,
+        "mem_available": 70873198592,
+        "swap_free": 8429658112,
+        "swap_rate_bytes_s": 0.0
+      },
+      "workload_slot": 0
+    },
+    "output_bytes": 320234620,
+    "peak_rss_bytes": 6258688,
+    "phase": "analysis",
+    "queued": true,
+    "rss_bytes": 0,
+    "started_epoch": 1793859861.290178,
+    "status": "failed",
+    "submitted_epoch": 1793859860.962339,
+    "updated_epoch": 1793859861.883322,
+    "waiting_reasons": [],
+    "worker_identity": {
+      "boot_id": "ee256d49-67ac-4cfd-a8fc-3d62d0ba9a59",
+      "pgid": 233206,
+      "pid": 233206,
+      "start_ticks": "83480178",
+      "state": "R"
+    }
+  },
+  "reason": "Python 2.7 raises ValueError for a relative import executed outside a package; corrected analysis-only runs reuse the completed native waveform",
+  "classification_note": "analysis-v1 functional result retained; analysis-v2/v3 separately require diagnostic screens for aggregate pass_validation"
+}

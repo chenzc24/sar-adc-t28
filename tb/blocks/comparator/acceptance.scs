@@ -1,0 +1,21 @@
+// Comparator delay/reset at stated differential inputs; native MOM plus receiver gate loads.
+VCCLOCK (c_clock 0) vsource type=pulse val0=0 val1=0.9 delay=5n rise=100p fall=100p width=4.9n period=10n
+VCN (c_n 0) vsource dc=0.45
+VCP (c_p 0) vsource type=pwl wave=[0 0.55000000000000004 9.900000000000001e-09 0.55000000000000004 1e-08 0.34999999999999998 1.99e-08 0.34999999999999998 2e-08 0.47999999999999998 2.9900000000000003e-08 0.47999999999999998 3.0000000000000004e-08 0.42000000000000004 3.99e-08 0.42000000000000004 4.0000000000000001e-08 0.45351562500000003 4.9899999999999997e-08 0.45351562500000003 4.9999999999999998e-08 0.44648437499999999 5.9900000000000014e-08 0.44648437499999999 6.0000000000000008e-08 0.45100000000000001 6.990000000000001e-08 0.45100000000000001 7.0000000000000005e-08 0.44900000000000001 7.9900000000000007e-08 0.44900000000000001 8.0000000000000002e-08 0.4501 8.9900000000000004e-08 0.4501 8.9999999999999999e-08 0.44990000000000002]
+XCOMP (c_clock c_outn c_outp VDD! c_n c_p 0) @COMPARATOR@
+CCN (c_outn 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1
+CCP (c_outp 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1
+XCRN (c_outn VDD! 0 c_unusedn) sar8p_inv
+XCRP (c_outp VDD! 0 c_unusedp) sar8p_inv
+// Independent floating-input kickback fixture, same nominal CDAC-side MOM geometry.
+VKINIT (k_init 0) vsource type=pwl wave=[0 0.9 10n 0.9 10.1n 0]
+VKP (k_sp 0) vsource dc=0.4505
+VKN (k_sn 0) vsource dc=0.4495
+XKP (k_p k_sp k_init VDD! 0) b_tb_switch
+XKN (k_n k_sn k_init VDD! 0) b_tb_switch
+CKP (k_p 0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=256 mismatchflag=1
+CKN (k_n 0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=256 mismatchflag=1
+VKC (k_clock 0) vsource type=pulse val0=0 val1=0.9 delay=15n rise=100p fall=100p width=4.9n period=1000n
+XKCOMP (k_clock k_outn k_outp VDD! k_n k_p 0) @COMPARATOR@
+CKON (k_outn 0) capacitor c=10f
+CKOP (k_outp 0) capacitor c=10f

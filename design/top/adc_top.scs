@@ -1,4 +1,9 @@
 // Generated from frozen B by scripts/sar8_entry.py build.
+// BEGIN SARADC RNL
+// @RNL(type="header") { @VERSION("0.3");
+// @USE-PACKAGE(name="sar8",version="0.1",path="../rnl/sar8.rnl");
+// @USE-PACKAGE(name="rnl-std-fill") {}; }
+// END SARADC RNL
 // Electrical subcircuit statements are preserved verbatim.
 
 subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VREFP 0
@@ -14,4 +19,156 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
     CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
     CL_COMP_P (COMP_P 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
     CL_CMP_CLK (CMP_CLK 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-24,105) @TEXT("SAR8 / current transistor hierarchy",size=2,halign="start",textcolor="#223d52");
+// (-24,97) @TEXT("VIN pair -> Bootstrap -> MOM CDAC -> StrongARM -> asynchronous SAR",size=1.15,halign="start",textcolor="#223d52");
+// #XSAMPLE @SET-SYMBOL $S_sar8p_clkbuf;
+// #XSAMPLE @PLACE(0,67) => @ORIENT("R0");
+// #XIDLE @SET-SYMBOL $S_sar8i_idle;
+// #XIDLE @PLACE(65,67) => @ORIENT("R0");
+// #XSEQ @SET-SYMBOL $S_sar8r_edge;
+// #XSEQ @PLACE(130,67) => @ORIENT("R0");
+// #XBOOTN @SET-SYMBOL $S_sar_bootstrap_flat_8b_p;
+// #XBOOTN @PLACE(0,12) => @ORIENT("R0");
+// #XBOOTP @SET-SYMBOL $S_sar_bootstrap_flat_8b_p;
+// #XBOOTP @PLACE(0,-25) => @ORIENT("R0");
+// #XCDAC @SET-SYMBOL $S_sar8j_r1_cdac;
+// #XCDAC @PLACE(72,-7) => @ORIENT("R0");
+// #XCOMP @SET-SYMBOL $S_sar_strongarm_t28;
+// #XCOMP @PLACE(137,-7) => @ORIENT("R0");
+// #XCTRL @SET-SYMBOL $S_sar8i_ctrl;
+// #XCTRL @PLACE(204,-7) => @ORIENT("R0");
+// #XREF @SET-SYMBOL $S_sar8i_refword;
+// #XREF @PLACE(72,-91) => @ORIENT("R0");
+// #CL_COMP_N @SET-SYMBOL $CAPACITOR;
+// #CL_COMP_N @PLACE(168,-45) => @ORIENT("R0");
+// #CL_COMP_N @TEXT("CL_COMP_N",key="name",size=1.3,halign="start") => @PLACE(171,-42);
+// #CL_COMP_N @TEXT("nr=8 lr=2.5u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(171,-49);
+// #CL_COMP_N @TEXT("",key="model");
+// #CL_COMP_P @SET-SYMBOL $CAPACITOR;
+// #CL_COMP_P @PLACE(184,-45) => @ORIENT("R0");
+// #CL_COMP_P @TEXT("CL_COMP_P",key="name",size=1.3,halign="start") => @PLACE(187,-42);
+// #CL_COMP_P @TEXT("nr=8 lr=2.5u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(187,-49);
+// #CL_COMP_P @TEXT("",key="model");
+// #CL_CMP_CLK @SET-SYMBOL $CAPACITOR;
+// #CL_CMP_CLK @PLACE(222,-45) => @ORIENT("R0");
+// #CL_CMP_CLK @TEXT("CL_CMP_CLK",key="name",size=1.3,halign="start") => @PLACE(225,-42);
+// #CL_CMP_CLK @TEXT("nr=8 lr=2.5u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(225,-49);
+// #CL_CMP_CLK @TEXT("",key="model");
+// (-12,81) @TEXT("Sample buffer",size=2.4,halign="start",textcolor="#223d52");
+// (53,82) @TEXT("Idle / preset",size=2.4,halign="start",textcolor="#223d52");
+// (118,82) @TEXT("Sample edge",size=2.4,halign="start",textcolor="#223d52");
+// (-12,27) @TEXT("Bootstrap -",size=2.4,halign="start",textcolor="#223d52");
+// (-12,-10) @TEXT("Bootstrap +",size=2.4,halign="start",textcolor="#223d52");
+// (60,13.55) @TEXT("MOM CDAC",size=2.4,halign="start",textcolor="#223d52");
+// (125,8.6) @TEXT("StrongARM",size=2.4,halign="start",textcolor="#223d52");
+// (192,11.9) @TEXT("Async SAR",size=2.4,halign="start",textcolor="#223d52");
+// (60,-70.45) @TEXT("Reference word",size=2.4,halign="start",textcolor="#223d52");
+// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:4 (29.5,67) (29.5,65.35) #XIDLE:2};
+// &"SAMPLE_MATCH" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:6 (97.5,65.35) (97.5,67) #XSEQ:1};
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {(-25,-23.35) (-25,13.65) (-25,67)};
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XSEQ:4 (-25,67)};
+// $JUNCTION @ATTACH (-25,67);
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XBOOTN:1 (-25,13.65)};
+// $JUNCTION @ATTACH (-25,13.65);
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XBOOTP:1 (-25,-23.35)};
+// $JUNCTION @ATTACH (-25,-23.35);
+// &"TOPN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTN:2 (32,12) (32,24) (98,24) (98,-5.35) #XCDAC:33};
+// &"TOPP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTP:2 (36,-25) (36,-31) (101,-31) (101,-8.65) #XCDAC:34};
+// &"TOPN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:33 (104.5,-5.35) (104.5,-7) #XCOMP:5};
+// &"TOPP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:34 (104.5,-8.65) (104.5,-10.3) #XCOMP:6};
+// &"COMP_N" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(168,-43) (168,-5.35) (168,-3.7)};
+// &"COMP_N" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:2 (168,-5.35)};
+// $JUNCTION @ATTACH (168,-5.35);
+// &"COMP_N" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:10 (168,-3.7)};
+// $JUNCTION @ATTACH (168,-3.7);
+// &"COMP_N" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CL_COMP_N:1 (168,-43)};
+// $JUNCTION @ATTACH (168,-43);
+// &"COMP_P" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(184,-43) (184,-8.65) (184,-7)};
+// &"COMP_P" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:3 (184,-8.65)};
+// $JUNCTION @ATTACH (184,-8.65);
+// &"COMP_P" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:11 (184,-7)};
+// $JUNCTION @ATTACH (184,-7);
+// &"COMP_P" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CL_COMP_P:1 (184,-43)};
+// $JUNCTION @ATTACH (184,-43);
+// &"CMP_CLK" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {(124,34) (217,34) (222,34)};
+// &"CMP_CLK" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XCTRL:1 (217,34)};
+// $JUNCTION @ATTACH (217,34);
+// &"CMP_CLK" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XCOMP:1 (124,34)};
+// $JUNCTION @ATTACH (124,34);
+// &"CMP_CLK" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#CL_CMP_CLK:1 (222,34)};
+// $JUNCTION @ATTACH (222,34);
+// {&"GNN0" &"GNN1" &"GNN2" &"GNN3" &"GNN4" &"GNN5" &"GNN6" &"GNN7"} @WIRE(mode="straight",linewidth=0.3) {#XREF:17 (111,-82.75) (111,-60) (41,-60) (41,1.25) #XCDAC:1};
+// {&"GNP0" &"GNP1" &"GNP2" &"GNP3" &"GNP4" &"GNP5" &"GNP6" &"GNP7"} @WIRE(mode="straight",linewidth=0.3) {#XREF:25 (115,-86.05) (115,-64) (37,-64) (37,-2.05) #XCDAC:9};
+// {&"GPN0" &"GPN1" &"GPN2" &"GPN3" &"GPN4" &"GPN5" &"GPN6" &"GPN7"} @WIRE(mode="straight",linewidth=0.3) {#XREF:33 (119,-89.35) (119,-68) (33,-68) (33,-5.35) #XCDAC:17};
+// {&"GPP0" &"GPP1" &"GPP2" &"GPP3" &"GPP4" &"GPP5" &"GPP6" &"GPP7"} @WIRE(mode="straight",linewidth=0.3) {#XREF:41 (123,-92.65) (123,-72) (29,-72) (29,-8.65) #XCDAC:25};
+// {&"CODE0" &"CODE1" &"CODE2" &"CODE3" &"CODE4" &"CODE5" &"CODE6" &"CODE7"} @WIRE(mode="straight",linewidth=0.3) {#XCTRL:2 (244,-3.7) (244,-132) (43,-132) (43,-86.05) #XREF:1};
+// {&"D0" &"D1" &"D2" &"D3" &"D4" &"D5" &"D6" &"D7"} @WIRE(mode="straight",linewidth=0.3) {#XCTRL:12 (248,-7) (248,-136) (39,-136) (39,-89.35) #XREF:9};
+// (155,-128) @TEXT("CODE[7:0] / D[7:0] feedback",size=0.95,halign="start",textcolor="#223d52");
+// (-24,-145) @TEXT("All three physical comparator/clock MOM loads are shown. VDD! / 0 are global rails.",size=0.95,halign="start",textcolor="#223d52");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:2 (130,78)};
+// (130,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:3 (130,56)};
+// (130,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"ACTIVE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:1 (49,68.65)};
+// (48.6,68.65) @TEXT("ACTIVE",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:3 (65,78)};
+// (65,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:4 (65,56)};
+// (65,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:5 (81,68.65)};
+// (81.4,68.65) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
+// &"SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:1 (-10,67)};
+// (-10.4,67) @TEXT("SAMPLE",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:2 (0,77)};
+// (0,77.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:3 (0,57)};
+// (0,56.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"VINN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTN:3 (-16,10.35)};
+// (-16.4,10.35) @TEXT("VINN",size=1.1,halign="end",valign="middle");
+// &"VINP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTP:3 (-16,-26.65)};
+// (-16.4,-26.65) @TEXT("VINP",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:35 (72,9.55)};
+// (72,9.95) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:36 (56,-11.95)};
+// (55.6,-11.95) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:37 (56,-15.25)};
+// (55.6,-15.25) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:38 (72,-23.55)};
+// (72,-23.95) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"PHI_U" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:20 (220,-10.3)};
+// (220.4,-10.3) @TEXT("PHI_U",size=1.1,halign="start",valign="middle");
+// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:21 (188,-10.3)};
+// (187.6,-10.3) @TEXT("SAMPLE_INT",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:22 (204,7.9)};
+// (204,8.3) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:23 (204,-21.9)};
+// (204,-22.3) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"ACTIVE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:24 (220,-13.6)};
+// (220.4,-13.6) @TEXT("ACTIVE",size=1.1,halign="start",valign="middle");
+// &"PHI_U" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:49 (56,-92.65)};
+// (55.6,-92.65) @TEXT("PHI_U",size=1.1,halign="end",valign="middle");
+// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:50 (56,-95.95)};
+// (55.6,-95.95) @TEXT("SAMPLE_INT",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:51 (72,-74.45)};
+// (72,-74.05) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:52 (72,-107.55)};
+// (72,-107.95) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"RST_DONE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:53 (88,-95.95)};
+// (88.4,-95.95) @TEXT("RST_DONE",size=1.1,halign="start",valign="middle");
+// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:54 (88,-99.25)};
+// (88.4,-99.25) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:4 (137,4.6)};
+// (137,5) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:7 (137,-18.6)};
+// (137,-19) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CL_COMP_N:2 (168,-50)};
+// (168,-50.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CL_COMP_P:2 (184,-50)};
+// (184,-50.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CL_CMP_CLK:2 (222,-50)};
+// (222,-50.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// }
+// END SARADC RNL
 ends sar_adc8_join_r4

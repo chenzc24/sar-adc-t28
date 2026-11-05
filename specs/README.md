@@ -6,5 +6,8 @@
 - [blocks/](blocks/)：模块 master、端口和实现位置。
 - [tests.json](tests.json)：7 个真实模板的输入散列、分析器、预算及历史运行身份。
 - [monte_carlo.json](monte_carlo.json)：200 种子模块与两冷角各 50 种子的统计范围。
+- [views.json](views.json)：命名视图及六模块的逐项 VA/管级选择；RC/clear 行为近似保留独立上升、下降延时及表征来源。
+- [candidates.json](candidates.json)：物理候选、当前默认及公共接口；内部辅助电路不作为公共接口锁定。
+- [block_tests.json](block_tests.json)：六项独立模块测试的激励、负载、测量、诊断限值和未覆盖项。
 
 指标中的空缺代表尚未定义或验证，不能从退出码、功能正确或示意图推定。Monte Carlo 种子与模型范围共同定义一次抽样，单独相同 seed 不足以证明同一 draw。

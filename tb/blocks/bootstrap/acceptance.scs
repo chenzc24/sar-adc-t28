@@ -1,0 +1,6 @@
+// Standalone sampler: normal initial 60 ns low / 40 ns high, 50 ohm source.
+VBCLOCK (b_clock 0) vsource type=pulse val0=0 val1=0.9 delay=60n rise=100p fall=100p width=39.9n period=100n
+VBIN (b_source 0) vsource type=pwl wave=[0 0.2 120n 0.2 120.1n 0.8]
+RBIN (b_source b_in) resistor r=50
+XBOOT (b_clock b_hold b_in) @SAMPLER@
+CBLOAD (b_hold 0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=256 mismatchflag=1

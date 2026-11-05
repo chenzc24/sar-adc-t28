@@ -1,0 +1,7492 @@
+{
+  "generator": "tools/saradc/schematic.py",
+  "rnl_version": "rnl 0.5.5 (b494cba)",
+  "source_hashes": {
+    "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "design/xtor/reference/reference.scs": "1ca683eff1ec5852e2f1af3c1bd82b1983398431e45921cafaba8e40695af035",
+    "design/xtor/sar/sar.scs": "999a315b03e3d51ed313e5c1ffda309daa91fb2fcfc2f6ef2f61d1cf83fb3eec",
+    "tools/saradc/schematic.py": "ad37181c4669d74dd52ac2764d0ce86d327f79ac2a9c9f8faf11a8131a5c0d49",
+    "tools/saradc/rnl.py": "25b27aa05a03f704f8a649c89996f5dc5cc0f1f958d0070a3202a3452821bbc0",
+    "tools/saradc/rnl_layouts.py": "8d1fd417e56ee85ad86fd9d7342219b5cff53e1cc1e9be9c0e312ff840222f46",
+    "tools/saradc/rnl_viewer.py": "5fce754ae23698d7c9bf9591c179b9251f3bc7dc26f97be126892c9c288d9552",
+    "tools/saradc/rnl_viewer.lock.json": "c2a9c2214ff5fcef80e4977e100bed7b87b7d6e41226174929a2c5ff3dc2a7ba",
+    "tools/saradc/drawing.html": "55535e103716cc22dd1fc3b2b505ef56ca8a18a3ef3883eced6785ce0684644a",
+    "design/dut.scs": "bf4405ce4b105d8229d06cf9057ef30b008a5fbedc2d1f47120c56baa847cba0",
+    "design/manifest.json": "01ee5058afbb96bc29056da73ae9aaee2ce6dfa219636e45e1635c5199e8ba87",
+    "specs/candidates.json": "83da18e7d87d554242839b551f83bf0998f31e1cb4fe138803ca7a83b62319c1",
+    "specs/views.json": "5144e8641ca538418860233ad6d47aa4fbbfa7864abc9c5c46c8edda01c7395c",
+    "specs/block_tests.json": "3e29464c4279287fb350f4424e567fecdbe6dd243549e2276e1e900b4700637e",
+    "specs/arch.json": "23a2e978f5e940b9c0d7ae7090e796e3d75c73b35f476671913b5e13d01acbd0",
+    "tb/blocks/bootstrap/acceptance.scs": "d561d151bc0c1d31b18fdd845f0b7f8189d574da1068fd6a6a233fabb116bb64",
+    "tb/blocks/cdac/acceptance.scs": "ab3be61c2db6b626400bec2174ac5b7f5e37adfb05a6b7318779bf21a1184c84",
+    "tb/blocks/comparator/acceptance.scs": "4902d1f17aa9e20303bae709a0d9a5e5b3a7a7ab9b32c971f3144a5c28bb937c",
+    "tb/blocks/reference/acceptance.scs": "de539de5e374422bbb10ec4641d2b2df486a50a5fb84a8f4b9074603d434e367",
+    "tb/blocks/clock/acceptance.scs": "60c7506201c3c13bc27856c8c7b44c9ee25018a0f54295afefe883f5405b385d",
+    "tb/blocks/sar/acceptance.scs": "5bd41add695457956feb1672b4b3db3592e3a621cb349c06b6df6742a159c77b",
+    "design/behav/veriloga/b_defaults.vh": "a16cbd349dce04aaa2c95c0b4f51449601159e50a93ef44739beb3836be9bfb7",
+    "design/behav/veriloga/cdac.va": "86f852fe7b68813fb855b6de1c06196685b84abf432e89b01b8e6b29d8cdd306",
+    "design/behav/veriloga/comparator.va": "5812a258f1b5d62f9e5ed25e6deb8b985482ad68b99e12921ae4edf5b04161b9",
+    "design/behav/veriloga/reference.va": "3cfd753c91e16e175bbd8cf1b4d22ba29121beda4aeb8dffdcaaa850f2a71a47",
+    "design/behav/veriloga/sampler.va": "dcab3ef0a1027ffedd3956a8622f41dff52f45f57f58101c4c9408d6faf21227",
+    "design/behav/veriloga/sar.va": "b57cb98fca68125727c45507f56ab1e6358267924b197cd6465085228b9dd342",
+    "design/behav/veriloga/sar_adc_b.va": "df878398423304d1c608291f84afd4eec1eaf99f0ff6b4427d21395ea71f2037",
+    "design/behav/veriloga/timing.va": "9cae0f597a2648250a59bebd15fbd0a42467ee00cd9860c30d4197e63f7afd74",
+    "tb/common/veriloga/block_switch.va": "6ab451fa1c05394fa8968b733646069e9de0f15aebe1fc69049a93f722780d1b",
+    "tb/behav/observer.va": "21901f8b3ed191a2536fccd40de909e2ec7f386452bc886fa086e5ab8d47aa49",
+    "tools/saradc/blocks.py": "e6316eabed47373f8c8849b2eb4b238d5e19a5e8ca9935e746661aa9b4ed5a4e",
+    "tools/saradc/views.py": "8c5ddcc4cfe568951f201eb8e918788c2fd377fdf3994f9ca65c2d83f0857ea1",
+    "tools/saradc/candidates.py": "b93d8cd138549519eab0bae10c78fbef2b1333fa8f65e997131bdcd304d1f56c",
+    "design/rnl/sar8.rnl": "aa24126537be6e89321f9162e27dfd764c5ea85fe62b670caca9f0a1c61ae3ab"
+  },
+  "levels": {
+    "sar_adc8_join_r4": {
+      "source": "design/top/adc_top.scs",
+      "instances": 12,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE",
+        "VDD!",
+        "VINN",
+        "VINP",
+        "VREFN",
+        "VREFP",
+        "0"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "28bb0bc37e60066464412fc61fb17b90871f867b6926cc320c2b954e030bdebb",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSEQ",
+          "level": "sar8r_edge",
+          "nets": [
+            "SAMPLE_MATCH",
+            "VDD!",
+            "0",
+            "SEQ_SAMPLE"
+          ]
+        },
+        {
+          "instance": "XIDLE",
+          "level": "sar8i_idle",
+          "nets": [
+            "ACTIVE",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "PRESET",
+            "SAMPLE_MATCH"
+          ]
+        },
+        {
+          "instance": "XSAMPLE",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "SAMPLE",
+            "VDD!",
+            "0",
+            "SAMPLE_INT"
+          ]
+        },
+        {
+          "instance": "XBOOTN",
+          "level": "sar_bootstrap_flat_8b_p",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPN",
+            "VINN"
+          ]
+        },
+        {
+          "instance": "XBOOTP",
+          "level": "sar_bootstrap_flat_8b_p",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPP",
+            "VINP"
+          ]
+        },
+        {
+          "instance": "XCDAC",
+          "level": "sar8j_r1_cdac",
+          "nets": [
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "TOPN",
+            "TOPP",
+            "VDD!",
+            "VREFN",
+            "VREFP",
+            "0"
+          ]
+        },
+        {
+          "instance": "XCTRL",
+          "level": "sar8i_ctrl",
+          "nets": [
+            "CMP_CLK",
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "COMP_N",
+            "COMP_P",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "ACTIVE"
+          ]
+        },
+        {
+          "instance": "XREF",
+          "level": "sar8i_refword",
+          "nets": [
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "RST_DONE",
+            "PRESET"
+          ]
+        },
+        {
+          "instance": "XCOMP",
+          "level": "sar_strongarm_t28",
+          "nets": [
+            "CMP_CLK",
+            "COMP_N",
+            "COMP_P",
+            "VDD!",
+            "TOPN",
+            "TOPP",
+            "0"
+          ]
+        }
+      ]
+    },
+    "sar_bootstrap_flat_8b_p": {
+      "source": "design/xtor/bootstrap/bootstrap.scs",
+      "instances": 14,
+      "ports": [
+        "CLKS",
+        "VOUT",
+        "Vin"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "659bdc25194c5ca5da1bde7cb1560253df5d609ef746660a3c3397e1eafefd4f",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b0": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "3e2ee17092832e24d5db9e224a775906259eaf983b6c4d84f64546971cc2eac7",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b1": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "14c7ba87f458e414fb6386bc3d902843f51ecd0fe3e2187935416ba8103dd5fb",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b2": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "c0aa9d6a7a6a4fb80ff4421d3d1af1823ed98faee40eb6d28ddfbef3938c9f18",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b3": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "9945884ad710d6034779a8ebbbe13462e68a8455299307f5a0134d7b16c1089e",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b4": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "7225bc8b0e5f7149921e04a4f44c6a602083d905fe8e1fed3b037d4a64b744cc",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b5": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "3d7a9f28b36fa400482506aef702fc691d47e71231474f7b59ea19a0807f029e",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b6": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "3f99af099c324d8ef304e84070cc17bab5d605c843c9465d4aed360cfa867b44",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_sw_b7": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 2,
+      "ports": [
+        "BOT",
+        "GN",
+        "GP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "73dc306244334312f4cc5d26e9c9f3b47967e649ef4f7ed541aab4aea61c3627",
+      "kind": "native",
+      "children": []
+    },
+    "sar8j_r1_cdac": {
+      "source": "design/xtor/cdac/cdac.scs",
+      "instances": 34,
+      "ports": [
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "TOPN",
+        "TOPP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "da8f28b134a75a2899bc5f7c81829a4b12a524fc0bbb54b3cd62582a07138aee",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSN0",
+          "level": "sar8j_r1_sw_b0",
+          "nets": [
+            "BN0",
+            "GNN0",
+            "GNP0",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP0",
+          "level": "sar8j_r1_sw_b0",
+          "nets": [
+            "BP0",
+            "GPN0",
+            "GPP0",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN1",
+          "level": "sar8j_r1_sw_b1",
+          "nets": [
+            "BN1",
+            "GNN1",
+            "GNP1",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP1",
+          "level": "sar8j_r1_sw_b1",
+          "nets": [
+            "BP1",
+            "GPN1",
+            "GPP1",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN2",
+          "level": "sar8j_r1_sw_b2",
+          "nets": [
+            "BN2",
+            "GNN2",
+            "GNP2",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP2",
+          "level": "sar8j_r1_sw_b2",
+          "nets": [
+            "BP2",
+            "GPN2",
+            "GPP2",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN3",
+          "level": "sar8j_r1_sw_b3",
+          "nets": [
+            "BN3",
+            "GNN3",
+            "GNP3",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP3",
+          "level": "sar8j_r1_sw_b3",
+          "nets": [
+            "BP3",
+            "GPN3",
+            "GPP3",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN4",
+          "level": "sar8j_r1_sw_b4",
+          "nets": [
+            "BN4",
+            "GNN4",
+            "GNP4",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP4",
+          "level": "sar8j_r1_sw_b4",
+          "nets": [
+            "BP4",
+            "GPN4",
+            "GPP4",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN5",
+          "level": "sar8j_r1_sw_b5",
+          "nets": [
+            "BN5",
+            "GNN5",
+            "GNP5",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP5",
+          "level": "sar8j_r1_sw_b5",
+          "nets": [
+            "BP5",
+            "GPN5",
+            "GPP5",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN6",
+          "level": "sar8j_r1_sw_b6",
+          "nets": [
+            "BN6",
+            "GNN6",
+            "GNP6",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP6",
+          "level": "sar8j_r1_sw_b6",
+          "nets": [
+            "BP6",
+            "GPN6",
+            "GPP6",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSN7",
+          "level": "sar8j_r1_sw_b7",
+          "nets": [
+            "BN7",
+            "GNN7",
+            "GNP7",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSP7",
+          "level": "sar8j_r1_sw_b7",
+          "nets": [
+            "BP7",
+            "GPN7",
+            "GPP7",
+            "VDD",
+            "VREFN",
+            "VREFP",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8p_delay_valid": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "0f4ee141721272e97bbf37c358f0b62f0c82ac0ba4be16e3d84e0a3497848f48",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8p_delay_write": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "55799cb8ba07e673db656ea5712328026c1ae8eed8922dcf9d17bbc108f24505",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8p_delay_quiet": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "2df0734cce1ce56933d8a111fa2018c4023dd977a8c41009a408a23c92b8c495",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8p_delay_capture": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "ee5172e04407bc593cec849a5609b1c277ddc120fd25738c6a43a1035f9cb0d6",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8p_delay_bbm": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "698483722b074284ec09c57f232bf3610f35018d6f46abe8e6b95f7743c86a7b",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8r_delay": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "17d3b9cdf69036f701965ec42c7bbc45cd41c0cd83d13cb3b5bae3aafc39b080",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8r_edge": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 3,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "078a8e9f895772671d33a7cf54d9746fb2b4847b79698936390336a4a01afe8e",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XD",
+          "level": "sar8r_delay",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AD"
+          ]
+        },
+        {
+          "instance": "XA",
+          "level": "sar8p_and2",
+          "nets": [
+            "A",
+            "AD",
+            "VDD",
+            "VSS",
+            "QUAL"
+          ]
+        },
+        {
+          "instance": "XB",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "QUAL",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        }
+      ]
+    },
+    "sar8s_step": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "2ea8ec982cb07999bb10ec6cfe591646312525fed19e92c7bc1bcc3dd4161c18",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8i_guard": {
+      "source": "design/xtor/clock/delays.scs",
+      "instances": 9,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "0fc0abbe3687d0888cb9daab21c386cb46b3c5117dfdce0daa703dead9228ef7",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X006",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_inv",
+          "nets": [
+            "RC0",
+            "VDD",
+            "VSS",
+            "B"
+          ]
+        }
+      ]
+    },
+    "sar8p_inv": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 1,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "ea86bc38d0f1a71624db026758471dd68bb107be734d68b866c4201d3c4d1f3b",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XLIB",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "A",
+            "Y",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8p_clkbuf": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 2,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "f113476c553d54db76d641722064190ffa1dedf21708a4b1a26d10b5da57ab7a",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "XFINAL",
+          "level": "sar8p_inv",
+          "nets": [
+            "AB",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        }
+      ]
+    },
+    "sar8p_nand2": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 1,
+      "ports": [
+        "A",
+        "B",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "df8c785d8c38f3386e5e19c1d49157a19aef27749f19898e7ab0d13684570f03",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XLIB",
+          "level": "ND2D1BWP12T30P140",
+          "nets": [
+            "A",
+            "B",
+            "Y",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8p_and2": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 2,
+      "ports": [
+        "A",
+        "B",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "c99c487699e9eede11549dcaaa6b734cf5cee60aafcd61e993e61aa4af9a5fb0",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X000",
+          "level": "sar8p_nand2",
+          "nets": [
+            "A",
+            "B",
+            "VDD",
+            "VSS",
+            "N"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_inv",
+          "nets": [
+            "N",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        }
+      ]
+    },
+    "sar8p_buf": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 2,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "e275351a0af19fc0b5c33a63fdc4db903e267539e9b962cdeb1383065e445186",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X001",
+          "level": "sar8p_inv",
+          "nets": [
+            "N",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "N"
+          ]
+        }
+      ]
+    },
+    "sar8p_xor2": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 4,
+      "ports": [
+        "A",
+        "B",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "87baa8c6fac94c0245feb070573720664e5d4809c99e0a60a84fbbcb8c1a857f",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X003",
+          "level": "sar8p_nand2",
+          "nets": [
+            "NA",
+            "NB",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_nand2",
+          "nets": [
+            "B",
+            "N",
+            "VDD",
+            "VSS",
+            "NB"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_nand2",
+          "nets": [
+            "A",
+            "N",
+            "VDD",
+            "VSS",
+            "NA"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_nand2",
+          "nets": [
+            "A",
+            "B",
+            "VDD",
+            "VSS",
+            "N"
+          ]
+        }
+      ]
+    },
+    "sar8p_or2": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 3,
+      "ports": [
+        "A",
+        "B",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "9be5277c5b0dc6c3199338d4549c41ca9dce5170362d32703e9069647a1cdab4",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X001",
+          "level": "sar8p_inv",
+          "nets": [
+            "B",
+            "VDD",
+            "VSS",
+            "BB"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "A",
+            "VDD",
+            "VSS",
+            "AB"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_nand2",
+          "nets": [
+            "AB",
+            "BB",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        }
+      ]
+    },
+    "sar8p_sr": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 5,
+      "ports": [
+        "Q",
+        "R",
+        "S",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "533a44f691e878389f55e52bbc8ea869c80577684d60cf5a615219935def0d57",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "R",
+            "VDD",
+            "VSS",
+            "RB"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_nand2",
+          "nets": [
+            "RB",
+            "Q",
+            "VDD",
+            "VSS",
+            "QB"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_nand2",
+          "nets": [
+            "SN",
+            "QB",
+            "VDD",
+            "VSS",
+            "Q"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_nand2",
+          "nets": [
+            "S",
+            "RB",
+            "VDD",
+            "VSS",
+            "SN"
+          ]
+        }
+      ]
+    },
+    "sar8p_dffr": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 2,
+      "ports": [
+        "CK",
+        "D",
+        "Q",
+        "RST",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "b2d07ec2b19b475680949d107dc45b1b656fa00b33c0067f95fab6093e3b0b99",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XRESET",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "RST",
+            "RN",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XFF",
+          "level": "DFCNQD1BWP12T30P140",
+          "nets": [
+            "D",
+            "CK",
+            "RN",
+            "Q",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8p_mux2": {
+      "source": "design/xtor/common/standard_cells.scs",
+      "instances": 4,
+      "ports": [
+        "D0",
+        "D1",
+        "SEL",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "e67112cfd2329dafffbcc26c138cf46954569c028ddc34284315accd9f887143",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "SEL",
+            "VDD",
+            "VSS",
+            "SB"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_nand2",
+          "nets": [
+            "N0",
+            "N1",
+            "VDD",
+            "VSS",
+            "Y"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_nand2",
+          "nets": [
+            "D1",
+            "SEL",
+            "VDD",
+            "VSS",
+            "N1"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_nand2",
+          "nets": [
+            "D0",
+            "SB",
+            "VDD",
+            "VSS",
+            "N0"
+          ]
+        }
+      ]
+    },
+    "sar_strongarm_t28": {
+      "source": "design/xtor/comparator/comparator.scs",
+      "instances": 11,
+      "ports": [
+        "CLK",
+        "OUTN",
+        "OUTP",
+        "VDD",
+        "VINN",
+        "VINP",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "b40d5a3cf96fa5b8707d7715b5417e43f881ce21aec096c99e157deebadbf93b",
+      "kind": "native",
+      "children": []
+    },
+    "sar8p_nonoverlap": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 5,
+      "ports": [
+        "CODE",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "928c088728fc0585fbb6c5cc28a214e2dd2e7682dc81a097306f75e5e677aba6",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "CODE",
+            "VDD",
+            "VSS",
+            "CB"
+          ]
+        },
+        {
+          "instance": "XD_LD",
+          "level": "sar8p_delay_bbm",
+          "nets": [
+            "CB",
+            "VDD",
+            "VSS",
+            "LD"
+          ]
+        },
+        {
+          "instance": "XD_HD",
+          "level": "sar8p_delay_bbm",
+          "nets": [
+            "CODE",
+            "VDD",
+            "VSS",
+            "HD"
+          ]
+        },
+        {
+          "instance": "X004",
+          "level": "sar8p_and2",
+          "nets": [
+            "CB",
+            "LD",
+            "VDD",
+            "VSS",
+            "L"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_and2",
+          "nets": [
+            "CODE",
+            "HD",
+            "VDD",
+            "VSS",
+            "H"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b0": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "1374bc4e5b165211b7782c8485c15b828b4cff1c3bfd07fe64c2fce2469f56c7",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b1": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "dcf0fca9fa78fced0fa68d5f19b351f0425a09059dfc3619555cbc406f357119",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b2": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "d0a649e2f211491ba7a60534825fa049ed1c08e87d38b4cc47db2ee1ed7ddf53",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b3": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "7954445a7ba0560670cdfd66bbd4cc81a353d0f136a71fb5da68e606252bfdfa",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b4": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "702847e7cee5925e4658da4301ca3a2d523e4ba57275fa08d281fe60f52dd599",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b5": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "57944d56f9847c7f75e9b1827e490b3b0e3edf98877bfab27e0e1dd2874e1404",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b6": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "d59d76a70723b5322392218eb12bcfcaf002ae8efde95237c2da3c5c2cd10078",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refdrv_b7": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 54,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "H",
+        "L",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "28c68f0058822ebe6050fbffa39cc3483a965c761687e40826e80656921d8c73",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XSTD_GNNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNB",
+            "GNNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNA",
+            "GNNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNNPRE",
+            "GNNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPB",
+            "GNPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GNPA",
+            "GNPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GNPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "H",
+            "GNPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNB",
+            "GPNDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNA",
+            "GPNB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPNAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPNPRE",
+            "GPNA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPCN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPB",
+            "GPPDRV",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPBN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "GPPA",
+            "GPPB",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTD_GPPAN",
+          "level": "INVD1BWP12T30P140",
+          "nets": [
+            "L",
+            "GPPA",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_inv",
+          "nets": [
+            "L",
+            "VDD",
+            "VSS",
+            "GNNPRE"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_inv",
+          "nets": [
+            "H",
+            "VDD",
+            "VSS",
+            "GPNPRE"
+          ]
+        }
+      ]
+    },
+    "sar8p_refword": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 43,
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "0111fc60ec73b0be01c0afa0d6bd2c86f38843b3903c94115d2f2d15b5c2f78d",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X002",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST1",
+            "VDD",
+            "VSS",
+            "FIRST2"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST0",
+            "VDD",
+            "VSS",
+            "FIRST1"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_buf",
+          "nets": [
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "FIRST0"
+          ]
+        },
+        {
+          "instance": "X007",
+          "level": "sar8p_or2",
+          "nets": [
+            "FIRST2",
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "CAP_REQ"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_or2",
+          "nets": [
+            "SAMPLE",
+            "ACK",
+            "VDD",
+            "VSS",
+            "REQ_RESET"
+          ]
+        },
+        {
+          "instance": "XREQUEST",
+          "level": "sar8p_sr",
+          "nets": [
+            "REQ_Q",
+            "REQ_RESET",
+            "PHI_U",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XD_LATE_CLK",
+          "level": "sar8p_delay_capture",
+          "nets": [
+            "REQ_Q",
+            "VDD",
+            "VSS",
+            "LATE_CLK"
+          ]
+        },
+        {
+          "instance": "XD_ACK",
+          "level": "sar8p_delay_valid",
+          "nets": [
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "ACK"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "CAP_REQ",
+            "VDD",
+            "VSS",
+            "CAP_CLK"
+          ]
+        },
+        {
+          "instance": "XMUX7",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE7",
+            "D7",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET7"
+          ]
+        },
+        {
+          "instance": "XMUX6",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE6",
+            "D6",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET6"
+          ]
+        },
+        {
+          "instance": "XMUX5",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE5",
+            "D5",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET5"
+          ]
+        },
+        {
+          "instance": "XMUX4",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE4",
+            "D4",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET4"
+          ]
+        },
+        {
+          "instance": "XMUX3",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE3",
+            "D3",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET3"
+          ]
+        },
+        {
+          "instance": "XMUX2",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE2",
+            "D2",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET2"
+          ]
+        },
+        {
+          "instance": "XMUX1",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE1",
+            "D1",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET1"
+          ]
+        },
+        {
+          "instance": "XMUX0",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE0",
+            "D0",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET0"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_inv",
+          "nets": [
+            "MSB_QN",
+            "VDD",
+            "VSS",
+            "Q7"
+          ]
+        },
+        {
+          "instance": "X017",
+          "level": "sar8p_inv",
+          "nets": [
+            "TARGET7",
+            "VDD",
+            "VSS",
+            "MSB_DN"
+          ]
+        },
+        {
+          "instance": "XSTORE7",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "MSB_DN",
+            "MSB_QN",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE6",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET6",
+            "Q6",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE5",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET5",
+            "Q5",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE4",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET4",
+            "Q4",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE3",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET3",
+            "Q3",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE2",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET2",
+            "Q2",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE1",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET1",
+            "Q1",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE0",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET0",
+            "Q0",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM7",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM6",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM5",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM4",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM3",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM2",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM1",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM0",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV0",
+          "level": "sar8p_refdrv_b0",
+          "nets": [
+            "GNN0",
+            "GNP0",
+            "GPN0",
+            "GPP0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV1",
+          "level": "sar8p_refdrv_b1",
+          "nets": [
+            "GNN1",
+            "GNP1",
+            "GPN1",
+            "GPP1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV2",
+          "level": "sar8p_refdrv_b2",
+          "nets": [
+            "GNN2",
+            "GNP2",
+            "GPN2",
+            "GPP2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV3",
+          "level": "sar8p_refdrv_b3",
+          "nets": [
+            "GNN3",
+            "GNP3",
+            "GPN3",
+            "GPP3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV4",
+          "level": "sar8p_refdrv_b4",
+          "nets": [
+            "GNN4",
+            "GNP4",
+            "GPN4",
+            "GPP4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV5",
+          "level": "sar8p_refdrv_b5",
+          "nets": [
+            "GNN5",
+            "GNP5",
+            "GPN5",
+            "GPP5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV6",
+          "level": "sar8p_refdrv_b6",
+          "nets": [
+            "GNN6",
+            "GNP6",
+            "GPN6",
+            "GPP6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV7",
+          "level": "sar8p_refdrv_b7",
+          "nets": [
+            "GNN7",
+            "GNP7",
+            "GPN7",
+            "GPP7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8s_refword": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 59,
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "RST_DONE"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "5a5dd8b099afd32375db09d45369beb7c54e160c96f6145a86e2a100996dad3a",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XRR7",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "SAMPLE",
+            "VDD",
+            "VSS",
+            "RST7"
+          ]
+        },
+        {
+          "instance": "XRSTEP1",
+          "level": "sar8s_step",
+          "nets": [
+            "SAMPLE",
+            "VDD",
+            "VSS",
+            "TAP1"
+          ]
+        },
+        {
+          "instance": "XRR6",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP1",
+            "VDD",
+            "VSS",
+            "RST6"
+          ]
+        },
+        {
+          "instance": "XRSTEP2",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP1",
+            "VDD",
+            "VSS",
+            "TAP2"
+          ]
+        },
+        {
+          "instance": "XRR5",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP2",
+            "VDD",
+            "VSS",
+            "RST5"
+          ]
+        },
+        {
+          "instance": "XRSTEP3",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP2",
+            "VDD",
+            "VSS",
+            "TAP3"
+          ]
+        },
+        {
+          "instance": "XRR4",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP3",
+            "VDD",
+            "VSS",
+            "RST4"
+          ]
+        },
+        {
+          "instance": "XRSTEP4",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP3",
+            "VDD",
+            "VSS",
+            "TAP4"
+          ]
+        },
+        {
+          "instance": "XRR3",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP4",
+            "VDD",
+            "VSS",
+            "RST3"
+          ]
+        },
+        {
+          "instance": "XRSTEP5",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP4",
+            "VDD",
+            "VSS",
+            "TAP5"
+          ]
+        },
+        {
+          "instance": "XRR2",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP5",
+            "VDD",
+            "VSS",
+            "RST2"
+          ]
+        },
+        {
+          "instance": "XRSTEP6",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP5",
+            "VDD",
+            "VSS",
+            "TAP6"
+          ]
+        },
+        {
+          "instance": "XRR1",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP6",
+            "VDD",
+            "VSS",
+            "RST1"
+          ]
+        },
+        {
+          "instance": "XRSTEP7",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP6",
+            "VDD",
+            "VSS",
+            "TAP7"
+          ]
+        },
+        {
+          "instance": "XRR0",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "TAP7",
+            "VDD",
+            "VSS",
+            "RST0"
+          ]
+        },
+        {
+          "instance": "XRDONE",
+          "level": "sar8p_buf",
+          "nets": [
+            "RST0",
+            "VDD",
+            "VSS",
+            "RST_DONE"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST1",
+            "VDD",
+            "VSS",
+            "FIRST2"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST0",
+            "VDD",
+            "VSS",
+            "FIRST1"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_buf",
+          "nets": [
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "FIRST0"
+          ]
+        },
+        {
+          "instance": "X007",
+          "level": "sar8p_or2",
+          "nets": [
+            "FIRST2",
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "CAP_REQ"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_or2",
+          "nets": [
+            "SAMPLE",
+            "ACK",
+            "VDD",
+            "VSS",
+            "REQ_RESET"
+          ]
+        },
+        {
+          "instance": "XREQUEST",
+          "level": "sar8p_sr",
+          "nets": [
+            "REQ_Q",
+            "REQ_RESET",
+            "PHI_U",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XD_LATE_CLK",
+          "level": "sar8p_delay_capture",
+          "nets": [
+            "REQ_Q",
+            "VDD",
+            "VSS",
+            "LATE_CLK"
+          ]
+        },
+        {
+          "instance": "XD_ACK",
+          "level": "sar8p_delay_valid",
+          "nets": [
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "ACK"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "CAP_REQ",
+            "VDD",
+            "VSS",
+            "CAP_CLK"
+          ]
+        },
+        {
+          "instance": "XMUX7",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE7",
+            "D7",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET7"
+          ]
+        },
+        {
+          "instance": "XMUX6",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE6",
+            "D6",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET6"
+          ]
+        },
+        {
+          "instance": "XMUX5",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE5",
+            "D5",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET5"
+          ]
+        },
+        {
+          "instance": "XMUX4",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE4",
+            "D4",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET4"
+          ]
+        },
+        {
+          "instance": "XMUX3",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE3",
+            "D3",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET3"
+          ]
+        },
+        {
+          "instance": "XMUX2",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE2",
+            "D2",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET2"
+          ]
+        },
+        {
+          "instance": "XMUX1",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE1",
+            "D1",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET1"
+          ]
+        },
+        {
+          "instance": "XMUX0",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE0",
+            "D0",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET0"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_inv",
+          "nets": [
+            "MSB_QN",
+            "VDD",
+            "VSS",
+            "Q7"
+          ]
+        },
+        {
+          "instance": "X017",
+          "level": "sar8p_inv",
+          "nets": [
+            "TARGET7",
+            "VDD",
+            "VSS",
+            "MSB_DN"
+          ]
+        },
+        {
+          "instance": "XSTORE7",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "MSB_DN",
+            "MSB_QN",
+            "RST7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE6",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET6",
+            "Q6",
+            "RST6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE5",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET5",
+            "Q5",
+            "RST5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE4",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET4",
+            "Q4",
+            "RST4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE3",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET3",
+            "Q3",
+            "RST3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE2",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET2",
+            "Q2",
+            "RST2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE1",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET1",
+            "Q1",
+            "RST1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE0",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET0",
+            "Q0",
+            "RST0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM7",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM6",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM5",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM4",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM3",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM2",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM1",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM0",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV0",
+          "level": "sar8p_refdrv_b0",
+          "nets": [
+            "GNN0",
+            "GNP0",
+            "GPN0",
+            "GPP0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV1",
+          "level": "sar8p_refdrv_b1",
+          "nets": [
+            "GNN1",
+            "GNP1",
+            "GPN1",
+            "GPP1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV2",
+          "level": "sar8p_refdrv_b2",
+          "nets": [
+            "GNN2",
+            "GNP2",
+            "GPN2",
+            "GPP2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV3",
+          "level": "sar8p_refdrv_b3",
+          "nets": [
+            "GNN3",
+            "GNP3",
+            "GPN3",
+            "GPP3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV4",
+          "level": "sar8p_refdrv_b4",
+          "nets": [
+            "GNN4",
+            "GNP4",
+            "GPN4",
+            "GPP4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV5",
+          "level": "sar8p_refdrv_b5",
+          "nets": [
+            "GNN5",
+            "GNP5",
+            "GPN5",
+            "GPP5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV6",
+          "level": "sar8p_refdrv_b6",
+          "nets": [
+            "GNN6",
+            "GNP6",
+            "GPN6",
+            "GPP6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV7",
+          "level": "sar8p_refdrv_b7",
+          "nets": [
+            "GNN7",
+            "GNP7",
+            "GPN7",
+            "GPP7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8i_refword": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 59,
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "RST_DONE",
+        "PRESET"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "755c6813967d04fc1c2a5289408542d241a87d6f91a2fb9596eb76a7ea2020ea",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XRR7",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "PRESET",
+            "VDD",
+            "VSS",
+            "RST7"
+          ]
+        },
+        {
+          "instance": "XRSTEP1",
+          "level": "sar8s_step",
+          "nets": [
+            "PRESET",
+            "VDD",
+            "VSS",
+            "TAP1"
+          ]
+        },
+        {
+          "instance": "XRR6",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP1",
+            "VDD",
+            "VSS",
+            "RST6"
+          ]
+        },
+        {
+          "instance": "XRSTEP2",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP1",
+            "VDD",
+            "VSS",
+            "TAP2"
+          ]
+        },
+        {
+          "instance": "XRR5",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP2",
+            "VDD",
+            "VSS",
+            "RST5"
+          ]
+        },
+        {
+          "instance": "XRSTEP3",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP2",
+            "VDD",
+            "VSS",
+            "TAP3"
+          ]
+        },
+        {
+          "instance": "XRR4",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP3",
+            "VDD",
+            "VSS",
+            "RST4"
+          ]
+        },
+        {
+          "instance": "XRSTEP4",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP3",
+            "VDD",
+            "VSS",
+            "TAP4"
+          ]
+        },
+        {
+          "instance": "XRR3",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP4",
+            "VDD",
+            "VSS",
+            "RST3"
+          ]
+        },
+        {
+          "instance": "XRSTEP5",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP4",
+            "VDD",
+            "VSS",
+            "TAP5"
+          ]
+        },
+        {
+          "instance": "XRR2",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP5",
+            "VDD",
+            "VSS",
+            "RST2"
+          ]
+        },
+        {
+          "instance": "XRSTEP6",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP5",
+            "VDD",
+            "VSS",
+            "TAP6"
+          ]
+        },
+        {
+          "instance": "XRR1",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP6",
+            "VDD",
+            "VSS",
+            "RST1"
+          ]
+        },
+        {
+          "instance": "XRSTEP7",
+          "level": "sar8s_step",
+          "nets": [
+            "TAP6",
+            "VDD",
+            "VSS",
+            "TAP7"
+          ]
+        },
+        {
+          "instance": "XRR0",
+          "level": "sar8p_and2",
+          "nets": [
+            "PRESET",
+            "TAP7",
+            "VDD",
+            "VSS",
+            "RST0"
+          ]
+        },
+        {
+          "instance": "XRDONE",
+          "level": "sar8p_buf",
+          "nets": [
+            "RST0",
+            "VDD",
+            "VSS",
+            "RST_DONE"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST1",
+            "VDD",
+            "VSS",
+            "FIRST2"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_buf",
+          "nets": [
+            "FIRST0",
+            "VDD",
+            "VSS",
+            "FIRST1"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_buf",
+          "nets": [
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "FIRST0"
+          ]
+        },
+        {
+          "instance": "X007",
+          "level": "sar8p_or2",
+          "nets": [
+            "FIRST2",
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "CAP_REQ"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_or2",
+          "nets": [
+            "SAMPLE",
+            "ACK",
+            "VDD",
+            "VSS",
+            "REQ_RESET"
+          ]
+        },
+        {
+          "instance": "XREQUEST",
+          "level": "sar8p_sr",
+          "nets": [
+            "REQ_Q",
+            "REQ_RESET",
+            "PHI_U",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XD_LATE_CLK",
+          "level": "sar8p_delay_capture",
+          "nets": [
+            "REQ_Q",
+            "VDD",
+            "VSS",
+            "LATE_CLK"
+          ]
+        },
+        {
+          "instance": "XD_ACK",
+          "level": "sar8p_delay_valid",
+          "nets": [
+            "LATE_CLK",
+            "VDD",
+            "VSS",
+            "ACK"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "CAP_REQ",
+            "VDD",
+            "VSS",
+            "CAP_CLK"
+          ]
+        },
+        {
+          "instance": "XMUX7",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE7",
+            "D7",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET7"
+          ]
+        },
+        {
+          "instance": "XMUX6",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE6",
+            "D6",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET6"
+          ]
+        },
+        {
+          "instance": "XMUX5",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE5",
+            "D5",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET5"
+          ]
+        },
+        {
+          "instance": "XMUX4",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE4",
+            "D4",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET4"
+          ]
+        },
+        {
+          "instance": "XMUX3",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE3",
+            "D3",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET3"
+          ]
+        },
+        {
+          "instance": "XMUX2",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE2",
+            "D2",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET2"
+          ]
+        },
+        {
+          "instance": "XMUX1",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE1",
+            "D1",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET1"
+          ]
+        },
+        {
+          "instance": "XMUX0",
+          "level": "sar8p_mux2",
+          "nets": [
+            "CODE0",
+            "D0",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "TARGET0"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_inv",
+          "nets": [
+            "MSB_QN",
+            "VDD",
+            "VSS",
+            "Q7"
+          ]
+        },
+        {
+          "instance": "X017",
+          "level": "sar8p_inv",
+          "nets": [
+            "TARGET7",
+            "VDD",
+            "VSS",
+            "MSB_DN"
+          ]
+        },
+        {
+          "instance": "XSTORE7",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "MSB_DN",
+            "MSB_QN",
+            "RST7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE6",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET6",
+            "Q6",
+            "RST6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE5",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET5",
+            "Q5",
+            "RST5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE4",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET4",
+            "Q4",
+            "RST4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE3",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET3",
+            "Q3",
+            "RST3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE2",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET2",
+            "Q2",
+            "RST2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE1",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET1",
+            "Q1",
+            "RST1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSTORE0",
+          "level": "sar8p_dffr",
+          "nets": [
+            "CAP_CLK",
+            "TARGET0",
+            "Q0",
+            "RST0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM7",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM6",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM5",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM4",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM3",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM2",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM1",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBBM0",
+          "level": "sar8p_nonoverlap",
+          "nets": [
+            "Q0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV0",
+          "level": "sar8p_refdrv_b0",
+          "nets": [
+            "GNN0",
+            "GNP0",
+            "GPN0",
+            "GPP0",
+            "H0",
+            "L0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV1",
+          "level": "sar8p_refdrv_b1",
+          "nets": [
+            "GNN1",
+            "GNP1",
+            "GPN1",
+            "GPP1",
+            "H1",
+            "L1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV2",
+          "level": "sar8p_refdrv_b2",
+          "nets": [
+            "GNN2",
+            "GNP2",
+            "GPN2",
+            "GPP2",
+            "H2",
+            "L2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV3",
+          "level": "sar8p_refdrv_b3",
+          "nets": [
+            "GNN3",
+            "GNP3",
+            "GPN3",
+            "GPP3",
+            "H3",
+            "L3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV4",
+          "level": "sar8p_refdrv_b4",
+          "nets": [
+            "GNN4",
+            "GNP4",
+            "GPN4",
+            "GPP4",
+            "H4",
+            "L4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV5",
+          "level": "sar8p_refdrv_b5",
+          "nets": [
+            "GNN5",
+            "GNP5",
+            "GPN5",
+            "GPP5",
+            "H5",
+            "L5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV6",
+          "level": "sar8p_refdrv_b6",
+          "nets": [
+            "GNN6",
+            "GNP6",
+            "GPN6",
+            "GPP6",
+            "H6",
+            "L6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XDRV7",
+          "level": "sar8p_refdrv_b7",
+          "nets": [
+            "GNN7",
+            "GNP7",
+            "GPN7",
+            "GPP7",
+            "H7",
+            "L7",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8i_idle": {
+      "source": "design/xtor/reference/reference.scs",
+      "instances": 5,
+      "ports": [
+        "ACTIVE",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "PRESET",
+        "SAMPLE_MATCH"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "b23ed31898eb3a95adb1a7acaa57b044a215533a55b25c1f4ff6480425f4cdea",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XN",
+          "level": "sar8p_inv",
+          "nets": [
+            "ACTIVE",
+            "VDD",
+            "VSS",
+            "IDLE"
+          ]
+        },
+        {
+          "instance": "XD",
+          "level": "sar8i_guard",
+          "nets": [
+            "IDLE",
+            "VDD",
+            "VSS",
+            "IDLE_D"
+          ]
+        },
+        {
+          "instance": "XP",
+          "level": "sar8p_or2",
+          "nets": [
+            "SAMPLE",
+            "IDLE_D",
+            "VDD",
+            "VSS",
+            "PRESET"
+          ]
+        },
+        {
+          "instance": "XA",
+          "level": "sar8p_and2",
+          "nets": [
+            "SAMPLE",
+            "SAMPLE",
+            "VDD",
+            "VSS",
+            "SAMPLE_AND"
+          ]
+        },
+        {
+          "instance": "XB",
+          "level": "sar8p_buf",
+          "nets": [
+            "SAMPLE_AND",
+            "VDD",
+            "VSS",
+            "SAMPLE_MATCH"
+          ]
+        }
+      ]
+    },
+    "sar8p_timing": {
+      "source": "design/xtor/sar/sar.scs",
+      "instances": 26,
+      "ports": [
+        "ACTIVE",
+        "CMP_CLK",
+        "COMP_N",
+        "COMP_P",
+        "DATA",
+        "PHI_U",
+        "PHI_W",
+        "SAMPLE",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "91c5256ca10bb957fa276dd1438d49752c35130406b681b68e808bc9719c864b",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "X017",
+          "level": "sar8p_inv",
+          "nets": [
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "UN"
+          ]
+        },
+        {
+          "instance": "X016",
+          "level": "sar8p_inv",
+          "nets": [
+            "PHI_W",
+            "VDD",
+            "VSS",
+            "WN"
+          ]
+        },
+        {
+          "instance": "X015",
+          "level": "sar8p_inv",
+          "nets": [
+            "CMP_CLK",
+            "VDD",
+            "VSS",
+            "CN"
+          ]
+        },
+        {
+          "instance": "X004",
+          "level": "sar8p_inv",
+          "nets": [
+            "NR",
+            "VDD",
+            "VSS",
+            "NRB"
+          ]
+        },
+        {
+          "instance": "X000",
+          "level": "sar8p_inv",
+          "nets": [
+            "SAMPLE",
+            "VDD",
+            "VSS",
+            "SN"
+          ]
+        },
+        {
+          "instance": "X022",
+          "level": "sar8p_and2",
+          "nets": [
+            "QUIET",
+            "QUIET_D",
+            "VDD",
+            "VSS",
+            "CLOCK_SET"
+          ]
+        },
+        {
+          "instance": "X020",
+          "level": "sar8p_and2",
+          "nets": [
+            "Q1",
+            "LIVE",
+            "VDD",
+            "VSS",
+            "QUIET"
+          ]
+        },
+        {
+          "instance": "X019",
+          "level": "sar8p_and2",
+          "nets": [
+            "Q0",
+            "UN",
+            "VDD",
+            "VSS",
+            "Q1"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_and2",
+          "nets": [
+            "CN",
+            "WN",
+            "VDD",
+            "VSS",
+            "Q0"
+          ]
+        },
+        {
+          "instance": "X014",
+          "level": "sar8p_and2",
+          "nets": [
+            "UD",
+            "SN",
+            "VDD",
+            "VSS",
+            "PHI_U"
+          ]
+        },
+        {
+          "instance": "X013",
+          "level": "sar8p_and2",
+          "nets": [
+            "PHI_W",
+            "WRITE_D",
+            "VDD",
+            "VSS",
+            "UD"
+          ]
+        },
+        {
+          "instance": "X010",
+          "level": "sar8p_and2",
+          "nets": [
+            "WD",
+            "SN",
+            "VDD",
+            "VSS",
+            "WRITE_REQ"
+          ]
+        },
+        {
+          "instance": "X009",
+          "level": "sar8p_and2",
+          "nets": [
+            "DEC",
+            "CMP_CLK",
+            "VDD",
+            "VSS",
+            "WD"
+          ]
+        },
+        {
+          "instance": "X008",
+          "level": "sar8p_and2",
+          "nets": [
+            "RAW",
+            "RAW_D",
+            "VDD",
+            "VSS",
+            "DEC"
+          ]
+        },
+        {
+          "instance": "X005",
+          "level": "sar8p_and2",
+          "nets": [
+            "PR",
+            "NRB",
+            "VDD",
+            "VSS",
+            "DATA"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_and2",
+          "nets": [
+            "SN",
+            "ACTIVE",
+            "VDD",
+            "VSS",
+            "LIVE"
+          ]
+        },
+        {
+          "instance": "X025",
+          "level": "sar8p_buf",
+          "nets": [
+            "CLOCK_Q",
+            "VDD",
+            "VSS",
+            "CMP_CLK"
+          ]
+        },
+        {
+          "instance": "X003",
+          "level": "sar8p_buf",
+          "nets": [
+            "COMP_N",
+            "VDD",
+            "VSS",
+            "NR"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_buf",
+          "nets": [
+            "COMP_P",
+            "VDD",
+            "VSS",
+            "PR"
+          ]
+        },
+        {
+          "instance": "X006",
+          "level": "sar8p_xor2",
+          "nets": [
+            "PR",
+            "NR",
+            "VDD",
+            "VSS",
+            "RAW"
+          ]
+        },
+        {
+          "instance": "XD_RAW_D",
+          "level": "sar8p_delay_valid",
+          "nets": [
+            "RAW",
+            "VDD",
+            "VSS",
+            "RAW_D"
+          ]
+        },
+        {
+          "instance": "X011",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "WRITE_REQ",
+            "VDD",
+            "VSS",
+            "PHI_W"
+          ]
+        },
+        {
+          "instance": "XD_WRITE_D",
+          "level": "sar8p_delay_write",
+          "nets": [
+            "PHI_W",
+            "VDD",
+            "VSS",
+            "WRITE_D"
+          ]
+        },
+        {
+          "instance": "XD_QUIET_D",
+          "level": "sar8p_delay_quiet",
+          "nets": [
+            "QUIET",
+            "VDD",
+            "VSS",
+            "QUIET_D"
+          ]
+        },
+        {
+          "instance": "X023",
+          "level": "sar8p_or2",
+          "nets": [
+            "SAMPLE",
+            "PHI_U",
+            "VDD",
+            "VSS",
+            "CLOCK_RESET"
+          ]
+        },
+        {
+          "instance": "XCLOCK",
+          "level": "sar8p_sr",
+          "nets": [
+            "CLOCK_Q",
+            "CLOCK_RESET",
+            "CLOCK_SET",
+            "VDD",
+            "VSS"
+          ]
+        }
+      ]
+    },
+    "sar8p_bitseq8": {
+      "source": "design/xtor/sar/sar.scs",
+      "instances": 9,
+      "ports": [
+        "PHI_U",
+        "SAMPLE",
+        "T0",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "d00e5588a591ad6527e7561d99f433d287f338bd43a99432fbbcfae8bd56ca19",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XF0",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T1",
+            "T0",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF1",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T2",
+            "T1",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF2",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T3",
+            "T2",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF3",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T4",
+            "T3",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF4",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T5",
+            "T4",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF5",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T6",
+            "T5",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF6",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "T7",
+            "T6",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XF7",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_U",
+            "VDD",
+            "NT7",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X001",
+          "level": "sar8p_inv",
+          "nets": [
+            "NT7",
+            "VDD",
+            "VSS",
+            "T7"
+          ]
+        }
+      ]
+    },
+    "sar8p_bit": {
+      "source": "design/xtor/sar/sar.scs",
+      "instances": 3,
+      "ports": [
+        "CODE",
+        "D",
+        "DATA",
+        "PHI_W",
+        "SAMPLE",
+        "TOKEN",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "a284cb5a8e2f9483068e14ed856220bd4061908dd9391a6d99299799e05ff462",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XMUX",
+          "level": "sar8p_mux2",
+          "nets": [
+            "D",
+            "DATA",
+            "TOKEN",
+            "VDD",
+            "VSS",
+            "NEXT_D"
+          ]
+        },
+        {
+          "instance": "XSTORE",
+          "level": "sar8p_dffr",
+          "nets": [
+            "PHI_W",
+            "NEXT_D",
+            "D",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X002",
+          "level": "sar8p_or2",
+          "nets": [
+            "D",
+            "TOKEN",
+            "VDD",
+            "VSS",
+            "CODE"
+          ]
+        }
+      ]
+    },
+    "sar_logic_8b_physical": {
+      "source": "design/xtor/sar/sar.scs",
+      "instances": 17,
+      "ports": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "d15fd99161737f9ea840f9d203e05568ae34553ef6ad22aced2e348bc011d57b",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XTIM",
+          "level": "sar8p_timing",
+          "nets": [
+            "ACTIVE",
+            "CMP_CLK",
+            "COMP_N",
+            "COMP_P",
+            "DATA",
+            "PHI_U",
+            "PHI_W",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSEQ",
+          "level": "sar8p_bitseq8",
+          "nets": [
+            "PHI_U",
+            "SAMPLE",
+            "T0",
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT7",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE7",
+            "D7",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT6",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE6",
+            "D6",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT5",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE5",
+            "D5",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT4",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE4",
+            "D4",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT3",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE3",
+            "D3",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT2",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE2",
+            "D2",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT1",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE1",
+            "D1",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT0",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE0",
+            "D0",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_or2",
+          "nets": [
+            "A01",
+            "A23",
+            "VDD",
+            "VSS",
+            "ACTIVE"
+          ]
+        },
+        {
+          "instance": "X017",
+          "level": "sar8p_or2",
+          "nets": [
+            "A2",
+            "A3",
+            "VDD",
+            "VSS",
+            "A23"
+          ]
+        },
+        {
+          "instance": "X016",
+          "level": "sar8p_or2",
+          "nets": [
+            "A0",
+            "A1",
+            "VDD",
+            "VSS",
+            "A01"
+          ]
+        },
+        {
+          "instance": "X015",
+          "level": "sar8p_or2",
+          "nets": [
+            "T6",
+            "T7",
+            "VDD",
+            "VSS",
+            "A3"
+          ]
+        },
+        {
+          "instance": "X014",
+          "level": "sar8p_or2",
+          "nets": [
+            "T4",
+            "T5",
+            "VDD",
+            "VSS",
+            "A2"
+          ]
+        },
+        {
+          "instance": "X013",
+          "level": "sar8p_or2",
+          "nets": [
+            "T2",
+            "T3",
+            "VDD",
+            "VSS",
+            "A1"
+          ]
+        },
+        {
+          "instance": "X012",
+          "level": "sar8p_or2",
+          "nets": [
+            "T0",
+            "T1",
+            "VDD",
+            "VSS",
+            "A0"
+          ]
+        }
+      ]
+    },
+    "sar8i_ctrl": {
+      "source": "design/xtor/sar/sar.scs",
+      "instances": 17,
+      "ports": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "ACTIVE"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "00cd85c386bf513f2f6740e0b3df5811ddab4c33b87e01e92c4022078cf52550",
+      "kind": "native",
+      "children": [
+        {
+          "instance": "XTIM",
+          "level": "sar8p_timing",
+          "nets": [
+            "ACTIVE",
+            "CMP_CLK",
+            "COMP_N",
+            "COMP_P",
+            "DATA",
+            "PHI_U",
+            "PHI_W",
+            "SAMPLE",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XSEQ",
+          "level": "sar8p_bitseq8",
+          "nets": [
+            "PHI_U",
+            "SAMPLE",
+            "T0",
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT7",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE7",
+            "D7",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T7",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT6",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE6",
+            "D6",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T6",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT5",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE5",
+            "D5",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T5",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT4",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE4",
+            "D4",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T4",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT3",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE3",
+            "D3",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T3",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT2",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE2",
+            "D2",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T2",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT1",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE1",
+            "D1",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T1",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "XBIT0",
+          "level": "sar8p_bit",
+          "nets": [
+            "CODE0",
+            "D0",
+            "DATA",
+            "PHI_W",
+            "SAMPLE",
+            "T0",
+            "VDD",
+            "VSS"
+          ]
+        },
+        {
+          "instance": "X018",
+          "level": "sar8p_or2",
+          "nets": [
+            "A01",
+            "A23",
+            "VDD",
+            "VSS",
+            "ACTIVE"
+          ]
+        },
+        {
+          "instance": "X017",
+          "level": "sar8p_or2",
+          "nets": [
+            "A2",
+            "A3",
+            "VDD",
+            "VSS",
+            "A23"
+          ]
+        },
+        {
+          "instance": "X016",
+          "level": "sar8p_or2",
+          "nets": [
+            "A0",
+            "A1",
+            "VDD",
+            "VSS",
+            "A01"
+          ]
+        },
+        {
+          "instance": "X015",
+          "level": "sar8p_or2",
+          "nets": [
+            "T6",
+            "T7",
+            "VDD",
+            "VSS",
+            "A3"
+          ]
+        },
+        {
+          "instance": "X014",
+          "level": "sar8p_or2",
+          "nets": [
+            "T4",
+            "T5",
+            "VDD",
+            "VSS",
+            "A2"
+          ]
+        },
+        {
+          "instance": "X013",
+          "level": "sar8p_or2",
+          "nets": [
+            "T2",
+            "T3",
+            "VDD",
+            "VSS",
+            "A1"
+          ]
+        },
+        {
+          "instance": "X012",
+          "level": "sar8p_or2",
+          "nets": [
+            "T0",
+            "T1",
+            "VDD",
+            "VSS",
+            "A0"
+          ]
+        }
+      ]
+    },
+    "tb_cdac": {
+      "source": "tb/blocks/cdac/acceptance.scs",
+      "instances": 43,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "f409767ada8fe324cd0bc7652e53e964e22fd6bd67331f87af2880a4290f4ba4",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XDPN",
+          "level": "b_tb_switch",
+          "nets": [
+            "d_n",
+            "d_cm",
+            "d_pre",
+            "VDD!",
+            "0"
+          ]
+        },
+        {
+          "instance": "XDPP",
+          "level": "b_tb_switch",
+          "nets": [
+            "d_p",
+            "d_cm",
+            "d_pre",
+            "VDD!",
+            "0"
+          ]
+        },
+        {
+          "instance": "XDAC",
+          "level": "sar8j_r1_cdac",
+          "nets": [
+            "d_gnn0",
+            "d_gnn1",
+            "d_gnn2",
+            "d_gnn3",
+            "d_gnn4",
+            "d_gnn5",
+            "d_gnn6",
+            "d_gnn7",
+            "d_gnp0",
+            "d_gnp1",
+            "d_gnp2",
+            "d_gnp3",
+            "d_gnp4",
+            "d_gnp5",
+            "d_gnp6",
+            "d_gnp7",
+            "d_gpn0",
+            "d_gpn1",
+            "d_gpn2",
+            "d_gpn3",
+            "d_gpn4",
+            "d_gpn5",
+            "d_gpn6",
+            "d_gpn7",
+            "d_gpp0",
+            "d_gpp1",
+            "d_gpp2",
+            "d_gpp3",
+            "d_gpp4",
+            "d_gpp5",
+            "d_gpp6",
+            "d_gpp7",
+            "d_n",
+            "d_p",
+            "VDD!",
+            "d_rn",
+            "d_rp",
+            "0"
+          ]
+        }
+      ]
+    },
+    "tb_comparator": {
+      "source": "tb/blocks/comparator/acceptance.scs",
+      "instances": 19,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "8d7b8e4618c9cb5a2ecc2fe1f9c99123dd9b52065c6544dd491b56384ba6a3c0",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XCOMP",
+          "level": "sar_strongarm_t28",
+          "nets": [
+            "c_clock",
+            "c_outn",
+            "c_outp",
+            "VDD!",
+            "c_n",
+            "c_p",
+            "0"
+          ]
+        },
+        {
+          "instance": "XCRN",
+          "level": "sar8p_inv",
+          "nets": [
+            "c_outn",
+            "VDD!",
+            "0",
+            "c_unusedn"
+          ]
+        },
+        {
+          "instance": "XCRP",
+          "level": "sar8p_inv",
+          "nets": [
+            "c_outp",
+            "VDD!",
+            "0",
+            "c_unusedp"
+          ]
+        },
+        {
+          "instance": "XKP",
+          "level": "b_tb_switch",
+          "nets": [
+            "k_p",
+            "k_sp",
+            "k_init",
+            "VDD!",
+            "0"
+          ]
+        },
+        {
+          "instance": "XKN",
+          "level": "b_tb_switch",
+          "nets": [
+            "k_n",
+            "k_sn",
+            "k_init",
+            "VDD!",
+            "0"
+          ]
+        },
+        {
+          "instance": "XKCOMP",
+          "level": "sar_strongarm_t28",
+          "nets": [
+            "k_clock",
+            "k_outn",
+            "k_outp",
+            "VDD!",
+            "k_n",
+            "k_p",
+            "0"
+          ]
+        }
+      ]
+    },
+    "tb_reference": {
+      "source": "tb/blocks/reference/acceptance.scs",
+      "instances": 20,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "69cb4c5aa95875c29e6bd40a1299a6f92aeed279be3d3976fb397d18f56d08fa",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XREF",
+          "level": "sar8i_refword",
+          "nets": [
+            "r_bit0",
+            "r_bit1",
+            "r_bit2",
+            "r_bit3",
+            "r_bit4",
+            "r_bit5",
+            "r_bit6",
+            "r_bit7",
+            "r_bit0",
+            "r_bit1",
+            "r_bit2",
+            "r_bit3",
+            "r_bit4",
+            "r_bit5",
+            "r_bit6",
+            "r_bit7",
+            "r_gnn0",
+            "r_gnn1",
+            "r_gnn2",
+            "r_gnn3",
+            "r_gnn4",
+            "r_gnn5",
+            "r_gnn6",
+            "r_gnn7",
+            "r_gnp0",
+            "r_gnp1",
+            "r_gnp2",
+            "r_gnp3",
+            "r_gnp4",
+            "r_gnp5",
+            "r_gnp6",
+            "r_gnp7",
+            "r_gpn0",
+            "r_gpn1",
+            "r_gpn2",
+            "r_gpn3",
+            "r_gpn4",
+            "r_gpn5",
+            "r_gpn6",
+            "r_gpn7",
+            "r_gpp0",
+            "r_gpp1",
+            "r_gpp2",
+            "r_gpp3",
+            "r_gpp4",
+            "r_gpp5",
+            "r_gpp6",
+            "r_gpp7",
+            "r_phi",
+            "r_reset",
+            "VDD!",
+            "0",
+            "r_done",
+            "r_reset"
+          ]
+        },
+        {
+          "instance": "XRLOAD",
+          "level": "sar8j_r1_cdac",
+          "nets": [
+            "r_gnn0",
+            "r_gnn1",
+            "r_gnn2",
+            "r_gnn3",
+            "r_gnn4",
+            "r_gnn5",
+            "r_gnn6",
+            "r_gnn7",
+            "r_gnp0",
+            "r_gnp1",
+            "r_gnp2",
+            "r_gnp3",
+            "r_gnp4",
+            "r_gnp5",
+            "r_gnp6",
+            "r_gnp7",
+            "r_gpn0",
+            "r_gpn1",
+            "r_gpn2",
+            "r_gpn3",
+            "r_gpn4",
+            "r_gpn5",
+            "r_gpn6",
+            "r_gpn7",
+            "r_gpp0",
+            "r_gpp1",
+            "r_gpp2",
+            "r_gpp3",
+            "r_gpp4",
+            "r_gpp5",
+            "r_gpp6",
+            "r_gpp7",
+            "r_n",
+            "r_p",
+            "VDD!",
+            "r_rn",
+            "r_rp",
+            "0"
+          ]
+        }
+      ]
+    },
+    "tb_sampler": {
+      "source": "tb/blocks/bootstrap/acceptance.scs",
+      "instances": 5,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "18ea326ef24834ae13176b4170b202db58692fa4210ea13145d847172f51aba7",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XBOOT",
+          "level": "sar_bootstrap_flat_8b_p",
+          "nets": [
+            "b_clock",
+            "b_hold",
+            "b_in"
+          ]
+        }
+      ]
+    },
+    "tb_sar": {
+      "source": "tb/blocks/sar/acceptance.scs",
+      "instances": 38,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "31e944c84c64f7aab0fe3a3f3e34cc976998a44287b05dc27e1f74f51007d827",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XSAR",
+          "level": "tb_sar_top",
+          "nets": [
+            "s_d0",
+            "s_d1",
+            "s_d2",
+            "s_d3",
+            "s_d4",
+            "s_d5",
+            "s_d6",
+            "s_d7",
+            "s_clock",
+            "VDD!",
+            "s_n",
+            "s_p",
+            "s_rn",
+            "s_rp",
+            "0"
+          ]
+        },
+        {
+          "instance": "XSPROBE",
+          "level": "b_behavior_observer",
+          "nets": [
+            "s_d0",
+            "s_d1",
+            "s_d2",
+            "s_d3",
+            "s_d4",
+            "s_d5",
+            "s_d6",
+            "s_d7",
+            "s_clock",
+            "VDD!",
+            "0"
+          ]
+        },
+        {
+          "instance": "XSTALLED",
+          "level": "tb_sar_stalled_top",
+          "nets": [
+            "f_d0",
+            "f_d1",
+            "f_d2",
+            "f_d3",
+            "f_d4",
+            "f_d5",
+            "f_d6",
+            "f_d7",
+            "s_clock",
+            "VDD!",
+            "f_n",
+            "f_p",
+            "f_rn",
+            "f_rp",
+            "0"
+          ]
+        }
+      ]
+    },
+    "tb_timing": {
+      "source": "tb/blocks/clock/acceptance.scs",
+      "instances": 21,
+      "ports": [],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "280c7417aa06483d9adc14b3d0e5a60ee46ea3bd0b99557907667a93bc8df3f8",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XT0",
+          "level": "sar8p_delay_valid",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out0"
+          ]
+        },
+        {
+          "instance": "XTL0",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out0",
+            "VDD!",
+            "0",
+            "t_unused0"
+          ]
+        },
+        {
+          "instance": "XT1",
+          "level": "sar8p_delay_write",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out1"
+          ]
+        },
+        {
+          "instance": "XTL1",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out1",
+            "VDD!",
+            "0",
+            "t_unused1"
+          ]
+        },
+        {
+          "instance": "XT2",
+          "level": "sar8p_delay_quiet",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out2"
+          ]
+        },
+        {
+          "instance": "XTL2",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out2",
+            "VDD!",
+            "0",
+            "t_unused2"
+          ]
+        },
+        {
+          "instance": "XT3",
+          "level": "sar8p_delay_capture",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out3"
+          ]
+        },
+        {
+          "instance": "XTL3",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out3",
+            "VDD!",
+            "0",
+            "t_unused3"
+          ]
+        },
+        {
+          "instance": "XT4",
+          "level": "sar8p_delay_bbm",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out4"
+          ]
+        },
+        {
+          "instance": "XTL4",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out4",
+            "VDD!",
+            "0",
+            "t_unused4"
+          ]
+        },
+        {
+          "instance": "XT5",
+          "level": "sar8r_delay",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out5"
+          ]
+        },
+        {
+          "instance": "XTL5",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out5",
+            "VDD!",
+            "0",
+            "t_unused5"
+          ]
+        },
+        {
+          "instance": "XT6",
+          "level": "sar8s_step",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out6"
+          ]
+        },
+        {
+          "instance": "XTL6",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out6",
+            "VDD!",
+            "0",
+            "t_unused6"
+          ]
+        },
+        {
+          "instance": "XT7",
+          "level": "sar8i_guard",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out7"
+          ]
+        },
+        {
+          "instance": "XTL7",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out7",
+            "VDD!",
+            "0",
+            "t_unused7"
+          ]
+        },
+        {
+          "instance": "XT8",
+          "level": "sar8r_edge",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out8"
+          ]
+        },
+        {
+          "instance": "XTL8",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out8",
+            "VDD!",
+            "0",
+            "t_unused8"
+          ]
+        },
+        {
+          "instance": "XT9",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "t_clock",
+            "VDD!",
+            "0",
+            "t_out9"
+          ]
+        },
+        {
+          "instance": "XTL9",
+          "level": "sar8p_inv",
+          "nets": [
+            "t_out9",
+            "VDD!",
+            "0",
+            "t_unused9"
+          ]
+        }
+      ]
+    },
+    "tb_sar_top": {
+      "source": "tb/blocks/sar/acceptance.scs (generated electrical environment)",
+      "instances": 12,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE",
+        "VDD!",
+        "VINN",
+        "VINP",
+        "VREFN",
+        "VREFP",
+        "0"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "e5ddb58b88969dc96d0e45d3f820a63672c4a6dd2cb87e41aad3ac070303a1b3",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XSEQ",
+          "level": "sar8r_edge",
+          "nets": [
+            "SAMPLE_MATCH",
+            "VDD!",
+            "0",
+            "SEQ_SAMPLE"
+          ]
+        },
+        {
+          "instance": "XIDLE",
+          "level": "b_idle",
+          "nets": [
+            "ACTIVE",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "PRESET",
+            "SAMPLE_MATCH"
+          ]
+        },
+        {
+          "instance": "XSAMPLE",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "SAMPLE",
+            "VDD!",
+            "0",
+            "SAMPLE_INT"
+          ]
+        },
+        {
+          "instance": "XBOOTN",
+          "level": "b_sampler_bridge",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPN",
+            "VINN"
+          ]
+        },
+        {
+          "instance": "XBOOTP",
+          "level": "b_sampler_bridge",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPP",
+            "VINP"
+          ]
+        },
+        {
+          "instance": "XCDAC",
+          "level": "b_cdac",
+          "nets": [
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "TOPN",
+            "TOPP",
+            "VDD!",
+            "VREFN",
+            "VREFP",
+            "0"
+          ]
+        },
+        {
+          "instance": "XCTRL",
+          "level": "sar8i_ctrl",
+          "nets": [
+            "CMP_CLK",
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "COMP_N",
+            "COMP_P",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "ACTIVE"
+          ]
+        },
+        {
+          "instance": "XREF",
+          "level": "b_reference",
+          "nets": [
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "RST_DONE",
+            "PRESET"
+          ]
+        },
+        {
+          "instance": "XCOMP",
+          "level": "b_comparator",
+          "nets": [
+            "CMP_CLK",
+            "COMP_N",
+            "COMP_P",
+            "VDD!",
+            "TOPN",
+            "TOPP",
+            "0"
+          ]
+        }
+      ]
+    },
+    "tb_sar_stalled_top": {
+      "source": "tb/blocks/sar/acceptance.scs (generated electrical environment)",
+      "instances": 12,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE",
+        "VDD!",
+        "VINN",
+        "VINP",
+        "VREFN",
+        "VREFP",
+        "0"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "3803aa21f380c5f6dbd40ab01528171b6f692f862855f32b03c4e04b9b63c8f7",
+      "kind": "testbench",
+      "children": [
+        {
+          "instance": "XSEQ",
+          "level": "sar8r_edge",
+          "nets": [
+            "SAMPLE_MATCH",
+            "VDD!",
+            "0",
+            "SEQ_SAMPLE"
+          ]
+        },
+        {
+          "instance": "XIDLE",
+          "level": "b_idle",
+          "nets": [
+            "ACTIVE",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "PRESET",
+            "SAMPLE_MATCH"
+          ]
+        },
+        {
+          "instance": "XSAMPLE",
+          "level": "sar8p_clkbuf",
+          "nets": [
+            "SAMPLE",
+            "VDD!",
+            "0",
+            "SAMPLE_INT"
+          ]
+        },
+        {
+          "instance": "XBOOTN",
+          "level": "b_sampler_bridge",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPN",
+            "VINN"
+          ]
+        },
+        {
+          "instance": "XBOOTP",
+          "level": "b_sampler_bridge",
+          "nets": [
+            "SEQ_SAMPLE",
+            "TOPP",
+            "VINP"
+          ]
+        },
+        {
+          "instance": "XCDAC",
+          "level": "b_cdac",
+          "nets": [
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "TOPN",
+            "TOPP",
+            "VDD!",
+            "VREFN",
+            "VREFP",
+            "0"
+          ]
+        },
+        {
+          "instance": "XCTRL",
+          "level": "sar8i_ctrl",
+          "nets": [
+            "CMP_CLK",
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "COMP_N",
+            "COMP_P",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "ACTIVE"
+          ]
+        },
+        {
+          "instance": "XREF",
+          "level": "b_reference",
+          "nets": [
+            "CODE0",
+            "CODE1",
+            "CODE2",
+            "CODE3",
+            "CODE4",
+            "CODE5",
+            "CODE6",
+            "CODE7",
+            "D0",
+            "D1",
+            "D2",
+            "D3",
+            "D4",
+            "D5",
+            "D6",
+            "D7",
+            "GNN0",
+            "GNN1",
+            "GNN2",
+            "GNN3",
+            "GNN4",
+            "GNN5",
+            "GNN6",
+            "GNN7",
+            "GNP0",
+            "GNP1",
+            "GNP2",
+            "GNP3",
+            "GNP4",
+            "GNP5",
+            "GNP6",
+            "GNP7",
+            "GPN0",
+            "GPN1",
+            "GPN2",
+            "GPN3",
+            "GPN4",
+            "GPN5",
+            "GPN6",
+            "GPN7",
+            "GPP0",
+            "GPP1",
+            "GPP2",
+            "GPP3",
+            "GPP4",
+            "GPP5",
+            "GPP6",
+            "GPP7",
+            "PHI_U",
+            "SAMPLE_INT",
+            "VDD!",
+            "0",
+            "RST_DONE",
+            "PRESET"
+          ]
+        },
+        {
+          "instance": "XCOMP",
+          "level": "b_comparator",
+          "nets": [
+            "CMP_CLK",
+            "COMP_N",
+            "COMP_P",
+            "VDD!",
+            "TOPN",
+            "TOPP",
+            "0"
+          ]
+        }
+      ]
+    },
+    "INVD1BWP12T30P140": {
+      "source": "external interface only",
+      "instances": 0,
+      "ports": [
+        "A",
+        "Y",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "3fb87d3f6c6b0a5bf9f8af6cba51555bfe39bb5019caf7f0c207686631e4f685",
+      "kind": "interface",
+      "children": []
+    },
+    "ND2D1BWP12T30P140": {
+      "source": "external interface only",
+      "instances": 0,
+      "ports": [
+        "A",
+        "B",
+        "Y",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "1b49619e12b6ed0ae2649114e69f57c794c49869c67835595b0d681d60bac624",
+      "kind": "interface",
+      "children": []
+    },
+    "DFCNQD1BWP12T30P140": {
+      "source": "external interface only",
+      "instances": 0,
+      "ports": [
+        "D",
+        "CK",
+        "RN",
+        "Q",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": true,
+      "electrical_body_sha256": "c979dee5a76a7e3b5e7e6e9a8086dc7ce65ad184466cb003ea2ed5513841091d",
+      "kind": "interface",
+      "children": []
+    },
+    "b_cdac": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "TOPN",
+        "TOPP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "59a09a1c15c5d646db03fea0e0399a639b841f59f768b29a36e14825fd9265f7",
+      "kind": "interface",
+      "children": []
+    },
+    "b_cdac_bit": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "GNN",
+        "GNP",
+        "GPN",
+        "GPP",
+        "TOPN",
+        "TOPP",
+        "VREFN",
+        "VREFP",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "72a717ce334a5cf9fcdb4a17cedb1537c5f8a13eefd24a86bcc3e5635d1497d7",
+      "kind": "interface",
+      "children": []
+    },
+    "b_comparator": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "CLK",
+        "OUTN",
+        "OUTP",
+        "VDD",
+        "VINN",
+        "VINP",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "001e150437438d4f79d27858a159b79882772b017649dffb535356827dfc170f",
+      "kind": "interface",
+      "children": []
+    },
+    "b_reference": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "RST_DONE",
+        "PRESET"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "b3596ed1e13257dc1dc4264c89483923acaa72ee5953c95706f9a499c423533c",
+      "kind": "interface",
+      "children": []
+    },
+    "b_edge": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "02bc7f71f1a04ec2f3a7c3f376257b9bbc4f973d39beab85b5cd361a81534111",
+      "kind": "interface",
+      "children": []
+    },
+    "b_idle": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "ACTIVE",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "PRESET",
+        "SAMPLE_MATCH"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "5c4f66e404cf31ddb61e4d80d8a8bbc4e01fa79a1f228dd51175ca696af82a38",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sampler": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "CLKS",
+        "VOUT",
+        "VIN",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "c022969030a9c5db96f4d1a3bc20706302469dd699bb19056929da617231444e",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "ACTIVE"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "3f4f0732b0a716e17878976d1f862837e10b80ad55f90908e374f77b29b2f791",
+      "kind": "interface",
+      "children": []
+    },
+    "sar_adc_b": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE",
+        "VDD",
+        "VINN",
+        "VINP",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "ddab0167837d01c19f9ad1dd9d39ac9630b0ec49fb1837f9ef825d6c6c4e7902",
+      "kind": "interface",
+      "children": []
+    },
+    "b_delay": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "db5bc291845a7a2efbe79a8d7001ba267cf7e5110d7fc1baec7b7f11d923a8da",
+      "kind": "interface",
+      "children": []
+    },
+    "b_behavior_observer": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "945de9b96b839b6c631c035fa3427c015effeae21287d112f8c6bf50d9ed74c3",
+      "kind": "interface",
+      "children": []
+    },
+    "b_tb_switch": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "B",
+        "EN",
+        "VDD",
+        "VSS"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "5a0d8e33d10554e79b812df115499a9162b7e4bf6d9416f04ca83b6ac7382698",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sampler_bridge": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "CLKS",
+        "VOUT",
+        "Vin"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "75d2f16054d00119dc0770311cbccdbf4a36fd6905fb41bc7be591086fbd1aa7",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_delay_valid": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "a41d14b22ebe7d4458fd76acc1d3a69fe0af49f871a0e941d80be164bdb4974c",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_delay_write": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "97b5366b39c82dd6bffda9f82882164656c6c219f52c97ba9a27614ea2b6b8ff",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_delay_quiet": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "dd094b0883cc5bf13bb359be0e0d7d716c1121b05b76f865baf188d184253a88",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_delay_capture": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "63a6b06db395af9f3f7f0d6e9f6f6a4aef9b0e9c3f43ea938babe684ddc43aaf",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_delay_bbm": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "ffec0e5d6ee271787c890bc0a72352ceddc9a49e4ce3e7237b0bad56926e698b",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8r_delay": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "644b401d9c1f2da89e88afdeddf80599d00013a556a3b0611b01d835606d57a2",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8s_step": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "cf58caf24eaa86c3b7658cb0ba413d9e47c0f7a3f5b847c77134d2dd06813099",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8i_guard": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "2e6990a0b711a97ff237bc815c944a41fc98032734a3f14313693eef23f528dd",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8r_edge": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "4dbed35255b9f4b2142a897deba6fb095beaa09ff8d68f7de00ceabb5cff2115",
+      "kind": "interface",
+      "children": []
+    },
+    "b_sar8p_clkbuf": {
+      "source": "design/behav/veriloga (behavioral interface only)",
+      "instances": 0,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "reachable_from_top": false,
+      "electrical_body_sha256": "15cf004330a0aad352e5d8a7c5198bcb52c592f4b75251aa749c438119ad33c4",
+      "kind": "interface",
+      "children": []
+    }
+  },
+  "generated_hashes": {
+    "design/rnl/current.scs": "34514e724cb811f0d0b47f751f826115e21ca05e29417e307bb029fbc96c1d25",
+    "design/rnl/testbenches.scs": "517fb174cfef332d15aa49783d1e3999c611b09d2f0737f6d3cca2ea384473b8",
+    "design/rnl/export.scs": "14873b771c65e636b0f3d325de6c1b0f0647d2c0c496f0077208ff890a4ceca9",
+    "design/rnl/workspace.json": "13bbf80ae69cdb90253f55624694aa1e7b4fc67b813f3f8cfae58d2b85da5efb",
+    "docs/schematics/index.html": "82e0d83252a69aa887f9b56a3e04a9c161933caafb4d089a4a7eb4da112189c3"
+  },
+  "diagnostics": "0 errors, 0 warnings, 0 hints",
+  "electrical_statements_preserved": true,
+  "scope": "Native topology is authored in source @RNL comments. VA / foundry cells show interfaces only. Not OA or layout."
+}

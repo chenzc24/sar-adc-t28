@@ -1,0 +1,292 @@
+{
+  "pass_validation": true, 
+  "pass_functional": true, 
+  "max_saved_step_s": 1.0000000000011339e-10, 
+  "analysis_complete": true, 
+  "metrics": {
+    "sar": [
+      {
+        "code": 0, 
+        "updates": 8, 
+        "expected": 0, 
+        "comparisons": 8, 
+        "conversion_s": 2.916076682131375e-08, 
+        "startup": true, 
+        "frame": 0
+      }, 
+      {
+        "code": 12, 
+        "updates": 8, 
+        "expected": 12, 
+        "comparisons": 8, 
+        "conversion_s": 2.9161793118882368e-08, 
+        "startup": false, 
+        "frame": 1
+      }, 
+      {
+        "code": 127, 
+        "updates": 8, 
+        "expected": 127, 
+        "comparisons": 8, 
+        "conversion_s": 2.9164427638055992e-08, 
+        "startup": false, 
+        "frame": 2
+      }, 
+      {
+        "code": 128, 
+        "updates": 8, 
+        "expected": 128, 
+        "comparisons": 8, 
+        "conversion_s": 2.9161162043734704e-08, 
+        "startup": false, 
+        "frame": 3
+      }, 
+      {
+        "code": 243, 
+        "updates": 8, 
+        "expected": 243, 
+        "comparisons": 8, 
+        "conversion_s": 2.9163907091328167e-08, 
+        "startup": false, 
+        "frame": 4
+      }, 
+      {
+        "code": 255, 
+        "updates": 8, 
+        "expected": 255, 
+        "comparisons": 8, 
+        "conversion_s": 2.9165014533557708e-08, 
+        "startup": false, 
+        "frame": 5
+      }
+    ], 
+    "sar_stalled": [
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 0
+      }, 
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 1
+      }, 
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 2
+      }, 
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 3
+      }, 
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 4
+      }, 
+      {
+        "comparisons": 1, 
+        "cleared_during_acquisition": true, 
+        "blocked_bit": 7, 
+        "updates": 0, 
+        "frame": 5
+      }
+    ]
+  }, 
+  "diagnostic_screens_pass": true, 
+  "context": {
+    "required_signals": [
+      "s_clock", 
+      "s_d0", 
+      "s_d1", 
+      "s_d2", 
+      "s_d3", 
+      "s_d4", 
+      "s_d5", 
+      "s_d6", 
+      "s_d7", 
+      "xsar.cmp_clk", 
+      "xsar.phi_u", 
+      "xsar.seq_sample", 
+      "xsar.comp_n", 
+      "xsar.comp_p", 
+      "xstalled.cmp_clk", 
+      "xstalled.phi_u", 
+      "f_d0", 
+      "f_d1", 
+      "f_d2", 
+      "f_d3", 
+      "f_d4", 
+      "f_d5", 
+      "f_d6", 
+      "f_d7"
+    ], 
+    "run_id": "sar8-sar-reset-tt-v1", 
+    "contracts": {
+      "sar": {
+        "metrics": [
+          "startup_codes", 
+          "normal_codes", 
+          "comparisons", 
+          "updates", 
+          "conversion_s", 
+          "first_timing_issue"
+        ], 
+        "stimulus": "native SAR and delay chain in electrical VA environment; six low/mid/high codes with 5 fF output loads", 
+        "limit_kind": "functional/timing interface diagnostic; VA gate charge is not extracted", 
+        "limits": {
+          "code_errors": 0, 
+          "comparisons_per_frame": 8, 
+          "updates_per_frame": 8, 
+          "conversion_budget_s": 6e-08
+        }, 
+        "template": "tb/blocks/sar/acceptance.scs"
+      }
+    }, 
+    "comparator_inputs_v": [
+      0.1, 
+      -0.1, 
+      0.03, 
+      -0.03, 
+      0.003515625, 
+      -0.003515625, 
+      0.001, 
+      -0.001, 
+      0.0001, 
+      -0.0001
+    ], 
+    "source_hashes": {
+      "design/xtor/cdac/cdac.scs": "1085d286d7b319c1ce3c0c2e313db83f9da5d409dc78fe0ba6b04be71ada5d5f", 
+      "tools/saradc/candidates.py": "b93d8cd138549519eab0bae10c78fbef2b1333fa8f65e997131bdcd304d1f56c", 
+      "design/xtor/sar/sar.scs": "c1026e8ea74ac10c9724d18ccb6ba259c9a22e2928a084698be3f6710efdf082", 
+      "design/xtor/bootstrap/bootstrap.scs": "619ad8e085417629be5393488be3a9b0bcb09af31b4f904854b73ec1df753f02", 
+      "tb/behav/observer.va": "21901f8b3ed191a2536fccd40de909e2ec7f386452bc886fa086e5ab8d47aa49", 
+      "design/behav/veriloga/reference.va": "3cfd753c91e16e175bbd8cf1b4d22ba29121beda4aeb8dffdcaaa850f2a71a47", 
+      "design/xtor/reference/reference.scs": "b1c1a5378f4d93e0af22f402384153ee299a6c2aa1a97f2b23678ebd5519cd97", 
+      "tools/saradc/views.py": "8c5ddcc4cfe568951f201eb8e918788c2fd377fdf3994f9ca65c2d83f0857ea1", 
+      "design/behav/veriloga/comparator.va": "5812a258f1b5d62f9e5ed25e6deb8b985482ad68b99e12921ae4edf5b04161b9", 
+      "design/behav/veriloga/cdac.va": "86f852fe7b68813fb855b6de1c06196685b84abf432e89b01b8e6b29d8cdd306", 
+      "tb/common/veriloga/block_switch.va": "6ab451fa1c05394fa8968b733646069e9de0f15aebe1fc69049a93f722780d1b", 
+      "design/xtor/comparator/comparator.scs": "b1eedf0cc09e9b0b7b9ee747f927fdae0fbc2fcff13a89a79e902628a987fa96", 
+      "design/behav/veriloga/sar_adc_b.va": "df878398423304d1c608291f84afd4eec1eaf99f0ff6b4427d21395ea71f2037", 
+      "design/behav/veriloga/sar.va": "b57cb98fca68125727c45507f56ab1e6358267924b197cd6465085228b9dd342", 
+      "specs/views.json": "5144e8641ca538418860233ad6d47aa4fbbfa7864abc9c5c46c8edda01c7395c", 
+      "design/xtor/clock/delays.scs": "c389bfd014e2996c6c2588bd1c13f66b8a26319e771d7ba34f06ebf376fb1c9f", 
+      "specs/candidates.json": "83da18e7d87d554242839b551f83bf0998f31e1cb4fe138803ca7a83b62319c1", 
+      "design/behav/veriloga/b_defaults.vh": "a16cbd349dce04aaa2c95c0b4f51449601159e50a93ef44739beb3836be9bfb7", 
+      "design/behav/veriloga/timing.va": "9cae0f597a2648250a59bebd15fbd0a42467ee00cd9860c30d4197e63f7afd74", 
+      "design/behav/veriloga/sampler.va": "dcab3ef0a1027ffedd3956a8622f41dff52f45f57f58101c4c9408d6faf21227", 
+      "tools/saradc/blocks.py": "4b539fd23e4726d7f3969ef7b9a4976e4d93ce4ebeea7fafb2cbdc6ee8f56cdf", 
+      "tb/blocks/sar/acceptance.scs": "5bd41add695457956feb1672b4b3db3592e3a621cb349c06b6df6742a159c77b", 
+      "specs/block_tests.json": "d6dbf9bca13622ab0da1ad2ada7185522743a91198a06fa7870eaf1e8ee6eda6", 
+      "specs/arch.json": "23a2e978f5e940b9c0d7ae7090e796e3d75c73b35f476671913b5e13d01acbd0"
+    }, 
+    "modules": [
+      "sar"
+    ], 
+    "reference_words": [
+      128, 
+      0, 
+      255, 
+      85, 
+      170, 
+      128
+    ], 
+    "expected_codes": [
+      0, 
+      12, 
+      127, 
+      128, 
+      243, 
+      255
+    ], 
+    "candidates": {
+      "comparator": {
+        "file": "design/xtor/comparator/comparator.scs", 
+        "sha256": "b1eedf0cc09e9b0b7b9ee747f927fdae0fbc2fcff13a89a79e902628a987fa96", 
+        "candidate": "b", 
+        "module": "comparator", 
+        "target": "xtor/comparator/comparator.scs"
+      }, 
+      "reference": {
+        "file": "design/xtor/reference/reference.scs", 
+        "sha256": "b1c1a5378f4d93e0af22f402384153ee299a6c2aa1a97f2b23678ebd5519cd97", 
+        "candidate": "b", 
+        "module": "reference", 
+        "target": "xtor/reference/reference.scs"
+      }, 
+      "cdac": {
+        "file": "design/xtor/cdac/cdac.scs", 
+        "sha256": "1085d286d7b319c1ce3c0c2e313db83f9da5d409dc78fe0ba6b04be71ada5d5f", 
+        "candidate": "b", 
+        "module": "cdac", 
+        "target": "xtor/cdac/cdac.scs"
+      }, 
+      "sampler": {
+        "file": "design/xtor/bootstrap/bootstrap.scs", 
+        "sha256": "619ad8e085417629be5393488be3a9b0bcb09af31b4f904854b73ec1df753f02", 
+        "candidate": "b", 
+        "module": "sampler", 
+        "target": "xtor/bootstrap/bootstrap.scs"
+      }, 
+      "timing": {
+        "file": "design/xtor/clock/delays.scs", 
+        "sha256": "c389bfd014e2996c6c2588bd1c13f66b8a26319e771d7ba34f06ebf376fb1c9f", 
+        "candidate": "b", 
+        "module": "timing", 
+        "target": "xtor/clock/delays.scs"
+      }, 
+      "sar": {
+        "file": "design/xtor/sar/sar.scs", 
+        "sha256": "c1026e8ea74ac10c9724d18ccb6ba259c9a22e2928a084698be3f6710efdf082", 
+        "candidate": "b", 
+        "module": "sar", 
+        "target": "xtor/sar/sar.scs"
+      }
+    }, 
+    "module_views": {
+      "comparator": "xtor", 
+      "reference": "xtor", 
+      "cdac": "xtor", 
+      "sampler": "xtor", 
+      "timing": "xtor", 
+      "sar": "xtor"
+    }, 
+    "sar_stalled": true, 
+    "conditions": {
+      "noise": false, 
+      "vdd_v": 0.9, 
+      "views": "Each independent module can use its declared xtor or VA implementation. Environmental substitutions are explicit.", 
+      "process": "TT", 
+      "mismatch": false, 
+      "temperature_c": 27
+    }
+  }, 
+  "diagnostics": [], 
+  "failures": [], 
+  "scope": "Independent TT module measurements. Diagnostic screens are separate from electrical signoff. Unallocated limits, native noise, MC/PVT, power and terminal reliability remain open.", 
+  "warning_codes": [
+    "CMI-2751", 
+    "CMI-2752", 
+    "CMI-2753", 
+    "CMI-2754", 
+    "CMI-2755", 
+    "SFE-1131", 
+    "SFE-2453", 
+    "SPECTRE-16780", 
+    "SPECTRE-16881", 
+    "VACOMP-2435"
+  ]
+}

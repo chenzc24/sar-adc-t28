@@ -1,6 +1,6 @@
 # B 版行为模型验证
 
-当前模型按采样、CDAC、比较器、SAR 和参考控制拆分；Python 与电气 VA 的适用层次分别记录。
+模型按功能拆分；Python 与电气 VA 的适用层次分别记录。本页 `sar8-modules-v3` 证据属于上一轮选择配置，保留其原始来源。本轮逐模块选择、RC/clear 非对称模型及独立测试见 [模块结果](../blocks/README.md)。
 
 - [数值回归](modules_python.json)：16,400 条既有确定性记录，码字、计数、事件时间保持一致。
 - [原生模块与混合测试](modules_native.json)、[来源回执](modules_provenance.json)、[运行状态](modules_status.json)、[原始告警](modules_warnings.txt)。

@@ -2,6 +2,8 @@
 
 VA/Python 的模块与混合层次测试见 [behav/README.md](behav/README.md)。下表提供已验证测试条件的模板，日常运行默认接入当前晶体管设计；冻结 B 用于显式回归。
 
+六个功能模块的独立管级/VA 测试见 [blocks/README.md](blocks/README.md)；它们使用本模块实际接口，原生负载与环境替代分别声明。生成后的测试台也可在 [原理图浏览器](../docs/schematics/index.html) 中查看。
+
 实际文件直接位于本目录，各用例的输入散列、历史身份、条件和预算由 [specs/tests.json](../specs/tests.json) 记录。
 
 | 用例别名 | 实际入口 |

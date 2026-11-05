@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "tests": {
+    "sampler": {
+      "template": "tb/blocks/bootstrap/acceptance.scs",
+      "metrics": [
+        "startup_error_v",
+        "normal_error_v",
+        "hold_droop_v"
+      ],
+      "stimulus": "0.2 V then 0.8 V; normal 60 ns low / 40 ns high; 50 ohm source; native 256-unit MOM load",
+      "limits": {
+        "sample_error_v": 0.003515625
+      },
+      "limit_kind": "half-LSB functional diagnostic; not a new ADC signoff budget"
+    },
+    "cdac": {
+      "template": "tb/blocks/cdac/acceptance.scs",
+      "metrics": [
+        "effective_weights_v",
+        "settle_to_quarter_lsb_s",
+        "hold_droop_v",
+        "reference_min_max_v"
+      ],
+      "stimulus": "independent gate sources; 0, single-bit words, 255, 0; 50 ohm / 4 pF references",
+      "limits": {
+        "settle_band_v": 0.0017578125
+      },
+      "limit_kind": "quarter-LSB measurement band; time limit remains unallocated"
+    },
+    "comparator": {
+      "template": "tb/blocks/comparator/acceptance.scs",
+      "metrics": [
+        "decision_delay_s",
+        "reset_s",
+        "wrong_decisions_above_half_lsb",
+        "differential_kickback_v"
+      ],
+      "stimulus": "signed 100/30/3.515625/1/0.1 mV; native MOM and receiver-gate loads; floating native MOM kickback fixture",
+      "limits": {
+        "diagnostic_speed_s": 7.5e-10
+      },
+      "limit_kind": "Existing independent TT speed screen; small-input offset/decision failures are reported, not silently dropped"
+    },
+    "reference": {
+      "template": "tb/blocks/reference/acceptance.scs",
+      "metrics": [
+        "stored_word_errors",
+        "logic_overlap_duration_s",
+        "first_overlap",
+        "gate_settle_s"
+      ],
+      "stimulus": "128,0,255,85,170,128; two captures per update; actual full CDAC gate load",
+      "limits": {
+        "stored_word_errors": 0,
+        "logic_overlap_duration_s": 0
+      },
+      "limit_kind": "logic threshold nonoverlap diagnostic, not MOS-current or terminal-reliability qualification"
+    },
+    "timing": {
+      "template": "tb/blocks/clock/acceptance.scs",
+      "metrics": [
+        "rise_delay_s",
+        "fall_delay_s",
+        "pulse_width_s",
+        "missing_edges"
+      ],
+      "stimulus": "normal external clock; all exported RC/edge helpers loaded by native receiver gates",
+      "limits": {
+        "missing_edges": 0
+      },
+      "limit_kind": "delay characterization; per-helper maximum delay not yet allocated"
+    },
+    "sar": {
+      "template": "tb/blocks/sar/acceptance.scs",
+      "metrics": [
+        "startup_codes",
+        "normal_codes",
+        "comparisons",
+        "updates",
+        "conversion_s",
+        "first_timing_issue",
+        "stalled_bit",
+        "cancel_on_next_sample"
+      ],
+      "stimulus": "native SAR and delay chain in electrical VA environment; six low/mid/high codes with 5 fF output loads; second comparator forced nonresponding, next sampling phase must clear the actual SAR",
+      "limits": {
+        "code_errors": 0,
+        "comparisons_per_frame": 8,
+        "updates_per_frame": 8,
+        "conversion_budget_s": 6e-08
+      },
+      "limit_kind": "functional/timing interface diagnostic; VA gate charge is not extracted"
+    }
+  },
+  "conditions": {
+    "vdd_v": 0.9,
+    "temperature_c": 27,
+    "process": "TT",
+    "noise": false,
+    "mismatch": false,
+    "views": "Each independent module can use its declared xtor or VA implementation. Environmental substitutions are explicit."
+  },
+  "uncovered": [
+    "native comparator noise probability and bandwidth convergence",
+    "per-module PVT/MC timing qualification",
+    "MOS-current nonoverlap and full terminal-voltage envelope",
+    "PEX",
+    "power integration convergence"
+  ]
+}

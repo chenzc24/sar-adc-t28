@@ -1,0 +1,9 @@
+`include "disciplines.vams"
+// Test fixture switch. This is a source/initialization element, never a DUT replacement.
+module b_tb_switch(A,B,EN,VDD,VSS);
+    inout A,B,VSS; input EN,VDD;
+    electrical A,B,EN,VDD,VSS;
+    parameter real ron=50 from (0:inf);
+    parameter real roff=1e15 from (0:inf);
+    analog I(A,B) <+ V(A,B)/(V(EN,VSS)>0.5*V(VDD,VSS) ? ron : roff);
+endmodule
