@@ -73,12 +73,14 @@ def stimulus(codes, sign):
 
 
 def prepare(version, corner, revision='v1'):
+    if version not in ('b', 'minimal', 'current'):
+        raise ValueError('Unknown reference short version')
     ensure_candidate()
     run_id = '%s-%s-%s-%s' % (PREFIX, version, corner, revision)
     engine().valid_id(run_id)
     condition = read('specs/corners.json')[corner]
     blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT,
-                        None if version == 'b' else {'reference':'minimal_direct'})
+                        {'reference':'minimal_direct'} if version == 'minimal' else None)
     tb = text('tb/top/short/tb.scs')
     for source, node, sign in [('VVINP', 'VINP_SRC', 1), ('VVINN', 'VINN_SRC', -1)]:
         tb = re.sub(r'(?m)^'+source+r' .*$', source+' ('+node+' 0) vsource type=pwl wave=['+stimulus(CODES, sign)+']', tb)
@@ -141,7 +143,7 @@ def prepare(version, corner, revision='v1'):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('action',choices=['prepare','submit','status','analyze','collect'])
-    p.add_argument('--version',choices=['b','minimal'],required=True)
+    p.add_argument('--version',choices=['b','minimal','current'],required=True)
     p.add_argument('--corner',choices=['tt','ssc','ssh','ffc','ffh'],required=True)
     p.add_argument('--revision',default='v1')
     p.add_argument('--host',choices=['thu-wei','thu-sui','thu-song'],help='Host for a new submission; existing runs retain their host')

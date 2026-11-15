@@ -1,6 +1,6 @@
 # 最简参考候选
 
-需求：[Issue #2](https://github.com/chenzc24/sar-adc-t28/issues/2)。候选名 `reference=minimal_direct`；2026-11-15 按用户决定设为当前默认实现。五点原生短测与逐管采集已完成，每角 18/18 帧码字正确。端压 TT/SS 冷/热通过测量范围，FF 冷/热持续时间失败，详见[报告](../../../results/soa/minimal_reference_five_corner_20261115.md)和[采用记录](../../../results/design/minimal_direct_adoption_20261115.json)。
+需求：[Issue #2](https://github.com/chenzc24/sar-adc-t28/issues/2)。当前默认为 `reference=minimal_msb_d2`：在初版 `minimal_direct` 上仅把 MSB 两侧末级 INV 从 D1 增强到 D2，门级数、逻辑和比较器不变。五角 90/90 帧功能与时序筛查通过，比较器端压通过；FF 冷仍有 SAR 存储 MM64 Vds 违例，参考源瞬态电流增加。[验证与限制](../../../results/soa/msb_drive_d2_trial_20261115.md) · [采用记录](../../../results/design/minimal_msb_d2_adoption_20261115.json)。
 
 SAR 的 `CODE = D OR TOKEN` 经公共 PRESET 初态选择后，直接驱动差分参考开关。低七位在 PRESET 有效时取 0，MSB 取 1；PRESET 无效时跟随 CODE。SAR 的判决寄存器、位序列、握手和 quiet/write 延时保持原样。公共 idle/preset 与采样路径保持 B 的电气语句。
 
@@ -24,7 +24,7 @@ SAR 的 `CODE = D OR TOKEN` 经公共 PRESET 初态选择后，直接驱动差�
 
 ## 验证入口
 
-`python -m tools.saradc.reference_short prepare --version minimal --corner tt` 生成冻结包；将 `prepare` 换成 `submit` 后通过 managed 流程登记并排队。`--version b` 指向冻结 B。`status / analyze / collect` 操作对应已登记身份。每次实际修改后使用新 `--revision`，不修改旧输入或重复提交。
+`python -m tools.saradc.reference_short prepare --version current --corner tt` 生成冻结包；将 `prepare` 换成 `submit` 后通过 managed 流程登记并排队。`--version b` 指向冻结 B，`--version minimal` 显式复现初版 D1。`status / analyze / collect` 操作对应已登记身份。每次实际修改后使用新 `--revision`，不修改旧输入或重复提交。
 
 五个 corner 为 `tt / ssc / ssh / ffc / ffh`。每版本每角 18 帧，12 个中心码及重复/大跳变。源阻抗、参考旁路、外部低 60 ns 高 40 ns 的采样时钟、真实模拟子电路和负载保持。采用相同原生波形分析器与独立公开输出观察器，电平阈值跟随 VDD，不要求旧参考捕获次数。
 

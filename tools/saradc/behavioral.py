@@ -37,7 +37,7 @@ def generated():
     rss=math.sqrt(quant**2+jitter**2+sum(x*x for x in noise.values()))
     projected=20*math.log10(amplitude/math.sqrt(2)/rss)
     lines=['# SAR8 总设计规格','',
-      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_direct`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_direct_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。','',
+      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_msb_d2`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_msb_d2_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。','',
       '## 架构与外部接口','',
       '- 8 bit、10 MS/s，全差分异步 SAR，flat binary CDAC；每侧 255 单位二进制电容加 1 单位 dummy，无桥电容。',
       '- 顶层端口顺序：`'+' '.join(a['interface']['port_order'])+'`。',
@@ -85,7 +85,7 @@ def generated():
       '- 历史 0.25 LSB 偏移分配作为暂定校正后残差目标；当前未校准比较器没有被伪称满足这条线。',
       '- 200 种子模块测试与 SS/FF 冷角各 50 种子闭环的抽样范围见 [monte_carlo.json](../specs/monte_carlo.json)。闭环局部失配仅开启比较器和 CDAC。',
       '- 已有 B 版单个 TT 瞬态噪声种子，见 [噪声对照](../results/noise/comparison.json)；带宽和统计收敛尚未建立。全电路局部失配、PEX、完整共模范围、校准范围/精度、功耗积分收敛及端压可靠性仍分别保留未完成项。',
-      '- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 TT、SS 冷/热通过该测量范围，FF 冷/热持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/minimal_reference_five_corner_20261115.md)。','',
+      '- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 比较器五角通过该测量范围，FF 冷 SAR 存储 MM64 Vds 持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/msb_drive_d2_trial_20261115.md)。','',
       '## 行为视图与交叉验证','',
       '[Python 模型](../design/behav/python/sar_adc.py) 与 [VA 模型](../design/behav/veriloga/sar_adc_b.va) 共用总规格和生成默认参数。无噪声为默认，支持有效位权、偏移、有限建立和比较停滞等参数。',
       '两模型的随机数流不同；确定性交叉逐例比较，随机噪声仅按各自分布建模。物理启动充电、kickback、原生 PDK MC、端压和功耗需要晶体管级模型。',

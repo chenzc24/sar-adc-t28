@@ -1,6 +1,6 @@
 # 管级实现与候选
 
-当前实现保持在各模块原路径。候选登记与默认选择的真源是 [candidates.json](../../specs/candidates.json)；当前 reference 选择 `minimal_direct`，其余五个模块仍选择 `b`。直接 include 入口和实现清单同步采用此选择；FF 两角端压失败保持开放。
+当前实现保持在各模块原路径。候选登记与默认选择的真源是 [candidates.json](../../specs/candidates.json)；当前 reference 选择 `minimal_msb_d2`，其余五个模块仍选择 `b`。直接 include 入口和实现清单同步采用此选择；FF 冷 SAR 存储端压失败保持开放。
 
 新增候选可放在 `design/xtor/<module>/<name>.scs` 或该目录的同名子目录，原实现保留。候选文件提供本模块全部需要的定义；公共 master 与端口顺序须符合登记的接口，内部结构可不同。平台 include、PDK 和标准库由测试台统一提供。
 

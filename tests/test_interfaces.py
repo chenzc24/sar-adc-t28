@@ -99,7 +99,7 @@ class Interfaces(unittest.TestCase):
         levels,ports,origin,hashes=schematic.sources(self.root)
         self.assertFalse((self.root/'work').exists())
         native=[n for n in levels if origin[n].startswith(('design/xtor','design/top'))]
-        self.assertEqual(len(native),38)
+        self.assertEqual(len(native),39)
         self.assertIn('tb_reference',levels)
         self.assertIn('XRLOAD',levels['tb_reference'])
         self.assertIn('tb_sar_stalled_top',levels)

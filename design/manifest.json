@@ -1,10 +1,10 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_v1",
   "source": "design/frozen/b/dut.scs",
   "source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "top": "sar_adc8_join_r4",
   "status": "user_adopted_with_open_soa_failures",
-  "validation": "results/design/minimal_direct_adoption_20261115.json",
+  "validation": "results/design/minimal_msb_d2_adoption_20261115.json",
   "standard_cell_include": "tb/common/platform/library_include.scs",
   "reachable_from_top": [
     "sar8i_ctrl",
@@ -38,6 +38,7 @@
     "sar8p_xor2",
     "sar8r_delay",
     "sar8r_edge",
+    "sar8ref_buf_d2",
     "sar_adc8_join_r4",
     "sar_bootstrap_flat_8b_p",
     "sar_strongarm_t28"
@@ -51,6 +52,7 @@
   "external_standard_cell_masters": [
     "DFCNQD1BWP12T30P140",
     "INVD1BWP12T30P140",
+    "INVD2BWP12T30P140",
     "ND2D1BWP12T30P140"
   ],
   "subcircuits": {
@@ -1246,7 +1248,7 @@
       "text_sha256": "36516c02761de19602f8e4ee1889d02f3e3ca44491b9ecd8797e360a18db4a77"
     },
     "sar8i_refword": {
-      "file": "xtor/reference/minimal_direct.scs",
+      "file": "xtor/reference/minimal_msb_d2.scs",
       "source_line": 4,
       "ports": [
         "CODE0",
@@ -1459,11 +1461,11 @@
         },
         {
           "instance": "XPN7",
-          "master": "sar8p_inv"
+          "master": "INVD2BWP12T30P140"
         },
         {
           "instance": "XNN7",
-          "master": "sar8p_buf"
+          "master": "sar8ref_buf_d2"
         },
         {
           "instance": "WNP7",
@@ -1478,10 +1480,10 @@
           "master": "iprobe"
         }
       ],
-      "text_sha256": "ede397cbbb73d0dfbe851df08f9bb474a2e3e09416dd051c564ada78e492c54f"
+      "text_sha256": "d63d0f062f9ac5147bfa4b92406fce29dc62aa3ee92a9f0b7e6839c7a1dbf2fe"
     },
     "sar8i_idle": {
-      "file": "xtor/reference/minimal_direct.scs",
+      "file": "xtor/reference/minimal_msb_d2.scs",
       "source_line": 50,
       "ports": [
         "ACTIVE",
@@ -1514,6 +1516,27 @@
         }
       ],
       "text_sha256": "7e74dca34f877fbc56985e82b0627015efc729bd81a1173ffb5da00e5020d81a"
+    },
+    "sar8ref_buf_d2": {
+      "file": "xtor/reference/minimal_msb_d2.scs",
+      "source_line": 59,
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "instances": [
+        {
+          "instance": "X000",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XFINAL",
+          "master": "INVD2BWP12T30P140"
+        }
+      ],
+      "text_sha256": "4332067825ee6632a2ea7ba91c6aacaf247f86fa3e12ad79925daaf0099c94fe"
     }
   },
   "source_role": "immutable historical B provenance; current source files are declared by subcircuits and candidates.json"

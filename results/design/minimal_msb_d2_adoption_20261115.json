@@ -1,0 +1,43 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_v1",
+  "adopted_on": "2026-11-15",
+  "authority": "user_requested_commit_and_push_of_verified_D2_version",
+  "previous_design_commit": "c024fd5",
+  "candidate_evidence_commit": "2b7d814",
+  "reference_candidate": "minimal_msb_d2",
+  "source_sha256": {
+    "dut.scs": "02dd8a0bf0a5b320c52ff3d6f2de5a8a005db51bfc7f6c62f91b49df9633747b",
+    "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+    "xtor/sar/sar.scs": "999a315b03e3d51ed313e5c1ffda309daa91fb2fcfc2f6ef2f61d1cf83fb3eec"
+  },
+  "evidence": "results/soa/msb_drive_d2_trial_20261115.json",
+  "source_comparison": "All physical bytes match completed five-corner D2 sources; DUT include filename only renamed",
+  "qualification": {
+    "function_timing": "90/90 frames and independent five-corner screens pass",
+    "comparator_soa": "33 terminal checks pass at each of five corners under project engineering rule",
+    "open_failures": [
+      "FFC SAR XBIT[7:0].XSTORE.XFF.MM64 Vds"
+    ],
+    "limitations": [
+      "SS first-frame bit7 continuous stable margin not quantified by existing analyzer; instantaneous screen passes",
+      "higher reference-source transient current",
+      "No transfer of previous FFT/full-static/MC/noise/PEX qualification",
+      "OA and Canvas not synchronized"
+    ]
+  },
+  "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+  "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+  "validation": {
+    "entry_check": "passed; 39 current subcircuits; frozen B unchanged",
+    "directed_tests": 26,
+    "directed_result": "passed",
+    "prepared_current_short": "work/decks/sar8-minref-current-tt-msbd2-adopt-20261115/recipe.yaml",
+    "new_simulation_submitted": false
+  }
+}

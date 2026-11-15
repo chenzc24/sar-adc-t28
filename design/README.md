@@ -8,7 +8,7 @@
 | 18 个 MOM 与分位参考开关 | [xtor/cdac/cdac.scs](xtor/cdac/cdac.scs) |
 | 11 MOS StrongARM | [xtor/comparator/comparator.scs](xtor/comparator/comparator.scs) |
 | 异步 SAR | [xtor/sar/sar.scs](xtor/sar/sar.scs) |
-| 最简参考驱动与公共空闲控制 | [xtor/reference/minimal_direct.scs](xtor/reference/minimal_direct.scs)，[设计说明](xtor/reference/minimal_direct.md) |
+| 最简参考驱动与公共空闲控制 | [xtor/reference/minimal_msb_d2.scs](xtor/reference/minimal_msb_d2.scs)，[设计说明](xtor/reference/minimal_direct.md) |
 | RC 与握手延时 | [xtor/clock/delays.scs](xtor/clock/delays.scs) |
 | 原生标准单元包装 | [xtor/common/standard_cells.scs](xtor/common/standard_cells.scs) |
 

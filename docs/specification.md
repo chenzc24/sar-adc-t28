@@ -1,6 +1,6 @@
 # SAR8 总设计规格
 
-本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_direct`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_direct_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。
+本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_msb_d2`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_msb_d2_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。
 
 ## 架构与外部接口
 
@@ -85,7 +85,7 @@ CDAC 建立误差分配 0.25 LSB=1.7578125 mV。固定增益、偏置、延迟�
 - 历史 0.25 LSB 偏移分配作为暂定校正后残差目标；当前未校准比较器没有被伪称满足这条线。
 - 200 种子模块测试与 SS/FF 冷角各 50 种子闭环的抽样范围见 [monte_carlo.json](../specs/monte_carlo.json)。闭环局部失配仅开启比较器和 CDAC。
 - 已有 B 版单个 TT 瞬态噪声种子，见 [噪声对照](../results/noise/comparison.json)；带宽和统计收敛尚未建立。全电路局部失配、PEX、完整共模范围、校准范围/精度、功耗积分收敛及端压可靠性仍分别保留未完成项。
-- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 TT、SS 冷/热通过该测量范围，FF 冷/热持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/minimal_reference_five_corner_20261115.md)。
+- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 比较器五角通过该测量范围，FF 冷 SAR 存储 MM64 Vds 持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/msb_drive_d2_trial_20261115.md)。
 
 ## 行为视图与交叉验证
 
