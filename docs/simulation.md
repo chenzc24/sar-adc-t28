@@ -62,6 +62,8 @@ Virtuoso 沿用工作区已经接入的 bridge/ADE 环境。本次不重建连�
 
 该分析读取 [端压工程规则](../specs/soa_rule.yaml)，对原生波形作分段线性阈值交点和滑动窗口累计时间测量，输出 `derived/terminal_results.json` 与 `derived/result.json`。全端点缺失或未分类模型会导致分析失败；数值通过先标为待时间分辨率复核。原始 CMI/LTE 告警保留。退出成功、18 帧码字正确与端压通过分开报告。
 
+同一冻结激励的单变量候选可显式加 `--candidate reference=NAME`（也支持其他已登记模块）。该入口按模块接口绑定历史包中的实际文件，记录替换前后散列并重建端点清单；默认设计不随实验改变。功能分析器 `reference_short.py` 支持 managed 的 `--source-run-dir`，可对已完成的全端点运行作独立 analysis-only 时序复核。
+
 同一 managed 执行器支持 `thu-wei`、`thu-sui` 与 `thu-song`。新登记可用 `engine().register(recipe, host='thu-song')` 选择服务器；初始化用 `engine().storage(host='thu-song')`。运行记录绑定主机，后续查询、分析、回收自动路由；无主机字段的历史记录归属 `thu-wei`。不得通过修改默认服务器迁移已有运行。
 
 这些服务器的 `/home` 用户目录及 PDK 为共享 NFS，`/server_local_ssd` 为各自本地磁盘。队列锁和资源检查按主机执行；转移未完成实验时保留原运行，用新 ID 登记目的主机，记录对应关系并先停止原任务，避免重复运行。停止接口仅处理经启动时间、进程组、账户和命令确认的对应 worker/child，保留原始日志与取消原因。

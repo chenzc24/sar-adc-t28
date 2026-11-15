@@ -1,0 +1,62 @@
+// Diagnostic candidate: symmetric MSB final drive D1 -> D2. No extra state or dead-time.
+// D/PHI_U/SAMPLE ports are retained only for interface compatibility.
+// iprobe joins are ideal wires between the existing separate gate pins.
+subckt sar8i_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE PRESET
+XPRESET_N (PRESET VDD VSS RUN) sar8p_inv
+XINITIAL0 (CODE0 RUN VDD VSS QN0) sar8p_nand2
+XPN0 (QN0 VDD VSS GPN0) sar8p_inv
+XNN0 (QN0 VDD VSS GNN0) sar8p_buf
+WNP0 (GNN0 GNP0) iprobe
+WPP0 (GPN0 GPP0) iprobe
+XINITIAL1 (CODE1 RUN VDD VSS QN1) sar8p_nand2
+XPN1 (QN1 VDD VSS GPN1) sar8p_inv
+XNN1 (QN1 VDD VSS GNN1) sar8p_buf
+WNP1 (GNN1 GNP1) iprobe
+WPP1 (GPN1 GPP1) iprobe
+XINITIAL2 (CODE2 RUN VDD VSS QN2) sar8p_nand2
+XPN2 (QN2 VDD VSS GPN2) sar8p_inv
+XNN2 (QN2 VDD VSS GNN2) sar8p_buf
+WNP2 (GNN2 GNP2) iprobe
+WPP2 (GPN2 GPP2) iprobe
+XINITIAL3 (CODE3 RUN VDD VSS QN3) sar8p_nand2
+XPN3 (QN3 VDD VSS GPN3) sar8p_inv
+XNN3 (QN3 VDD VSS GNN3) sar8p_buf
+WNP3 (GNN3 GNP3) iprobe
+WPP3 (GPN3 GPP3) iprobe
+XINITIAL4 (CODE4 RUN VDD VSS QN4) sar8p_nand2
+XPN4 (QN4 VDD VSS GPN4) sar8p_inv
+XNN4 (QN4 VDD VSS GNN4) sar8p_buf
+WNP4 (GNN4 GNP4) iprobe
+WPP4 (GPN4 GPP4) iprobe
+XINITIAL5 (CODE5 RUN VDD VSS QN5) sar8p_nand2
+XPN5 (QN5 VDD VSS GPN5) sar8p_inv
+XNN5 (QN5 VDD VSS GNN5) sar8p_buf
+WNP5 (GNN5 GNP5) iprobe
+WPP5 (GPN5 GPP5) iprobe
+XINITIAL6 (CODE6 RUN VDD VSS QN6) sar8p_nand2
+XPN6 (QN6 VDD VSS GPN6) sar8p_inv
+XNN6 (QN6 VDD VSS GNN6) sar8p_buf
+WNP6 (GNN6 GNP6) iprobe
+WPP6 (GPN6 GPP6) iprobe
+XINITIAL7 (CODE7 PRESET VDD VSS Q7) sar8p_or2
+XINV7 (Q7 VDD VSS QN7) sar8p_inv
+XPN7 (QN7 GPN7 VDD VSS) INVD2BWP12T30P140
+XNN7 (QN7 VDD VSS GNN7) sar8ref_buf_d2
+WNP7 (GNN7 GNP7) iprobe
+WPP7 (GPN7 GPP7) iprobe
+WUNUSED (RST_DONE VSS) iprobe
+ends sar8i_refword
+
+subckt sar8i_idle ACTIVE SAMPLE VDD VSS PRESET SAMPLE_MATCH
+    XN (ACTIVE VDD VSS IDLE) sar8p_inv
+    XD (IDLE VDD VSS IDLE_D) sar8i_guard
+    XP (SAMPLE IDLE_D VDD VSS PRESET) sar8p_or2
+    XA (SAMPLE SAMPLE VDD VSS SAMPLE_AND) sar8p_and2
+    XB (SAMPLE_AND VDD VSS SAMPLE_MATCH) sar8p_buf
+ends sar8i_idle
+
+// Same two-inverter buffer; only the output inverter drive changes.
+subckt sar8ref_buf_d2 A VDD VSS Y
+    X000 (A VDD VSS N) sar8p_inv
+    XFINAL (N Y VDD VSS) INVD2BWP12T30P140
+ends sar8ref_buf_d2

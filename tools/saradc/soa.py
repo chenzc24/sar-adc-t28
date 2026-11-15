@@ -10,12 +10,13 @@ import shlex
 import subprocess
 import yaml
 from .__main__ import engine
+from . import candidates
 from .measure.soa_topology import statements
 
 ROOT=Path(__file__).resolve().parents[2]
 
 
-def prepare(corner, revision='v1', maxstep_ps=10):
+def prepare(corner, revision='v1', maxstep_ps=10, overrides=None):
     if corner not in ('tt','ssc','ssh','ffc','ffh') or not math.isfinite(maxstep_ps) or maxstep_ps<=0:
         raise ValueError('Known corner and positive finite maximum step required')
     old='sar8-minref-minimal-'+corner+('-v2' if corner=='tt' else '-song-v1')
@@ -24,6 +25,22 @@ def prepare(corner, revision='v1', maxstep_ps=10):
     blobs={i['name']:(ROOT/i['source']).read_bytes() for i in original['inputs']}
     for i in original['inputs']:
         assert hashlib.sha256(blobs[i['name']]).hexdigest()==i['sha256'],i['name']
+    changes=[]
+    if overrides:
+        selected=candidates.selected(overrides,ROOT)
+        for module in sorted(overrides):
+            row=selected[module];target=row['target']
+            if target not in blobs:
+                # Historical frozen packages can use the previous filename.
+                interfaces=set(candidates.read(ROOT)['modules'][module]['interfaces'])
+                matches=[n for n,b in blobs.items() if n.startswith('xtor/') and n.endswith('.scs')
+                         and interfaces <= set(candidates.definitions(b.decode()))]
+                if len(matches)!=1:raise ValueError('Cannot uniquely bind candidate to frozen module: '+module)
+                target=matches[0]
+            data=(ROOT/row['file']).read_bytes()
+            changes.append(dict(module=module,candidate=row['candidate'],file=row['file'],target=target,
+                                before_sha256=hashlib.sha256(blobs[target]).hexdigest(),after_sha256=hashlib.sha256(data).hexdigest()))
+            blobs[target]=data
     run_id='sar8-minref-soa-'+corner+'-song-'+revision
     engine().valid_id(run_id)
     destination=ROOT/'work/decks'/run_id
@@ -60,7 +77,14 @@ def prepare(corner, revision='v1', maxstep_ps=10):
              expected_stop_s=original['expected_stop_s'],
              expected_codes=original['test_conditions']['expected_codes'],
              source_input_hashes={i['name']:i['sha256'] for i in original['inputs']},
-             change_scope='save all MOS terminal nodes; optional maxstep refinement only',maxstep_ps=maxstep_ps)
+             change_scope=('explicit candidate substitution; save all MOS terminal nodes' if changes else
+                           'save all MOS terminal nodes; optional maxstep refinement only'),
+             candidate_changes=changes,maxstep_ps=maxstep_ps)
+    if changes:
+        functional=json.loads(blobs['context.json'])
+        functional.update(run_id=run_id,candidate_changes=changes,
+                          source_hashes={n:hashlib.sha256(b).hexdigest() for n,b in blobs.items() if n!='context.json'})
+        blobs['context.json']=(json.dumps(functional,indent=2)+'\n').encode()
     blobs['soa_context.json']=(json.dumps(ctx,indent=2)+'\n').encode()
     for name,data in blobs.items():
         target=destination/name
@@ -81,7 +105,8 @@ def prepare(corner, revision='v1', maxstep_ps=10):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('action',choices=['prepare','submit']);p.add_argument('--corner',required=True,choices=['tt','ssc','ssh','ffc','ffh'])
     p.add_argument('--revision',default='v1');p.add_argument('--maxstep-ps',type=float,default=10)
-    a=p.parse_args();path,info=prepare(a.corner,a.revision,a.maxstep_ps)
+    p.add_argument('--candidate',action='append',default=[],help='Explicit module=candidate; preserves current defaults')
+    a=p.parse_args();path,info=prepare(a.corner,a.revision,a.maxstep_ps,candidates.assignments(a.candidate))
     if a.action=='submit':
         e=engine();e.register(path,host='thu-song')
         info['submission']=e.phase('submit',json.loads((ROOT/path).read_text())['run_id'],queue=True)

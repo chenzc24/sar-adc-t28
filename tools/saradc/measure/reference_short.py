@@ -179,4 +179,5 @@ def analyze(run_dir,output_dir):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--run-dir',required=True);parser.add_argument('--output-dir',required=True)
-    args=parser.parse_args();analyze(args.run_dir,args.output_dir)
+    parser.add_argument('--source-run-dir')
+    args=parser.parse_args();analyze(args.source_run_dir or args.run_dir,args.output_dir)
