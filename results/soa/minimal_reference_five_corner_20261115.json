@@ -1,0 +1,853 @@
+{
+  "candidate": "reference=minimal_direct",
+  "host": "thu-song",
+  "scope": "18-frame minimal full-transistor short test, five PVT points, startup included",
+  "rule_id": "sar8-thin-oxide-transient-v1",
+  "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+  "limits": {
+    "continuous_V": 1.1,
+    "peak_V": 1.29,
+    "window_s": 1e-08,
+    "max_over_s": 1e-10,
+    "over_threshold_operator": "strictly_greater",
+    "peak_and_duration_operator": "less_than_or_equal",
+    "duration": "sum_of_all_above_threshold_intervals_in_each_sliding_window",
+    "evaluate_independently_per": "device_and_terminal_pair",
+    "pass_expression": "max_abs_V <= continuous_V OR (max_abs_V <= peak_V AND max_sliding_over_s <= max_over_s)"
+  },
+  "device_count": 1075,
+  "thin_oxide_devices_per_corner": 1049,
+  "checked_pairs_per_corner": 3147,
+  "thick_oxide_devices_per_corner_outside_rule": 26,
+  "overall_engineering_verdict": "fail",
+  "foundry_reliability_qualified": false,
+  "corners": [
+    {
+      "corner": "tt",
+      "coarse_source": {
+        "run_id": "sar8-minref-soa-tt-song-v2-fast-v1",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-tt-song-v2-fast-v1/collected/derived/result.json",
+        "sha256": "d1f557c18069a9036bbe896f4c3a2afbba99f940ca6e27d146176513bc9a56a1"
+      },
+      "coarse_peak_V": 1.1154193533732892,
+      "coarse_max_over_ps": 77.92490951174985,
+      "coarse_max_native_step_ps": 10.000000000911312,
+      "coarse_violation_pair_count": 0,
+      "refined_source": {
+        "run_id": "sar8-minref-soa-tt-song-v3-step2p",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-tt-song-v3-step2p/collected/derived/result.json",
+        "sha256": "35414ee0ddd69f36f95c8d7b54717073759201b4259b75a161ac7e9f256e7fe1"
+      },
+      "peak_change_V": -2.0265683087217212e-06,
+      "max_over_change_ps": -0.008883465808864458,
+      "resolution_review": "10 ps and 2 ps full-transient results compared",
+      "verdict_stable": true,
+      "peak_V": 1.1154173268049805,
+      "max_over_ps": 77.91602604594098,
+      "violation_pair_count": 0,
+      "violations": [],
+      "worst_peak": {
+        "total_over_s": 3.9872040219429114e-10,
+        "max_sliding_over_s": 7.791602604594099e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 2.0377857161332506e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.1154173268049805,
+        "peak_time_s": 1.503720267913413e-06,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 6,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 3.9872040219429114e-10,
+        "max_sliding_over_s": 7.791602604594099e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 2.0377857161332506e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.1154173268049805,
+        "peak_time_s": 1.503720267913413e-06,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 6,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "max_native_step_ps": 2.0000000009022405,
+      "observed_codes_pass": true,
+      "engineering_verdict": "pass_in_reported_capture_scope",
+      "module_summary": {
+        "XCDAC": {
+          "peak_V": 0.9653907050166401,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCOMP": {
+          "peak_V": 1.1154173268049805,
+          "max_over_ps": 77.91602604594098,
+          "violation_pairs": 0
+        },
+        "XCTRL": {
+          "peak_V": 1.0807420304233595,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XIDLE": {
+          "peak_V": 0.9340007756591714,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XREF": {
+          "peak_V": 0.9851251409437486,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSAMPLE": {
+          "peak_V": 0.9037270144108722,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSEQ": {
+          "peak_V": 0.9723786747541948,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        }
+      },
+      "outside_rule_peaks": {
+        "thick_oxide_gs_gd_ds": {
+          "terminal_pair": "gd",
+          "in_rule": false,
+          "instance": "XDUT.XBOOTP.Mmain",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.5643416356517594,
+          "peak_time_s": 1.562265480068338e-06,
+          "model": "nch_18_mac",
+          "nodes": [
+            "xdut.topp",
+            "xdut.xbootp.g"
+          ]
+        },
+        "thin_oxide_body_pairs": {
+          "terminal_pair": "gb",
+          "in_rule": false,
+          "instance": "XDUT.XCOMP.MNINN",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.098913504265624,
+          "peak_time_s": 1.037489470393119e-07,
+          "model": "nch_mac",
+          "nodes": [
+            "0",
+            "xdut.topn"
+          ]
+        }
+      }
+    },
+    {
+      "corner": "ssc",
+      "coarse_source": {
+        "run_id": "sar8-minref-soa-ssc-song-v2-fast-v1",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ssc-song-v2-fast-v1/collected/derived/result.json",
+        "sha256": "2d98745eef04ca976fd7879ce54ce8cbabccb5733177dd73af49ffcbce5e896e"
+      },
+      "coarse_peak_V": 1.0610907416824382,
+      "coarse_max_over_ps": 0.0,
+      "coarse_max_native_step_ps": 10.000000000911312,
+      "coarse_violation_pair_count": 0,
+      "resolution_review": "Native adaptive capture with <=10 ps max step; peak below continuous limit; no separate 2 ps rerun",
+      "continuous_limit_headroom_V": 0.03890925831756187,
+      "peak_V": 1.0610907416824382,
+      "max_over_ps": 0.0,
+      "violation_pair_count": 0,
+      "violations": [],
+      "worst_peak": {
+        "total_over_s": 0,
+        "max_sliding_over_s": 0.0,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": null,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.0610907416824382,
+        "peak_time_s": 1.504784859235088e-06,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 0,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 0,
+        "max_sliding_over_s": 0.0,
+        "terminal_pair": "gs",
+        "in_rule": true,
+        "worst_window_end_s": null,
+        "instance": "XDUT.XSEQ.XD.X006.XLIB.MM1",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 0.8442498502757715,
+        "peak_time_s": 6.001273768430286e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 0,
+        "nodes": [
+          "0",
+          "xdut.sample_match"
+        ]
+      },
+      "max_native_step_ps": 10.000000000911312,
+      "observed_codes_pass": true,
+      "engineering_verdict": "pass_in_reported_capture_scope",
+      "module_summary": {
+        "XCDAC": {
+          "peak_V": 0.9922582630542882,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCOMP": {
+          "peak_V": 1.0610907416824382,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCTRL": {
+          "peak_V": 0.9882254971925719,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XIDLE": {
+          "peak_V": 0.9223094671546004,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XREF": {
+          "peak_V": 0.8963851003319463,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSAMPLE": {
+          "peak_V": 0.8207457724223023,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSEQ": {
+          "peak_V": 0.8862385888689496,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        }
+      },
+      "outside_rule_peaks": {
+        "thick_oxide_gs_gd_ds": {
+          "terminal_pair": "ds",
+          "in_rule": false,
+          "instance": "XDUT.XBOOTN.Maux",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.4847774103914202,
+          "peak_time_s": 1.500381561913527e-06,
+          "model": "nch_18_mac",
+          "nodes": [
+            "xdut.xbootn.g",
+            "xdut.xbootn.greset"
+          ]
+        },
+        "thin_oxide_body_pairs": {
+          "terminal_pair": "gb",
+          "in_rule": false,
+          "instance": "XDUT.XCOMP.MNINN",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.142518276743508,
+          "peak_time_s": 1.504792532086809e-06,
+          "model": "nch_mac",
+          "nodes": [
+            "0",
+            "xdut.topn"
+          ]
+        }
+      }
+    },
+    {
+      "corner": "ssh",
+      "coarse_source": {
+        "run_id": "sar8-minref-soa-ssh-song-v2-fast-v1",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ssh-song-v2-fast-v1/collected/derived/result.json",
+        "sha256": "25c133f3c9df209f3c5953db0f9cb9490d977101f1f80ee43e1e31e7d5f58600"
+      },
+      "coarse_peak_V": 1.009114493252745,
+      "coarse_max_over_ps": 0.0,
+      "coarse_max_native_step_ps": 10.000000000911312,
+      "coarse_violation_pair_count": 0,
+      "resolution_review": "Native adaptive capture with <=10 ps max step; peak below continuous limit; no separate 2 ps rerun",
+      "continuous_limit_headroom_V": 0.09088550674725515,
+      "peak_V": 1.009114493252745,
+      "max_over_ps": 0.0,
+      "violation_pair_count": 0,
+      "violations": [],
+      "worst_peak": {
+        "total_over_s": 0,
+        "max_sliding_over_s": 0.0,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": null,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.009114493252745,
+        "peak_time_s": 1.504443777835082e-06,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 0,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 0,
+        "max_sliding_over_s": 0.0,
+        "terminal_pair": "gs",
+        "in_rule": true,
+        "worst_window_end_s": null,
+        "instance": "XDUT.XSEQ.XD.X006.XLIB.MM1",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 0.8355874290504934,
+        "peak_time_s": 6.001158842852828e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 0,
+        "nodes": [
+          "0",
+          "xdut.sample_match"
+        ]
+      },
+      "max_native_step_ps": 10.000000000911312,
+      "observed_codes_pass": true,
+      "engineering_verdict": "pass_in_reported_capture_scope",
+      "module_summary": {
+        "XCDAC": {
+          "peak_V": 0.9557528208293887,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCOMP": {
+          "peak_V": 1.009114493252745,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCTRL": {
+          "peak_V": 0.9552831734746771,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XIDLE": {
+          "peak_V": 0.8401649865684133,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XREF": {
+          "peak_V": 0.8822675683666049,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSAMPLE": {
+          "peak_V": 0.813385610854496,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSEQ": {
+          "peak_V": 0.8643690379995028,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        }
+      },
+      "outside_rule_peaks": {
+        "thick_oxide_gs_gd_ds": {
+          "terminal_pair": "gd",
+          "in_rule": false,
+          "instance": "XDUT.XBOOTP.Mmain",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.4545025929955302,
+          "peak_time_s": 1.562957248698368e-06,
+          "model": "nch_18_mac",
+          "nodes": [
+            "xdut.topp",
+            "xdut.xbootp.g"
+          ]
+        },
+        "thin_oxide_body_pairs": {
+          "terminal_pair": "gb",
+          "in_rule": false,
+          "instance": "XDUT.XCOMP.MNINN",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.099350443685735,
+          "peak_time_s": 1.504449826374275e-06,
+          "model": "nch_mac",
+          "nodes": [
+            "0",
+            "xdut.topn"
+          ]
+        }
+      }
+    },
+    {
+      "corner": "ffc",
+      "coarse_source": {
+        "run_id": "sar8-minref-soa-ffc-song-v2-fast-v1",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ffc-song-v2-fast-v1/collected/derived/result.json",
+        "sha256": "42a282d715107378de1f2edc4b10c133a35e33c8015ad3fb7662cef80a5345b4"
+      },
+      "coarse_peak_V": 1.205520392917685,
+      "coarse_max_over_ps": 166.04860336321238,
+      "coarse_max_native_step_ps": 10.000000000911312,
+      "coarse_violation_pair_count": 9,
+      "refined_source": {
+        "run_id": "sar8-minref-soa-ffc-song-v3-step2p",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ffc-song-v3-step2p/collected/derived/result.json",
+        "sha256": "f21461ac834beaaee884179cc94f5dc42b785847d72c311e925be3deb91e3a9d"
+      },
+      "peak_change_V": 3.7070434419916864e-06,
+      "max_over_change_ps": 0.0013356335531941191,
+      "resolution_review": "10 ps and 2 ps full-transient results compared",
+      "verdict_stable": true,
+      "peak_V": 1.205524099961127,
+      "max_over_ps": 166.04993899676558,
+      "violation_pair_count": 9,
+      "violations": [
+        {
+          "total_over_s": 9.206582307199583e-10,
+          "max_sliding_over_s": 1.315273496881511e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 1.3602415358980556e-06,
+          "instance": "XDUT.XCTRL.XBIT7.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1834415960759108,
+          "peak_time_s": 1.460114520797065e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 7,
+          "nodes": [
+            "xdut.xctrl.xbit7.xstore.xff.mq_x",
+            "xdut.xctrl.xbit7.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 9.662737659390927e-10,
+          "max_sliding_over_s": 1.314984589405789e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432659564718e-07,
+          "instance": "XDUT.XCTRL.XBIT6.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.183325954109868,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 13,
+          "nodes": [
+            "xdut.xctrl.xbit6.xstore.xff.mq_x",
+            "xdut.xctrl.xbit6.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.0977380108169583e-09,
+          "max_sliding_over_s": 1.314983936457736e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432650727665e-07,
+          "instance": "XDUT.XCTRL.XBIT5.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1833258619126126,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 14,
+          "nodes": [
+            "xdut.xctrl.xbit5.xstore.xff.mq_x",
+            "xdut.xctrl.xbit5.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.123019782073083e-09,
+          "max_sliding_over_s": 1.3149833731162399e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432640944863e-07,
+          "instance": "XDUT.XCTRL.XBIT4.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1833257277879747,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 15,
+          "nodes": [
+            "xdut.xctrl.xbit4.xstore.xff.mq_x",
+            "xdut.xctrl.xbit4.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.1230532448857581e-09,
+          "max_sliding_over_s": 1.3149825971048877e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432628944566e-07,
+          "instance": "XDUT.XCTRL.XBIT3.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1833255322273004,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 15,
+          "nodes": [
+            "xdut.xctrl.xbit3.xstore.xff.mq_x",
+            "xdut.xctrl.xbit3.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.1230536055763158e-09,
+          "max_sliding_over_s": 1.3149815936736594e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432613843207e-07,
+          "instance": "XDUT.XCTRL.XBIT2.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1833252746181302,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 15,
+          "nodes": [
+            "xdut.xctrl.xbit2.xstore.xff.mq_x",
+            "xdut.xctrl.xbit2.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.386004872240328e-09,
+          "max_sliding_over_s": 1.3149801570570765e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432593776416e-07,
+          "instance": "XDUT.XCTRL.XBIT1.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1833250945700395,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 17,
+          "nodes": [
+            "xdut.xctrl.xbit1.xstore.xff.mq_x",
+            "xdut.xctrl.xbit1.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.436347322394903e-09,
+          "max_sliding_over_s": 1.3149778551137522e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 9.602432563360933e-07,
+          "instance": "XDUT.XCTRL.XBIT0.XSTORE.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.183324336040064,
+          "peak_time_s": 1.660116283685074e-06,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 19,
+          "nodes": [
+            "xdut.xctrl.xbit0.xstore.xff.mq_x",
+            "xdut.xctrl.xbit0.xstore.xff.net176"
+          ]
+        },
+        {
+          "total_over_s": 1.1276600006268766e-09,
+          "max_sliding_over_s": 1.6604993899676558e-10,
+          "terminal_pair": "gd",
+          "in_rule": true,
+          "worst_window_end_s": 2.0341381616234685e-07,
+          "instance": "XDUT.XCOMP.MNINP",
+          "verdict": "violation",
+          "peak_abs_V": 1.205524099961127,
+          "peak_time_s": 2.032860634087102e-07,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 7,
+          "nodes": [
+            "xdut.topp",
+            "xdut.xcomp.y"
+          ]
+        }
+      ],
+      "worst_peak": {
+        "total_over_s": 1.1276600006268766e-09,
+        "max_sliding_over_s": 1.6604993899676558e-10,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 2.0341381616234685e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "violation",
+        "peak_abs_V": 1.205524099961127,
+        "peak_time_s": 2.032860634087102e-07,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 7,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 1.1276600006268766e-09,
+        "max_sliding_over_s": 1.6604993899676558e-10,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 2.0341381616234685e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "violation",
+        "peak_abs_V": 1.205524099961127,
+        "peak_time_s": 2.032860634087102e-07,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 7,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "max_native_step_ps": 2.0000000009022405,
+      "observed_codes_pass": true,
+      "engineering_verdict": "fail",
+      "module_summary": {
+        "XCDAC": {
+          "peak_V": 1.01589693755686,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCOMP": {
+          "peak_V": 1.205524099961127,
+          "max_over_ps": 166.04993899676558,
+          "violation_pairs": 1
+        },
+        "XCTRL": {
+          "peak_V": 1.1834415960759108,
+          "max_over_ps": 131.5273496881511,
+          "violation_pairs": 8
+        },
+        "XIDLE": {
+          "peak_V": 1.021895129532666,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XREF": {
+          "peak_V": 1.0805378800233656,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSAMPLE": {
+          "peak_V": 0.9932919373441639,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSEQ": {
+          "peak_V": 1.0734846793944477,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        }
+      },
+      "outside_rule_peaks": {
+        "thick_oxide_gs_gd_ds": {
+          "terminal_pair": "gd",
+          "in_rule": false,
+          "instance": "XDUT.XBOOTP.Mmain",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.6568313580861995,
+          "peak_time_s": 1.561919017135869e-06,
+          "model": "nch_18_mac",
+          "nodes": [
+            "xdut.topp",
+            "xdut.xbootp.g"
+          ]
+        },
+        "thin_oxide_body_pairs": {
+          "terminal_pair": "bd",
+          "in_rule": false,
+          "instance": "XDUT.XCTRL.XBIT0.XSTORE.XFF.MM4",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.140940936210557,
+          "peak_time_s": 1.360085219907416e-06,
+          "model": "nch_mac",
+          "nodes": [
+            "0",
+            "xdut.xctrl.xbit0.xstore.xff.qf"
+          ]
+        }
+      }
+    },
+    {
+      "corner": "ffh",
+      "coarse_source": {
+        "run_id": "sar8-minref-soa-ffh-song-v2-fast-v1",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ffh-song-v2-fast-v1/collected/derived/result.json",
+        "sha256": "1ab56e77d823e53fadb0ef6ef0937dd4f45cab01bdcab91db05c37ef689fdfc9"
+      },
+      "coarse_peak_V": 1.1912590342393834,
+      "coarse_max_over_ps": 173.50060664342007,
+      "coarse_max_native_step_ps": 10.000000000911312,
+      "coarse_violation_pair_count": 1,
+      "refined_source": {
+        "run_id": "sar8-minref-soa-ffh-song-v3-step2p",
+        "result_path": "work/output/managed_execution/runs/sar8-minref-soa-ffh-song-v3-step2p/collected/derived/result.json",
+        "sha256": "a21bbede554a0a95736967948785c9ca04cc21e5ba4c1602a34c4d60c3f1c248"
+      },
+      "peak_change_V": -2.40254232952708e-07,
+      "max_over_change_ps": -0.0028308821405526267,
+      "resolution_review": "10 ps and 2 ps full-transient results compared",
+      "verdict_stable": true,
+      "peak_V": 1.1912587939851504,
+      "max_over_ps": 173.49777576127954,
+      "violation_pair_count": 1,
+      "violations": [
+        {
+          "total_over_s": 1.1597599017092195e-09,
+          "max_sliding_over_s": 1.7349777576127953e-10,
+          "terminal_pair": "gd",
+          "in_rule": true,
+          "worst_window_end_s": 1.5037159998455502e-06,
+          "instance": "XDUT.XCOMP.MNINP",
+          "verdict": "violation",
+          "peak_abs_V": 1.1912587939851504,
+          "peak_time_s": 2.035874166513377e-07,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 7,
+          "nodes": [
+            "xdut.topp",
+            "xdut.xcomp.y"
+          ]
+        }
+      ],
+      "worst_peak": {
+        "total_over_s": 1.1597599017092195e-09,
+        "max_sliding_over_s": 1.7349777576127953e-10,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.5037159998455502e-06,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "violation",
+        "peak_abs_V": 1.1912587939851504,
+        "peak_time_s": 2.035874166513377e-07,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 7,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 1.1597599017092195e-09,
+        "max_sliding_over_s": 1.7349777576127953e-10,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.5037159998455502e-06,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "violation",
+        "peak_abs_V": 1.1912587939851504,
+        "peak_time_s": 2.035874166513377e-07,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 7,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "max_native_step_ps": 2.0000000009022405,
+      "observed_codes_pass": true,
+      "engineering_verdict": "fail",
+      "module_summary": {
+        "XCDAC": {
+          "peak_V": 1.004697117867666,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XCOMP": {
+          "peak_V": 1.1912587939851504,
+          "max_over_ps": 173.49777576127954,
+          "violation_pairs": 1
+        },
+        "XCTRL": {
+          "peak_V": 1.0938331136104404,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XIDLE": {
+          "peak_V": 1.009979754203417,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XREF": {
+          "peak_V": 1.0434029040393649,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSAMPLE": {
+          "peak_V": 0.9913634040867004,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        },
+        "XSEQ": {
+          "peak_V": 1.0253800683429883,
+          "max_over_ps": 0.0,
+          "violation_pairs": 0
+        }
+      },
+      "outside_rule_peaks": {
+        "thick_oxide_gs_gd_ds": {
+          "terminal_pair": "gd",
+          "in_rule": false,
+          "instance": "XDUT.XBOOTN.Mmain",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.6652327099177988,
+          "peak_time_s": 1.462105879753163e-06,
+          "model": "nch_18_mac",
+          "nodes": [
+            "xdut.topn",
+            "xdut.xbootn.g"
+          ]
+        },
+        "thin_oxide_body_pairs": {
+          "terminal_pair": "bd",
+          "in_rule": false,
+          "instance": "XDUT.XCTRL.XBIT0.XSTORE.XFF.MM4",
+          "verdict": "outside_rule",
+          "peak_abs_V": 1.095975918278085,
+          "peak_time_s": 1.360088777504562e-06,
+          "model": "nch_mac",
+          "nodes": [
+            "0",
+            "xdut.xctrl.xbit0.xstore.xff.qf"
+          ]
+        }
+      }
+    }
+  ],
+  "independent_backend_comparison": {
+    "scope": "Entire TT native waveform and all terminal pairs",
+    "peak_difference_V": 0.0,
+    "duration_difference_s": 0.0,
+    "verdicts_identical": true
+  },
+  "original_capture_error": "sar8-minref-soa-tt-song-v1: case-folded save names ignored; capture interrupted and retained, excluded from verdict.",
+  "limitations": [
+    "Only gs/gd/ds of classified thin-oxide MOS are qualified under the adopted engineering rule.",
+    "Body pairs and thick-oxide devices are recorded in per-terminal results but not qualified.",
+    "No MC, noise, PEX, supply ramp, or broader input coverage in this test.",
+    "CMI warnings and Spectre LTE-relaxation warnings remain in original logs.",
+    "Only TT and FF corners have a separate 2 ps maximum-step convergence comparison."
+  ]
+}

@@ -1,0 +1,81 @@
+# Authoritative project engineering screen; not a foundry reliability envelope.
+schema_version: 1
+rule_id: sar8-thin-oxide-transient-v1
+adopted_on: '2026-11-15'
+authority: user_adopted_project_rule
+source:
+  issue: https://github.com/many-question/ADC-12b-100M/issues/136
+  revision: 44f52bc
+  limits: https://github.com/many-question/ADC-12b-100M/blob/44f52bc/specs/soa.yaml
+  transient: https://github.com/many-question/ADC-12b-100M/blob/44f52bc/specs/soa_rule.yaml
+foundry_reliability_qualified: false
+
+scope:
+  modules: all
+  corners: all_required_by_test
+  include_startup: true
+  include_native_standard_cell_internal_devices: true
+  voltage_measure: absolute_terminal_difference
+  mos_terminal_pairs: [gs, gd, ds]
+  moscap_terminal_pairs: [pn]
+  thin_oxide_mos_models:
+    - nch_mac
+    - nch_lvt_mac
+    - nch_ulvt_mac
+    - nch_hvt_mac
+    - nch_uhvt_mac
+    - nch_ehvt_mac
+    - nch_avt_mac
+    - nch_na_mac
+    - pch_mac
+    - pch_lvt_mac
+    - pch_ulvt_mac
+    - pch_hvt_mac
+    - pch_uhvt_mac
+    - pch_ehvt_mac
+  thin_oxide_moscap_models: [nmoscap, pmoscap]
+  thick_oxide_models_outside_this_rule:
+    - nch_18_mac
+    - pch_18_mac
+    - nch_na18_mac
+    - nmoscap_18
+    - pmoscap_18
+  unclassified_device: unverified
+  body_terminal_pairs: outside_rule_retain_diagnostics
+  thick_oxide_verdict: outside_rule_not_qualified
+
+limits:
+  continuous_V: 1.1
+  peak_V: 1.29  # Adopt the literal upstream value; 0.99 * 1.3 is 1.287, not 1.29.
+  window_s: 10.0e-9
+  max_over_s: 100.0e-12
+  over_threshold_operator: strictly_greater
+  peak_and_duration_operator: less_than_or_equal
+  duration: sum_of_all_above_threshold_intervals_in_each_sliding_window
+  evaluate_independently_per: device_and_terminal_pair
+  pass_expression: 'max_abs_V <= continuous_V OR (max_abs_V <= peak_V AND max_sliding_over_s <= max_over_s)'
+
+evidence:
+  waveform: native_transient_terminal_voltages
+  threshold_crossings: interpolate_between_native_samples
+  required:
+    - exact_run_and_frozen_netlist_identity
+    - rule_id_and_rule_file_sha256
+    - complete_device_model_and_terminal_mapping
+    - full_transient_coverage_including_startup
+    - peak_and_sliding_window_duration_per_device_and_pair
+    - worst_event_times_and_raw_waveform_references
+    - temporal_resolution_review_for_peaks_and_100ps_duration
+    - reviewed_results_for_every_required_corner
+  missing_or_error_or_unreviewed: unverified
+  behavioral_only: unverified
+  printed_warning_log_alone: insufficient
+  decimated_plot_waveform_alone: insufficient
+
+preservation:
+  pdk_model_warning_limits: unchanged
+  original_warnings_and_results: immutable
+  design_supply_and_timing_specs: unchanged
+  reassessment: separate_result_bound_to_source_and_rule_hash
+  waveform_reanalysis: managed_analysis_only_bound_to_completed_source
+  missing_terminal_waveforms: new_managed_simulation_required

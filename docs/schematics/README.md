@@ -1,5 +1,7 @@
 # RNL 原理图
 
+注意：现有生成文件仍是历史 B 快照，未随 2026-11-15 最简参考版采用而重绘。当前连接以 [design/dut.scs](../../design/dut.scs) 和 [manifest](../../design/manifest.json) 为准；OA/Canvas 不宣称同步。
+
 顶层和六个模块的绘图记录直接写在[当前源网表](../../design/README.md)的 `// @RNL` 注释中；共用符号为 [sar8.rnl](../../design/rnl/sar8.rnl)。49 个本地子电路按电路拓扑排列：比较器对称再生、Bootstrap 预充与升压、两侧 MOM 阵列、参考与 SAR 位片、RC 和主动 clear。总共提供 83 个层次，包含独立测试台及外部接口。
 
 ## 查看

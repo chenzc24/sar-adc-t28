@@ -54,6 +54,9 @@ def build(name='current',root=None,candidate_overrides=None):
         blobs[item['target']]=(root/item['file']).read_bytes()
     owners={}
     arity=dict(external_arity)
+    # Native zero-voltage current probes join separately exposed interface pins.
+    # They are ideal wires, not behavioral replacement gates or extra drivers.
+    arity['iprobe']=2
     for filename,body in blobs.items():
         for master,definition in candidates.definitions(body.decode('utf-8')).items():
             if master in owners: raise ValueError('Duplicate candidate master: '+master)

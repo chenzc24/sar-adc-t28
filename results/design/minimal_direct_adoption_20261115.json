@@ -1,0 +1,62 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_minref_v1",
+  "adopted_on": "2026-11-15",
+  "authority": "user_explicit_adoption_after_five_corner_terminal_review",
+  "reference_candidate": "minimal_direct",
+  "other_modules": "unchanged B implementations",
+  "source_sha256": {
+    "dut.scs": "dafdb097975757402727450da2e890de44fc82f5bf78b616b0aa6cea72dad20c",
+    "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "xtor/reference/minimal_direct.scs": "e6eee711cc8eec5da5579cbfcbd9b02ef34a9952eff879e6ab851313a5879eeb",
+    "xtor/sar/sar.scs": "999a315b03e3d51ed313e5c1ffda309daa91fb2fcfc2f6ef2f61d1cf83fb3eec"
+  },
+  "historical_frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+  "rule_path": "specs/soa_rule.yaml",
+  "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+  "evidence": "results/soa/minimal_reference_five_corner_20261115.json",
+  "qualification": {
+    "five_corner_observed_codes": "18/18 each corner",
+    "soa": "TT/SSC/SSH pass measured scope; FFC/FFH fail duration",
+    "open_failures": [
+      "FF cold/hot XCOMP.MNINP |Vgd|",
+      "FF cold XCTRL.XBIT[7:0].XSTORE.XFF.MM64 |Vds|"
+    ],
+    "full_static_fft_mc": "not transferred from frozen B",
+    "body_and_thick_oxide": "outside adopted thin-oxide screen",
+    "oa_canvas_generated_schematics": "not synchronized"
+  },
+  "change": "Selection/include/manifest/documentation only; measured circuit bytes preserved; no new simulation or device sizing.",
+  "validation": {
+    "source_comparison_run": "sar8-minref-soa-tt-song-v2",
+    "all_current_sources_match_measured": true,
+    "include_path_rename_only": true,
+    "frozen_b_bytes_unchanged": true,
+    "explicit_reference_b_override_preserved": true,
+    "source_comparison": {
+      "dut.scs": "include path rename only",
+      "top/adc_top.scs": "identical measured bytes",
+      "xtor/bootstrap/bootstrap.scs": "identical measured bytes",
+      "xtor/cdac/cdac.scs": "identical measured bytes",
+      "xtor/clock/delays.scs": "identical measured bytes",
+      "xtor/common/standard_cells.scs": "identical measured bytes",
+      "xtor/comparator/comparator.scs": "identical measured bytes",
+      "xtor/reference/minimal_direct.scs": "identical measured bytes",
+      "xtor/sar/sar.scs": "identical measured bytes"
+    },
+    "local_checks": {
+      "entry_tests": 3,
+      "interface_tests": 9,
+      "reference_short_tests": 6,
+      "rnl_tests": 6,
+      "result": "passed",
+      "current_short_package": "work/decks/sar8-minref-minimal-tt-adoption-20261115/recipe.yaml",
+      "simulation_submitted": false
+    },
+    "legacy_analyzers": "Use reference_short for current native full-DUT acceptance; frozen B capture-count analyzers are not automatically adapted."
+  }
+}

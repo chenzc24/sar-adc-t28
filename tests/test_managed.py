@@ -20,6 +20,50 @@ else:
 
 
 class ExecutionChecks(unittest.TestCase):
+    def test_unified_cgroup_unlimited_child_retains_parent_limits(self):
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);parent=base/'user.slice';child=parent/'user-596.slice';child.mkdir(parents=True)
+            for p,values in [(parent,{'memory.max':'4096','memory.current':'1024','cpu.max':'200000 100000'}),
+                             (child,{'memory.max':'max','memory.current':'512','cpu.max':'max 100000','cpuset.cpus.effective':'0-3,8'})]:
+                for n,v in values.items():(p/n).write_text(v)
+            groups,limits=agent.cgroup_v2('/user.slice/user-596.slice',8192,base.as_posix())
+            self.assertEqual(min(v['headroom'] for v in groups.values()),3072)
+            self.assertEqual(min(limits),2)
+            self.assertTrue(any(v['limit'] is None for v in groups.values()))
+            self.assertEqual(agent.cgroup_v2('/none',8192,(base/'missing').as_posix()),({},[]))
+
+    def test_host_binding_survives_default_change_and_rejects_relocation(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(execution,'SPEC_ROOT',Path(folder)), \
+             mock.patch.object(project,'remote_host',return_value='thu-sui'):
+            project.save(Path(folder)/'old.yaml',{'managed':True})
+            project.save(Path(folder)/'new.yaml',{'remote_host':'thu-sui'})
+            self.assertEqual(execution.request_host({'run_id':'old'}),'thu-wei')
+            self.assertEqual(execution.request_host({'run_id':'new'}),'thu-sui')
+            self.assertEqual(execution.request_host({'run_id':'unregistered'},'thu-wei'),'thu-wei')
+            project.save(Path(folder)/'song.yaml',{'remote_host':'thu-song'})
+            self.assertEqual(execution.request_host({'run_id':'song'}),'thu-song')
+            with self.assertRaises(ValueError):execution.request_host({'run_id':'song'},'thu-wei')
+            with self.assertRaises(ValueError):execution.request_host({'run_id':'old'},'thu-sui')
+            with self.assertRaises(ValueError):execution.request_host({},'unapproved-host')
+
+    def test_wrong_endpoint_rejected_before_mutation(self):
+        with mock.patch.object(agent.os,'getuid',return_value=596,create=True), \
+             mock.patch.object(agent.socket,'gethostname',return_value='thu-wei'), \
+             mock.patch.object(agent,'storage_init') as init:
+            with self.assertRaises(AssertionError):agent.main({'action':'init','expected_host':'thu-sui'})
+            init.assert_not_called()
+
+    def test_cancel_preserves_completion_and_does_not_signal_stale_identity(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(agent,'runpath',return_value=folder), \
+             mock.patch.object(agent,'owned'), mock.patch.object(agent.fcntl,'flock'), \
+             mock.patch.object(agent.os,'kill',create=True) as kill:
+            with mock.patch.object(agent,'inspect',return_value={'simulation':{'status':'complete'}}):
+                self.assertFalse(agent.cancel('example','simulation','user request')['changed'])
+            with mock.patch.object(agent,'inspect',return_value={'simulation':{'status':'queued','worker_identity':{'pid':1}}}), \
+                 mock.patch.object(agent,'same_process',return_value=False):
+                with self.assertRaises(AssertionError):agent.cancel('example','simulation','user request')
+            kill.assert_not_called()
+
     def test_status_reads_server_without_a_local_run_registry(self):
         with tempfile.TemporaryDirectory() as folder, \
              mock.patch.object(execution,'OUT',Path(folder)), \

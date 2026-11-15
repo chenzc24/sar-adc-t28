@@ -28,7 +28,18 @@ def root_path(value):
     p=p.resolve()
     if not p.is_relative_to(ROOT) or not p.is_file() or p.is_symlink():raise ValueError('Input must be a project file: '+value)
     return p
-def rpc(request,timeout=45):
+def request_host(request,host=None):
+    run_id=request.get('run_id') or request.get('recipe',{}).get('run_id')
+    record=SPEC_ROOT/(valid_id(run_id)+'.yaml') if run_id else None
+    bound=project.load(record).get('remote_host','thu-wei') if record and record.exists() else None
+    if host and bound and host!=bound:raise ValueError('Run is bound to '+bound)
+    chosen=bound or host or project.remote_host()
+    if chosen not in ('thu-wei','thu-sui','thu-song'):raise ValueError('Unsupported execution host')
+    return chosen
+
+def rpc(request,timeout=45,host=None):
+    host=request_host(request,host)
+    request=dict(request,expected_host=host)
     OUT.mkdir(parents=True,exist_ok=True);stamp=str(time.time_ns());folder=OUT/'transport';folder.mkdir(exist_ok=True)
     agent=ROOT/'tools/saradc/managed/remote_agent.py';blob=agent.read_bytes();version=hashlib.sha256(blob).hexdigest()
     payload=dict(agent=base64.b64encode(blob).decode(),agent_hash=version,request=request)
@@ -54,16 +65,20 @@ print(json.dumps({'ok':True,'result':result}))
     out=folder/(stamp+'.output.json');err=folder/(stamp+'.stderr')
     with inp.open('rb') as i,out.open('wb') as o,err.open('wb') as e:
         try:rc=subprocess.run(['ssh','-C','-o','BatchMode=yes','-o','ConnectTimeout=10','-o','ConnectionAttempts=1',
-            '-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2',project.remote_host(),cmd],stdin=i,stdout=o,stderr=e,timeout=timeout).returncode
+            '-o','ServerAliveInterval=10','-o','ServerAliveCountMax=2',host,cmd],stdin=i,stdout=o,stderr=e,timeout=timeout).returncode
         except subprocess.TimeoutExpired:rc=124
     if rc:raise RuntimeError(f'Remote result uncertain (exit {rc}); inspect {out}. Never auto-resubmit. '+err.read_text(errors='replace')[-1200:])
     response=json.loads(out.read_text(encoding='utf-8'))
     if not response.get('ok'):raise RuntimeError(str(response))
     return response['result']
 
-def storage():
-    result=rpc(dict(action='init',policy=POLICY))
+def storage(host=None):
+    host=request_host({},host)
+    result=rpc(dict(action='init',policy=POLICY),host=host)
     assert result['root']==REMOTE_ROOT and result['uid']==596 and result['probe_readback']
+    if host!=project.remote_host():
+        project.save(ROOT/'work/state/hosts'/host/'storage.json',result)
+        return result
     dest=ROOT/'work/state/storage.json';project.save(dest,result)
     cfg=project.load(ROOT/'site.local.yaml')
     cfg['roots'].update(new_run_root=REMOTE_ROOT+'/runs',new_run_root_status='owner_mount_write_read_verified')
@@ -71,13 +86,15 @@ def storage():
     project.save(ROOT/'site.local.yaml',cfg);project.save(ROOT/'work/state/execution_policy.json',POLICY)
     return result
 
-def register(spec_path):
+def register(spec_path,host=None):
     spec=project.load(root_path(spec_path));run_id=valid_id(spec['run_id']);files=[]
+    host=request_host(dict(run_id=run_id),host)
     kind=spec.get('kind','simulation')
     if kind not in ('simulation','analysis_only'):raise ValueError('Unsupported recipe kind')
     source_ref=None
     if kind=='analysis_only':
         source_id=valid_id(spec['source_run_id'])
+        if request_host(dict(run_id=source_id))!=host:raise ValueError('Analysis source must be on the same host')
         if source_id==run_id:raise ValueError('Analysis source cannot be itself')
         record=project.load(SPEC_ROOT/(source_id+'.yaml'))
         if not record.get('managed') or record['recipe'].get('kind','simulation')!='simulation':raise ValueError('Source must be a managed simulation')
@@ -139,11 +156,12 @@ def register(spec_path):
         if old['recipe_hash']!=h:raise ValueError('Run ID inputs already registered; use a new ID for changed inputs')
     else:
         target.parent.mkdir(parents=True,exist_ok=True)
-        record=dict(managed=True,recipe_hash=h,recipe=recipe,remote_path=REMOTE_ROOT+'/runs/'+run_id)
+        record=dict(managed=True,recipe_hash=h,recipe=recipe,remote_host=host,remote_path=REMOTE_ROOT+'/runs/'+run_id)
         try:
             with target.open('x',encoding='utf-8') as f:yaml.safe_dump(record,f,allow_unicode=True,sort_keys=False)
         except FileExistsError:
-            if project.load(target).get('recipe_hash')!=h:raise ValueError('Concurrent registration with different inputs; preserve the existing record')
+            concurrent=project.load(target)
+            if concurrent.get('recipe_hash')!=h or concurrent.get('remote_host','thu-wei')!=host:raise ValueError('Concurrent registration with different inputs or host; preserve the existing record')
     local.mkdir(parents=True,exist_ok=True)
     for f in files:
         dest=local/'inputs'/f['name'];dest.parent.mkdir(parents=True,exist_ok=True)
@@ -194,11 +212,13 @@ def transfer(listing,dest,request):
 
 def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument('action',choices=['storage','register','submit','run-status','analyze','collect','gate'])
+    p.add_argument('--host',choices=['thu-wei','thu-sui','thu-song'],help='Destination for new registration or storage initialization')
     p.add_argument('target',nargs='?');p.add_argument('--queue',action='store_true');p.add_argument('--phase',choices=['simulation','analysis'],default='simulation')
     a=p.parse_args(argv)
+    if a.host and a.action not in ('storage','register'):p.error('Existing runs route by their registered host')
     if a.action!='storage' and not a.target:p.error('target is required for '+a.action)
-    if a.action=='storage':result=storage()
-    elif a.action=='register':result=register(a.target)
+    if a.action=='storage':result=storage(a.host)
+    elif a.action=='register':result=register(a.target,a.host)
     elif a.action=='gate':result=admission(a.target,a.phase)
     elif a.action=='collect':result=collect(a.target)
     else:result=phase('status' if a.action=='run-status' else a.action,a.target,a.queue)

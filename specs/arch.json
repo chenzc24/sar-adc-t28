@@ -1,5 +1,5 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_v1",
   "resolution_bits": 8,
   "sample_rate_hz": 10000000.0,
   "supply_v": [
@@ -27,10 +27,11 @@
   "top": "sar_adc8_join_r4",
   "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "qualification": {
-    "terminal_voltage": "open",
+    "terminal_voltage": "five_point_short_TT_SS_pass_FF_cold_hot_fail_under_soa_rule_v1",
     "oa": "Text model work does not assert OA synchronization or modify OA",
     "pex": "not_included",
-    "virtuoso_connection": "existing_integration_reused"
+    "virtuoso_connection": "existing_integration_reused",
+    "adoption_record": "results/design/minimal_direct_adoption_20261115.json"
   },
   "schema_version": 2,
   "authority": {
@@ -38,8 +39,9 @@
     "topology": "design/top/adc_top.scs",
     "immutable_measured_source": "design/frozen/b/dut.scs",
     "top_ports_source": "design/manifest.json",
-    "physical_source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
-    "requirements_status": "Current B operating contract plus explicitly labelled engineering allocations"
+    "physical_source_sha256": null,
+    "requirements_status": "B external operating contract retained; minimal reference path adopted with known SOA failures",
+    "current_source_hashes": "results/design/minimal_direct_adoption_20261115.json"
   },
   "architecture": {
     "kind": "fully_differential_asynchronous_SAR",
@@ -224,11 +226,11 @@
       "rising_event_counts": {
         "cmp": 8,
         "write": 8,
-        "update": 8,
-        "cap": 16
+        "update": 8
       },
-      "event_order": "cmp[i] < write[i] < update[i] < cmp[i+1]; two cap rises per bit",
-      "no_fixed_bit_clock": true
+      "event_order": "cmp[i] < write[i] < update[i] < cmp[i+1]; no reference-side capture circuit in minimal_direct",
+      "no_fixed_bit_clock": true,
+      "reference_capture": "not_applicable_in_current_implementation"
     },
     "standard_cells": {
       "implementation": "design/xtor/common/standard_cells.scs",
@@ -243,16 +245,19 @@
       "quiet_cap_multi": 30,
       "write_cap_multi": 4,
       "capture_cap_multi": 10,
-      "RC_clear_devices": "explicit transistor-level circuit; retained"
+      "RC_clear_devices": "explicit transistor-level circuit; retained",
+      "scope": "SAR quiet/write/guard remain active; reference capture/bbm definitions retained but not used by minimal XREF"
     },
     "reference_control": {
-      "implementation": "design/xtor/reference/reference.scs",
+      "implementation": "design/xtor/reference/minimal_direct.scs",
       "features": [
-        "nonoverlap",
-        "gate_drivers",
-        "idle_reset",
-        "preset"
-      ]
+        "CODE_direct",
+        "common_PRESET_initial_state",
+        "native_gate_drivers",
+        "unchanged_common_idle"
+      ],
+      "reference_side_storage": false,
+      "nonoverlap_guaranteed": false
     }
   },
   "loading": {
@@ -455,6 +460,13 @@
       "behavioral_output_r_ohm": 100,
       "reference_deadtime_s": 1e-10,
       "qualification": "Engineering behavioral defaults; unit C uses the existing nominal characterization, remaining values are not extracted physical B parameters"
+    },
+    "physical_calibration_source": "historical frozen B; not recalibrated to minimal_direct",
+    "historical_b_rising_event_counts": {
+      "cmp": 8,
+      "write": 8,
+      "update": 8,
+      "cap": 16
     }
   }
 }

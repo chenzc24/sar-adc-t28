@@ -236,7 +236,9 @@ def layout(name,body,portmap):
     elif name=='sar8p_bitseq8':bitseq(s)
     elif name=='sar8p_timing':timing(s)
     elif name in {'sar8i_ctrl','sar_logic_8b_physical'}:sar(s)
-    elif name in {'sar8i_refword','sar8s_refword','sar8p_refword'}:refword(s)
+    elif name in {'sar8i_refword','sar8s_refword','sar8p_refword'}:
+        if 'X000' in s.parts:refword(s)
+        else:graph(s)
     else:simple(s)
     return s.finish()
 

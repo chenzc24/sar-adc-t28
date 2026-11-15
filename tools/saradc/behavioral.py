@@ -36,8 +36,8 @@ def generated():
     quant=lsb/math.sqrt(12)
     rss=math.sqrt(quant**2+jitter**2+sum(x*x for x in noise.values()))
     projected=20*math.log10(amplitude/math.sqrt(2)/rss)
-    lines=['# B 版总设计规格','',
-      '本页由 [specs/arch.json](../specs/arch.json) 生成。电气实现是冻结 B，行为模型用于算法与协议交叉验证。测量、工程分配和未定项分别列出。','',
+    lines=['# SAR8 总设计规格','',
+      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_direct`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_direct_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。','',
       '## 架构与外部接口','',
       '- 8 bit、10 MS/s，全差分异步 SAR，flat binary CDAC；每侧 255 单位二进制电容加 1 单位 dummy，无桥电容。',
       '- 顶层端口顺序：`'+' '.join(a['interface']['port_order'])+'`。',
@@ -63,11 +63,11 @@ def generated():
       '- CDAC：18 个 `cfmom_2t` 实例；单位几何 nr=8、lr=2 µm、w=s=50 nm、stm=1、spm=3，multi 按 1..128 缩放。N/P 侧 dummy 分别接 VREFN/VREFP。同单位几何的既有低频 AC 提取约 4.00407 fF，每侧 256 单位约 1.02504 pF；这是有偏置/频率条件的表征值，不是恒定器件值。旧 6.86047 fF 比较值和 512 独立单元的失配统计不归给当前 18 个分组实例。',
       '- 参考开关：L=%g nm，NMOS W=%g nm、PMOS W=%g nm，multi=%d·2^bit。'%(cdac['reference_switch_l_m']*1e9,cdac['n_switch_w_m']*1e9,cdac['p_switch_w_m']*1e9,cdac['switch_multi_lsb_first'][0]),
       '- 比较器：%d MOS StrongARM；输入对 W=%g µm/L=%g nm，尾管 W=%g µm，再生 N/P W=%g/%g nm。'%(comp['MOS_count'],comp['input_pair_w_m']*1e6,comp['input_pair_l_m']*1e9,comp['tail_w_m']*1e6,comp['regeneration_n_w_m']*1e9,comp['regeneration_p_w_m']*1e9),
-      '- 数字路径：原生标准单元；真实 RC、清除管、非交叠及模拟/升压域管级电路保留。',
+      '- 数字路径：原生标准单元；SAR 的 RC、清除管及模拟/升压域电路保留。参考侧采用 CODE + 公共 PRESET + 正反相驱动，取消额外 DFF/MUX、逐位复位/捕获、非交叠发生器及栅极串联电阻。',
       '- 原生标准单元 masters：`'+'`、`'.join(a['blocks']['standard_cells']['external_masters'])+'`。','',
       '## 时序合同','',
-      '每帧正常事件为 8 次比较、8 次写入、8 次参考更新、16 次捕获。逐位 `cmp < write < update < next cmp`，每位两次捕获。新采样取消未完成事件。60 ns 是帧内转换分配，不代表硬件有超时检测引脚。',
-      '八个 TT 行为事件间隔取十帧原生边沿的中位数；转换预算来自外部低相位，20 ps 输出平滑和算术正则化属于模型设定。cmp→write 包括比较器及数字接收流水，不是纯比较器再生常数。外部高相位为 40 ns，真实 Bootstrap 导通窗仍由内部栅控波形确定。','',
+      '当前最简版每帧要求 8 次比较与写入，按实际 CODE/栅控及逐位底板建立验证参考状态；参考侧已无捕获电路，不再要求 16 次捕获。新采样取消未完成事件，外部采样关闭沿保持不变。60 ns 是帧内转换分配，不代表硬件有超时检测引脚。历史冻结 B 与 B 行为模型仍有 8 次参考更新、16 次捕获的独立合同。',
+      '下表 TT 行为事件间隔取历史 B 十帧原生边沿的中位数，不能作为最简版实测时序。转换预算来自外部低相位，20 ps 输出平滑和算术正则化属于模型设定。cmp→write 包括比较器及数字接收流水，不是纯比较器再生常数。外部高相位为 40 ns，真实 Bootstrap 导通窗仍由内部栅控波形确定。','',
       '| 行为间隔 | 配置值/ns |','| --- | ---: |']
     for key,value in t.items():
         if key.endswith('_s'):lines.append('| `%s` | %.9f |'%(key,value*1e9))
@@ -85,7 +85,7 @@ def generated():
       '- 历史 0.25 LSB 偏移分配作为暂定校正后残差目标；当前未校准比较器没有被伪称满足这条线。',
       '- 200 种子模块测试与 SS/FF 冷角各 50 种子闭环的抽样范围见 [monte_carlo.json](../specs/monte_carlo.json)。闭环局部失配仅开启比较器和 CDAC。',
       '- 已有 B 版单个 TT 瞬态噪声种子，见 [噪声对照](../results/noise/comparison.json)；带宽和统计收敛尚未建立。全电路局部失配、PEX、完整共模范围、校准范围/精度、功耗积分收敛及端压可靠性仍分别保留未完成项。',
-      '- PDK 给出的端压告警和正式寿命包络分开记录；0.99 V 核心供电上限不能替代“允许多少端压、持续多久”的可靠性签核。','',
+      '- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 TT、SS 冷/热通过该测量范围，FF 冷/热持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/minimal_reference_five_corner_20261115.md)。','',
       '## 行为视图与交叉验证','',
       '[Python 模型](../design/behav/python/sar_adc.py) 与 [VA 模型](../design/behav/veriloga/sar_adc_b.va) 共用总规格和生成默认参数。无噪声为默认，支持有效位权、偏移、有限建立和比较停滞等参数。',
       '两模型的随机数流不同；确定性交叉逐例比较，随机噪声仅按各自分布建模。物理启动充电、kickback、原生 PDK MC、端压和功耗需要晶体管级模型。',

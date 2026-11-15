@@ -1,10 +1,10 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_v1",
   "source": "design/frozen/b/dut.scs",
   "source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "top": "sar_adc8_join_r4",
-  "status": "split_view_tt_short_10_frames_matched",
-  "validation": "49 exact subcircuits; historical evidence binds frozen B; migration TT receipt is recorded separately",
+  "status": "user_adopted_with_open_soa_failures",
+  "validation": "results/design/minimal_direct_adoption_20261115.json",
   "standard_cell_include": "tb/common/platform/library_include.scs",
   "reachable_from_top": [
     "sar8i_ctrl",
@@ -25,8 +25,6 @@
     "sar8p_bitseq8",
     "sar8p_buf",
     "sar8p_clkbuf",
-    "sar8p_delay_bbm",
-    "sar8p_delay_capture",
     "sar8p_delay_quiet",
     "sar8p_delay_valid",
     "sar8p_delay_write",
@@ -34,29 +32,20 @@
     "sar8p_inv",
     "sar8p_mux2",
     "sar8p_nand2",
-    "sar8p_nonoverlap",
     "sar8p_or2",
-    "sar8p_refdrv_b0",
-    "sar8p_refdrv_b1",
-    "sar8p_refdrv_b2",
-    "sar8p_refdrv_b3",
-    "sar8p_refdrv_b4",
-    "sar8p_refdrv_b5",
-    "sar8p_refdrv_b6",
-    "sar8p_refdrv_b7",
     "sar8p_sr",
     "sar8p_timing",
     "sar8p_xor2",
     "sar8r_delay",
     "sar8r_edge",
-    "sar8s_step",
     "sar_adc8_join_r4",
     "sar_bootstrap_flat_8b_p",
     "sar_strongarm_t28"
   ],
   "retained_auxiliary_definitions": [
-    "sar8p_refword",
-    "sar8s_refword",
+    "sar8p_delay_bbm",
+    "sar8p_delay_capture",
+    "sar8s_step",
     "sar_logic_8b_physical"
   ],
   "external_standard_cell_masters": [
@@ -1196,1489 +1185,6 @@
       ],
       "text_sha256": "fa39340e07333d2902af73f5f12f3887605163fe35e86732f0b84b9548ad8a13"
     },
-    "sar8p_nonoverlap": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 676,
-      "ports": [
-        "CODE",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "X000",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "XD_LD",
-          "master": "sar8p_delay_bbm"
-        },
-        {
-          "instance": "XD_HD",
-          "master": "sar8p_delay_bbm"
-        },
-        {
-          "instance": "X004",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "X002",
-          "master": "sar8p_and2"
-        }
-      ],
-      "text_sha256": "eca15df879f0149f122ada900f8e46311a17c646bfece515e1a98925110d78f8"
-    },
-    "sar8p_refdrv_b0": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 688,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "a289e78686b95ac6e920a141a9ead1ebb3bc553727e417d41060bb8be51d60cb"
-    },
-    "sar8p_refdrv_b1": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 797,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "854c587d015fe0c22abd5a7479e44b1e189a39ceac435538edbe1785c8075151"
-    },
-    "sar8p_refdrv_b2": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 906,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "55065efc09aef49975aa62ad7d2b2f036374626e82aebdef482f9267d37e411f"
-    },
-    "sar8p_refdrv_b3": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1015,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "633d82fdd1bbb41badc564bac2a16b65644270883d29df1d566695958bb53712"
-    },
-    "sar8p_refdrv_b4": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1124,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "fb9bd8ef78eaa9a57cb630fde162c908d05bda352da8bdcbdaa905c42712ca8b"
-    },
-    "sar8p_refdrv_b5": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1233,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "b22ab02e2136a3bbe6bb1c784efa74eafbae02925877511978c792ad8299b8e7"
-    },
-    "sar8p_refdrv_b6": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1342,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "50283009eb919eb1f05fd5a07b62eef53feb2024eac836f5d9ccf3ab67175d38"
-    },
-    "sar8p_refdrv_b7": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1451,
-      "ports": [
-        "GNN",
-        "GNP",
-        "GPN",
-        "GPP",
-        "H",
-        "L",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "XSTD_GNNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GNPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPNAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPCN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPBN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "XSTD_GPPAN",
-          "master": "INVD1BWP12T30P140"
-        },
-        {
-          "instance": "X025",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_inv"
-        }
-      ],
-      "text_sha256": "6537f5be99f3f9fca78bdb1af5c5910fe8a78f6a864128c4323988558eb74a45"
-    },
-    "sar8p_refword": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1564,
-      "ports": [
-        "CODE0",
-        "CODE1",
-        "CODE2",
-        "CODE3",
-        "CODE4",
-        "CODE5",
-        "CODE6",
-        "CODE7",
-        "D0",
-        "D1",
-        "D2",
-        "D3",
-        "D4",
-        "D5",
-        "D6",
-        "D7",
-        "GNN0",
-        "GNN1",
-        "GNN2",
-        "GNN3",
-        "GNN4",
-        "GNN5",
-        "GNN6",
-        "GNN7",
-        "GNP0",
-        "GNP1",
-        "GNP2",
-        "GNP3",
-        "GNP4",
-        "GNP5",
-        "GNP6",
-        "GNP7",
-        "GPN0",
-        "GPN1",
-        "GPN2",
-        "GPN3",
-        "GPN4",
-        "GPN5",
-        "GPN6",
-        "GPN7",
-        "GPP0",
-        "GPP1",
-        "GPP2",
-        "GPP3",
-        "GPP4",
-        "GPP5",
-        "GPP6",
-        "GPP7",
-        "PHI_U",
-        "SAMPLE",
-        "VDD",
-        "VSS"
-      ],
-      "instances": [
-        {
-          "instance": "X002",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X001",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X000",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X007",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "X003",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "XREQUEST",
-          "master": "sar8p_sr"
-        },
-        {
-          "instance": "XD_LATE_CLK",
-          "master": "sar8p_delay_capture"
-        },
-        {
-          "instance": "XD_ACK",
-          "master": "sar8p_delay_valid"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_clkbuf"
-        },
-        {
-          "instance": "XMUX7",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX6",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX5",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX4",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX3",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX2",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX1",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX0",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "X018",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X017",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "XSTORE7",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE6",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE5",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE4",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE3",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE2",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE1",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE0",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XBBM7",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM6",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM5",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM4",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM3",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM2",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM1",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM0",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XDRV0",
-          "master": "sar8p_refdrv_b0"
-        },
-        {
-          "instance": "XDRV1",
-          "master": "sar8p_refdrv_b1"
-        },
-        {
-          "instance": "XDRV2",
-          "master": "sar8p_refdrv_b2"
-        },
-        {
-          "instance": "XDRV3",
-          "master": "sar8p_refdrv_b3"
-        },
-        {
-          "instance": "XDRV4",
-          "master": "sar8p_refdrv_b4"
-        },
-        {
-          "instance": "XDRV5",
-          "master": "sar8p_refdrv_b5"
-        },
-        {
-          "instance": "XDRV6",
-          "master": "sar8p_refdrv_b6"
-        },
-        {
-          "instance": "XDRV7",
-          "master": "sar8p_refdrv_b7"
-        }
-      ],
-      "text_sha256": "5db72b739b2098944cf210c10f6fa8a39d654e2c51989880253ca2a90df7eaa2"
-    },
-    "sar8s_refword": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1749,
-      "ports": [
-        "CODE0",
-        "CODE1",
-        "CODE2",
-        "CODE3",
-        "CODE4",
-        "CODE5",
-        "CODE6",
-        "CODE7",
-        "D0",
-        "D1",
-        "D2",
-        "D3",
-        "D4",
-        "D5",
-        "D6",
-        "D7",
-        "GNN0",
-        "GNN1",
-        "GNN2",
-        "GNN3",
-        "GNN4",
-        "GNN5",
-        "GNN6",
-        "GNN7",
-        "GNP0",
-        "GNP1",
-        "GNP2",
-        "GNP3",
-        "GNP4",
-        "GNP5",
-        "GNP6",
-        "GNP7",
-        "GPN0",
-        "GPN1",
-        "GPN2",
-        "GPN3",
-        "GPN4",
-        "GPN5",
-        "GPN6",
-        "GPN7",
-        "GPP0",
-        "GPP1",
-        "GPP2",
-        "GPP3",
-        "GPP4",
-        "GPP5",
-        "GPP6",
-        "GPP7",
-        "PHI_U",
-        "SAMPLE",
-        "VDD",
-        "VSS",
-        "RST_DONE"
-      ],
-      "instances": [
-        {
-          "instance": "XRR7",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP1",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR6",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP2",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR5",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP3",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR4",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP4",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR3",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP5",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR2",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP6",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR1",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP7",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR0",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRDONE",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X002",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X001",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X000",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X007",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "X003",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "XREQUEST",
-          "master": "sar8p_sr"
-        },
-        {
-          "instance": "XD_LATE_CLK",
-          "master": "sar8p_delay_capture"
-        },
-        {
-          "instance": "XD_ACK",
-          "master": "sar8p_delay_valid"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_clkbuf"
-        },
-        {
-          "instance": "XMUX7",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX6",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX5",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX4",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX3",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX2",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX1",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX0",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "X018",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X017",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "XSTORE7",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE6",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE5",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE4",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE3",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE2",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE1",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE0",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XBBM7",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM6",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM5",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM4",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM3",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM2",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM1",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM0",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XDRV0",
-          "master": "sar8p_refdrv_b0"
-        },
-        {
-          "instance": "XDRV1",
-          "master": "sar8p_refdrv_b1"
-        },
-        {
-          "instance": "XDRV2",
-          "master": "sar8p_refdrv_b2"
-        },
-        {
-          "instance": "XDRV3",
-          "master": "sar8p_refdrv_b3"
-        },
-        {
-          "instance": "XDRV4",
-          "master": "sar8p_refdrv_b4"
-        },
-        {
-          "instance": "XDRV5",
-          "master": "sar8p_refdrv_b5"
-        },
-        {
-          "instance": "XDRV6",
-          "master": "sar8p_refdrv_b6"
-        },
-        {
-          "instance": "XDRV7",
-          "master": "sar8p_refdrv_b7"
-        }
-      ],
-      "text_sha256": "541de6451e1b449c1f54a7e92495861d7c78d300cfa3cabdde2cf3c3e74e3f9f"
-    },
-    "sar8i_refword": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1830,
-      "ports": [
-        "CODE0",
-        "CODE1",
-        "CODE2",
-        "CODE3",
-        "CODE4",
-        "CODE5",
-        "CODE6",
-        "CODE7",
-        "D0",
-        "D1",
-        "D2",
-        "D3",
-        "D4",
-        "D5",
-        "D6",
-        "D7",
-        "GNN0",
-        "GNN1",
-        "GNN2",
-        "GNN3",
-        "GNN4",
-        "GNN5",
-        "GNN6",
-        "GNN7",
-        "GNP0",
-        "GNP1",
-        "GNP2",
-        "GNP3",
-        "GNP4",
-        "GNP5",
-        "GNP6",
-        "GNP7",
-        "GPN0",
-        "GPN1",
-        "GPN2",
-        "GPN3",
-        "GPN4",
-        "GPN5",
-        "GPN6",
-        "GPN7",
-        "GPP0",
-        "GPP1",
-        "GPP2",
-        "GPP3",
-        "GPP4",
-        "GPP5",
-        "GPP6",
-        "GPP7",
-        "PHI_U",
-        "SAMPLE",
-        "VDD",
-        "VSS",
-        "RST_DONE",
-        "PRESET"
-      ],
-      "instances": [
-        {
-          "instance": "XRR7",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP1",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR6",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP2",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR5",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP3",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR4",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP4",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR3",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP5",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR2",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP6",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR1",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRSTEP7",
-          "master": "sar8s_step"
-        },
-        {
-          "instance": "XRR0",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XRDONE",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X002",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X001",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X000",
-          "master": "sar8p_buf"
-        },
-        {
-          "instance": "X007",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "X003",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "XREQUEST",
-          "master": "sar8p_sr"
-        },
-        {
-          "instance": "XD_LATE_CLK",
-          "master": "sar8p_delay_capture"
-        },
-        {
-          "instance": "XD_ACK",
-          "master": "sar8p_delay_valid"
-        },
-        {
-          "instance": "X008",
-          "master": "sar8p_clkbuf"
-        },
-        {
-          "instance": "XMUX7",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX6",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX5",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX4",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX3",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX2",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX1",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "XMUX0",
-          "master": "sar8p_mux2"
-        },
-        {
-          "instance": "X018",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X017",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "XSTORE7",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE6",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE5",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE4",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE3",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE2",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE1",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XSTORE0",
-          "master": "sar8p_dffr"
-        },
-        {
-          "instance": "XBBM7",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM6",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM5",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM4",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM3",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM2",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM1",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XBBM0",
-          "master": "sar8p_nonoverlap"
-        },
-        {
-          "instance": "XDRV0",
-          "master": "sar8p_refdrv_b0"
-        },
-        {
-          "instance": "XDRV1",
-          "master": "sar8p_refdrv_b1"
-        },
-        {
-          "instance": "XDRV2",
-          "master": "sar8p_refdrv_b2"
-        },
-        {
-          "instance": "XDRV3",
-          "master": "sar8p_refdrv_b3"
-        },
-        {
-          "instance": "XDRV4",
-          "master": "sar8p_refdrv_b4"
-        },
-        {
-          "instance": "XDRV5",
-          "master": "sar8p_refdrv_b5"
-        },
-        {
-          "instance": "XDRV6",
-          "master": "sar8p_refdrv_b6"
-        },
-        {
-          "instance": "XDRV7",
-          "master": "sar8p_refdrv_b7"
-        }
-      ],
-      "text_sha256": "8f0dd1f3196c5f9dfe98eb648809128a9fd5809ea9b5084bedec8b45c46e2b1c"
-    },
-    "sar8i_idle": {
-      "file": "xtor/reference/reference.scs",
-      "source_line": 1904,
-      "ports": [
-        "ACTIVE",
-        "SAMPLE",
-        "VDD",
-        "VSS",
-        "PRESET",
-        "SAMPLE_MATCH"
-      ],
-      "instances": [
-        {
-          "instance": "XN",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "XD",
-          "master": "sar8i_guard"
-        },
-        {
-          "instance": "XP",
-          "master": "sar8p_or2"
-        },
-        {
-          "instance": "XA",
-          "master": "sar8p_and2"
-        },
-        {
-          "instance": "XB",
-          "master": "sar8p_buf"
-        }
-      ],
-      "text_sha256": "7e74dca34f877fbc56985e82b0627015efc729bd81a1173ffb5da00e5020d81a"
-    },
     "sar_adc8_join_r4": {
       "file": "top/adc_top.scs",
       "source_line": 1721,
@@ -2738,6 +1244,277 @@
         }
       ],
       "text_sha256": "36516c02761de19602f8e4ee1889d02f3e3ca44491b9ecd8797e360a18db4a77"
+    },
+    "sar8i_refword": {
+      "file": "xtor/reference/minimal_direct.scs",
+      "source_line": 4,
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "RST_DONE",
+        "PRESET"
+      ],
+      "instances": [
+        {
+          "instance": "XPRESET_N",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XINITIAL0",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN0",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN0",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP0",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP0",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL1",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN1",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN1",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP1",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP1",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL2",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN2",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN2",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP2",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP2",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL3",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN3",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN3",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP3",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP3",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL4",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN4",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN4",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP4",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP4",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL5",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN5",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN5",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP5",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP5",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL6",
+          "master": "sar8p_nand2"
+        },
+        {
+          "instance": "XPN6",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN6",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP6",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP6",
+          "master": "iprobe"
+        },
+        {
+          "instance": "XINITIAL7",
+          "master": "sar8p_or2"
+        },
+        {
+          "instance": "XINV7",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XPN7",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XNN7",
+          "master": "sar8p_buf"
+        },
+        {
+          "instance": "WNP7",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WPP7",
+          "master": "iprobe"
+        },
+        {
+          "instance": "WUNUSED",
+          "master": "iprobe"
+        }
+      ],
+      "text_sha256": "ede397cbbb73d0dfbe851df08f9bb474a2e3e09416dd051c564ada78e492c54f"
+    },
+    "sar8i_idle": {
+      "file": "xtor/reference/minimal_direct.scs",
+      "source_line": 50,
+      "ports": [
+        "ACTIVE",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "PRESET",
+        "SAMPLE_MATCH"
+      ],
+      "instances": [
+        {
+          "instance": "XN",
+          "master": "sar8p_inv"
+        },
+        {
+          "instance": "XD",
+          "master": "sar8i_guard"
+        },
+        {
+          "instance": "XP",
+          "master": "sar8p_or2"
+        },
+        {
+          "instance": "XA",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XB",
+          "master": "sar8p_buf"
+        }
+      ],
+      "text_sha256": "7e74dca34f877fbc56985e82b0627015efc729bd81a1173ffb5da00e5020d81a"
     }
-  }
+  },
+  "source_role": "immutable historical B provenance; current source files are declared by subcircuits and candidates.json"
 }

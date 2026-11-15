@@ -21,7 +21,7 @@ class RnlChecks(unittest.TestCase):
 
     def test_native_comments_preserve_statements_and_cover_every_instance(self):
         native=[n for n in self.levels if self.origin[n].startswith(('design/top','design/xtor'))]
-        self.assertEqual(len(native),49)
+        self.assertEqual(len(native),38)
         for n in native:
             body=self.levels[n];drawn,count=annotate(n,body,self.ports)
             self.assertEqual(schematic.electrical_statements(body),schematic.electrical_statements(drawn),n)

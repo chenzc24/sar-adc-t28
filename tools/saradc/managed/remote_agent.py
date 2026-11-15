@@ -65,11 +65,37 @@ def managed_process(pid):
     except (IOError,OSError,ValueError,KeyError,AssertionError):pass
     return None
 
+def cgroup_v2(path,mem_available,base='/sys/fs/cgroup'):
+    """Read every unified ancestor; explicit 'max' is observed, not missing."""
+    groups={};quotas=[];parts=path.strip('/').split('/') if path.strip('/') else []
+    assert all(p not in ('.','..') for p in parts)
+    for i in range(len(parts)+1):
+        folder=base+('/'+'/'.join(parts[:i]) if i else '')
+        try:
+            with open(folder+'/memory.max') as f:raw=f.read().strip()
+            with open(folder+'/memory.current') as f:used=int(f.read())
+            limit=None if raw=='max' else int(raw)
+            groups[folder]=dict(version=2,limit=limit,used=used,
+                headroom=mem_available if limit is None else max(0,limit-used),memory_max=raw)
+        except IOError:pass
+        try:
+            with open(folder+'/cpu.max') as f:value,period=f.read().split()
+            if value!='max':quotas.append(float(value)/int(period))
+        except IOError:pass
+        try:
+            with open(folder+'/cpuset.cpus.effective') as f:ranges=f.read().strip().split(',')
+            if ranges!=['']:
+                quotas.append(float(sum(int(r.split('-')[1])-int(r.split('-')[0])+1 if '-' in r else 1 for r in ranges)))
+        except IOError:pass
+    return groups,quotas
+
 def snapshot():
     mem={s.split(':')[0]:int(s.split(':')[1].split()[0])*1024 for s in open('/proc/meminfo')}
     cg={};quota=[]
     for line in open('/proc/self/cgroup'):
         _,controllers,p=line.strip().split(':',2)
+        if controllers=='':
+            unified,limits=cgroup_v2(p,mem['MemAvailable']);cg.update(unified);quota.extend(limits)
         if 'memory' in controllers.split(','):
             base='/sys/fs/cgroup/memory';parts=p.strip('/').split('/')
             for i in range(len(parts)+1):
@@ -128,7 +154,7 @@ def gate(recp,phase,obs,pol):
     if not obs['cgroups']:reasons.append('user_cgroup_observation_missing')
     return dict(pass_gate=not reasons,reasons=reasons,snapshot=obs,phase=phase,policy_sha256=sha(ROOT+'/policy.json') if os.path.exists(ROOT+'/policy.json') else None)
 def storage_init(req):
-    assert os.getuid()==UID and socket.gethostname().split('.')[0]=='thu-wei'
+    assert os.getuid()==UID and socket.gethostname().split('.')[0]==req['expected_host']
     parent='/server_local_ssd/chenzc_intern25';owned(parent)
     mounts=[s.split() for s in open('/proc/mounts')]
     mount=next(s for s in mounts if s[1]=='/server_local_ssd')
@@ -140,7 +166,7 @@ def storage_init(req):
     assert read(probe)['uid']==UID
     write(ROOT+'/policy.json',req['policy'])
     s=os.stat(ROOT);fs=os.statvfs(ROOT)
-    return dict(root=ROOT,uid=s.st_uid,mode=oct(s.st_mode & 0o777),mount_device=mount[0],filesystem=mount[2],
+    return dict(host=socket.gethostname(),root=ROOT,uid=s.st_uid,mode=oct(s.st_mode & 0o777),mount_device=mount[0],filesystem=mount[2],
         available_bytes=fs.f_bavail*fs.f_frsize,probe_sha256=sha(probe),probe_readback=True,
         retention_policy='scratch; administrator retention/backup guarantees not established',historical_data_changed=False)
 def register(req):
@@ -164,7 +190,7 @@ def register(req):
     write(path+'/recipe.json',recp);write(path+'/registered.json',dict(recipe_hash=fingerprint,epoch=time.time(),files_complete=True))
     return dict(existing=False,path=path,recipe_hash=fingerprint)
 def inspect(run_id):
-    path=runpath(run_id);owned(path);result=dict(run_id=run_id,path=path,registered=read(path+'/registered.json'))
+    path=runpath(run_id);owned(path);result=dict(host=socket.gethostname(),run_id=run_id,path=path,registered=read(path+'/registered.json'))
     for phase in ['simulation','analysis']:
         p=path+'/'+phase+'.state.json'
         s=read(p) if os.path.isfile(p) else dict(status='not_started')
@@ -230,6 +256,57 @@ def group_usage(pgid):
             rss+=int(s.get('VmRSS','0 kB').split()[0])*1024;members.append(int(pid))
         except IOError:pass
     return rss,members
+
+def cancel(run_id,phase,reason):
+    """Stop only the exact registered worker/child; preserve completed evidence."""
+    assert phase in ('simulation','analysis') and reason
+    path=runpath(run_id);owned(path)
+    launch=open(path+'/'+phase+'.launch.lock','a');fcntl.flock(launch,fcntl.LOCK_EX)
+    frozen=None
+    try:
+        old=inspect(run_id)[phase]
+        if old.get('status') in TERMINAL:return dict(changed=False,state=old)
+        worker_id=old.get('worker_identity')
+        assert same_process(worker_id),'Worker identity unavailable; reconcile without signalling'
+        owned('/proc/'+str(worker_id['pid']))
+        args=open('/proc/'+str(worker_id['pid'])+'/cmdline','rb').read().decode().split('\x00')
+        assert args[2:5]==['worker',run_id,phase],'Not the registered worker command'
+        os.kill(worker_id['pid'],signal.SIGSTOP);frozen=worker_id
+        for _ in range(100):
+            current=identity(worker_id['pid'])
+            if current and current['state'] in ('T','t'):break
+            time.sleep(.01)
+        else:raise RuntimeError('Worker did not stop for cancellation inspection')
+        old=read(path+'/'+phase+'.state.json')
+        if old.get('status') in TERMINAL:return dict(changed=False,state=old)
+        child=old.get('child_identity')
+        children=open('/proc/%d/task/%d/children'%(worker_id['pid'],worker_id['pid'])).read().split()
+        assert all(child and int(p)==child['pid'] for p in children),'Unrecorded child; resume and reconcile'
+        if old.get('status')=='running' and not same_process(child):
+            return dict(changed=False,finishing=True,state=old)
+        receipt=dict(host=socket.gethostname(),run_id=run_id,phase=phase,reason=reason,prior_state=old,epoch=time.time())
+        write(path+'/'+phase+'.cancel.json',receipt)
+        if same_process(child):
+            owned('/proc/'+str(child['pid']))
+            assert child['pgid']==child['pid'],'Child is not its own process group'
+            os.killpg(child['pgid'],signal.SIGTERM)
+            for _ in range(30):
+                if not same_process(child):break
+                time.sleep(.1)
+            if same_process(child):os.killpg(child['pgid'],signal.SIGKILL)
+        assert same_process(worker_id),'Worker identity changed during cancellation'
+        os.kill(worker_id['pid'],signal.SIGTERM)
+        os.kill(worker_id['pid'],signal.SIGCONT);frozen=None
+        for _ in range(100):
+            if not same_process(worker_id):break
+            time.sleep(.01)
+        assert not same_process(worker_id),'Cancelled worker is still live'
+        assert not same_process(child),'Cancelled child is still live'
+        result=state(path,phase,status='interrupted',reason=reason,waiting_reasons=[],cancelled_by_user=True)
+        return dict(changed=True,state=result)
+    finally:
+        if frozen and same_process(frozen):os.kill(frozen['pid'],signal.SIGCONT)
+        launch.close()
 def tree_bytes(path):
     total=0
     for parent,dirs,files in os.walk(path,followlinks=False):
@@ -391,13 +468,15 @@ def legacy_artifacts(path):
         files.append(dict(name=name,bytes=n,sha256=sha(p)));total+=n
     return dict(remote_path=path,files=files,skipped=skipped,total_bytes=total,read_only=True)
 def main(req):
-    assert os.getuid()==UID and socket.gethostname().split('.')[0]=='thu-wei','Unexpected execution host/account'
+    expected=req.get('expected_host','thu-wei')
+    assert expected in ('thu-wei','thu-sui','thu-song') and os.getuid()==UID and socket.gethostname().split('.')[0]==expected,'Unexpected execution host/account'
     action=req['action']
     if action=='init':return storage_init(req)
     owned(ROOT);assert os.getuid()==UID
     if action=='register':return register(req)
     if action=='gate':return gate(req['recipe'],req.get('phase','simulation'),snapshot(),policy())
     if action=='status':return inspect(req['run_id'])
+    if action=='cancel':return cancel(req['run_id'],req.get('phase','simulation'),req['reason'])
     if action in ['submit','analyze']:return spawn(req['run_id'],'simulation' if action=='submit' else 'analysis',req.get('queue',False))
     if action=='artifacts':return artifacts(req['run_id'])
     if action in ['legacy-list','legacy-fetch']:
