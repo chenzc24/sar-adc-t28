@@ -12,6 +12,7 @@
 | A/B 五点关键码 | [pvt/results.json](pvt/results.json) |
 | 最简参考候选五点逐管端压 | [新规则判定与时间步长复核](soa/minimal_reference_five_corner_20261115.md)：TT/SS 两角通过本次范围，FF 冷/热持续时间违例 |
 | 比较器栅漏超限定位 | [输入顶板切换下冲](soa/comparator_input_undershoot_20261115.md)；[D2 候选五角短测及比较器端压通过](soa/msb_drive_d2_trial_20261115.md)，FF 冷仍有 SAR 存储违例；已按用户决定采用 |
+| FF 冷 SAR 标准 DFF 内部超限 | [复位反馈与 MM64 源极下冲](soa/dff_reset_feedback_20261115.md)：XBIT7 全部 7 次脉冲已对齐整机证据，仍待隔离修复 |
 | 比较器、CDAC 各 200 种子 | [mc/modules_200.json](mc/modules_200.json) |
 | 冷角闭环查询时快照 | [mc/cold_progress.json](mc/cold_progress.json)、[mc/checkpoint_snapshot.json](mc/checkpoint_snapshot.json) |
 | 目录迁移 TT 短测 | [运行状态及原始告警](migration/native_short.json)，[迁移回执](migration/restructure.json) |
