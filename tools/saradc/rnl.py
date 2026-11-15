@@ -7,6 +7,7 @@ INSTANCE = re.compile(r'(?m)^\s*(\w+)\s+\(([^)]*)\)\s+(\S+)([^\n]*)')
 RECORD = re.compile(r'(?ms)^// BEGIN SARADC RNL\r?\n.*?^// END SARADC RNL\r?\n')
 EXTERNAL = {'INVD1BWP12T30P140':['A','Y','VDD','VSS'],
             'INVD2BWP12T30P140':['I','ZN','VDD','VSS'],
+            'OR2D1BWP12T30P140':['A1','A2','Z','VDD','VSS'],
             'ND2D1BWP12T30P140':['A','B','Y','VDD','VSS'],
             'DFCNQD1BWP12T30P140':['D','CK','RN','Q','VDD','VSS'],
             'iprobe':['p','n']}  # Native ideal current probe, two connected terminals.

@@ -57,6 +57,8 @@ def build(name='current',root=None,candidate_overrides=None):
     # Native zero-voltage current probes join separately exposed interface pins.
     # They are ideal wires, not behavioral replacement gates or extra drivers.
     arity['iprobe']=2
+    # Native library header verified on thu-song: A1 A2 Z VDD VSS.
+    arity['OR2D1BWP12T30P140']=5
     for filename,body in blobs.items():
         for master,definition in candidates.definitions(body.decode('utf-8')).items():
             if master in owners: raise ValueError('Duplicate candidate master: '+master)

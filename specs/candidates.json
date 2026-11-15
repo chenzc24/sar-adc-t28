@@ -95,8 +95,8 @@
       }
     },
     "sar": {
-      "selected": "b",
-      "target": "xtor/sar/sar.scs",
+      "selected": "reset_data_or",
+      "target": "xtor/sar/reset_data_or.scs",
       "interfaces": {
         "sar8i_ctrl": [
           "CMP_CLK",
@@ -128,8 +128,13 @@
       "candidates": {
         "b": {
           "file": "design/xtor/sar/sar.scs",
-          "status": "current_implementation",
+          "status": "historical_implementation",
           "evidence": "results/README.md; individual records remain bound to their source hashes"
+        },
+        "reset_data_or": {
+          "file": "design/xtor/sar/reset_data_or.scs",
+          "status": "current_implementation_ffc_short_pass_other_corners_unverified",
+          "evidence": "results/design/reset_data_or_adoption_20261115.json"
         }
       }
     },
@@ -215,7 +220,7 @@
         },
         "minimal_msb_d2": {
           "file": "design/xtor/reference/minimal_msb_d2.scs",
-          "status": "current_implementation_with_open_sar_soa_failures",
+          "status": "current_implementation",
           "evidence": "results/design/minimal_msb_d2_adoption_20261115.json"
         }
       }

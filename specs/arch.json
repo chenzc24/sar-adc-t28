@@ -1,5 +1,5 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
   "resolution_bits": 8,
   "sample_rate_hz": 10000000.0,
   "supply_v": [
@@ -27,11 +27,11 @@
   "top": "sar_adc8_join_r4",
   "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "qualification": {
-    "terminal_voltage": "five_point_short_comparator_pass_remaining_FFC_SAR_MM64_duration_fail",
+    "terminal_voltage": "FFC_18_frame_native_short_pass_other_corners_unverified_for_reset_OR",
     "oa": "Text model work does not assert OA synchronization or modify OA",
     "pex": "not_included",
     "virtuoso_connection": "existing_integration_reused",
-    "adoption_record": "results/design/minimal_msb_d2_adoption_20261115.json"
+    "adoption_record": "results/design/reset_data_or_adoption_20261115.json"
   },
   "schema_version": 2,
   "authority": {
@@ -40,8 +40,8 @@
     "immutable_measured_source": "design/frozen/b/dut.scs",
     "top_ports_source": "design/manifest.json",
     "physical_source_sha256": null,
-    "requirements_status": "B external operating contract retained; minimal MSB D2 reference adopted with known FFC SAR SOA failures",
-    "current_source_hashes": "results/design/minimal_msb_d2_adoption_20261115.json"
+    "requirements_status": "B external operating contract retained; MSB D2 reference plus SAR reset-data OR adopted with FF cold short evidence only",
+    "current_source_hashes": "results/design/reset_data_or_adoption_20261115.json"
   },
   "architecture": {
     "kind": "fully_differential_asynchronous_SAR",
@@ -221,7 +221,7 @@
       "uncalibrated_offset_requirement_v": null
     },
     "sar": {
-      "implementation": "design/xtor/sar/sar.scs",
+      "implementation": "design/xtor/sar/reset_data_or.scs",
       "decisions_per_frame": 8,
       "rising_event_counts": {
         "cmp": 8,
@@ -230,14 +230,17 @@
       },
       "event_order": "cmp[i] < write[i] < update[i] < cmp[i+1]; no reference-side capture circuit in minimal_direct",
       "no_fixed_bit_clock": true,
-      "reference_capture": "not_applicable_in_current_implementation"
+      "reference_capture": "not_applicable_in_current_implementation",
+      "reset_data_logic": "D_pin = NEXT_D OR SAMPLE; native OR2D1 per data bit; asynchronous CDN clear retained"
     },
     "standard_cells": {
       "implementation": "design/xtor/common/standard_cells.scs",
       "external_masters": [
         "DFCNQD1BWP12T30P140",
         "INVD1BWP12T30P140",
-        "ND2D1BWP12T30P140"
+        "INVD2BWP12T30P140",
+        "ND2D1BWP12T30P140",
+        "OR2D1BWP12T30P140"
       ]
     },
     "timing_reference": {

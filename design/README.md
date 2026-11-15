@@ -7,12 +7,12 @@
 | Bootstrap 采样 | [xtor/bootstrap/bootstrap.scs](xtor/bootstrap/bootstrap.scs) |
 | 18 个 MOM 与分位参考开关 | [xtor/cdac/cdac.scs](xtor/cdac/cdac.scs) |
 | 11 MOS StrongARM | [xtor/comparator/comparator.scs](xtor/comparator/comparator.scs) |
-| 异步 SAR | [xtor/sar/sar.scs](xtor/sar/sar.scs) |
+| 异步 SAR | [xtor/sar/reset_data_or.scs](xtor/sar/reset_data_or.scs)，数据位 D 输入增加原生复位 OR |
 | 最简参考驱动与公共空闲控制 | [xtor/reference/minimal_msb_d2.scs](xtor/reference/minimal_msb_d2.scs)，[设计说明](xtor/reference/minimal_direct.md) |
 | RC 与握手延时 | [xtor/clock/delays.scs](xtor/clock/delays.scs) |
 | 原生标准单元包装 | [xtor/common/standard_cells.scs](xtor/common/standard_cells.scs) |
 
-[frozen/b/dut.scs](frozen/b/dut.scs) 是历史实测的字节级输入，供原案例复现。当前分模块视图已换入最简参考驱动，实际定义与可达性以 manifest 为准。旧参考实现保存在 `xtor/reference/reference.scs`；既有结果的来源散列保持原值。
+[frozen/b/dut.scs](frozen/b/dut.scs) 是历史实测的字节级输入，供原案例复现。当前分模块视图已换入最简参考 MSB D2 驱动与 SAR 数据复位 OR，实际定义与可达性以 manifest 为准。旧参考实现保存在 `xtor/reference/reference.scs`；既有结果的来源散列保持原值。
 
 PDK 和原生标准库保存在服务器；各测试 deck 显式引用模型 section。
 

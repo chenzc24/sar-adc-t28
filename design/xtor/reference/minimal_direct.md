@@ -1,6 +1,6 @@
 # 最简参考候选
 
-需求：[Issue #2](https://github.com/chenzc24/sar-adc-t28/issues/2)。当前默认为 `reference=minimal_msb_d2`：在初版 `minimal_direct` 上仅把 MSB 两侧末级 INV 从 D1 增强到 D2，门级数、逻辑和比较器不变。五角 90/90 帧功能与时序筛查通过，比较器端压通过；FF 冷仍有 SAR 存储 MM64 Vds 违例，参考源瞬态电流增加。[验证与限制](../../../results/soa/msb_drive_d2_trial_20261115.md) · [采用记录](../../../results/design/minimal_msb_d2_adoption_20261115.json)。
+需求：[Issue #2](https://github.com/chenzc24/sar-adc-t28/issues/2)。当前默认为 `reference=minimal_msb_d2`：在初版 `minimal_direct` 上仅把 MSB 两侧末级 INV 从 D1 增强到 D2，门级数、逻辑和比较器不变。五角 90/90 帧功能与时序筛查通过，比较器端压通过；该五角 D2 实验当时仍有 FF 冷 SAR 存储 MM64 Vds 违例，参考源瞬态电流增加。[验证与限制](../../../results/soa/msb_drive_d2_trial_20261115.md) · [采用记录](../../../results/design/minimal_msb_d2_adoption_20261115.json)。
 
 SAR 的 `CODE = D OR TOKEN` 经公共 PRESET 初态选择后，直接驱动差分参考开关。低七位在 PRESET 有效时取 0，MSB 取 1；PRESET 无效时跟随 CODE。SAR 的判决寄存器、位序列、握手和 quiet/write 延时保持原样。公共 idle/preset 与采样路径保持 B 的电气语句。
 
@@ -31,3 +31,5 @@ SAR 的 `CODE = D OR TOKEN` 经公共 PRESET 初态选择后，直接驱动差�
 逐位底板判据是按标称二进制正权重计算的残差界，不覆盖浮动顶板 kickback。参考开关端口电流包含位移电流，不能直接等同于纯沟道直通电流。缺失信号、未完成波形和观察器不一致都不能算通过。首帧明确参与验收；原始端压告警单列保留。
 
 TT 原生功能与测量通过后才提交其余四角；真实错码、超时或建立 screen 失败先定位。CPU/内存/磁盘不满足 managed 准入时保留队列，不放宽门禁、不终止其他任务。本次由用户明确采用为默认设计；该决定不改变端压规则及未通过结果。
+
+当前整体设计另已采用 SAR 数据复位 OR，参考模块保持本页 D2 实现不变。加 OR 版 FF 冷已通过，其他角未验证，见[当前采用记录](../../../results/design/reset_data_or_adoption_20261115.json)。

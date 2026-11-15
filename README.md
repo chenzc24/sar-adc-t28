@@ -1,6 +1,6 @@
 # SAR ADC T28
 
-8 bit、10 MS/s、全差分异步 SAR ADC。当前设计为最简参考驱动版 `sar8_l90_mmain2_stdcell_minref_msbd2_v1`（`reference=minimal_msb_d2`，其余模块沿用 B），采用 Spectre 网表设计；数字逻辑使用原生标准单元。
+8 bit、10 MS/s、全差分异步 SAR ADC。当前设计为最简参考 MSB D2＋数据复位 OR 版 `sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1`（`reference=minimal_msb_d2`、`sar=reset_data_or`，其余模块沿用 B），采用 Spectre 网表设计；数字逻辑使用原生标准单元。
 
 | 要找什么 | 入口 |
 | --- | --- |
@@ -26,7 +26,7 @@
 
 日常默认当前管级设计。混合层次可重复指定 `--view comparator=va --view reference=va`；候选试用可加 `--candidate comparator=NAME`，冻结 B 仍显式回归。独立模块用 `block prepare/sim/follow`，源码、实际负载和测量均随运行冻结。
 
-2026-11-15 按用户决定采用已验证的最简参考 MSB D2 驱动，默认打包与直接 include 均使用该实现。[采用记录](results/design/minimal_msb_d2_adoption_20261115.json)。五点短测每角 18/18 帧码字正确；端压按[新规则](specs/soa_rule.yaml)判定，五角比较器端压通过本次范围，FF 冷仍有 8 项 SAR 存储 MM64 Vds 持续时间失败。[逐管结果](results/soa/msb_drive_d2_trial_20261115.md)。历史 B 的 FFT、全码、MC 和[迁移对照](results/migration/comparison.json)仍仅归属各自冻结输入，不转移为最简版指标。
+2026-11-15 按用户决定采用数据复位 OR 版，默认打包与直接 include 均使用已实测的原生标准单元实现，标准库内部不变。[采用记录](results/design/reset_data_or_adoption_20261115.json)。FF 冷（0.99 V、−40°C）18/18 帧功能时序通过，按[新规则](specs/soa_rule.yaml)端压违例由 8 项降为 0 项；内部采样关闭沿最大偏移 5.88 ps。[完整对照](results/soa/dff_reset_or_ffc_20261115.md)。加 OR 版其他四角尚未验证；此前 D2 的五角结果和历史 B 的 FFT、全码、MC 均仍归属各自冻结输入，不转移为本版指标。
 
 个人笔记已迁到 `E:/Learning/SAR-ADC-T28`。旧实验、历史计划和一次性脚本通过 [来源记录](results/provenance.json) 的 Git 提交追溯；本机完整工作快照位于被忽略的 `work/legacy/`。
 

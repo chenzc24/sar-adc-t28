@@ -1,0 +1,323 @@
+{
+  "run_id": "sar8-dff-periphery-ffc-order-v1",
+  "host": "thu-song",
+  "remote_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-dff-periphery-ffc-order-v1",
+  "recipe_hash": "c0509bc04882bc7145b36b2ae94e6d18503944a7ca8ddda6f9da3167d59a5d35",
+  "configuration": {
+    "cases": {
+      "baseline": 0,
+      "early": -2e-10,
+      "late": 2.2e-09
+    },
+    "scope": "Isolated native standard-DFF port replay; only D waveform phase differs; no ADC candidate adoption",
+    "source_run": "sar8-minref-soa-ffc-song-msbd2-v1-step2p",
+    "source_events_sha256": "4db99882ed3bcba19e7dd683228ba0caaee88275f5d70cda33097b54c3c71b9b",
+    "source_window_s": [
+      1.3596e-06,
+      1.361e-06
+    ],
+    "time_translation_s": -1.355e-06,
+    "limitations": [
+      "Ideal sources replay actual CP/CDN/D waveforms at pins; upstream drivers replaced by measured voltages",
+      "Q loads retain original hold MUX and CODE OR plus reference first INV; downstream loading truncated",
+      "Identical reset release and clock priming; steady pre-event state must be checked",
+      "Early/late D are diagnostic independent sources, not ADC logic implementations",
+      "No full-ADC timing/noise/mismatch/PEX qualification"
+    ]
+  },
+  "result": {
+    "limitations": [
+      "Ideal sources replay actual CP/CDN/D waveforms at pins; upstream drivers replaced by measured voltages",
+      "Q loads retain original hold MUX and CODE OR plus reference first INV; downstream loading truncated",
+      "Identical reset release and clock priming; steady pre-event state must be checked",
+      "Early/late D are diagnostic independent sources, not ADC logic implementations",
+      "No full-ADC timing/noise/mismatch/PEX qualification"
+    ],
+    "native_end_s": 1e-08,
+    "run_id": "sar8-dff-periphery-ffc-order-v1",
+    "analysis_complete": true,
+    "checked_pair_count": 468,
+    "raw_waveform": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-dff-periphery-ffc-order-v1/raw/tran_short.tran.tran",
+    "corner": "ffc",
+    "worst_duration": {
+      "total_over_s": 1.3150853059492894e-10,
+      "max_sliding_over_s": 1.3150853059492894e-10,
+      "terminal_pair": "ds",
+      "in_rule": true,
+      "worst_window_end_s": 5.24152090869198e-09,
+      "instance": "XDUT.Xbaseline.XFF.MM64",
+      "verdict": "violation",
+      "peak_abs_V": 1.1834491635304665,
+      "peak_time_s": 5.114590315418211e-09,
+      "model": "nch_mac",
+      "numeric_pass": false,
+      "over_pulse_count": 1,
+      "nodes": [
+        "xdut.xbaseline.xff.mq_x",
+        "xdut.xbaseline.xff.net176"
+      ]
+    },
+    "reduction_backend": "compiled_stream_with_reference_selftest",
+    "cases": {
+      "early": {
+        "mm64": {
+          "total_over_s": 2.430935407653806e-11,
+          "max_sliding_over_s": 2.430935407653806e-11,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 4.939890396108528e-09,
+          "instance": "XDUT.Xearly.XFF.MM64",
+          "verdict": "numeric_pass_pending_review",
+          "peak_abs_V": 1.1053265830500376,
+          "peak_time_s": 4.920631936776805e-09,
+          "model": "nch_mac",
+          "numeric_pass": true,
+          "over_pulse_count": 1,
+          "nodes": [
+            "xdut.xearly.xff.mq_x",
+            "xdut.xearly.xff.net176"
+          ]
+        },
+        "primed_q_high": true,
+        "violation_pairs": [],
+        "cleared_q_low": true,
+        "samples": {
+          "7.5e-09": {
+            "q": 4.7365870963545587e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "6.5e-09": {
+            "q": 4.7365369933691353e-07,
+            "cdn": 9.983480163077952e-07,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "9.9e-09": {
+            "q": 4.736525360640862e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "4.5e-09": {
+            "q": 0.9899994993375211,
+            "cdn": 0.9899995437314606,
+            "cp": 5.080284260425366e-07,
+            "d": 0.9899995346060912
+          }
+        },
+        "clear_held_after_release": true
+      },
+      "late": {
+        "mm64": {
+          "total_over_s": 2.5240933098550347e-11,
+          "max_sliding_over_s": 2.5240933098550347e-11,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 7.340693515430802e-09,
+          "instance": "XDUT.Xlate.XFF.MM64",
+          "verdict": "numeric_pass_pending_review",
+          "peak_abs_V": 1.10560733112473,
+          "peak_time_s": 7.32042997773731e-09,
+          "model": "nch_mac",
+          "numeric_pass": true,
+          "over_pulse_count": 1,
+          "nodes": [
+            "xdut.xlate.xff.mq_x",
+            "xdut.xlate.xff.net176"
+          ]
+        },
+        "primed_q_high": true,
+        "violation_pairs": [],
+        "cleared_q_low": true,
+        "samples": {
+          "7.5e-09": {
+            "q": 4.7365130060598586e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 9.561920835059498e-06
+          },
+          "6.5e-09": {
+            "q": 4.736536745501656e-07,
+            "cdn": 9.983480163077952e-07,
+            "cp": 5.261025309218878e-07,
+            "d": 0.9899995345810912
+          },
+          "9.9e-09": {
+            "q": 4.7364684091805066e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "4.5e-09": {
+            "q": 0.9899994993375211,
+            "cdn": 0.9899995437314606,
+            "cp": 5.080284260425366e-07,
+            "d": 0.9899995345810912
+          }
+        },
+        "clear_held_after_release": true
+      },
+      "baseline": {
+        "mm64": {
+          "total_over_s": 1.3150853059492894e-10,
+          "max_sliding_over_s": 1.3150853059492894e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 5.24152090869198e-09,
+          "instance": "XDUT.Xbaseline.XFF.MM64",
+          "verdict": "violation",
+          "peak_abs_V": 1.1834491635304665,
+          "peak_time_s": 5.114590315418211e-09,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 1,
+          "nodes": [
+            "xdut.xbaseline.xff.mq_x",
+            "xdut.xbaseline.xff.net176"
+          ]
+        },
+        "primed_q_high": true,
+        "violation_pairs": [
+          {
+            "total_over_s": 1.3150853059492894e-10,
+            "max_sliding_over_s": 1.3150853059492894e-10,
+            "terminal_pair": "ds",
+            "in_rule": true,
+            "worst_window_end_s": 5.24152090869198e-09,
+            "instance": "XDUT.Xbaseline.XFF.MM64",
+            "verdict": "violation",
+            "peak_abs_V": 1.1834491635304665,
+            "peak_time_s": 5.114590315418211e-09,
+            "model": "nch_mac",
+            "numeric_pass": false,
+            "over_pulse_count": 1,
+            "nodes": [
+              "xdut.xbaseline.xff.mq_x",
+              "xdut.xbaseline.xff.net176"
+            ]
+          }
+        ],
+        "cleared_q_low": true,
+        "samples": {
+          "7.5e-09": {
+            "q": 4.7365872199660863e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "6.5e-09": {
+            "q": 4.736536789821942e-07,
+            "cdn": 9.983480163077952e-07,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "9.9e-09": {
+            "q": 4.736525372700252e-07,
+            "cdn": 0.99,
+            "cp": 5.261025309218878e-07,
+            "d": 3.385650653752195e-06
+          },
+          "4.5e-09": {
+            "q": 0.9899994993375213,
+            "cdn": 0.9899995437314606,
+            "cp": 5.080284260425366e-07,
+            "d": 0.9899995345810912
+          }
+        },
+        "clear_held_after_release": true
+      }
+    },
+    "max_native_step_s": 2.000000000001027e-12,
+    "source_run_id": "sar8-minref-soa-ffc-song-msbd2-v1-step2p",
+    "checked_device_count": 156,
+    "device_count": 156,
+    "native_start_s": 0.0,
+    "inventory_sha256": "ebca16f120ef8a540287021239510f6a15508abaa7dc56610ceac53e224e8ddf",
+    "verdict": "violation",
+    "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+    "violation_pair_count": 1,
+    "scope": "Isolated native standard-DFF port replay; only D waveform phase differs; no ADC candidate adoption",
+    "violations": [
+      {
+        "total_over_s": 1.3150853059492894e-10,
+        "max_sliding_over_s": 1.3150853059492894e-10,
+        "terminal_pair": "ds",
+        "in_rule": true,
+        "worst_window_end_s": 5.24152090869198e-09,
+        "instance": "XDUT.Xbaseline.XFF.MM64",
+        "verdict": "violation",
+        "peak_abs_V": 1.1834491635304665,
+        "peak_time_s": 5.114590315418211e-09,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 1,
+        "nodes": [
+          "xdut.xbaseline.xff.mq_x",
+          "xdut.xbaseline.xff.net176"
+        ]
+      }
+    ],
+    "native_points": 6985,
+    "rule_id": "sar8-thin-oxide-transient-v1",
+    "worst_peak": {
+      "total_over_s": 1.3150853059492894e-10,
+      "max_sliding_over_s": 1.3150853059492894e-10,
+      "terminal_pair": "ds",
+      "in_rule": true,
+      "worst_window_end_s": 5.24152090869198e-09,
+      "instance": "XDUT.Xbaseline.XFF.MM64",
+      "verdict": "violation",
+      "peak_abs_V": 1.1834491635304665,
+      "peak_time_s": 5.114590315418211e-09,
+      "model": "nch_mac",
+      "numeric_pass": false,
+      "over_pulse_count": 1,
+      "nodes": [
+        "xdut.xbaseline.xff.mq_x",
+        "xdut.xbaseline.xff.net176"
+      ]
+    }
+  },
+  "native": {
+    "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+    "zero_error_footer": true,
+    "electrical_verdict": "not_inferred",
+    "native_exit": 0,
+    "effective_settings": {
+      "reltol": "1e-06, default 1e-03",
+      "abstol(V)": "10 nV, default 1 uV",
+      "maxstep": "2 ps, default 200 ps",
+      "abstol(I)": "100 fA, default 1 pA",
+      "method": "trap"
+    },
+    "native_analysis_pass": true,
+    "thread_log": "Multithreading is disabled due to the size of the design being too small.",
+    "warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "CMI-2756",
+      "SFE-1131"
+    ]
+  },
+  "simulation_status": "complete",
+  "analysis_status": "complete",
+  "reproduction": {
+    "full_dut_peak_V": 1.1834428395395797,
+    "full_dut_event_duration_ps": 131.525135,
+    "peak_delta_uV": 6.323990886736297,
+    "duration_delta_ps": -0.016604405071063866
+  },
+  "adopted": false,
+  "library_modified": false,
+  "artifact_sha256": {
+    "recipe.json": "6d0871a5fa6983eadd319eacec30b8826c82cd19063858ed4e5624b89634290e",
+    "inputs\\diagnostic.json": "81788d2a362b998e66f0aef0f23f0368c0631d2613534bc493c390e56250777f",
+    "collected\\derived\\result.json": "5bb58d14853940d16666550cd5946175cae3ac4a8c980c6a6495e1297a3a30ed",
+    "collected\\derived\\terminal_results.json": "5e86127c52d498dbd923b28c6f64c3aacc1211462fd13fa574b9c42a1d45a3bb"
+  }
+}

@@ -48,7 +48,7 @@ class Interfaces(unittest.TestCase):
         profile=['current','reference=va','timing=va','comparator=va']
         blob=views.build(profile,self.root)
         self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+b_reference')
-        self.assertRegex(blob['xtor/sar/sar.scs'].decode(),r'\)\s+b_sar8p_delay_write')
+        self.assertRegex(blob[candidates.read(self.root)['modules']['sar']['target']].decode(),r'\)\s+b_sar8p_delay_write')
         self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+sar8i_ctrl')
         with self.assertRaisesRegex(ValueError,'Frozen B'):
             views.build(['frozen-b','comparator=va'],self.root)

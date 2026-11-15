@@ -1,6 +1,6 @@
 # 验证结果
 
-当前设计为最简参考 MSB D2 驱动版，见[采用记录](design/minimal_msb_d2_adoption_20261115.json)。下面历史 A/B 全码、FFT、MC 与噪声结果仍归属原冻结输入，[provenance.json](provenance.json) 保留其来源；不可直接作为最简版性能。
+当前设计为最简参考 MSB D2＋数据复位 OR 版，见[采用记录](design/reset_data_or_adoption_20261115.json)。本版仅 FF 冷 18 帧功能时序及端压筛查通过，其他角尚未验证。下面历史 A/B 全码、FFT、MC 与噪声结果仍归属原冻结输入，[provenance.json](provenance.json) 保留其来源；不可直接作为最简版性能。
 
 | 验证 | 结果入口 |
 | --- | --- |
@@ -12,7 +12,8 @@
 | A/B 五点关键码 | [pvt/results.json](pvt/results.json) |
 | 最简参考候选五点逐管端压 | [新规则判定与时间步长复核](soa/minimal_reference_five_corner_20261115.md)：TT/SS 两角通过本次范围，FF 冷/热持续时间违例 |
 | 比较器栅漏超限定位 | [输入顶板切换下冲](soa/comparator_input_undershoot_20261115.md)；[D2 候选五角短测及比较器端压通过](soa/msb_drive_d2_trial_20261115.md)，FF 冷仍有 SAR 存储违例；已按用户决定采用 |
-| FF 冷 SAR 标准 DFF 内部超限 | [复位反馈与 MM64 源极下冲](soa/dff_reset_feedback_20261115.md)：XBIT7 全部 7 次脉冲已对齐整机证据，仍待隔离修复 |
+| FF 冷 SAR 标准 DFF 内部超限 | [复位反馈与 MM64 源极下冲](soa/dff_reset_feedback_20261115.md)；[外围时序隔离对照](soa/dff_periphery_order_20261115.md)：库内部不变，D 下降移出清零区间使超限时间约 132→25 ps；真实外围验证见下一项 |
+| 数据 DFF 外部原生 OR 候选 | [FF 冷真实闭环短测](soa/dff_reset_or_ffc_20261115.md)：18/18 帧功能时序通过，规则内违例 8→0，最坏累计 131.527→52.515 ps；其他角未测，已按用户决定采用 |
 | 比较器、CDAC 各 200 种子 | [mc/modules_200.json](mc/modules_200.json) |
 | 冷角闭环查询时快照 | [mc/cold_progress.json](mc/cold_progress.json)、[mc/checkpoint_snapshot.json](mc/checkpoint_snapshot.json) |
 | 目录迁移 TT 短测 | [运行状态及原始告警](migration/native_short.json)，[迁移回执](migration/restructure.json) |

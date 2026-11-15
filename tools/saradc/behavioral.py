@@ -37,7 +37,7 @@ def generated():
     rss=math.sqrt(quant**2+jitter**2+sum(x*x for x in noise.values()))
     projected=20*math.log10(amplitude/math.sqrt(2)/rss)
     lines=['# SAR8 总设计规格','',
-      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_msb_d2`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_msb_d2_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。','',
+      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现为 `'+a['design_id']+'`。版本及验收状态见 [采用记录](../'+a['qualification']['adoption_record']+')。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径和数据复位 OR 的电气延迟。','',
       '## 架构与外部接口','',
       '- 8 bit、10 MS/s，全差分异步 SAR，flat binary CDAC；每侧 255 单位二进制电容加 1 单位 dummy，无桥电容。',
       '- 顶层端口顺序：`'+' '.join(a['interface']['port_order'])+'`。',

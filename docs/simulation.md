@@ -7,7 +7,7 @@ VA/Python 行为视图使用 `python -m tools.saradc behav generate` 同步总�
 当前最简参考版采用独立短测入口（不套用 B 的内部捕获计数）：
 
 ```powershell
-.venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version minimal --corner tt --revision current-v1
+.venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version current --corner tt --revision current-v1
 ```
 
 下面保留历史 B 回归示例；普通 `prepare` 负责打包当前选择，但旧用例分析器不会自动适配最简参考状态机，当前原生整机短测应使用上面的 `reference_short` 入口。

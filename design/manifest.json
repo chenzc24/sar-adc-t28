@@ -1,10 +1,10 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
   "source": "design/frozen/b/dut.scs",
   "source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "top": "sar_adc8_join_r4",
-  "status": "user_adopted_with_open_soa_failures",
-  "validation": "results/design/minimal_msb_d2_adoption_20261115.json",
+  "status": "user_adopted_ffc_short_pass_other_corners_unverified",
+  "validation": "results/design/reset_data_or_adoption_20261115.json",
   "standard_cell_include": "tb/common/platform/library_include.scs",
   "reachable_from_top": [
     "sar8i_ctrl",
@@ -778,8 +778,8 @@
       "text_sha256": "e7effa6aeeac3dd126bf9d3e062009f83138a63f01cc7779cf25a9070c2b6e82"
     },
     "sar8p_timing": {
-      "file": "xtor/sar/sar.scs",
-      "source_line": 505,
+      "file": "xtor/sar/reset_data_or.scs",
+      "source_line": 6,
       "ports": [
         "ACTIVE",
         "CMP_CLK",
@@ -901,8 +901,8 @@
       "text_sha256": "df74500d1a18b098438d9360a8f7ab300d51683efb8f7acc24d0f4310cd213e5"
     },
     "sar8p_bitseq8": {
-      "file": "xtor/sar/sar.scs",
-      "source_line": 548,
+      "file": "xtor/sar/reset_data_or.scs",
+      "source_line": 36,
       "ports": [
         "PHI_U",
         "SAMPLE",
@@ -958,8 +958,8 @@
       "text_sha256": "d1737cbafde38c4567d52a6fa355bec5848bf7764a40837dedef748389cdf87c"
     },
     "sar8p_bit": {
-      "file": "xtor/sar/sar.scs",
-      "source_line": 575,
+      "file": "xtor/sar/reset_data_or.scs",
+      "source_line": 48,
       "ports": [
         "CODE",
         "D",
@@ -976,6 +976,10 @@
           "master": "sar8p_mux2"
         },
         {
+          "instance": "XRESET_DATA_OR",
+          "master": "OR2D1BWP12T30P140"
+        },
+        {
           "instance": "XSTORE",
           "master": "sar8p_dffr"
         },
@@ -984,11 +988,11 @@
           "master": "sar8p_or2"
         }
       ],
-      "text_sha256": "6c016f77e9372805e8072ff03d7b36b326869c83c4020bd91033a94ed0931104"
+      "text_sha256": "e85db82e26fd7314882b9daccca5888ab561f3ffa2b50a6502346e1e752cba8c"
     },
     "sar_logic_8b_physical": {
-      "file": "xtor/sar/sar.scs",
-      "source_line": 585,
+      "file": "xtor/sar/reset_data_or.scs",
+      "source_line": 55,
       "ports": [
         "CMP_CLK",
         "CODE0",
@@ -1087,8 +1091,8 @@
       "text_sha256": "4efe80d878e0344f6f3ae8c7c1c8599837c6aea51f599758197ae5c35ef66bca"
     },
     "sar8i_ctrl": {
-      "file": "xtor/sar/sar.scs",
-      "source_line": 1811,
+      "file": "xtor/sar/reset_data_or.scs",
+      "source_line": 78,
       "ports": [
         "CMP_CLK",
         "CODE0",

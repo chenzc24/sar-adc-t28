@@ -1,6 +1,6 @@
 # SAR8 总设计规格
 
-本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现采用最简参考驱动 `reference=minimal_msb_d2`，其余模块沿用 B。版本及验收状态见 [采用记录](../results/design/minimal_msb_d2_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径。
+本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现为 `sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1`。版本及验收状态见 [采用记录](../results/design/reset_data_or_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径和数据复位 OR 的电气延迟。
 
 ## 架构与外部接口
 
@@ -40,7 +40,7 @@
 - 参考开关：L=90 nm，NMOS W=150 nm、PMOS W=175 nm，multi=3·2^bit。
 - 比较器：11 MOS StrongARM；输入对 W=1 µm/L=30 nm，尾管 W=1 µm，再生 N/P W=500/500 nm。
 - 数字路径：原生标准单元；SAR 的 RC、清除管及模拟/升压域电路保留。参考侧采用 CODE + 公共 PRESET + 正反相驱动，取消额外 DFF/MUX、逐位复位/捕获、非交叠发生器及栅极串联电阻。
-- 原生标准单元 masters：`DFCNQD1BWP12T30P140`、`INVD1BWP12T30P140`、`ND2D1BWP12T30P140`。
+- 原生标准单元 masters：`DFCNQD1BWP12T30P140`、`INVD1BWP12T30P140`、`INVD2BWP12T30P140`、`ND2D1BWP12T30P140`、`OR2D1BWP12T30P140`。
 
 ## 时序合同
 

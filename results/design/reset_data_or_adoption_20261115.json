@@ -1,0 +1,64 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "adopted_on": "2026-11-15",
+  "authority": "user_requested_adopt_commit_push_and_merge_to_main",
+  "previous_design_commit": "7bdd6bb",
+  "selected_candidates": {
+    "reference": "minimal_msb_d2",
+    "sar": "reset_data_or",
+    "sampler": "b",
+    "cdac": "b",
+    "comparator": "b",
+    "timing": "b"
+  },
+  "source_sha256": {
+    "dut.scs": "41302d6c053c74ddb2c7ebec79470be166261fe74da9a9739ceb6cb660a16410",
+    "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+    "xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
+  },
+  "source_comparison": "All physical bytes match completed FF cold closed-loop run; DUT include paths renamed only",
+  "source_run_id": "sar8-minref-soa-ffc-song-msbd2-resetor-v1-step2p",
+  "recipe_hash": "8d918e6d91372c5d54d9027d01ecbaef81e74278eca402597a0247e0727b8695",
+  "evidence": "results/soa/dff_reset_or_ffc_20261115.json",
+  "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+  "qualification": {
+    "FFC_18_frame_function_timing": "pass",
+    "FFC_engineering_soa": "0 violating terminal pairs at 2 ps maximum step; report resolution review passed",
+    "other_corners": "not_verified_for_OR_version",
+    "limits": [
+      "No transfer of earlier D2 five-corner or frozen B FFT/static/MC qualification",
+      "No MC/noise/PEX/supply ramp",
+      "No full Liberty timing or foundry reliability signoff",
+      "OA and Canvas not synchronized"
+    ]
+  },
+  "validation": {
+    "entry_check": {
+      "pass_check": true,
+      "exact_subcircuits": 39,
+      "comparison": "original statements after removing SARADC RNL comment blocks",
+      "current_subcircuits": 39,
+      "matches_frozen_b": false,
+      "locked_cases": 7,
+      "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
+      "behavioral_spec": {
+        "shared_spec": "specs/arch.json",
+        "generated_defaults_match": true,
+        "physical_ports_match": true,
+        "electrical_defaults_match": true
+      }
+    },
+    "directed_tests": 36,
+    "directed_result": "passed",
+    "initial_manifest_check": "37/39 due normalized line continuations in two stored definition hashes; corrected to exact unmodified source text, final check 39/39",
+    "prepared_current_short": "work/decks/sar8-minref-current-ffc-resetor-adopt-20261115/recipe.yaml",
+    "new_simulation_submitted": false
+  },
+  "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea"
+}
