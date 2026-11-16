@@ -20,6 +20,18 @@ else:
 
 
 class ExecutionChecks(unittest.TestCase):
+    def test_cleanup_marker_blocks_reanalysis_and_run_id_reuse(self):
+        with tempfile.TemporaryDirectory() as folder, mock.patch.object(agent,'runpath',return_value=folder), mock.patch.object(agent,'owned'):
+            recipe={'run_id':'old-source'}
+            self.assertIsNone(agent.validate_phase(recipe,'simulation'))
+            for state in ('pending','raw_deleted','partial_failure'):
+                Path(folder,'raw_cleanup.json').write_text(json.dumps({'status':state}))
+                for phase in ('simulation','analysis'):
+                    with self.assertRaisesRegex(AssertionError,'cleanup or deleted'):
+                        agent.validate_phase(recipe,phase)
+                with self.assertRaisesRegex(AssertionError,'Source raw waveforms'):
+                    agent.source_provenance({'run_id':'new-analysis','source':{'run_id':'old-source'}})
+
     def test_unified_cgroup_unlimited_child_retains_parent_limits(self):
         with tempfile.TemporaryDirectory() as folder:
             base=Path(folder);parent=base/'user.slice';child=parent/'user-596.slice';child.mkdir(parents=True)

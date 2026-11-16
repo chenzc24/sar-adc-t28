@@ -1,0 +1,84 @@
+{
+  "agent_sha256": "463dc0f3502efa75b74f455bb6fc19f2fffdb78d3459f8bc96f71e17b3fe3727", 
+  "child_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 284251, 
+    "pid": 284251, 
+    "start_ticks": "168958969", 
+    "state": "R"
+  }, 
+  "elapsed_seconds": 340.710510969162, 
+  "exit_code": 0, 
+  "gate": {
+    "pass_gate": true, 
+    "phase": "analysis", 
+    "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb", 
+    "reasons": [], 
+    "snapshot": {
+      "cgroup_headroom": 42651631616, 
+      "cgroups": {
+        "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+          "headroom": 42651631616, 
+          "limit": 51539607552, 
+          "used": 8887975936
+        }
+      }, 
+      "conflicting_processes": [
+        {
+          "comm": "spectre", 
+          "managed": {
+            "phase": "simulation", 
+            "reserved_rss_mib": 1024, 
+            "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1", 
+            "threads": 4
+          }, 
+          "pid": 128857
+        }, 
+        {
+          "comm": "python", 
+          "managed": {
+            "phase": "analysis", 
+            "reserved_rss_mib": 256, 
+            "run_id": "sar8-pair-s15212-p-edge-v3-analysis2", 
+            "threads": 1
+          }, 
+          "pid": 284204
+        }
+      ], 
+      "cpu_capacity": 48.0, 
+      "disk_free": 1177945718784, 
+      "epoch": 1794789239.334249, 
+      "host": "thu-song", 
+      "load1": 11.32, 
+      "mem_available": 94419046400, 
+      "swap_free": 1299378176, 
+      "swap_rate_bytes_s": 0.0
+    }, 
+    "workload_slot": 2
+  }, 
+  "output_bytes": 1753427, 
+  "peak_rss_bytes": 13189120, 
+  "phase": "analysis", 
+  "queued": true, 
+  "rss_bytes": 12677120, 
+  "source_provenance": {
+    "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-pair-s15212-cd-edge-v3", 
+    "recipe_file_sha256": "c66b1a131af2db6e0178c860599316cc5757635b7fc2db9b2c43b4ed20376e61", 
+    "recipe_hash": "c66f5618e907f7672207e6e390979703a8ea6e08b572507c2f2d61af3d421fae", 
+    "registration_sha256": "cf396b7966a4c73c71d5ee4ecdf7d7cf31ddf712bd1c17bfa1b90b98e698ed36", 
+    "run_id": "sar8-pair-s15212-cd-edge-v3", 
+    "simulation_state_sha256": "2d3a058d27546b491c1b10d42f508ed97f8b264f396feb3b245c807dd8d80617"
+  }, 
+  "started_epoch": 1794789239.351796, 
+  "status": "complete", 
+  "submitted_epoch": 1794789239.041954, 
+  "updated_epoch": 1794789580.066808, 
+  "waiting_reasons": [], 
+  "worker_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 284249, 
+    "pid": 284249, 
+    "start_ticks": "168958939", 
+    "state": "R"
+  }
+}

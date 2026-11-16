@@ -191,6 +191,7 @@ def register(req):
     return dict(existing=False,path=path,recipe_hash=fingerprint)
 def inspect(run_id):
     path=runpath(run_id);owned(path);result=dict(host=socket.gethostname(),run_id=run_id,path=path,registered=read(path+'/registered.json'))
+    if os.path.exists(path+'/raw_cleanup.json'):result['raw_retention']=read(path+'/raw_cleanup.json')
     for phase in ['simulation','analysis']:
         p=path+'/'+phase+'.state.json'
         s=read(p) if os.path.isfile(p) else dict(status='not_started')
@@ -205,6 +206,7 @@ def source_provenance(recp):
     """Validate an exact completed managed source; never mutate that directory."""
     source=recp['source'];assert source['run_id']!=recp['run_id'],'Source cannot be itself'
     path=runpath(source['run_id']);owned(path)
+    assert not os.path.exists(path+'/raw_cleanup.json'),'Source raw waveforms reserved for cleanup or deleted; use archive or a new run'
     for name in ['recipe.json','registered.json','simulation.state.json','raw']:
         owned(path+'/'+name)
     registration=read(path+'/registered.json');original=read(path+'/recipe.json')
@@ -223,6 +225,7 @@ def validate_phase(recp,phase):
     if recp.get('kind')=='analysis_only':
         assert phase=='analysis','Analysis-only run cannot execute a simulation'
         return source_provenance(recp)
+    assert not os.path.exists(runpath(recp['run_id'])+'/raw_cleanup.json'),'Raw waveforms reserved for cleanup or deleted; preserve old run identity'
     if phase=='analysis':assert inspect(recp['run_id'])['simulation'].get('status')=='complete','Native simulation must complete first'
     return None
 
@@ -437,7 +440,7 @@ def worker(run_id,phase):
     state(path,phase,**result);lock.close()
 def artifacts(run_id):
     path=runpath(run_id);owned(path);out=[]
-    candidates=['simulation.state.json','analysis.state.json','simulation.admission.json','analysis.admission.json','spectre.out','raw/logStatus','source_provenance.json']
+    candidates=['simulation.state.json','analysis.state.json','simulation.admission.json','analysis.admission.json','spectre.out','raw/logStatus','source_provenance.json','raw_cleanup.json']
     if os.path.isdir(path+'/derived'):
         for parent,dirs,files in os.walk(path+'/derived',followlinks=False):
             dirs[:]=[d for d in dirs if not os.path.islink(os.path.join(parent,d))]

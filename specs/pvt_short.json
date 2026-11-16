@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "process": ["TT", "SS", "FF", "FS", "SF"],
+  "supply_v": {"low": 0.81, "nom": 0.90, "high": 0.99},
+  "temperature_c": [-40, 27, 125],
+  "passive_sections": ["tt_res_bip_dio_disres", "tt_mom", "tt_ind_jvar", "tt_r_metal"],
+  "reference_v": [0.0, 0.9],
+  "code_centers_in_order": [0, 255, 1, 254, 2, 12, 63, 64, 127, 128],
+  "frames_per_new_corner": 10,
+  "maxstep_ps": 10,
+  "max_output_mib_per_run": 4096,
+  "existing_five": {"tt_nom_27": "tt", "ss_low_m40": "ssc", "ss_low_125": "ssh", "ff_high_m40": "ffc", "ff_high_125": "ffh"},
+  "existing_five_revision": "msbd2-resetor-v1-step2p",
+  "scope": "45 MOS/supply/temperature points with TT passives; original five use 18 frames and 2 ps full-terminal capture; other 40 use ten code centers, 10 ps selected functional/timing signals; no full-terminal qualification, FFT/static linearity, mismatch, transient noise or PEX for the extension"
+}

@@ -1,0 +1,43 @@
+simulator lang=spectre
+// Same TT fixture for both extracted geometries. Only the DUT include changes.
+include "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs" section=tt_mom
+include "extracted.scs"
+
+subckt schematic_mom_ratio (TOP B0 B1)
+  C0 (TOP B0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+  C1 (TOP B1) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+  C2 (TOP B1) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+ends schematic_mom_ratio
+
+VCM (CM 0) vsource dc=0.45
+VB0 (CMD0 0) vsource type=pulse val0=0.45 val1=0.55 delay=1n rise=10p fall=10p width=2n period=20n
+VB1 (CMD1 0) vsource type=pulse val0=0.45 val1=0.55 delay=5n rise=10p fall=10p width=2n period=20n
+
+// Clamp TOP at common mode for charge measurements. The 1-ohm shunt
+// makes the clamp current observable without a simulator-specific save name.
+RQPRE (QPRE CM) resistor r=1
+RQPOST (QPOST CM) resistor r=1
+RQP0 (CMD0 QPB0) resistor r=2k
+RQP1 (CMD1 QPB1) resistor r=2k
+RQX0 (CMD0 QXB0) resistor r=2k
+RQX1 (CMD1 QXB1) resistor r=2k
+XQPRE (QPRE QPB0 QPB1) schematic_mom_ratio
+XQPOST @PEX_Q_INSTANCE@
+
+// A separate copy drives the same 4 fF top load in each circuit.
+RFP0 (CMD0 FPB0) resistor r=2k
+RFP1 (CMD1 FPB1) resistor r=2k
+RFX0 (CMD0 FXB0) resistor r=2k
+RFX1 (CMD1 FXB1) resistor r=2k
+CLPRE (FPRE 0) capacitor c=4f
+CLPOST (FPOST 0) capacitor c=4f
+RLPRE (FPRE CM) resistor r=1T
+RLPOST (FPOST CM) resistor r=1T
+XFPRE (FPRE FPB0 FPB1) schematic_mom_ratio
+XFPOST @PEX_F_INSTANCE@
+
+// Set the same acquired bias on the two high impedance top plates.
+ic FPRE=0.45 FPOST=0.45
+simulatorOptions options temp=27 reltol=1e-6 vabstol=1e-10 iabstol=1e-15
+tran tran stop=9n maxstep=1p errpreset=conservative ic=node
+save CM QPRE QPOST FPRE FPOST

@@ -72,18 +72,25 @@ def stimulus(codes, sign):
     return ' '.join(points)
 
 
-def prepare(version, corner, revision='v1'):
+def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None):
     if version not in ('b', 'minimal', 'current'):
         raise ValueError('Unknown reference short version')
     ensure_candidate()
     run_id = '%s-%s-%s-%s' % (PREFIX, version, corner, revision)
     engine().valid_id(run_id)
-    condition = read('specs/corners.json')[corner]
+    condition = read('specs/corners.json')[corner] if condition is None else dict(condition)
+    codes = list(CODES if codes is None else codes)
+    if not codes or any(type(k) is not int or not 0 <= k <= 255 for k in codes):
+        raise ValueError('Expected nonempty 8-bit code centers')
+    if (set(condition) != {'mos','temperature_c','vdd_v'} or
+            condition['mos'] not in ('TT','SS','FF','FS','SF') or
+            condition['temperature_c'] not in (-40,27,125) or condition['vdd_v'] not in (.81,.9,.99)):
+        raise ValueError('Unsupported PVT condition')
     blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT,
                         {'reference':'minimal_direct'} if version == 'minimal' else None)
     tb = text('tb/top/short/tb.scs')
     for source, node, sign in [('VVINP', 'VINP_SRC', 1), ('VVINN', 'VINN_SRC', -1)]:
-        tb = re.sub(r'(?m)^'+source+r' .*$', source+' ('+node+' 0) vsource type=pwl wave=['+stimulus(CODES, sign)+']', tb)
+        tb = re.sub(r'(?m)^'+source+r' .*$', source+' ('+node+' 0) vsource type=pwl wave=['+stimulus(codes, sign)+']', tb)
     blobs['tb.scs'] = tb.encode()
     deck = text('tb/top/short/test.scs').splitlines()
     deck = [line for line in deck if not line.startswith(('XMEASURE ', 'ahdl_include ', 'tran_ab ', 'save '))]
@@ -99,7 +106,7 @@ def prepare(version, corner, revision='v1'):
         signal_names += ['XDUT.XCDAC.B'+side+str(bit) for side in ['N','P']]
     currents = ['XDUT.XCDAC.XS%s%d.%s:1'%(side,bit,mos)
                 for side in ['N','P'] for bit in range(8) for mos in ['MN_LOW','MP_HIGH']]
-    stop = (59+100*len(CODES))*1e-9
+    stop = (59+100*len(codes))*1e-9
     deck += '\nahdl_include "observer.va"\nXPROBE ('+' '.join('D%d'%i for i in range(8))+' SAMPLE VDD! 0) b_behavior_observer\n'
     deck += 'tran_short tran stop=%.17g maxstep=10p errpreset=moderate lteratio=10\n'%stop
     deck += 'save '+' '.join(signal_names+currents)+'\n'
@@ -109,7 +116,7 @@ def prepare(version, corner, revision='v1'):
     for filename in ['reference_short.py', 'native_stream.py']:
         blobs[filename] = (ROOT/'tools/saradc/measure'/filename).read_bytes()
     ctx = dict(run_id=run_id, issue=2, version=version, corner=corner, **condition,
-               expected_codes=CODES, frames=len(CODES), period_s=100e-9, frame_origin_s=59e-9,
+               expected_codes=codes, frames=len(codes), period_s=100e-9, frame_origin_s=59e-9,
                expected_stop_s=stop, lsb_v=1.8/256, settling_band_lsb=.25,
                required_signals=[s.lower() for s in signal_names], current_signals=[s.lower() for s in currents],
                noise=False, mismatch=False, pex=False, baseline_frozen_b_sha256=read('specs/arch.json')['frozen_b_sha256'],
@@ -129,11 +136,13 @@ def prepare(version, corner, revision='v1'):
     # v1 measured 2 GiB by 0.921 us (B) / 1.410 us (minimal).
     # Retain full native precision and currents for the 1.859 us experiment.
     # The managed disk admission and runtime limits enforce this declared budget.
-    resources['max_output_mib']=8192
+    if max_output_mib is not None and (type(max_output_mib) is not int or max_output_mib<=0):
+        raise ValueError('Positive output budget required')
+    resources['max_output_mib']=8192 if max_output_mib is None else max_output_mib
     recipe = dict(schema_version=1,run_id=run_id,design_id='sar8_reference_direct_issue2',entry='test.scs',
                   analyzer='reference_short.py', inputs=[dict(name=n,source=(dest/n).relative_to(ROOT).as_posix(),sha256=hashlib.sha256(b).hexdigest()) for n,b in blobs.items()],
                   resources=resources,spectre_args=original['spectre_args'],summary_signals=['sample'],
-                  expected_stop_s=stop,qualification_scope='18-frame native functional/timing comparison; terminal qualification deferred',test_conditions=ctx)
+                  expected_stop_s=stop,qualification_scope='%d-frame native functional/timing comparison; terminal qualification deferred'%len(codes),test_conditions=ctx)
     p=dest/'recipe.yaml'; content=json.dumps(recipe,indent=2)+'\n'
     if p.exists() and p.read_text(encoding='utf-8')!=content:raise ValueError('Recipe identity differs')
     p.write_text(content,encoding='utf-8',newline='\n')

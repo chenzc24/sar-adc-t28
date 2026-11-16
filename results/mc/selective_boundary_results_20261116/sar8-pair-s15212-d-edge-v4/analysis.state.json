@@ -1,0 +1,76 @@
+{
+  "agent_sha256": "463dc0f3502efa75b74f455bb6fc19f2fffdb78d3459f8bc96f71e17b3fe3727", 
+  "child_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 283766, 
+    "pid": 283766, 
+    "start_ticks": "168922654", 
+    "state": "R"
+  }, 
+  "elapsed_seconds": 347.90895795822144, 
+  "exit_code": 0, 
+  "gate": {
+    "pass_gate": true, 
+    "phase": "analysis", 
+    "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb", 
+    "reasons": [], 
+    "snapshot": {
+      "cgroup_headroom": 38181076992, 
+      "cgroups": {
+        "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+          "headroom": 38181076992, 
+          "limit": 51539607552, 
+          "used": 13358530560
+        }
+      }, 
+      "conflicting_processes": [
+        {
+          "comm": "spectre", 
+          "managed": {
+            "phase": "simulation", 
+            "reserved_rss_mib": 1024, 
+            "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1", 
+            "threads": 4
+          }, 
+          "pid": 128857
+        }, 
+        {
+          "comm": "python", 
+          "managed": {
+            "phase": "analysis", 
+            "reserved_rss_mib": 256, 
+            "run_id": "sar8-pair-s15212-c-edge-v4", 
+            "threads": 1
+          }, 
+          "pid": 283720
+        }
+      ], 
+      "cpu_capacity": 48.0, 
+      "disk_free": 1177950969856, 
+      "epoch": 1794788876.776492, 
+      "host": "thu-song", 
+      "load1": 15.62, 
+      "mem_available": 94430035968, 
+      "swap_free": 1299378176, 
+      "swap_rate_bytes_s": 0.0
+    }, 
+    "workload_slot": 2
+  }, 
+  "output_bytes": 5147909592, 
+  "peak_rss_bytes": 13201408, 
+  "phase": "analysis", 
+  "queued": true, 
+  "rss_bytes": 12795904, 
+  "started_epoch": 1794788876.793574, 
+  "status": "complete", 
+  "submitted_epoch": 1794788876.488537, 
+  "updated_epoch": 1794789224.702684, 
+  "waiting_reasons": [], 
+  "worker_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 283763, 
+    "pid": 283763, 
+    "start_ticks": "168922625", 
+    "state": "R"
+  }
+}

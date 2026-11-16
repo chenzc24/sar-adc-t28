@@ -10,6 +10,7 @@
 | RNL 原理图与层次展开 | [离线浏览器](docs/schematics/index.html)，[官方查看器与编辑说明](docs/schematics/README.md) |
 | 独立模块测试 | [tb/blocks/README.md](tb/blocks/README.md) |
 | 管级候选 | [design/xtor/README.md](design/xtor/README.md) |
+| CDAC 版图、DRC/LVS/PEX 与后仿 | [Layout/README.md](Layout/README.md) |
 | VA/Python 行为模型 | [design/behav/README.md](design/behav/README.md) |
 | 实际测试台 | [tb/README.md](tb/README.md) |
 | 仿真结果 | [results/README.md](results/README.md) |
@@ -26,7 +27,7 @@
 
 日常默认当前管级设计。混合层次可重复指定 `--view comparator=va --view reference=va`；候选试用可加 `--candidate comparator=NAME`，冻结 B 仍显式回归。独立模块用 `block prepare/sim/follow`，源码、实际负载和测量均随运行冻结。
 
-2026-11-15 按用户决定采用数据复位 OR 版，默认打包与直接 include 均使用已实测的原生标准单元实现，标准库内部不变。[采用记录](results/design/reset_data_or_adoption_20261115.json)。FF 冷（0.99 V、−40°C）18/18 帧功能时序通过，按[新规则](specs/soa_rule.yaml)端压违例由 8 项降为 0 项；内部采样关闭沿最大偏移 5.88 ps。[完整对照](results/soa/dff_reset_or_ffc_20261115.md)。加 OR 版其他四角尚未验证；此前 D2 的五角结果和历史 B 的 FFT、全码、MC 均仍归属各自冻结输入，不转移为本版指标。
+2026-11-15 按用户决定采用数据复位 OR 版，默认打包与直接 include 均使用已实测的原生标准单元实现，标准库内部不变。[采用记录](results/design/reset_data_or_adoption_20261115.json)。FF 冷（0.99 V、−40°C）18/18 帧功能时序通过，按[新规则](specs/soa_rule.yaml)端压违例由 8 项降为 0 项；内部采样关闭沿最大偏移 5.88 ps。[完整对照](results/soa/dff_reset_or_ffc_20261115.md)。当前 OR 版已完成 45 点 PVT 短测：原五角 90 帧、新增 40 角 400 帧，码字及功能时序均通过；原五角端压数值违例为 0（保留时间分辨率复核标记），新增 40 角不作完整逐管端压资格判定。[回收结果](results/pvt/resetor_45_short_20261115.md)。此前 D2 的五角结果和历史 B 的 FFT、全码、MC 均仍归属各自冻结输入，不转移为本版指标。
 
 个人笔记已迁到 `E:/Learning/SAR-ADC-T28`。旧实验、历史计划和一次性脚本通过 [来源记录](results/provenance.json) 的 Git 提交追溯；本机完整工作快照位于被忽略的 `work/legacy/`。
 

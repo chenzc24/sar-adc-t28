@@ -1,0 +1,1016 @@
+{
+  "date": "2026-11-16",
+  "issue": "https://github.com/chenzc24/sar-adc-t28/issues/3",
+  "acceptance": "Organization equivalence, no physical/electrical repair",
+  "migration_pass": true,
+  "source_checkpoint": "work/layout/restructure/checkpoint.json",
+  "runtime_checkpoint": "work/layout/restructure/runtime-checkpoint.json",
+  "relocation_map": "work/layout/restructure/relocation.json",
+  "shared_lock": "legacy_root/layout.lock",
+  "physical": {
+    "before": "cdac-full-corefill-20261116",
+    "after": "cdac-org-native",
+    "checks": {
+      "same_cell": true,
+      "geometry_equal": true,
+      "labels_equal_raw_names": false,
+      "labels_equal_by_geometry": true,
+      "drc_markers_equal": true,
+      "lvs_correct": true,
+      "generator_and_reference_bytes_equal": false,
+      "rule_decks_equal": true,
+      "lvs_reference_text_equal": true,
+      "pex_statements_equal": false
+    },
+    "geometry_sha256": "4d8c359255a67c247ecc85d1488b4e9f447bd9d9703805578723d612b0b60f35",
+    "evidence": [
+      {
+        "remote": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116",
+        "manifest_sha256": "d09c65439359c23ee1c1cb0928f32f6cc06916cf019eea871d03bfe77e835261",
+        "gds_sha256": "5e8f4a493f4afee36cb16709f25ae926c5dd60e32cbe1f56b7adb7a3b7484baf",
+        "pex_files": {
+          "extracted.scs.pex": {
+            "statement_sha256": "761898574f444bb94fe1ab2cd796a62d4cdc13acd2a728461bcc25f4a1ade683",
+            "sha256": "aa697be6ea45a407f6a4f3b74417d1a91e48724a065445ec985d68c5e455813f"
+          },
+          "extracted.scs": {
+            "statement_sha256": "e4a5a08583e572040751e8e83797f68e70c572728f32f3054ba79068211c8a7e",
+            "sha256": "580de7dc78b482f7d8146700a9372bf7235d177ac0570ef882cfb1fc2e227a19"
+          },
+          "extracted.scs.sar8j_r1_cdac.pxi": {
+            "statement_sha256": "749b2307960360c5750292cc91f31ef3e0241435f40975f81dc3ad3f72ee6696",
+            "sha256": "6b0345b29d5cde1004d762cc6ed0e76888ed6492ce77b881a6835e823001fb79"
+          }
+        }
+      },
+      {
+        "remote": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/cdac-org-native",
+        "manifest_sha256": "a10d3c6beb62c92632df33bbd23f303476f76c02c0e215f32465720dd473d478",
+        "gds_sha256": "04d400579463331929b122eab733f5639684e1bc4c2251bfd26ec45d46feb460",
+        "pex_files": {
+          "extracted.scs.pex": {
+            "statement_sha256": "69bd3b0cbdf615de5b4ceaac401ed837206492ac23cc05bdcbde63d37544e2c6",
+            "sha256": "e3fd7f14596d189f4847f0127be4c71549b6a3e007c8260e04e6f858dc351fdd"
+          },
+          "extracted.scs": {
+            "statement_sha256": "d3dea0e5de4d83975d951384d03aebff2df1711aea30a225a7edbfb67c067f2e",
+            "sha256": "f071518c2764549fa277463361cf81370914a63c36e104076843c187b2d60287"
+          },
+          "extracted.scs.sar8j_r1_cdac.pxi": {
+            "statement_sha256": "616df2b13f79c698f229503ce1a43dd24584c0bbd5a753b081d190500eb6f02e",
+            "sha256": "defc8b73e32590ea55eff9b2d753c8fe1f50e3e67d0afe28900a8ad793c097df"
+          }
+        }
+      }
+    ],
+    "drc_markers": {
+      "DIODMY_L:WARNING": 1,
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+    },
+    "drc_verdict": "NOT_CLEAN",
+    "lvs_verdict": "CORRECT",
+    "differences": "Volatile PCell labels differ; geometry-keyed labels match. CDL line endings differ, text lines match. PEX identifiers/order are not byte-equivalent; actual TT before/after required."
+  },
+  "tt": {
+    "before": {
+      "run_id": "cdac-org-before-tt",
+      "result_sha256": "ce5b84df7417aff2dc0938fdfe387dd65d1763e9d38f4873182a00c49eb26c8c",
+      "frames": [
+        {
+          "frame": 0,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.189457287139383,
+          "deadline_margin_ns": 31.810542712860546,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 1.0005000000000005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 1.0009073746928696e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 1.0013524801483442e-07
+            }
+          ]
+        },
+        {
+          "frame": 1,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.18947665193669,
+          "deadline_margin_ns": 31.810523348063317,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 2.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 2.0009073672216524e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 2.0013524795784718e-07
+            }
+          ]
+        },
+        {
+          "frame": 2,
+          "expected_code": 12,
+          "code_90": 0,
+          "code_pass": false,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.398018296216605,
+          "deadline_margin_ns": 31.601981703783455,
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 3.0004999999999994e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 3.000907378195465e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 3.0013520409714775e-07
+            }
+          ]
+        },
+        {
+          "frame": 3,
+          "expected_code": 127,
+          "code_90": 127,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.973357276202172,
+          "deadline_margin_ns": 31.026642723797888,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 4.0004999999999993e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 4.000907381025154e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 4.001343854550279e-07
+            }
+          ]
+        },
+        {
+          "frame": 4,
+          "expected_code": 128,
+          "code_90": 128,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.956896632998184,
+          "deadline_margin_ns": 31.043103367001773,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 5.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 5.000907382683688e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 5.001343851690023e-07
+            }
+          ]
+        },
+        {
+          "frame": 5,
+          "expected_code": 243,
+          "code_90": 255,
+          "code_pass": false,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.402555132565706,
+          "deadline_margin_ns": 31.59744486743425,
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 6.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 6.000907379623352e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 6.001352038994982e-07
+            }
+          ]
+        },
+        {
+          "frame": 6,
+          "expected_code": 255,
+          "code_90": 255,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.193541465525783,
+          "deadline_margin_ns": 31.80645853447417,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 7.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 7.000907372858544e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 7.001352478463387e-07
+            }
+          ]
+        },
+        {
+          "frame": 7,
+          "expected_code": 255,
+          "code_90": 255,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.193549443031902,
+          "deadline_margin_ns": 31.806450556968056,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 8.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 8.00090738313286e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 8.001352489777436e-07
+            }
+          ]
+        },
+        {
+          "frame": 8,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.18948136960988,
+          "deadline_margin_ns": 31.81051863039018,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 9.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 9.000907386683661e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 9.001352490514511e-07
+            }
+          ]
+        },
+        {
+          "frame": 9,
+          "expected_code": 128,
+          "code_90": 128,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.95819823633981,
+          "deadline_margin_ns": 31.041801763659826,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 1.0000500000000003e-06
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 1.0000907375235745e-06
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 1.0001343855572309e-06
+            }
+          ]
+        }
+      ],
+      "all_code_pass": false,
+      "all_timing_pass": true,
+      "first_issue": {
+        "reason": "center_code",
+        "bit": null,
+        "frame": 2
+      },
+      "precharge": {
+        "bootn_charge_v": 0.899999967831641,
+        "bootp_charge_v": 0.8999999728866408,
+        "time_s": 5.899999999999633e-08
+      },
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "VACOMP-2435"
+      ],
+      "settling_scope": "Distributed CDAC bottom-plate settling unmeasured; no independent settled TOP target.",
+      "current_scope": "Schematic switch terminal currents unavailable in extracted hierarchy; no overlap-current verdict.",
+      "limitations": [
+        "Only CDAC has PEX; other modules remain pre-layout.",
+        "No MC, transient noise, supply ramp or terminal qualification.",
+        "No independent settling target or distributed bottom-plate measurement.",
+        "Ten TT frames do not establish full-code or corner performance."
+      ],
+      "physical_evidence": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116",
+      "prelayout_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+      "raw_result": "work/output/managed_execution/runs/cdac-org-before-tt/collected/derived/result.json"
+    },
+    "after": {
+      "run_id": "cdac-org-after-tt",
+      "result_sha256": "7c24535cc02d9e7835095c806caa8b753cfbb97d6b28e5622edb2389bcef26b0",
+      "frames": [
+        {
+          "frame": 0,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.189453124993175,
+          "deadline_margin_ns": 31.810546875006754,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 1.0005000000000005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 1.0009073659271587e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 1.0013524815865454e-07
+            }
+          ]
+        },
+        {
+          "frame": 1,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.18948295360448,
+          "deadline_margin_ns": 31.81051704639553,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 2.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 2.000907379150757e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 2.0013524832173785e-07
+            }
+          ]
+        },
+        {
+          "frame": 2,
+          "expected_code": 12,
+          "code_90": 0,
+          "code_pass": false,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.398032154080504,
+          "deadline_margin_ns": 31.601967845919557,
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 3.0004999999999994e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 3.000907374311592e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 3.0013520382760826e-07
+            }
+          ]
+        },
+        {
+          "frame": 3,
+          "expected_code": 127,
+          "code_90": 127,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.973364391501434,
+          "deadline_margin_ns": 31.026635608498626,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 4.0004999999999993e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 4.000907379027056e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 4.0013438576426184e-07
+            }
+          ]
+        },
+        {
+          "frame": 4,
+          "expected_code": 128,
+          "code_90": 128,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.956970293369366,
+          "deadline_margin_ns": 31.043029706630588,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 5.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 5.000907380680822e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 5.001343858332905e-07
+            }
+          ]
+        },
+        {
+          "frame": 5,
+          "expected_code": 243,
+          "code_90": 255,
+          "code_pass": false,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.402560104473874,
+          "deadline_margin_ns": 31.59743989552608,
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 6.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 6.000907379624373e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 6.001352039010075e-07
+            }
+          ]
+        },
+        {
+          "frame": 6,
+          "expected_code": 255,
+          "code_90": 255,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.193540501556658,
+          "deadline_margin_ns": 31.8064594984433,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 7.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 7.000907379672306e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 7.001352489760054e-07
+            }
+          ]
+        },
+        {
+          "frame": 7,
+          "expected_code": 255,
+          "code_90": 255,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.19354689221505,
+          "deadline_margin_ns": 31.806453107784904,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 8.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 8.000907385993483e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 8.001352486233457e-07
+            }
+          ]
+        },
+        {
+          "frame": 8,
+          "expected_code": 0,
+          "code_90": 0,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.18947101456063,
+          "deadline_margin_ns": 31.81052898543943,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 9.0005e-07
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 9.000907384212181e-07
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 9.001352489977919e-07
+            }
+          ]
+        },
+        {
+          "frame": 9,
+          "expected_code": 128,
+          "code_90": 128,
+          "code_pass": true,
+          "counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "timing_pass": true,
+          "sample_edges_pass": true,
+          "observer_crosscheck": true,
+          "event_order_pass": true,
+          "conversion_ns": 28.958188635105948,
+          "deadline_margin_ns": 31.04181136489369,
+          "issues": [],
+          "sample_close_events": [
+            {
+              "signal": "sample",
+              "rising": false,
+              "time_s": 1.0000500000000003e-06
+            },
+            {
+              "signal": "sample_int",
+              "rising": false,
+              "time_s": 1.000090737430797e-06
+            },
+            {
+              "signal": "close",
+              "rising": false,
+              "time_s": 1.000134385397913e-06
+            }
+          ]
+        }
+      ],
+      "all_code_pass": false,
+      "all_timing_pass": true,
+      "first_issue": {
+        "reason": "center_code",
+        "bit": null,
+        "frame": 2
+      },
+      "precharge": {
+        "bootn_charge_v": 0.8999999678316405,
+        "bootp_charge_v": 0.8999999728866431,
+        "time_s": 5.899999999999633e-08
+      },
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "VACOMP-2435"
+      ],
+      "settling_scope": "Distributed CDAC bottom-plate settling unmeasured; no independent settled TOP target.",
+      "current_scope": "Schematic switch terminal currents unavailable in extracted hierarchy; no overlap-current verdict.",
+      "limitations": [
+        "Only CDAC has PEX; other modules remain pre-layout.",
+        "No MC, transient noise, supply ramp or terminal qualification.",
+        "No independent settling target or distributed bottom-plate measurement.",
+        "Ten TT frames do not establish full-code or corner performance."
+      ],
+      "physical_evidence": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/cdac-org-native",
+      "prelayout_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+      "raw_result": "work/output/managed_execution/runs/cdac-org-after-tt/collected/derived/result.json"
+    },
+    "comparison": {
+      "pass": true,
+      "tolerance_s": 1e-11,
+      "frames": [
+        {
+          "frame": 0,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 8.765710904725361e-16,
+          "conversion_delta_s": 4.162146208130935e-15,
+          "pass": true
+        },
+        {
+          "frame": 1,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 1.1929104603454601e-15,
+          "conversion_delta_s": 6.301667788477517e-15,
+          "pass": true
+        },
+        {
+          "frame": 2,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 3.8838731738699496e-16,
+          "conversion_delta_s": 1.3857863898181223e-14,
+          "pass": true
+        },
+        {
+          "frame": 3,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 3.092339413506527e-16,
+          "conversion_delta_s": 7.115299261784004e-15,
+          "pass": true
+        },
+        {
+          "frame": 4,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 6.642881299830268e-16,
+          "conversion_delta_s": 7.366037118217151e-14,
+          "pass": true
+        },
+        {
+          "frame": 5,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 1.5093068328887564e-18,
+          "conversion_delta_s": 4.9719081687271685e-15,
+          "pass": true
+        },
+        {
+          "frame": 6,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 1.129666665929379e-15,
+          "conversion_delta_s": 9.639691249674344e-16,
+          "pass": true
+        },
+        {
+          "frame": 7,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 3.543979498564888e-16,
+          "conversion_delta_s": 2.55081685196501e-15,
+          "pass": true
+        },
+        {
+          "frame": 8,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 2.471480145036886e-16,
+          "conversion_delta_s": 1.0355049248289561e-14,
+          "pass": true
+        },
+        {
+          "frame": 9,
+          "same_codes_events_verdicts": true,
+          "sample_edge_delta_s": 1.593177917743509e-16,
+          "conversion_delta_s": 9.601233863065772e-15,
+          "pass": true
+        }
+      ],
+      "scope": "Equality of migration measurements, not ADC performance acceptance"
+    },
+    "changed_frozen_inputs": [
+      "cdac_physical.json",
+      "context.json",
+      "extracted.scs",
+      "extracted.scs.pex",
+      "extracted.scs.sar8j_r1_cdac.pxi"
+    ],
+    "stimulus_and_nonpex_inputs_byte_equal": true,
+    "registered_before_recipe_sha256": "8620be37c397d4e61fbb97df4f99f96a2d6d54ac086f9bd85eb0d79ad3985a60",
+    "registered_after_recipe_sha256": "156479a3bb2b24fbb17ba0d6adcb1e381bc38593cfe05aa966f0559bb2daa4d3"
+  },
+  "verification": {
+    "local_tests": "8 targeted tests pass",
+    "cli_packagers": "5 help/import entrypoints pass",
+    "native_python2_compile": "pass",
+    "legacy_source_identity": "Native helper validated both original/new evidence; CRLF-only differences accepted, changed CDL rejected",
+    "duplicate_native_id": "rejected before launching another process",
+    "unreconciled_oa_regeneration": "rejected before evidence/OA write"
+  },
+  "retained_operational_events": [
+    "Before-TT collection attempted during active analysis: checksum mismatch; subsequent collection after completion succeeded, no reanalysis or resimulation.",
+    "Two-case netlist recovery exceeded local 32MiB cumulative guard; switched to streamed remote hashing and small metadata, no limit relaxed."
+  ],
+  "limits": [
+    "Core floorplan is a reservation, not an implemented whole-ADC layout or final die area.",
+    "Critical route parasitic budgets, routing layers, guard/IO area remain unassigned.",
+    "Existing CDAC amplitude problem is not repaired; code failures remain in both runs.",
+    "Distributed bottom-plate settling, switch branch overlap and full terminal reliability unmeasured.",
+    "Only CDAC is extracted; other modules remain prelayout. No new FFT/PVT/MC.",
+    "Live unsaved OA state is not represented by saved-cell native verification."
+  ],
+  "git": "No commit or push; original untracked Layout protected by explicit source archive.",
+  "raw_retention": {
+    "status": "hold",
+    "runs": [
+      "cdac-org-before-tt",
+      "cdac-org-after-tt"
+    ],
+    "reason": "Unclosed CDAC code/gain failures may require waveform diagnosis and comparison during the next physical repair. No deletion."
+  },
+  "archive_receipt": "results/storage/layout_migration_archive_20261116.json",
+  "current_runtime": {
+    "host": "thu-wei",
+    "runtime": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/runtime",
+    "files_sha256": {
+      "fill_ablation.py": "b2b99cd549bfa79896837bea5515a71c31bcbb8ec6980abfac7eb0ae7d229d43",
+      "mom.il": "11f121780f5ad6e51abae13aeaaa40fc2bb1a0d5a04d737203d9600d3dd1c83f",
+      "fill_cdac.py": "6051c9af2f1b7152b94766ac26be6ec83abb6319dae387fe518e3d7697fc2431",
+      "check_fill_geometry.py": "49f9785567d5b46a81f8208bbef88ae54cf6e5019baa4b5d944ecf3bc494010c",
+      "hierarchy.il": "4407d0a5e45bd8d629e100bfb0774ad96563e2fc48451b9e08a9804fc4742864",
+      "workspace.py": "7d34bdd58de4f2a2e105596a85eba717425ceddbf9ce4d81149bb4b802c9b267",
+      "compact-reference.cdl": "62de58903e78bdbf253cae8ddc4fe7123716c4384b3d9374d54ac1aad4990ed9",
+      "run_physical.py": "c616965899cd3a70fede3ac4a20e2cb6444564c111db70f6c16e7d2932f18750",
+      "compact.il": "df6bfd24092421568e8bb7f836da564a8d87bf6bbee57baa131c6d3b9ff1200c",
+      "apply_fill.py": "9d83716233acce0ceb969f96895c2a104cd4551541771100d14a35054b2f6c09",
+      "cdac-full-reference.cdl": "7e4141771b8ef98d4694b52fbcde0a19dde1eeab8860fc343dc66d2e67198529",
+      "reference.cdl": "704ab026511f45ba86116422a142180cd86e13feff1ae16b462098af9a705278",
+      "cdac-full.il": "2f6307befd352b7c9acb91f4eb4b42107d7e5689894f28500ff26ab83b316365",
+      "workspace.json": "d01eb656277687b53838d952ff9963d3055ed86f22ddb80af736d36df800e624"
+    },
+    "note": "Native migration evidence used the first deployed driver; later driver changes freeze runtime inputs and allow hash-checked CRLF-only legacy source comparisons. Native helper validated independently; no geometry changes."
+  }
+}

@@ -35,6 +35,8 @@ Use [docs/development-workflow.md](docs/development-workflow.md) for implementat
   Its recipe, execution policy and server state define resource admission and progress.
 - Read status from the existing monitor; read electrical verdicts from waveform measurements.
   Inspect the original run identity before retrying uncertain submissions.
+- At experiment closeout, before large batches, or when reclaiming disk space, follow
+  [waveform retention](docs/waveform-retention.md) to archive evidence and release eligible raw files.
 - Validate a circuit change through its real interface, loading and timing conditions.
   Report functionality, performance and electrical qualification at their measured scope.
 - Foundry PDKs and shared libraries remain read-only. Keep proprietary model text,

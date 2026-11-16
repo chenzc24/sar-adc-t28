@@ -1,0 +1,472 @@
+{
+  "electrical_source": "design/manifest.json",
+  "masters": {
+    "sar8i_ctrl": {
+      "ports": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "ACTIVE"
+      ],
+      "source": "design/xtor/sar/reset_data_or.scs"
+    },
+    "sar8i_idle": {
+      "ports": [
+        "ACTIVE",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "PRESET",
+        "SAMPLE_MATCH"
+      ],
+      "source": "design/xtor/reference/minimal_msb_d2.scs"
+    },
+    "sar8i_refword": {
+      "ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE",
+        "VDD",
+        "VSS",
+        "RST_DONE",
+        "PRESET"
+      ],
+      "source": "design/xtor/reference/minimal_msb_d2.scs"
+    },
+    "sar8j_r1_cdac": {
+      "ports": [
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "TOPN",
+        "TOPP",
+        "VDD",
+        "VREFN",
+        "VREFP",
+        "VSS"
+      ],
+      "source": "design/xtor/cdac/cdac.scs"
+    },
+    "sar8p_clkbuf": {
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "source": "design/xtor/common/standard_cells.scs"
+    },
+    "sar8r_edge": {
+      "ports": [
+        "A",
+        "VDD",
+        "VSS",
+        "Y"
+      ],
+      "source": "design/xtor/clock/delays.scs"
+    },
+    "sar_bootstrap_flat_8b_p": {
+      "ports": [
+        "CLKS",
+        "VOUT",
+        "Vin"
+      ],
+      "source": "design/xtor/bootstrap/bootstrap.scs"
+    },
+    "sar_strongarm_t28": {
+      "ports": [
+        "CLK",
+        "OUTN",
+        "OUTP",
+        "VDD",
+        "VINN",
+        "VINP",
+        "VSS"
+      ],
+      "source": "design/xtor/comparator/comparator.scs"
+    }
+  },
+  "top_instances": {
+    "XSEQ": {
+      "nodes": [
+        "SAMPLE_MATCH",
+        "VDD!",
+        "0",
+        "SEQ_SAMPLE"
+      ],
+      "master": "sar8r_edge"
+    },
+    "XIDLE": {
+      "nodes": [
+        "ACTIVE",
+        "SAMPLE_INT",
+        "VDD!",
+        "0",
+        "PRESET",
+        "SAMPLE_MATCH"
+      ],
+      "master": "sar8i_idle"
+    },
+    "XSAMPLE": {
+      "nodes": [
+        "SAMPLE",
+        "VDD!",
+        "0",
+        "SAMPLE_INT"
+      ],
+      "master": "sar8p_clkbuf"
+    },
+    "XBOOTN": {
+      "nodes": [
+        "SEQ_SAMPLE",
+        "TOPN",
+        "VINN"
+      ],
+      "master": "sar_bootstrap_flat_8b_p"
+    },
+    "XBOOTP": {
+      "nodes": [
+        "SEQ_SAMPLE",
+        "TOPP",
+        "VINP"
+      ],
+      "master": "sar_bootstrap_flat_8b_p"
+    },
+    "XCDAC": {
+      "nodes": [
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "TOPN",
+        "TOPP",
+        "VDD!",
+        "VREFN",
+        "VREFP",
+        "0"
+      ],
+      "master": "sar8j_r1_cdac"
+    },
+    "XCTRL": {
+      "nodes": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE_INT",
+        "VDD!",
+        "0",
+        "ACTIVE"
+      ],
+      "master": "sar8i_ctrl"
+    },
+    "XREF": {
+      "nodes": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GNP0",
+        "GNP1",
+        "GNP2",
+        "GNP3",
+        "GNP4",
+        "GNP5",
+        "GNP6",
+        "GNP7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "GPP0",
+        "GPP1",
+        "GPP2",
+        "GPP3",
+        "GPP4",
+        "GPP5",
+        "GPP6",
+        "GPP7",
+        "PHI_U",
+        "SAMPLE_INT",
+        "VDD!",
+        "0",
+        "RST_DONE",
+        "PRESET"
+      ],
+      "master": "sar8i_refword"
+    },
+    "XCOMP": {
+      "nodes": [
+        "CMP_CLK",
+        "COMP_N",
+        "COMP_P",
+        "VDD!",
+        "TOPN",
+        "TOPP",
+        "0"
+      ],
+      "master": "sar_strongarm_t28"
+    },
+    "CL_COMP_N": {
+      "nodes": [
+        "COMP_N",
+        "0"
+      ],
+      "master": "cfmom_2t"
+    },
+    "CL_COMP_P": {
+      "nodes": [
+        "COMP_P",
+        "0"
+      ],
+      "master": "cfmom_2t"
+    },
+    "CL_CMP_CLK": {
+      "nodes": [
+        "CMP_CLK",
+        "0"
+      ],
+      "master": "cfmom_2t"
+    }
+  },
+  "port_policy": "Preserve exact electrical order. Local VDD/VSS map only to top VDD!/0. Do not short CDAC gates internally.",
+  "proposed_faces": {
+    "cdac": {
+      "TOPN_TOPP": "north/centre, existing exits may require a separately verified change",
+      "gates": "south/east toward reference",
+      "VREFN_VREFP": "south/west"
+    },
+    "comparator": {
+      "inputs": "south toward CDAC",
+      "outputs_clock": "east toward SAR"
+    },
+    "bootstrap": {
+      "VIN": "north",
+      "TOP": "toward respective CDAC side",
+      "clock": "outer digital side"
+    },
+    "reference": {
+      "gates": "north toward CDAC switches",
+      "code_controls": "east toward SAR"
+    }
+  },
+  "routing_layers": {
+    "status": "unassigned_until_native_pin_access_and_PDK_review",
+    "permitted_by_net": null,
+    "rule": "Retain existing M1-M7 CDAC geometry. New layer/via assignments require native rules, spacing and PEX verification; this plan grants no blanket layer permission."
+  },
+  "routes": {
+    "TOPN": {
+      "from": "XCDAC",
+      "to": "XCOMP",
+      "priority": 1,
+      "intent": "short symmetric differential route; control fixed-potential parasitics"
+    },
+    "TOPP": {
+      "from": "XCDAC",
+      "to": "XCOMP",
+      "priority": 1,
+      "intent": "match TOPN topology; compare extracted C, not just length"
+    },
+    "sample_n": {
+      "from": "XBOOTN",
+      "to": "XCDAC",
+      "priority": 1,
+      "intent": "keep VIN/TOP and boosted nodes local; maintain body connections"
+    },
+    "sample_p": {
+      "from": "XBOOTP",
+      "to": "XCDAC",
+      "priority": 1,
+      "intent": "mirror N side geometrical intent"
+    },
+    "gates_32": {
+      "from": "XREF",
+      "to": "XCDAC",
+      "priority": 2,
+      "intent": "preserve gate interface and MSB D2 driver; validate actual switching, no assumed non-overlap"
+    },
+    "decision": {
+      "from": "XCOMP",
+      "to": "XCTRL",
+      "priority": 2,
+      "intent": "match COMP_N/COMP_P loads and preserve asynchronous handshake"
+    },
+    "compare_clock": {
+      "from": "XCTRL",
+      "to": "XCOMP",
+      "priority": 2,
+      "intent": "route away from TOP and VIN; retain actual CL_CMP_CLK load"
+    }
+  },
+  "external_routes": {
+    "VINN_VINP": "north analog entry, local to bootstrap",
+    "VREFN_VREFP": "south/west dedicated distribution to CDAC",
+    "SAMPLE_D0_D7": "east digital edge",
+    "VDD_VSS": "perimeter straps and explicit local returns; isolation/guard topology pending"
+  }
+}

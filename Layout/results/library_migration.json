@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-16",
+  "status": "migration_verified",
+  "library": "SAR_ADC_T28_LAYOUT",
+  "source_library": "SAR8_MOM_PILOT",
+  "source_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/SAR8_MOM_PILOT",
+  "destination_path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT",
+  "technology_library": "tsmcN28",
+  "evidence_root": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/library-migration-20261116",
+  "backup_archive": "source-oa.tar.gz",
+  "backup_sha256": "01f43d2a2135c875bba89ef0ac7a1e1dcddc2f8909b0b7314c80fa08140b9454",
+  "relocation_byte_identical": true,
+  "all_source_cells_present": true,
+  "layout_views": 125,
+  "checked_instance_references": 48444,
+  "unresolved_masters": 0,
+  "old_library_references": 0,
+  "top": {
+    "cell": "sar8j_r1_cdac",
+    "view": "layout",
+    "ports": 38,
+    "bbox_um": [
+      [
+        -1.165,
+        -50.0
+      ],
+      [
+        89.165,
+        42.49
+      ]
+    ],
+    "instances": [
+      [
+        "FILL_ODPO",
+        "SAR_ADC_T28_LAYOUT",
+        "sar8_cdac_fill_odpo"
+      ],
+      [
+        "FILL_METAL",
+        "SAR_ADC_T28_LAYOUT",
+        "sar8_cdac_fill_metal"
+      ],
+      [
+        "XP",
+        "SAR_ADC_T28_LAYOUT",
+        "sar8_cdac_half"
+      ],
+      [
+        "XN",
+        "SAR_ADC_T28_LAYOUT",
+        "sar8_cdac_half"
+      ]
+    ]
+  },
+  "geometry_comparison": {
+    "before_top_sha256": "7d5b31b2d6c47d018ae1f2562297121f16f3a556020a625fe901e6f91e73d648",
+    "top_geometry_equal": true,
+    "top_labels_equal": true,
+    "top_ports": 38,
+    "after_top_sha256": "7d5b31b2d6c47d018ae1f2562297121f16f3a556020a625fe901e6f91e73d648"
+  },
+  "source_validation": {
+    "cdl_identical": true,
+    "placement_identical": true,
+    "generated_skill_diff": "library name and destination guard only",
+    "python_syntax_valid": true
+  },
+  "deployment": {
+    "cdac-full.il": {
+      "after": "6eb6ef5f5658d42f6364448d02af08515bb34d0a5f413e834b38b82c57278456",
+      "before": "a09db36dec98fc70cab722919fd925d9b570dcb78c76f3b31e1ee92021e0399c"
+    },
+    "run_physical.py": {
+      "after": "6d5694af73fdf5445668b0540ee5683654a5810b5394794347d0da1ab637706a",
+      "before": "acd2173fdb04021bd1d89effa56b4153504fca15d19912bc516e3b7acb12b0d7"
+    },
+    "mom.il": {
+      "after": "11f121780f5ad6e51abae13aeaaa40fc2bb1a0d5a04d737203d9600d3dd1c83f",
+      "before": "a0d3940b3ae4bcbbbf98db66dd889283ceae16310531aa868fe41e13aab78ca4"
+    },
+    "apply_fill.py": {
+      "after": "ffa1eaa489b385d2eb46394bdb0d19e681f6bb5440199a8afa5cba1666f86e2d",
+      "before": "1ca97eefc2c1a2cfb86dffd68e298e0cd7420e899a83cb123908178c11c915cb"
+    },
+    "compact.il": {
+      "after": "df6bfd24092421568e8bb7f836da564a8d87bf6bbee57baa131c6d3b9ff1200c",
+      "before": "198af7a9703b83b5c61898efdbe62437e92e02c1166ce2ab66a3197b02d03ced"
+    }
+  },
+  "mapping_files": [
+    "/home/chenzc_intern25/TSMC28/llm_IO/cds.lib",
+    "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/cds.lib"
+  ],
+  "session": {
+    "opened_new_library_cdac_readonly": true,
+    "geOpen_result": "window:5",
+    "manual_comparator_edit_window_preserved": true
+  },
+  "events": [
+    "Native ccpRename completed after a confirmation dialog; the original client call timed out at 120 seconds. Completion was verified from actual library inventory before continuing; rename was not repeated.",
+    "Library-list refresh initially aborted because readonly CDAC hierarchy buffers cached the old path. Only unmodified readonly buffers in SAR_ADC_T28_LAYOUT were purged; refresh and full readback then succeeded.",
+    "Existing missing-library mapping warnings for AA_DIG_VALIDATE_20260512 and ts1n28hpcpsvtb1024x16m8s were retained; unrelated mappings were not changed.",
+    "User stopped final Computer Use snapshot with Escape; no further Computer Use actions taken."
+  ],
+  "validation_scope": "Migration only. Full CDAC GDS geometry and 38 port labels match the immediate pre-migration stream. DRC/LVS/PEX and electrical simulation were not rerun; existing performance limitations remain. Historical evidence identities are unchanged."
+}

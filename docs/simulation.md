@@ -1,5 +1,11 @@
 # 运行与监测
 
+实验收尾、提交大批任务或释放磁盘时，执行[波形归档与清理](waveform-retention.md)：归档测量与图表所需证据后可按清单删除原始大波形。现有 managed 执行器不会自动删除。
+
+45 点扩展由 `python -m tools.saradc.pvt_short --revision NEW_ID` 准备，按 `specs/pvt_short.json` 排除原五点，冻结当前 OR 版的其余 40 个角。每角 10 个中心码、1.059 µs、10 ps 最大步长、4 线程、4 GiB 输出预算；仅保存真实接口和时序测量信号，不据此判断完整逐管端压。参考固定 0/0.9 V，无源模型固定 TT，没有独立 1.8 V 供电轨。
+
+`tools/saradc/managed/batch_follow.py` 是有限批次的服务器调度器，读取已登记 run ID 与 recipe hash，沿用 managed 准入、仿真和分析接口，自动接续分析；同批次有唯一控制器锁。失败或结果不确定的任务保留并标记待核对，不自动重提，其余工况继续。调度器不删波形，完整结果回收和归档后按清理规则另行处理。
+
 VA/Python 行为视图使用 `python -m tools.saradc behav generate` 同步总规格，`behav check` 做数值交叉，`behav sim --run-id sar8-modules-v3` 提交模块与混合层次原生验证；`behav follow --run-id ID` 一次性等待该运行完成后分析、回收，失败不自动重跑。详细范围见 [行为模型](../design/behav/README.md)。已登记的 ID 绑定冻结输入，修改源后使用新 ID。
 
 在项目根目录使用 `.venv/Scripts/python.exe -m tools.saradc`。执行器沿用已验证的 managed 机制：唯一运行身份、冻结输入、资源排队、独立分析和有散列的回收。
@@ -67,3 +73,7 @@ Virtuoso 沿用工作区已经接入的 bridge/ADE 环境。本次不重建连�
 同一 managed 执行器支持 `thu-wei`、`thu-sui` 与 `thu-song`。新登记可用 `engine().register(recipe, host='thu-song')` 选择服务器；初始化用 `engine().storage(host='thu-song')`。运行记录绑定主机，后续查询、分析、回收自动路由；无主机字段的历史记录归属 `thu-wei`。不得通过修改默认服务器迁移已有运行。
 
 这些服务器的 `/home` 用户目录及 PDK 为共享 NFS，`/server_local_ssd` 为各自本地磁盘。队列锁和资源检查按主机执行；转移未完成实验时保留原运行，用新 ID 登记目的主机，记录对应关系并先停止原任务，避免重复运行。停止接口仅处理经启动时间、进程组、账户和命令确认的对应 worker/child，保留原始日志与取消原因。
+
+当前 OR 版含噪声动态测试用 `python -m tools.saradc.noise_fft --run-id NEW_ID` 准备；`--pilot` 生成 8 帧的观察器/协议预检（2 MHz 噪声着色低频拐点，非正式频谱），完整包为 8 帧预热＋连续 1024 帧（10 kHz–2 GHz 配置、noise seed 101）。新观察器不依赖已移除的参考捕获时钟，原生波形解码与 VA 输出码交叉检查。`managed/noise_fft_follow.py` 读取两个已登记身份的冻结清单，预检通过后提交完整运行并自动接续分析；不自动重试、不拼接、不删波形。实际启动见[记录](../results/noise/resetor_1024_launch_20261115.md)。
+
+整机全局＋局部 MC 的准备入口为 `python -m tools.saradc.mc_short --revision NEW_ID`，固定三组电压/温度、各 12 种子、每种子 10 点。`managed/mc_short_follow.py` 消费已登记的精确身份，每组前两个样本通过后自动补齐；原生参数文件核对实际随机覆盖，码字偏移与时序错误分开。已有批次从检查点查询，不重复运行准备/提交命令。当前批次和 analysis-only 源复用见[启动记录](../results/mc/resetor_global_local_launch_20261115.md)。

@@ -1,0 +1,11 @@
+* Independent LVS intent. Reference switches follow frozen B, cdac.scs sw_b0/sw_b1.
+* Each folded MOS keeps the original gate length and total channel width.
+.SUBCKT sar8_mom_ratio TOP B0 B1 GN0 GP0 GN1 GP1 VDD VSS VREFN VREFP
+XL TOP B1 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+XC TOP B0 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+XR TOP B1 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+MN0 B0 GN0 VREFN VSS nch_mac W=0.150U L=0.090U M=3
+MP0 B0 GP0 VREFP VDD pch_mac W=0.175U L=0.090U M=3
+MN1 B1 GN1 VREFN VSS nch_mac W=0.150U L=0.090U M=6
+MP1 B1 GP1 VREFP VDD pch_mac W=0.175U L=0.090U M=6
+.ENDS sar8_mom_ratio

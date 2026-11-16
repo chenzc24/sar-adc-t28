@@ -1,0 +1,766 @@
+{
+  "schema_version": 1,
+  "status": "v2_registered_and_batch_running",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "design_source_sha256": {
+    "dut.scs": "41302d6c053c74ddb2c7ebec79470be166261fe74da9a9739ceb6cb660a16410",
+    "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+    "xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
+  },
+  "scope": "45 MOS/supply/temperature points with TT passives; original five use 18 frames and 2 ps full-terminal capture; other 40 use ten code centers, 10 ps selected functional/timing signals; no full-terminal qualification, FFT/static linearity, mismatch, transient noise or PEX for the extension",
+  "code_centers": [
+    0,
+    255,
+    1,
+    254,
+    2,
+    12,
+    63,
+    64,
+    127,
+    128
+  ],
+  "existing_five": {
+    "tt_nom_27": "sar8-minref-soa-tt-song-msbd2-resetor-v1-step2p",
+    "ss_low_m40": "sar8-minref-soa-ssc-song-msbd2-resetor-v1-step2p",
+    "ss_low_125": "sar8-minref-soa-ssh-song-msbd2-resetor-v1-step2p",
+    "ff_high_m40": "sar8-minref-soa-ffc-song-msbd2-resetor-v1-step2p",
+    "ff_high_125": "sar8-minref-soa-ffh-song-msbd2-resetor-v1-step2p"
+  },
+  "new_runs": [
+    {
+      "corner": "fs_nom_27",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 27,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-fs_nom_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_nom_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "6546cc67bbc3427db61026c841641e31f76db73ef29f3ebb051771212e5fbf5c",
+      "recipe_hash": "a51d59446d3ba97ad75c4ec1e8857d1efaf551fc8328bc99174cb95aff4c760f"
+    },
+    {
+      "corner": "sf_nom_27",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 27,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-sf_nom_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_nom_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "e2c1dbc66eecd05953ca1a1c114274ce6174ed1e3e04d8031440912f87b3e0b1",
+      "recipe_hash": "aa2b08fff5255fd72577a639ba2063313a64ed1d5b811349d353432a08c29f7c"
+    },
+    {
+      "corner": "ff_high_27",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": 27,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-ff_high_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_high_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "397d560147f3145f2517e5545ce24be8127bf91623ad11c3ada27f2714c9480d",
+      "recipe_hash": "c7e0d3f18a047406ccfe8071eace4d51dc35126b9b5adf6ba951d966ca2c0e34"
+    },
+    {
+      "corner": "ff_low_125",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": 125,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-ff_low_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_low_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "99ee3c424f6686ad31be0472f6b88b07b735ca7cc0d64339583e0ca8794b82c8",
+      "recipe_hash": "33c4f1cd918a21c24e466d0ed390e51d7aa70d068a26f9b5a50a318fb9489af7"
+    },
+    {
+      "corner": "ff_low_27",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": 27,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-ff_low_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_low_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "f8788a2b7c3b7627827700fa1886d8652884bb9f03741198b1ef8aa4e4927357",
+      "recipe_hash": "35ce50447c49fc951972c94e57e46d3c53e0819a9bad20f8efe7adf9b27c20cf"
+    },
+    {
+      "corner": "ff_low_m40",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": -40,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-ff_low_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_low_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "a1825cfbb412a15770ef1a62735845bdab90740348591f6da44a7f286edba7c4",
+      "recipe_hash": "2d2212341810f5d77b7c2cc5ffae2719784d33e2ef9f2420b301fcc485fdbe02"
+    },
+    {
+      "corner": "ff_nom_125",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": 125,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ff_nom_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_nom_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "5b69399c89c64324807346129e8418fd7705feb4615d3f10db88860d1ae00e19",
+      "recipe_hash": "6b90c302211a6934442966ae5c17f0fb830bdbeda80796d7d8fade72584ed2b9"
+    },
+    {
+      "corner": "ff_nom_27",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": 27,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ff_nom_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_nom_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "404f7d404264813e747cccfd018fc2fe0a0926f753410189ab31257c14753fe4",
+      "recipe_hash": "a148ebaec41ea43bdd8988bf5b25e826ccca1b24392442c8c9105a25f45a5499"
+    },
+    {
+      "corner": "ff_nom_m40",
+      "condition": {
+        "mos": "FF",
+        "temperature_c": -40,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ff_nom_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ff_nom_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "f8dfd805bb84a397b1aeaa300c21f7a564191b99c3304b8fdc4d8439b1500692",
+      "recipe_hash": "65d4d153f93648454ca1cccf35b89e7184bef4e76bf4148ae73fccdc1dba517d"
+    },
+    {
+      "corner": "fs_high_125",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 125,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-fs_high_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_high_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "d04fa74282eaa8bbe9b7bef2ef19ae01ea6deaaefe3c97b7c65cbe1d19a48567",
+      "recipe_hash": "74163abddf3ff14c5fba87e6c87b8bdce2f85952e6f9186511134d1c11d66924"
+    },
+    {
+      "corner": "fs_high_27",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 27,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-fs_high_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_high_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "ad54cc0c5eed6bb9040aadf35f59514137627c388b775d5f2024907cb912f8b5",
+      "recipe_hash": "7af8a2908f08cf8689a32b27ebe54a0234b78a1f5ff3fbd8ef9a2695df6c16a8"
+    },
+    {
+      "corner": "fs_high_m40",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": -40,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-fs_high_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_high_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "b83bcd5fcf3eab40f7a9f1d4e5cbf94715019c522994c3d1eaca464c1144c256",
+      "recipe_hash": "99831538dcdf028daac4ee3d6e334a4998edafd74d9ce8c620553b7973577f3d"
+    },
+    {
+      "corner": "fs_low_125",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 125,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-fs_low_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_low_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "54d638bf555ce948e37f277fdd6bbe03068f16c1b214f1e6805bab170e6eb28c",
+      "recipe_hash": "9cd080d8785556b58be6652f40a9c8534acac5e754fc232ab92b63d8570b6626"
+    },
+    {
+      "corner": "fs_low_27",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 27,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-fs_low_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_low_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "1d8e5f5d99c6b35149b08dfbb5e77e79cfc9508414035c82610168ae49428037",
+      "recipe_hash": "d7c5d627945e18d1953041626e8ebf95c0cb93839d1940edb935aeb04ae16955"
+    },
+    {
+      "corner": "fs_low_m40",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": -40,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-fs_low_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_low_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "8bd55141c8ccb9a93d8b4b4ceecca9119a9a3a0fd893233293cd08f219db5eb9",
+      "recipe_hash": "a8dde67cf0d094b8b9acc2f352a1bfc6fb4d685b3e43bd518421b0bad2f9c177"
+    },
+    {
+      "corner": "fs_nom_125",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": 125,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-fs_nom_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_nom_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "9a83ba70fa6221e09b24386f8930eba929d73a204517db9af230816ba811b17a",
+      "recipe_hash": "d664aefdb324ccb53c664edecafd22239058893ea5976a10fd90e36bd202ba71"
+    },
+    {
+      "corner": "fs_nom_m40",
+      "condition": {
+        "mos": "FS",
+        "temperature_c": -40,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-fs_nom_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-fs_nom_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "2f2b01183fa09e1d02321852db5952e3ff0ae66aa94f8959d240c7b3106c790a",
+      "recipe_hash": "9c75b6914bcdafa4f524adfe63439c347d41526106d017f90ad33258c432ef8d"
+    },
+    {
+      "corner": "sf_high_125",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 125,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-sf_high_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_high_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "5d1f2689414dce3c1fa4be17fd189f0cc3e411a95ea61a37a07aba39656f0d64",
+      "recipe_hash": "2a3604f908efdf420b94742a6298a0a304778994a56cfea0be35451e563d9e8d"
+    },
+    {
+      "corner": "sf_high_27",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 27,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-sf_high_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_high_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "c06487a84e90d2fdf50cfb6565caacb4e94d1a4e77a1dfaf14faa3c65f7a51f9",
+      "recipe_hash": "d0c6da5b1279bf5cdfc85c8be5e7e7fe427bddc4732922af8182091ae4d0b740"
+    },
+    {
+      "corner": "sf_high_m40",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": -40,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-sf_high_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_high_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "3ab62912a4f5ed784a962bdf29137e747cab74d137efbcd3a1b91ed82880ab98",
+      "recipe_hash": "9bf7bc4d6d0f25089994e02fe5c77e6c8ba439a756acab1b3816e385e020d107"
+    },
+    {
+      "corner": "sf_low_125",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 125,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-sf_low_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_low_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "af5ada503af4a59e8bf0bdda1e57aae7af3ab16c054ded94e28068e1d92241a8",
+      "recipe_hash": "0a26d62c1c91103bca9a746046061b276b86ad76d14334135982cd48be7b0659"
+    },
+    {
+      "corner": "sf_low_27",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 27,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-sf_low_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_low_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "4a361a48003ae32054e1d933e550d0f906bfb09ed5047aff621d4d900e323a4c",
+      "recipe_hash": "3a1efeff53838b93818221718fba039c1e54f983fc95b34974b0d146f2bf8785"
+    },
+    {
+      "corner": "sf_low_m40",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": -40,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-sf_low_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_low_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "389346c0becd873c55e0c992947d5f1cb98f161a19029d810e1a2c43411257c4",
+      "recipe_hash": "d93f34f99cfcb06c81f01fcde912ec21cc3dbea4f2077722485d49a9eaad28d1"
+    },
+    {
+      "corner": "sf_nom_125",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": 125,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-sf_nom_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_nom_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "dd3e31a3d41596d998276ba22e44ff44d1e66257a780d32c53f1874ac6f2bc50",
+      "recipe_hash": "e5560b4bc92a8c3b4094d8a2df456f4e2e4e2c32b2dc39042b7cbff969cc7381"
+    },
+    {
+      "corner": "sf_nom_m40",
+      "condition": {
+        "mos": "SF",
+        "temperature_c": -40,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-sf_nom_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-sf_nom_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "a1f2b44b45cfabc300ed6639205411bed8e403349e1d13ad2ea4c85edb634757",
+      "recipe_hash": "3f80a23460535f68adcd71b36a9d3df0a0b8f26e26a9751426723c440e96becb"
+    },
+    {
+      "corner": "ss_high_125",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": 125,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-ss_high_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_high_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "46835815a1734f062210dca2760ce1fb39dd5ab50e52cfec6ae33ba1765f2ff2",
+      "recipe_hash": "a57c26616370e71c343b764389f85a45c813b710969d85431880659621e99e9f"
+    },
+    {
+      "corner": "ss_high_27",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": 27,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-ss_high_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_high_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "3e4447924d905339731400c013310c2dbf7fbad8af5b936caa9df9b08b893fae",
+      "recipe_hash": "121bd0b640682bcd2530a97239c882b3e9c053424fb3849dc1172ddc81246119"
+    },
+    {
+      "corner": "ss_high_m40",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": -40,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-ss_high_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_high_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "a9f942a24646306d7f6dcae7341d142f1722f726adce823f9f371e0ff1e04253",
+      "recipe_hash": "811f1d287d45bb2de5149660365730b64053bc138a9dd955357cb2b2535be695"
+    },
+    {
+      "corner": "ss_low_27",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": 27,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-ss_low_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_low_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "c0be028fb4f04e94837aae3ff0ab38e986a1695e0609af5e259b11e17f487fd0",
+      "recipe_hash": "81e3fd800aeccb55fa1fc25c836da4e91e9ee1ac7684fd578768dd36c5fa2aca"
+    },
+    {
+      "corner": "ss_nom_125",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": 125,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ss_nom_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_nom_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "95d06fbbd6515559d7a6744643d25476217f9fb9eebffd4f96d31273e53e0061",
+      "recipe_hash": "d9f8cc889c6f0acdb86c57081a8de8f6733052ac6d14a41648f8ede49818503d"
+    },
+    {
+      "corner": "ss_nom_27",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": 27,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ss_nom_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_nom_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "4d824c4f2f8b1cdca6f0404fd7cf451345121195bbc2db1732ce9b29a37d0843",
+      "recipe_hash": "ca5c475218d96dd407317eb5b0f6577650152343a1a9257d6c75f471409496fe"
+    },
+    {
+      "corner": "ss_nom_m40",
+      "condition": {
+        "mos": "SS",
+        "temperature_c": -40,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-ss_nom_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-ss_nom_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "3a4bf0daf52c8a9c845c73c444b6ba690bd4a240e4faa4611d7dde143e6d9736",
+      "recipe_hash": "e5d22bbe1820c5783b91e4d49799b5e2ef924d7c3aec3971e974854c0dbf3367"
+    },
+    {
+      "corner": "tt_high_125",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": 125,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-tt_high_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_high_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "737c93063b04649af5dbc2c5566bf2ec364052694731d8d30fd708d2836c95ef",
+      "recipe_hash": "0ea1c75dca8b2ee716002f06515e6cb6994034becaa28ac131bddaa893863ac3"
+    },
+    {
+      "corner": "tt_high_27",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": 27,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-tt_high_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_high_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "b21514c9d3613bed8def0b99c1fd9af3b51a6fe716a3155b1b409b186215967f",
+      "recipe_hash": "2f792f2dc65b26d47e06e7e7091463766fa74ff47602ced69b20843f584dde6a"
+    },
+    {
+      "corner": "tt_high_m40",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": -40,
+        "vdd_v": 0.99
+      },
+      "run_id": "sar8-minref-current-tt_high_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_high_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "8fd265b9f9ffb24daaa7680a80405d6d2afeca541d54002f46b3ae4c005163fd",
+      "recipe_hash": "d421f59ec249e4fe2ddd452861538763437583bc4eac1993fe2155b25752dbc2"
+    },
+    {
+      "corner": "tt_low_125",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": 125,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-tt_low_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_low_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "8b147c725af3794934980db3a60e5f597337ff338918480351484d27434ae98f",
+      "recipe_hash": "d7a217d27a5635d3a64617227441d17797ee1af1b6918f0a03f2efcece8b94ac"
+    },
+    {
+      "corner": "tt_low_27",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": 27,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-tt_low_27-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_low_27-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "154c0b53c0461f1045d6ee6def1c5b4ec647254656ddf55530da05309bbeaf25",
+      "recipe_hash": "8c0e1c8266a4a1bb6e13cdb3855200291f387f702459153919ff1c46fb87ce17"
+    },
+    {
+      "corner": "tt_low_m40",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": -40,
+        "vdd_v": 0.81
+      },
+      "run_id": "sar8-minref-current-tt_low_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_low_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "f0932ec3fce44e66ab5cf40a585b1e58d4c8891bec2c1a10ba56284be2494121",
+      "recipe_hash": "35dc9329871ca0008b3070903cdcffd99a7cad347246df4971143ab9f998c64d"
+    },
+    {
+      "corner": "tt_nom_125",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": 125,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-tt_nom_125-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_nom_125-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "8e453babfe338353ab94545e8dc4b6ed772aa7cc3e561e31959915505e8559b5",
+      "recipe_hash": "3042478f4e55544f447272cb71cf3b676c49f2502ba15adf2d8c751fa3f04202"
+    },
+    {
+      "corner": "tt_nom_m40",
+      "condition": {
+        "mos": "TT",
+        "temperature_c": -40,
+        "vdd_v": 0.9
+      },
+      "run_id": "sar8-minref-current-tt_nom_m40-resetor40-v2",
+      "recipe": "work/decks/sar8-minref-current-tt_nom_m40-resetor40-v2/recipe.yaml",
+      "prepared_recipe_sha256": "1194ce8790d34d908db509096e0cb71ea9959ebeb72dbe97e5ba44fed2a5dec9",
+      "recipe_hash": "9fad09fe78ccd50cb56c4cb5eea80447328834db8993bd6a50240a9267465097"
+    }
+  ],
+  "launch": {
+    "processes": [
+      {
+        "start_ticks": "164140107",
+        "script_sha256": "c43b127879ec57710404edd12519e9442670e2078bc4b52e1cacbebdb2fc4e31",
+        "pid": 71745,
+        "script": "batch_follow.py"
+      },
+      {
+        "start_ticks": "164140107",
+        "script_sha256": "f2b5e643d59df0d73994da4ef0df01b7a0341ca3d594218edd6511d44aea1976",
+        "pid": 71746,
+        "script": "cache_follow.py"
+      }
+    ],
+    "agent_sha256": "358b1e74e59f0ee6a7222a4174982b000a61fdd50e263609f3c491e868cc1d02",
+    "run_count": 40,
+    "created_epoch": 1794741051.324174,
+    "batch_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/batches/sar8-pvt40-resetor-v2",
+    "disk_free_bytes": 1323314769920,
+    "host": "thu-song"
+  },
+  "model_preflight": {
+    "section_count": 1201,
+    "sections": {
+      "sfmacro_mos_moscap": true,
+      "tt_r_metal": true,
+      "fsmacro_mos_moscap": true,
+      "tt_ind_jvar": true,
+      "ttmacro_mos_moscap": true,
+      "ffmacro_mos_moscap": true,
+      "ssmacro_mos_moscap": true,
+      "tt_res_bip_dio_disres": true,
+      "tt_mom": true
+    },
+    "model_path": "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/../models/spectre/crn28ull_1d8_elk_v1d8_2p2_shrink0d9_embedded_usage.scs",
+    "model_sha256": "0861d3d08ec8a7884bc1f7c45f72bc9ab3df7c860ff8098f76abf1185fd97b96"
+  },
+  "budget": {
+    "expected_raw_gib": [
+      60,
+      100
+    ],
+    "sum_output_caps_gib": 160,
+    "threads_per_simulation": 4,
+    "max_managed_workloads": 7,
+    "simulation_rss_mib": 1024,
+    "analysis_rss_mib": 256,
+    "estimated_elapsed_hours": [
+      1,
+      2
+    ],
+    "conservative_elapsed_hours": 3,
+    "assumptions": "Historical 18-frame selected-signal runs: simulation 237-394 s, analysis 166-189 s; scaled to 10 frames plus queue and shared I/O contingency; not a completion guarantee"
+  },
+  "validation": {
+    "directed_checks": 36,
+    "all_40_frozen_packages_verified": true,
+    "standard_cell_library_unchanged": true
+  },
+  "snapshot": {
+    "status": "running",
+    "runs": {
+      "sar8-minref-current-ss_nom_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_high_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_high_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_high_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ss_nom_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_low_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ss_nom_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_low_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ff_nom_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "queued"
+      },
+      "sar8-minref-current-ff_nom_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_nom_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_nom_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_low_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_low_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_nom_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-ss_high_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_high_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_nom_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_low_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_low_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ff_low_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-ff_low_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-tt_nom_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ff_nom_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_nom_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-ff_high_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-ff_low_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "running"
+      },
+      "sar8-minref-current-sf_high_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_nom_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_low_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_low_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_high_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ss_high_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ss_high_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-sf_high_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_nom_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_high_125-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-fs_high_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-ss_low_27-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      },
+      "sar8-minref-current-tt_low_m40-resetor40-v2": {
+        "analysis": "not_started",
+        "simulation": "not_started"
+      }
+    },
+    "started_epoch": 1794741051.34009,
+    "failed_or_uncertain": [],
+    "finished_count": 0,
+    "batch_id": "sar8-pvt40-resetor-v2",
+    "updated_epoch": 1794741083.082246
+  },
+  "cache_adviser": {
+    "files": {},
+    "status": "running",
+    "used_after": 40170373120,
+    "used_before": 40170246144,
+    "updated_epoch": 1794741081.371985,
+    "limit": 51539607552,
+    "method": "POSIX_FADV_DONTNEED; completed simulation files; only consumed prefix when readers exist"
+  },
+  "prior_attempt": {
+    "batch": "sar8-pvt40-resetor-v1",
+    "issue": "Controller hard AS ceiling inherited by workers; Spectre never started",
+    "failed_before_native_start": 35,
+    "not_started": 5,
+    "source_recovery": "work/pvt45/resetor40-v1/recovery.json",
+    "preserved": true
+  },
+  "recovery": "Preserve inherited controller hard ceiling; bound own soft AS/RSS; real FS nominal transient startup verified with first-frame code 0"
+}

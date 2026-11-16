@@ -1,0 +1,65 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// CAP capture clock does not exist in this design. Legacy record column ncap is explicitly 0.
+// Testbench observer only: no voltage/current contribution on any DUT node.
+module sar8_fft_monitor(SAMPLE,CMP,WRITE,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7);
+    input SAMPLE,CMP,WRITE,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7;
+    electrical SAMPLE,CMP,WRITE,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7;
+    parameter real time_origin=0 from [0:inf);
+    integer nc,nw,nu,ncap,sequence_error,code,early,frame,valid,report_frame,late_change;
+    real rail_error,vh,sample_time,sample_vin,held_diff,last_update;
+    analog begin
+        @(initial_step) begin
+            nc=0;nw=0;nu=0;ncap=0;sequence_error=0;early=-1;frame=0;late_change=0;
+            sample_time=0;sample_vin=0;held_diff=0;last_update=0;
+        end
+        @(cross(V(SAMPLE)-0.5*V(VDD),+1)) begin
+            nc=0;nw=0;nu=0;ncap=0;sequence_error=0;late_change=0;
+        end
+        @(cross(V(SAMPLE)-0.5*V(VDD),-1)) begin sample_time=$abstime;sample_vin=V(VP,VN);end
+        @(cross(V(CMP)-0.5*V(VDD),+1)) begin
+            if (nc!=nw || nw!=nu) sequence_error=1;
+            nc=nc+1;
+        end
+        @(cross(V(WRITE)-0.5*V(VDD),+1)) begin
+            if (nc!=nw+1 || nw!=nu) sequence_error=1;
+            nw=nw+1;
+        end
+        @(cross(V(UPDATE)-0.5*V(VDD),+1)) begin
+            if (nc!=nw || nw!=nu+1) sequence_error=1;
+            nu=nu+1;last_update=$abstime;
+        end
+        @(timer(time_origin+41.8n,100n)) held_diff=V(TOPP,TOPN);
+        @(cross(V(D0)-0.5*V(VDD),0) or cross(V(D1)-0.5*V(VDD),0) or
+          cross(V(D2)-0.5*V(VDD),0) or cross(V(D3)-0.5*V(VDD),0) or
+          cross(V(D4)-0.5*V(VDD),0) or cross(V(D5)-0.5*V(VDD),0) or
+          cross(V(D6)-0.5*V(VDD),0) or cross(V(D7)-0.5*V(VDD),0)) begin
+            if ($abstime>time_origin+frame*100n+90n && $abstime<time_origin+frame*100n+98n) late_change=1;
+        end
+        @(timer(time_origin+90n,100n)) begin
+            vh=0.5*V(VDD);
+            early=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+        end
+        @(timer(time_origin+98n,100n)) begin
+            vh=0.5*V(VDD);
+            code=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+            rail_error=max(min(abs(V(D0)),abs(V(D0)-V(VDD))),min(abs(V(D1)),abs(V(D1)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D2)),abs(V(D2)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D3)),abs(V(D3)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D4)),abs(V(D4)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D5)),abs(V(D5)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D6)),abs(V(D6)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D7)),abs(V(D7)-V(VDD))));
+            valid=(nc==8 && nw==8 && nu==8 && sequence_error==0 && early==code && late_change==0 &&
+                   V(SAMPLE)<0.1*V(VDD) && V(CMP)<0.1*V(VDD) && rail_error<0.1*V(VDD));
+            report_frame=frame;
+            $strobe("FFTMEAS,%d,%d,%d,%d,%d,%d,%d,%d,%.12g,%.15g,%.12g,%.12g,%.12g,%.12g",
+                report_frame,code,nc,nw,nu,ncap,early,valid,rail_error,sample_time,sample_vin,
+                held_diff,V(TOPP,TOPN),last_update-sample_time);
+            frame=frame+1;
+        end
+    end
+endmodule

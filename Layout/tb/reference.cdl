@@ -1,0 +1,11 @@
+* Independent LVS intent: frozen B unit, three copies for the 1:2 fixture.
+* Calibre uses the installed cfmom_2t primitive declaration.
+.SUBCKT sar8_mom_unit TOP B0
+X0 TOP B0 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+.ENDS sar8_mom_unit
+
+.SUBCKT sar8_mom_ratio TOP B0 B1
+X0 TOP B0 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+X1 TOP B1 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+X2 TOP B1 cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1
+.ENDS sar8_mom_ratio

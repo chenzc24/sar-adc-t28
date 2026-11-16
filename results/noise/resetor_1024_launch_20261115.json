@@ -1,0 +1,442 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "host": "thu-song",
+  "full_run": {
+    "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1",
+    "registration": {
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-resetor-noise-tt-fft1024-s101-v1",
+      "recipe_hash": "8149c4bacdd2d73dd87797544be37b43b2cb86110164575a35cc23b2b326808f",
+      "existing": false
+    }
+  },
+  "pilot_run": {
+    "run_id": "sar8-resetor-noise-tt-pilot-s101-v1",
+    "registration": {
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-resetor-noise-tt-pilot-s101-v1",
+      "recipe_hash": "ccd89582f5570877a196b2db594323965c18c07c560b2c7280d1608e6b4b8bcc",
+      "existing": false
+    }
+  },
+  "controller": {
+    "start_ticks": "164691296",
+    "script_sha256": "607f6f5d9c3e2ebbfd8f381f40fc10a06e1c5702b7d544b4a741fd8259e089de",
+    "folder": "/server_local_ssd/chenzc_intern25/sar-adc-t28/batches/sar8-resetor-noise-fft1024-s101-v1",
+    "pid": 127989,
+    "epoch": 1794746563.212432
+  },
+  "full_conditions": {
+    "frames": 1032,
+    "warmup": 8,
+    "stop_s": 0.000103259,
+    "signals": [
+      "d0",
+      "d1",
+      "d2",
+      "d3",
+      "d4",
+      "d5",
+      "d6",
+      "d7",
+      "sample",
+      "vdd!",
+      "vinp_src",
+      "vinn_src",
+      "vvdd:p",
+      "vrefhigh:p",
+      "vreflow:p",
+      "vsample:p"
+    ],
+    "frequency_hz": 4501953.125,
+    "samples": 1024,
+    "bin": 461,
+    "amplitude_dbfs": -1,
+    "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1",
+    "kind": "dynamic",
+    "label": "current-resetor",
+    "dut_sha256": "41302d6c053c74ddb2c7ebec79470be166261fe74da9a9739ceb6cb660a16410",
+    "corner": "tt",
+    "vdd": 0.9,
+    "temperature_c": 27,
+    "reference_v": 0.9,
+    "frame_origin_s": 5.9e-08,
+    "noise": true,
+    "mismatch": false,
+    "PEX": false,
+    "passive_corner": "nominal_tt",
+    "solver_profile": "mm",
+    "period_s": 1e-07,
+    "pilot": false,
+    "noisefmin_hz": 10000.0,
+    "noisefmax_hz": 2000000000.0,
+    "noiseseed": 101,
+    "noisescale": 1,
+    "noise_model_section": "noise_worst",
+    "noise_scope": "All enabled device models and four external 50 ohm resistors; ideal sources noiseless",
+    "noise_bandwidth_convergence": "not_established",
+    "observer_capture_clock": "absent; legacy field is zero",
+    "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+    "source_hashes": {
+      "dut.scs": "41302d6c053c74ddb2c7ebec79470be166261fe74da9a9739ceb6cb660a16410",
+      "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+      "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+      "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+      "xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+      "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+      "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+      "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+      "xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d",
+      "tb.scs": "137ac7385dd9bffb29ce236c2877fd881115ee8024bf14d1d5166e7fe55a3ff3",
+      "library_include.scs": "4c3c8fd21d424845c78a35c478d8793d64aac679e02157f20f3b0b9aeedef5fe",
+      "sar8_fft_monitor.va": "fa427facf6f618f81ed0dc0c14e526b05dc2960af69ac6c75e51420539916149",
+      "noise_fft_reduce.py": "93e6f0df5be4d52b6a57e76db9357903ee64df6dcffa5368bf218cacef6e92b2",
+      "dynamic_reduce.py": "bc4a4298331286b99fa0e0c3764249e72b7300d54c925740da8d6c053f79c088",
+      "native_stream.py": "fbe33485f68fbba9e7e17b76f7dbf5d59b0cf0fe2e866e51a6929a83effca2ef",
+      "test.scs": "0a6ece553691384c3297f6f4ab40a5edf759003c16e680a38ed6e1299b4a2b1a"
+    },
+    "checkpoint_scope": "Periodic save enabled; no recovery or stitched output authorized by this recipe; noisy recovery equivalence unverified"
+  },
+  "full_resources": {
+    "threads": 4,
+    "simulation_rss_mib": 1024,
+    "simulation_virtual_mib": 8192,
+    "analysis_rss_mib": 256,
+    "analysis_virtual_mib": 1024,
+    "max_output_mib": 16384,
+    "simulation_wall_seconds": 345600,
+    "analysis_wall_seconds": 14400,
+    "queue_timeout_seconds": 86400
+  },
+  "pilot_conditions": {
+    "frames": 8,
+    "stop_s": 8.59e-07,
+    "noisefmin_hz": 2000000.0,
+    "purpose": "compile/observer/protocol/native decode preflight only; no spectrum qualification"
+  },
+  "status": "full_continuous_fft_running",
+  "noise_bandwidth_convergence": "not_established",
+  "raw_retention": "Prior 45-corner evidence archived; current waveforms retained for unresolved resolution/follow-up needs; free space at admission about 1.15 TiB, no deletion required for this 16 GiB budget",
+  "prior_noise_reference": {
+    "run_id": "sar8noise-b-tt-fft1024-g2-s101-v1",
+    "elapsed_seconds": 148183.08309602737,
+    "scope": "Historical B, different server/load; not a time guarantee for current design"
+  },
+  "initial_progress": {
+    "errors": [],
+    "simulation_status": "running",
+    "controller": {
+      "started_epoch": 1794746563.231422,
+      "status": "running",
+      "runs": {
+        "full": {
+          "simulation": "not_started",
+          "waiting_for": "pilot native protocol and independent decode",
+          "analysis": "not_started",
+          "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1"
+        },
+        "pilot": {
+          "simulation": "running",
+          "analysis": "not_started",
+          "run_id": "sar8-resetor-noise-tt-pilot-s101-v1"
+        }
+      },
+      "updated_epoch": 1794746803.424974
+    },
+    "elapsed": 305.44333696365356,
+    "last_frame": "......9......8......7......6......5..FFTMEAS,3,105,8,8,8,0,105,1,0.000392143157928,4.000907925029e-07,-0.177804153893,-0.159058614023,-0.159056479159,2.89353831502e-08",
+    "epoch": 1794746816.905815,
+    "output_bytes": 27319578,
+    "frame_count": 4
+  },
+  "validation": {
+    "directed_tests": 28,
+    "source_hashes_match_adoption": true,
+    "all_registered_input_hashes_match_local": true,
+    "veriloga_native_compilation": "passed; pilot transient running",
+    "pilot_partial_protocol_frames": 4
+  },
+  "pilot_collection": {
+    "collected_files": 7,
+    "bytes": 39160,
+    "skipped": [],
+    "local_path": "work/output/managed_execution/runs/sar8-resetor-noise-tt-pilot-s101-v1/collected",
+    "state": {
+      "run_id": "sar8-resetor-noise-tt-pilot-s101-v1",
+      "registered": {
+        "epoch": 1794746507.915738,
+        "files_complete": true,
+        "recipe_hash": "ccd89582f5570877a196b2db594323965c18c07c560b2c7280d1608e6b4b8bcc"
+      },
+      "analysis": {
+        "status": "complete",
+        "rss_bytes": 6877184,
+        "started_epoch": 1794747044.214114,
+        "updated_epoch": 1794747047.431094,
+        "agent_sha256": "463dc0f3502efa75b74f455bb6fc19f2fffdb78d3459f8bc96f71e17b3fe3727",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 3.216758966445923,
+        "submitted_epoch": 1794747043.904419,
+        "output_bytes": 44614630,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 51363487744,
+                "limit": 51539607552,
+                "used": 176119808
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 1300951040,
+            "cgroup_headroom": 51363487744,
+            "host": "thu-song",
+            "conflicting_processes": [],
+            "epoch": 1794747044.19659,
+            "disk_free": 1260749369344,
+            "load1": 2.51,
+            "mem_available": 95776784384
+          },
+          "phase": "analysis"
+        },
+        "phase": "analysis",
+        "child_identity": {
+          "start_ticks": "164739396",
+          "pid": 128825,
+          "state": "R",
+          "pgid": 128825,
+          "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+        },
+        "peak_rss_bytes": 6909952,
+        "worker_identity": {
+          "start_ticks": "164739366",
+          "pid": 128823,
+          "state": "R",
+          "pgid": 128823,
+          "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+        },
+        "queued": true
+      },
+      "simulation": {
+        "status": "complete",
+        "rss_bytes": 356175872,
+        "started_epoch": 1794746511.372528,
+        "updated_epoch": 1794747014.886577,
+        "agent_sha256": "358b1e74e59f0ee6a7222a4174982b000a61fdd50e263609f3c491e868cc1d02",
+        "exit_code": 0,
+        "waiting_reasons": [],
+        "elapsed_seconds": 503.50080394744873,
+        "submitted_epoch": 1794746511.061057,
+        "output_bytes": 44596075,
+        "gate": {
+          "pass_gate": true,
+          "workload_slot": 0,
+          "reasons": [],
+          "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+          "snapshot": {
+            "cgroups": {
+              "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                "headroom": 51533541376,
+                "limit": 51539607552,
+                "used": 6066176
+              }
+            },
+            "cpu_capacity": 48.0,
+            "swap_rate_bytes_s": 0.0,
+            "swap_free": 1300951040,
+            "cgroup_headroom": 51533541376,
+            "host": "thu-song",
+            "conflicting_processes": [],
+            "epoch": 1794746511.356016,
+            "disk_free": 1260793151488,
+            "load1": 0.14,
+            "mem_available": 95771496448
+          },
+          "phase": "simulation"
+        },
+        "phase": "simulation",
+        "child_identity": {
+          "start_ticks": "164686112",
+          "pid": 127602,
+          "state": "R",
+          "pgid": 127602,
+          "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+        },
+        "peak_rss_bytes": 422313984,
+        "worker_identity": {
+          "start_ticks": "164686082",
+          "pid": 127600,
+          "state": "R",
+          "pgid": 127600,
+          "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+        },
+        "queued": true,
+        "native": {
+          "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022",
+          "zero_error_footer": true,
+          "electrical_verdict": "not_inferred",
+          "native_exit": 0,
+          "effective_settings": {
+            "reltol": "1e-06, default 1e-03",
+            "abstol(V)": "10 nV, default 1 uV",
+            "maxstep": "10 ps, default 17.18 ns",
+            "abstol(I)": "100 fA, default 1 pA",
+            "method": "trap"
+          },
+          "native_analysis_pass": true,
+          "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [2, 4], consider adding +mt=2 or +mt=4 on command line.",
+          "warning_codes": [
+            "CMI-2751",
+            "CMI-2752",
+            "CMI-2753",
+            "CMI-2754",
+            "CMI-2755",
+            "SFE-1131",
+            "SFE-2453",
+            "SFE-3014",
+            "SFE-3016",
+            "VACOMP-2435"
+          ]
+        }
+      },
+      "host": "thu-song",
+      "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar8-resetor-noise-tt-pilot-s101-v1"
+    }
+  },
+  "progress_at_full_start": {
+    "runs": {
+      "full": {
+        "frames": 0,
+        "status": "running",
+        "errors": [],
+        "last": null,
+        "elapsed": 16.10709500312805
+      },
+      "pilot": {
+        "frames": 8,
+        "status": "complete",
+        "errors": [],
+        "last": "......9......8......7......6......5......4......3......2......1......0FFTMEAS,7,227,8,8,8,0,227,1,0.000253283566272,8.00090756446012e-07,0.686919960939,0.695921039971,0.695945971009,2.89453290209e-08",
+        "elapsed": 503.50080394744873
+      }
+    },
+    "controller": {
+      "pilot_pass": {
+        "scope": "Observer/protocol and native decode only; not a noise bandwidth qualification",
+        "epoch": 1794747073.947864,
+        "result_sha256": "5fc5abc29e55af851adc74925a66b810502383868699c06ac0f5caba2175a9b3",
+        "run_id": "sar8-resetor-noise-tt-pilot-s101-v1"
+      },
+      "started_epoch": 1794746563.231422,
+      "runs": {
+        "full": {
+          "simulation": "not_started",
+          "submission": {
+            "gate": {
+              "phase": "simulation",
+              "reasons": [],
+              "snapshot": {
+                "cgroups": {
+                  "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+                    "headroom": 51367866368,
+                    "limit": 51539607552,
+                    "used": 171741184
+                  }
+                },
+                "cpu_capacity": 48.0,
+                "swap_rate_bytes_s": 0.0,
+                "swap_free": 1300951040,
+                "cgroup_headroom": 51367866368,
+                "host": "thu-song",
+                "conflicting_processes": [],
+                "epoch": 1794747074.206651,
+                "disk_free": 1260749262848,
+                "load1": 1.52,
+                "mem_available": 95782608896
+              },
+              "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+              "pass_gate": true
+            },
+            "accepted": true,
+            "worker_pid": 128855,
+            "admitted": true,
+            "existing": false
+          },
+          "analysis": "not_started",
+          "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1"
+        },
+        "pilot": {
+          "simulation": "complete",
+          "analysis": "complete",
+          "run_id": "sar8-resetor-noise-tt-pilot-s101-v1"
+        }
+      },
+      "status": "running",
+      "updated_epoch": 1794747074.217372
+    },
+    "epoch": 1794747092.051423
+  },
+  "full_simulation_state": {
+    "status": "running",
+    "rss_bytes": 348057600,
+    "started_epoch": 1794747074.518759,
+    "updated_epoch": 1794747122.849405,
+    "agent_sha256": "463dc0f3502efa75b74f455bb6fc19f2fffdb78d3459f8bc96f71e17b3fe3727",
+    "waiting_reasons": [],
+    "elapsed_seconds": 48.330585956573486,
+    "submitted_epoch": 1794747074.208517,
+    "output_bytes": 6155840,
+    "gate": {
+      "pass_gate": true,
+      "workload_slot": 0,
+      "reasons": [],
+      "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb",
+      "snapshot": {
+        "cgroups": {
+          "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+            "headroom": 51363426304,
+            "limit": 51539607552,
+            "used": 176181248
+          }
+        },
+        "cpu_capacity": 48.0,
+        "swap_rate_bytes_s": 0.0,
+        "swap_free": 1300951040,
+        "cgroup_headroom": 51363426304,
+        "host": "thu-song",
+        "conflicting_processes": [],
+        "epoch": 1794747074.502131,
+        "disk_free": 1260749295616,
+        "load1": 1.52,
+        "mem_available": 95779184640
+      },
+      "phase": "simulation"
+    },
+    "phase": "simulation",
+    "child_identity": {
+      "start_ticks": "164742427",
+      "pid": 128857,
+      "state": "R",
+      "pgid": 128857,
+      "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+    },
+    "peak_rss_bytes": 348057600,
+    "worker_identity": {
+      "start_ticks": "164742397",
+      "pid": 128855,
+      "state": "R",
+      "pgid": 128855,
+      "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe"
+    },
+    "queued": true
+  },
+  "estimated_wall_hours": [
+    18,
+    24
+  ],
+  "estimate_scope": "Pilot 8 frames/503.5 s extrapolation only; pilot shaping floor differs; no guarantee"
+}

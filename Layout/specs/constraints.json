@@ -1,0 +1,62 @@
+{
+  "units": "um",
+  "supply_range_V": [
+    0.81,
+    0.99
+  ],
+  "resolution_bits": 8,
+  "sample_rate_Hz": 10000000,
+  "stimulus_authority": "tb/top/short/context.json + current reference_short generated fixture",
+  "preserve": [
+    "sampling window and closing edge",
+    "reset priority",
+    "asynchronous handshake",
+    "real comparator/control loads",
+    "current minimal_msb_d2 reference",
+    "current reset_data_or SAR"
+  ],
+  "matching": [
+    "differential MOM topology and unit assignment",
+    "functional boundary dummy retained",
+    "comparator input and regenerative pairs require matched environment",
+    "bootstrap differential environment"
+  ],
+  "placement": {
+    "digital_corridor_min_um": 10,
+    "status": "planning reserve, not foundry rule",
+    "guard_ring_and_well_separation": "pending native device and isolation review"
+  },
+  "electrical_budgets": {
+    "TOP_added_fixed_capacitance_F": {
+      "limit": null,
+      "basis": "Must derive from current CDAC PEX sensitivity and acceptable ADC gain/settling; 15.12% historical loss remains unresolved"
+    },
+    "TOP_differential_capacitance_imbalance_F": {
+      "limit": null,
+      "basis": "Allocate from 8-bit accuracy and mismatch/PEX measurements; cannot claim zero from symmetric drawing"
+    },
+    "comparator_input_route_capacitance_F": {
+      "limit": null,
+      "basis": "Native comparator delay/load sweep required before detailed routing freeze"
+    },
+    "reference_gate_route_delay_s": {
+      "limit": null,
+      "basis": "Measure actual gate transitions/establishment using current MSB D2 reference"
+    },
+    "sar_handshake_route_delay_s": {
+      "limit": null,
+      "basis": "Close timing against actual per-bit conversion budget; no zero-delay substitution"
+    }
+  },
+  "migration_acceptance": {
+    "geometry": "same normalized GDS geometry and cell connectivity",
+    "lvs": "CORRECT",
+    "drc": "no new markers; preserve two original warnings",
+    "tt": "same ten-frame fixture, compare code, event counts, sampling closes and conversion times",
+    "timing_tolerance_s": 1e-11,
+    "timing_tolerance_basis": "one maximum saved/transient step of the unchanged short fixture; report actual differences",
+    "performance_repair": false
+  },
+  "fill": "Only the filled wrapper owns density fill; final top integration must prevent overlapping block/top fill and recheck density/PEX.",
+  "qualification": "DRC execution, LVS, functionality, settling, parasitics and terminal reliability are separate verdicts."
+}

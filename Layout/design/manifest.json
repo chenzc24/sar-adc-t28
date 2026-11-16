@@ -1,0 +1,45 @@
+{
+  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "electrical_authority": "design/manifest.json",
+  "electrical_sources_sha256": {
+    "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
+    "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+    "design/xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
+  },
+  "library_config": "site.local.yaml:layout",
+  "technology": "tsmcN28",
+  "ownership": "oa_owned_current; generation is not certified to reproduce accepted manual edits",
+  "allow_regeneration": false,
+  "cells": {
+    "cdac": {
+      "core": "sar8j_r1_cdac_core",
+      "filled": "sar8j_r1_cdac",
+      "view": "layout",
+      "fill_owner": "filled wrapper, XCORE is the same functional master",
+      "fill_masters": [
+        "sar8_cdac_fill_odpo",
+        "sar8_cdac_fill_metal"
+      ],
+      "electrical_port_mapping": {
+        "VDD!": "VDD",
+        "0": "VSS"
+      },
+      "status": "existing_candidate_not_qualified"
+    }
+  },
+  "oa_recovery": {
+    "host": "thu-wei",
+    "root_key": "legacy_root",
+    "relative_path": "evidence/cdac-core-fill-20261116/before-oa.tar.gz",
+    "scope": "before core/fill hierarchy edit; preserve current evidence stream for subsequent recovery",
+    "procedure": "Layout/docs/workflow.md#恢复与同版迭代"
+  },
+  "source_checkpoint": "work/layout/restructure/checkpoint.json",
+  "history": "Source remains untracked until an authorized Git commit; the owned zip checkpoint protects this migration."
+}

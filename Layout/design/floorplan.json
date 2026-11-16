@@ -1,0 +1,149 @@
+{
+  "units": "um",
+  "status": "coarse_proposal_not_applied_to_OA",
+  "core_bbox": [
+    0,
+    0,
+    176,
+    170
+  ],
+  "die_bbox": null,
+  "io_ring": null,
+  "blocks": [
+    {
+      "id": "cdac",
+      "label": "MOM CDAC + switches",
+      "origin": [
+        20,
+        40
+      ],
+      "orientation": "R0",
+      "size": [
+        90.33,
+        92.49
+      ],
+      "instances": [
+        "XCDAC"
+      ],
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Existing OA bbox; may change during parasitic repair",
+      "evidence": {
+        "physical_id": "cdac-full-corefill-20261116",
+        "file": "oa.console",
+        "native_bbox": [
+          [
+            -1.165,
+            -50.0
+          ],
+          [
+            89.165,
+            42.49
+          ]
+        ]
+      },
+      "native_origin_translation": [
+        21.165,
+        90.0
+      ]
+    },
+    {
+      "id": "comparator",
+      "label": "Comparator",
+      "origin": [
+        57,
+        140
+      ],
+      "orientation": "R0",
+      "size": [
+        16,
+        12
+      ],
+      "instances": [
+        "XCOMP",
+        "CL_COMP_N",
+        "CL_COMP_P",
+        "CL_CMP_CLK"
+      ],
+      "basis": "space_reservation",
+      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+    },
+    {
+      "id": "bootstrap_n",
+      "label": "Bootstrap N",
+      "origin": [
+        20,
+        140
+      ],
+      "orientation": "R0",
+      "size": [
+        24,
+        14
+      ],
+      "instances": [
+        "XBOOTN"
+      ],
+      "basis": "space_reservation",
+      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+    },
+    {
+      "id": "bootstrap_p",
+      "label": "Bootstrap P",
+      "origin": [
+        87,
+        140
+      ],
+      "orientation": "R0",
+      "size": [
+        24,
+        14
+      ],
+      "instances": [
+        "XBOOTP"
+      ],
+      "basis": "space_reservation",
+      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+    },
+    {
+      "id": "reference",
+      "label": "Reference drivers",
+      "origin": [
+        20,
+        15
+      ],
+      "orientation": "R0",
+      "size": [
+        90,
+        16
+      ],
+      "instances": [
+        "XREF"
+      ],
+      "basis": "space_reservation",
+      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+    },
+    {
+      "id": "sar_timing",
+      "label": "SAR + timing",
+      "origin": [
+        123,
+        30
+      ],
+      "orientation": "R0",
+      "size": [
+        40,
+        70
+      ],
+      "instances": [
+        "XCTRL",
+        "XSEQ",
+        "XIDLE",
+        "XSAMPLE"
+      ],
+      "basis": "space_reservation",
+      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+    }
+  ],
+  "reasoning": "CDAC anchors measured area; bootstrap and comparator sit near analog north side; reference drives CDAC switch edge from south; SAR/clock placed east across routing corridor.",
+  "reserve": "All unallocated space belongs to routing, supplies, isolation, guard/boundary planning; it is not a routed utilization measurement.",
+  "next": "Read actual comparator/standard-cell/power footprints, assign verified pin access layers and numeric parasitic budgets before freezing this plan. The existing CDAC shape is revisable."
+}

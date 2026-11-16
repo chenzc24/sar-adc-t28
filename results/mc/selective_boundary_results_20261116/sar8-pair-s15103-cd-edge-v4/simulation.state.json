@@ -1,0 +1,94 @@
+{
+  "agent_sha256": "463dc0f3502efa75b74f455bb6fc19f2fffdb78d3459f8bc96f71e17b3fe3727", 
+  "child_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 313509, 
+    "pid": 313509, 
+    "start_ticks": "170001435", 
+    "state": "R"
+  }, 
+  "elapsed_seconds": 1019.7912380695343, 
+  "exit_code": 0, 
+  "gate": {
+    "pass_gate": true, 
+    "phase": "simulation", 
+    "policy_sha256": "2b600b9ce3eebaa611e924c8d7cc5cc4e11a0c211d20302b91f4e6307eb2ddfb", 
+    "reasons": [], 
+    "snapshot": {
+      "cgroup_headroom": 42708508672, 
+      "cgroups": {
+        "/sys/fs/cgroup/memory/user.slice/user-596.slice": {
+          "headroom": 42708508672, 
+          "limit": 51539607552, 
+          "used": 8831098880
+        }
+      }, 
+      "conflicting_processes": [
+        {
+          "comm": "spectre", 
+          "managed": {
+            "phase": "simulation", 
+            "reserved_rss_mib": 1024, 
+            "run_id": "sar8-resetor-noise-tt-fft1024-s101-v1", 
+            "threads": 4
+          }, 
+          "pid": 128857
+        }
+      ], 
+      "cpu_capacity": 48.0, 
+      "disk_free": 1129907175424, 
+      "epoch": 1794799663.997764, 
+      "host": "thu-song", 
+      "load1": 14.01, 
+      "mem_available": 87732846592, 
+      "swap_free": 1299378176, 
+      "swap_rate_bytes_s": 0.0
+    }, 
+    "workload_slot": 1
+  }, 
+  "native": {
+    "effective_settings": {
+      "abstol(I)": "100 fA, default 1 pA", 
+      "abstol(V)": "10 nV, default 1 uV", 
+      "maxstep": "10 ps, default 69.18 ns", 
+      "method": "trap", 
+      "reltol": "1e-06, default 1e-03"
+    }, 
+    "electrical_verdict": "not_inferred", 
+    "native_analysis_pass": true, 
+    "native_exit": 0, 
+    "thread_log": "-   (Spectre X) Multi-threading. The recommended number of threads is [2, 4], consider adding +mt=2 or +mt=4 on command line.", 
+    "version": "Version 21.1.0.509.isr12 64bit -- 24 Sep 2022", 
+    "warning_codes": [
+      "CMI-2751", 
+      "CMI-2752", 
+      "CMI-2753", 
+      "CMI-2754", 
+      "CMI-2755", 
+      "SFE-1131", 
+      "SFE-2453", 
+      "SFE-3014", 
+      "SFE-3016", 
+      "SPECTRE-16780", 
+      "VACOMP-2435"
+    ], 
+    "zero_error_footer": true
+  }, 
+  "output_bytes": 5067108313, 
+  "peak_rss_bytes": 535777280, 
+  "phase": "simulation", 
+  "queued": true, 
+  "rss_bytes": 534454272, 
+  "started_epoch": 1794799664.011257, 
+  "status": "complete", 
+  "submitted_epoch": 1794799663.708423, 
+  "updated_epoch": 1794800683.817559, 
+  "waiting_reasons": [], 
+  "worker_identity": {
+    "boot_id": "c1cf3d87-9356-4dd3-a3a3-4aa60c4056fe", 
+    "pgid": 313476, 
+    "pid": 313476, 
+    "start_ticks": "170001405", 
+    "state": "R"
+  }
+}

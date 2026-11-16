@@ -1,0 +1,60 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench only. Drive the external sources through the existing 50 ohm input
+// resistors. Read output pins; never force an internal DUT voltage or event.
+module sar8_boundary_source(VIP,VIN,D0,D1,D2,D3,D4,D5,D6,D7,VDD,VSS);
+  output VIP,VIN;
+  input D0,D1,D2,D3,D4,D5,D6,D7,VDD,VSS;
+  electrical VIP,VIN,D0,D1,D2,D3,D4,D5,D6,D7,VDD,VSS;
+  parameter real lsb=0.00703125;
+  parameter real cm=0.45;
+  integer cycle,stage,target,group_index,j,code,guard_bad;
+  real probe,pending,lo,hi,estimate,threshold;
+  analog begin
+    @(initial_step) begin
+      cycle=0;stage=-2;target=0;group_index=0;j=0;guard_bad=0;
+      probe=-0.9+0.5*lsb;pending=probe;lo=0;hi=0;estimate=0;
+    end
+    // 98 ns after frame origin (59 ns); independent observer fires earlier.
+    @(timer(157n,100n)) begin
+      threshold=0.5*V(VDD,VSS);
+      code=(V(D0,VSS)>threshold)+2*(V(D1,VSS)>threshold)
+        +4*(V(D2,VSS)>threshold)+8*(V(D3,VSS)>threshold)
+        +16*(V(D4,VSS)>threshold)+32*(V(D5,VSS)>threshold)
+        +64*(V(D6,VSS)>threshold)+128*(V(D7,VSS)>threshold);
+      if(cycle>=2 && cycle<30) begin
+        group_index=(cycle-2)/14;j=(cycle-2)%14;
+        target=(group_index==0)?64:128;stage=j;
+        if(j==0 && code>=target) guard_bad=guard_bad+1;
+        if(j==1 && code<target) guard_bad=guard_bad+1;
+        if(j>=2 && j<=9) begin
+          if(code>=target) hi=probe;else lo=probe;
+          estimate=(lo+hi)/2;
+        end
+      end else begin stage=-1;target=0;end
+      $display("BOUNDARY,%d,%d,%d,%.16g,%d,%.16g,%.16g,%.16g,%d",
+        cycle,target,stage,probe,code,lo,hi,estimate,guard_bad);
+      if(cycle==0) pending=0.9-0.5*lsb;
+      else if(cycle==1 || cycle==15) begin
+        target=(cycle==1)?64:128;
+        lo=-0.9+(target-8)*lsb;hi=-0.9+(target+8)*lsb;
+        pending=lo;
+      end else if(cycle>=2 && cycle<30) begin
+        if(j==0) pending=hi;
+        else if(j>=1 && j<9) pending=(lo+hi)/2;
+        else if(j==9) pending=estimate-0.25*lsb;
+        else if(j==10) pending=estimate-0.1*lsb;
+        else if(j==11) pending=estimate+0.1*lsb;
+        else if(j==12) pending=estimate+0.25*lsb;
+        else pending=0.9-0.5*lsb;
+      end else if(cycle==30) pending=estimate-0.1*lsb;
+      else if(cycle==31) pending=-0.9+0.5*lsb;
+      else if(cycle==32) pending=estimate+0.1*lsb;
+      cycle=cycle+1;
+    end
+    @(timer(159.8n,100n)) probe=pending;
+    V(VIP,VSS)<+cm+transition(probe,0,100p,100p)/2;
+    V(VIN,VSS)<+cm-transition(probe,0,100p,100p)/2;
+  end
+endmodule

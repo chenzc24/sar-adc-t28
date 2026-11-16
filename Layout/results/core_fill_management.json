@@ -1,0 +1,239 @@
+{
+  "date": "2026-11-16",
+  "design_binding": {
+    "current_design": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+    "cdac_equality": {
+      "sar8j_r1_cdac": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "e63144462abd6784f63e573f6f791037f2e8ecbd261df231a71acdb203d009e4"
+      },
+      "sar8j_r1_sw_b0": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "f8964d0ce88089ba0806162b35313ae35422601290a8611b05ad927f54257633"
+      },
+      "sar8j_r1_sw_b1": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "8b77d499e8657a8ca987de8384813f0e36c5d1b1ef7322e2f2fc098a4aa11090"
+      },
+      "sar8j_r1_sw_b2": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "520d025f5a7a71ba43b2f6da8d0d5fe1790adb250cbfde7f7addcd7a50073d9e"
+      },
+      "sar8j_r1_sw_b3": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "3559910525ceff0bb2e964725e64a43a6f4315aa1b932947797f06b1f3661409"
+      },
+      "sar8j_r1_sw_b4": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "9b2387368674397b1b8cf1af930c7a063d2df2a370a5514fef18610c87f54552"
+      },
+      "sar8j_r1_sw_b5": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "3e9f5707cae4ffd074d4d4ed74d3da1360d05970680831e64986a7d2c2c92171"
+      },
+      "sar8j_r1_sw_b6": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "2dc255a11699665fc7a98e6d9e47720ac130012d997807fbbc3f1c850952d167"
+      },
+      "sar8j_r1_sw_b7": {
+        "matches_frozen_b": true,
+        "electrical_sha256": "08f43d86b762f862ce38dd6a659ee3ac152f4a30b91411966cdf86f6a9e43cb2"
+      }
+    },
+    "reference_candidate": "minimal_msb_d2",
+    "sar_candidate": "reset_data_or",
+    "gate_interface": "38 ports retained; paired gates shorted by external reference iprobe, not internally in CDAC",
+    "files": {
+      "design\\xtor\\cdac\\cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+      "design\\xtor\\reference\\minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+      "design\\xtor\\sar\\reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d",
+      "design\\top\\adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5"
+    }
+  },
+  "library": "SAR_ADC_T28_LAYOUT",
+  "library_path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT",
+  "review_core": "sar8j_r1_cdac_core/layout",
+  "verification_top": "sar8j_r1_cdac/layout",
+  "wrapper_instances": [
+    "XCORE",
+    "FILL_ODPO",
+    "FILL_METAL"
+  ],
+  "functional_instances": [
+    "XP",
+    "XN"
+  ],
+  "terminals": 38,
+  "wrapper_shapes": 76,
+  "wrapper_shapes_scope": "Only matching interface pin rectangles and labels",
+  "core_scope": "Active MOMs, boundary matching dummy, switches, functional routing and pins; no density fill",
+  "native_readback": {
+    "status": "success",
+    "output": "(\"PASS\" 38 \"one_shared_core\" \"no_density_fill_in_core\")",
+    "errors": [],
+    "warnings": [],
+    "execution_time": 0.15453290000004927,
+    "metadata": {}
+  },
+  "geometry": {
+    "fill_geometry_equal": true,
+    "core_sha256": "d467d309d50cfef0d3225ac86d317a3a2628e3739d6f37891928e6475cfcc486",
+    "half_geometry_equal": true,
+    "physical_evidence": "cdac-full-corefill-20261116",
+    "core_geometry_equal": true,
+    "ports_equal": true
+  },
+  "rollback_evidence": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-core-fill-20261116",
+  "physical_evidence": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116",
+  "physical_manifest_sha256": "d09c65439359c23ee1c1cb0928f32f6cc06916cf019eea871d03bfe77e835261",
+  "physical_checks": {
+    "drc": {
+      "args": [
+        "calibre",
+        "-drc",
+        "-hier",
+        "-turbo",
+        "4",
+        "-nowait",
+        "drc.svrf"
+      ],
+      "deferred_context_rules": [],
+      "markers": 2,
+      "markers_by_rule": {
+        "DIODMY_L:WARNING": 1,
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+      },
+      "returncode": 0,
+      "status": "exited",
+      "verdict": "NOT_CLEAN"
+    },
+    "format": {
+      "args": [
+        "calibre",
+        "-xrc",
+        "-fmt",
+        "-all",
+        "-nowait",
+        "pex.svrf"
+      ],
+      "returncode": 0,
+      "status": "exited"
+    },
+    "lvs": {
+      "args": [
+        "calibre",
+        "-lvs",
+        "-hier",
+        "-turbo",
+        "4",
+        "-nowait",
+        "lvs.svrf"
+      ],
+      "returncode": 0,
+      "status": "exited",
+      "verdict": "CORRECT"
+    },
+    "oa": {
+      "args": [
+        "virtuoso",
+        "-nograph",
+        "-nocdsinit",
+        "-log",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116/oa.ciw.log",
+        "-restore",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116/build.il"
+      ],
+      "returncode": 0,
+      "status": "exited"
+    },
+    "pex": {
+      "bytes": 3056178,
+      "companion_sha256": {
+        "extracted.scs.pex": "aa697be6ea45a407f6a4f3b74417d1a91e48724a065445ec985d68c5e455813f",
+        "extracted.scs.sar8j_r1_cdac.pxi": "6b0345b29d5cde1004d762cc6ed0e76888ed6492ce77b881a6835e823001fb79"
+      },
+      "sha256": "580de7dc78b482f7d8146700a9372bf7235d177ac0570ef882cfb1fc2e227a19"
+    },
+    "phdb": {
+      "args": [
+        "calibre",
+        "-xrc",
+        "-phdb",
+        "-turbo",
+        "4",
+        "-nowait",
+        "pex.svrf"
+      ],
+      "returncode": 0,
+      "status": "exited"
+    },
+    "rcc": {
+      "args": [
+        "calibre",
+        "-xrc",
+        "-pdb",
+        "-rcc",
+        "-turbo",
+        "4",
+        "-nowait",
+        "pex.svrf"
+      ],
+      "returncode": 0,
+      "status": "exited"
+    },
+    "stream": {
+      "args": [
+        "strmout",
+        "-library",
+        "SAR_ADC_T28_LAYOUT",
+        "-strmFile",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116/fixture.gds",
+        "-topCell",
+        "sar8j_r1_cdac",
+        "-view",
+        "layout",
+        "-layerMap",
+        "/home/process/tsmc28n/PDK_mmWave/iPDK_CRN28HPC+ULL_v1.8_2p2a_20190531/tsmcN28/tsmcN28.layermap",
+        "-logFile",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116/stream.log",
+        "-summaryFile",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116/stream.sum",
+        "-cdslib",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/cds.lib",
+        "-runDir",
+        "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout-mom-pilot/evidence/cdac-full-corefill-20261116",
+        "-convertPin",
+        "geometry",
+        "-convertPcellPin",
+        "geometry"
+      ],
+      "returncode": 0,
+      "status": "exited"
+    }
+  },
+  "physical_error": null,
+  "physical_complete": true,
+  "input_packaging_check": {
+    "run_id": "cdac-packcheck-current-20261116",
+    "source_physical_evidence": "cdac-full-filled-pex7-flat",
+    "registered": false,
+    "submitted": false,
+    "purpose": "Validate current-design packaging only, not a new simulation or a test of the new hierarchy"
+  },
+  "limits": [
+    "One shared functional core, not two independently editable design versions.",
+    "Density fill must be reassessed after functional geometry changes.",
+    "Reference driver and SAR changes are external to this CDAC layout; they are not laid out here.",
+    "Original two DRC warnings remain NOT_CLEAN; no complete foundry signoff claim.",
+    "Known historical TT code errors and approximately 15.12% span loss are not fixed by hierarchy management.",
+    "New current-design packaging measures functional timing only; extracted internal bottom-plate settling and switch currents remain unmeasured."
+  ],
+  "source_sha256": {
+    "Layout/cells/full_cdac.py": "001642dada7d12dc89816dcfd64ff6b6b1ecf09e1b3b75fd94a2d7263c0730d6",
+    "Layout/cells/hierarchy.il": "4407d0a5e45bd8d629e100bfb0774ad96563e2fc48451b9e08a9804fc4742864",
+    "Layout/physical/apply_fill.py": "0065f4a5482b4564c6cd46679322ba218bfdb774ce218c9a73d89fc2e8ba40ef",
+    "Layout/physical/check_fill_geometry.py": "e6ba92b60d4a14c2d9434762b8fc58537c4f1c772bf2cfe183cd5d9f4b926f9a",
+    "Layout/simulation/prepare_integrated_sim.py": "5277c6fbbbfbbac03f033c69a6c335bdab6949f63fa1d267bcff6c8199cbc205",
+    "Layout/analysis/measure_integrated.py": "083cfa178f4b6ad29bd0e4dfc2ab9a5164097070d74ba108a8d456e65d75bf77"
+  }
+}

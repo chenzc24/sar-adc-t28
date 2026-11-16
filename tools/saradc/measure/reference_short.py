@@ -77,7 +77,7 @@ def finish(f,ctx):
     return f
 
 
-def analyze(run_dir,output_dir):
+def analyze(run_dir,output_dir,frame_finisher=None):
     ctx=json.load(open(os.path.join(run_dir,'inputs/context.json')))
     frames=[frame_new(i) for i in range(ctx['frames'])]
     obs={};warnings=set();warning_lines=[]
@@ -90,7 +90,7 @@ def analyze(run_dir,output_dir):
                 obs[idx]=int(m.group(2))
             warnings.update(re.findall(r'WARNING \(([^)]+)\)',line))
             if 'WARNING (' in line:warning_lines.append(line.strip())
-    paths=[os.path.join(run_dir,'raw',n) for n in os.listdir(os.path.join(run_dir,'raw')) if n.endswith('.tran.tran')]
+    paths=[os.path.join(p,n) for p,_,names in os.walk(os.path.join(run_dir,'raw')) for n in names if n.endswith('.tran.tran')]
     if len(paths)!=1:raise ValueError('Expected exactly one native transient')
     prev=None;last_update=None;last_bad=None;rx_since=None;points=0;current_missing=None
     last_plot=-1.;precharge=None
@@ -165,7 +165,7 @@ def analyze(run_dir,output_dir):
     if prev is None or t<ctx['expected_stop_s']-1e-14:raise ValueError('Incomplete transient')
     if sorted(obs)!=list(range(ctx['frames'])):raise ValueError('Missing observer frames')
     for f in frames:f['observer_code']=obs[f['frame']]
-    frames=[finish(f,ctx) for f in frames]
+    frames=[(frame_finisher or finish)(f,ctx) for f in frames]
     result=dict(context=ctx,analysis_complete=True,native_end_s=t,native_points=points,precharge=precharge,frames=frames,
                 all_code_pass=all(f['code_pass'] for f in frames),pass_function_timing=all(f['pass_function_timing'] for f in frames),
                 all_screens_pass=all(not f['issues'] for f in frames),first_issue=next((dict(frame=f['frame'],**f['issues'][0]) for f in frames if f['issues']),None),
