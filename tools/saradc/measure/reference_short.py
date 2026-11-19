@@ -54,10 +54,13 @@ def finish(f,ctx):
     closes,opens=times('sample',False),times('sample',True)
     f['expected_code']=ctx['expected_codes'][f['frame']]
     f['counts']={'compare':len(cr),'write':len(wr),'update':len(up)}
-    f['code_pass']=f['code_98']==f['expected_code']
+    allowed=ctx.get('accepted_codes',{}).get(str(f['frame']),[f['expected_code']])
+    f['code_pass']=f['code_98'] in allowed
     f['observer_crosscheck']=f['observer_code'] is not None and f['observer_code']==f['code_98']
+    single_edge = ctx.get('version') == 'single_edge'
     f['event_order_pass']=(len(cr)==len(wr)==len(up)==8 and
-        all(cr[i]<wr[i]<up[i] for i in range(8)) and all(up[i]<cr[i+1] for i in range(7)))
+        all(cr[i]<wr[i] and (wr[i]==up[i] if single_edge else wr[i]<up[i]) for i in range(8))
+        and all(up[i]<cr[i+1] for i in range(7)))
     f['sample_edges_pass']=(len(closes)==len(opens)==len(times('close',False))==len(times('sample_int',False))==1)
     deadline=ctx['frame_origin_s']+(f['frame']+1)*ctx['period_s']+1.05e-9
     f['conversion_ns']=(up[-1]-closes[0])*1e9 if up and len(closes)==1 else None
@@ -77,8 +80,11 @@ def finish(f,ctx):
     return f
 
 
-def analyze(run_dir,output_dir,frame_finisher=None):
+def analyze(run_dir,output_dir,frame_finisher=None,sample_reader=None):
     ctx=json.load(open(os.path.join(run_dir,'inputs/context.json')))
+    event_nodes = dict(EVENTS)
+    if ctx.get('version') == 'single_edge':
+        event_nodes['write'] = event_nodes['update']
     frames=[frame_new(i) for i in range(ctx['frames'])]
     obs={};warnings=set();warning_lines=[]
     with open(os.path.join(run_dir,'spectre.out')) as f:
@@ -96,7 +102,7 @@ def analyze(run_dir,output_dir,frame_finisher=None):
     last_plot=-1.;precharge=None
     with open(os.path.join(output_dir,'timeline.csv'),'w') as out:
         writer=csv.writer(out);writer.writerow(['time_s','input_diff_v','top_diff_v','code','sample','cmp','preset','vrefp','vrefn'])
-        for t,v in samples(paths[0]):
+        for t,v in (sample_reader or samples)(paths[0]):
             missing=[s for s in ctx['required_signals'] if s not in v]
             if missing:raise ValueError('Missing native voltage signals: '+str(missing))
             if any(math.isnan(v[s]) or math.isinf(v[s]) for s in ctx['required_signals']):raise ValueError('Nonfinite waveform')
@@ -129,7 +135,7 @@ def analyze(run_dir,output_dir,frame_finisher=None):
             if prev:
                 pt,old=prev
                 transitions=[]
-                for name,node in list(EVENTS.items())+[(k,k) for k in RX]:
+                for name,node in list(event_nodes.items())+[(k,k) for k in RX]:
                     a=old[node]-.5*old['vdd!'];z=v[node]-.5*v['vdd!']
                     if (a>0)!=(z>0):
                         cross=pt-a/(z-a)*(t-pt);transitions.append((cross,name,z>0))

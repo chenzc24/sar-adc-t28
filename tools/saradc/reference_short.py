@@ -89,8 +89,10 @@ def resetor_20261115_sources():
 
 def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None, source_blobs=None,
             cell_library=None):
-    if version not in ('b', 'minimal', 'current'):
+    if version not in ('b', 'minimal', 'current', 'single_edge'):
         raise ValueError('Unknown reference short version')
+    if version == 'single_edge' and source_blobs is None:
+        raise ValueError('Single-edge runs require their dedicated DUT package')
     ensure_candidate()
     run_id = '%s-%s-%s-%s' % (PREFIX, version, corner, revision)
     engine().valid_id(run_id)
@@ -123,6 +125,11 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
     for bit in range(8):
         signal_names += ['XDUT.'+s+str(bit) for s in ['GNN','GNP','GPN','GPP','CODE']]
         signal_names += ['XDUT.XCDAC.B'+side+str(bit) for side in ['N','P']]
+    if version == 'single_edge':
+        signal_names.remove('XDUT.XCTRL.PHI_W')
+        signal_names += ['XDUT.XCTRL.XBIT%d.DIN' % i for i in range(8)]
+        signal_names.append('XDUT.XCTRL.XDONE.DIN')
+        signal_names.append('XDUT.XCTRL.XTIM.XPHASE.DIN')
     currents = ['XDUT.XCDAC.XS%s%d.%s:1'%(side,bit,mos)
                 for side in ['N','P'] for bit in range(8) for mos in ['MN_LOW','MP_HIGH']]
     stop = (59+100*len(codes))*1e-9
