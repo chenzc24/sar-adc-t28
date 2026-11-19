@@ -56,16 +56,27 @@
       "orientation": "R0",
       "size": [
         16,
-        12
+        14
       ],
       "instances": [
-        "XCOMP",
-        "CL_COMP_N",
-        "CL_COMP_P",
-        "CL_CMP_CLK"
+        "XCOMP"
       ],
       "basis": "space_reservation",
-      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+      "uncertainty": "Core measured 1.63 x 3.52 um (guard rings included). The 16 x 14 um reservation keeps room for access routing; the three model MOM loads are no longer drawn, so it can shrink once the comparator-to-SAR routing is planned.",
+      "core_measurement": {
+        "cell": "sar_strongarm_t28_core",
+        "bbox_um": [
+          [
+            -0.815,
+            -2.645
+          ],
+          [
+            0.815,
+            0.875
+          ]
+        ],
+        "evidence": "comp-v7-20261118-pex"
+      }
     },
     {
       "id": "bootstrap_n",
@@ -130,8 +141,8 @@
       ],
       "orientation": "R0",
       "size": [
-        40,
-        70
+        41,
+        56
       ],
       "instances": [
         "XCTRL",
@@ -140,7 +151,12 @@
         "XSAMPLE"
       ],
       "basis": "space_reservation",
-      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+      "uncertainty": "The filled macro fits this reservation at local origin (0.5, 0) um. The top-level interconnect and supply grid have separate allowances.",
+      "physical_progress": "Layout/results/sar_timing.json",
+      "native_placement_offset_um": [
+        0.5,
+        0
+      ]
     }
   ],
   "reasoning": "CDAC anchors measured area; bootstrap and comparator sit near analog north side; reference drives CDAC switch edge from south; SAR/clock placed east across routing corridor.",

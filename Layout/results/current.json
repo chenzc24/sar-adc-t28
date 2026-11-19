@@ -1,14 +1,14 @@
 {
   "planning_inputs_sha256": {
-    "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
+    "design/manifest.json": "0bb38ca3699e28bd2bf82a6387f9ba81f7edf89d37f845ea70d3afb374a99825",
     "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
-    "Layout/design/manifest.json": "35912371f9fa9aa93a19cd45079669ee847cc7d5f2f05f7100f3df94d8814b44",
-    "Layout/design/floorplan.json": "f20af4dd86791988ddc2a9872e5bbec8f99f192a45a8fbbe49ba950f07eb90fd",
-    "Layout/specs/interfaces.json": "fdc4696be04969bc0d0cf5f0108c31e414e6b339a8cd7227b756fc3fe829cecf",
-    "Layout/specs/constraints.json": "4e4a99943dffbc9c73d51c1649bb16e4ca100307a7092682e577fb958404abef",
+    "Layout/design/manifest.json": "153803d6f1cafaabdb3db12802251b41b3204ade4d3702cb2bda018bd3d69c93",
+    "Layout/design/floorplan.json": "719296a10960db187c4d7b3b7e6552e43c445bab58718c3faa0c9d20bb550fd5",
+    "Layout/specs/interfaces.json": "6325a930919980be9c9f31a099958bc784003c7390e062e43ee49a33826aefe9",
+    "Layout/specs/constraints.json": "ad180b17c611488899e3f655a0d511fa1688a46fee724d3839e97aa29dd788bc",
     "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
-    "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "design/xtor/clock/delays_quiet8p5.scs": "e0554fdd3b15f98d1670bb10ea03908bbba7f4ba0a69348b9f3ed7f0157fb60d",
     "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
     "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
@@ -19,15 +19,13 @@
     "area": "area.json",
     "status": "coarse_plan_unimplemented",
     "unresolved_budgets": [
-      "TOP_added_fixed_capacitance_F",
-      "TOP_differential_capacitance_imbalance_F",
       "comparator_input_route_capacitance_F",
       "reference_gate_route_delay_s",
       "sar_handshake_route_delay_s"
     ]
   },
   "signoff": false,
-  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
   "qualification_inputs_sha256": {
     "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
     "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
@@ -65,5 +63,46 @@
     "historical_report": "cdac.md",
     "historical_amplitude_loss_percent": 15.12,
     "status": "unresolved; not remeasured as an amplitude metric in this migration"
+  },
+  "bootstrap": {
+    "status": "prefill_core_verified",
+    "physical_evidence": "boot-core-20261118",
+    "geometry_sha256": "a77327c667de8e754e3abe1bcf94b84c64471ffa6fd48889022d02de5ab7dbb8",
+    "lvs": "CORRECT",
+    "tt_run": "boot-post-tt-20261118",
+    "schematic_tt_run": "boot-pre-tt-20261118",
+    "physical_signoff": false,
+    "report": "bootstrap.json"
+  },
+  "comparator": {
+    "status": "prefill_module_delivered_not_full_signoff",
+    "physical_evidence": "comp-v7-20261118-pex",
+    "geometry_sha256": "b562b09dcab3da9b0d1efbf078cfe530c84508cde93203bc80d14bfac6606e51",
+    "lvs": "CORRECT",
+    "physical_signoff": false,
+    "report": "comparator.json",
+    "tt_run": "comp-v7-tt-20261118",
+    "integrated_run": "comp-v7-int-20261118",
+    "fill_status": "stale_built_for_superseded_core_do_not_integrate"
+  },
+  "cdac": {
+    "view": "layout_paired_stacked",
+    "physical_evidence": "cdac-paired-plan-d-20261118-combined",
+    "trial_evidence": "cdac-paired-plan-d-20261118",
+    "gds_sha256": "490bff108b59542d9ddcf3c2128c265eb9f34abce9e85b24905d8257adbbae3f",
+    "functional_geometry_sha256": "840f7de58d2770fb68b58599bf1457e935fb1a9f2a71636bc24cc6058f9d8998",
+    "report": "cdac.md"
+  },
+  "sar_timing": {
+    "status": "routed_native_core_and_filled_macro_qualified",
+    "core_evidence": "sar-timing-core-signoff-20261118",
+    "filled_evidence": "sar-timing-fill-signoff-20261118",
+    "geometry_sha256": "132702182ecbeb3bcf96f822751a99173822049953f77bc9e87f35b948782d13",
+    "native_lvs": "CORRECT",
+    "drc_geometry_or_density": 0,
+    "drc_advisories": 2,
+    "accepted_corners": 5,
+    "frames": 50,
+    "report": "sar_timing.json"
   }
 }

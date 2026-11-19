@@ -1,72 +1,70 @@
-# 开发与验证流程
+# Development and Verification Workflow
 
-以用户已经确认的目标和验收条件开始，完成实现、验证、审查和交付。明确的小任务直接执行；需要设计讨论、多人交接或真实依赖时，再形成 Spec 或拆分任务。已经确认的决定在后续阶段持续有效。
+Start with the objective and acceptance criteria the user has agreed to. Carry the work through implementation, verification, review, and delivery. Execute small, clear tasks directly. Use a spec or split the work when it requires design discussion, handoff, or a real dependency. Carry confirmed decisions into later stages.
 
-## 阶段与 Skill
+## Workflow Stages and Skills
 
-方法由 `.agents/skills/` 中安装的原版 Skill 定义。选择阶段后读取完整原文及其依赖。
+The original skills installed under `.agents/skills/` define the methods. Once a stage applies, read the full skill and its dependencies.
 
-| 阶段 | Skill | 得到什么 |
+| Stage | Skill | Output |
 | --- | --- | --- |
-| 澄清需求 | `grill-with-docs`，依赖 `grilling`、`domain-modeling` | 确认需求、术语与设计决定 |
-| 形成验收 | `to-spec` | Spec 与测试边界，发布按用户授权执行 |
-| 拆分任务 | `to-tickets` | 有交付目标和依赖关系的任务 |
-| 实施 | `implement`，调用 `tdd`、`code-review` | 经过验证和审查的提交 |
-| 多任务实施 | `implement-spec` | 按任务图推进实施与合并 |
-| 独立审查 | `code-review` | Standards 和 Spec 两个独立审查结果 |
-| 交付 | `pr`，需要展示证据时用 `show-me` | 带验证证据的 PR |
-| 架构改进 | `improve-codebase-architecture`、`codebase-design` | 结构问题与候选方案 |
-| 探索、引导与交接 | `prototype`、`wizard`、`handoff` | 对应问题的验证结果与交接信息 |
-| 回顾 | `retro` | 从指定来源提炼改进候选 |
-| 规则维护与配置 | `writing-for-agents`、`setup-matt-pocock-skills` | 文档组织与项目配置 |
+| Clarify requirements | `grill-with-docs` with `grilling` and `domain-modeling` | Agreed requirements, terminology, and design decisions |
+| Define acceptance | `to-spec` | Spec and test scope, with publication subject to user authorization |
+| Split the work | `to-tickets` | Tasks with deliverables and dependencies |
+| Implement | `implement`, which calls `tdd` and `code-review` | A verified and reviewed commit |
+| Implement multiple tasks | `implement-spec` | Implementation and integration in dependency order |
+| Review independently | `code-review` | Separate standards and spec findings |
+| Deliver | `pr`, with `show-me` when evidence needs to be presented | PR with verification evidence |
+| Improve the architecture | `improve-codebase-architecture`, `codebase-design` | Structural issues and candidate designs |
+| Explore, guide, or hand off work | `prototype`, `wizard`, `handoff` | Findings or handoff information for the task |
+| Run a retrospective | `retro` | Improvements derived from the specified sources |
+| Maintain rules and configuration | `writing-for-agents`, `setup-matt-pocock-skills` | Documentation organization and project configuration |
 
-保留各 Skill 的 `disable-model-invocation` 设置。带此标记的 Skill 由用户显式调用；其余按描述触发。需要用户确认的节点由原版方法定义，已有授权和已确认决定在阶段间继承。
+Honor each skill's `disable-model-invocation` setting. The user explicitly invokes skills with this setting. Other skills apply when their descriptions match. The original methods specify user checkpoints. Prior authorizations and confirmed decisions carry across stages.
 
-19 个 Skill 共 55 个文件安装在项目内，完整性和来源见 [.agents/skill-sources.json](../.agents/skill-sources.json)。具体调度按原版 `implement-spec` 执行；服务器仿真并发由独立的资源配置决定。
+The project installs 19 skills across 55 files. Use the original `implement-spec` method to schedule implementation tasks. Simulation concurrency follows the server resource configuration. [Skill provenance and integrity](../.agents/skill-sources.json)
 
-## 一次变更怎样完成
+## Completing a Change
 
-1. 从项目首页找到实际设计和测试入口，确认本次要改变的行为与验收条件。
-2. 修改对应源和必要调用方，选用能够覆盖实际风险的最小验证。
-3. 核对结果与 diff，处理确定性失败，报告未解决问题及证据范围。
-4. 在提交或 PR 中记录改了什么、为什么、怎样验证和剩余限制，按用户授权发布。
+1. Start at the project README. Find the design and testbench in use, then confirm the behavior to change and its acceptance criteria.
+2. Update the source and any affected callers. Run the smallest verification that covers the risk.
+3. Check the results and the diff. Resolve reproducible failures and report the remaining issues and the scope of the evidence.
+4. Record the change, rationale, verification, and limitations in the commit or PR. Follow the user's authorization for publication.
 
-会话或 Issue 承载当前需求。任务需要交接时，用一个持续更新的需求来源。临时笔记可放入被忽略的 `work/`，历史计划和总日志通过历史 Git 提交追溯。
+Maintain one current requirement in the conversation or issue, including during handoff. Put temporary notes in the ignored `work/` directory. Trace historical plans and aggregate logs through Git.
 
-## 信息放在哪里
+## Sources of Record
 
-| 信息 | 权威位置 |
+| Information | Source |
 | --- | --- |
-| 当前设计和测试入口 | 根 README，链接到实际源文件 |
-| 设计约束、模块接口、判定标准 | 对应模块的规格或契约 |
-| 当前需求和验收 | 已确认的会话或 Issue |
-| 仿真条件、输入身份、预算 | 运行配方与冻结输入 manifest |
-| 进度、失败和实际资源 | 受管运行状态、监测器和原始日志 |
-| 测量数值及有效范围 | 对应运行的结果文件；结果页链接这些证据 |
-| 实施历史与验证记录 | Git 提交或 PR |
+| Current design and test entry points | Root README with links to the source files |
+| Design constraints, module interfaces, and acceptance criteria | The relevant module specification or contract |
+| Current requirement and acceptance | The agreed conversation or issue |
+| Simulation settings, input identity, and budgets | Run recipe and frozen-input manifest |
+| Progress, failures, and actual resource usage | Managed run state, monitor, and raw logs |
+| Measurements and their scope | Result files for the run, linked from the results page |
+| Implementation and verification history | Git commit or PR |
 
-文档保留当前有效规则。状态、模型 section、运行 ID 和参数能从配置或结果读取时，直接引用其来源。历史实验的日期、版本和失败仍随其证据保留。
+Keep documentation aligned with the current rules. Link directly to the configuration or result for status, model sections, run IDs, and parameters. Keep historical dates, versions, and failures with their evidence.
 
-## 验证按改动选择
+## Verification by Change Type
 
-| 改动 | 必要验证 |
+| Change | Required verification |
 | --- | --- |
-| 入口和目录整理 | 链接、依赖和输入身份可解析 |
-| 工具代码 | 受影响路径的实际执行或定向测试 |
-| 网表或行为模型 | 连接与参数核对，相关模块原生仿真 |
-| 模块接口或时序 | 真实负载下的模块测试和相关整机闭环 |
-| 版图 | DRC、LVS、PEX 及受影响的后仿 |
+| Entry point or directory reorganization | Resolve links, dependencies, and input identities |
+| Tool code | Exercise the affected path or run a focused test |
+| Netlist or behavioral model | Check connectivity and parameters, then simulate the affected modules with the native simulator |
+| Module interface or timing | Test the module with its actual load and run the relevant closed-loop ADC test |
+| Layout | Run DRC, LVS, PEX, and the affected post-layout simulations |
 
-重复验证由新的改动、失败或尚未覆盖的问题驱动。电路测量预算和良率目标先定义，再决定工况与样本数。
+Repeat verification when a change, failure, or coverage gap warrants it. Define measurement budgets and yield targets before selecting corners and sample counts.
 
-## 长任务
+## Long-Running Tasks
 
-已有仿真由其受管队列接续。查询监测器和测量结果后，按运行身份处理失败。修正分析器时新建绑定完成源的 analysis-only 任务，保留原始结果。资源策略由实际执行配置读取。
+Existing simulations continue under their managed queues. Check the monitor and measurement results, then handle failures by run identity. When correcting an analyzer, create an analysis-only task bound to the completed source run and retain the original result. Read the resource policy from the actual execution configuration.
 
-受管工具与命令见 [仿真命令](simulation.md)。该入口负责执行、回收和资源约束；目录治理和日常任务流程由本页定义。
+The simulation guide covers managed execution, collection, and resource limits. Use this workflow for directory conventions and day-to-day engineering. [Simulation guide](simulation.md)
 
-## 参考
+## References
 
-本流程采用 Analog Canvas 固定提交 `7ff62c6c22f827d2434c195ad49207fa7151c807` 中的完整原版 Skill 文件，并使用本项目的 Spectre 验证契约。上游原仓库和版本、文件 SHA256 见安装清单，MIT 许可原文保存在 `.agents/licenses/`。
-
-[Analog Canvas Agent 入口](https://github.com/cascode-ai/analog-canvas/blob/7ff62c6c22f827d2434c195ad49207fa7151c807/AGENTS.md) · [开发流程](https://github.com/cascode-ai/analog-canvas/blob/7ff62c6c22f827d2434c195ad49207fa7151c807/docs/development-workflow.md)
+This workflow uses the unmodified upstream skills from Analog Canvas commit `7ff62c6c22f827d2434c195ad49207fa7151c807` with this project's Spectre verification contract. The installation manifest records the upstream repository, revision, and file SHA256 digests. The MIT license text is in `.agents/licenses/`. [Analog Canvas agent entry](https://github.com/cascode-ai/analog-canvas/blob/7ff62c6c22f827d2434c195ad49207fa7151c807/AGENTS.md) · [Upstream development workflow](https://github.com/cascode-ai/analog-canvas/blob/7ff62c6c22f827d2434c195ad49207fa7151c807/docs/development-workflow.md)

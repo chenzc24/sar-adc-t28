@@ -1,29 +1,29 @@
-# SAR8 总设计规格
+# SAR8 Design Specification
 
-本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现为 `sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1`。版本及验收状态见 [采用记录](../results/design/reset_data_or_adoption_20261115.json)。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径和数据复位 OR 的电气延迟。
+This page is generated from [specs/arch.json](../specs/arch.json). The current electrical implementation is `sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3`. The behavioral models approximate the B algorithm and protocol. Use native measurements for the minimal reference and data-reset OR path delays. [Adoption and qualification record](../results/design/sar_std_delay_20261119.json)
 
-## 架构与外部接口
+## Architecture and External Interface
 
-- 8 bit、10 MS/s，全差分异步 SAR，flat binary CDAC；每侧 255 单位二进制电容加 1 单位 dummy，无桥电容。
-- 顶层端口顺序：`D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP VREFN VREFP 0`。
-- 数字输出为 D0..D7，无外部位时钟、BUSY、VALID 或 EOC 引脚。SAMPLE 高电平采样并复位 SAR；下降沿结束采样，内部自主推进 8 位。
-- 码字在转换中逐位变化，完成后、下一采样开始前读取。正差分极性为 VINP−VINN。
+- An 8-bit, 10 MS/s, fully differential asynchronous SAR with a flat binary CDAC. Each side connects 255 binary-weighted unit capacitors and one unit dummy to its top plate without a bridge capacitor.
+- Top-level port order is `D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP VREFN VREFP 0`.
+- Digital outputs are D0..D7. SAMPLE high samples and resets the SAR. Its falling edge ends sampling and starts the autonomous eight-bit sequence. The interface has no external bit clock, BUSY, VALID, or EOC pin.
+- The code changes bit by bit during conversion. Read it after conversion and before the next sample. Positive differential voltage is VINP−VINN.
 
-| 项目 | 当前定义 |
+| Item | Definition |
 | --- | --- |
-| 核心电源 | 标称 0.9 V，验证范围 0.81–0.99 V |
-| 参考 | VREFN=0 V、VREFP=0.9 V，独立于核心电源 |
-| 输入 | 标称共模 0.45 V；差分 -0.9..0.9 V，单端 0..0.9 V；完整共模范围尚未签核 |
-| 量化 | 256 码，LSB=7.03125000 mV；理想边界 −0.9+k·LSB，上边码处理精确相等 |
-| 帧时序 | 100 ns：高 40 ns 采样、低 60 ns 转换；启动先低 60 ns 预充，再进入正常周期 |
-| 实际激励 | delay=60 ns，rise/fall=100/100 ps，width=39.9 ns；首次下降阈值在 100.05 ns |
-| 输入源 | 每端理想源串联 50 Ω |
-| 参考源 | 每轨理想源串联 50 Ω、旁路 4 pF，无片上参考缓冲器 |
-| 输出负载 | 每位 5 fF；比较器输出及其时钟另有原生 MOM 负载 |
+| Core supply | 0.9 V nominal, 0.81–0.99 V verification range |
+| References | VREFN=0 V and VREFP=0.9 V, independent of the core supply |
+| Input | 0.45 V nominal common mode, -0.9..0.9 V differential, 0..0.9 V single-ended. Full common-mode range is unqualified. |
+| Quantization | 256 codes, LSB=7.03125000 mV. Ideal boundaries are −0.9+k·LSB. Use the upper code at equality. |
+| Frame timing | 100 ns total, with 40 ns high for sampling and 60 ns low for conversion. Start with 60 ns low for precharge before normal cycling. |
+| Actual stimulus | Delay=60 ns, rise/fall=100/100 ps, width=39.9 ns. The first falling-edge threshold crossing is at 100.05 ns. |
+| Input source | Ideal source with 50 Ω series resistance per pin |
+| Reference source | Ideal source with 50 Ω series resistance and 4 pF bypass per rail. The fixture drives the reference directly. |
+| Output load | 5 fF per bit. The comparator outputs and clock use native MOM model loads in pre-layout simulation only. |
 
-## 工况定义
+## Corners
 
-| 工况 | MOS corner | 温度/°C | VDD/V |
+| Condition | MOS corner | Temperature (°C) | VDD (V) |
 | --- | --- | ---: | ---: |
 | tt | TT | 27 | 0.9 |
 | ssc | SS | -40 | 0.81 |
@@ -31,23 +31,23 @@
 | ffc | FF | -40 | 0.99 |
 | ffh | FF | 125 | 0.99 |
 
-各工况的实际 MOS、MOM 与无源模型 section 由冻结用例的 include 决定，不能从 MOS corner 名字推断其他器件角。用例身份见 [tests.json](../specs/tests.json)。
+Read the frozen case includes for actual MOS, MOM, and passive model sections. The MOS corner name identifies MOS conditions. [Test identities](../specs/tests.json)
 
-## 当前晶体管实现
+## Current Transistor Implementation
 
-- Bootstrap：每路 2 只并联 1 µm/150 nm 的 `nch_18_mac` 主开关，原生 MOM bootstrap 电容 multi=200。
-- CDAC：18 个 `cfmom_2t` 实例；单位几何 nr=8、lr=2 µm、w=s=50 nm、stm=1、spm=3，multi 按 1..128 缩放。N/P 侧 dummy 分别接 VREFN/VREFP。同单位几何的既有低频 AC 提取约 4.00407 fF，每侧 256 单位约 1.02504 pF；这是有偏置/频率条件的表征值，不是恒定器件值。旧 6.86047 fF 比较值和 512 独立单元的失配统计不归给当前 18 个分组实例。
-- 参考开关：L=90 nm，NMOS W=150 nm、PMOS W=175 nm，multi=3·2^bit。
-- 比较器：11 MOS StrongARM；输入对 W=1 µm/L=30 nm，尾管 W=1 µm，再生 N/P W=500/500 nm。
-- 数字路径：原生标准单元；SAR 的 RC、清除管及模拟/升压域电路保留。参考侧采用 CODE + 公共 PRESET + 正反相驱动，取消额外 DFF/MUX、逐位复位/捕获、非交叠发生器及栅极串联电阻。
-- 原生标准单元 masters：`DFCNQD1BWP12T30P140`、`INVD1BWP12T30P140`、`INVD2BWP12T30P140`、`ND2D1BWP12T30P140`、`OR2D1BWP12T30P140`。
+- Bootstrap uses 2 parallel 1 µm/150 nm `nch_18_mac` main switches per channel and a native MOM capacitor with multi=200.
+- The CDAC uses 18 `cfmom_2t` instances. The unit geometry is nr=8, lr=2 µm, w=s=50 nm, stm=1, and spm=3, with multi from 1 to 128. The N and P dummies connect to VREFN and VREFP, respectively. The prior low-frequency AC characterization of this unit geometry gave about 4.00407 fF per unit and 1.02504 pF per 256-unit side at its specified bias and frequency. The older 6.86047 fF comparison and the 512-independent-unit mismatch results apply to their original models.
+- Reference switches use L=90 nm, NMOS W=150 nm, PMOS W=175 nm, and multi=3·2^bit.
+- The 11-MOS StrongARM comparator uses input pairs of W=1 µm and L=30 nm, a tail width of 1 µm, and N/P regeneration widths of 500/500 nm.
+- The digital path uses native standard cells. The SAR uses input-qualified native delay cells. The analog and boosted circuits remain transistor-level. The reference uses CODE, a shared PRESET, and true and complementary drive. The minimal reference removes the extra DFF/MUX, per-bit reset and capture, non-overlap generator, and series gate resistors.
+- Native standard-cell masters are `DEL050D1BWP12T30P140`, `DEL075D1BWP12T30P140`, `DEL200D1BWP12T30P140`, `DEL250D1BWP12T30P140`, `DFCNQD1BWP12T30P140`, `INVD1BWP12T30P140`, `INVD2BWP12T30P140`, `ND2D1BWP12T30P140`, `OR2D1BWP12T30P140`.
 
-## 时序合同
+## Timing Contract
 
-当前最简版每帧要求 8 次比较与写入，按实际 CODE/栅控及逐位底板建立验证参考状态；参考侧已无捕获电路，不再要求 16 次捕获。新采样取消未完成事件，外部采样关闭沿保持不变。60 ns 是帧内转换分配，不代表硬件有超时检测引脚。历史冻结 B 与 B 行为模型仍有 8 次参考更新、16 次捕获的独立合同。
-下表 TT 行为事件间隔取历史 B 十帧原生边沿的中位数，不能作为最简版实测时序。转换预算来自外部低相位，20 ps 输出平滑和算术正则化属于模型设定。cmp→write 包括比较器及数字接收流水，不是纯比较器再生常数。外部高相位为 40 ns，真实 Bootstrap 导通窗仍由内部栅控波形确定。
+The minimal design requires eight comparisons and writes per frame. Verify reference state from actual CODE, gate control, and per-bit bottom-plate settling. The current reference path has no capture events. A new sample cancels unfinished events at the established external timing. The 60 ns conversion allocation comes from the frame. The interface exposes no timeout pin. Frozen B and its behavioral model use their own contract of eight reference updates and 16 captures.
+The TT behavioral intervals below are medians of native edges across ten historical B frames. The low phase sets the conversion budget. The 20 ps output smoothing and arithmetic regularization are model settings. The compare-to-write interval covers the comparator and digital receive pipeline. The high phase is 40 ns, and internal gate waveforms determine the actual Bootstrap conduction window.
 
-| 行为间隔 | 配置值/ns |
+| Behavioral interval | Value (ns) |
 | --- | ---: |
 | `sample_buffer_s` | 0.034436181 |
 | `seq_buffer_s` | 0.043999306 |
@@ -61,34 +61,48 @@
 | `conversion_budget_s` | 60.000000000 |
 | `transition_s` | 0.020000000 |
 
-该近似未拟合 SS/FF 角，也未包括晶体管局部失配引起的延时分布。真实时序资格由闭环逐位测量确定。模块比较器的 0.75 ns 探针和同 draw 保持差的 0.25 LSB 属于独立诊断 screen，不能代替整帧 deadline 或器件可靠性判据。
+The model uses TT intervals. Use native per-bit closed-loop measurements for timing qualification, including SS, FF, and mismatch. The 0.75 ns comparator probe and the same-draw extended-hold comparison with a 0.25 LSB limit are module diagnostics. Use separate evidence for full-frame deadlines and device reliability.
 
-## 性能目标与工程误差分配
+## Performance Targets and Error Budget
 
-沿用已有 8-bit 工程目标：−1 dBFS 输入时 ENOB≥7 bit（SNDR≥43.9 dB），无缺码、单调，|DNL|≤1 LSB、端点 |INL|≤1 LSB，功耗预算≤1 mW。这些是工程目标；已完成测量的条件和范围见 [results](../results/README.md)。
+Engineering targets are ENOB ≥7 bits (SNDR ≥43.9 dB) at −1 dBFS, monotonicity with no missing codes, absolute DNL and endpoint INL ≤1 LSB, and power ≤1 mW. Consult measured results for actual conditions and coverage. [Results](../results/README.md)
 
-| 分配 | RMS/mV |
+| Allocation | RMS (mV) |
 | --- | ---: |
-| 理想量化 | 2.029747 |
+| Ideal quantization | 2.029747 |
 | `sampling_noise_rms_lsb` | 1.265625 |
 | `comparator_noise_rms_lsb` | 1.265625 |
 | `reference_noise_rms_lsb` | 0.843750 |
 | `unmodeled_distortion_rms_lsb` | 1.054688 |
-| 20 ps、4.5 MHz 抖动 | 0.320738 |
+| Jitter of 20 ps at 4.5 MHz | 0.320738 |
 
-RSS=3.041486 mV，分配投影 SNDR=45.412833 dB、ENOB=7.251301 bit；该 RSS 不是当前 B 版的噪声实测。
-CDAC 建立误差分配 0.25 LSB=1.7578125 mV。固定增益、偏置、延迟单列，避免并入随机噪声重复计数。
+The allocated RSS is 3.041486 mV. It projects SNDR of 45.412833 dB and ENOB of 7.251301 bits. Use measured spectra for the noise of a physical run.
+The CDAC settling allocation is 0.25 LSB (1.7578125 mV). Report fixed gain, offset, and delay separately from random-noise RSS.
 
-## 校准、统计与未定项
+### Full Scale and Gain Error
 
-- 当前未实现校准器。比较器 200 种子极值只给出已观察到的偏移，不定义所有工艺样本的校准范围。校准范围、步进、权重字长尚未选定。
-- 历史 0.25 LSB 偏移分配作为暂定校正后残差目标；当前未校准比较器没有被伪称满足这条线。
-- 200 种子模块测试与 SS/FF 冷角各 50 种子闭环的抽样范围见 [monte_carlo.json](../specs/monte_carlo.json)。闭环局部失配仅开启比较器和 CDAC。
-- 已有 B 版单个 TT 瞬态噪声种子，见 [噪声对照](../results/noise/comparison.json)；带宽和统计收敛尚未建立。全电路局部失配、PEX、完整共模范围、校准范围/精度、功耗积分收敛及端压可靠性仍分别保留未完成项。
-- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 比较器五角通过该测量范围，FF 冷 SAR 存储 MM64 Vds 持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/msb_drive_d2_trial_20261115.md)。
+Nominal full scale is ±(VREFP−VREFN)=±0.9 V with ideal binary weights 2^i·LSB. Define k as the sum of measured effective bit weights divided by the sum of ideal weights. Actual full scale is ±0.9·k V. The code-domain gain error is GE=1/k−1, positive when codes exceed the ideal. Reference −1 dBFS to nominal full scale. Endpoint INL and DNL exclude offset and gain.
 
-## 行为视图与交叉验证
+| Gain error | Limit |
+| --- | ---: |
+| TT | 6% |
+| Any corner | 10% |
+| Hard limit for an unclipped −1 dBFS sine | 12.2% |
 
-[Python 模型](../design/behav/python/sar_adc.py) 与 [VA 模型](../design/behav/veriloga/sar_adc_b.va) 共用总规格和生成默认参数。无噪声为默认，支持有效位权、偏移、有限建立和比较停滞等参数。
-两模型的随机数流不同；确定性交叉逐例比较，随机噪声仅按各自分布建模。物理启动充电、kickback、原生 PDK MC、端压和功耗需要晶体管级模型。
-[行为模型说明](../design/behav/README.md)列出模型层次、旧模型审查和运行方法。
+At TT, allocate ≤4.7% to the CDAC including planned fill, ≤0.8% to top-level TOP routing and device layout, and 0.5% to margin. Measure the CDAC share from standalone bit weights for the same extracted view. Use gain-normalized extracted weights to check layout systematic linearity, with |DNL|≤0.25 LSB and endpoint |INL|≤0.25 LSB. Leave the rest of the budget for mismatch, noise, and the comparator.
+Accept the measured gain against these limits. Digital gain correction of the 8-bit output would merge or drop codes. The 0.9 V core level already sets the upper reference.
+For short ADC tests, compute the expected code as `clip(128+floor(Vin/(LSB·k)), 0, 255)`. Use k from an independent CDAC test of the same physical view, or k=1 for the schematic. The functional check allows ±1 code with `Layout/tools/analysis/gain_corrected_codes.py`. Evaluate gain, linearity, and dynamic performance against their own limits.
+
+## Calibration, Statistics, and Open Items
+
+- The current design is uncalibrated. Comparator extremes among 200 seeds describe the offsets observed in those samples. Calibration range, step size, and weight word length are open.
+- The historical 0.25 LSB offset allocation is a provisional residual target after correction. The current comparator offset is reported as measured.
+- The Monte Carlo specification defines the 200-seed module tests and the 50-seed closed-loop tests at each of SS cold and FF cold. Closed-loop local mismatch is enabled only in the comparator and CDAC. [Sampling scope](../specs/monte_carlo.json)
+- The B version has one TT transient-noise seed. Bandwidth and statistical convergence are open, as are full-circuit local mismatch, PEX, full common-mode range, calibration range and accuracy, power integration convergence, and terminal-voltage reliability. [Noise comparison](../results/noise/comparison.json)
+- Use the terminal-voltage rule for engineering acceptance. The five-point minimal-reference D2 trial passed the comparator screen at all five corners within its measurement scope. At FF cold, SAR storage device MM64 failed the Vds duration limit. Apply the rule to the adopted design and rely on separate evidence for reliability signoff. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Per-device results](../results/soa/msb_drive_d2_trial_20261115.md)
+
+## Behavioral Views and Cross-Checks
+
+The Python and Verilog-A models share the specification and generated defaults. The default is noiseless. Both support effective bit weights, offset, finite settling, and a stalled comparator. [Python model](../design/behav/python/sar_adc.py) · [Verilog-A model](../design/behav/veriloga/sar_adc_b.va)
+Compare deterministic cases individually. The models use different random streams and model noise according to their respective distributions. Use transistor-level models for physical startup charging, kickback, native PDK Monte Carlo, terminal voltages, and power.
+See the model guide for view hierarchy, legacy review, and commands. [Behavioral model guide](../design/behav/README.md)

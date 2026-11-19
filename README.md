@@ -1,34 +1,36 @@
 # SAR ADC T28
 
-8 bit、10 MS/s、全差分异步 SAR ADC。当前设计为最简参考 MSB D2＋数据复位 OR 版 `sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1`（`reference=minimal_msb_d2`、`sar=reset_data_or`，其余模块沿用 B），采用 Spectre 网表设计；数字逻辑使用原生标准单元。
+An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The current schematic uses input-qualified native delay cells and the minimal MSB D2 reference. The previous routed SAR uses RC delays. [Schematic tests](results/design/sar_std_delay_20261119.md) · [Previous routed SAR](Layout/results/sar_timing.md) · [Routed standard-delay candidate and slow-corner diagnosis](Layout/results/sar_std_static_candidate_c_20261119.md)
 
-| 要找什么 | 入口 |
+| Topic | Entry point |
 | --- | --- |
-| 完整总规格 | [docs/specification.md](docs/specification.md)，机器真源 [specs/arch.json](specs/arch.json) |
-| 顶层 | [design/top/adc_top.scs](design/top/adc_top.scs)；完整 include 为 [design/dut.scs](design/dut.scs) |
-| 子模块 | [design/README.md](design/README.md) |
-| RNL 原理图与层次展开 | [离线浏览器](docs/schematics/index.html)，[官方查看器与编辑说明](docs/schematics/README.md) |
-| 独立模块测试 | [tb/blocks/README.md](tb/blocks/README.md) |
-| 管级候选 | [design/xtor/README.md](design/xtor/README.md) |
-| CDAC 版图、DRC/LVS/PEX 与后仿 | [Layout/README.md](Layout/README.md) |
-| VA/Python 行为模型 | [design/behav/README.md](design/behav/README.md) |
-| 实际测试台 | [tb/README.md](tb/README.md) |
-| 仿真结果 | [results/README.md](results/README.md) |
-| 架构、工况与验收 | [specs/README.md](specs/README.md) |
-| 运行和监测 | [docs/simulation.md](docs/simulation.md) |
+| Design specification | [Specification](docs/specification.md) and its machine-readable source [specs/arch.json](specs/arch.json) |
+| Top level | [ADC top](design/top/adc_top.scs) and [complete DUT includes](design/dut.scs) |
+| Modules | [Design index](design/README.md) |
+| RNL schematics and hierarchy | [Offline viewer](docs/schematics/index.html) and [viewer and editing guide](docs/schematics/README.md) |
+| Standalone module tests | [Block testbenches](tb/blocks/README.md) |
+| Transistor-level candidates | [Candidate index](design/xtor/README.md) |
+| Layout, DRC, LVS, PEX, and post-layout simulation | [Layout index](Layout/README.md) |
+| Verilog-A and Python behavioral models | [Behavioral model index](design/behav/README.md) |
+| Testbenches | [Testbench index](tb/README.md) |
+| Simulation results | [Results index](results/README.md) |
+| Architecture, corners, and acceptance | [Specifications index](specs/README.md) |
+| Execution and monitoring | [Simulation guide](docs/simulation.md) |
 
 ```powershell
 .venv/Scripts/python.exe -m tools.saradc check
-.venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version current --corner tt --revision current-v1
+.venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version current --corner tt --revision std-delay-v3
 .venv/Scripts/python.exe -m tools.saradc observe cold
 ```
 
-`prepare` 把真实用例打包进被忽略的 `work/decks/`。新仿真通过现有 managed 执行器登记、排队、分析和回收；原始波形及动态运行状态位于工作区和服务器。
+`prepare` packages a real test case in the ignored `work/decks/` directory. The existing managed executor registers, queues, analyzes, and collects new simulations. The workspace and server hold raw waveforms and live run state.
 
-日常默认当前管级设计。混合层次可重复指定 `--view comparator=va --view reference=va`；候选试用可加 `--candidate comparator=NAME`，冻结 B 仍显式回归。独立模块用 `block prepare/sim/follow`，源码、实际负载和测量均随运行冻结。
+The current transistor-level design is the default. For a mixed hierarchy, specify the view option for each module, for example `--view comparator=va --view reference=va`. To try a candidate, use `--candidate comparator=NAME`. Select frozen B explicitly for regression. Standalone module tests use `block prepare/sim/follow` and freeze the source, actual load, and measurements with the run.
 
-2026-11-15 按用户决定采用数据复位 OR 版，默认打包与直接 include 均使用已实测的原生标准单元实现，标准库内部不变。[采用记录](results/design/reset_data_or_adoption_20261115.json)。FF 冷（0.99 V、−40°C）18/18 帧功能时序通过，按[新规则](specs/soa_rule.yaml)端压违例由 8 项降为 0 项；内部采样关闭沿最大偏移 5.88 ps。[完整对照](results/soa/dff_reset_or_ffc_20261115.md)。当前 OR 版已完成 45 点 PVT 短测：原五角 90 帧、新增 40 角 400 帧，码字及功能时序均通过；原五角端压数值违例为 0（保留时间分辨率复核标记），新增 40 角不作完整逐管端压资格判定。[回收结果](results/pvt/resetor_45_short_20261115.md)。此前 D2 的五角结果和历史 B 的 FFT、全码、MC 均仍归属各自冻结输入，不转移为本版指标。
+On 2026-11-15, the project adopted the data-reset OR version at the user's direction. Default packaging and direct includes both use the tested native standard-cell implementation, with the standard-cell library internals intact. At FF cold (0.99 V, −40 °C), 18 of 18 frames passed function and timing. Terminal-voltage violations fell from eight to zero under the new rule, and the maximum internal sampling close-edge shift was 5.88 ps. [Adoption record](results/design/reset_data_or_adoption_20261115.json) · [Terminal-voltage rule](specs/soa_rule.yaml) · [FF-cold comparison](results/soa/dff_reset_or_ffc_20261115.md)
 
-个人笔记已迁到 `E:/Learning/SAR-ADC-T28`。旧实验、历史计划和一次性脚本通过 [来源记录](results/provenance.json) 的 Git 提交追溯；本机完整工作快照位于被忽略的 `work/legacy/`。
+The prior 17.13 µm reset-OR version completed a 45-point PVT short test. Codes and functional timing passed on 90 frames at the original five corners and 400 frames across 40 additional corners. The original five corners had zero numerical terminal-voltage violations, with time-resolution review flags retained. The additional 40 corners cover code and functional timing. The earlier D2 five-corner results and historical B FFT, full-code, and Monte Carlo results belong to their respective frozen inputs. [45-point PVT results](results/pvt/resetor_45_short_20261115.md)
 
-开发方法见 [AGENTS.md](AGENTS.md) 与 [工作流](docs/development-workflow.md)，Skills 保存在 `.agents/skills/`。端压可靠性、全电路局部失配和 PEX 仍按各项证据的实际范围报告。
+Personal notes are at `E:/Learning/SAR-ADC-T28`. Use the Git commit in the provenance record for older experiments, plans, and one-off scripts. The complete local working snapshot is in the ignored `work/legacy/` directory. [Provenance](results/provenance.json)
+
+Use the agent entry and development workflow for project work. Project skills are in `.agents/skills/`. Report terminal-voltage reliability, full-circuit local mismatch, and PEX within the scope of their evidence. [Agent entry](AGENTS.md) · [Development workflow](docs/development-workflow.md)

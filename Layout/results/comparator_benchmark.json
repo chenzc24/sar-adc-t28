@@ -1,0 +1,545 @@
+{
+  "schema": "saradc-comparator-benchmark/1",
+  "frozen_run": "comp-v4-20261117-pex",
+  "method": "Real frozen GDS measurement plus explicitly attributed prior Calibre/TT evidence; not the upstream canned scorecard",
+  "inputs": {
+    "work\\layout\\comparator-redesign\\official-v4.gds": "af089c02ae82219e312d9006609eb6206c150cb025d2ca3c342974652e933ea7",
+    "Layout\\results\\comparator.json": "811509f274ae83ee8dac74c89f4f384025fe7e97e73c89d7af574bee3f8bccdb",
+    "work\\layout\\layoutml-v3-preview\\LayoutML\\explorations\\AG-analog-matching-invariants\\matching_engine.py": "e3516518944d05e9dd84b5740347872770d860953ff75b6e00d17ec620683b1a",
+    "Layout\\design\\comparator.il": "90458b50111a6a6dc5ddfa4136a8ef3421666aca20b04454296d20f0faff2a36",
+    "Layout\\experiment\\benchmark_comparator_v4.py": "5a1ffd9207c88daf31c7b8540a9d31f0ba548370dba5f948b67040e4e5051e08"
+  },
+  "dbu_um": 0.001,
+  "bbox_dbu": [
+    -830,
+    -2515,
+    830,
+    925
+  ],
+  "area_um2": 5.7104,
+  "aspect_ratio_height_over_width": 2.072289156626506,
+  "gate_finger_count": 14,
+  "device_assignment_source": "Frozen generator row mapping, validated against actual OD intersection PO; not inferred from GDS names",
+  "device_gate_boxes_dbu": {
+    "RSTY": [
+      [
+        -340,
+        0,
+        -310,
+        500
+      ]
+    ],
+    "PLATN": [
+      [
+        -210,
+        0,
+        -180,
+        500
+      ]
+    ],
+    "RSTN": [
+      [
+        -80,
+        0,
+        -50,
+        500
+      ]
+    ],
+    "RSTP": [
+      [
+        50,
+        0,
+        80,
+        500
+      ]
+    ],
+    "PLATP": [
+      [
+        180,
+        0,
+        210,
+        500
+      ]
+    ],
+    "RSTX": [
+      [
+        310,
+        0,
+        340,
+        500
+      ]
+    ],
+    "LATN": [
+      [
+        -210,
+        -1300,
+        -180,
+        -800
+      ]
+    ],
+    "INP": [
+      [
+        -80,
+        -1300,
+        -50,
+        -800
+      ],
+      [
+        -210,
+        -2140,
+        -180,
+        -1640
+      ]
+    ],
+    "INN": [
+      [
+        50,
+        -1300,
+        80,
+        -800
+      ],
+      [
+        180,
+        -2140,
+        210,
+        -1640
+      ]
+    ],
+    "LATP": [
+      [
+        180,
+        -1300,
+        210,
+        -800
+      ]
+    ],
+    "TL": [
+      [
+        -80,
+        -2140,
+        -50,
+        -1640
+      ],
+      [
+        50,
+        -2140,
+        80,
+        -1640
+      ]
+    ]
+  },
+  "matching": [
+    {
+      "pair": [
+        "INP",
+        "INN"
+      ],
+      "fingers_each": 2,
+      "mirror_xor_um2": 0.0,
+      "layoutml_common_centroid": {
+        "pass": false,
+        "dx_dbu": 260,
+        "dy_dbu": 0
+      },
+      "centroid_separation_um": [
+        0.26,
+        0.0
+      ]
+    },
+    {
+      "pair": [
+        "LATN",
+        "LATP"
+      ],
+      "fingers_each": 1,
+      "mirror_xor_um2": 0.0,
+      "layoutml_common_centroid": {
+        "pass": false,
+        "dx_dbu": 390,
+        "dy_dbu": 0
+      },
+      "centroid_separation_um": [
+        0.39,
+        0.0
+      ]
+    },
+    {
+      "pair": [
+        "PLATN",
+        "PLATP"
+      ],
+      "fingers_each": 1,
+      "mirror_xor_um2": 0.0,
+      "layoutml_common_centroid": {
+        "pass": false,
+        "dx_dbu": 390,
+        "dy_dbu": 0
+      },
+      "centroid_separation_um": [
+        0.39,
+        0.0
+      ]
+    },
+    {
+      "pair": [
+        "RSTY",
+        "RSTX"
+      ],
+      "fingers_each": 1,
+      "mirror_xor_um2": 0.0,
+      "layoutml_common_centroid": {
+        "pass": false,
+        "dx_dbu": 650,
+        "dy_dbu": 0
+      },
+      "centroid_separation_um": [
+        0.65,
+        0.0
+      ]
+    },
+    {
+      "pair": [
+        "RSTN",
+        "RSTP"
+      ],
+      "fingers_each": 1,
+      "mirror_xor_um2": 0.0,
+      "layoutml_common_centroid": {
+        "pass": false,
+        "dx_dbu": 130,
+        "dy_dbu": 0
+      },
+      "centroid_separation_um": [
+        0.13,
+        0.0
+      ]
+    }
+  ],
+  "common_centroid_verdict": "Not common-centroid; mirror-symmetric design. Report gradient exposure, not automatic rejection without a centroid requirement.",
+  "feol_and_dummy_marker_mirror_xor_um2": {
+    "6/0": 0.0,
+    "17/0": 0.0,
+    "17/7": 0.0,
+    "25/0": 0.0,
+    "26/0": 0.0,
+    "3/0": 0.0
+  },
+  "dummy_scope": "Geometric symmetry only; dummy adequacy, full local context/LDE, well noise isolation and substrate coupling not qualified",
+  "ring_cavity_count": 2,
+  "gate_area_outside_ring_cavities_um2": 0.0,
+  "route_connectivity_scope": "M1-M3 through V1/V2 only; terminal anchors from frozen generator/manifest; not independent LVS",
+  "unnamed_metal_components": 0,
+  "routes": [
+    {
+      "pair": [
+        "VINP",
+        "VINN"
+      ],
+      "layers": {
+        "M1": {
+          "area_a_um2": 0.023799999999999998,
+          "area_b_um2": 0.023799999999999998,
+          "mirror_xor_um2": 0.0
+        },
+        "M2": {
+          "area_a_um2": 0.0182,
+          "area_b_um2": 0.0182,
+          "mirror_xor_um2": 0.0
+        },
+        "M3": {
+          "area_a_um2": 0.077,
+          "area_b_um2": 0.077,
+          "mirror_xor_um2": 0.0
+        }
+      },
+      "via_counts": {
+        "VINP": {
+          "V1": 1,
+          "V2": 1
+        },
+        "VINN": {
+          "V1": 1,
+          "V2": 1
+        }
+      }
+    },
+    {
+      "pair": [
+        "OUTP",
+        "OUTN"
+      ],
+      "layers": {
+        "M1": {
+          "area_a_um2": 0.09799999999999999,
+          "area_b_um2": 0.09799999999999999,
+          "mirror_xor_um2": 0.0
+        },
+        "M2": {
+          "area_a_um2": 0.11199999999999999,
+          "area_b_um2": 0.11199999999999999,
+          "mirror_xor_um2": 0.13999999999999999
+        },
+        "M3": {
+          "area_a_um2": 0.1456,
+          "area_b_um2": 0.1456,
+          "mirror_xor_um2": 0.0
+        }
+      },
+      "via_counts": {
+        "OUTP": {
+          "V1": 4,
+          "V2": 4
+        },
+        "OUTN": {
+          "V1": 4,
+          "V2": 4
+        }
+      }
+    },
+    {
+      "pair": [
+        "Y",
+        "X"
+      ],
+      "layers": {
+        "M1": {
+          "area_a_um2": 0.105,
+          "area_b_um2": 0.105,
+          "mirror_xor_um2": 0.0
+        },
+        "M2": {
+          "area_a_um2": 0.06369999999999999,
+          "area_b_um2": 0.06369999999999999,
+          "mirror_xor_um2": 0.0
+        },
+        "M3": {
+          "area_a_um2": 0.1659,
+          "area_b_um2": 0.1659,
+          "mirror_xor_um2": 0.0
+        }
+      },
+      "via_counts": {
+        "Y": {
+          "V1": 3,
+          "V2": 3
+        },
+        "X": {
+          "V1": 3,
+          "V2": 3
+        }
+      }
+    }
+  ],
+  "grounded_capacitance_pairs": [
+    {
+      "pair": [
+        "VINP",
+        "VINN"
+      ],
+      "a_fF": 0.0495,
+      "b_fF": 0.0496,
+      "delta_fF": 9.999999999999593e-05,
+      "imbalance_percent_of_mean": 0.20181634712410884
+    },
+    {
+      "pair": [
+        "OUTP",
+        "OUTN"
+      ],
+      "a_fF": 0.3306,
+      "b_fF": 0.3336,
+      "delta_fF": 0.0030000000000000027,
+      "imbalance_percent_of_mean": 0.9033423667570016
+    },
+    {
+      "pair": [
+        "Y",
+        "X"
+      ],
+      "a_fF": 0.2426,
+      "b_fF": 0.2435,
+      "delta_fF": 0.0008999999999999841,
+      "imbalance_percent_of_mean": 0.370294178152637
+    }
+  ],
+  "capacitance_scope": "Sums of grounded interconnect capacitors in extracted.scs.pex; excludes intrinsic device capacitance and inter-net coupling; mirror coupling from .pxi cc_ capacitors, internal nets named by device role",
+  "mirror_coupling_difference_fF": {
+    "CLK|OUTP vs CLK|OUTN": 0.0072,
+    "OUTP|Y vs OUTN|X": 0.0039,
+    "OUTN|TAIL vs OUTP|TAIL": 0.008
+  },
+  "prior_physical_checks": {
+    "drc": {
+      "args": [
+        "calibre",
+        "-drc",
+        "-hier",
+        "-turbo",
+        "4",
+        "-nowait",
+        "drc.svrf"
+      ],
+      "deferred_context_rules": [],
+      "markers": 2,
+      "markers_by_rule": {
+        "DIODMY_L:WARNING": 1,
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+      },
+      "returncode": 0,
+      "status": "exited",
+      "verdict": "NOT_CLEAN"
+    },
+    "lvs": "CORRECT",
+    "pex": {
+      "bytes": 13139,
+      "companion_sha256": {
+        "extracted.scs.pex": "94d4ade7e015c0689e22354bb645bb4127cd1610b22d849e049b61c64c26cdb7",
+        "extracted.scs.sar_strongarm_t28_core.pxi": "e4ca46765ea59078eb9814d59e5068d24981fd6a8927284129f3a1caec40991c"
+      },
+      "sha256": "398af8d3e4f47f4a48d602b08c65336a9130062daf0eaac96890ff0e4dfb0caa"
+    }
+  },
+  "prior_tt_independent": {
+    "run_id": "comp-v4-tt-20261117",
+    "result_sha256": "160f0ef154d0376afb56594307d92bc419a4428576d4d813cda8f0d4b01f95c8",
+    "recipe_sha256": "2d56b9c6a24294acb537d832e555fd1a43f0c48ad645a894dad0704d2f5d2fc3",
+    "physical_evidence": "comp-v4-20261117-pex",
+    "correct_decisions": 10,
+    "total_decisions": 10,
+    "pass_validation": true,
+    "diagnostics": [],
+    "scope": "TT 0.9V 27C, existing native MOM/receiver block fixture, no noise/mismatch",
+    "metrics": {
+      "kickback_initial_v": 0.0010000003022476167,
+      "reset_s": [
+        3.280123912830867e-11,
+        3.300495789028573e-11,
+        3.2988569346741914e-11,
+        3.309134911324207e-11,
+        3.31026789844664e-11,
+        3.3100993221718233e-11,
+        3.311441910179181e-11,
+        3.3104166543053386e-11,
+        3.3118567982683114e-11,
+        3.310484007186284e-11
+      ],
+      "decision_delay_s": [
+        8.439545275837979e-11,
+        1.447453296742232e-10,
+        1.3746415070798527e-10,
+        1.6728401093465468e-10,
+        2.0312169484805377e-10,
+        2.0825551003591568e-10,
+        2.3448489411786377e-10,
+        2.3679771876576425e-10,
+        3.018193815714188e-10,
+        3.109462642732584e-10
+      ],
+      "differential_kickback_peak_abs_v": 6.70326557821177e-05,
+      "differential_kickback_v": 1.5641403399602183e-05,
+      "wrong_decisions_above_half_lsb": 0,
+      "common_mode_kickback_peak_abs_v": 0.0004097219509796579,
+      "decisions": [
+        {
+          "input_v": 0.1,
+          "delay_s": 8.439545275837979e-11,
+          "decided": true,
+          "reset_s": 3.280123912830867e-11,
+          "positive": true,
+          "losing_output_v": 0.8999962231636737
+        },
+        {
+          "input_v": -0.1,
+          "delay_s": 1.447453296742232e-10,
+          "decided": true,
+          "reset_s": 3.300495789028573e-11,
+          "positive": false,
+          "losing_output_v": 0.8999962248004468
+        },
+        {
+          "input_v": 0.03,
+          "delay_s": 1.3746415070798527e-10,
+          "decided": true,
+          "reset_s": 3.2988569346741914e-11,
+          "positive": true,
+          "losing_output_v": 0.8999962226566829
+        },
+        {
+          "input_v": -0.03,
+          "delay_s": 1.6728401093465468e-10,
+          "decided": true,
+          "reset_s": 3.309134911324207e-11,
+          "positive": false,
+          "losing_output_v": 0.8999962206446315
+        },
+        {
+          "input_v": 0.003515625,
+          "delay_s": 2.0312169484805377e-10,
+          "decided": true,
+          "reset_s": 3.31026789844664e-11,
+          "positive": true,
+          "losing_output_v": 0.8999962222880986
+        },
+        {
+          "input_v": -0.003515625,
+          "delay_s": 2.0825551003591568e-10,
+          "decided": true,
+          "reset_s": 3.3100993221718233e-11,
+          "positive": false,
+          "losing_output_v": 0.8999962200602375
+        },
+        {
+          "input_v": 0.001,
+          "delay_s": 2.3448489411786377e-10,
+          "decided": true,
+          "reset_s": 3.311441910179181e-11,
+          "positive": true,
+          "losing_output_v": 0.8999962222367551
+        },
+        {
+          "input_v": -0.001,
+          "delay_s": 2.3679771876576425e-10,
+          "decided": true,
+          "reset_s": 3.3104166543053386e-11,
+          "positive": false,
+          "losing_output_v": 0.8999962200059716
+        },
+        {
+          "input_v": 0.0001,
+          "delay_s": 3.018193815714188e-10,
+          "decided": true,
+          "reset_s": 3.3118567982683114e-11,
+          "positive": true,
+          "losing_output_v": 0.8999962222210914
+        },
+        {
+          "input_v": -0.0001,
+          "delay_s": 3.109462642732584e-10,
+          "decided": true,
+          "reset_s": 3.310484007186284e-11,
+          "positive": false,
+          "losing_output_v": 0.899996220003855
+        }
+      ]
+    }
+  },
+  "prior_tt_integrated_summary": {
+    "run_id": "comp-v4-int-20261117",
+    "result_sha256": "699c32ead71029373b6c342ecd6acf26d1e9b480c570963eb40b92fc1f1bcb6c",
+    "scope": "Comparator prefill RC only; other modules schematic; TT 0.9V 27C current ten-frame ADC fixture",
+    "all_code_pass": true,
+    "pass_function_timing": true,
+    "all_screens_pass": true
+  },
+  "prior_tt_max_conversion_ns": 28.814325561078352,
+  "unqualified": [
+    "Two original fixture warnings remain (DIODMY_L, IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE); density checked only at top level",
+    "Input pair and tail are drawn as two parallel 0.5u fingers instead of one 1u finger; LVS-equivalent, LDE differs from the schematic model draw",
+    "Output-strap crossing leaves <=0.008 fF mirror coupling mismatch; fixture delay fit -0.02 mV is not a statistical offset",
+    "No PVT/mismatch/noise/offset-distribution/terminal-reliability qualification",
+    "No final filled or complete top-level RC qualification; VDD/VSS are guard-ring M1 and need top-level straps",
+    "Three explicit top-level MOM loads and module routing still need placement in the 16x14 um reservation"
+  ],
+  "no_aggregate_score_reason": "No calibrated quality weights, accepted parasitic/matching limits, or independent layout corpus. Hard checks and descriptive metrics remain separate.",
+  "layoutml_roundtrip_evidence": "Layout/experiment/info form/geometry_diff.json; prior 8-layer XOR failure is a conversion issue, not a V4 physical defect"
+}

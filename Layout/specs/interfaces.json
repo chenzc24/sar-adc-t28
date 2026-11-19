@@ -393,6 +393,20 @@
       "master": "cfmom_2t"
     }
   },
+  "not_drawn_instances": {
+    "CL_COMP_N": {
+      "reason": "Electrical model load (cfmom_2t nr=8 lr=2.5u multi=2, ~10 fF estimated) on the comparator output/clock, specified under specs/arch.json loading. Kept in design/top/adc_top.scs for pre-layout simulation; not drawn. The real load comes from extracted top-level wiring. Diagnostic comp-v7-int-noload-20261118 (TT) and comp-v7-int-ffc-noload-20261118 (ffc) pass without it. A top-level LVS reference must omit it.",
+      "decided": "2026-11-18"
+    },
+    "CL_COMP_P": {
+      "reason": "Electrical model load (cfmom_2t nr=8 lr=2.5u multi=2, ~10 fF estimated) on the comparator output/clock, specified under specs/arch.json loading. Kept in design/top/adc_top.scs for pre-layout simulation; not drawn. The real load comes from extracted top-level wiring. Diagnostic comp-v7-int-noload-20261118 (TT) and comp-v7-int-ffc-noload-20261118 (ffc) pass without it. A top-level LVS reference must omit it.",
+      "decided": "2026-11-18"
+    },
+    "CL_CMP_CLK": {
+      "reason": "Electrical model load (cfmom_2t nr=8 lr=2.5u multi=2, ~10 fF estimated) on the comparator output/clock, specified under specs/arch.json loading. Kept in design/top/adc_top.scs for pre-layout simulation; not drawn. The real load comes from extracted top-level wiring. Diagnostic comp-v7-int-noload-20261118 (TT) and comp-v7-int-ffc-noload-20261118 (ffc) pass without it. A top-level LVS reference must omit it.",
+      "decided": "2026-11-18"
+    }
+  },
   "port_policy": "Preserve exact electrical order. Local VDD/VSS map only to top VDD!/0. Do not short CDAC gates internally.",
   "proposed_faces": {
     "cdac": {
@@ -460,7 +474,7 @@
       "from": "XCTRL",
       "to": "XCOMP",
       "priority": 2,
-      "intent": "route away from TOP and VIN; retain actual CL_CMP_CLK load"
+      "intent": "route away from TOP and VIN; CMP_CLK load is the extracted wiring (CL_CMP_CLK is not drawn)"
     }
   },
   "external_routes": {
@@ -468,5 +482,157 @@
     "VREFN_VREFP": "south/west dedicated distribution to CDAC",
     "SAMPLE_D0_D7": "east digital edge",
     "VDD_VSS": "perimeter straps and explicit local returns; isolation/guard topology pending"
+  },
+  "implemented_pin_access": {
+    "bootstrap": {
+      "cell": "sar_bootstrap_flat_8b_p_core",
+      "evidence": "boot-core-20261118",
+      "coordinate_frame": "Local core origin in R0, um",
+      "ports": {
+        "VIN": {
+          "layer": "M2",
+          "center_um": [
+            -2.165,
+            0.07
+          ],
+          "pin_size_um": [
+            0.12,
+            0.12
+          ]
+        },
+        "VOUT": {
+          "layer": "M2",
+          "center_um": [
+            -1.835,
+            0.07
+          ],
+          "pin_size_um": [
+            0.12,
+            0.12
+          ]
+        },
+        "VDD": {
+          "layer": "M3",
+          "center_um": [
+            1.8,
+            0.07
+          ],
+          "pin_size_um": [
+            0.12,
+            0.12
+          ]
+        },
+        "CLKS": {
+          "layer": "M2",
+          "center_um": [
+            2.46,
+            0.07
+          ],
+          "pin_size_um": [
+            0.12,
+            0.12
+          ]
+        },
+        "VSS": {
+          "layer": "M2",
+          "center_um": [
+            3.15,
+            0.07
+          ],
+          "pin_size_um": [
+            0.12,
+            0.12
+          ]
+        }
+      },
+      "top_integration": "Each channel uses this master. VOUT connects to TOPP or TOPN, VIN to VINP or VINN, and CLKS to SEQ_SAMPLE. All five ports face the lower edge in R0.",
+      "sensitive_regions": "VIN and VOUT below the main switch, the internal boosted G, and the M3/M4 BTOP and BBOT array feeds. Route the clock from the control side and check coupling in the integrated layout."
+    },
+    "comparator": {
+      "cell": "sar_strongarm_t28_core",
+      "evidence": "comp-v7-20261118-pex",
+      "coordinate_frame": "Local core origin, um",
+      "ports": {
+        "VINP": {
+          "layer": "M2",
+          "center_um": [
+            -0.765,
+            -1.6
+          ],
+          "pin_size_um": [
+            0.1,
+            0.05
+          ]
+        },
+        "VINN": {
+          "layer": "M2",
+          "center_um": [
+            0.765,
+            -1.6
+          ],
+          "pin_size_um": [
+            0.1,
+            0.05
+          ]
+        },
+        "OUTP": {
+          "layer": "M3",
+          "center_um": [
+            -0.195,
+            0.825
+          ],
+          "pin_size_um": [
+            0.05,
+            0.1
+          ]
+        },
+        "OUTN": {
+          "layer": "M3",
+          "center_um": [
+            0.195,
+            0.825
+          ],
+          "pin_size_um": [
+            0.05,
+            0.1
+          ]
+        },
+        "CLK": {
+          "layer": "M3",
+          "center_um": [
+            0.0,
+            -2.595
+          ],
+          "pin_size_um": [
+            0.05,
+            0.1
+          ]
+        },
+        "VDD": {
+          "layer": "M1",
+          "center_um": [
+            -0.7,
+            0.16
+          ],
+          "pin_size_um": [
+            0.07,
+            0.2
+          ]
+        },
+        "VSS": {
+          "layer": "M1",
+          "center_um": [
+            -0.7,
+            -1.18
+          ],
+          "pin_size_um": [
+            0.07,
+            0.2
+          ]
+        }
+      },
+      "top_integration": "VINP leaves the west edge and VINN the east edge on M2 at y=-1.60, straight out of the N1/N2 channel; OUTP/OUTN leave the north edge on M3 trunks (OUTP west); CLK enters the south edge on the centre M3 trunk. VDD/VSS are the N+/P+ guard-ring M1 and need local top-level straps. Route toward the east SAR with paired output topology and keep CLK on the south side, away from the outputs and inputs.",
+      "sensitive_regions": "Input gates at x=+/-0.065 (N1) and +/-0.195 (N2) with their M2 exits at y=-1.60; X/Y M3 trunks at x=+/-0.39 and output M3 trunks at x=-/+0.195; CLK M3 trunk at x=0 from the south edge to y=-0.23. The core uses M1-M3 only; keep digital routing off M4+ above it and qualify final coupling."
+    }
   }
 }

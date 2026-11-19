@@ -1,27 +1,27 @@
-# 测试台
+# Testbenches
 
-VA/Python 的模块与混合层次测试见 [behav/README.md](behav/README.md)。下表提供已验证测试条件的模板，日常运行默认接入当前晶体管设计；冻结 B 用于显式回归。
+The table lists templates for previously verified test conditions. Daily runs use the current transistor-level design. Select frozen B explicitly for its regression. [Verilog-A and Python tests](behav/README.md)
 
-六个功能模块的独立管级/VA 测试见 [blocks/README.md](blocks/README.md)；它们使用本模块实际接口，原生负载与环境替代分别声明。生成后的测试台也可在 [原理图浏览器](../docs/schematics/index.html) 中查看。
+Each standalone transistor-level or Verilog-A block test uses the module's actual interface and declares its native load and environment substitutes. The schematic viewer can also show the generated testbench. [Standalone block tests](blocks/README.md) · [Schematic viewer](../docs/schematics/index.html)
 
-实际文件直接位于本目录，各用例的输入散列、历史身份、条件和预算由 [specs/tests.json](../specs/tests.json) 记录。
+The test files live in this directory. The registry records input digests, historical identities, conditions, and budgets. [Test registry](../specs/tests.json)
 
-| 用例别名 | 实际入口 |
+| Case | Entry point |
 | --- | --- |
-| `tt_short` | [top/short/test.scs](top/short/test.scs) |
-| `tt_fft1024` | [top/fft/test.scs](top/fft/test.scs) |
-| `tt_static_low` | [top/static/test.scs](top/static/test.scs) |
-| `mc_cold_ss` | [top/mc_ss_cold/test.scs](top/mc_ss_cold/test.scs) |
-| `mc_cold_ff` | [top/mc_ff_cold/test.scs](top/mc_ff_cold/test.scs) |
-| `mc_comparator_tt` | [blocks/comparator/test.scs](blocks/comparator/test.scs) |
-| `mc_cdac_tt` | [blocks/cdac/test.scs](blocks/cdac/test.scs) |
+| `tt_short` | [Short transient](top/short/test.scs) |
+| `tt_fft1024` | [FFT test](top/fft/test.scs) |
+| `tt_static_low` | [Low-code static test](top/static/test.scs) |
+| `mc_cold_ss` | [SS-cold Monte Carlo](top/mc_ss_cold/test.scs) |
+| `mc_cold_ff` | [FF-cold Monte Carlo](top/mc_ff_cold/test.scs) |
+| `mc_comparator_tt` | [Comparator Monte Carlo](blocks/comparator/test.scs) |
+| `mc_cdac_tt` | [CDAC Monte Carlo](blocks/cdac/test.scs) |
 
-`test.scs` 提供模型、分析和保存设置，`tb.scs` 提供激励、真实负载及 DUT 实例。VA 监视器位于 `common/veriloga/`，测量代码位于 `tools/saradc/measure/`。
+`test.scs` defines models, analysis, and saves. `tb.scs` defines stimulus, the actual load, and the DUT instance. Verilog-A observers are in `common/veriloga/`. Measurement code is in `tools/saradc/measure/`.
 
-整机测试使用 50 Ω 输入/参考源阻抗、4 pF 参考旁路、5 fF 数字输出负载。外部时钟先低 60 ns、高 40 ns。精确值和模型 section 以实际 deck 为准。
+The ADC testbench uses 50 Ω input and reference source resistance, 4 pF reference bypass, and a 5 fF digital load per output. The external clock starts with 60 ns low and 40 ns high. Read the actual deck for exact values and model sections.
 
-`tt_static_low` 保留已验证的前三个边界测试。已完成全码结果包含 255 个边界和 256 个中心码；后续分段由工作区中的历史运行定义追溯，当前模板不复制数百份生成 deck。
+`tt_static_low` keeps the verified first three transitions. The completed full-code measurements contain 255 transitions and 256 code centers. Trace the remaining segments through historical run definitions in the workspace.
 
-`prepare CASE --seed N` 从单个 MC 模板生成指定种子；闭环局部失配只覆盖比较器和 CDAC。原生 MOS/MOM 统计模型由 deck 指定。默认 `--view current` 接入当前设计，`--view frozen-b` 保留原输入用于回归。独立比较器模板替换其嵌入的当前比较器定义；CDAC 位权模板读取当前 18 个 MOM 的几何与 multiplicity，仍是独立统计表征，不包含完整开关及整机建立时序。
+`prepare CASE --seed N` generates one sample from its MC template. The closed-loop local-mismatch cases cover the comparator and CDAC. The deck selects the native MOS and MOM statistical models. The default `--view current` binds the current design. Use `--view frozen-b` for the original regression inputs. The standalone comparator case replaces its embedded comparator definition. The CDAC bit-weight fixture uses the geometry and multiplicities of the current 18 MOM instances. Its scope is standalone statistical characterization.
 
-`tt_short --view comparator_xtor` 等视图只保留指定模块为管级实现，其余核心模块使用电气 VA 模型；具体选择见 [views.json](../specs/views.json)。
+A mixed view such as `tt_short --view comparator_xtor` keeps the selected module transistor-level and uses electrical Verilog-A models for the other core modules. [View registry](../specs/views.json)

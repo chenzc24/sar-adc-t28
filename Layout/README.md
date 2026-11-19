@@ -1,50 +1,66 @@
 # SAR8 Layout
 
-从整机规划开始，再做模块 placement/routing，最后完成顶层互联和同源物理、电气验证。当前只实现了 **CDAC 版图候选**；整机 floorplan 是尚未写入 OA 的初步规划。
+The project has a CDAC layout candidate, a comparator, the functional core of the Bootstrap sampling switch, and a compact SAR timing core with complete routing and a separately filled integration view. Use readback from each OA view for module dimensions and pins. The ADC floorplan is preliminary.
 
-| 当前信息 | 唯一入口 |
+The 2026-11-18 CDAC redesign is at `SAR_ADC_T28_LAYOUT / sar8j_r1_cdac_core / layout_paired_balanced`. Its core area is 3738.62 µm². In standalone prefill TT simulation, its amplitude was 96.99% of the schematic result. Eight of ten codes were correct after integrating this CDAC into the current ADC. The current view `layout_paired_stacked` adds the planned fill cell and orders the small bits by weight; its extracted gain error is 4.22% and its layout DNL/INL is 0.12/0.08 LSB. Across the SS/FF −40/125 °C corners, these stay within 4.22–4.26% and 0.12/0.08 LSB. At SS 0.81 V −40 °C, the integrated ADC shows a 0.35 LSB sampling residual, above the 0.25 LSB screen. About 0.25 pF of extra TOP capacitance per side slows the bootstrap switch, while routing resistance plays no part, so the fix belongs to the sampler or acquisition timing. [CDAC report with earlier filled results, same-condition comparisons, and trial fill](results/cdac.md)
+
+| Topic | Entry point |
 | --- | --- |
-| 实际电气设计 | [前端 manifest](../design/manifest.json)，Layout 不另维护一份电路 |
-| 物理源、OA 所有权和恢复点 | [design/manifest.json](design/manifest.json) |
-| 整机 placement 意图 | [design/floorplan.json](design/floorplan.json) → [预览](results/floorplan.svg)、[面积](results/area.json) |
-| 模块端口、朝向、互联优先级 | [specs/interfaces.json](specs/interfaces.json) |
-| 匹配、填充、时序和验收边界 | [specs/constraints.json](specs/constraints.json) |
-| 当前证据和未完成项 | [results/current.json](results/current.json) |
-| 操作、原处迭代和回滚 | [docs/workflow.md](docs/workflow.md) |
-| OA 实例、引脚、图形和坐标查询 | [docs/layout-query.md](docs/layout-query.md) |
+| Electrical design used by Layout | [Front-end manifest](../design/manifest.json) |
+| Sample enable and SAR timing under the extracted CDAC load | [Four-frame acquisition measurements and routed candidate](results/sar_cdac_aperture_results_20261119.md) |
+| Physical source, OA ownership, and recovery points | [Layout manifest](design/manifest.json) |
+| Top-level placement intent | [Floorplan](design/floorplan.json), [preview](results/floorplan.svg), and [area](results/area.json) |
+| CDAC redesign and proposed top-level placement | [Native layout and post-layout comparison](results/cdac_paired.json), [same-scale figures](results/figures/cdac_paired_comparison.png), and [top-level placement and TOP branch lengths](design/floorplan_paired.json) |
+| Planned-fill CDAC `layout_paired_planned`, gain criteria, and gain-normalized code checks | [Planned fill record](results/cdac_planned_fill.json), [fill locations](results/figures/cdac_planned_fill.png), and [gain-normalized code check](results/gain_corrected_codes.json) |
+| Current CDAC `layout_paired_stacked`: planned fill with weight-ordered small bits for DNL | [Report section](results/cdac.md#weight-ordered-small-bits-layout_paired_stacked), [small-bit placement and trunks](results/figures/cdac_small_bit_center.png), and [record](results/cdac_planned_fill.json) |
+| CDAC gate driver and M6 integration | [Native XREF and CDAC integration](results/reference_driver.md) |
+| Module ports, orientations, and interconnect priorities | [Interfaces](specs/interfaces.json) |
+| Matching, fill, timing, and acceptance scope | [Constraints](specs/constraints.json) |
+| Module dummies, independent fill, and top-level density closure | [Fill policy](specs/fill-policy.md) |
+| Current evidence and open items | [Current results](results/current.json) |
+| Measured single-sided Bootstrap dimensions, pins, parasitics, and sampling error | [Core layout](results/figures/bootstrap_core.png), [verification](results/bootstrap.json), and [plate-routing comparison](results/bootstrap_routing_review.json) |
+| Operations, in-place iteration, and rollback | [Layout workflow](docs/workflow.md) |
+| Query the active Virtuoso layout or a saved OA view | [Layout Query Guide](docs/layout-query.md) |
 
-初步核心框为 **176 × 170 µm，0.02992 mm²**。其中只有 CDAC 的 **90.33 × 92.49 µm** 来自现有 OA；比较器、采样、参考和 SAR 的数字是空间预留，尚未证明能放下全部器件。未分配部分预留给走线、电源、隔离和边界。Die、IO ring、保护结构面积未定，不以此估计最终芯片面积。关键寄生、布线层和路由时序预算仍待原生读回及电气分配。
+The preliminary core envelope is **176 × 170 µm (0.02992 mm²)**. Native readback gives **90.33 × 92.49 µm** for the CDAC and **1.63 × 3.52 µm** for the comparator core including its guard ring. Reserve **16 × 14 µm** for the comparator group and its interface routing. The three MOM loads on the comparator outputs and clock are circuit models. Their entries are in `not_drawn_instances`. The previous sampler reservation is smaller than the measured single-sided Bootstrap outline. Replan its top-level location and routing. The reference occupies reserved space. The routed SAR core measures 39.885 × 51.600 µm. The 41 × 56 µm reservation includes the filled outline and pin access. Use the remaining space for routing, power, isolation, and boundaries. Die, IO ring, and protection structure dimensions are open. Use the envelope as a floorplan estimate. Critical parasitic and routing timing budgets are still unallocated. [Interfaces](specs/interfaces.json)
 
-所有工作 layout 使用一个 `SAR_ADC_T28_LAYOUT` Library，位于 `llm_IO` 下，实际主机/路径只在本机 `site.local.yaml:layout` 配置。
+All work layouts use the single library `SAR_ADC_T28_LAYOUT` under `llm_IO`. The actual host and paths are configured locally in `site.local.yaml:layout`.
 
-| 打开哪个 cell | 用途 |
+| Cell view | Purpose |
 | --- | --- |
-| `sar8j_r1_cdac_core/layout` | 功能连接、placement、routing；保留匹配 dummy、功能屏蔽与器件，不带密度填充 |
-| `sar8j_r1_cdac/layout` | 引用同一 XCORE，加 FILL_ODPO/FILL_METAL，进行完整物理验证及 PEX |
+| `sar_bootstrap_flat_8b_p_core/layout` | Shared single-sided sampling core for the P and N channels, 24.68 × 24.99 µm. The lower edge exposes VIN, VOUT, VDD, CLKS, and VSS. |
+| `sar8j_r1_cdac_core/layout` | Functional connectivity, placement, and routing, with matching dummies, functional shielding, and devices. Density fill belongs to its own hierarchy. |
+| `sar8j_r1_cdac/layout` | References the same XCORE with FILL_ODPO and FILL_METAL for full physical verification and PEX. |
+| `sar_strongarm_t28_core/layout` | Functional 11-transistor comparator core with three shared-diffusion rows, one instance per finger, N+/P+ guard rings, and seven ports. This is the current review and integration view. |
+| `sar8_sar_timing_core/layout_compact_eco` | Functional view for device and route review. All 208 nets are joined. [Same-scale placement and metal](results/figures/sar_timing_compact.png) |
+| `sar8_sar_timing/layout_eco` | Integration view containing the verified core and its OD/PO and metal fill. [Calibre and five-corner measurements](results/sar_timing.md) |
+| `sar8_sar_timing_core/layout_array_review` and `sar8_sar_timing/layout_array_review` | Revised bit rows, dedicated detector supply feeds and seven local decaps. [Geometry, dual-rail five-corner results and top-level density](results/sar_timing_refinement.md) |
+| `sar8_sar_timing_core/layout_std_static` and `sar8_sar_timing/layout_std_static` | Standard-delay candidate with a four-gate static latch. Its extracted timing misses the 90 ns deadline at SS. [Physical views, latch load and routing comparison](results/sar_std_static_candidate_c_20261119.md) |
+| `sar_strongarm_t28/layout` | Fill evaluation wrapper for the same core. The existing fill belongs to an earlier core and its qualification has expired. Refresh and verify the fill before integration. |
 
-工作 cell 不按版本复制。当前 OA 含已接受的修改，默认验证现有 OA，**禁止直接用旧生成器覆盖**；源码重建能力尚未重新认证。完整顶层的38端口保持不变；当前外部参考为 `minimal_msb_d2`、SAR 为 `reset_data_or`，不假设旧非交叠逻辑仍适用。
+Iterate in the fixed work cells. Verify existing OA by default to protect accepted edits. The CDAC generator has yet to be requalified for rebuild. The comparator generator matches the source of the verified native run byte for byte. An explicit rebuild still requires the edit-lock check and OA checkpoint. The full top-level interface has 38 ports. The reference is `minimal_msb_d2`. The selected front-end SAR is `std_delay_qualified`. The released RC layout uses `reset_data_or`. Use their current timing contract for non-overlap behavior.
 
 ```text
 Layout/
 ├─ README.md
 ├─ __main__.py              # python -m Layout
-├─ project.py               # site 配置、历史/当前证据解析
-├─ planning.py              # 规划检查及派生视图
-├─ design/                  # manifest、floorplan、CDAC 生成器和 SKILL
-├─ specs/                   # 接口、约束和验收范围
-├─ tb/                      # MOM fixture、独立 CDL 参考
+├─ project.py               # Site configuration and evidence resolution
+├─ planning.py              # Floorplan checks and generated views
+├─ design/                  # Manifests, floorplan, and native layout generators
+├─ specs/                   # Interfaces, limits, and acceptance scope
+├─ tb/                      # MOM fixtures and independent CDL references
 ├─ tools/
 │  ├─ deploy.py
-│  ├─ physical/             # 原生 OA/GDS/DRC/LVS/PEX 执行器
-│  ├─ simulation/           # managed 后仿/诊断打包
-│  └─ analysis/             # 测量、比较和寄生统计
-├─ results/                 # 当前索引、规划图、精简证据及历史结果
-└─ docs/                    # 工作流、原 MOM 实验范围
+│  ├─ physical/             # Native OA, GDS, DRC, LVS, and PEX execution
+│  ├─ simulation/           # Managed post-layout and diagnostic recipes
+│  └─ analysis/             # Measurements, comparisons, and parasitic statistics
+├─ results/                 # Active index, planning figures, and evidence
+└─ docs/                    # Workflows and original MOM pilot scope
 ```
 
-远端职责为 `layout/runtime/`（当前部署）、`layout/state/`（回执/状态）、`layout/evidence/<运行ID>/`（冻结输入及结果）。OA 仍留在共享 home 的统一库，Spectre 仍走既有 managed `runs/`。原 `layout-mom-pilot/evidence/` 保持原址查阅；新旧入口共享旧锁。运行 ID 是证据身份，不是另一个工作版图版本。
+Remote layout directories are `layout/runtime/` for the current deployment, `layout/state/` for receipts and state, and `layout/evidence/<run-id>/` for frozen inputs and results. OA lives in the shared home library. Spectre uses the existing managed `runs/` directory. Read legacy pilot evidence at `layout-mom-pilot/evidence/`. Both entry points use the existing lock. A run ID identifies its evidence.
 
-从仓库根目录运行：
+Run these commands from the repository root.
 
 ```powershell
 .venv/Scripts/python.exe -m Layout check
@@ -56,10 +72,12 @@ Layout/
 .venv/Scripts/python.exe -m Layout prepare-tt PHYSICAL_ID TT_RUN_ID
 ```
 
-`generate` 仅在 `work/` 生成输入；`prepare-tt` 仅打包，登记、执行、分析和回收使用[既有仿真入口](../docs/simulation.md)。不得重复使用已执行身份。迁移实际结果见 [workflow_migration.json](results/workflow_migration.json)。
+`generate` creates inputs under `work/`. `prepare-tt` packages the recipe. Use the simulation entry point for registration, execution, analysis, and collection. Assign new IDs to new runs. [Simulation guide](../docs/simulation.md) · [Workflow migration results](results/workflow_migration.json)
 
-**2026-11-16 迁移验收通过：**同一 OA 的几何哈希、LVS 连接和规则身份一致；DRC 保留原两条 warning。迁移前后当前参考/SAR配置的十帧码字、握手计数和判定一致，最大转换时间差约 0.074 ps（对照容差10 ps）。两组都存在 12→0、243→255 的码字失败；采样沿与握手时序通过，精确模拟建立和端压未获资格。原始日志、冻结输入与测量已[归档](../results/storage/layout_migration_archive_20261116.json)，大波形因后续 CDAC 定位保留。
+For the comparator, use `generate --module comparator` and `physical ID --module comparator`. The current prefill core (2026-11-18 v7) passed LVS and retained two original DRC warnings. All ten standalone TT points resolved correctly. Codes and handshakes passed all ten frames when integrated into the current ADC. See the report for the scope of these checks. [Comparator workflow](docs/workflow.md#comparator-module) · [Comparator results](results/comparator.md)
 
-CDAC 历史后仿的约 **15.12% 幅度损失与两处错码仍未修复**。它们来自历史 B 配置，不能当作当前参考/SAR 的新测量。寄生分组证据显示金属与 OD/PO 填充约占新增 TOP 固定负载的61%/39%；见[CDAC 结果](results/cdac.md)。本次整理不改变几何或宣称性能修复；LVS、DRC warning、功能、建立和端压分开报告。
+**The workflow migration passed on 2026-11-16.** For the same OA, geometry digests, LVS connectivity, and rule identities matched. DRC retained the two original warnings. The pre- and post-migration runs used the current reference/SAR configuration and agreed on ten-frame codes, handshake counts, and verdicts. The maximum conversion time difference was about 0.074 ps against a 10 ps comparison tolerance. Both runs had code failures at 12→0 and 243→255. Sampling edges and handshake timing passed. Precision analog settling and terminal voltage remained unqualified. The archive contains raw logs, frozen inputs, and measurements. Large waveforms were retained for CDAC diagnosis. [Migration archive](../results/storage/layout_migration_archive_20261116.json)
 
-[库迁移](results/library_migration.json) · [核心/填充管理](results/core_fill_management.json) · [历史目录整理](results/organization.json) · [MOM 实验](docs/pilot-spec.md) · [当前需求 Issue #3](https://github.com/chenzc24/sar-adc-t28/issues/3)
+The historical CDAC post-layout result for B includes about **15.12% amplitude loss and two incorrect codes**. The parasitic breakdown assigns about 61% of added fixed-potential TOP loading to metal fill and 39% to OD/PO fill. The workflow migration checked geometry and input equivalence. Report LVS, DRC warnings, function, settling, and terminal voltage from their respective evidence. [CDAC results](results/cdac.md)
+
+[Library migration](results/library_migration.json) · [Core and fill management](results/core_fill_management.json) · [Historical directory organization](results/organization.json) · [MOM pilot](docs/pilot-spec.md) · [Issue #3](https://github.com/chenzc24/sar-adc-t28/issues/3)

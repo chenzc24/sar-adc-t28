@@ -28,12 +28,39 @@
   },
   "electrical_budgets": {
     "TOP_added_fixed_capacitance_F": {
-      "limit": null,
-      "basis": "Must derive from current CDAC PEX sensitivity and acceptable ADC gain/settling; 15.12% historical loss remains unresolved"
+      "limit": 5.7e-14,
+      "authoritative_metric": "CDAC gain error from standalone fixture weights of the extracted view with its planned fill <= 4.7% (specs/arch.json error_budget.gain_error_allocation)",
+      "basis": "Screening proxy per side: GE ~= Cp/C_eff with C_eff ~= 1.22 pF (1.025 pF units plus extracted TOP-bottom coupling), so 4.7% ~= 57 fF of TOP capacitance to 0, VSS, VDD and fixed references. Prefill paired CDAC measures 38.5 fF, leaving about 19 fF for its planned fill. Top-level TOP wiring and comparator/sampler layout share 0.8% (~10 fF) separately.",
+      "measured": {
+        "view": "layout_paired_stacked",
+        "evidence": "cdac-paired-plan-d-20261118-combined",
+        "per_side_F": [
+          5.194e-14,
+          5.197e-14
+        ],
+        "charge_model_gain_error": 0.0422,
+        "record": "Layout/results/cdac_planned_fill.json"
+      }
     },
     "TOP_differential_capacitance_imbalance_F": {
-      "limit": null,
-      "basis": "Allocate from 8-bit accuracy and mismatch/PEX measurements; cannot claim zero from symmetric drawing"
+      "limit": 1e-15,
+      "basis": "Side gain mismatch <= ~0.1% of C_eff; it converts common-mode reference steps into differential error. Prefill paired CDAC measures 0.17 fF.",
+      "measured": {
+        "view": "layout_paired_stacked",
+        "value_F": 3e-17
+      }
+    },
+    "CDAC_systematic_linearity_LSB": {
+      "limit": 0.25,
+      "basis": "|DNL| and endpoint |INL| from gain-normalized extracted bit weights (specs/arch.json error_budget.layout_systematic_linearity_lsb); prefill paired CDAC 0.33/0.29, original layout 0.15/0.10",
+      "measured": {
+        "view": "layout_paired_stacked",
+        "evidence": "cdac-paired-plan-d-20261118-combined",
+        "dnl_abs_max": 0.123,
+        "inl_abs_max": 0.084,
+        "method": "standalone transient cdac-stacked-mx-20261118 of the merged extraction; the charge model gives the same values",
+        "record": "Layout/results/cdac_planned_fill.json"
+      }
     },
     "comparator_input_route_capacitance_F": {
       "limit": null,
@@ -57,6 +84,6 @@
     "timing_tolerance_basis": "one maximum saved/transient step of the unchanged short fixture; report actual differences",
     "performance_repair": false
   },
-  "fill": "Only the filled wrapper owns density fill; final top integration must prevent overlapping block/top fill and recheck density/PEX.",
+  "fill": "Follow Layout/specs/fill-policy.md: retain required matching/device dummies in the core; manage density fill separately. Gain-sensitive modules (CDAC) own a deterministic in-footprint OD/PO plan aligned to the unit grid plus PDK fill-blocking layers over their sensitive conductors, and are qualified with that plan in place; the top level fills everywhere else and honors the blocks. Final qualification uses actual filled top DRC/LVS/PEX.",
   "qualification": "DRC execution, LVS, functionality, settling, parasitics and terminal reliability are separate verdicts."
 }

@@ -75,7 +75,7 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
     blobs['test.scs']=('\n'.join(deck)+'\n').encode('utf-8')
     blobs['block_switch.va']=(root/'tb/common/veriloga/block_switch.va').read_bytes()
     blobs['observer.va']=(root/'tb/behav/observer.va').read_bytes()
-    blobs['library_include.scs']=(root/'tb/common/platform/library_include.scs').read_bytes()
+    blobs['library_include.scs']=views.standard_cell_library(root, blobs['dut.scs'])
     for name in ['analyze_blocks.py','native_stream.py']:blobs[name]=(root/'tools/saradc/measure'/name).read_bytes()
     sources=[root/'specs/block_tests.json',root/'specs/candidates.json',root/'specs/views.json',root/'specs/arch.json',
              *[root/tests[m]['template'] for m in modules],*[root/r['file'] for r in selected.values()],

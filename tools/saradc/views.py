@@ -7,6 +7,20 @@ ROOT=Path(__file__).resolve().parents[2]
 MODULES=('sampler','cdac','comparator','sar','reference','timing')
 
 
+def standard_cell_library(root=None, dut=None, mos_corner=None):
+    """Resolve the active ADC library, preserving source-bound historical transients."""
+    root = root or ROOT
+    manifest = json.loads((root/'design/manifest.json').read_text(encoding='utf-8'))
+    legacy = 'tb/common/platform/library_include.scs'
+    default = manifest['standard_cell_include']
+    if dut is not None and default != legacy:
+        timing_file = candidates.read(root)['modules']['timing']['target']
+        if ('include "' + timing_file + '"').encode() not in dut:
+            return (root/legacy).read_bytes()
+    source = manifest.get('standard_cell_includes_by_mos', {}).get((mos_corner or '').upper(), default)
+    return (root/source).read_bytes()
+
+
 def registry(root=None):
     return json.loads(((root or ROOT)/'specs/views.json').read_text(encoding='utf-8'))
 
@@ -57,8 +71,12 @@ def build(name='current',root=None,candidate_overrides=None):
     # Native zero-voltage current probes join separately exposed interface pins.
     # They are ideal wires, not behavioral replacement gates or extra drivers.
     arity['iprobe']=2
+    arity['rupolym']=2  # Retained RC timing candidate.
     # Native library header verified on thu-song: A1 A2 Z VDD VSS.
     arity['OR2D1BWP12T30P140']=5
+    # The installed DEL cells have ordered terminals I, Z, VDD, VSS.
+    for size in (25, 50, 75, 100, 150, 200, 250):
+        arity[f'DEL{size:03d}D1BWP12T30P140'] = 4
     for filename,body in blobs.items():
         for master,definition in candidates.definitions(body.decode('utf-8')).items():
             if master in owners: raise ValueError('Duplicate candidate master: '+master)

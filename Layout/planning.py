@@ -59,9 +59,13 @@ def check(root=ROOT):
             if min(x+w, a+d) > max(x, a) and min(y+h, c+e) > max(y, c):
                 errors.append('Overlapping blocks: ' + b['id'] + '/' + other['id'])
     planned_instances = [inst for b in blocks for inst in b['instances']]
-    expected_instances = interfaces['top_instances']
+    # Electrical-only instances (model loads) stay in the netlist but are never drawn.
+    not_drawn = interfaces.get('not_drawn_instances', {})
+    if set(not_drawn) - set(interfaces['top_instances']):
+        errors.append('Not-drawn instances must be top instances')
+    expected_instances = [name for name in interfaces['top_instances'] if name not in not_drawn]
     if sorted(planned_instances) != sorted(expected_instances):
-        errors.append('Floorplan must allocate each top instance exactly once')
+        errors.append('Floorplan must allocate each drawn top instance exactly once')
     for name, route in interfaces['routes'].items():
         if route['from'] not in expected_instances or route['to'] not in expected_instances:
             errors.append('Unknown route endpoint: ' + name)
@@ -108,7 +112,7 @@ def render(root=ROOT):
                   f'<text x="{sx+w/2}" y="{sy+h/2-1}" font-size="{font}" text-anchor="middle">{html.escape(b["label"])}</text>',
                   f'<text x="{sx+w/2}" y="{sy+h/2+4}" font-size="{min(font,3)}" text-anchor="middle">{w} x {h} um</text>']
     parts += [f'<text x="12" y="{ch+37}" font-size="4">Core allocation: {cw} x {ch} um ({cw*ch/1e6:.5f} mm2)</text>',
-              '<text x="12" y="214" font-size="3.5">Green: existing CDAC bbox. Blue: unmeasured reservations.</text>',
+              '<text x="12" y="214" font-size="3.5">Green shows measured outlines. Blue shows reserved areas.</text>',
               '<text x="12" y="221" font-size="3.5">Grey: routing / supplies / isolation / boundary allowance.</text>',
               '<text x="12" y="228" font-size="3.5">Die / IO / guard rings / extracted budgets: not finalized.</text>', '</g></svg>']
     target = root/'Layout/results/floorplan.svg'

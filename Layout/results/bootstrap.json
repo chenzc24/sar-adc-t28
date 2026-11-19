@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "status": "prefill_core_verified",
+  "library": "SAR_ADC_T28_LAYOUT",
+  "core": "sar_bootstrap_flat_8b_p_core",
+  "view": "layout",
+  "electrical_master": "sar_bootstrap_flat_8b_p",
+  "top_instances": [
+    "XBOOTP",
+    "XBOOTN"
+  ],
+  "electrical_source": "design/xtor/bootstrap/bootstrap.scs",
+  "electrical_source_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+  "generator": "Layout/design/bootstrap.il",
+  "generator_sha256": "f6aae0acf0eec590c3a8e5e4e82039526030307381e69a13fe237f62ab9bb2e1",
+  "reference_cdl_sha256": "50dd85e89eb04405ee408d421294a0e282df9e47a1a7b58f19dbb9239d7ddcd0",
+  "physical_evidence": "boot-core-20261118",
+  "physical_evidence_root_key": "remote_root",
+  "gds_sha256": "d5f975b5aca9b61bc4ed5ec801f16a2fcca7409687f8bbce1f42aa6e38542025",
+  "geometry_sha256": "a77327c667de8e754e3abe1bcf94b84c64471ffa6fd48889022d02de5ab7dbb8",
+  "figure": "Layout/results/figures/bootstrap_core.png",
+  "bbox_um": [
+    [
+      -12.34,
+      -0.045
+    ],
+    [
+      12.34,
+      24.945
+    ]
+  ],
+  "size_um": [
+    24.68,
+    24.99
+  ],
+  "area_um2": 616.7532,
+  "ports": {
+    "VIN": {
+      "layer": "M2",
+      "center_um": [
+        -2.165,
+        0.07
+      ],
+      "pin_size_um": [
+        0.12,
+        0.12
+      ]
+    },
+    "VOUT": {
+      "layer": "M2",
+      "center_um": [
+        -1.835,
+        0.07
+      ],
+      "pin_size_um": [
+        0.12,
+        0.12
+      ]
+    },
+    "VDD": {
+      "layer": "M3",
+      "center_um": [
+        1.8,
+        0.07
+      ],
+      "pin_size_um": [
+        0.12,
+        0.12
+      ]
+    },
+    "VSS": {
+      "layer": "M2",
+      "center_um": [
+        3.15,
+        0.07
+      ],
+      "pin_size_um": [
+        0.12,
+        0.12
+      ]
+    },
+    "CLKS": {
+      "layer": "M2",
+      "center_um": [
+        2.46,
+        0.07
+      ],
+      "pin_size_um": [
+        0.12,
+        0.12
+      ]
+    }
+  },
+  "terminal_map": {
+    "Vin": "VIN",
+    "VOUT": "VOUT",
+    "CLKS": "CLKS",
+    "VDD!": "VDD",
+    "0": "VSS"
+  },
+  "geometry": {
+    "scope": "One Bootstrap channel. All coordinates are local R0, in micrometres.",
+    "pcell_instances": {
+      "native_mos": 11,
+      "mos_fingers": 13,
+      "native_mom": 200
+    },
+    "cboot": {
+      "model": "cfmom_2t",
+      "units_by_row": [
+        19,
+        19,
+        27,
+        27,
+        27,
+        27,
+        27,
+        27
+      ],
+      "unit_bbox_size_um": [
+        0.76,
+        2.92
+      ],
+      "unit_bbox_area_sum_um2": 443.84,
+      "pitch_um": [
+        0.92,
+        3.14
+      ],
+      "row_orientations": [
+        "R0",
+        "MX",
+        "R0",
+        "MX",
+        "R0",
+        "MX",
+        "R0",
+        "MX"
+      ],
+      "terminals": {
+        "PLUS": "BTOP",
+        "MINUS": "BBOT"
+      },
+      "routing": "Adjacent M3 plate terminals joined on their native y coordinates. M4 feeds use paired M3/M4 vias. The switch bank occupies the opening in the two lower rows."
+    },
+    "sharing": {
+      "shared_interfaces": 9,
+      "main_group": [
+        "Mmain",
+        "Mmain_U1",
+        "Msin"
+      ],
+      "diffusion_order": [
+        "VIN",
+        "VOUT",
+        "VIN",
+        "BBOT"
+      ],
+      "native_mos_terminals": {
+        "S": "VIN",
+        "D": "VOUT",
+        "D_1": "BBOT",
+        "G": "G",
+        "B": "VSS"
+      },
+      "source_strap": "Native M1 Source",
+      "gate_strap": "Native M2 Top",
+      "internal_only_diffusion": "GRESET between Maux and MRSTG",
+      "pin_escape": {
+        "nets": [
+          "VIN",
+          "VOUT"
+        ],
+        "layer": "M2",
+        "horizontal_offset_um": 0,
+        "length_to_pin_center_um": 0.81
+      }
+    },
+    "bodies": {
+      "substrate": "P+ contacted ring on VSS around the NMOS rows",
+      "wells": {
+        "BTOP": [
+          "M2",
+          "M4"
+        ],
+        "VDD": [
+          "M4B",
+          "MPCLK"
+        ]
+      },
+      "well_contacts": "N+ contacted ring in each N-well",
+      "nwell_space_um": 1.02
+    },
+    "interface": "VIN and VOUT are adjacent at the lower edge, aligned to their diffusion contacts. VDD, CLKS and VSS exits are to the right. The boosted G trunk and the two capacitor feeds stay inside the cell."
+  },
+  "drc": {
+    "verdict": "NOT_CLEAN",
+    "markers": 6,
+    "markers_by_rule": {
+      "DIODMY_L:WARNING": 1,
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+      "OD.DN.3": 1,
+      "OD.S.14": 1,
+      "PO.DN.3": 1,
+      "PO.DN.3.1": 1
+    },
+    "fill_dependent": [
+      "OD.DN.3",
+      "OD.S.14",
+      "PO.DN.3",
+      "PO.DN.3.1"
+    ],
+    "other_geometry_markers": 0
+  },
+  "fill_feasibility": {
+    "scope": "Scratch OD/PO GDS assessment only, same placement, routing and bounding box. No fill imported to core.",
+    "source_gds_sha256": "d5f975b5aca9b61bc4ed5ec801f16a2fcca7409687f8bbce1f42aa6e38542025",
+    "fill_gds_sha256": "39809151c64589dbd46eec1518b4933e8959a079a386fc82eba1ad0396b13614",
+    "fill_generator_deck_sha256": "76a394c529ba941d3564a4a1559ffec935ee652baffef1baff65eb5b7cc936c0",
+    "fill_job_deck_sha256": "16c56872aee73db156ed64afb9da17dca86a7e69c5ca81a69956388b8e6b7403",
+    "combined_gds_sha256": "0a73aeffd5516f38be6bb57eec764a3301d6f85862b9c323e01ce17d2b5aa494",
+    "combined_drc_job_deck_sha256": "2c32f95796b800ad1c7a4917a2c5723ee4a2eacff06e0956a6a0de0983e483c7",
+    "checks": "Same foundry DRC deck as the prefill run.",
+    "markers_by_rule": {
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+      "DIODMY_L:WARNING": 1
+    },
+    "final_owner": "Top-level integration with actual neighboring cells and routing."
+  },
+  "lvs": {
+    "verdict": "CORRECT",
+    "matched_ports": 5,
+    "matched_nets": 11,
+    "before_reduction": {
+      "nmos": 9,
+      "pmos": 4,
+      "mom": 200,
+      "additional_layout_well_diodes": 2
+    },
+    "after_reduction": {
+      "nmos": 8,
+      "pmos": 4,
+      "mom": 200,
+      "unmatched": 0
+    }
+  },
+  "pex": {
+    "view": "prefill",
+    "extraction": "Calibre xRC RCC",
+    "return_codes": {
+      "phdb": 0,
+      "rcc": 0,
+      "format": 0
+    },
+    "extraction_sha256": {
+      "extracted.scs": "bbc11d450541a0dea12f40e5d1a1f5d112b6f25ed59e85b734a98b3156a5fa87",
+      "extracted.scs.pex": "3235b537146c61fc63d24d3c55449f00ee997f03c9c27d4ed07c6904ffb764ee",
+      "extracted.scs.sar_bootstrap_flat_8b_p_core.pxi": "499d0b721207eb771d61423a390517e086d87f39ada37be6211156a45c1b849e"
+    },
+    "capacitance_scope": "Explicit xRC interconnect only. Attached capacitance sums distinct-net and extraction-ground capacitors with other nodes fixed. MOS, well-diode and native MOM compact-model capacitances are excluded.",
+    "attached_fF": {
+      "BBOT": 222.16045704004208,
+      "BTOP": 219.00429450505789,
+      "CLKS": 1.448642857,
+      "CLKSB": 1.286295964,
+      "CTRL": 1.3361108339999999,
+      "G": 2.1092981370000006,
+      "GRESET": 0.10999904200000002,
+      "VIN": 0.6102473958000002,
+      "VOUT": 0.2785319318,
+      "VSS": 1.3611764109200002
+    },
+    "ground_fF": {
+      "BBOT": 33.24299211005661,
+      "BTOP": 30.454774496072414,
+      "CLKS": 0.5942403700000001,
+      "CLKSB": 0.56614416,
+      "CTRL": 0.574600714,
+      "G": 0.707657398,
+      "GRESET": 0.0381388,
+      "VIN": 0.1620437018,
+      "VOUT": 0.03712132580000001,
+      "VSS": 0.62134245592
+    },
+    "coupling_fF": {
+      "BBOT / BTOP": 188.24737805098547,
+      "BBOT / CLKS": 0.070089319,
+      "BBOT / CLKSB": 0.07197614900000002,
+      "BBOT / CTRL": 0.1238144,
+      "BBOT / G": 0.326059375,
+      "BBOT / VIN": 0.029041490000000003,
+      "BBOT / VSS": 0.049106145999999996,
+      "BTOP / CTRL": 0.13129555099999998,
+      "BTOP / G": 0.13398915599999997,
+      "BTOP / VSS": 0.03685725100000001,
+      "CLKS / CLKSB": 0.31784061,
+      "CLKS / CTRL": 0.126920444,
+      "CLKS / G": 0.054876505000000006,
+      "CLKS / GRESET": 0.00416602,
+      "CLKS / VSS": 0.280509589,
+      "CLKSB / G": 0.049311803,
+      "CLKSB / GRESET": 0.04225472200000001,
+      "CLKSB / VSS": 0.23876851999999996,
+      "CTRL / G": 0.36959918699999994,
+      "CTRL / VIN": 0.00200568,
+      "CTRL / VSS": 0.007874858,
+      "G / GRESET": 0.012250900000000002,
+      "G / VIN": 0.27410998300000017,
+      "G / VOUT": 0.13088494,
+      "G / VSS": 0.05055889,
+      "GRESET / VSS": 0.0131886,
+      "VIN / VOUT": 0.09530105300000001,
+      "VIN / VSS": 0.047745488,
+      "VOUT / VSS": 0.015224613000000003
+    },
+    "vout_port_to_switch_diffusion_ohm": {
+      "N_VOUT_M0_d": 21.90890007130505,
+      "N_VOUT_M1_s": 21.905200071305053
+    },
+    "resistance_scope": "Effective resistance of the interconnect, port to each main transistor terminal with other terminals open.",
+    "model_plate_order": "All 200 native PCells use PLUS=BTOP, MINUS=BBOT. The xRC two-terminal models are emitted in BBOT, BTOP order. The present compact model has an even differential voltage coefficient. The extracted netlist was used as emitted.",
+    "plate_coupling": "Explicit BTOP-to-BBOT capacitance is in parallel with the 200 native MOMs.",
+    "supply_scope": "The installed xRC runset excludes VDD distribution. Supply wiring impedance is outside these measurements."
+  },
+  "rules": {
+    "drc": "f3f9264811dd566400bef7b5c07447b4ea9695956befd0a4bfc52a57f65032dc",
+    "lvs": "aa30dc2a6aeb9095af7554caa5a5acf816a1b74e815643fd013ec423c37c1569",
+    "pex": "89dcaabc6f99d49c43d213a19def8581c963eb311946ced66347a7bd1cc562a1"
+  },
+  "tt": {
+    "scope": "Independent sampling block",
+    "process": "TT",
+    "vdd_v": 0.9,
+    "temperature_c": 27,
+    "source_ohm": 50,
+    "hold_load_native_mom_units": 256,
+    "stimulus_v": [
+      0.2,
+      0.8
+    ],
+    "clock_low_high_ns": [
+      60,
+      40
+    ],
+    "sample_read_ns": [
+      101.1,
+      201.1
+    ],
+    "hold_read_ns": [
+      155,
+      255
+    ],
+    "sample_error_limit_v": 0.003515625,
+    "hold_drift_limit_v": null,
+    "runs": {
+      "schematic": {
+        "run_id": "boot-pre-tt-20261118",
+        "recipe_hash": "ba32ab959068120ee2cf1c3b45d04b563987808c1c40d7315b7943f668ce2216",
+        "result_sha256": "c4f95501675c3455ddfe6901b13e69ef3623711a7b16713a686c8a5dc3fc852f",
+        "pass_functional": true,
+        "max_saved_step_s": 5.000000000111549e-12,
+        "metrics_v": {
+          "startup_error_v": -0.0007874487965594257,
+          "hold_droop_v": 4.008832149571262e-08,
+          "normal_hold_droop_v": -1.0069692857328505e-09,
+          "first_hold_droop_v": 4.008832149571262e-08,
+          "normal_error_v": -0.001061406337493187
+        },
+        "warning_codes": [
+          "SFE-1131",
+          "VACOMP-2435"
+        ]
+      },
+      "prefill": {
+        "run_id": "boot-post-tt-20261118",
+        "recipe_hash": "4762e35a67852a140a129589a54f0a548a7ae228d2038ed71189e88505718c95",
+        "result_sha256": "64d701f4dca10c75bcc8d2635684716dfa1e9499dbc2bb6cb0866c80a9b8e790",
+        "pass_functional": true,
+        "max_saved_step_s": 5.000000000111549e-12,
+        "metrics_v": {
+          "startup_error_v": -0.0008453866527666776,
+          "hold_droop_v": 5.575869672957978e-05,
+          "normal_hold_droop_v": 1.680817557359049e-07,
+          "first_hold_droop_v": 5.575869672957978e-05,
+          "normal_error_v": -0.0011349287090445248
+        },
+        "warning_codes": [
+          "SFE-1131",
+          "SFE-2453",
+          "SFE-3031",
+          "VACOMP-2435"
+        ]
+      }
+    },
+    "netlist_warnings": "Spectre mapped a subcircuit reference terminal to ground and removed a 0.0302 fF floating capacitance on the VSS network in the extracted run. Original warnings are in the native logs."
+  },
+  "physical_signoff": false,
+  "limits": [
+    "Final top-level fill, routing, power distribution and coupled extraction remain open.",
+    "Standalone nominal sampling only. Differential integration, PVT, mismatch, noise and terminal stress were outside this run."
+  ],
+  "raw": {
+    "private_gds": "work/layout/bootstrap/boot-core-20261118/fixture.gds",
+    "physical_reports": "work/layout/bootstrap/boot-core-20261118",
+    "local_archive_index": "results/storage/bootstrap_archive_20261118.json"
+  }
+}

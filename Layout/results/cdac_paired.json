@@ -1,0 +1,1361 @@
+{
+  "date": "2026-11-18",
+  "status": "prefill_layout_and_nominal_extraction_review",
+  "electrical_design": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "library": "SAR_ADC_T28_LAYOUT",
+  "cell": "sar8j_r1_cdac",
+  "core": "sar8j_r1_cdac_core",
+  "half": "sar8_cdac_half",
+  "view": "layout_paired_balanced",
+  "generator": "Layout/design/cdac_paired.py",
+  "native_primitives": "Layout/design/cdac_paired.il",
+  "generated_skill_sha256": "fdc811d01eb70a14b1179368fd480017819e0541d3ae30e3472a7d78cee74082",
+  "independent_reference_cdl_sha256": "7e4141771b8ef98d4694b52fbcde0a19dde1eeab8860fc343dc66d2e67198529",
+  "physical_evidence": "cdac-paired-k-20261118",
+  "published_evidence": "cdac-paired-k-publish-20261118",
+  "official_verification_evidence": "cdac-balanced-native-20261118",
+  "published_geometry_sha256": {
+    "sar8_cdac_half": "ce04f7a2cfd3283d562d46f7f06cd04e84d9b7cc645f9eba1475b408787d59b4",
+    "sar8j_r1_cdac": "41a6ea358fe392719ffd40e532c17eac5c2cda158edcfd6bdd2108e6d5c54878",
+    "sar8j_r1_cdac_core": "b623d8c92506dd4933facd17e441867e70a3890431e80fad68fac4ed7ebfc972"
+  },
+  "original_geometry_sha256_before_after": [
+    "4d8c359255a67c247ecc85d1488b4e9f447bd9d9703805578723d612b0b60f35",
+    "4d8c359255a67c247ecc85d1488b4e9f447bd9d9703805578723d612b0b60f35"
+  ],
+  "review_stream_sha256": "92af69879aa31ffa6d8adefa2e474d71634b032e0369f4dfd9f5744ed99de30a",
+  "validated_extraction_gds_sha256": "198744f6c8317655b4005c80c44dd7a0ac8426d800d5bc6d08b2916215d16803",
+  "independent_review_stream_sha256": "cc72b701ed692164317ffdc926a3b0900d4f0794384ffba4b29f34d347e3accf",
+  "reextraction_comparison": {
+    "canonical_netlist_file_equality": {
+      "extracted.scs": true,
+      "extracted.scs.pex": true,
+      "extracted.scs.sar8j_r1_cdac.pxi": true
+    },
+    "original_file_sha256": {
+      "extracted.scs": "703fb6517fb11fa9d894ec749b857e77f1d87a6060d3192d65f7c0cba6121ff5",
+      "extracted.scs.pex": "4619da6977f6b3ec5d6998e63bfc425c2804aba521c309a2d80a3e641434b3e0",
+      "extracted.scs.sar8j_r1_cdac.pxi": "a1cd02f259c8e3a849f41da7f68563acb14eaa5097e090fc6bb5db7e3c7a87ff"
+    },
+    "gain": 0.9699620402963296,
+    "gain_difference": 0.0,
+    "fixed_fF": {
+      "TOPP": 38.65372978200007,
+      "TOPN": 38.475066506000054
+    }
+  },
+  "standalone_density_probe": {
+    "source": "cdac-balanced-native-20261118",
+    "functional_geometry_sha256": "41a6ea358fe392719ffd40e532c17eac5c2cda158edcfd6bdd2108e6d5c54878",
+    "drc_source_sha256": "f3f9264811dd566400bef7b5c07447b4ea9695956befd0a4bfc52a57f65032dc",
+    "source_gds_sha256": "cc72b701ed692164317ffdc926a3b0900d4f0794384ffba4b29f34d347e3accf",
+    "probe": "single default foundry metal and OD/PO insertion on a private GDS copy",
+    "boundary_um": {
+      "xRT": 70.515,
+      "yRT": 25.86,
+      "yLB": -25.9,
+      "xLB": -1.715
+    },
+    "combined_gds_sha256": "2b7b0c9bceed5a1d085614bfd4bd0c0934669a2213eeb1d456112aab8bd5ea47",
+    "markers": {
+      "M9.DN.3": 1,
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+      "DIODMY_L:WARNING": 1,
+      "OD.DN.3": 2
+    },
+    "filled_pex_performed": true,
+    "physical_rc_path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/cdac-balanced-density-20261118/rc_eval/sample",
+    "lvs": "CORRECT",
+    "fixed_fF": {
+      "TOPP": 142.17685238578906,
+      "TOPN": 140.50485431237007
+    },
+    "fixed_fF_mean": 141.34085334907957,
+    "settled_charge_model_gain_ratio": 0.8954385105540357,
+    "extracted_files_sha256": {
+      "extracted.scs": "4d98f08bc41723677afbb9ef4fbcef5c873233c663383415e549bb7b7f0a1ced",
+      "extracted.scs.pex": "60fdd120cd4fba6207453f553a609665218ae878f8e32989a81351fc0fca62e1",
+      "extracted.scs.sar8j_r1_cdac.pxi": "f1de22117c51fd182be6f03a565084de2b05403e6bbd7f247d68b113383b0c45"
+    },
+    "scope": "Default standalone fill probe, extracted netlist and charge-conservation model only. Density markers remain. The official OA and integrated TT results are prefill."
+  },
+  "layout": {
+    "active_sites_per_side": 256,
+    "dummy_sites_per_side": 84,
+    "binary_units_per_side": 255,
+    "termination_units_per_side": 1,
+    "unit_fingers": 8,
+    "unit_length_um": 2,
+    "unit_metal_range": [
+      "M1",
+      "M3"
+    ],
+    "folded_fingers_each_polarity_per_side": 765,
+    "switch_rows_per_side": 6,
+    "switch_gate_and_drain_feeds_max_nominal_pitch_fingers": 16,
+    "pitch_um": [
+      0.96,
+      2.92
+    ],
+    "bottom_collection_m4_width_um": {
+      "near": {
+        "B7": 0.41,
+        "B6": 0.4,
+        "B5": 0.37
+      },
+      "far": {
+        "B7": 0.33,
+        "B6": 0.3,
+        "B5": 0.25
+      },
+      "other": 0.14
+    },
+    "first_moment_check": "Physical MOM bounding-box centroids in the saved half view. B1 through B7 coincide. B0 and the termination occupy two central diagonal sites.",
+    "ports": {
+      "TOPN": [
+        "M3",
+        33.84,
+        25.78
+      ],
+      "GNN0": [
+        "M6",
+        29.76,
+        -23.95
+      ],
+      "GNP0": [
+        "M6",
+        31.04,
+        -23.95
+      ],
+      "GNN1": [
+        "M6",
+        28.48,
+        -23.95
+      ],
+      "GNP1": [
+        "M6",
+        29.12,
+        -23.95
+      ],
+      "GNN2": [
+        "M6",
+        25.92,
+        -23.95
+      ],
+      "GNP2": [
+        "M6",
+        26.56,
+        -23.95
+      ],
+      "GNN3": [
+        "M6",
+        21.6,
+        -23.95
+      ],
+      "GNP3": [
+        "M6",
+        22.24,
+        -23.95
+      ],
+      "GNN4": [
+        "M6",
+        13.12,
+        -23.95
+      ],
+      "GNP4": [
+        "M6",
+        13.76,
+        -23.95
+      ],
+      "GNN5": [
+        "M6",
+        4.64,
+        -23.95
+      ],
+      "GNP5": [
+        "M6",
+        5.28,
+        -23.95
+      ],
+      "GNN6": [
+        "M6",
+        22.88,
+        -23.95
+      ],
+      "GNP6": [
+        "M6",
+        23.68,
+        -23.95
+      ],
+      "GNN7": [
+        "M6",
+        16.0,
+        -23.95
+      ],
+      "GNP7": [
+        "M6",
+        16.64,
+        -23.95
+      ],
+      "TOPP": [
+        "M3",
+        34.96,
+        25.78
+      ],
+      "GPN0": [
+        "M6",
+        39.04,
+        -23.95
+      ],
+      "GPP0": [
+        "M6",
+        37.76,
+        -23.95
+      ],
+      "GPN1": [
+        "M6",
+        40.32,
+        -23.95
+      ],
+      "GPP1": [
+        "M6",
+        39.68,
+        -23.95
+      ],
+      "GPN2": [
+        "M6",
+        42.88,
+        -23.95
+      ],
+      "GPP2": [
+        "M6",
+        42.24,
+        -23.95
+      ],
+      "GPN3": [
+        "M6",
+        47.2,
+        -23.95
+      ],
+      "GPP3": [
+        "M6",
+        46.56,
+        -23.95
+      ],
+      "GPN4": [
+        "M6",
+        55.68,
+        -23.95
+      ],
+      "GPP4": [
+        "M6",
+        55.04,
+        -23.95
+      ],
+      "GPN5": [
+        "M6",
+        64.16,
+        -23.95
+      ],
+      "GPP5": [
+        "M6",
+        63.52,
+        -23.95
+      ],
+      "GPN6": [
+        "M6",
+        45.92,
+        -23.95
+      ],
+      "GPP6": [
+        "M6",
+        45.12,
+        -23.95
+      ],
+      "GPN7": [
+        "M6",
+        52.8,
+        -23.95
+      ],
+      "GPP7": [
+        "M6",
+        52.16,
+        -23.95
+      ],
+      "VSS": [
+        "M5",
+        34.4,
+        -24.45
+      ],
+      "VDD": [
+        "M5",
+        34.4,
+        -24.88
+      ],
+      "VREFN": [
+        "M5",
+        34.4,
+        -25.31
+      ],
+      "VREFP": [
+        "M5",
+        34.4,
+        -25.74
+      ]
+    }
+  },
+  "geometry_measurement": "Saved OA metal rectangles with assigned nets, evaluated as abs(width-height) per drawn segment, multiplied by the functional instance count. Via counts are GDS cut shapes in via instances at half or core boundaries. Both designs omit PCell interiors and density fill. Positions and counts were read from native OA and exported GDS.",
+  "geometries": {
+    "original": {
+      "view": "layout",
+      "size_um": [
+        90.33,
+        92.49
+      ],
+      "bbox_um": [
+        -1.165,
+        -50.0,
+        89.165,
+        42.49
+      ],
+      "area_um2": 8354.6217,
+      "top_row_buses_per_half": 8,
+      "top_external_wiring_per_half_um": 404.44,
+      "route_length_by_layer_um": {
+        "M1": 2132.23,
+        "M2": 1082.2,
+        "M3": 2166.0,
+        "M4": 5421.24,
+        "M5": 2743.2,
+        "M6": 1974.8,
+        "M7": 1216.0
+      },
+      "route_length_um": 16735.67,
+      "via_cuts_by_interface": {
+        "V1": 3844,
+        "V2": 1044,
+        "V3": 1930,
+        "V4": 510,
+        "V5": 540,
+        "V6": 56
+      },
+      "via_cuts": 7924,
+      "mom_centroids_per_half_um": {
+        "VSS": [
+          15.26,
+          18.71
+        ],
+        "B7": [
+          15.26,
+          18.71
+        ],
+        "B5": [
+          15.26,
+          18.71
+        ],
+        "B6": [
+          15.26,
+          18.71
+        ],
+        "TERM": [
+          15.74,
+          21.21
+        ],
+        "B4": [
+          15.26,
+          18.71
+        ],
+        "B3": [
+          15.26,
+          18.71
+        ],
+        "B2": [
+          15.26,
+          18.71
+        ],
+        "B1": [
+          15.26,
+          18.71
+        ],
+        "B0": [
+          14.78,
+          16.21
+        ]
+      },
+      "mom_units_per_half": {
+        "VSS": 84,
+        "B7": 128,
+        "B5": 32,
+        "B6": 64,
+        "TERM": 1,
+        "B4": 16,
+        "B3": 8,
+        "B2": 4,
+        "B1": 2,
+        "B0": 1
+      },
+      "switch_device_blocks_per_half": {
+        "cfmom_2t": 340,
+        "nch_mac": 65,
+        "pch_mac": 65
+      }
+    },
+    "review": {
+      "view": "layout_paired_balanced",
+      "size_um": [
+        72.23,
+        51.76
+      ],
+      "bbox_um": [
+        -1.715,
+        -25.900000000000002,
+        70.515,
+        25.86
+      ],
+      "area_um2": 3738.6248,
+      "top_row_buses_per_half": 4,
+      "top_external_wiring_per_half_um": 213.27,
+      "route_length_by_layer_um": {
+        "M1": 2021.29,
+        "M2": 1360.64,
+        "M3": 989.38,
+        "M4": 3660.08,
+        "M5": 635.7,
+        "M6": 664.3
+      },
+      "route_length_um": 9331.39,
+      "via_cuts_by_interface": {
+        "V1": 3400,
+        "V2": 548,
+        "V3": 856,
+        "V4": 352,
+        "V5": 264
+      },
+      "via_cuts": 5420,
+      "mom_centroids_per_half_um": {
+        "VSS": [
+          17.18,
+          11.43
+        ],
+        "B7": [
+          17.18,
+          11.43
+        ],
+        "B6": [
+          17.18,
+          11.43
+        ],
+        "B5": [
+          17.18,
+          11.43
+        ],
+        "B4": [
+          17.18,
+          11.43
+        ],
+        "B3": [
+          17.18,
+          11.43
+        ],
+        "B2": [
+          17.18,
+          11.43
+        ],
+        "B1": [
+          17.18,
+          11.43
+        ],
+        "TERM": [
+          16.7,
+          12.89
+        ],
+        "B0": [
+          17.66,
+          9.97
+        ]
+      },
+      "mom_units_per_half": {
+        "VSS": 84,
+        "B7": 128,
+        "B6": 64,
+        "B5": 32,
+        "B4": 16,
+        "B3": 8,
+        "B2": 4,
+        "B1": 2,
+        "TERM": 1,
+        "B0": 1
+      },
+      "switch_device_blocks_per_half": {
+        "cfmom_2t": 340,
+        "nch_mac": 16,
+        "pch_mac": 16
+      }
+    }
+  },
+  "verification": {
+    "lvs": "CORRECT",
+    "matched_ports": 38,
+    "matched_nets": 54,
+    "matched_mom": 680,
+    "total_device_fingers": 3060,
+    "drc": "NOT_CLEAN",
+    "drc_markers": {
+      "DIODMY_L:WARNING": 1,
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+      "M5.DN.1": 1,
+      "M6.DN.1": 1,
+      "OD.DN.3": 1,
+      "OD.S.14": 1,
+      "PO.DN.3": 1,
+      "PO.DN.3.1": 1
+    },
+    "deferred_rules": [
+      "M5.DN.1",
+      "M6.DN.1",
+      "OD.DN.3",
+      "OD.S.14",
+      "PO.DN.3",
+      "PO.DN.3.1"
+    ],
+    "coupled_pex": "complete",
+    "native_rcc_footer": {
+      "warnings": 38,
+      "errors": 0
+    },
+    "native_format_footer": {
+      "warnings": 5,
+      "errors": 0
+    },
+    "whole_chip_signoff": false
+  },
+  "electrical_comparison": {
+    "scope": "TT 0.9 V 27 C. Both standalone comparisons use independent pre/post CDAC transients. Gain is the sum of eight post-layout bit steps divided by the sum of eight schematic bit steps. Residuals divide out that gain; they are single-bit errors, not INL/DNL.",
+    "integration_method": "Current ADC numerical configuration for both old and new (Spectre X MX, Gear2, moderate transient and lteratio=10), 5 ps max step and identical stimuli",
+    "original_prefill": {
+      "physical_id": "cdac-full-pex3",
+      "simulation": "cdac-full-tt-prefill-v1",
+      "fixed_fF_mean": 60.42230893599828,
+      "same_method_run": {
+        "id": "cdac-baseline-prefill-mx-20261118",
+        "recipe_sha256": "cd27c475629f2061208361ca7099f43dccbe2c6484baf5fc2719a5046d3d0d97",
+        "result_sha256": "ab7b5e7943aed896babf37898e10d73f15b0229f1b2031bd9610404b79201ce2",
+        "host": "thu-wei",
+        "runtime_s": 202.24361205101013,
+        "analysis_runtime_s": 6.148010015487671
+      },
+      "historical_default_gain": 0.9529385288346828,
+      "gain_ratio": 0.9529215727718857,
+      "gain_normalized_bit_residual_lsb": [
+        0.02014696972312861,
+        0.016329870005735714,
+        0.017941147952483187,
+        0.021042789347682285,
+        0.027592530000194335,
+        -0.04853740967444509,
+        -0.016900034216062763,
+        -0.03761586313871135
+      ],
+      "max_abs_gain_normalized_single_bit_residual_lsb": 0.04853740967444509,
+      "effective_weights_v": [
+        0.0068351619067008595,
+        0.013509758320479959,
+        0.02692089687052912,
+        0.05374236089654,
+        0.10738785852071431,
+        0.21408070438527355,
+        0.4286984720421716,
+        0.8573714159617849
+      ],
+      "schematic_weights_v": [
+        0.007031189943701555,
+        0.014062379131284053,
+        0.02812475635141687,
+        0.05624950772830167,
+        0.11249927097030504,
+        0.2249984912826919,
+        0.44999685011627116,
+        0.899993740717383
+      ],
+      "settling_to_quarter_lsb_ns": [
+        0.544946,
+        0.771445,
+        0.815366,
+        0.918225,
+        1.080441,
+        1.261965,
+        1.417818,
+        1.064456,
+        1.047741,
+        1.233972
+      ],
+      "all_19ns_targets_stable": true,
+      "post_block_failures": []
+    },
+    "paired_prefill": {
+      "run": {
+        "id": "cdac-balanced-mx-20261118",
+        "recipe_sha256": "bb142f34411ab4f12ce25734145359c2c7d7f91c6a8558c20a1e3c3bfc34c5c7",
+        "result_sha256": "482ae4353b2cf4c22030dc5664cacdf326c9fab56d4f3d0fef8a2afe1d057ad8",
+        "host": "thu-wei",
+        "runtime_s": 261.92001008987427,
+        "analysis_runtime_s": 6.159719944000244
+      },
+      "fixed_fF_by_side": {
+        "TOPN": 38.475066506000054,
+        "TOPP": 38.65372978200007
+      },
+      "fixed_fF_mean": 38.564398144000066,
+      "pex_settled_model_gain": 0.9699620402963296,
+      "gain_ratio": 0.9699439919621178,
+      "gain_normalized_bit_residual_lsb": [
+        0.04258444509626671,
+        0.09459950390256254,
+        0.09120768121907899,
+        0.0622608908975507,
+        -0.03516535224028061,
+        -0.06240868872489831,
+        -0.0643110045335899,
+        -0.1287674756166742
+      ],
+      "max_abs_gain_normalized_single_bit_residual_lsb": 0.1287674756166742,
+      "effective_weights_v": [
+        0.007110282901576392,
+        0.014284880912980302,
+        0.027901467122168677,
+        0.054983485811104904,
+        0.10887816463415312,
+        0.21781030722178374,
+        0.43603313467196214,
+        0.872065321378851
+      ],
+      "schematic_weights_v": [
+        0.007031189950067851,
+        0.014062378963066613,
+        0.028124756045809718,
+        0.05624950723910521,
+        0.11249926839231483,
+        0.22499848569934533,
+        0.4499968391072052,
+        0.899993723686074
+      ],
+      "settling_to_quarter_lsb_ns": [
+        0.34207,
+        0.516667,
+        0.635575,
+        0.75804,
+        0.928025,
+        1.108407,
+        1.248717,
+        0.46525,
+        0.938761,
+        1.097501
+      ],
+      "all_19ns_targets_stable": true,
+      "post_block_failures": []
+    }
+  },
+  "integrated_adc_tt": {
+    "run": {
+      "id": "cdac-balanced-int-20261118",
+      "recipe_sha256": "1af4264f30ccf8d36aac5f34337c4a7248c35ea851a43b2cec10e81d88a25fae",
+      "result_sha256": "0fd71aeb0903f23edf5bd5405a046f1ddee9068c956d5497f88f94b0eb2b90c1",
+      "host": "thu-wei",
+      "runtime_s": 1692.3987817764282,
+      "analysis_runtime_s": 76.32752299308777
+    },
+    "frames": [
+      {
+        "frame": 0,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.47189685222273,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 1,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.471951414355097,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 2,
+        "expected": 12,
+        "actual": 8,
+        "conversion_ns": 28.85710832336785,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": [
+          {
+            "reason": "center_code",
+            "bit": null
+          }
+        ]
+      },
+      {
+        "frame": 3,
+        "expected": 127,
+        "actual": 127,
+        "conversion_ns": 28.952170642434773,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 4,
+        "expected": 128,
+        "actual": 128,
+        "conversion_ns": 28.903433155147543,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 5,
+        "expected": 243,
+        "actual": 247,
+        "conversion_ns": 28.92138510785251,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": [
+          {
+            "reason": "center_code",
+            "bit": null
+          }
+        ]
+      },
+      {
+        "frame": 6,
+        "expected": 255,
+        "actual": 255,
+        "conversion_ns": 28.48354969893798,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 7,
+        "expected": 255,
+        "actual": 255,
+        "conversion_ns": 28.483531508063596,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 8,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.471921748366444,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 9,
+        "expected": 128,
+        "actual": 128,
+        "conversion_ns": 28.90471156821902,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      }
+    ],
+    "exact_codes": 8,
+    "center_code_errors": [
+      [
+        12,
+        8
+      ],
+      [
+        243,
+        247
+      ]
+    ],
+    "limits": [
+      "Only CDAC has PEX; other modules remain pre-layout.",
+      "No MC, transient noise, supply ramp or terminal qualification.",
+      "No independent settling target or distributed bottom-plate measurement.",
+      "Ten TT frames do not establish full-code or corner performance."
+    ]
+  },
+  "original_prefill_integrated_adc_tt": {
+    "run": {
+      "id": "cdac-baseline-prefill-int-20261118",
+      "recipe_sha256": "52a2e575c95e11431b4db26a9f77c411fbc621b0c191e0ad24b07058f8e1f8ff",
+      "result_sha256": "590874f0f45a218cedf9e870cbe0ad4cb62f7347e21178e120fef9e1b0281795",
+      "host": "thu-wei",
+      "runtime_s": 1179.9412949085236,
+      "analysis_runtime_s": 126.38361501693726
+    },
+    "frames": [
+      {
+        "frame": 0,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.41257586438881,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 1,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.412595288570483,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 2,
+        "expected": 12,
+        "actual": 6,
+        "conversion_ns": 28.8596362650876,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": [
+          {
+            "reason": "center_code",
+            "bit": null
+          }
+        ]
+      },
+      {
+        "frame": 3,
+        "expected": 127,
+        "actual": 127,
+        "conversion_ns": 28.93066768813832,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 4,
+        "expected": 128,
+        "actual": 128,
+        "conversion_ns": 28.914159911391103,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 5,
+        "expected": 243,
+        "actual": 249,
+        "conversion_ns": 28.86905410908347,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": [
+          {
+            "reason": "center_code",
+            "bit": null
+          }
+        ]
+      },
+      {
+        "frame": 6,
+        "expected": 255,
+        "actual": 255,
+        "conversion_ns": 28.41900918795422,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 7,
+        "expected": 255,
+        "actual": 255,
+        "conversion_ns": 28.419016240499936,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 8,
+        "expected": 0,
+        "actual": 0,
+        "conversion_ns": 28.41258361499624,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      },
+      {
+        "frame": 9,
+        "expected": 128,
+        "actual": 128,
+        "conversion_ns": 28.915482521709077,
+        "timing_pass": true,
+        "sampling_pass": true,
+        "handshake_counts": {
+          "write": 8,
+          "compare": 8,
+          "update": 8
+        },
+        "issues": []
+      }
+    ],
+    "exact_codes": 8,
+    "center_code_errors": [
+      [
+        12,
+        6
+      ],
+      [
+        243,
+        249
+      ]
+    ],
+    "limits": [
+      "Only CDAC has PEX; other modules remain pre-layout.",
+      "No MC, transient noise, supply ramp or terminal qualification.",
+      "No independent settling target or distributed bottom-plate measurement.",
+      "Ten TT frames do not establish full-code or corner performance."
+    ]
+  },
+  "development_screen": {
+    "first_layout": "layout_paired",
+    "block_run": {
+      "id": "cdac-paired-tt-20261118",
+      "recipe_sha256": "c80799967ae5f12c8f6c3ed910edfe6b8235f86edbc6df547996ca81c5a73ace",
+      "result_sha256": "0225f3fb77a0083ab2daf7e57a85a70dde95c7ea789aeffd47069ee06660c78b",
+      "host": "thu-wei",
+      "runtime_s": 331.5833170413971,
+      "analysis_runtime_s": 7.452621936798096
+    },
+    "block": {
+      "gain_ratio": 0.9692594067971926,
+      "gain_normalized_bit_residual_lsb": [
+        0.07166946356061582,
+        0.1306205538611005,
+        0.1330549379582349,
+        0.15131927449279775,
+        0.1500678974125474,
+        -0.005751911220220525,
+        -0.003610680215789191,
+        -0.6273695358492798
+      ],
+      "max_abs_gain_normalized_single_bit_residual_lsb": 0.6273695358492798,
+      "effective_weights_v": [
+        0.007303497946631654,
+        0.014520318340723426,
+        0.02816703307928342,
+        0.05555175157691361,
+        0.11006370240530572,
+        0.2180426955160754,
+        0.4361390460484416,
+        0.8680517331282598
+      ],
+      "schematic_weights_v": [
+        0.007031206470379636,
+        0.014062412424129977,
+        0.0281248234353062,
+        0.056249642169584446,
+        0.1124992681340109,
+        0.22499848220900154,
+        0.4499968224762693,
+        0.8999936615517516
+      ],
+      "settling_to_quarter_lsb_ns": [
+        0.340537,
+        0.517461,
+        0.637943,
+        0.761655,
+        0.925725,
+        1.104074,
+        1.247436,
+        0.489741,
+        0.937879,
+        1.093078
+      ],
+      "all_19ns_targets_stable": true,
+      "post_block_failures": []
+    },
+    "integrated_run": {
+      "id": "cdac-paired-int-20261118",
+      "recipe_sha256": "8694d8f035fec4747a3424a67463687f6e8d6e0d68324b029a54573e2bb08542",
+      "result_sha256": "68647a38470e14f9ede800803d87b70e993884182bc27d0b69459cd422b15101",
+      "host": "thu-wei",
+      "runtime_s": 1295.1439361572266,
+      "analysis_runtime_s": 75.33801913261414
+    },
+    "integrated": {
+      "frames": [
+        {
+          "frame": 0,
+          "expected": 0,
+          "actual": 0,
+          "conversion_ns": 28.451695351379627,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 1,
+          "expected": 0,
+          "actual": 0,
+          "conversion_ns": 28.45170973098377,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 2,
+          "expected": 12,
+          "actual": 7,
+          "conversion_ns": 28.935429616186276,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ]
+        },
+        {
+          "frame": 3,
+          "expected": 127,
+          "actual": 126,
+          "conversion_ns": 28.98202696641793,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ]
+        },
+        {
+          "frame": 4,
+          "expected": 128,
+          "actual": 128,
+          "conversion_ns": 28.89920287261283,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 5,
+          "expected": 243,
+          "actual": 246,
+          "conversion_ns": 28.890774874932667,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": [
+            {
+              "reason": "center_code",
+              "bit": null
+            }
+          ]
+        },
+        {
+          "frame": 6,
+          "expected": 255,
+          "actual": 255,
+          "conversion_ns": 28.49611718383592,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 7,
+          "expected": 255,
+          "actual": 255,
+          "conversion_ns": 28.49612020373962,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 8,
+          "expected": 0,
+          "actual": 0,
+          "conversion_ns": 28.451699042783357,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        },
+        {
+          "frame": 9,
+          "expected": 128,
+          "actual": 128,
+          "conversion_ns": 28.90049100838185,
+          "timing_pass": true,
+          "sampling_pass": true,
+          "handshake_counts": {
+            "write": 8,
+            "compare": 8,
+            "update": 8
+          },
+          "issues": []
+        }
+      ],
+      "exact_codes": 7,
+      "center_code_errors": [
+        [
+          12,
+          7
+        ],
+        [
+          127,
+          126
+        ],
+        [
+          243,
+          246
+        ]
+      ],
+      "limits": [
+        "Only CDAC has PEX; other modules remain pre-layout.",
+        "No MC, transient noise, supply ramp or terminal qualification.",
+        "No independent settling target or distributed bottom-plate measurement.",
+        "Ten TT frames do not establish full-code or corner performance."
+      ]
+    },
+    "selected_candidate": "k",
+    "coupling_width_trials": {
+      "d": [
+        0.07169872325945947,
+        0.1307758591002517,
+        0.1334392759895353,
+        0.152125300407425,
+        0.15134201505289369,
+        -0.004223094151228679,
+        -0.0032314747684409895,
+        -0.6319266048899124
+      ],
+      "f": [
+        0.04313617485242549,
+        0.09274614501112843,
+        0.09827065102452615,
+        0.07658844522677555,
+        0.0037501259947454457,
+        -0.1604379819420103,
+        -0.21137443548431634,
+        0.05732087531674779
+      ],
+      "g": [
+        0.040058628812078556,
+        0.08693342554044348,
+        0.08182296597442029,
+        0.05300063284083478,
+        -0.07531941336521264,
+        0.028544590656530033,
+        0.09322295234784406,
+        -0.30826378280696076
+      ],
+      "h": [
+        0.04139635444941869,
+        0.09454258791427028,
+        0.08176192676925442,
+        0.05295257567011191,
+        -0.0737538409443399,
+        0.018735090678838162,
+        0.05410656579977058,
+        -0.2697412603373408
+      ],
+      "j": [
+        0.041719207429743665,
+        0.09493259433390255,
+        0.0800294060690856,
+        0.04953452599272978,
+        -0.07913969974046964,
+        0.005144787552346486,
+        0.026919068027368098,
+        -0.2191398896647172
+      ],
+      "k": [
+        0.042617399532722366,
+        0.09475243499579333,
+        0.09153181825773782,
+        0.06258318773143756,
+        -0.03501216412019659,
+        -0.06226021238432011,
+        -0.06383261714439925,
+        -0.13037984686877735
+      ]
+    },
+    "default_integration_attempt": {
+      "status": "failed",
+      "reason": null,
+      "exit_code": 1,
+      "elapsed_seconds": 1150.1944301128387,
+      "run_id": "cdac-balanced-tt-20261118",
+      "native_error": "SPECTRE-16927",
+      "description": "Original isolated fixture with the simulator default integration. Newton convergence recovery and very small time steps were observed during precharge."
+    },
+    "explicit_gear2_cx_attempts": {
+      "cdac-balanced-g2-20261118": {
+        "status": "interrupted",
+        "reason": "Agent ended a redundant Gear2 diagnostic. The default CX fixture used the same integration method and the same Newton failures were seen. The MX comparison passed 90 ns.",
+        "exit_code": null,
+        "elapsed_seconds": 597.2542219161987
+      },
+      "cdac-baseline-prefill-g2-20261118": {
+        "status": "complete",
+        "reason": null,
+        "exit_code": 0,
+        "elapsed_seconds": 319.21237206459045
+      }
+    }
+  },
+  "system_floorplan": "Layout/design/floorplan_paired.json",
+  "figure": "Layout/results/figures/cdac_paired_comparison.png",
+  "limits": [
+    "Global routing and top-level density fill are outstanding.",
+    "Final filled CDAC amplitude, INL/DNL, process variation and mismatch remain unmeasured.",
+    "The ten-frame check replaces the CDAC with PEX and uses the current transistor models for the other blocks."
+  ],
+  "planned_fill": {
+    "view": "layout_paired_planned",
+    "record": "Layout/results/cdac_planned_fill.json",
+    "note": "Same core and half geometry as layout_paired_balanced, plus the sar8_cdac_fill_plan cell referenced by the wrapper"
+  }
+}

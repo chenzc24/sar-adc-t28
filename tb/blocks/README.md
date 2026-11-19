@@ -1,17 +1,17 @@
-# 独立模块测试
+# Standalone Block Tests
 
-用例真源是 [block_tests.json](../../specs/block_tests.json)。每项声明实际激励、负载、测量项目、诊断限值与未覆盖项；测试源直接保存在各模块的 `acceptance.scs`。
+The block registry is the source for stimulus, loads, measurements, diagnostic limits, and coverage gaps. Each module's `acceptance.scs` is its testbench source. [Block test registry](../../specs/block_tests.json)
 
-| 模块 | 测试台 | 测量 |
+| Module | Testbench | Measurements |
 | --- | --- | --- |
-| Bootstrap | [bootstrap/acceptance.scs](bootstrap/acceptance.scs) | 正常 60 ns 低 / 40 ns 高时钟；首帧、后续采样误差和保持漂移；50 Ω 输入及原生 MOM 负载 |
-| CDAC | [cdac/acceptance.scs](cdac/acceptance.scs) | 单位到 MSB 的有效位权、四分之一 LSB 带内建立、满量程换向、保持；50 Ω / 4 pF 参考 |
-| 比较器 | [comparator/acceptance.scs](comparator/acceptance.scs) | 正负多幅度判决、延时、复位；原生输出 MOM 与接收门负载；浮置 MOM 输入下的差分 kickback |
-| SAR | [sar/acceptance.scs](sar/acceptance.scs) | 六个低/中/高码，首帧、8 次比较及更新、转换时间；管级 SAR 接电气 VA 环境；强制比较器不响应并检查下一采样撤销挂起 |
-| 参考控制 | [reference/acceptance.scs](reference/acceptance.scs) | 预置、两次捕获、存储字、门控阈值非交叠；实际 CDAC 及开关栅负载 |
-| RC / clear 延时 | [clock/acceptance.scs](clock/acceptance.scs) | 全部导出的延时/边沿辅助模块，上升与下降延时、脉宽、缺失边沿；原生接收门负载 |
+| Bootstrap | [bootstrap/acceptance.scs](bootstrap/acceptance.scs) | Normal 60 ns low and 40 ns high clock, first and subsequent sampling error, hold drift, 50 Ω input, and native MOM load |
+| CDAC | [cdac/acceptance.scs](cdac/acceptance.scs) | Effective weights from unit to MSB, settling within a quarter LSB, full-scale reversals, hold, and 50 Ω / 4 pF references |
+| Comparator | [comparator/acceptance.scs](comparator/acceptance.scs) | Positive and negative decisions at several amplitudes, delay, reset, native output MOM and receiving-gate loads, and differential kickback with floating MOM inputs |
+| SAR | [sar/acceptance.scs](sar/acceptance.scs) | Six low, mid, and high codes, first frame, eight decisions and updates, conversion time, and cancellation on the next sample when the comparator is forced to stall. The transistor SAR runs in an electrical Verilog-A environment. |
+| Reference control | [reference/acceptance.scs](reference/acceptance.scs) | Preset, two captures, stored word, and gate threshold non-overlap with the actual CDAC and switch gate loads |
+| RC and clear delays | [clock/acceptance.scs](clock/acceptance.scs) | Rise and fall delays, pulse widths, and missing edges of exported delay and edge helpers with native receiving-gate loads |
 
-比较器失调和 CDAC 静态位权的原生 MC 继续使用 [comparator/test.scs](comparator/test.scs) 和 [cdac/test.scs](cdac/test.scs)，不重复创建种子任务。
+Use the existing native comparator offset and CDAC static bit-weight Monte Carlo inputs and registrations. [Comparator MC](comparator/test.scs) · [CDAC MC](cdac/test.scs)
 
 ```powershell
 python -m tools.saradc block list
@@ -21,17 +21,17 @@ python -m tools.saradc block follow --run-id NEW_ID
 python -m tools.saradc block sim --module reference --view behavioral --view reference=xtor --candidate reference=b --run-id NEW_ID
 ```
 
-省略 `--module` 运行六项；可重复选择模块。`prepare` 只打包，`sim` 打包并登记一次，`follow` 只接续已有运行并回收。已使用的运行 ID 不重新生成或重提。
+Omit `--module` to run all six cases or repeat it to select several. `prepare` packages inputs. `sim` packages and registers once. `follow` continues and collects the existing run. Use each run ID for its original registered inputs.
 
-每次生成的 `test.scs`、模块 fixture、选择配置、来源哈希和 managed 配方位于 `work/blocks/ID/`。测量器是 [analyze_blocks.py](../../tools/saradc/measure/analyze_blocks.py)，结果在 [results/blocks](../../results/blocks/README.md)。它检查保存信号完整性，以流式方式测量实际波形。
+Each package puts `test.scs`, module fixtures, selection settings, source digests, and a managed recipe in `work/blocks/ID/`. The analyzer checks completeness of saved signals and streams the waveform measurements. [Analyzer](../../tools/saradc/measure/analyze_blocks.py) · [Block results](../../results/blocks/README.md)
 
-分析器修复时：
+For an analyzer fix, run analysis-only against the completed simulation.
 
 ```powershell
 python -m tools.saradc block reanalyze --run-id NEW_ANALYSIS_ID --source-run COMPLETED_SIM_ID
 python -m tools.saradc block follow --run-id NEW_ANALYSIS_ID
 ```
 
-`pass_functional` 与 `diagnostic_screens_pass` 分开；完整 `pass_validation` 要求二者均通过。小信号不响应、门控交叠和未分配的时序限值保留，不从进程退出码推断电气合格。CDAC 建立时间相对有限长、且已检查稳定的尾段电压测量，不冒充无限保持 oracle。
+Report `pass_functional` and `diagnostic_screens_pass` independently. `pass_validation` requires both. Preserve small-signal misses, gate overlap, and unallocated timing limits. Take electrical verdicts from measurements. Measure CDAC settling against the finite, stability-checked tail of the waveform.
 
-当前测试不构成所有 PVT、局部失配、原生噪声概率、MOS 导通电流非交叠、器件可靠性和 PEX 的完整签核。VA 环境的负载/延时近似及统计范围见 [行为模型说明](../../design/behav/README.md)。
+These cases qualify the conditions in their recipes. Full PVT, local mismatch, native noise probabilities, MOS conduction-current non-overlap, reliability, and PEX require separate evidence. [Verilog-A load and delay approximations and statistical scope](../../design/behav/README.md)

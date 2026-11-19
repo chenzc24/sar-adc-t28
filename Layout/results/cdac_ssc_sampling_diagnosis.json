@@ -1,0 +1,503 @@
+{
+  "date": "2026-11-18",
+  "condition": "SS 0.81 V -40 C, 50 ohm input sources, 40 ns external acquisition, references 0.9 V",
+  "question": "Why the layout CDAC exceeds the 0.25 LSB sample-close residual screen at SS -40 C",
+  "method": "Waveform traces of the sampling windows (Layout/tools/analysis/sampling_trace.py, analysis-only managed runs) and one-variable counterfactuals of the extracted CDAC (work/layout/cdac-sampling-diag/build_variant.py); every other input byte-identical",
+  "cases": {
+    "schematic_cdac": {
+      "run": "sar8-minref-current-ssc-cdacdiag-v1",
+      "result_sha256": "46474086d037f1f51e0ba3b1f6fb55d84bd10c266fd3dfaea293f6654b1e4acf",
+      "trace_run": "cdac-sampling-trace-sch-ssc-20261118",
+      "sample_close_error_lsb_by_frame": [
+        0.008280658874437246,
+        -0.001355180449485892,
+        -0.005396587291465317,
+        -0.023945072056103335,
+        -1.2881982240426421e-05,
+        -0.005587878946692449,
+        -0.0019756723242872784,
+        0.0013855178009218748,
+        0.0063320942515727235,
+        -0.03816203081403242
+      ],
+      "codes": [
+        0,
+        0,
+        12,
+        127,
+        128,
+        243,
+        255,
+        255,
+        0,
+        128
+      ],
+      "min_deadline_margin_ns": 30.261291108126063,
+      "frame9_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          63.973,
+          -63.603
+        ],
+        "8ns": [
+          50.008,
+          -7.183
+        ],
+        "12ns": [
+          36.043,
+          -1.768
+        ],
+        "16ns": [
+          23.509,
+          -0.498
+        ],
+        "20ns": [
+          12.865,
+          -0.138
+        ],
+        "24ns": [
+          5.53,
+          -0.027
+        ],
+        "28ns": [
+          1.941,
+          0.003
+        ],
+        "32ns": [
+          0.614,
+          0.006
+        ],
+        "36ns": [
+          0.187,
+          0.004
+        ],
+        "40ns": [
+          0.056,
+          0.002
+        ]
+      },
+      "frame8_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          -126.801,
+          127.294
+        ],
+        "8ns": [
+          -12.843,
+          96.528
+        ],
+        "12ns": [
+          -4.122,
+          68.474
+        ],
+        "16ns": [
+          -1.634,
+          42.94
+        ],
+        "20ns": [
+          -0.683,
+          20.986
+        ],
+        "24ns": [
+          -0.262,
+          6.343
+        ],
+        "28ns": [
+          -0.087,
+          1.211
+        ],
+        "32ns": [
+          -0.031,
+          0.201
+        ],
+        "36ns": [
+          -0.013,
+          0.033
+        ],
+        "40ns": [
+          -0.006,
+          0.005
+        ]
+      },
+      "diagnostic": null
+    },
+    "layout_paired_stacked": {
+      "run": "cdac-stacked-int-ssc-20261118",
+      "result_sha256": "81489a8db3ccc8e214e6dc9f9abde33bc8318b5f9eec84943935040169553bd3",
+      "trace_run": "cdac-sampling-trace-ssc-20261118",
+      "sample_close_error_lsb_by_frame": [
+        0.03991370894690741,
+        -0.0008158803831608768,
+        -0.020594308402621664,
+        -0.22226332156001324,
+        -0.00021470424571469316,
+        -0.03302771345404822,
+        -0.01343614528749975,
+        0.0010081706861658768,
+        0.11995541692300549,
+        -0.35149381667276697
+      ],
+      "codes": [
+        0,
+        0,
+        7,
+        127,
+        128,
+        248,
+        255,
+        255,
+        0,
+        128
+      ],
+      "min_deadline_margin_ns": 20.454197066578885,
+      "frame9_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          63.962,
+          -63.101
+        ],
+        "8ns": [
+          52.451,
+          -10.085
+        ],
+        "12ns": [
+          40.914,
+          -3.093
+        ],
+        "16ns": [
+          30.305,
+          -1.102
+        ],
+        "20ns": [
+          20.674,
+          -0.409
+        ],
+        "24ns": [
+          12.418,
+          -0.149
+        ],
+        "28ns": [
+          6.383,
+          -0.046
+        ],
+        "32ns": [
+          2.867,
+          -0.008
+        ],
+        "36ns": [
+          1.182,
+          0.003
+        ],
+        "40ns": [
+          0.468,
+          0.004
+        ]
+      },
+      "frame8_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          -126.284,
+          127.138
+        ],
+        "8ns": [
+          -17.639,
+          102.031
+        ],
+        "12ns": [
+          -6.369,
+          78.801
+        ],
+        "16ns": [
+          -2.885,
+          57.14
+        ],
+        "20ns": [
+          -1.416,
+          37.459
+        ],
+        "24ns": [
+          -0.718,
+          20.539
+        ],
+        "28ns": [
+          -0.342,
+          8.047
+        ],
+        "32ns": [
+          -0.149,
+          2.315
+        ],
+        "36ns": [
+          -0.068,
+          0.593
+        ],
+        "40ns": [
+          -0.032,
+          0.143
+        ]
+      },
+      "diagnostic": null
+    },
+    "layout_resistance_x0p01": {
+      "run": "cdac-diag-rsmall-ssc-20261118",
+      "result_sha256": "a87b0af76f9d77bfa26f17178bdda071cefd145ff4105f9c13a2f7f6cb47f1a7",
+      "trace_run": "cdac-sampling-trace-rsmall-ssc-20261118",
+      "sample_close_error_lsb_by_frame": [
+        0.039809546236995175,
+        -0.001210070426635765,
+        -0.02041335182631264,
+        -0.2106273367655515,
+        -0.00017222879501825142,
+        -0.028972454801766565,
+        -0.012305452462994772,
+        0.0012797423873521045,
+        0.10543395399319402,
+        -0.33576409825928505
+      ],
+      "codes": [
+        0,
+        0,
+        7,
+        127,
+        128,
+        248,
+        255,
+        255,
+        0,
+        128
+      ],
+      "min_deadline_margin_ns": 20.45535913915429,
+      "frame9_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          63.962,
+          -63.604
+        ],
+        "8ns": [
+          52.678,
+          -9.75
+        ],
+        "12ns": [
+          41.118,
+          -2.929
+        ],
+        "16ns": [
+          30.481,
+          -1.027
+        ],
+        "20ns": [
+          20.816,
+          -0.375
+        ],
+        "24ns": [
+          12.507,
+          -0.134
+        ],
+        "28ns": [
+          6.405,
+          -0.039
+        ],
+        "32ns": [
+          2.851,
+          -0.005
+        ],
+        "36ns": [
+          1.16,
+          0.004
+        ],
+        "40ns": [
+          0.452,
+          0.005
+        ]
+      },
+      "frame8_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          -126.908,
+          127.331
+        ],
+        "8ns": [
+          -16.9,
+          102.413
+        ],
+        "12ns": [
+          -6.055,
+          79.137
+        ],
+        "16ns": [
+          -2.729,
+          57.42
+        ],
+        "20ns": [
+          -1.331,
+          37.676
+        ],
+        "24ns": [
+          -0.67,
+          20.671
+        ],
+        "28ns": [
+          -0.315,
+          8.041
+        ],
+        "32ns": [
+          -0.133,
+          2.255
+        ],
+        "36ns": [
+          -0.059,
+          0.557
+        ],
+        "40ns": [
+          -0.028,
+          0.13
+        ]
+      },
+      "diagnostic": {
+        "base_run": "cdac-stacked-int-ssc-20261118",
+        "mode": "r_scale=0.01",
+        "changes": {
+          "extracted.scs.pex": {
+            "changed": 145618,
+            "removed_f": 0.0
+          }
+        },
+        "note": "Synthetic one-variable counterfactual of the extracted CDAC; not a physical view"
+      }
+    },
+    "layout_without_top_parasitic_c": {
+      "run": "cdac-diag-notopc-ssc-20261118",
+      "result_sha256": "68ce7072ec47d2fab38b7a6972477fa84b3f5dda4d68f2fb0ff8f57f09d840c3",
+      "trace_run": "cdac-sampling-trace-notopc-ssc-20261118",
+      "sample_close_error_lsb_by_frame": [
+        0.00917434886285188,
+        -0.0009270000377783718,
+        -0.0047506799268938315,
+        -0.026304630081952496,
+        -1.810402325632923e-05,
+        -0.007318258959101184,
+        -0.002498580757490839,
+        0.0011302392888347852,
+        0.008445263353880565,
+        -0.04164530888060211
+      ],
+      "codes": [
+        0,
+        0,
+        12,
+        127,
+        128,
+        243,
+        255,
+        255,
+        0,
+        128
+      ],
+      "min_deadline_margin_ns": 20.50163593537452,
+      "frame9_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          63.953,
+          -63.582
+        ],
+        "8ns": [
+          49.742,
+          -7.449
+        ],
+        "12ns": [
+          35.815,
+          -1.878
+        ],
+        "16ns": [
+          23.328,
+          -0.54
+        ],
+        "20ns": [
+          12.753,
+          -0.154
+        ],
+        "24ns": [
+          5.509,
+          -0.033
+        ],
+        "28ns": [
+          1.96,
+          0.001
+        ],
+        "32ns": [
+          0.632,
+          0.005
+        ],
+        "36ns": [
+          0.197,
+          0.003
+        ],
+        "40ns": [
+          0.061,
+          0.002
+        ]
+      },
+      "frame8_err_n_err_p_lsb_vs_time_after_frame_origin": {
+        "4ns": [
+          -125.906,
+          127.029
+        ],
+        "8ns": [
+          -13.697,
+          96.506
+        ],
+        "12ns": [
+          -4.342,
+          68.075
+        ],
+        "16ns": [
+          -1.735,
+          42.627
+        ],
+        "20ns": [
+          -0.742,
+          21.079
+        ],
+        "24ns": [
+          -0.288,
+          6.345
+        ],
+        "28ns": [
+          -0.099,
+          1.258
+        ],
+        "32ns": [
+          -0.038,
+          0.225
+        ],
+        "36ns": [
+          -0.016,
+          0.038
+        ],
+        "40ns": [
+          -0.007,
+          0.006
+        ]
+      },
+      "diagnostic": {
+        "base_run": "cdac-stacked-int-ssc-20261118",
+        "mode": "drop_top_c",
+        "changes": {
+          "extracted.scs.pex": {
+            "changed": 3868,
+            "removed_f": 4.4219850633999724e-14
+          },
+          "extracted.scs.sar8j_r1_cdac.pxi": {
+            "changed": 29383,
+            "removed_f": 4.5217028834797044e-13
+          }
+        },
+        "note": "Synthetic one-variable counterfactual of the extracted CDAC; not a physical view"
+      }
+    }
+  },
+  "finding": "At sample open each TOP still holds the previous input and must swing to the new one through the bootstrap switch. Discharging toward a mid-scale input (frames 3 and 9, TOPN 0.9 V -> 0.45 V) is the weak direction: body effect on the thick-oxide switch leaves little overdrive at SS -40 C and 0.81 V, so the swing is current-limited (~24 uA, ~19 mV/ns) and then decays with a 4-5 ns tail. The extracted CDAC adds about 0.25 pF per side to the ~1.03 pF sampled capacitance, mostly TOP coupling to the driven bottom plates (~0.2 pF) plus ~52 fF of fixed load, so the same trajectory takes ~25% longer and the tail is ~2 time constants short at close. Scaling all extracted resistance to 1% changes nothing (-0.336 vs -0.351 LSB); removing only the TOP parasitic capacitance restores the schematic result (-0.042 vs -0.038 LSB). The planned fill contributes ~14 fF of the added capacitance.",
+  "remedy_options": [
+    "Strengthen the bootstrap main switch (more parallel width or bulk bootstrapping) for SS -40 C mid-scale discharge",
+    "Lengthen acquisition within the conversion slack (SS -40 C deadline margin is 20.45 ns); this changes the external timing spec",
+    "Reduce TOP capacitance; the TOP-to-bottom-plate coupling is intrinsic to the MOM array and routing, so this needs a CDAC redesign"
+  ],
+  "design_versions": {
+    "layout_and_counterfactual_runs": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1 (xtor/clock/delays.scs)",
+    "schematic_baseline_run": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2 (xtor/clock/delays_quiet8p5.scs), current from 2026-11-18 20:02",
+    "note": "The sampling residual of the schematic CDAC is 0.038 LSB under both designs (earlier sar-timing-schematic-ssc-20261118 and this baseline), so the attribution holds; deadline margins differ because of the clock change, not the CDAC."
+  }
+}

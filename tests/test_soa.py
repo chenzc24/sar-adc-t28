@@ -7,7 +7,7 @@ import tempfile
 PATH=Path(__file__).resolve().parents[1]/'tools/saradc/measure'
 sys.path.insert(0,str(PATH))
 from soa import over_intervals,sliding_max,analyze
-from soa_topology import definitions,flatten
+from soa_topology import definitions,flatten,save_voltage_node
 
 
 class SoaTests(unittest.TestCase):
@@ -48,6 +48,18 @@ class SoaTests(unittest.TestCase):
     def test_unknown_leaf_fails_closed(self):
         a=definitions('subckt top I O\nX1 (I O) missing\nends top')
         with self.assertRaisesRegex(ValueError,'Unresolved'):flatten(a,'top',['i','o'])
+
+    def test_lpe_terminal_net_is_saved_as_a_voltage(self):
+        top=definitions('subckt top A Z\nX1 (A Z 0) gate\nends top')
+        top.update(definitions('.subckt gate A Z VSS\nR1 A M1:GATE 10\nC1 M1:GATE VSS 1f\n'
+                               'MM1 Z M1:GATE VSS VSS nch_mac\n.ends',True))
+        circuit=flatten(top,'top',['a','z'])
+        self.assertEqual(circuit['other_leaves'],{'resistor':1,'capacitor':1})
+        name=circuit['devices'][0]['nodes'][1]
+        self.assertEqual(name,'XDUT.X1.M1:GATE')
+        saved=save_voltage_node(name)
+        self.assertEqual(saved,r'XDUT.X1.M1\:GATE')
+        self.assertEqual(save_voltage_node(saved),saved)
 
     def test_native_analysis_detects_duration_failure_and_body_scope(self):
         with tempfile.TemporaryDirectory() as folder:

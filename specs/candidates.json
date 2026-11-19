@@ -95,8 +95,8 @@
       }
     },
     "sar": {
-      "selected": "reset_data_or",
-      "target": "xtor/sar/reset_data_or.scs",
+      "selected": "std_delay_qualified",
+      "target": "xtor/sar/reset_data_or_std_delay.scs",
       "interfaces": {
         "sar8i_ctrl": [
           "CMP_CLK",
@@ -133,8 +133,13 @@
         },
         "reset_data_or": {
           "file": "design/xtor/sar/reset_data_or.scs",
-          "status": "current_implementation_ffc_short_pass_other_corners_unverified",
+          "status": "previous_implementation",
           "evidence": "results/design/reset_data_or_adoption_20261115.json"
+        },
+        "std_delay_qualified": {
+          "file": "design/xtor/sar/reset_data_or_std_delay.scs",
+          "status": "current_schematic_implementation",
+          "evidence": "results/design/sar_std_delay_20261119.json"
         }
       }
     },
@@ -226,8 +231,8 @@
       }
     },
     "timing": {
-      "selected": "b",
-      "target": "xtor/clock/delays.scs",
+      "selected": "std_delay",
+      "target": "xtor/clock/delays_std.scs",
       "interfaces": {
         "sar8p_delay_valid": [
           "A",
@@ -281,8 +286,18 @@
       "candidates": {
         "b": {
           "file": "design/xtor/clock/delays.scs",
-          "status": "current_implementation",
+          "status": "previous_implementation",
           "evidence": "results/README.md; individual records remain bound to their source hashes"
+        },
+        "quiet8p5": {
+          "file": "design/xtor/clock/delays_quiet8p5.scs",
+          "status": "previous_implementation",
+          "evidence": "results/design/sar_timing_quiet8p5_20261118.json"
+        },
+        "std_delay": {
+          "file": "design/xtor/clock/delays_std.scs",
+          "status": "current_schematic_implementation",
+          "evidence": "results/design/sar_std_delay_20261119.json"
         }
       }
     }

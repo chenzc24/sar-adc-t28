@@ -1,0 +1,2009 @@
+COMPARATOR V4 — COMPLETE LAYOUTML IMPORT AND RECOMPILED GEOMETRY
+Source matches 01_gds_complete.txt. This is importer/compiler output, NOT an OA query or a browser DOM dump.
+No abridgment. LML alone does not contain full PCell geometry; the full store follows.
+
+BEGIN layoutml.flat.lml
+layoutml 0.3 profile=objects syntax=v0.3+role mode=strict
+technology tsmc28 variant=HPC+ deck_version=tsmcN28 store=sar_strongarm_t28_core.store.json
+units user=1u dbu=1n grid=1n
+
+cell sar_strongarm_t28_core {
+  // ── 由 gds_to_lml_algo.py 零硬编码算法从 official-v4.gds 全自动逆向生成 ──
+
+  pcell R_NMOS_1 tsmc28.nch_mac at (-0.285, -2.14) params={w=0.5 l=0.03 nf=4 fingers=NINP,NTAIL,NTAIL,NINN} realization=sha256:97d2c036b58709f6 {
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NTAIL nch_mac W=1 L=0.03 nf=2 G=&CLK SD=&TAIL,&VSS B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+  }
+
+  pcell R_NMOS_2 tsmc28.nch_mac at (-0.285, -1.3) params={w=0.5 l=0.03 nf=4 fingers=NLATN,NINP,NINN,NLATP} realization=sha256:85c6dee1bac11096 {
+    device NLATN nch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&Y B=&VSS
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+    device NLATP nch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&X B=&VSS
+  }
+
+  pcell R_PMOS_1 tsmc28.pch_mac at (-0.415, 0) params={w=0.5 l=0.03 nf=6 fingers=PRSTY,PLATN,PRSTN,PRSTP,PLATP,PRSTX} realization=sha256:a3919d1f21fc9ae8 {
+    device PRSTY pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&Y B=&VDD
+    device PLATN pch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&VDD B=&VDD
+    device PRSTN pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTN,&VDD B=&VDD
+    device PRSTP pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTP,&VDD B=&VDD
+    device PLATP pch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&VDD B=&VDD
+    device PRSTX pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&X B=&VDD
+  }
+
+  shapes {
+    rect @WELL [-0.83, -0.425]..[0.83, 0.925]
+  }
+
+  route &CLK {
+    viastack @M1..@M2 at (-0.055, -2.275) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.055, 0.595) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.035, 0.595) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.055, -2.295) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (-0.1, -2.24) -> (0.1, -2.24)
+    path @M1 w=0.07 (-0.36, 0.65) -> (0.36, 0.65)
+    path @M2 w=0.07 (-0.15, -2.24) -> (0.15, -2.24)
+    path @M2 w=0.07 (0, 0.5) -> (0, 0.8)
+    path @M3 w=0.07 (0, -2.295) -> (0, 0.925)
+  }
+
+  route &OUTN {
+    viastack @M1..@M2 at (0.14, -0.735) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (0.14, -0.185) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.315, -1.155) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, 0.025) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (0.14, -1.155) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, -0.755) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, -0.205) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, 0.025) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (0.095, -0.7) -> (0.295, -0.7)
+    path @M1 w=0.07 (0.095, -0.15) -> (0.295, -0.15)
+    path @M2 w=0.07 (-0.315, -1.1) -> (0.25, -1.1)
+    path @M2 w=0.07 (0.045, -0.7) -> (0.345, -0.7)
+    path @M2 w=0.07 (0.045, -0.15) -> (0.345, -0.15)
+    path @M2 w=0.07 (-0.185, 0.08) -> (0.25, 0.08)
+    path @M1 w=0.07 (-0.26, -1.3) -> (-0.26, -0.8)
+    path @M1 w=0.07 (-0.13, 0) -> (-0.13, 0.5)
+    path @M3 w=0.07 (0.195, -1.155) -> (0.195, 0.925)
+  }
+
+  route &OUTP {
+    viastack @M1..@M2 at (-0.25, -0.735) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.25, -0.185) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (0.205, -0.915) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, 0.265) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.25, -0.915) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, -0.755) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, -0.205) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, 0.265) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (-0.295, -0.7) -> (-0.095, -0.7)
+    path @M1 w=0.07 (-0.295, -0.15) -> (-0.095, -0.15)
+    path @M2 w=0.07 (-0.25, -0.86) -> (0.315, -0.86)
+    path @M2 w=0.07 (-0.345, -0.7) -> (-0.045, -0.7)
+    path @M2 w=0.07 (-0.345, -0.15) -> (-0.045, -0.15)
+    path @M2 w=0.07 (-0.25, 0.32) -> (0.185, 0.32)
+    path @M1 w=0.07 (0.13, 0) -> (0.13, 0.5)
+    path @M1 w=0.07 (0.26, -1.3) -> (0.26, -0.8)
+    path @M3 w=0.07 (-0.195, -1.155) -> (-0.195, 0.925)
+  }
+
+  route &TAIL {
+    viastack @M1..@M2 at (-0.035, -1.3) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, -1.755) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, -1.755) size=0.11x0.11 via=1x1
+    path @M2 w=0.07 (-0.185, -1.7) -> (0.185, -1.7)
+    path @M1 w=0.07 (-0.13, -2.14) -> (-0.13, -1.64)
+    path @M1 w=0.07 (0, -1.3) -> (0, -0.8)
+    path @M1 w=0.07 (0.13, -2.14) -> (0.13, -1.64)
+    path @M2 w=0.07 (0, -1.7) -> (0, -1.19)
+  }
+
+  route &VDD {
+    viastack @M1..@M2 at (-0.77, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.315, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.055, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.205, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.66, 0.145) size=0.11x0.11 via=1x1
+    path @M1 w=0.07 (-0.75, -0.31) -> (0.75, -0.31)
+    path @M1 w=0.07 (-0.75, 0.81) -> (0.75, 0.81)
+    path @M2 w=0.07 (-0.77, 0.2) -> (0.77, 0.2)
+    path @M1 w=0.07 (-0.715, -0.345) -> (-0.715, 0.845)
+    path @M1 w=0.07 (-0.26, 0) -> (-0.26, 0.5)
+    path @M1 w=0.07 (0, 0) -> (0, 0.5)
+    path @M1 w=0.07 (0.26, 0) -> (0.26, 0.5)
+    path @M1 w=0.07 (0.715, -0.345) -> (0.715, 0.845)
+  }
+
+  route &VINN {
+    viastack @M1..@M2 at (0.16, -1.525) size=0.07x0.11 via=1x1
+    viastack @M2..@M3 at (0.16, -1.525) size=0.07x0.11 via2=1x1
+    path @M1 w=0.07 (0.03, -1.4) -> (0.23, -1.4)
+    path @M1 w=0.07 (0.195, -1.575) -> (0.195, -1.365)
+    path @M2 w=0.07 (0.195, -1.6) -> (0.195, -1.34)
+    path @M3 w=0.07 (0.195, -2.515) -> (0.195, -1.415)
+  }
+
+  route &VINP {
+    viastack @M1..@M2 at (-0.23, -1.525) size=0.07x0.11 via=1x1
+    viastack @M2..@M3 at (-0.23, -1.525) size=0.07x0.11 via2=1x1
+    path @M1 w=0.07 (-0.23, -1.4) -> (-0.03, -1.4)
+    path @M1 w=0.07 (-0.195, -1.575) -> (-0.195, -1.365)
+    path @M2 w=0.07 (-0.195, -1.6) -> (-0.195, -1.34)
+    path @M3 w=0.07 (-0.195, -2.515) -> (-0.195, -1.415)
+  }
+
+  route &VSS {
+    viastack @M1..@M2 at (-0.64, -2.055) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.055, -2.055) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.53, -2.055) size=0.11x0.11 via=1x1
+    path @M1 w=0.07 (-0.62, -2.4) -> (0.62, -2.4)
+    path @M1 w=0.07 (-0.62, -0.54) -> (0.62, -0.54)
+    path @M2 w=0.07 (-0.64, -2) -> (0.64, -2)
+    path @M1 w=0.07 (-0.585, -2.435) -> (-0.585, -0.505)
+    path @M1 w=0.07 (0, -2.14) -> (0, -1.64)
+    path @M1 w=0.07 (0.585, -2.435) -> (0.585, -0.505)
+  }
+
+  route &X {
+    viastack @M1..@M2 at (0.355, 0.385) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (0.205, -1.875) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, -1.035) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (0.355, 0.385) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (0.335, -1.875) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.335, -1.035) size=0.11x0.11 via2=1x1
+    path @M2 w=0.07 (0.205, -1.82) -> (0.445, -1.82)
+    path @M2 w=0.07 (0.075, -0.98) -> (0.445, -0.98)
+    path @M1 w=0.07 (0.13, -1.3) -> (0.13, -0.8)
+    path @M1 w=0.07 (0.26, -2.14) -> (0.26, -1.64)
+    path @M1 w=0.07 (0.39, 0) -> (0.39, 0.5)
+    path @M2 w=0.07 (0.39, 0.29) -> (0.39, 0.59)
+    path @M3 w=0.07 (0.39, -1.875) -> (0.39, 0.495)
+  }
+
+  route &Y {
+    viastack @M1..@M2 at (-0.425, 0.385) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (-0.315, -1.875) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, -1.035) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.425, 0.385) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.445, -1.875) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.445, -1.035) size=0.11x0.11 via2=1x1
+    path @M2 w=0.07 (-0.445, -1.82) -> (-0.205, -1.82)
+    path @M2 w=0.07 (-0.445, -0.98) -> (-0.075, -0.98)
+    path @M1 w=0.07 (-0.39, 0) -> (-0.39, 0.5)
+    path @M1 w=0.07 (-0.26, -2.14) -> (-0.26, -1.64)
+    path @M1 w=0.07 (-0.13, -1.3) -> (-0.13, -0.8)
+    path @M2 w=0.07 (-0.39, 0.29) -> (-0.39, 0.59)
+    path @M3 w=0.07 (-0.39, -1.875) -> (-0.39, 0.495)
+  }
+
+  cell_port VDD @M1 [-0.05, 0.76]..[0.05, 0.86] label (0, 0.81)
+  cell_port VSS @M1 [-0.05, -2.45]..[0.05, -2.35] label (0, -2.4)
+  cell_port OUTP @M3 [-0.245, 0.805]..[-0.145, 0.905] label (-0.195, 0.855)
+  cell_port CLK @M3 [-0.05, 0.805]..[0.05, 0.905] label (0, 0.855)
+  cell_port OUTN @M3 [0.145, 0.805]..[0.245, 0.905] label (0.195, 0.855)
+  cell_port VINP @M3 [-0.245, -2.495]..[-0.145, -2.395] label (-0.195, -2.445)
+  cell_port VINN @M3 [0.145, -2.495]..[0.245, -2.395] label (0.195, -2.445)
+}
+top sar_strongarm_t28_core
+
+END layoutml.flat.lml
+
+BEGIN layoutml.meso.lml
+layoutml 0.3 profile=objects syntax=v0.3+role mode=strict
+technology tsmc28 variant=HPC+ deck_version=tsmcN28 store=sar_strongarm_t28_core.store.json
+units user=1u dbu=1n grid=1n
+
+cell sar_strongarm_t28_core {
+  // ── 由 gds_to_lml_algo.py 零硬编码算法从 official-v4.gds 全自动逆向生成 ──
+
+  viadef V_M12_1 @M1..@M2 size=0.11x0.11 via=1x1
+  viadef V_M23_1 @M2..@M3 size=0.11x0.11 via2=1x1
+  viadef V_M12_2 @M1..@M2 size=0.07x0.11 via=1x1
+  viadef V_M12_3 @M1..@M2 size=0.11x0.07 via=1x1
+  viadef V_M23_2 @M2..@M3 size=0.07x0.11 via2=1x1
+
+  pcell R_NMOS_1 tsmc28.nch_mac at (-0.285, -2.14) params={w=0.5 l=0.03 nf=4 fingers=NINP,NTAIL*2,NINN} realization=sha256:97d2c036b58709f6 {
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NTAIL nch_mac W=1 L=0.03 nf=2 G=&CLK SD=&TAIL,&VSS B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+  }
+
+  pcell R_NMOS_2 tsmc28.nch_mac above R_NMOS_1 gap=0.34 align=left params={w=0.5 l=0.03 nf=4 fingers=NLATN,NINP,NINN,NLATP} realization=sha256:85c6dee1bac11096 {
+    device NLATN nch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&Y B=&VSS
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+    device NLATP nch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&X B=&VSS
+  }
+
+  pcell R_PMOS_1 tsmc28.pch_mac above R_NMOS_2 gap=0.8 align=center well=@WELL:(0.23,0.28) params={w=0.5 l=0.03 nf=6 fingers=PRSTY,PLATN,PRSTN,PRSTP,PLATP,PRSTX} realization=sha256:a3919d1f21fc9ae8 {
+    device PRSTY pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&Y B=&VDD
+    device PLATN pch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&VDD B=&VDD
+    device PRSTN pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTN,&VDD B=&VDD
+    device PRSTP pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTP,&VDD B=&VDD
+    device PLATP pch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&VDD B=&VDD
+    device PRSTX pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&X B=&VDD
+  }
+
+  route &CLK {
+    path @M2 w=0.07 (R_PMOS_1.x0+0.415, R_PMOS_1.y1) -> (x, R_PMOS_1.y1+0.3) via=V_M23_2@R_PMOS_1.y1+0.15
+    path @M3 w=0.07 (R_NMOS_2.x0+0.285, R_NMOS_1.y0-0.155) -> (x, R_PMOS_1.y1+0.425)
+    path @M1 w=0.07 (R_NMOS_1.x0+0.185, R_NMOS_1.y0-0.1) -> (R_NMOS_1.x1-0.185, y) via=V_M12_3@R_NMOS_1.x0+0.285
+    path @M1 w=0.07 (R_PMOS_1.x0+0.055, R_PMOS_1.y1+0.15) -> (R_PMOS_1.x1-0.055, y) via=V_M12_1@R_PMOS_1.x0+0.415
+    path @M2 w=0.07 (R_NMOS_1.x0+0.135, R_NMOS_1.y0-0.1) -> (R_NMOS_1.x1-0.135, y) via=V_M23_1@R_NMOS_1.x0+0.285
+  }
+
+  route &OUTN {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_2.x+0.325 ys=[R_NMOS_2.SD_0.y-0.05, R_NMOS_2.y1+0.1, R_PMOS_1.y0-0.15, R_PMOS_1.y0+0.08] span_y=(R_NMOS_2.y0+0.145..R_PMOS_1.y1+0.425) via2=V_M23_1
+    path @M1 w=0.07 (R_NMOS_2.SD_0.x, R_NMOS_2.SD_0.y0) -> (x, R_NMOS_2.SD_0.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x, R_PMOS_1.SD_2.y0) -> (x, R_PMOS_1.SD_2.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x+0.225, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_2.x+0.425, y) via=V_M12_3@R_PMOS_1.SD_2.x+0.325
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x+0.225, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_2.x+0.425, y) via=V_M12_3@R_PMOS_1.SD_2.x+0.325
+    path @M2 w=0.07 (R_NMOS_2.SD_0.x-0.055, R_NMOS_2.SD_0.y-0.05) -> (R_NMOS_2.SD_0.x+0.51, y) via=V_M12_1@R_NMOS_2.SD_0.x
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x+0.175, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_2.x+0.475, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x+0.175, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_2.x+0.475, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x-0.055, R_PMOS_1.y0+0.08) -> (R_PMOS_1.SD_2.x+0.38, y) via=V_M12_1@R_PMOS_1.SD_2.x
+  }
+
+  route &OUTP {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_4.x-0.325 ys=[R_NMOS_2.y1-0.06, R_NMOS_2.y1+0.1, R_PMOS_1.y0-0.15, R_PMOS_1.SD_4.y+0.07] span_y=(R_NMOS_2.y0+0.145..R_PMOS_1.y1+0.425) via2=V_M23_1
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x, R_PMOS_1.SD_4.y0) -> (x, R_PMOS_1.SD_4.y1)
+    path @M1 w=0.07 (R_NMOS_2.SD_4.x, R_NMOS_2.SD_4.y0) -> (x, R_NMOS_2.SD_4.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x-0.425, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_4.x-0.225, y) via=V_M12_3@R_PMOS_1.SD_4.x-0.325
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x-0.425, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_4.x-0.225, y) via=V_M12_3@R_PMOS_1.SD_4.x-0.325
+    path @M2 w=0.07 (R_NMOS_2.SD_4.x-0.51, R_NMOS_2.y1-0.06) -> (R_NMOS_2.SD_4.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_4.x
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.475, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_4.x-0.175, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.475, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_4.x-0.175, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.38, R_PMOS_1.y1-0.18) -> (R_PMOS_1.SD_4.x+0.055, y) via=V_M12_1@R_PMOS_1.SD_4.x
+  }
+
+  route &TAIL {
+    collect_sd @M2 w=0.07 on R_NMOS_1.SD[&TAIL] track=top-0.06 via=V_M12_1 lead=@M1:0.07
+    path @M1 w=0.07 (R_NMOS_2.SD_2.x, R_NMOS_2.SD_2.y0) -> (x, R_NMOS_2.SD_2.y1) via=V_M12_2@R_NMOS_2.y0+0.055
+    path @M2 w=0.07 (R_NMOS_2.SD_2.x, R_NMOS_1.y1-0.06) -> (x, R_NMOS_2.y0+0.11)
+  }
+
+  route &VDD {
+    lead @M1 w=0.07 from=[(R_PMOS_1.SD_1.x-0.455, R_PMOS_1.y0-0.345), (R_PMOS_1.SD_5.x+0.455, R_PMOS_1.y0-0.345)] to_y=R_PMOS_1.y1+0.345
+    lead @M1 w=0.07 on R_PMOS_1.SD[&VDD] track=(bottom..top)
+    path @M1 w=0.07 (R_PMOS_1.SD_1.x-0.49, R_PMOS_1.y0-0.31) -> (R_PMOS_1.SD_5.x+0.49, y)
+    path @M1 w=0.07 (R_PMOS_1.SD_1.x-0.49, R_PMOS_1.y1+0.31) -> (R_PMOS_1.SD_5.x+0.49, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_1.x-0.51, R_PMOS_1.SD_3.y-0.05) -> (R_PMOS_1.SD_5.x+0.51, y) via=V_M12_1@[R_PMOS_1.SD_1.x-0.455, R_PMOS_1.SD_1.x, R_PMOS_1.SD_3.x, R_PMOS_1.SD_5.x, R_PMOS_1.SD_5.x+0.455]
+  }
+
+  route &VINN {
+    path @M1 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.065) -> (x, R_NMOS_2.y0-0.1) -> (R_NMOS_2.x1-0.255, y) via=V_M12_2@(R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.17)
+    path @M2 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.04) -> (x, R_NMOS_2.y0-0.04) via=V_M23_2@R_NMOS_1.y1+0.17
+    path @M3 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y0-0.375) -> (x, R_NMOS_2.y0-0.115)
+  }
+
+  route &VINP {
+    path @M1 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.065) -> (x, R_NMOS_2.y0-0.1) -> (R_NMOS_2.x0+0.255, y) via=V_M12_2@(R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.17)
+    path @M2 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.04) -> (x, R_NMOS_2.y0-0.04) via=V_M23_2@R_NMOS_1.y1+0.17
+    path @M3 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y0-0.375) -> (x, R_NMOS_2.y0-0.115)
+  }
+
+  route &VSS {
+    lead @M1 w=0.07 from=[(R_NMOS_1.SD_2.x-0.585, R_NMOS_1.y0-0.295), (R_NMOS_1.SD_2.x+0.585, R_NMOS_1.y0-0.295)] to_y=R_NMOS_2.y1+0.295
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x, R_NMOS_1.SD_2.y0) -> (x, R_NMOS_1.SD_2.y1)
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x-0.62, R_NMOS_1.y0-0.26) -> (R_NMOS_1.SD_2.x+0.62, y)
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x-0.62, R_NMOS_2.y1+0.26) -> (R_NMOS_1.SD_2.x+0.62, y)
+    path @M2 w=0.07 (R_NMOS_1.SD_2.x-0.64, R_NMOS_1.y0+0.14) -> (R_NMOS_1.SD_2.x+0.64, y) via=V_M12_1@[R_NMOS_1.SD_2.x-0.585, R_NMOS_1.SD_2.x, R_NMOS_1.SD_2.x+0.585]
+  }
+
+  route &X {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_6.x ys=[R_NMOS_1.SD_4.y+0.07, R_NMOS_2.SD_3.y+0.07] span_y=(R_NMOS_1.SD_4.y+0.015..R_PMOS_1.y1-0.005) via2=V_M23_1
+    path @M1 w=0.07 (R_NMOS_2.SD_3.x, R_NMOS_2.SD_3.y0) -> (x, R_NMOS_2.SD_3.y1)
+    path @M1 w=0.07 (R_NMOS_1.SD_4.x, R_NMOS_1.SD_4.y0) -> (x, R_NMOS_1.SD_4.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_6.x, R_PMOS_1.SD_6.y0) -> (x, R_PMOS_1.SD_6.y1) via=V_M12_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_PMOS_1.SD_6.x, R_PMOS_1.SD_6.y+0.04) -> (x, R_PMOS_1.y1+0.09) via=V_M23_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_NMOS_1.SD_4.x-0.055, R_NMOS_1.SD_4.y+0.07) -> (R_NMOS_1.SD_4.x+0.185, y) via=V_M12_1@R_NMOS_1.SD_4.x
+    path @M2 w=0.07 (R_NMOS_2.SD_3.x-0.055, R_NMOS_2.SD_3.y+0.07) -> (R_PMOS_1.SD_6.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_3.x
+  }
+
+  route &Y {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_0.x ys=[R_NMOS_1.SD_0.y+0.07, R_NMOS_2.SD_1.y+0.07] span_y=(R_NMOS_1.SD_0.y+0.015..R_PMOS_1.y1-0.005) via2=V_M23_1
+    path @M1 w=0.07 (R_PMOS_1.SD_0.x, R_PMOS_1.SD_0.y0) -> (x, R_PMOS_1.SD_0.y1) via=V_M12_2@R_PMOS_1.y1-0.06
+    path @M1 w=0.07 (R_NMOS_1.SD_0.x, R_NMOS_1.SD_0.y0) -> (x, R_NMOS_1.SD_0.y1)
+    path @M1 w=0.07 (R_NMOS_2.SD_1.x, R_NMOS_2.SD_1.y0) -> (x, R_NMOS_2.SD_1.y1)
+    path @M2 w=0.07 (R_PMOS_1.SD_0.x, R_PMOS_1.SD_0.y+0.04) -> (x, R_PMOS_1.y1+0.09) via=V_M23_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_NMOS_1.SD_0.x-0.185, R_NMOS_1.SD_0.y+0.07) -> (R_NMOS_1.SD_0.x+0.055, y) via=V_M12_1@R_NMOS_1.SD_0.x
+    path @M2 w=0.07 (R_PMOS_1.SD_0.x-0.055, R_NMOS_2.SD_1.y+0.07) -> (R_NMOS_2.SD_1.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_1.x
+  }
+
+  cell_port VDD @M1 on R_PMOS_1.SD_3+(0, 0.56) size=0.1x0.1
+  cell_port VSS @M1 on R_NMOS_1.SD_2+(0, -0.51) size=0.1x0.1
+  cell_port OUTP @M3 on R_PMOS_1.SD_4+(-0.325, 0.605) size=0.1x0.1
+  cell_port CLK @M3 on R_PMOS_1+(0, 0.605) size=0.1x0.1
+  cell_port OUTN @M3 on R_PMOS_1.SD_2+(0.325, 0.605) size=0.1x0.1
+  cell_port VINP @M3 on R_NMOS_1+(-0.195, -0.555) size=0.1x0.1
+  cell_port VINN @M3 on R_NMOS_1+(0.195, -0.555) size=0.1x0.1
+}
+top sar_strongarm_t28_core
+
+END layoutml.meso.lml
+
+BEGIN layoutml.store.json
+{
+  "realizations": {
+    "sha256:97d2c036b58709f6": {
+      "master": "tsmc28.nch_mac",
+      "layers_dbu_nm": {
+        "diff": [
+          [
+            495,
+            0,
+            570,
+            500
+          ],
+          [
+            0,
+            0,
+            75,
+            500
+          ],
+          [
+            0,
+            0,
+            570,
+            500
+          ],
+          [
+            365,
+            0,
+            465,
+            500
+          ],
+          [
+            235,
+            0,
+            335,
+            500
+          ],
+          [
+            105,
+            0,
+            205,
+            500
+          ]
+        ],
+        "mcon": [
+          [
+            525,
+            430,
+            565,
+            470
+          ],
+          [
+            525,
+            300,
+            565,
+            340
+          ],
+          [
+            525,
+            165,
+            565,
+            205
+          ],
+          [
+            525,
+            30,
+            565,
+            70
+          ],
+          [
+            395,
+            430,
+            435,
+            470
+          ],
+          [
+            395,
+            300,
+            435,
+            340
+          ],
+          [
+            395,
+            165,
+            435,
+            205
+          ],
+          [
+            395,
+            30,
+            435,
+            70
+          ],
+          [
+            265,
+            430,
+            305,
+            470
+          ],
+          [
+            265,
+            300,
+            305,
+            340
+          ],
+          [
+            265,
+            165,
+            305,
+            205
+          ],
+          [
+            265,
+            30,
+            305,
+            70
+          ],
+          [
+            135,
+            430,
+            175,
+            470
+          ],
+          [
+            135,
+            300,
+            175,
+            340
+          ],
+          [
+            135,
+            165,
+            175,
+            205
+          ],
+          [
+            135,
+            30,
+            175,
+            70
+          ],
+          [
+            5,
+            430,
+            45,
+            470
+          ],
+          [
+            5,
+            300,
+            45,
+            340
+          ],
+          [
+            5,
+            165,
+            45,
+            205
+          ],
+          [
+            5,
+            30,
+            45,
+            70
+          ]
+        ],
+        "met1": [
+          [
+            520,
+            0,
+            570,
+            500
+          ],
+          [
+            390,
+            0,
+            440,
+            500
+          ],
+          [
+            260,
+            0,
+            310,
+            500
+          ],
+          [
+            130,
+            0,
+            180,
+            500
+          ],
+          [
+            0,
+            0,
+            50,
+            500
+          ]
+        ],
+        "poly": [
+          [
+            465,
+            500,
+            495,
+            580
+          ],
+          [
+            465,
+            -80,
+            495,
+            0
+          ],
+          [
+            465,
+            -80,
+            495,
+            580
+          ],
+          [
+            335,
+            500,
+            365,
+            580
+          ],
+          [
+            335,
+            -80,
+            365,
+            0
+          ],
+          [
+            335,
+            -80,
+            365,
+            580
+          ],
+          [
+            205,
+            500,
+            235,
+            580
+          ],
+          [
+            205,
+            -80,
+            235,
+            0
+          ],
+          [
+            205,
+            -80,
+            235,
+            580
+          ],
+          [
+            75,
+            500,
+            105,
+            580
+          ],
+          [
+            75,
+            -80,
+            105,
+            0
+          ],
+          [
+            75,
+            0,
+            105,
+            500
+          ],
+          [
+            75,
+            -80,
+            105,
+            580
+          ]
+        ],
+        "nsdm": [
+          [
+            -65,
+            -145,
+            635,
+            645
+          ]
+        ],
+        "od_25": [
+          [
+            -105,
+            -105,
+            675,
+            605
+          ]
+        ],
+        "poly_dummy": [
+          [
+            725,
+            -60,
+            755,
+            560
+          ],
+          [
+            595,
+            -60,
+            625,
+            560
+          ],
+          [
+            -185,
+            -60,
+            -155,
+            560
+          ],
+          [
+            -55,
+            -60,
+            -25,
+            560
+          ]
+        ]
+      },
+      "ports_local_nm": [
+        {
+          "port": "SD_0",
+          "role": "@M1",
+          "net": "Y",
+          "box": [
+            0,
+            0,
+            50,
+            500
+          ]
+        },
+        {
+          "port": "SD_1",
+          "role": "@M1",
+          "net": "TAIL",
+          "box": [
+            130,
+            0,
+            180,
+            500
+          ]
+        },
+        {
+          "port": "SD_2",
+          "role": "@M1",
+          "net": "VSS",
+          "box": [
+            260,
+            0,
+            310,
+            500
+          ]
+        },
+        {
+          "port": "SD_3",
+          "role": "@M1",
+          "net": "TAIL",
+          "box": [
+            390,
+            0,
+            440,
+            500
+          ]
+        },
+        {
+          "port": "SD_4",
+          "role": "@M1",
+          "net": "X",
+          "box": [
+            520,
+            0,
+            570,
+            500
+          ]
+        }
+      ]
+    },
+    "sha256:85c6dee1bac11096": {
+      "master": "tsmc28.nch_mac",
+      "layers_dbu_nm": {
+        "diff": [
+          [
+            495,
+            0,
+            570,
+            500
+          ],
+          [
+            0,
+            0,
+            75,
+            500
+          ],
+          [
+            0,
+            0,
+            570,
+            500
+          ],
+          [
+            365,
+            0,
+            465,
+            500
+          ],
+          [
+            235,
+            0,
+            335,
+            500
+          ],
+          [
+            105,
+            0,
+            205,
+            500
+          ]
+        ],
+        "mcon": [
+          [
+            525,
+            430,
+            565,
+            470
+          ],
+          [
+            525,
+            300,
+            565,
+            340
+          ],
+          [
+            525,
+            165,
+            565,
+            205
+          ],
+          [
+            525,
+            30,
+            565,
+            70
+          ],
+          [
+            395,
+            430,
+            435,
+            470
+          ],
+          [
+            395,
+            300,
+            435,
+            340
+          ],
+          [
+            395,
+            165,
+            435,
+            205
+          ],
+          [
+            395,
+            30,
+            435,
+            70
+          ],
+          [
+            265,
+            430,
+            305,
+            470
+          ],
+          [
+            265,
+            300,
+            305,
+            340
+          ],
+          [
+            265,
+            165,
+            305,
+            205
+          ],
+          [
+            265,
+            30,
+            305,
+            70
+          ],
+          [
+            135,
+            430,
+            175,
+            470
+          ],
+          [
+            135,
+            300,
+            175,
+            340
+          ],
+          [
+            135,
+            165,
+            175,
+            205
+          ],
+          [
+            135,
+            30,
+            175,
+            70
+          ],
+          [
+            5,
+            430,
+            45,
+            470
+          ],
+          [
+            5,
+            300,
+            45,
+            340
+          ],
+          [
+            5,
+            165,
+            45,
+            205
+          ],
+          [
+            5,
+            30,
+            45,
+            70
+          ]
+        ],
+        "met1": [
+          [
+            520,
+            0,
+            570,
+            500
+          ],
+          [
+            390,
+            0,
+            440,
+            500
+          ],
+          [
+            260,
+            0,
+            310,
+            500
+          ],
+          [
+            130,
+            0,
+            180,
+            500
+          ],
+          [
+            0,
+            0,
+            50,
+            500
+          ]
+        ],
+        "poly": [
+          [
+            465,
+            500,
+            495,
+            580
+          ],
+          [
+            465,
+            -80,
+            495,
+            0
+          ],
+          [
+            465,
+            -80,
+            495,
+            580
+          ],
+          [
+            335,
+            500,
+            365,
+            580
+          ],
+          [
+            335,
+            -80,
+            365,
+            0
+          ],
+          [
+            335,
+            -80,
+            365,
+            580
+          ],
+          [
+            205,
+            500,
+            235,
+            580
+          ],
+          [
+            205,
+            -80,
+            235,
+            0
+          ],
+          [
+            205,
+            -80,
+            235,
+            580
+          ],
+          [
+            75,
+            500,
+            105,
+            580
+          ],
+          [
+            75,
+            -80,
+            105,
+            0
+          ],
+          [
+            75,
+            0,
+            105,
+            500
+          ],
+          [
+            75,
+            -80,
+            105,
+            580
+          ]
+        ],
+        "nsdm": [
+          [
+            -65,
+            -145,
+            635,
+            645
+          ]
+        ],
+        "od_25": [
+          [
+            -105,
+            -105,
+            675,
+            605
+          ]
+        ],
+        "poly_dummy": [
+          [
+            725,
+            -60,
+            755,
+            560
+          ],
+          [
+            595,
+            -60,
+            625,
+            560
+          ],
+          [
+            -185,
+            -60,
+            -155,
+            560
+          ],
+          [
+            -55,
+            -60,
+            -25,
+            560
+          ]
+        ]
+      },
+      "ports_local_nm": [
+        {
+          "port": "SD_0",
+          "role": "@M1",
+          "net": "OUTN",
+          "box": [
+            0,
+            0,
+            50,
+            500
+          ]
+        },
+        {
+          "port": "SD_1",
+          "role": "@M1",
+          "net": "Y",
+          "box": [
+            130,
+            0,
+            180,
+            500
+          ]
+        },
+        {
+          "port": "SD_2",
+          "role": "@M1",
+          "net": "TAIL",
+          "box": [
+            260,
+            0,
+            310,
+            500
+          ]
+        },
+        {
+          "port": "SD_3",
+          "role": "@M1",
+          "net": "X",
+          "box": [
+            390,
+            0,
+            440,
+            500
+          ]
+        },
+        {
+          "port": "SD_4",
+          "role": "@M1",
+          "net": "OUTP",
+          "box": [
+            520,
+            0,
+            570,
+            500
+          ]
+        }
+      ]
+    },
+    "sha256:a3919d1f21fc9ae8": {
+      "master": "tsmc28.pch_mac",
+      "layers_dbu_nm": {
+        "diff": [
+          [
+            755,
+            0,
+            830,
+            500
+          ],
+          [
+            0,
+            0,
+            75,
+            500
+          ],
+          [
+            0,
+            0,
+            830,
+            500
+          ],
+          [
+            625,
+            0,
+            725,
+            500
+          ],
+          [
+            495,
+            0,
+            595,
+            500
+          ],
+          [
+            365,
+            0,
+            465,
+            500
+          ],
+          [
+            235,
+            0,
+            335,
+            500
+          ],
+          [
+            105,
+            0,
+            205,
+            500
+          ]
+        ],
+        "mcon": [
+          [
+            785,
+            430,
+            825,
+            470
+          ],
+          [
+            785,
+            300,
+            825,
+            340
+          ],
+          [
+            785,
+            165,
+            825,
+            205
+          ],
+          [
+            785,
+            30,
+            825,
+            70
+          ],
+          [
+            655,
+            430,
+            695,
+            470
+          ],
+          [
+            655,
+            300,
+            695,
+            340
+          ],
+          [
+            655,
+            165,
+            695,
+            205
+          ],
+          [
+            655,
+            30,
+            695,
+            70
+          ],
+          [
+            525,
+            430,
+            565,
+            470
+          ],
+          [
+            525,
+            300,
+            565,
+            340
+          ],
+          [
+            525,
+            165,
+            565,
+            205
+          ],
+          [
+            525,
+            30,
+            565,
+            70
+          ],
+          [
+            395,
+            430,
+            435,
+            470
+          ],
+          [
+            395,
+            300,
+            435,
+            340
+          ],
+          [
+            395,
+            165,
+            435,
+            205
+          ],
+          [
+            395,
+            30,
+            435,
+            70
+          ],
+          [
+            265,
+            430,
+            305,
+            470
+          ],
+          [
+            265,
+            300,
+            305,
+            340
+          ],
+          [
+            265,
+            165,
+            305,
+            205
+          ],
+          [
+            265,
+            30,
+            305,
+            70
+          ],
+          [
+            135,
+            430,
+            175,
+            470
+          ],
+          [
+            135,
+            300,
+            175,
+            340
+          ],
+          [
+            135,
+            165,
+            175,
+            205
+          ],
+          [
+            135,
+            30,
+            175,
+            70
+          ],
+          [
+            5,
+            430,
+            45,
+            470
+          ],
+          [
+            5,
+            300,
+            45,
+            340
+          ],
+          [
+            5,
+            165,
+            45,
+            205
+          ],
+          [
+            5,
+            30,
+            45,
+            70
+          ]
+        ],
+        "met1": [
+          [
+            780,
+            0,
+            830,
+            500
+          ],
+          [
+            650,
+            0,
+            700,
+            500
+          ],
+          [
+            520,
+            0,
+            570,
+            500
+          ],
+          [
+            390,
+            0,
+            440,
+            500
+          ],
+          [
+            260,
+            0,
+            310,
+            500
+          ],
+          [
+            130,
+            0,
+            180,
+            500
+          ],
+          [
+            0,
+            0,
+            50,
+            500
+          ]
+        ],
+        "poly": [
+          [
+            725,
+            500,
+            755,
+            580
+          ],
+          [
+            725,
+            -80,
+            755,
+            0
+          ],
+          [
+            725,
+            -80,
+            755,
+            580
+          ],
+          [
+            595,
+            500,
+            625,
+            580
+          ],
+          [
+            595,
+            -80,
+            625,
+            0
+          ],
+          [
+            595,
+            -80,
+            625,
+            580
+          ],
+          [
+            465,
+            500,
+            495,
+            580
+          ],
+          [
+            465,
+            -80,
+            495,
+            0
+          ],
+          [
+            465,
+            -80,
+            495,
+            580
+          ],
+          [
+            335,
+            500,
+            365,
+            580
+          ],
+          [
+            335,
+            -80,
+            365,
+            0
+          ],
+          [
+            335,
+            -80,
+            365,
+            580
+          ],
+          [
+            205,
+            500,
+            235,
+            580
+          ],
+          [
+            205,
+            -80,
+            235,
+            0
+          ],
+          [
+            205,
+            -80,
+            235,
+            580
+          ],
+          [
+            75,
+            500,
+            105,
+            580
+          ],
+          [
+            75,
+            -80,
+            105,
+            0
+          ],
+          [
+            75,
+            0,
+            105,
+            500
+          ],
+          [
+            75,
+            -80,
+            105,
+            580
+          ]
+        ],
+        "psdm": [
+          [
+            -65,
+            -145,
+            895,
+            645
+          ]
+        ],
+        "nwell": [
+          [
+            -105,
+            -105,
+            935,
+            605
+          ]
+        ],
+        "poly_dummy": [
+          [
+            985,
+            -60,
+            1015,
+            560
+          ],
+          [
+            855,
+            -60,
+            885,
+            560
+          ],
+          [
+            -185,
+            -60,
+            -155,
+            560
+          ],
+          [
+            -55,
+            -60,
+            -25,
+            560
+          ]
+        ],
+        "ehvt_p": [
+          [
+            -105,
+            -120,
+            935,
+            620
+          ]
+        ]
+      },
+      "ports_local_nm": [
+        {
+          "port": "SD_0",
+          "role": "@M1",
+          "net": "Y",
+          "box": [
+            0,
+            0,
+            50,
+            500
+          ]
+        },
+        {
+          "port": "SD_1",
+          "role": "@M1",
+          "net": "VDD",
+          "box": [
+            130,
+            0,
+            180,
+            500
+          ]
+        },
+        {
+          "port": "SD_2",
+          "role": "@M1",
+          "net": "OUTN",
+          "box": [
+            260,
+            0,
+            310,
+            500
+          ]
+        },
+        {
+          "port": "SD_3",
+          "role": "@M1",
+          "net": "VDD",
+          "box": [
+            390,
+            0,
+            440,
+            500
+          ]
+        },
+        {
+          "port": "SD_4",
+          "role": "@M1",
+          "net": "OUTP",
+          "box": [
+            520,
+            0,
+            570,
+            500
+          ]
+        },
+        {
+          "port": "SD_5",
+          "role": "@M1",
+          "net": "VDD",
+          "box": [
+            650,
+            0,
+            700,
+            500
+          ]
+        },
+        {
+          "port": "SD_6",
+          "role": "@M1",
+          "net": "X",
+          "box": [
+            780,
+            0,
+            830,
+            500
+          ]
+        }
+      ]
+    }
+  }
+}
+END layoutml.store.json
+
+BEGIN reference.cdl
+* Electrical source SHA256 c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3
+.SUBCKT sar_strongarm_t28_core CLK OUTN OUTP VDD VINN VINP VSS
+MNLATN OUTN OUTP Y VSS nch_mac L=30n W=500n
+MNLATP OUTP OUTN X VSS nch_mac L=30n W=500n
+MNINN X VINN TAIL VSS nch_mac L=30n W=1u
+MNINP Y VINP TAIL VSS nch_mac L=30n W=1u
+MNTAIL TAIL CLK VSS VSS nch_mac L=30n W=1u
+MPRSTN OUTN CLK VDD VDD pch_mac L=30n W=500n
+MPRSTP OUTP CLK VDD VDD pch_mac L=30n W=500n
+MPRSTY Y CLK VDD VDD pch_mac L=30n W=500n
+MPRSTX X CLK VDD VDD pch_mac L=30n W=500n
+MPLATN OUTN OUTP VDD VDD pch_mac L=30n W=500n
+MPLATP OUTP OUTN VDD VDD pch_mac L=30n W=500n
+.ENDS sar_strongarm_t28_core
+
+END reference.cdl
+
+The following geometry is compiled by upstream meso_compiler.py; it may differ from source GDS.
+ALL_FLATTENED_SHAPES_JSONL
+{"top":"sar_strongarm_t28_core","dbu_um":0.001,"coordinate_rule":"integer DBU; multiply by dbu_um for micrometres","shape_count":389,"note":"Exact polygon/path/text coordinates, not bounding boxes alone."}
+{"id":0,"layer":3,"datatype":0,"bbox_dbu":[-830,-425,830,925],"type":"box","properties":{}}
+{"id":1,"layer":3,"datatype":0,"bbox_dbu":[-520,-105,520,605],"type":"box","properties":{}}
+{"id":2,"layer":6,"datatype":0,"bbox_dbu":[210,-2140,285,-1640],"type":"box","properties":{}}
+{"id":3,"layer":6,"datatype":0,"bbox_dbu":[-285,-2140,-210,-1640],"type":"box","properties":{}}
+{"id":4,"layer":6,"datatype":0,"bbox_dbu":[-285,-2140,285,-1640],"type":"box","properties":{}}
+{"id":5,"layer":6,"datatype":0,"bbox_dbu":[80,-2140,180,-1640],"type":"box","properties":{}}
+{"id":6,"layer":6,"datatype":0,"bbox_dbu":[-50,-2140,50,-1640],"type":"box","properties":{}}
+{"id":7,"layer":6,"datatype":0,"bbox_dbu":[-180,-2140,-80,-1640],"type":"box","properties":{}}
+{"id":8,"layer":6,"datatype":0,"bbox_dbu":[210,-1300,285,-800],"type":"box","properties":{}}
+{"id":9,"layer":6,"datatype":0,"bbox_dbu":[-285,-1300,-210,-800],"type":"box","properties":{}}
+{"id":10,"layer":6,"datatype":0,"bbox_dbu":[-285,-1300,285,-800],"type":"box","properties":{}}
+{"id":11,"layer":6,"datatype":0,"bbox_dbu":[80,-1300,180,-800],"type":"box","properties":{}}
+{"id":12,"layer":6,"datatype":0,"bbox_dbu":[-50,-1300,50,-800],"type":"box","properties":{}}
+{"id":13,"layer":6,"datatype":0,"bbox_dbu":[-180,-1300,-80,-800],"type":"box","properties":{}}
+{"id":14,"layer":6,"datatype":0,"bbox_dbu":[340,0,415,500],"type":"box","properties":{}}
+{"id":15,"layer":6,"datatype":0,"bbox_dbu":[-415,0,-340,500],"type":"box","properties":{}}
+{"id":16,"layer":6,"datatype":0,"bbox_dbu":[-415,0,415,500],"type":"box","properties":{}}
+{"id":17,"layer":6,"datatype":0,"bbox_dbu":[210,0,310,500],"type":"box","properties":{}}
+{"id":18,"layer":6,"datatype":0,"bbox_dbu":[80,0,180,500],"type":"box","properties":{}}
+{"id":19,"layer":6,"datatype":0,"bbox_dbu":[-50,0,50,500],"type":"box","properties":{}}
+{"id":20,"layer":6,"datatype":0,"bbox_dbu":[-180,0,-80,500],"type":"box","properties":{}}
+{"id":21,"layer":6,"datatype":0,"bbox_dbu":[-310,0,-210,500],"type":"box","properties":{}}
+{"id":22,"layer":17,"datatype":0,"bbox_dbu":[180,-1640,210,-1560],"type":"box","properties":{}}
+{"id":23,"layer":17,"datatype":0,"bbox_dbu":[180,-2220,210,-2140],"type":"box","properties":{}}
+{"id":24,"layer":17,"datatype":0,"bbox_dbu":[180,-2220,210,-1560],"type":"box","properties":{}}
+{"id":25,"layer":17,"datatype":0,"bbox_dbu":[50,-1640,80,-1560],"type":"box","properties":{}}
+{"id":26,"layer":17,"datatype":0,"bbox_dbu":[50,-2220,80,-2140],"type":"box","properties":{}}
+{"id":27,"layer":17,"datatype":0,"bbox_dbu":[50,-2220,80,-1560],"type":"box","properties":{}}
+{"id":28,"layer":17,"datatype":0,"bbox_dbu":[-80,-1640,-50,-1560],"type":"box","properties":{}}
+{"id":29,"layer":17,"datatype":0,"bbox_dbu":[-80,-2220,-50,-2140],"type":"box","properties":{}}
+{"id":30,"layer":17,"datatype":0,"bbox_dbu":[-80,-2220,-50,-1560],"type":"box","properties":{}}
+{"id":31,"layer":17,"datatype":0,"bbox_dbu":[-210,-1640,-180,-1560],"type":"box","properties":{}}
+{"id":32,"layer":17,"datatype":0,"bbox_dbu":[-210,-2220,-180,-2140],"type":"box","properties":{}}
+{"id":33,"layer":17,"datatype":0,"bbox_dbu":[-210,-2140,-180,-1640],"type":"box","properties":{}}
+{"id":34,"layer":17,"datatype":0,"bbox_dbu":[-210,-2220,-180,-1560],"type":"box","properties":{}}
+{"id":35,"layer":17,"datatype":0,"bbox_dbu":[180,-800,210,-720],"type":"box","properties":{}}
+{"id":36,"layer":17,"datatype":0,"bbox_dbu":[180,-1380,210,-1300],"type":"box","properties":{}}
+{"id":37,"layer":17,"datatype":0,"bbox_dbu":[180,-1380,210,-720],"type":"box","properties":{}}
+{"id":38,"layer":17,"datatype":0,"bbox_dbu":[50,-800,80,-720],"type":"box","properties":{}}
+{"id":39,"layer":17,"datatype":0,"bbox_dbu":[50,-1380,80,-1300],"type":"box","properties":{}}
+{"id":40,"layer":17,"datatype":0,"bbox_dbu":[50,-1380,80,-720],"type":"box","properties":{}}
+{"id":41,"layer":17,"datatype":0,"bbox_dbu":[-80,-800,-50,-720],"type":"box","properties":{}}
+{"id":42,"layer":17,"datatype":0,"bbox_dbu":[-80,-1380,-50,-1300],"type":"box","properties":{}}
+{"id":43,"layer":17,"datatype":0,"bbox_dbu":[-80,-1380,-50,-720],"type":"box","properties":{}}
+{"id":44,"layer":17,"datatype":0,"bbox_dbu":[-210,-800,-180,-720],"type":"box","properties":{}}
+{"id":45,"layer":17,"datatype":0,"bbox_dbu":[-210,-1380,-180,-1300],"type":"box","properties":{}}
+{"id":46,"layer":17,"datatype":0,"bbox_dbu":[-210,-1300,-180,-800],"type":"box","properties":{}}
+{"id":47,"layer":17,"datatype":0,"bbox_dbu":[-210,-1380,-180,-720],"type":"box","properties":{}}
+{"id":48,"layer":17,"datatype":0,"bbox_dbu":[310,500,340,580],"type":"box","properties":{}}
+{"id":49,"layer":17,"datatype":0,"bbox_dbu":[310,-80,340,0],"type":"box","properties":{}}
+{"id":50,"layer":17,"datatype":0,"bbox_dbu":[310,-80,340,580],"type":"box","properties":{}}
+{"id":51,"layer":17,"datatype":0,"bbox_dbu":[180,500,210,580],"type":"box","properties":{}}
+{"id":52,"layer":17,"datatype":0,"bbox_dbu":[180,-80,210,0],"type":"box","properties":{}}
+{"id":53,"layer":17,"datatype":0,"bbox_dbu":[180,-80,210,580],"type":"box","properties":{}}
+{"id":54,"layer":17,"datatype":0,"bbox_dbu":[50,500,80,580],"type":"box","properties":{}}
+{"id":55,"layer":17,"datatype":0,"bbox_dbu":[50,-80,80,0],"type":"box","properties":{}}
+{"id":56,"layer":17,"datatype":0,"bbox_dbu":[50,-80,80,580],"type":"box","properties":{}}
+{"id":57,"layer":17,"datatype":0,"bbox_dbu":[-80,500,-50,580],"type":"box","properties":{}}
+{"id":58,"layer":17,"datatype":0,"bbox_dbu":[-80,-80,-50,0],"type":"box","properties":{}}
+{"id":59,"layer":17,"datatype":0,"bbox_dbu":[-80,-80,-50,580],"type":"box","properties":{}}
+{"id":60,"layer":17,"datatype":0,"bbox_dbu":[-210,500,-180,580],"type":"box","properties":{}}
+{"id":61,"layer":17,"datatype":0,"bbox_dbu":[-210,-80,-180,0],"type":"box","properties":{}}
+{"id":62,"layer":17,"datatype":0,"bbox_dbu":[-210,-80,-180,580],"type":"box","properties":{}}
+{"id":63,"layer":17,"datatype":0,"bbox_dbu":[-340,500,-310,580],"type":"box","properties":{}}
+{"id":64,"layer":17,"datatype":0,"bbox_dbu":[-340,-80,-310,0],"type":"box","properties":{}}
+{"id":65,"layer":17,"datatype":0,"bbox_dbu":[-340,0,-310,500],"type":"box","properties":{}}
+{"id":66,"layer":17,"datatype":0,"bbox_dbu":[-340,-80,-310,580],"type":"box","properties":{}}
+{"id":67,"layer":17,"datatype":7,"bbox_dbu":[440,-2200,470,-1580],"type":"box","properties":{}}
+{"id":68,"layer":17,"datatype":7,"bbox_dbu":[310,-2200,340,-1580],"type":"box","properties":{}}
+{"id":69,"layer":17,"datatype":7,"bbox_dbu":[-470,-2200,-440,-1580],"type":"box","properties":{}}
+{"id":70,"layer":17,"datatype":7,"bbox_dbu":[-340,-2200,-310,-1580],"type":"box","properties":{}}
+{"id":71,"layer":17,"datatype":7,"bbox_dbu":[440,-1360,470,-740],"type":"box","properties":{}}
+{"id":72,"layer":17,"datatype":7,"bbox_dbu":[310,-1360,340,-740],"type":"box","properties":{}}
+{"id":73,"layer":17,"datatype":7,"bbox_dbu":[-470,-1360,-440,-740],"type":"box","properties":{}}
+{"id":74,"layer":17,"datatype":7,"bbox_dbu":[-340,-1360,-310,-740],"type":"box","properties":{}}
+{"id":75,"layer":17,"datatype":7,"bbox_dbu":[570,-60,600,560],"type":"box","properties":{}}
+{"id":76,"layer":17,"datatype":7,"bbox_dbu":[440,-60,470,560],"type":"box","properties":{}}
+{"id":77,"layer":17,"datatype":7,"bbox_dbu":[-600,-60,-570,560],"type":"box","properties":{}}
+{"id":78,"layer":17,"datatype":7,"bbox_dbu":[-470,-60,-440,560],"type":"box","properties":{}}
+{"id":79,"layer":25,"datatype":0,"bbox_dbu":[-480,-145,480,645],"type":"box","properties":{}}
+{"id":80,"layer":26,"datatype":0,"bbox_dbu":[-350,-2285,350,-1495],"type":"box","properties":{}}
+{"id":81,"layer":26,"datatype":0,"bbox_dbu":[-350,-1445,350,-655],"type":"box","properties":{}}
+{"id":82,"layer":30,"datatype":0,"bbox_dbu":[240,-1710,280,-1670],"type":"box","properties":{}}
+{"id":83,"layer":30,"datatype":0,"bbox_dbu":[240,-1840,280,-1800],"type":"box","properties":{}}
+{"id":84,"layer":30,"datatype":0,"bbox_dbu":[240,-1975,280,-1935],"type":"box","properties":{}}
+{"id":85,"layer":30,"datatype":0,"bbox_dbu":[240,-2110,280,-2070],"type":"box","properties":{}}
+{"id":86,"layer":30,"datatype":0,"bbox_dbu":[110,-1710,150,-1670],"type":"box","properties":{}}
+{"id":87,"layer":30,"datatype":0,"bbox_dbu":[110,-1840,150,-1800],"type":"box","properties":{}}
+{"id":88,"layer":30,"datatype":0,"bbox_dbu":[110,-1975,150,-1935],"type":"box","properties":{}}
+{"id":89,"layer":30,"datatype":0,"bbox_dbu":[110,-2110,150,-2070],"type":"box","properties":{}}
+{"id":90,"layer":30,"datatype":0,"bbox_dbu":[-20,-1710,20,-1670],"type":"box","properties":{}}
+{"id":91,"layer":30,"datatype":0,"bbox_dbu":[-20,-1840,20,-1800],"type":"box","properties":{}}
+{"id":92,"layer":30,"datatype":0,"bbox_dbu":[-20,-1975,20,-1935],"type":"box","properties":{}}
+{"id":93,"layer":30,"datatype":0,"bbox_dbu":[-20,-2110,20,-2070],"type":"box","properties":{}}
+{"id":94,"layer":30,"datatype":0,"bbox_dbu":[-150,-1710,-110,-1670],"type":"box","properties":{}}
+{"id":95,"layer":30,"datatype":0,"bbox_dbu":[-150,-1840,-110,-1800],"type":"box","properties":{}}
+{"id":96,"layer":30,"datatype":0,"bbox_dbu":[-150,-1975,-110,-1935],"type":"box","properties":{}}
+{"id":97,"layer":30,"datatype":0,"bbox_dbu":[-150,-2110,-110,-2070],"type":"box","properties":{}}
+{"id":98,"layer":30,"datatype":0,"bbox_dbu":[-280,-1710,-240,-1670],"type":"box","properties":{}}
+{"id":99,"layer":30,"datatype":0,"bbox_dbu":[-280,-1840,-240,-1800],"type":"box","properties":{}}
+{"id":100,"layer":30,"datatype":0,"bbox_dbu":[-280,-1975,-240,-1935],"type":"box","properties":{}}
+{"id":101,"layer":30,"datatype":0,"bbox_dbu":[-280,-2110,-240,-2070],"type":"box","properties":{}}
+{"id":102,"layer":30,"datatype":0,"bbox_dbu":[240,-870,280,-830],"type":"box","properties":{}}
+{"id":103,"layer":30,"datatype":0,"bbox_dbu":[240,-1000,280,-960],"type":"box","properties":{}}
+{"id":104,"layer":30,"datatype":0,"bbox_dbu":[240,-1135,280,-1095],"type":"box","properties":{}}
+{"id":105,"layer":30,"datatype":0,"bbox_dbu":[240,-1270,280,-1230],"type":"box","properties":{}}
+{"id":106,"layer":30,"datatype":0,"bbox_dbu":[110,-870,150,-830],"type":"box","properties":{}}
+{"id":107,"layer":30,"datatype":0,"bbox_dbu":[110,-1000,150,-960],"type":"box","properties":{}}
+{"id":108,"layer":30,"datatype":0,"bbox_dbu":[110,-1135,150,-1095],"type":"box","properties":{}}
+{"id":109,"layer":30,"datatype":0,"bbox_dbu":[110,-1270,150,-1230],"type":"box","properties":{}}
+{"id":110,"layer":30,"datatype":0,"bbox_dbu":[-20,-870,20,-830],"type":"box","properties":{}}
+{"id":111,"layer":30,"datatype":0,"bbox_dbu":[-20,-1000,20,-960],"type":"box","properties":{}}
+{"id":112,"layer":30,"datatype":0,"bbox_dbu":[-20,-1135,20,-1095],"type":"box","properties":{}}
+{"id":113,"layer":30,"datatype":0,"bbox_dbu":[-20,-1270,20,-1230],"type":"box","properties":{}}
+{"id":114,"layer":30,"datatype":0,"bbox_dbu":[-150,-870,-110,-830],"type":"box","properties":{}}
+{"id":115,"layer":30,"datatype":0,"bbox_dbu":[-150,-1000,-110,-960],"type":"box","properties":{}}
+{"id":116,"layer":30,"datatype":0,"bbox_dbu":[-150,-1135,-110,-1095],"type":"box","properties":{}}
+{"id":117,"layer":30,"datatype":0,"bbox_dbu":[-150,-1270,-110,-1230],"type":"box","properties":{}}
+{"id":118,"layer":30,"datatype":0,"bbox_dbu":[-280,-870,-240,-830],"type":"box","properties":{}}
+{"id":119,"layer":30,"datatype":0,"bbox_dbu":[-280,-1000,-240,-960],"type":"box","properties":{}}
+{"id":120,"layer":30,"datatype":0,"bbox_dbu":[-280,-1135,-240,-1095],"type":"box","properties":{}}
+{"id":121,"layer":30,"datatype":0,"bbox_dbu":[-280,-1270,-240,-1230],"type":"box","properties":{}}
+{"id":122,"layer":30,"datatype":0,"bbox_dbu":[370,430,410,470],"type":"box","properties":{}}
+{"id":123,"layer":30,"datatype":0,"bbox_dbu":[370,300,410,340],"type":"box","properties":{}}
+{"id":124,"layer":30,"datatype":0,"bbox_dbu":[370,165,410,205],"type":"box","properties":{}}
+{"id":125,"layer":30,"datatype":0,"bbox_dbu":[370,30,410,70],"type":"box","properties":{}}
+{"id":126,"layer":30,"datatype":0,"bbox_dbu":[240,430,280,470],"type":"box","properties":{}}
+{"id":127,"layer":30,"datatype":0,"bbox_dbu":[240,300,280,340],"type":"box","properties":{}}
+{"id":128,"layer":30,"datatype":0,"bbox_dbu":[240,165,280,205],"type":"box","properties":{}}
+{"id":129,"layer":30,"datatype":0,"bbox_dbu":[240,30,280,70],"type":"box","properties":{}}
+{"id":130,"layer":30,"datatype":0,"bbox_dbu":[110,430,150,470],"type":"box","properties":{}}
+{"id":131,"layer":30,"datatype":0,"bbox_dbu":[110,300,150,340],"type":"box","properties":{}}
+{"id":132,"layer":30,"datatype":0,"bbox_dbu":[110,165,150,205],"type":"box","properties":{}}
+{"id":133,"layer":30,"datatype":0,"bbox_dbu":[110,30,150,70],"type":"box","properties":{}}
+{"id":134,"layer":30,"datatype":0,"bbox_dbu":[-20,430,20,470],"type":"box","properties":{}}
+{"id":135,"layer":30,"datatype":0,"bbox_dbu":[-20,300,20,340],"type":"box","properties":{}}
+{"id":136,"layer":30,"datatype":0,"bbox_dbu":[-20,165,20,205],"type":"box","properties":{}}
+{"id":137,"layer":30,"datatype":0,"bbox_dbu":[-20,30,20,70],"type":"box","properties":{}}
+{"id":138,"layer":30,"datatype":0,"bbox_dbu":[-150,430,-110,470],"type":"box","properties":{}}
+{"id":139,"layer":30,"datatype":0,"bbox_dbu":[-150,300,-110,340],"type":"box","properties":{}}
+{"id":140,"layer":30,"datatype":0,"bbox_dbu":[-150,165,-110,205],"type":"box","properties":{}}
+{"id":141,"layer":30,"datatype":0,"bbox_dbu":[-150,30,-110,70],"type":"box","properties":{}}
+{"id":142,"layer":30,"datatype":0,"bbox_dbu":[-280,430,-240,470],"type":"box","properties":{}}
+{"id":143,"layer":30,"datatype":0,"bbox_dbu":[-280,300,-240,340],"type":"box","properties":{}}
+{"id":144,"layer":30,"datatype":0,"bbox_dbu":[-280,165,-240,205],"type":"box","properties":{}}
+{"id":145,"layer":30,"datatype":0,"bbox_dbu":[-280,30,-240,70],"type":"box","properties":{}}
+{"id":146,"layer":30,"datatype":0,"bbox_dbu":[-410,430,-370,470],"type":"box","properties":{}}
+{"id":147,"layer":30,"datatype":0,"bbox_dbu":[-410,300,-370,340],"type":"box","properties":{}}
+{"id":148,"layer":30,"datatype":0,"bbox_dbu":[-410,165,-370,205],"type":"box","properties":{}}
+{"id":149,"layer":30,"datatype":0,"bbox_dbu":[-410,30,-370,70],"type":"box","properties":{}}
+{"id":150,"layer":31,"datatype":0,"bbox_dbu":[235,-2140,285,-1640],"type":"box","properties":{}}
+{"id":151,"layer":31,"datatype":0,"bbox_dbu":[105,-2140,155,-1640],"type":"box","properties":{}}
+{"id":152,"layer":31,"datatype":0,"bbox_dbu":[-25,-2140,25,-1640],"type":"box","properties":{}}
+{"id":153,"layer":31,"datatype":0,"bbox_dbu":[-155,-2140,-105,-1640],"type":"box","properties":{}}
+{"id":154,"layer":31,"datatype":0,"bbox_dbu":[-285,-2140,-235,-1640],"type":"box","properties":{}}
+{"id":155,"layer":31,"datatype":0,"bbox_dbu":[235,-1300,285,-800],"type":"box","properties":{}}
+{"id":156,"layer":31,"datatype":0,"bbox_dbu":[105,-1300,155,-800],"type":"box","properties":{}}
+{"id":157,"layer":31,"datatype":0,"bbox_dbu":[-25,-1300,25,-800],"type":"box","properties":{}}
+{"id":158,"layer":31,"datatype":0,"bbox_dbu":[-155,-1300,-105,-800],"type":"box","properties":{}}
+{"id":159,"layer":31,"datatype":0,"bbox_dbu":[-285,-1300,-235,-800],"type":"box","properties":{}}
+{"id":160,"layer":31,"datatype":0,"bbox_dbu":[365,0,415,500],"type":"box","properties":{}}
+{"id":161,"layer":31,"datatype":0,"bbox_dbu":[235,0,285,500],"type":"box","properties":{}}
+{"id":162,"layer":31,"datatype":0,"bbox_dbu":[105,0,155,500],"type":"box","properties":{}}
+{"id":163,"layer":31,"datatype":0,"bbox_dbu":[-25,0,25,500],"type":"box","properties":{}}
+{"id":164,"layer":31,"datatype":0,"bbox_dbu":[-155,0,-105,500],"type":"box","properties":{}}
+{"id":165,"layer":31,"datatype":0,"bbox_dbu":[-285,0,-235,500],"type":"box","properties":{}}
+{"id":166,"layer":31,"datatype":0,"bbox_dbu":[-415,0,-365,500],"type":"box","properties":{}}
+{"id":167,"layer":31,"datatype":0,"bbox_dbu":[-100,-2275,100,-2205],"type":"box","properties":{}}
+{"id":168,"layer":31,"datatype":0,"bbox_dbu":[-360,615,360,685],"type":"box","properties":{}}
+{"id":169,"layer":31,"datatype":0,"bbox_dbu":[-55,-2275,55,-2205],"type":"box","properties":{}}
+{"id":170,"layer":31,"datatype":0,"bbox_dbu":[-55,595,55,705],"type":"box","properties":{}}
+{"id":171,"layer":31,"datatype":0,"bbox_dbu":[-295,-1300,-225,-800],"type":"box","properties":{}}
+{"id":172,"layer":31,"datatype":0,"bbox_dbu":[-165,0,-95,500],"type":"box","properties":{}}
+{"id":173,"layer":31,"datatype":0,"bbox_dbu":[95,-735,295,-665],"type":"box","properties":{}}
+{"id":174,"layer":31,"datatype":0,"bbox_dbu":[95,-185,295,-115],"type":"box","properties":{}}
+{"id":175,"layer":31,"datatype":0,"bbox_dbu":[140,-735,250,-665],"type":"box","properties":{}}
+{"id":176,"layer":31,"datatype":0,"bbox_dbu":[140,-185,250,-115],"type":"box","properties":{}}
+{"id":177,"layer":31,"datatype":0,"bbox_dbu":[-315,-1155,-205,-1045],"type":"box","properties":{}}
+{"id":178,"layer":31,"datatype":0,"bbox_dbu":[-185,25,-75,135],"type":"box","properties":{}}
+{"id":179,"layer":31,"datatype":0,"bbox_dbu":[95,0,165,500],"type":"box","properties":{}}
+{"id":180,"layer":31,"datatype":0,"bbox_dbu":[225,-1300,295,-800],"type":"box","properties":{}}
+{"id":181,"layer":31,"datatype":0,"bbox_dbu":[-295,-735,-95,-665],"type":"box","properties":{}}
+{"id":182,"layer":31,"datatype":0,"bbox_dbu":[-295,-185,-95,-115],"type":"box","properties":{}}
+{"id":183,"layer":31,"datatype":0,"bbox_dbu":[-250,-735,-140,-665],"type":"box","properties":{}}
+{"id":184,"layer":31,"datatype":0,"bbox_dbu":[-250,-185,-140,-115],"type":"box","properties":{}}
+{"id":185,"layer":31,"datatype":0,"bbox_dbu":[205,-915,315,-805],"type":"box","properties":{}}
+{"id":186,"layer":31,"datatype":0,"bbox_dbu":[75,265,185,375],"type":"box","properties":{}}
+{"id":187,"layer":31,"datatype":0,"bbox_dbu":[-165,-2140,-95,-1640],"type":"box","properties":{}}
+{"id":188,"layer":31,"datatype":0,"bbox_dbu":[95,-2140,165,-1640],"type":"box","properties":{}}
+{"id":189,"layer":31,"datatype":0,"bbox_dbu":[-35,-1300,35,-800],"type":"box","properties":{}}
+{"id":190,"layer":31,"datatype":0,"bbox_dbu":[-185,-1755,-75,-1645],"type":"box","properties":{}}
+{"id":191,"layer":31,"datatype":0,"bbox_dbu":[75,-1755,185,-1645],"type":"box","properties":{}}
+{"id":192,"layer":31,"datatype":0,"bbox_dbu":[-35,-1300,35,-1190],"type":"box","properties":{}}
+{"id":193,"layer":31,"datatype":0,"bbox_dbu":[-750,-345,-680,845],"type":"box","properties":{}}
+{"id":194,"layer":31,"datatype":0,"bbox_dbu":[680,-345,750,845],"type":"box","properties":{}}
+{"id":195,"layer":31,"datatype":0,"bbox_dbu":[-295,0,-225,500],"type":"box","properties":{}}
+{"id":196,"layer":31,"datatype":0,"bbox_dbu":[-35,0,35,500],"type":"box","properties":{}}
+{"id":197,"layer":31,"datatype":0,"bbox_dbu":[225,0,295,500],"type":"box","properties":{}}
+{"id":198,"layer":31,"datatype":0,"bbox_dbu":[-750,-345,750,-275],"type":"box","properties":{}}
+{"id":199,"layer":31,"datatype":0,"bbox_dbu":[-750,775,750,845],"type":"box","properties":{}}
+{"id":200,"layer":31,"datatype":0,"bbox_dbu":[-770,145,-660,255],"type":"box","properties":{}}
+{"id":201,"layer":31,"datatype":0,"bbox_dbu":[-315,145,-205,255],"type":"box","properties":{}}
+{"id":202,"layer":31,"datatype":0,"bbox_dbu":[-55,145,55,255],"type":"box","properties":{}}
+{"id":203,"layer":31,"datatype":0,"bbox_dbu":[205,145,315,255],"type":"box","properties":{}}
+{"id":204,"layer":31,"datatype":0,"bbox_dbu":[660,145,770,255],"type":"box","properties":{}}
+{"id":205,"layer":31,"datatype":0,"bbox_dbu":[160,-1575,230,-1365],"type":"box","properties":{}}
+{"id":206,"layer":31,"datatype":0,"bbox_dbu":[30,-1435,230,-1365],"type":"box","properties":{}}
+{"id":207,"layer":31,"datatype":0,"bbox_dbu":[160,-1525,230,-1415],"type":"box","properties":{}}
+{"id":208,"layer":31,"datatype":0,"bbox_dbu":[-230,-1575,-160,-1365],"type":"box","properties":{}}
+{"id":209,"layer":31,"datatype":0,"bbox_dbu":[-230,-1435,-30,-1365],"type":"box","properties":{}}
+{"id":210,"layer":31,"datatype":0,"bbox_dbu":[-230,-1525,-160,-1415],"type":"box","properties":{}}
+{"id":211,"layer":31,"datatype":0,"bbox_dbu":[-620,-2435,-550,-505],"type":"box","properties":{}}
+{"id":212,"layer":31,"datatype":0,"bbox_dbu":[550,-2435,620,-505],"type":"box","properties":{}}
+{"id":213,"layer":31,"datatype":0,"bbox_dbu":[-35,-2140,35,-1640],"type":"box","properties":{}}
+{"id":214,"layer":31,"datatype":0,"bbox_dbu":[-620,-2435,620,-2365],"type":"box","properties":{}}
+{"id":215,"layer":31,"datatype":0,"bbox_dbu":[-620,-575,620,-505],"type":"box","properties":{}}
+{"id":216,"layer":31,"datatype":0,"bbox_dbu":[-640,-2055,-530,-1945],"type":"box","properties":{}}
+{"id":217,"layer":31,"datatype":0,"bbox_dbu":[-55,-2055,55,-1945],"type":"box","properties":{}}
+{"id":218,"layer":31,"datatype":0,"bbox_dbu":[530,-2055,640,-1945],"type":"box","properties":{}}
+{"id":219,"layer":31,"datatype":0,"bbox_dbu":[95,-1300,165,-800],"type":"box","properties":{}}
+{"id":220,"layer":31,"datatype":0,"bbox_dbu":[225,-2140,295,-1640],"type":"box","properties":{}}
+{"id":221,"layer":31,"datatype":0,"bbox_dbu":[355,0,425,500],"type":"box","properties":{}}
+{"id":222,"layer":31,"datatype":0,"bbox_dbu":[355,385,425,495],"type":"box","properties":{}}
+{"id":223,"layer":31,"datatype":0,"bbox_dbu":[205,-1875,315,-1765],"type":"box","properties":{}}
+{"id":224,"layer":31,"datatype":0,"bbox_dbu":[75,-1035,185,-925],"type":"box","properties":{}}
+{"id":225,"layer":31,"datatype":0,"bbox_dbu":[-425,0,-355,500],"type":"box","properties":{}}
+{"id":226,"layer":31,"datatype":0,"bbox_dbu":[-295,-2140,-225,-1640],"type":"box","properties":{}}
+{"id":227,"layer":31,"datatype":0,"bbox_dbu":[-165,-1300,-95,-800],"type":"box","properties":{}}
+{"id":228,"layer":31,"datatype":0,"bbox_dbu":[-425,385,-355,495],"type":"box","properties":{}}
+{"id":229,"layer":31,"datatype":0,"bbox_dbu":[-315,-1875,-205,-1765],"type":"box","properties":{}}
+{"id":230,"layer":31,"datatype":0,"bbox_dbu":[-185,-1035,-75,-925],"type":"box","properties":{}}
+{"id":231,"layer":31,"datatype":0,"bbox_dbu":[-50,760,50,860],"type":"box","properties":{}}
+{"id":232,"layer":31,"datatype":0,"bbox_dbu":[-50,-2450,50,-2350],"type":"box","properties":{}}
+{"id":233,"layer":31,"datatype":0,"bbox_dbu":[0,810,0,810],"type":"text","text":"VDD","position_dbu":[0,810],"transform":"r0 0,810","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":234,"layer":31,"datatype":0,"bbox_dbu":[0,-2400,0,-2400],"type":"text","text":"VSS","position_dbu":[0,-2400],"transform":"r0 0,-2400","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":235,"layer":32,"datatype":0,"bbox_dbu":[-35,500,35,800],"type":"box","properties":{}}
+{"id":236,"layer":32,"datatype":0,"bbox_dbu":[-150,-2275,150,-2205],"type":"box","properties":{}}
+{"id":237,"layer":32,"datatype":0,"bbox_dbu":[-35,595,35,705],"type":"box","properties":{}}
+{"id":238,"layer":32,"datatype":0,"bbox_dbu":[-55,-2275,55,-2205],"type":"box","properties":{}}
+{"id":239,"layer":32,"datatype":0,"bbox_dbu":[-55,595,55,705],"type":"box","properties":{}}
+{"id":240,"layer":32,"datatype":0,"bbox_dbu":[-55,-2295,55,-2185],"type":"box","properties":{}}
+{"id":241,"layer":32,"datatype":0,"bbox_dbu":[-315,-1135,250,-1065],"type":"box","properties":{}}
+{"id":242,"layer":32,"datatype":0,"bbox_dbu":[45,-735,345,-665],"type":"box","properties":{}}
+{"id":243,"layer":32,"datatype":0,"bbox_dbu":[45,-185,345,-115],"type":"box","properties":{}}
+{"id":244,"layer":32,"datatype":0,"bbox_dbu":[-185,45,250,115],"type":"box","properties":{}}
+{"id":245,"layer":32,"datatype":0,"bbox_dbu":[140,-1155,250,-1045],"type":"box","properties":{}}
+{"id":246,"layer":32,"datatype":0,"bbox_dbu":[140,-755,250,-645],"type":"box","properties":{}}
+{"id":247,"layer":32,"datatype":0,"bbox_dbu":[140,-205,250,-95],"type":"box","properties":{}}
+{"id":248,"layer":32,"datatype":0,"bbox_dbu":[140,25,250,135],"type":"box","properties":{}}
+{"id":249,"layer":32,"datatype":0,"bbox_dbu":[140,-735,250,-665],"type":"box","properties":{}}
+{"id":250,"layer":32,"datatype":0,"bbox_dbu":[140,-185,250,-115],"type":"box","properties":{}}
+{"id":251,"layer":32,"datatype":0,"bbox_dbu":[-315,-1155,-205,-1045],"type":"box","properties":{}}
+{"id":252,"layer":32,"datatype":0,"bbox_dbu":[-185,25,-75,135],"type":"box","properties":{}}
+{"id":253,"layer":32,"datatype":0,"bbox_dbu":[-250,-895,315,-825],"type":"box","properties":{}}
+{"id":254,"layer":32,"datatype":0,"bbox_dbu":[-345,-735,-45,-665],"type":"box","properties":{}}
+{"id":255,"layer":32,"datatype":0,"bbox_dbu":[-345,-185,-45,-115],"type":"box","properties":{}}
+{"id":256,"layer":32,"datatype":0,"bbox_dbu":[-250,285,185,355],"type":"box","properties":{}}
+{"id":257,"layer":32,"datatype":0,"bbox_dbu":[-250,-915,-140,-805],"type":"box","properties":{}}
+{"id":258,"layer":32,"datatype":0,"bbox_dbu":[-250,-755,-140,-645],"type":"box","properties":{}}
+{"id":259,"layer":32,"datatype":0,"bbox_dbu":[-250,-205,-140,-95],"type":"box","properties":{}}
+{"id":260,"layer":32,"datatype":0,"bbox_dbu":[-250,265,-140,375],"type":"box","properties":{}}
+{"id":261,"layer":32,"datatype":0,"bbox_dbu":[-250,-735,-140,-665],"type":"box","properties":{}}
+{"id":262,"layer":32,"datatype":0,"bbox_dbu":[-250,-185,-140,-115],"type":"box","properties":{}}
+{"id":263,"layer":32,"datatype":0,"bbox_dbu":[205,-915,315,-805],"type":"box","properties":{}}
+{"id":264,"layer":32,"datatype":0,"bbox_dbu":[75,265,185,375],"type":"box","properties":{}}
+{"id":265,"layer":32,"datatype":0,"bbox_dbu":[-185,-1735,185,-1665],"type":"box","properties":{}}
+{"id":266,"layer":32,"datatype":0,"bbox_dbu":[-35,-1700,35,-1190],"type":"box","properties":{}}
+{"id":267,"layer":32,"datatype":0,"bbox_dbu":[-185,-1755,-75,-1645],"type":"box","properties":{}}
+{"id":268,"layer":32,"datatype":0,"bbox_dbu":[75,-1755,185,-1645],"type":"box","properties":{}}
+{"id":269,"layer":32,"datatype":0,"bbox_dbu":[-35,-1300,35,-1190],"type":"box","properties":{}}
+{"id":270,"layer":32,"datatype":0,"bbox_dbu":[-770,165,770,235],"type":"box","properties":{}}
+{"id":271,"layer":32,"datatype":0,"bbox_dbu":[-770,145,-660,255],"type":"box","properties":{}}
+{"id":272,"layer":32,"datatype":0,"bbox_dbu":[-315,145,-205,255],"type":"box","properties":{}}
+{"id":273,"layer":32,"datatype":0,"bbox_dbu":[-55,145,55,255],"type":"box","properties":{}}
+{"id":274,"layer":32,"datatype":0,"bbox_dbu":[205,145,315,255],"type":"box","properties":{}}
+{"id":275,"layer":32,"datatype":0,"bbox_dbu":[660,145,770,255],"type":"box","properties":{}}
+{"id":276,"layer":32,"datatype":0,"bbox_dbu":[160,-1600,230,-1340],"type":"box","properties":{}}
+{"id":277,"layer":32,"datatype":0,"bbox_dbu":[160,-1525,230,-1415],"type":"box","properties":{}}
+{"id":278,"layer":32,"datatype":0,"bbox_dbu":[160,-1525,230,-1415],"type":"box","properties":{}}
+{"id":279,"layer":32,"datatype":0,"bbox_dbu":[-230,-1600,-160,-1340],"type":"box","properties":{}}
+{"id":280,"layer":32,"datatype":0,"bbox_dbu":[-230,-1525,-160,-1415],"type":"box","properties":{}}
+{"id":281,"layer":32,"datatype":0,"bbox_dbu":[-230,-1525,-160,-1415],"type":"box","properties":{}}
+{"id":282,"layer":32,"datatype":0,"bbox_dbu":[-640,-2035,640,-1965],"type":"box","properties":{}}
+{"id":283,"layer":32,"datatype":0,"bbox_dbu":[-640,-2055,-530,-1945],"type":"box","properties":{}}
+{"id":284,"layer":32,"datatype":0,"bbox_dbu":[-55,-2055,55,-1945],"type":"box","properties":{}}
+{"id":285,"layer":32,"datatype":0,"bbox_dbu":[530,-2055,640,-1945],"type":"box","properties":{}}
+{"id":286,"layer":32,"datatype":0,"bbox_dbu":[355,290,425,590],"type":"box","properties":{}}
+{"id":287,"layer":32,"datatype":0,"bbox_dbu":[205,-1855,445,-1785],"type":"box","properties":{}}
+{"id":288,"layer":32,"datatype":0,"bbox_dbu":[75,-1015,445,-945],"type":"box","properties":{}}
+{"id":289,"layer":32,"datatype":0,"bbox_dbu":[335,-1875,445,-1765],"type":"box","properties":{}}
+{"id":290,"layer":32,"datatype":0,"bbox_dbu":[335,-1035,445,-925],"type":"box","properties":{}}
+{"id":291,"layer":32,"datatype":0,"bbox_dbu":[355,385,425,495],"type":"box","properties":{}}
+{"id":292,"layer":32,"datatype":0,"bbox_dbu":[355,385,425,495],"type":"box","properties":{}}
+{"id":293,"layer":32,"datatype":0,"bbox_dbu":[205,-1875,315,-1765],"type":"box","properties":{}}
+{"id":294,"layer":32,"datatype":0,"bbox_dbu":[75,-1035,185,-925],"type":"box","properties":{}}
+{"id":295,"layer":32,"datatype":0,"bbox_dbu":[-425,290,-355,590],"type":"box","properties":{}}
+{"id":296,"layer":32,"datatype":0,"bbox_dbu":[-445,-1855,-205,-1785],"type":"box","properties":{}}
+{"id":297,"layer":32,"datatype":0,"bbox_dbu":[-445,-1015,-75,-945],"type":"box","properties":{}}
+{"id":298,"layer":32,"datatype":0,"bbox_dbu":[-445,-1875,-335,-1765],"type":"box","properties":{}}
+{"id":299,"layer":32,"datatype":0,"bbox_dbu":[-445,-1035,-335,-925],"type":"box","properties":{}}
+{"id":300,"layer":32,"datatype":0,"bbox_dbu":[-425,385,-355,495],"type":"box","properties":{}}
+{"id":301,"layer":32,"datatype":0,"bbox_dbu":[-425,385,-355,495],"type":"box","properties":{}}
+{"id":302,"layer":32,"datatype":0,"bbox_dbu":[-315,-1875,-205,-1765],"type":"box","properties":{}}
+{"id":303,"layer":32,"datatype":0,"bbox_dbu":[-185,-1035,-75,-925],"type":"box","properties":{}}
+{"id":304,"layer":33,"datatype":0,"bbox_dbu":[-35,-2295,35,925],"type":"box","properties":{}}
+{"id":305,"layer":33,"datatype":0,"bbox_dbu":[-35,595,35,705],"type":"box","properties":{}}
+{"id":306,"layer":33,"datatype":0,"bbox_dbu":[-55,-2295,55,-2185],"type":"box","properties":{}}
+{"id":307,"layer":33,"datatype":0,"bbox_dbu":[160,-1155,230,925],"type":"box","properties":{}}
+{"id":308,"layer":33,"datatype":0,"bbox_dbu":[140,-1155,250,-1045],"type":"box","properties":{}}
+{"id":309,"layer":33,"datatype":0,"bbox_dbu":[140,-755,250,-645],"type":"box","properties":{}}
+{"id":310,"layer":33,"datatype":0,"bbox_dbu":[140,-205,250,-95],"type":"box","properties":{}}
+{"id":311,"layer":33,"datatype":0,"bbox_dbu":[140,25,250,135],"type":"box","properties":{}}
+{"id":312,"layer":33,"datatype":0,"bbox_dbu":[-230,-1155,-160,925],"type":"box","properties":{}}
+{"id":313,"layer":33,"datatype":0,"bbox_dbu":[-250,-915,-140,-805],"type":"box","properties":{}}
+{"id":314,"layer":33,"datatype":0,"bbox_dbu":[-250,-755,-140,-645],"type":"box","properties":{}}
+{"id":315,"layer":33,"datatype":0,"bbox_dbu":[-250,-205,-140,-95],"type":"box","properties":{}}
+{"id":316,"layer":33,"datatype":0,"bbox_dbu":[-250,265,-140,375],"type":"box","properties":{}}
+{"id":317,"layer":33,"datatype":0,"bbox_dbu":[160,-2515,230,-1415],"type":"box","properties":{}}
+{"id":318,"layer":33,"datatype":0,"bbox_dbu":[160,-1525,230,-1415],"type":"box","properties":{}}
+{"id":319,"layer":33,"datatype":0,"bbox_dbu":[-230,-2515,-160,-1415],"type":"box","properties":{}}
+{"id":320,"layer":33,"datatype":0,"bbox_dbu":[-230,-1525,-160,-1415],"type":"box","properties":{}}
+{"id":321,"layer":33,"datatype":0,"bbox_dbu":[355,-1875,425,495],"type":"box","properties":{}}
+{"id":322,"layer":33,"datatype":0,"bbox_dbu":[335,-1875,445,-1765],"type":"box","properties":{}}
+{"id":323,"layer":33,"datatype":0,"bbox_dbu":[335,-1035,445,-925],"type":"box","properties":{}}
+{"id":324,"layer":33,"datatype":0,"bbox_dbu":[355,385,425,495],"type":"box","properties":{}}
+{"id":325,"layer":33,"datatype":0,"bbox_dbu":[-425,-1875,-355,495],"type":"box","properties":{}}
+{"id":326,"layer":33,"datatype":0,"bbox_dbu":[-445,-1875,-335,-1765],"type":"box","properties":{}}
+{"id":327,"layer":33,"datatype":0,"bbox_dbu":[-445,-1035,-335,-925],"type":"box","properties":{}}
+{"id":328,"layer":33,"datatype":0,"bbox_dbu":[-425,385,-355,495],"type":"box","properties":{}}
+{"id":329,"layer":33,"datatype":0,"bbox_dbu":[-245,805,-145,905],"type":"box","properties":{}}
+{"id":330,"layer":33,"datatype":0,"bbox_dbu":[-50,805,50,905],"type":"box","properties":{}}
+{"id":331,"layer":33,"datatype":0,"bbox_dbu":[145,805,245,905],"type":"box","properties":{}}
+{"id":332,"layer":33,"datatype":0,"bbox_dbu":[-245,-2495,-145,-2395],"type":"box","properties":{}}
+{"id":333,"layer":33,"datatype":0,"bbox_dbu":[145,-2495,245,-2395],"type":"box","properties":{}}
+{"id":334,"layer":33,"datatype":0,"bbox_dbu":[-195,855,-195,855],"type":"text","text":"OUTP","position_dbu":[-195,855],"transform":"r0 -195,855","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":335,"layer":33,"datatype":0,"bbox_dbu":[0,855,0,855],"type":"text","text":"CLK","position_dbu":[0,855],"transform":"r0 0,855","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":336,"layer":33,"datatype":0,"bbox_dbu":[195,855,195,855],"type":"text","text":"OUTN","position_dbu":[195,855],"transform":"r0 195,855","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":337,"layer":33,"datatype":0,"bbox_dbu":[-195,-2445,-195,-2445],"type":"text","text":"VINP","position_dbu":[-195,-2445],"transform":"r0 -195,-2445","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":338,"layer":33,"datatype":0,"bbox_dbu":[195,-2445,195,-2445],"type":"text","text":"VINN","position_dbu":[195,-2445],"transform":"r0 195,-2445","size_dbu":0,"font":-1,"halign":"NoHAlign","valign":"NoVAlign","properties":{}}
+{"id":339,"layer":51,"datatype":0,"bbox_dbu":[-25,-2265,25,-2215],"type":"box","properties":{}}
+{"id":340,"layer":51,"datatype":0,"bbox_dbu":[-25,625,25,675],"type":"box","properties":{}}
+{"id":341,"layer":51,"datatype":0,"bbox_dbu":[170,-725,220,-675],"type":"box","properties":{}}
+{"id":342,"layer":51,"datatype":0,"bbox_dbu":[170,-175,220,-125],"type":"box","properties":{}}
+{"id":343,"layer":51,"datatype":0,"bbox_dbu":[-285,-1125,-235,-1075],"type":"box","properties":{}}
+{"id":344,"layer":51,"datatype":0,"bbox_dbu":[-155,55,-105,105],"type":"box","properties":{}}
+{"id":345,"layer":51,"datatype":0,"bbox_dbu":[-220,-725,-170,-675],"type":"box","properties":{}}
+{"id":346,"layer":51,"datatype":0,"bbox_dbu":[-220,-175,-170,-125],"type":"box","properties":{}}
+{"id":347,"layer":51,"datatype":0,"bbox_dbu":[235,-885,285,-835],"type":"box","properties":{}}
+{"id":348,"layer":51,"datatype":0,"bbox_dbu":[105,295,155,345],"type":"box","properties":{}}
+{"id":349,"layer":51,"datatype":0,"bbox_dbu":[-155,-1725,-105,-1675],"type":"box","properties":{}}
+{"id":350,"layer":51,"datatype":0,"bbox_dbu":[105,-1725,155,-1675],"type":"box","properties":{}}
+{"id":351,"layer":51,"datatype":0,"bbox_dbu":[-25,-1270,25,-1220],"type":"box","properties":{}}
+{"id":352,"layer":51,"datatype":0,"bbox_dbu":[-740,175,-690,225],"type":"box","properties":{}}
+{"id":353,"layer":51,"datatype":0,"bbox_dbu":[-285,175,-235,225],"type":"box","properties":{}}
+{"id":354,"layer":51,"datatype":0,"bbox_dbu":[-25,175,25,225],"type":"box","properties":{}}
+{"id":355,"layer":51,"datatype":0,"bbox_dbu":[235,175,285,225],"type":"box","properties":{}}
+{"id":356,"layer":51,"datatype":0,"bbox_dbu":[690,175,740,225],"type":"box","properties":{}}
+{"id":357,"layer":51,"datatype":0,"bbox_dbu":[170,-1495,220,-1445],"type":"box","properties":{}}
+{"id":358,"layer":51,"datatype":0,"bbox_dbu":[-220,-1495,-170,-1445],"type":"box","properties":{}}
+{"id":359,"layer":51,"datatype":0,"bbox_dbu":[-610,-2025,-560,-1975],"type":"box","properties":{}}
+{"id":360,"layer":51,"datatype":0,"bbox_dbu":[-25,-2025,25,-1975],"type":"box","properties":{}}
+{"id":361,"layer":51,"datatype":0,"bbox_dbu":[560,-2025,610,-1975],"type":"box","properties":{}}
+{"id":362,"layer":51,"datatype":0,"bbox_dbu":[365,415,415,465],"type":"box","properties":{}}
+{"id":363,"layer":51,"datatype":0,"bbox_dbu":[235,-1845,285,-1795],"type":"box","properties":{}}
+{"id":364,"layer":51,"datatype":0,"bbox_dbu":[105,-1005,155,-955],"type":"box","properties":{}}
+{"id":365,"layer":51,"datatype":0,"bbox_dbu":[-415,415,-365,465],"type":"box","properties":{}}
+{"id":366,"layer":51,"datatype":0,"bbox_dbu":[-285,-1845,-235,-1795],"type":"box","properties":{}}
+{"id":367,"layer":51,"datatype":0,"bbox_dbu":[-155,-1005,-105,-955],"type":"box","properties":{}}
+{"id":368,"layer":52,"datatype":0,"bbox_dbu":[-25,625,25,675],"type":"box","properties":{}}
+{"id":369,"layer":52,"datatype":0,"bbox_dbu":[-25,-2265,25,-2215],"type":"box","properties":{}}
+{"id":370,"layer":52,"datatype":0,"bbox_dbu":[170,-1125,220,-1075],"type":"box","properties":{}}
+{"id":371,"layer":52,"datatype":0,"bbox_dbu":[170,-725,220,-675],"type":"box","properties":{}}
+{"id":372,"layer":52,"datatype":0,"bbox_dbu":[170,-175,220,-125],"type":"box","properties":{}}
+{"id":373,"layer":52,"datatype":0,"bbox_dbu":[170,55,220,105],"type":"box","properties":{}}
+{"id":374,"layer":52,"datatype":0,"bbox_dbu":[-220,-885,-170,-835],"type":"box","properties":{}}
+{"id":375,"layer":52,"datatype":0,"bbox_dbu":[-220,-725,-170,-675],"type":"box","properties":{}}
+{"id":376,"layer":52,"datatype":0,"bbox_dbu":[-220,-175,-170,-125],"type":"box","properties":{}}
+{"id":377,"layer":52,"datatype":0,"bbox_dbu":[-220,295,-170,345],"type":"box","properties":{}}
+{"id":378,"layer":52,"datatype":0,"bbox_dbu":[170,-1495,220,-1445],"type":"box","properties":{}}
+{"id":379,"layer":52,"datatype":0,"bbox_dbu":[-220,-1495,-170,-1445],"type":"box","properties":{}}
+{"id":380,"layer":52,"datatype":0,"bbox_dbu":[365,-1845,415,-1795],"type":"box","properties":{}}
+{"id":381,"layer":52,"datatype":0,"bbox_dbu":[365,-1005,415,-955],"type":"box","properties":{}}
+{"id":382,"layer":52,"datatype":0,"bbox_dbu":[365,415,415,465],"type":"box","properties":{}}
+{"id":383,"layer":52,"datatype":0,"bbox_dbu":[-415,-1845,-365,-1795],"type":"box","properties":{}}
+{"id":384,"layer":52,"datatype":0,"bbox_dbu":[-415,-1005,-365,-955],"type":"box","properties":{}}
+{"id":385,"layer":52,"datatype":0,"bbox_dbu":[-415,415,-365,465],"type":"box","properties":{}}
+{"id":386,"layer":75,"datatype":0,"bbox_dbu":[-390,-2245,390,-1535],"type":"box","properties":{}}
+{"id":387,"layer":75,"datatype":0,"bbox_dbu":[-390,-1405,390,-695],"type":"box","properties":{}}
+{"id":388,"layer":205,"datatype":6,"bbox_dbu":[-520,-120,520,620],"type":"box","properties":{}}
+END_ALL_FLATTENED_SHAPES

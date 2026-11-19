@@ -3,7 +3,6 @@
 from __future__ import print_function
 
 import argparse
-import fcntl
 import hashlib
 import json
 import os
@@ -12,7 +11,11 @@ import re
 import struct
 import subprocess
 import socket
-import workspace
+import tarfile
+if __package__:
+    from . import workspace
+else:
+    import workspace
 
 try:
     from shlex import quote
@@ -34,7 +37,13 @@ CASES = {
     "rollback": ("sar8_mom_ratio", 0.5, False),
     "compact": ("sar8_mom_ratio", None, False),
     "full": ("sar8j_r1_cdac", None, False),
+    "comparator": ("sar_strongarm_t28_core", None, False),
+    "comparator-filled": ("sar_strongarm_t28", None, False),
+    "bootstrap": ("sar_bootstrap_flat_8b_p_core", None, False),
 }
+COMPARATOR_PORTS = sorted(("CLK", "OUTN", "OUTP", "VDD", "VINN", "VINP", "VSS"))
+BOOTSTRAP_PORTS = sorted(("CLKS", "VOUT", "VIN", "VDD", "VSS"))
+BOOTSTRAP_FILL_RULES = {"OD.S.14", "OD.DN.3", "PO.DN.3", "PO.DN.3.1"}
 COMPACT_PORTS = sorted(("TOP", "B0", "B1", "GN0", "GP0", "GN1", "GP1", "VDD", "VSS", "VREFN", "VREFP"))
 FULL_PORTS = sorted(["G"+s+p+str(b) for s in "NP" for p in "NP" for b in range(8)] +
                     ["TOPN", "TOPP", "VDD", "VSS", "VREFN", "VREFP"])
@@ -54,6 +63,10 @@ def drc_blockers(rules, case):
     # These results remain DRC failures. Permit pre-fill electrical diagnosis
     # only once the actual spacing/width/connectivity issues have been fixed.
     deferred = FULL_CONTEXT_RULES if case == "full" else set()
+    if case == "comparator":
+        deferred = {"OD.DN.3", "PO.DN.3", "PO.DN.3.1"}
+    if case == "bootstrap":
+        deferred = BOOTSTRAP_FILL_RULES
     return set(rules) - FIXTURE_DRC_MARKERS - deferred
 
 
@@ -135,7 +148,7 @@ def replace_once(text, pattern, line):
     return updated
 
 
-def prepare_deck(out, name, top):
+def prepare_deck(out, name, top, distributed_supplies=()):
     path = {
         "drc": join(RULES, "drc/drc_rule_T28_cell"),
         "lvs": join(RULES, "lvs/calibre.lvs"),
@@ -164,11 +177,23 @@ def prepare_deck(out, name, top):
             lambda m: m.group(1) + join(dirname(path), m.group(2)), text,
         )
         if name == "pex":
+            if distributed_supplies:
+                # Enable only the requested rails in this job's deck copy.
+                def include_rails(match):
+                    tokens = re.findall(r'"[^"]+"', match.group(1))
+                    if not tokens or " ".join(tokens) != " ".join(match.group(1).split()):
+                        raise ValueError("Unsupported PEX EXTRACT EXCLUDE syntax")
+                    other = [token for token in tokens if token[1:-1] not in distributed_supplies]
+                    return "PEX EXTRACT EXCLUDE " + " ".join(other) if other else ""
+
+                text = re.sub(r'(?im)^[ \t]*PEX[ \t]+EXTRACT[ \t]+EXCLUDE[ \t]+([^\r\n]+)', include_rails, text)
+                support["distributed_supplies"] = list(distributed_supplies)
             # The installed xRC deck recommends flattening inserted dummy
             # patterns. Expand only our fixed fill masters and their children;
-            # preserve the functional CDAC hierarchy and all fill geometry.
+            # preserve functional hierarchy and all fill geometry.
             fill_cells = sorted(cell for cell in gds_identity(join(out, "fixture.gds"))["labels"]
-                                if cell.startswith(("CDFO_", "CDFM_", "sar8_cdac_fill_")))
+                                if cell.startswith(("CDFO_", "CDFM_", "sar8_cdac_fill_", "SCFO_", "SCFM_", "sar8_comp_fill_",
+                                                    "STFO_", "STFM_", "sar8_timing_fill_")))
             if fill_cells:
                 text = replace_once(text, r'^//FLATTEN CELL TOP_CELL_DM TOP_CELL_DODDPO[^\n]*',
                                     "FLATTEN CELL " + " ".join(fill_cells))
@@ -237,11 +262,14 @@ def tool(setup, args, cwd, log, seconds):
         )
 
 
-def run(root, out, case, through, source_stream=None, extract_only=False, existing_oa=False, pex_timeout=300, omit_fill=None):
+def run(root, out, case, through, source_stream=None, extract_only=False, existing_oa=False, pex_timeout=300, omit_fill=None, view='layout'):
     top, extension, open_b1 = CASES[case]
+    if view != 'layout' and not (view == 'layout_paired_balanced' and case == 'full' and existing_oa and not source_stream):
+        raise ValueError('Alternate view requires an existing CDAC layout')
     log = {"case": case, "top": top, "library": LIB, "library_path": LIB_PATH, "b1_extension_um": extension,
            "open_b1": open_b1, "checks": {}, "decks": {}}
     log['execution_host']=socket.gethostname()
+    log['oa_view']=view
     log['workspace_configuration_sha256']=sha(raw(join(root,'workspace.json')))
     log['driver_sha256']={name:sha(raw(join(root,name))) for name in ('run_physical.py','workspace.py')}
     if omit_fill and (case != 'full' or not source_stream or extract_only or existing_oa):
@@ -268,16 +296,19 @@ def run(root, out, case, through, source_stream=None, extract_only=False, existi
         # Preserve the actual driver/config bytes, not only a mutable deployment.
         for name in list(log['driver_sha256']) + ['workspace.json', 'cds.lib']:
             put(join(out, name), raw(join(root, name)))
-        generator = {"compact": "compact.il", "full": "cdac-full.il"}.get(case, "mom.il")
-        reference = join(root, {"compact": "compact-reference.cdl", "full": "cdac-full-reference.cdl"}.get(case, "reference.cdl"))
+        generator = {"compact": "compact.il", "full": "cdac-full.il", "comparator": "comparator.il", "comparator-filled": "comparator-wrapper.il", "bootstrap": "bootstrap.il"}.get(case, "mom.il")
+        if view == 'layout_paired_balanced':
+            generator = 'cdac-paired.il'
+        reference = join(root, {"compact": "compact-reference.cdl", "full": "cdac-full-reference.cdl", "comparator": "comparator-reference.cdl", "comparator-filled": "comparator-filled-reference.cdl", "bootstrap": "bootstrap-reference.cdl"}.get(case, "reference.cdl"))
         log["source_sha256"] = {basename(p): sha(raw(p)) for p in (join(root, generator), reference)}
         for path in (join(root, generator), reference):
             put(join(out, basename(path)), raw(path))
         if existing_oa:
             log['oa_mode'] = 'read_existing_owned_cell'
-            applied=workspace.state('fill_applied.json')
-            if isfile(applied):
-                log['fill_application']=json.loads(read(applied))
+            if case in ('full','comparator-filled'):
+                applied=workspace.state('fill_applied.json' if case=='full' else 'comparator-fill-applied.json')
+                if isfile(applied):
+                    log['fill_application']=json.loads(read(applied))
         checkpoint = None
         if case in ("open", "reroute", "rollback"):
             checkpoint = json.loads(read(workspace.state("checkpoint.json")))
@@ -326,15 +357,28 @@ def run(root, out, case, through, source_stream=None, extract_only=False, existi
         else:
             entry = join(out, "build.il")
             if existing_oa:
+                count = 7 if case.startswith("comparator") else 38
+                if case == "bootstrap":
+                    count = len(BOOTSTRAP_PORTS)
                 build = '''let((cv)
-cv=dbOpenCellViewByType("SAR_ADC_T28_LAYOUT" "sar8j_r1_cdac" "layout" "" "r")
-unless(cv && length(cv~>terminals)==38 error("Invalid existing full CDAC\\n"))
-printf("PILOT_OA_OK sar8j_r1_cdac instances=%d ports=%d bbox=%L\\n" length(cv~>instances) length(cv~>terminals) cv~>bBox)
+cv=dbOpenCellViewByType("SAR_ADC_T28_LAYOUT" "%s" "%s" "" "r")
+unless(cv && length(cv~>terminals)==%d error("Invalid existing layout\\n"))
+printf("PILOT_OA_OK %s instances=%%d ports=%%d bbox=%%L\\n" length(cv~>instances) length(cv~>terminals) cv~>bBox)
 dbClose(cv))
 exit(0)
-'''
-            elif case in ("compact", "full"):
-                build = 'load("{}")\n'.format(generator)
+''' % (top, view, count, top)
+            elif case in ("compact", "full", "comparator", "bootstrap"):
+                if case in ("comparator", "bootstrap"):
+                    cell_path = join(LIB_PATH, top)
+                    if os.path.isdir(cell_path):
+                        if any(name.endswith(('.cdslck', '.cdslck.RHEL')) or '.cdslck' in name
+                               for directory, dirs, files in os.walk(cell_path) for name in files):
+                            raise RuntimeError(top + " OA is locked by another editor")
+                        backup = join(out, 'before-' + case + '-oa.tar.gz')
+                        with tarfile.open(backup, 'w:gz') as archive:
+                            archive.add(cell_path, arcname=top)
+                        log['oa_checkpoint_sha256'] = sha(raw(backup))
+                build = 'load("{}")\n'.format(join(out, generator))
             else:
                 build = 'pilotCell = "{}"\npilotB1Extension = {}\npilotOpenB1 = {}\nload("mom.il")\n'.format(
                     top, extension, "t" if open_b1 else "nil"
@@ -345,7 +389,7 @@ exit(0)
             if "PILOT_OA_OK " + top not in read(join(out, "oa.console")):
                 raise RuntimeError("No saved OA readback")
             launch("stream", CADENCE, ["strmout", "-library", LIB, "-strmFile", gds_path,
-                                       "-topCell", top, "-view", "layout", "-layerMap", join(PDK, "tsmcN28.layermap"),
+                                       "-topCell", top, "-view", view, "-layerMap", join(PDK, "tsmcN28.layermap"),
                                        "-logFile", join(out, "stream.log"), "-summaryFile", join(out, "stream.sum"),
                                        "-cdslib", join(root, "cds.lib"), "-runDir", out, "-convertPin", "geometry",
                                        "-convertPcellPin", "geometry"], root, 100)
@@ -356,6 +400,10 @@ exit(0)
             ports = COMPACT_PORTS
         if case == "full":
             ports = FULL_PORTS
+        if case.startswith("comparator"):
+            ports = COMPARATOR_PORTS
+        if case == "bootstrap":
+            ports = BOOTSTRAP_PORTS
         if sorted(gds["labels"].get(top, [])) != ports:
             raise RuntimeError("Top GDS labels differ from fixture ports")
         if case == "rollback" and gds["structural_sha256"][top] != checkpoint["geometry_sha256"]:
@@ -384,7 +432,15 @@ exit(0)
                     log["checks"][name]["verdict"] = "NOT_CLEAN" if rules else "CLEAN"
                     log["checks"][name]["deferred_context_rules"] = sorted(set(rules) & FULL_CONTEXT_RULES)
                     log["physical_signoff"] = False
-                if unexpected_drc and case not in ("compact", "full"):
+                if case.startswith("comparator"):
+                    log["checks"][name]["verdict"] = "NOT_CLEAN" if rules else "CLEAN"
+                    log["checks"][name]["deferred_context_rules"] = sorted(set(rules) & {"OD.DN.3", "PO.DN.3", "PO.DN.3.1"})
+                    log["physical_signoff"] = False
+                if case == "bootstrap":
+                    log["checks"][name]["verdict"] = "NOT_CLEAN" if rules else "CLEAN"
+                    log["checks"][name]["deferred_fill_rules"] = sorted(set(rules) & BOOTSTRAP_FILL_RULES)
+                    log["physical_signoff"] = False
+                if unexpected_drc and case not in ("compact", "full", "comparator", "comparator-filled"):
                     raise RuntimeError("Unexpected DRC markers; inspect the original rule results")
             elif name == "lvs":
                 # A comparison mismatch is a successful tool execution but
@@ -441,6 +497,7 @@ def write_checkpoint(root, evidence_id, log):
 
 
 def main():
+    import fcntl
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("case", choices=CASES)
     parser.add_argument("evidence_id")
@@ -451,14 +508,23 @@ def main():
                         help="Diagnostic stream only: omit one top-level fill instance; rerun DRC/LVS/PEX")
     parser.add_argument("--pex-timeout",type=int,choices=(300,1800),default=300,help="RCC wall limit; filled macros may need 1800s")
     parser.add_argument("--existing-oa", action="store_true", help="Verify the current owned full CDAC without rebuilding it")
+    parser.add_argument('--view', choices=('layout','layout_paired_balanced'), default='layout')
+    parser.add_argument("--rebuild-comparator", action="store_true", help="Explicitly rebuild the generator-owned comparator core")
+    parser.add_argument("--rebuild-bootstrap", action="store_true", help="Explicitly rebuild the generator-owned Bootstrap core")
     parser.add_argument("--checkpoint", action="store_true", help="Save this verified working baseline as the rollback point")
     args = parser.parse_args()
+    for core in ('comparator','bootstrap'):
+        rebuild = getattr(args, 'rebuild_' + core)
+        if rebuild and (args.case != core or args.existing_oa or args.source_stream):
+            parser.error(core + ' rebuild needs its own core and a fresh physical run')
+        if args.case == core and not (args.existing_oa or args.source_stream or rebuild):
+            parser.error('Use --existing-oa or explicitly request --rebuild-' + core)
     if args.through is None:
         args.through = "lvs" if args.case in ("compact", "full") else "pex"
     if args.case == "compact" and args.through == "pex":
         parser.error("The switch routing fixture is qualified through LVS")
-    if args.existing_oa and (args.case!='full' or args.source_stream or args.checkpoint):
-        parser.error("Existing-OA mode is only for the current full CDAC")
+    if args.existing_oa and (args.case not in ('full', 'comparator', 'comparator-filled', 'bootstrap') or args.source_stream or args.checkpoint):
+        parser.error("Existing-OA mode requires a supported current module")
     if not all(re.match(r"\A[a-z0-9][a-z0-9-]{1,55}\Z", name)
                for name in (args.evidence_id, args.source_stream) if name is not None):
         parser.error("Choose a unique short evidence ID")
@@ -470,7 +536,7 @@ def main():
         parser.error("Checkpoint requires generating and verifying the actual working baseline")
     configured=workspace.paths()
     root=configured['runtime']
-    if not args.existing_oa and not args.source_stream and not configured.get('allow_regeneration',False):
+    if args.case not in ('comparator','bootstrap') and not args.existing_oa and not args.source_stream and not configured.get('allow_regeneration',False):
         parser.error('OA is checkpoint-owned: use --existing-oa; reconcile manual edits before allowing regeneration')
     if configured['library']!=LIB or configured['library_path']!=LIB_PATH:
         parser.error('Configured library differs from the native generator target')
@@ -483,7 +549,7 @@ def main():
     with open(configured['lock'], "a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         out = workspace.evidence(args.evidence_id,create=True)
-        log = run(root, out, args.case, args.through, args.source_stream, args.extract_only, args.existing_oa, args.pex_timeout, args.omit_fill)
+        log = run(root, out, args.case, args.through, args.source_stream, args.extract_only, args.existing_oa, args.pex_timeout, args.omit_fill, args.view)
         if args.checkpoint:
             write_checkpoint(root, args.evidence_id, log)
 

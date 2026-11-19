@@ -1,5 +1,5 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3",
   "resolution_bits": 8,
   "sample_rate_hz": 10000000.0,
   "supply_v": [
@@ -27,11 +27,11 @@
   "top": "sar_adc8_join_r4",
   "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "qualification": {
-    "terminal_voltage": "FFC_18_frame_native_short_pass_other_corners_unverified_for_reset_OR",
-    "oa": "Text model work does not assert OA synchronization or modify OA",
-    "pex": "not_included",
+    "terminal_voltage": "Two frames at FF cold and FF hot screened against the project thin-oxide GS/GD/DS rule. See measured coverage and model warnings.",
+    "oa": "Prior quiet8p5 routed macro belongs to the previous design.",
+    "pex": "Standard-delay candidate is schematic only.",
     "virtuoso_connection": "existing_integration_reused",
-    "adoption_record": "results/design/reset_data_or_adoption_20261115.json"
+    "adoption_record": "results/design/sar_std_delay_20261119.json"
   },
   "schema_version": 2,
   "authority": {
@@ -40,15 +40,15 @@
     "immutable_measured_source": "design/frozen/b/dut.scs",
     "top_ports_source": "design/manifest.json",
     "physical_source_sha256": null,
-    "requirements_status": "B external operating contract retained; MSB D2 reference plus SAR reset-data OR adopted with FF cold short evidence only",
-    "current_source_hashes": "results/design/reset_data_or_adoption_20261115.json"
+    "requirements_status": "Existing ADC interface, 10 MS/s, five-corner schematic short regression.",
+    "current_source_hashes": "results/design/sar_std_delay_20261119.json"
   },
   "architecture": {
     "kind": "fully_differential_asynchronous_SAR",
     "sampling": "top_plate_bootstrap",
     "cdac": "flat_binary_8bit_plus_one_dummy_per_side",
     "comparator": "11_MOS_StrongARM",
-    "control": "native_standard_cells_and_explicit_RC_delays",
+    "control": "native_standard_cells_with_input_qualified_delay_chains",
     "output_encoding": "unsigned_binary",
     "decision_order": "MSB_first",
     "external_bit_clock": false,
@@ -221,7 +221,7 @@
       "uncalibrated_offset_requirement_v": null
     },
     "sar": {
-      "implementation": "design/xtor/sar/reset_data_or.scs",
+      "implementation": "design/xtor/sar/reset_data_or_std_delay.scs",
       "decisions_per_frame": 8,
       "rising_event_counts": {
         "cmp": 8,
@@ -236,6 +236,10 @@
     "standard_cells": {
       "implementation": "design/xtor/common/standard_cells.scs",
       "external_masters": [
+        "DEL050D1BWP12T30P140",
+        "DEL075D1BWP12T30P140",
+        "DEL200D1BWP12T30P140",
+        "DEL250D1BWP12T30P140",
         "DFCNQD1BWP12T30P140",
         "INVD1BWP12T30P140",
         "INVD2BWP12T30P140",
@@ -244,12 +248,75 @@
       ]
     },
     "timing_reference": {
-      "implementation": "design/xtor/clock/delays.scs",
-      "quiet_cap_multi": 30,
-      "write_cap_multi": 4,
-      "capture_cap_multi": 10,
-      "RC_clear_devices": "explicit transistor-level circuit; retained",
-      "scope": "SAR quiet/write/guard remain active; reference capture/bbm definitions retained but not used by minimal XREF"
+      "implementation": "design/xtor/clock/delays_std.scs",
+      "active": {
+        "valid": [
+          "DEL200"
+        ],
+        "write": [
+          "DEL250",
+          "DEL250",
+          "DEL075"
+        ],
+        "quiet": [
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250"
+        ],
+        "sample": [
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250"
+        ],
+        "idle_guard": [
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250",
+          "DEL250"
+        ]
+      },
+      "qualification": "Input AND every second DEL and at the final tap. RAW_D and QUIET_D drive buffers.",
+      "active_delay_cells": 52,
+      "active_qualifier_and2": 28,
+      "retained_storage_cap": "XCTRL.XTIM.XCLOCK.CQB"
     },
     "reference_control": {
       "implementation": "design/xtor/reference/minimal_msb_d2.scs",
@@ -274,7 +341,8 @@
       ],
       "nr": 8,
       "lr_m": 2.5e-06,
-      "multi_each": 2
+      "multi_each": 2,
+      "layout": "Pre-layout model loads, not drawn (Layout/specs/interfaces.json not_drawn_instances); TT and ffc integrated diagnostics pass without them"
     }
   },
   "targets": {
@@ -286,6 +354,22 @@
     "monotonicity_required": true,
     "dnl_abs_max_lsb": 1.0,
     "inl_endpoint_abs_max_lsb": 1.0,
+    "gain_error": {
+      "definition": "Nominal full scale is +/-(VREFP-VREFN) with ideal binary weights 2^i*LSB. k = sum of measured effective bit weights / sum of ideal weights; actual full scale is +/-k*(VREFP-VREFN). Gain error GE = 1/k - 1 in the code domain, positive when codes exceed the ideal. INL is endpoint-fit and, like DNL, excludes offset and gain.",
+      "test_level_reference": "nominal_full_scale",
+      "max_tt": 0.06,
+      "max_any_corner": 0.1,
+      "hard_limit": 0.122,
+      "hard_limit_basis": "A -1 dBFS sine of the nominal full scale must not clip: k >= 10^(-1/20)",
+      "basis": "Top-plate sampling attenuates every DAC step by C_eff/(C_eff+Cp) while the sampled input is not attenuated. The resulting gain is linear and leaves INL/DNL, missing codes and in-range SNDR unchanged. 6% at TT keeps about 0.5 dB headroom for the -1 dBFS test.",
+      "calibration": "None. Digital gain correction of the 8-bit output would merge or drop codes, and VREFP already equals the 0.9 V core level, so the reference cannot be trimmed upward."
+    },
+    "integrated_code_check": {
+      "method": "Expected code = clip(128 + floor(Vin_diff/(LSB*k)), 0, 255) with k from an independent standalone CDAC weight measurement of the same physical view; k = 1 for a schematic CDAC",
+      "tolerance_codes": 1,
+      "tool": "Layout/tools/analysis/gain_corrected_codes.py",
+      "role": "Functional code check of short integrated fixtures. Gain, linearity and dynamic performance are qualified by their own limits, not by exact codes at a few inputs."
+    },
     "power_max_w": 0.001,
     "dynamic_validation_scope": "Measured TT coherent FFT; transient-noise, PEX and whole-PVT signoff remain separate"
   },
@@ -300,7 +384,19 @@
     "cdac_settling_abs_lsb": 0.25,
     "legacy_offset_allocation_lsb": 0.25,
     "offset_allocation_role": "Provisional residual after correction; not a pass threshold for current uncalibrated comparator",
-    "fixed_offset_gain_delay": "Report separately from random-noise RSS"
+    "fixed_offset_gain_delay": "Report separately from random-noise RSS",
+    "gain_error_allocation": {
+      "cdac_with_planned_fill": 0.047,
+      "top_level_top_wiring_and_device_layout": 0.008,
+      "margin": 0.005,
+      "total_tt": 0.06,
+      "measurement": "CDAC share from standalone CDAC fixture weights of the extracted view with its planned fill; top-level share from the integrated extraction"
+    },
+    "layout_systematic_linearity_lsb": {
+      "dnl_abs_max": 0.25,
+      "inl_endpoint_abs_max": 0.25,
+      "basis": "Computed from gain-normalized extracted bit weights; the rest of the 1 LSB targets is left for mismatch, noise and comparator effects"
+    }
   },
   "calibration": {
     "implementation": "not_implemented",

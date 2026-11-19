@@ -1,0 +1,299 @@
+{
+  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "scope": "Proposed ADC macro placement around the implemented CDAC. The CDAC internal geometry is routed. Macro outlines, pin positions and provisional TOP paths belong to integration planning.",
+  "units": "um",
+  "core_bbox_um": [
+    0,
+    0,
+    156,
+    120
+  ],
+  "core_allocation_um2": 18720,
+  "allocated_blocks_um2": 9217.8688,
+  "remaining_area_um2": 9502.1312,
+  "digital_corridor_um": 10,
+  "minimum_project_corridor_um": 10,
+  "die_bbox_um": null,
+  "blocks": [
+    {
+      "id": "cdac",
+      "instances": [
+        "XCDAC"
+      ],
+      "cell": "sar8j_r1_cdac",
+      "view": "layout_paired_balanced",
+      "evidence": "cdac-paired-k-publish-20261118",
+      "basis": "measured_oa_bbox",
+      "orientation": "R0",
+      "lower_left_um": [
+        18.885,
+        32
+      ],
+      "size_um": [
+        72.23,
+        51.76
+      ],
+      "native_translation_um": [
+        20.6,
+        57.9
+      ],
+      "pin_centers": {
+        "TOPN": [
+          "M3",
+          54.44,
+          83.68
+        ],
+        "TOPP": [
+          "M3",
+          55.56,
+          83.68
+        ]
+      }
+    },
+    {
+      "id": "comparator",
+      "instances": [
+        "XCOMP"
+      ],
+      "cell": "sar_strongarm_t28_core",
+      "view": "layout",
+      "evidence": "comp-v7-20261118-pex",
+      "basis": "measured_oa_bbox",
+      "orientation": "MY",
+      "lower_left_um": [
+        54.185,
+        85.4
+      ],
+      "size_um": [
+        1.63,
+        3.52
+      ],
+      "native_translation_um": [
+        55.0,
+        88.045
+      ],
+      "pin_centers": {
+        "VINN": [
+          "M2",
+          54.235,
+          86.445
+        ],
+        "VINP": [
+          "M2",
+          55.765,
+          86.445
+        ]
+      }
+    },
+    {
+      "id": "bootstrap_n",
+      "instances": [
+        "XBOOTN"
+      ],
+      "cell": "sar_bootstrap_flat_8b_p_core",
+      "view": "layout",
+      "evidence": "boot-core-20261118",
+      "basis": "measured_oa_bbox",
+      "orientation": "MY",
+      "lower_left_um": [
+        27.72,
+        86.25
+      ],
+      "size_um": [
+        24.68,
+        24.99
+      ],
+      "native_translation_um": [
+        40.06,
+        86.295
+      ],
+      "pin_centers": {
+        "VOUT": [
+          "M2",
+          41.895,
+          86.365
+        ]
+      }
+    },
+    {
+      "id": "bootstrap_p",
+      "instances": [
+        "XBOOTP"
+      ],
+      "cell": "sar_bootstrap_flat_8b_p_core",
+      "view": "layout",
+      "evidence": "boot-core-20261118",
+      "basis": "measured_oa_bbox",
+      "orientation": "R0",
+      "lower_left_um": [
+        57.6,
+        86.25
+      ],
+      "size_um": [
+        24.68,
+        24.99
+      ],
+      "native_translation_um": [
+        69.94,
+        86.295
+      ],
+      "pin_centers": {
+        "VOUT": [
+          "M2",
+          68.105,
+          86.365
+        ]
+      }
+    },
+    {
+      "id": "reference",
+      "instances": [
+        "XREF"
+      ],
+      "basis": "space_reservation",
+      "lower_left_um": [
+        10,
+        9
+      ],
+      "size_um": [
+        90,
+        16
+      ],
+      "orientation": "R0"
+    },
+    {
+      "id": "sar_timing",
+      "instances": [
+        "XCTRL",
+        "XSEQ",
+        "XIDLE",
+        "XSAMPLE"
+      ],
+      "basis": "space_reservation",
+      "lower_left_um": [
+        110,
+        25
+      ],
+      "size_um": [
+        40,
+        70
+      ],
+      "orientation": "R0"
+    }
+  ],
+  "planned_top_paths": {
+    "TOPN": {
+      "from": "XCDAC.TOPN",
+      "common_to_tee_um": 1.38,
+      "to_comparator": {
+        "pin": "XCOMP.VINN",
+        "points_um": [
+          [
+            54.44,
+            83.68
+          ],
+          [
+            54.44,
+            84.52
+          ],
+          [
+            53.9,
+            84.52
+          ],
+          [
+            53.9,
+            86.445
+          ],
+          [
+            54.235,
+            86.445
+          ]
+        ],
+        "length_um": 3.64
+      },
+      "to_sampler": {
+        "pin": "XBOOTN.VOUT",
+        "points_um": [
+          [
+            54.44,
+            83.68
+          ],
+          [
+            54.44,
+            84.52
+          ],
+          [
+            53.9,
+            84.52
+          ],
+          [
+            41.895,
+            84.52
+          ],
+          [
+            41.895,
+            86.365
+          ]
+        ],
+        "length_um": 15.23
+      }
+    },
+    "TOPP": {
+      "from": "XCDAC.TOPP",
+      "common_to_tee_um": 1.38,
+      "to_comparator": {
+        "pin": "XCOMP.VINP",
+        "points_um": [
+          [
+            55.56,
+            83.68
+          ],
+          [
+            55.56,
+            84.52
+          ],
+          [
+            56.1,
+            84.52
+          ],
+          [
+            56.1,
+            86.445
+          ],
+          [
+            55.765,
+            86.445
+          ]
+        ],
+        "length_um": 3.64
+      },
+      "to_sampler": {
+        "pin": "XBOOTP.VOUT",
+        "points_um": [
+          [
+            55.56,
+            83.68
+          ],
+          [
+            55.56,
+            84.52
+          ],
+          [
+            56.1,
+            84.52
+          ],
+          [
+            68.105,
+            84.52
+          ],
+          [
+            68.105,
+            86.365
+          ]
+        ],
+        "length_um": 15.23
+      }
+    }
+  },
+  "route_assumptions": "M3 from CDAC, matched branches, M2 receiver access. The centerline paths include shared segments. Via access, obstruction clearance, cross-block spacing, clock, reference and supply routing require top-level layout verification."
+}

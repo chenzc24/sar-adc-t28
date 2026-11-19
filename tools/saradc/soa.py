@@ -11,17 +11,19 @@ import subprocess
 import yaml
 from .__main__ import engine
 from . import candidates
-from .measure.soa_topology import statements
+from .measure.soa_topology import save_voltage_node, statements
 
 ROOT=Path(__file__).resolve().parents[2]
 
 
-def prepare(corner, revision='v1', maxstep_ps=10, overrides=None):
+def prepare(corner, revision='v1', maxstep_ps=10, overrides=None, source_run_id=None):
     if corner not in ('tt','ssc','ssh','ffc','ffh') or not math.isfinite(maxstep_ps) or maxstep_ps<=0:
         raise ValueError('Known corner and positive finite maximum step required')
-    old='sar8-minref-minimal-'+corner+('-v2' if corner=='tt' else '-song-v1')
+    old=engine().valid_id(source_run_id) if source_run_id else 'sar8-minref-minimal-'+corner+('-v2' if corner=='tt' else '-song-v1')
     source=ROOT/'work/decks'/old
     original=json.loads((source/'recipe.yaml').read_text())
+    if original['test_conditions']['corner'] != corner or original['run_id'] != old:
+        raise ValueError('Source short test has a different corner or identity')
     blobs={i['name']:(ROOT/i['source']).read_bytes() for i in original['inputs']}
     for i in original['inputs']:
         assert hashlib.sha256(blobs[i['name']]).hexdigest()==i['sha256'],i['name']
@@ -62,7 +64,7 @@ def prepare(corner, revision='v1', maxstep_ps=10, overrides=None):
     known=set(rule['scope']['thin_oxide_mos_models']+rule['scope']['thin_oxide_moscap_models']+
               rule['scope']['thick_oxide_models_outside_this_rule'])
     assert not models-known,models-known
-    nodes=sorted({n for d in inventory['devices'] for n in d['nodes']}-{'0'})
+    nodes=sorted(save_voltage_node(n) for n in {n for d in inventory['devices'] for n in d['nodes']}-{'0'})
     deck=blobs['test.scs'].decode()
     deck=re.sub(r'maxstep=10p', 'maxstep=%gp'%maxstep_ps,deck)
     deck+='\n// Complete physical MOS terminal inventory; no circuit change.\n'
@@ -106,7 +108,8 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('action',choices=['prepare','submit']);p.add_argument('--corner',required=True,choices=['tt','ssc','ssh','ffc','ffh'])
     p.add_argument('--revision',default='v1');p.add_argument('--maxstep-ps',type=float,default=10)
     p.add_argument('--candidate',action='append',default=[],help='Explicit module=candidate; preserves current defaults')
-    a=p.parse_args();path,info=prepare(a.corner,a.revision,a.maxstep_ps,candidates.assignments(a.candidate))
+    p.add_argument('--source-run-id',help='Bind to the named prepared short-test recipe and its frozen circuit')
+    a=p.parse_args();path,info=prepare(a.corner,a.revision,a.maxstep_ps,candidates.assignments(a.candidate),a.source_run_id)
     if a.action=='submit':
         e=engine();e.register(path,host='thu-song')
         info['submission']=e.phase('submit',json.loads((ROOT/path).read_text())['run_id'],queue=True)

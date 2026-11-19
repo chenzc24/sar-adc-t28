@@ -1,37 +1,39 @@
-# 验证结果
+# Verification Results
 
-完成实验按[波形归档与清理规则](../docs/waveform-retention.md)保存小数据、图表、告警及运行身份；允许随后清理原始大波形，回执与归档索引放在 `results/storage/`。
+At experiment closeout, archive compact data, figures, warnings, and run identities. The retention policy permits cleanup of eligible raw waveforms. Keep receipts and archive indexes under `results/storage/`. [Waveform Retention and Cleanup](../docs/waveform-retention.md)
 
-2026-11-15 已清理 thu-song 旧波形 374.985 GiB，保留最新 OR 版五角数据；[归档与删除回执](storage/20261115-song-waveform-cleanup.md)。
+On 2026-11-15, cleanup recovered 374.985 GiB of old waveforms on thu-song and retained the latest five-corner OR data. [Archive and deletion receipt](storage/20261115-song-waveform-cleanup.md)
 
-当前设计为最简参考 MSB D2＋数据复位 OR 版，见[采用记录](design/reset_data_or_adoption_20261115.json)。本版 45 点 PVT 短测共 490 帧码字及功能时序通过；原五角逐管端压数值违例为 0，保留时间分辨率复核标记，新增 40 角仅验证功能时序与接口筛查。下面历史 A/B 全码、FFT、MC 与噪声结果仍归属原冻结输入，[provenance.json](provenance.json) 保留其来源；不可直接作为最简版性能。
+The standard-delay schematic passed five closed-loop corners. Its continuous and mismatch results are in the [timing regression](design/sar_std_delay_20261119.md). The previous 8.5 µm RC design passed five extracted SAR corners. [RC layout results](../Layout/results/sar_timing.md) · [Prior reset-OR adoption](design/reset_data_or_adoption_20261115.json)
 
-| 验证 | 结果入口 |
+The routed standard-delay candidate removes the discrete QB MOM. The nine-stage QUIET implementation misses the 90 ns deadline at SS cold and hot. The measured cell-internal delay and the shorter return route are documented with the extracted clock-latch waveforms. [Routed SAR diagnosis](../Layout/results/sar_std_static_candidate_c_20261119.md)
+
+| Verification | Evidence |
 | --- | --- |
-| TT 全码：255 边界、256 中心码 | [static/results.json](static/results.json) |
-| TT 1024 点 FFT 与 ADCtoolbox | [fft/results.json](fft/results.json)、[A/B 频谱](fft/ab_spectrum.png)、[B 版 12 图](fft/b_toolbox_panel.png) |
-| 当前 OR 版连续 1024 点含噪声 FFT | [最终回收及频谱](noise/resetor_1024_20261116/README.md)：SNR 48.576dB、SNDR 48.554dB、ENOB 7.773bit、SFDR 65.495dBc；1032帧协议通过，单噪声种子，保留端压/LTE及收敛限制 |
-| 当前 OR 版整机全局＋局部 MC | [36/36 种子最终回收](mc/resetor_global_local_36/README.md)：360 帧、2880 次逐位比较通过时序及建立筛查；码字偏移和测量范围分别记录 |
-| 当前 OR 版选择性失配边界补测 | [14/16案例回收](mc/selective_boundary_results_20261116/README.md)：476帧、3808次逐位比较通过本次诊断；标称C/D两例预算未覆盖，边界偏移与告警分别记录 |
-| B 版单种子 TT 瞬态噪声 | [noise/comparison.json](noise/comparison.json)，带宽与统计收敛未完成 |
-| 当前 OR 版其余 40 角短测 | [45 点回收：新增 400/400 帧通过及范围限制](pvt/resetor_45_short_20261115.md)；[原入队记录](pvt/resetor_40_launch_20261115.md) |
-| 独立模块与混合层次 | [六模块、逐项混合及 SAR 挂起/重启](blocks/README.md) |
-| VA/Python 行为模型 | [行为交叉验证](behav/README.md)，与晶体管性能资格分别记录 |
-| A/B 五点关键码 | [pvt/results.json](pvt/results.json) |
-| 最简参考候选五点逐管端压 | [新规则判定与时间步长复核](soa/minimal_reference_five_corner_20261115.md)：TT/SS 两角通过本次范围，FF 冷/热持续时间违例 |
-| 比较器栅漏超限定位 | [输入顶板切换下冲](soa/comparator_input_undershoot_20261115.md)；[D2 候选五角短测及比较器端压通过](soa/msb_drive_d2_trial_20261115.md)，FF 冷仍有 SAR 存储违例；已按用户决定采用 |
-| FF 冷 SAR 标准 DFF 内部超限 | [复位反馈与 MM64 源极下冲](soa/dff_reset_feedback_20261115.md)；[外围时序隔离对照](soa/dff_periphery_order_20261115.md)：库内部不变，D 下降移出清零区间使超限时间约 132→25 ps；真实外围验证见下一项 |
-| 数据 DFF 外部原生 OR 候选 | [FF 冷真实闭环短测](soa/dff_reset_or_ffc_20261115.md)：18/18 帧功能时序通过，规则内违例 8→0，最坏累计 131.527→52.515 ps；已按用户决定采用；后续其余角结果见上方 45 点回收 |
-| 比较器、CDAC 各 200 种子 | [mc/modules_200.json](mc/modules_200.json)；[与当前版的复用核对及补测范围](mc/modules_200_reuse_audit_20261116.md) |
-| 冷角闭环查询时快照 | [mc/cold_progress.json](mc/cold_progress.json)、[mc/checkpoint_snapshot.json](mc/checkpoint_snapshot.json) |
-| 目录迁移 TT 短测 | [运行状态及原始告警](migration/native_short.json)，[迁移回执](migration/restructure.json) |
+| TT full-code test, 255 transitions and 256 code centers | [Static results](static/results.json) |
+| TT 1024-point FFT and ADCtoolbox | [FFT results](fft/results.json), [A/B spectra](fft/ab_spectrum.png), and [B's 12-plot panel](fft/b_toolbox_panel.png) |
+| 17.13 µm reset-OR design, continuous 1024-point noisy FFT | SNR 48.576 dB, SNDR 48.554 dB, ENOB 7.773 bits, and SFDR 65.495 dBc. All 1032 frame protocols passed. The test uses one noise seed and retains terminal-voltage and LTE warnings and convergence limits. [Final results and spectrum](noise/resetor_1024_20261116/README.md) |
+| 17.13 µm reset-OR design, full-circuit global-plus-local Monte Carlo | 36/36 seeds collected. All 360 frames and 2880 bit comparisons passed timing and settling screens. See the report for code shifts and measurement scope. [Final MC results](mc/resetor_global_local_36/README.md) |
+| 17.13 µm reset-OR design, selective-mismatch boundary supplement | 14/16 cases collected. All 476 frames and 3808 bit comparisons passed the diagnostic. Nominal C/D are outside the completed coverage due to the budget. See the report for shifts and warnings. [Boundary results](mc/selective_boundary_results_20261116/README.md) |
+| B, single-seed TT transient noise | Bandwidth and statistical convergence are open. [Noise comparison](noise/comparison.json) |
+| Additional 40 PVT corners for OR | 400/400 additional frames passed within the tested scope. [45-point results](pvt/resetor_45_short_20261115.md) · [Queue record](pvt/resetor_40_launch_20261115.md) |
+| Standalone modules and mixed hierarchy | [Six module tests, mixed views, and SAR stall/restart](blocks/README.md) |
+| Verilog-A and Python behavioral models | [Behavioral cross-checks and scope](behav/README.md) |
+| A/B key codes at five corners | [PVT results](pvt/results.json) |
+| Per-device terminal voltage for the minimal-reference candidate | TT and both SS corners passed within scope. FF cold and hot had duration violations. [Rule verdict and time-step review](soa/minimal_reference_five_corner_20261115.md) |
+| Comparator gate-to-drain over-limit diagnosis | The D2 candidate passed the comparator screen at five corners. The FF-cold SAR storage violation remained at that checkpoint. The user adopted D2. [Input top-plate undershoot](soa/comparator_input_undershoot_20261115.md) · [D2 trial](soa/msb_drive_d2_trial_20261115.md) |
+| FF-cold SAR standard DFF internal violation | Moving the D falling edge outside the clear interval reduced over-limit duration from about 132 to 25 ps without modifying the library. [Reset feedback and MM64 source undershoot](soa/dff_reset_feedback_20261115.md) · [Peripheral timing control](soa/dff_periphery_order_20261115.md) |
+| Native OR at the data DFF input | At FF cold, 18/18 frames passed function and timing, violations fell from 8 to 0, and worst cumulative duration fell from 131.527 to 52.515 ps. The user adopted the design. Other corners are included in the 45-point results above. [Native OR closed-loop test](soa/dff_reset_or_ffc_20261115.md) |
+| 200 seeds each for comparator and CDAC | [Module results](mc/modules_200.json) · [Reuse audit and supplementary scope](mc/modules_200_reuse_audit_20261116.md) |
+| Closed-loop cold-corner snapshots | [Progress](mc/cold_progress.json) · [Checkpoint](mc/checkpoint_snapshot.json) |
+| Directory migration TT short test | [Run state and original warnings](migration/native_short.json) · [Migration receipt](migration/restructure.json) |
 
-B 的确定性 TT 动态指标：SNDR 48.788 dB、SFDR 64.768 dBc、ENOB 7.812 bit、SNR 48.806 dB；瞬态噪声、失配和 PEX 在该测试中关闭。功耗估计 86.53 µW，积分网格收敛尚待验证，不含外部输入和时钟源。
+B's deterministic TT dynamic results were SNDR 48.788 dB, SFDR 64.768 dBc, ENOB 7.812 bits, and SNR 48.806 dB with transient noise, mismatch, and PEX disabled. Estimated power was 86.53 µW excluding external input and clock sources. The integration grid convergence is open.
 
-历史比较器 200 种子的失调样本标准差约 14.188 mV；CDAC 独立静态位权预测的最大绝对 DNL 0.1617 LSB、端点 INL 0.0848 LSB。这些范围不等同于整机良率。该历史冷角闭环 MC 的局部失配仅覆盖比较器和 CDAC；2026-11-15 当前 OR 版新批次采用全局＋全 DUT 局部统计变化，见上表。
+The historical 200-seed comparator offset standard deviation was about 14.188 mV. Standalone CDAC weights predicted a maximum absolute DNL of 0.1617 LSB and endpoint INL of 0.0848 LSB. Use the corresponding full-circuit evidence for yield or timing conclusions. Historical cold-corner closed-loop local mismatch covered only the comparator and CDAC. The 2026-11-15 OR batch applied global and full-DUT local variation.
 
-端压告警与未解决项保留。实时进度通过 `python -m tools.saradc observe cold`、`observe refs` 和 `checkpoint` 查询；结果页的 JSON 是有观察时间的快照。
+Use `python -m tools.saradc observe cold`, `observe refs`, and `checkpoint` for live progress. The JSON results are timestamped snapshots and retain warnings and open items.
 
-迁移短测 `sar8-tree-tt-short-v1` 的 10 帧码字和事件计数与原 B 版完全一致，三个采样关闭沿及转换时间的最大差值均为 0 ps。首次分析因缺少四个 Bootstrap 内部节点失败，同源只读重分析完成了功能和时序对照。这四个节点的电容预充电压未测，端压告警仍保留。[逐帧对照](migration/comparison.json) · [运行和失败记录](migration/native_short.json) · [原始告警](migration/native_warnings.txt)
+The `sar8-tree-tt-short-v1` migration run matched the original B codes and event counts for all ten frames. The maximum difference in the three sampled close edges and conversion times was 0 ps. The first analysis failed because four internal Bootstrap nodes were missing. Independent read-only analysis of the same source completed the function and timing comparison. Precharge voltages at those four nodes remain unmeasured and the original terminal-voltage warnings are retained. [Frame comparison](migration/comparison.json) · [Run and analysis failure](migration/native_short.json) · [Original warnings](migration/native_warnings.txt)
 
-SS 5115 的原 q45 参照失败与 q38 修正回执见 [reference_5115.json](mc/reference_5115.json)。
+For SS 5115, use the original q45 reference failure and q38 correction receipts. [Reference receipts](mc/reference_5115.json)

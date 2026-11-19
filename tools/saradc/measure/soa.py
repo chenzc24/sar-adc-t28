@@ -92,7 +92,7 @@ def analyze(run_dir, output_dir, tool_dir=None):
     # Deduplicate physically identical terminal differences, preserving device attribution.
     pairs, index, rows = [],{},[]
     for d in topo['devices']:
-        pins = dict(zip('pn' if len(d['nodes'])==2 else 'dgsb',[n.lower() for n in d['nodes']]))
+        pins = dict(zip('pn' if len(d['nodes'])==2 else 'dgsb',[n.replace('\\','').lower() for n in d['nodes']]))
         for pair in (['pn'] if len(pins)==2 else ['gs','gd','ds','gb','bs','bd']):
             key = tuple(sorted((pins[pair[0]],pins[pair[1]])))
             covered = d['model'] in thin and pair in ('gs','gd','ds','pn')
@@ -175,7 +175,7 @@ def analyze(run_dir, output_dir, tool_dir=None):
                 violations=violations,raw_waveform=raw,
                 limitations=['Piecewise-linear native-waveform screen; temporal-resolution review required before pass.',
                              'Body pairs and thick-oxide devices are recorded but not qualified by this rule.',
-                             '18-frame stimulus coverage only; no MC/noise/PEX/supply ramp.'])
+                             ctx.get('extraction_scope','%d-frame stimulus coverage only; no MC/noise/PEX/supply ramp.' % len(ctx['expected_codes']))])
     if not os.path.isdir(output_dir):os.makedirs(output_dir)
     for name,obj in [('terminal_results.json',rows),('result.json',result)]:
         with open(os.path.join(output_dir,name),'w') as f:json.dump(obj,f,indent=2);f.write('\n')

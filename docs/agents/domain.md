@@ -1,5 +1,5 @@
 # Domain Documentation
 
-本项目采用单一领域上下文。统一术语见 [GLOSSARY.md](../../GLOSSARY.md)，已确认的架构决定写入 `docs/adr/`。
+The project uses one domain context. Use the glossary for terms and `docs/adr/` for confirmed architectural decisions. [Project glossary](../../GLOSSARY.md) · [Architecture decisions](../adr/README.md)
 
-读取与任务有关的术语和决定。讨论改变术语或设计假设时使用 `domain-modeling`，让一个事实保留一个权威来源。原始数值、波形和运行参数由相应 manifest 与结果提供。
+Read the terms and decisions relevant to the task. Use `domain-modeling` when a discussion changes a term or design assumption, and keep one authoritative source for each fact. Use the corresponding manifests and results for original values, waveforms, and run parameters.

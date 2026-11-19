@@ -18,16 +18,14 @@ def prepare(revision='resetor40-v1'):
     conditions=matrix(cfg)
     assert len(conditions)==45 and len(cfg['existing_five'])==5
     assert set(cfg['existing_five'])<=set(conditions)
-    adoption=json.loads((ROOT/'results/design/reset_data_or_adoption_20261115.json').read_text(encoding='utf-8'))
-    for name,digest in adoption['source_sha256'].items():
-        assert hashlib.sha256((ROOT/'design'/name).read_bytes()).hexdigest()==digest,'Design changed: '+name
+    adoption, original_sources = reference_short.resetor_20261115_sources()
     batch=dict(schema_version=1,revision=revision,host='thu-song',design_id=adoption['design_id'],
                design_source_sha256=adoption['source_sha256'],scope=cfg['scope'],code_centers=cfg['code_centers_in_order'],
                existing_five={n:'sar8-minref-soa-'+old+'-song-'+cfg['existing_five_revision'] for n,old in cfg['existing_five'].items()},runs=[])
     for name,condition in conditions.items():
         if name in cfg['existing_five']:continue
         path=reference_short.prepare('current',name,revision,condition=condition,codes=cfg['code_centers_in_order'],
-                                     max_output_mib=cfg['max_output_mib_per_run'])
+                                     max_output_mib=cfg['max_output_mib_per_run'],source_blobs=original_sources)
         recipe=json.loads((ROOT/path).read_text(encoding='utf-8'))
         assert recipe['test_conditions']['passive_sections']==cfg['passive_sections']
         assert recipe['test_conditions']['reference_v']==cfg['reference_v']

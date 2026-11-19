@@ -1,0 +1,130 @@
+layoutml 0.3 profile=objects syntax=v0.3+role mode=strict
+technology tsmc28 variant=HPC+ deck_version=tsmcN28 store=sar_strongarm_t28_core.store.json
+units user=1u dbu=1n grid=1n
+
+cell sar_strongarm_t28_core {
+  // ── 由 gds_to_lml_algo.py 零硬编码算法从 official-v4.gds 全自动逆向生成 ──
+
+  viadef V_M12_1 @M1..@M2 size=0.11x0.11 via=1x1
+  viadef V_M23_1 @M2..@M3 size=0.11x0.11 via2=1x1
+  viadef V_M12_2 @M1..@M2 size=0.07x0.11 via=1x1
+  viadef V_M12_3 @M1..@M2 size=0.11x0.07 via=1x1
+  viadef V_M23_2 @M2..@M3 size=0.07x0.11 via2=1x1
+
+  pcell R_NMOS_1 tsmc28.nch_mac at (-0.285, -2.14) params={w=0.5 l=0.03 nf=4 fingers=NINP,NTAIL*2,NINN} realization=sha256:97d2c036b58709f6 {
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NTAIL nch_mac W=1 L=0.03 nf=2 G=&CLK SD=&TAIL,&VSS B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+  }
+
+  pcell R_NMOS_2 tsmc28.nch_mac above R_NMOS_1 gap=0.34 align=left params={w=0.5 l=0.03 nf=4 fingers=NLATN,NINP,NINN,NLATP} realization=sha256:85c6dee1bac11096 {
+    device NLATN nch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&Y B=&VSS
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+    device NLATP nch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&X B=&VSS
+  }
+
+  pcell R_PMOS_1 tsmc28.pch_mac above R_NMOS_2 gap=0.8 align=center well=@WELL:(0.23,0.28) params={w=0.5 l=0.03 nf=6 fingers=PRSTY,PLATN,PRSTN,PRSTP,PLATP,PRSTX} realization=sha256:a3919d1f21fc9ae8 {
+    device PRSTY pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&Y B=&VDD
+    device PLATN pch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&VDD B=&VDD
+    device PRSTN pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTN,&VDD B=&VDD
+    device PRSTP pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTP,&VDD B=&VDD
+    device PLATP pch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&VDD B=&VDD
+    device PRSTX pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&X B=&VDD
+  }
+
+  route &CLK {
+    path @M2 w=0.07 (R_PMOS_1.x0+0.415, R_PMOS_1.y1) -> (x, R_PMOS_1.y1+0.3) via=V_M23_2@R_PMOS_1.y1+0.15
+    path @M3 w=0.07 (R_NMOS_2.x0+0.285, R_NMOS_1.y0-0.155) -> (x, R_PMOS_1.y1+0.425)
+    path @M1 w=0.07 (R_NMOS_1.x0+0.185, R_NMOS_1.y0-0.1) -> (R_NMOS_1.x1-0.185, y) via=V_M12_3@R_NMOS_1.x0+0.285
+    path @M1 w=0.07 (R_PMOS_1.x0+0.055, R_PMOS_1.y1+0.15) -> (R_PMOS_1.x1-0.055, y) via=V_M12_1@R_PMOS_1.x0+0.415
+    path @M2 w=0.07 (R_NMOS_1.x0+0.135, R_NMOS_1.y0-0.1) -> (R_NMOS_1.x1-0.135, y) via=V_M23_1@R_NMOS_1.x0+0.285
+  }
+
+  route &OUTN {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_2.x+0.325 ys=[R_NMOS_2.SD_0.y-0.05, R_NMOS_2.y1+0.1, R_PMOS_1.y0-0.15, R_PMOS_1.y0+0.08] span_y=(R_NMOS_2.y0+0.145..R_PMOS_1.y1+0.425) via2=V_M23_1
+    path @M1 w=0.07 (R_NMOS_2.SD_0.x, R_NMOS_2.SD_0.y0) -> (x, R_NMOS_2.SD_0.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x, R_PMOS_1.SD_2.y0) -> (x, R_PMOS_1.SD_2.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x+0.225, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_2.x+0.425, y) via=V_M12_3@R_PMOS_1.SD_2.x+0.325
+    path @M1 w=0.07 (R_PMOS_1.SD_2.x+0.225, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_2.x+0.425, y) via=V_M12_3@R_PMOS_1.SD_2.x+0.325
+    path @M2 w=0.07 (R_NMOS_2.SD_0.x-0.055, R_NMOS_2.SD_0.y-0.05) -> (R_NMOS_2.SD_0.x+0.51, y) via=V_M12_1@R_NMOS_2.SD_0.x
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x+0.175, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_2.x+0.475, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x+0.175, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_2.x+0.475, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_2.x-0.055, R_PMOS_1.y0+0.08) -> (R_PMOS_1.SD_2.x+0.38, y) via=V_M12_1@R_PMOS_1.SD_2.x
+  }
+
+  route &OUTP {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_4.x-0.325 ys=[R_NMOS_2.y1-0.06, R_NMOS_2.y1+0.1, R_PMOS_1.y0-0.15, R_PMOS_1.SD_4.y+0.07] span_y=(R_NMOS_2.y0+0.145..R_PMOS_1.y1+0.425) via2=V_M23_1
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x, R_PMOS_1.SD_4.y0) -> (x, R_PMOS_1.SD_4.y1)
+    path @M1 w=0.07 (R_NMOS_2.SD_4.x, R_NMOS_2.SD_4.y0) -> (x, R_NMOS_2.SD_4.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x-0.425, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_4.x-0.225, y) via=V_M12_3@R_PMOS_1.SD_4.x-0.325
+    path @M1 w=0.07 (R_PMOS_1.SD_4.x-0.425, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_4.x-0.225, y) via=V_M12_3@R_PMOS_1.SD_4.x-0.325
+    path @M2 w=0.07 (R_NMOS_2.SD_4.x-0.51, R_NMOS_2.y1-0.06) -> (R_NMOS_2.SD_4.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_4.x
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.475, R_NMOS_2.y1+0.1) -> (R_PMOS_1.SD_4.x-0.175, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.475, R_PMOS_1.y0-0.15) -> (R_PMOS_1.SD_4.x-0.175, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_4.x-0.38, R_PMOS_1.y1-0.18) -> (R_PMOS_1.SD_4.x+0.055, y) via=V_M12_1@R_PMOS_1.SD_4.x
+  }
+
+  route &TAIL {
+    collect_sd @M2 w=0.07 on R_NMOS_1.SD[&TAIL] track=top-0.06 via=V_M12_1 lead=@M1:0.07
+    path @M1 w=0.07 (R_NMOS_2.SD_2.x, R_NMOS_2.SD_2.y0) -> (x, R_NMOS_2.SD_2.y1) via=V_M12_2@R_NMOS_2.y0+0.055
+    path @M2 w=0.07 (R_NMOS_2.SD_2.x, R_NMOS_1.y1-0.06) -> (x, R_NMOS_2.y0+0.11)
+  }
+
+  route &VDD {
+    lead @M1 w=0.07 from=[(R_PMOS_1.SD_1.x-0.455, R_PMOS_1.y0-0.345), (R_PMOS_1.SD_5.x+0.455, R_PMOS_1.y0-0.345)] to_y=R_PMOS_1.y1+0.345
+    lead @M1 w=0.07 on R_PMOS_1.SD[&VDD] track=(bottom..top)
+    path @M1 w=0.07 (R_PMOS_1.SD_1.x-0.49, R_PMOS_1.y0-0.31) -> (R_PMOS_1.SD_5.x+0.49, y)
+    path @M1 w=0.07 (R_PMOS_1.SD_1.x-0.49, R_PMOS_1.y1+0.31) -> (R_PMOS_1.SD_5.x+0.49, y)
+    path @M2 w=0.07 (R_PMOS_1.SD_1.x-0.51, R_PMOS_1.SD_3.y-0.05) -> (R_PMOS_1.SD_5.x+0.51, y) via=V_M12_1@[R_PMOS_1.SD_1.x-0.455, R_PMOS_1.SD_1.x, R_PMOS_1.SD_3.x, R_PMOS_1.SD_5.x, R_PMOS_1.SD_5.x+0.455]
+  }
+
+  route &VINN {
+    path @M1 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.065) -> (x, R_NMOS_2.y0-0.1) -> (R_NMOS_2.x1-0.255, y) via=V_M12_2@(R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.17)
+    path @M2 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y1+0.04) -> (x, R_NMOS_2.y0-0.04) via=V_M23_2@R_NMOS_1.y1+0.17
+    path @M3 w=0.07 (R_NMOS_1.x1-0.09, R_NMOS_1.y0-0.375) -> (x, R_NMOS_2.y0-0.115)
+  }
+
+  route &VINP {
+    path @M1 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.065) -> (x, R_NMOS_2.y0-0.1) -> (R_NMOS_2.x0+0.255, y) via=V_M12_2@(R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.17)
+    path @M2 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y1+0.04) -> (x, R_NMOS_2.y0-0.04) via=V_M23_2@R_NMOS_1.y1+0.17
+    path @M3 w=0.07 (R_NMOS_1.x0+0.09, R_NMOS_1.y0-0.375) -> (x, R_NMOS_2.y0-0.115)
+  }
+
+  route &VSS {
+    lead @M1 w=0.07 from=[(R_NMOS_1.SD_2.x-0.585, R_NMOS_1.y0-0.295), (R_NMOS_1.SD_2.x+0.585, R_NMOS_1.y0-0.295)] to_y=R_NMOS_2.y1+0.295
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x, R_NMOS_1.SD_2.y0) -> (x, R_NMOS_1.SD_2.y1)
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x-0.62, R_NMOS_1.y0-0.26) -> (R_NMOS_1.SD_2.x+0.62, y)
+    path @M1 w=0.07 (R_NMOS_1.SD_2.x-0.62, R_NMOS_2.y1+0.26) -> (R_NMOS_1.SD_2.x+0.62, y)
+    path @M2 w=0.07 (R_NMOS_1.SD_2.x-0.64, R_NMOS_1.y0+0.14) -> (R_NMOS_1.SD_2.x+0.64, y) via=V_M12_1@[R_NMOS_1.SD_2.x-0.585, R_NMOS_1.SD_2.x, R_NMOS_1.SD_2.x+0.585]
+  }
+
+  route &X {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_6.x ys=[R_NMOS_1.SD_4.y+0.07, R_NMOS_2.SD_3.y+0.07] span_y=(R_NMOS_1.SD_4.y+0.015..R_PMOS_1.y1-0.005) via2=V_M23_1
+    path @M1 w=0.07 (R_NMOS_2.SD_3.x, R_NMOS_2.SD_3.y0) -> (x, R_NMOS_2.SD_3.y1)
+    path @M1 w=0.07 (R_NMOS_1.SD_4.x, R_NMOS_1.SD_4.y0) -> (x, R_NMOS_1.SD_4.y1)
+    path @M1 w=0.07 (R_PMOS_1.SD_6.x, R_PMOS_1.SD_6.y0) -> (x, R_PMOS_1.SD_6.y1) via=V_M12_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_PMOS_1.SD_6.x, R_PMOS_1.SD_6.y+0.04) -> (x, R_PMOS_1.y1+0.09) via=V_M23_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_NMOS_1.SD_4.x-0.055, R_NMOS_1.SD_4.y+0.07) -> (R_NMOS_1.SD_4.x+0.185, y) via=V_M12_1@R_NMOS_1.SD_4.x
+    path @M2 w=0.07 (R_NMOS_2.SD_3.x-0.055, R_NMOS_2.SD_3.y+0.07) -> (R_PMOS_1.SD_6.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_3.x
+  }
+
+  route &Y {
+    spine @M3 w=0.07 at x=R_PMOS_1.SD_0.x ys=[R_NMOS_1.SD_0.y+0.07, R_NMOS_2.SD_1.y+0.07] span_y=(R_NMOS_1.SD_0.y+0.015..R_PMOS_1.y1-0.005) via2=V_M23_1
+    path @M1 w=0.07 (R_PMOS_1.SD_0.x, R_PMOS_1.SD_0.y0) -> (x, R_PMOS_1.SD_0.y1) via=V_M12_2@R_PMOS_1.y1-0.06
+    path @M1 w=0.07 (R_NMOS_1.SD_0.x, R_NMOS_1.SD_0.y0) -> (x, R_NMOS_1.SD_0.y1)
+    path @M1 w=0.07 (R_NMOS_2.SD_1.x, R_NMOS_2.SD_1.y0) -> (x, R_NMOS_2.SD_1.y1)
+    path @M2 w=0.07 (R_PMOS_1.SD_0.x, R_PMOS_1.SD_0.y+0.04) -> (x, R_PMOS_1.y1+0.09) via=V_M23_2@R_PMOS_1.y1-0.06
+    path @M2 w=0.07 (R_NMOS_1.SD_0.x-0.185, R_NMOS_1.SD_0.y+0.07) -> (R_NMOS_1.SD_0.x+0.055, y) via=V_M12_1@R_NMOS_1.SD_0.x
+    path @M2 w=0.07 (R_PMOS_1.SD_0.x-0.055, R_NMOS_2.SD_1.y+0.07) -> (R_NMOS_2.SD_1.x+0.055, y) via=V_M12_1@R_NMOS_2.SD_1.x
+  }
+
+  cell_port VDD @M1 on R_PMOS_1.SD_3+(0, 0.56) size=0.1x0.1
+  cell_port VSS @M1 on R_NMOS_1.SD_2+(0, -0.51) size=0.1x0.1
+  cell_port OUTP @M3 on R_PMOS_1.SD_4+(-0.325, 0.605) size=0.1x0.1
+  cell_port CLK @M3 on R_PMOS_1+(0, 0.605) size=0.1x0.1
+  cell_port OUTN @M3 on R_PMOS_1.SD_2+(0.325, 0.605) size=0.1x0.1
+  cell_port VINP @M3 on R_NMOS_1+(-0.195, -0.555) size=0.1x0.1
+  cell_port VINN @M3 on R_NMOS_1+(0.195, -0.555) size=0.1x0.1
+}
+top sar_strongarm_t28_core

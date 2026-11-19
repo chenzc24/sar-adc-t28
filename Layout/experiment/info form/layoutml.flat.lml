@@ -1,0 +1,183 @@
+layoutml 0.3 profile=objects syntax=v0.3+role mode=strict
+technology tsmc28 variant=HPC+ deck_version=tsmcN28 store=sar_strongarm_t28_core.store.json
+units user=1u dbu=1n grid=1n
+
+cell sar_strongarm_t28_core {
+  // ── 由 gds_to_lml_algo.py 零硬编码算法从 official-v4.gds 全自动逆向生成 ──
+
+  pcell R_NMOS_1 tsmc28.nch_mac at (-0.285, -2.14) params={w=0.5 l=0.03 nf=4 fingers=NINP,NTAIL,NTAIL,NINN} realization=sha256:97d2c036b58709f6 {
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NTAIL nch_mac W=1 L=0.03 nf=2 G=&CLK SD=&TAIL,&VSS B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+  }
+
+  pcell R_NMOS_2 tsmc28.nch_mac at (-0.285, -1.3) params={w=0.5 l=0.03 nf=4 fingers=NLATN,NINP,NINN,NLATP} realization=sha256:85c6dee1bac11096 {
+    device NLATN nch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&Y B=&VSS
+    device NINP nch_mac W=0.5 L=0.03 nf=1 G=&VINP SD=&TAIL,&Y B=&VSS
+    device NINN nch_mac W=0.5 L=0.03 nf=1 G=&VINN SD=&TAIL,&X B=&VSS
+    device NLATP nch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&X B=&VSS
+  }
+
+  pcell R_PMOS_1 tsmc28.pch_mac at (-0.415, 0) params={w=0.5 l=0.03 nf=6 fingers=PRSTY,PLATN,PRSTN,PRSTP,PLATP,PRSTX} realization=sha256:a3919d1f21fc9ae8 {
+    device PRSTY pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&Y B=&VDD
+    device PLATN pch_mac W=0.5 L=0.03 nf=1 G=&OUTP SD=&OUTN,&VDD B=&VDD
+    device PRSTN pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTN,&VDD B=&VDD
+    device PRSTP pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&OUTP,&VDD B=&VDD
+    device PLATP pch_mac W=0.5 L=0.03 nf=1 G=&OUTN SD=&OUTP,&VDD B=&VDD
+    device PRSTX pch_mac W=0.5 L=0.03 nf=1 G=&CLK SD=&VDD,&X B=&VDD
+  }
+
+  shapes {
+    rect @WELL [-0.83, -0.425]..[0.83, 0.925]
+  }
+
+  route &CLK {
+    viastack @M1..@M2 at (-0.055, -2.275) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.055, 0.595) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.035, 0.595) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.055, -2.295) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (-0.1, -2.24) -> (0.1, -2.24)
+    path @M1 w=0.07 (-0.36, 0.65) -> (0.36, 0.65)
+    path @M2 w=0.07 (-0.15, -2.24) -> (0.15, -2.24)
+    path @M2 w=0.07 (0, 0.5) -> (0, 0.8)
+    path @M3 w=0.07 (0, -2.295) -> (0, 0.925)
+  }
+
+  route &OUTN {
+    viastack @M1..@M2 at (0.14, -0.735) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (0.14, -0.185) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.315, -1.155) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, 0.025) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (0.14, -1.155) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, -0.755) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, -0.205) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.14, 0.025) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (0.095, -0.7) -> (0.295, -0.7)
+    path @M1 w=0.07 (0.095, -0.15) -> (0.295, -0.15)
+    path @M2 w=0.07 (-0.315, -1.1) -> (0.25, -1.1)
+    path @M2 w=0.07 (0.045, -0.7) -> (0.345, -0.7)
+    path @M2 w=0.07 (0.045, -0.15) -> (0.345, -0.15)
+    path @M2 w=0.07 (-0.185, 0.08) -> (0.25, 0.08)
+    path @M1 w=0.07 (-0.26, -1.3) -> (-0.26, -0.8)
+    path @M1 w=0.07 (-0.13, 0) -> (-0.13, 0.5)
+    path @M3 w=0.07 (0.195, -1.155) -> (0.195, 0.925)
+  }
+
+  route &OUTP {
+    viastack @M1..@M2 at (-0.25, -0.735) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (-0.25, -0.185) size=0.11x0.07 via=1x1
+    viastack @M1..@M2 at (0.205, -0.915) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, 0.265) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.25, -0.915) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, -0.755) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, -0.205) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.25, 0.265) size=0.11x0.11 via2=1x1
+    path @M1 w=0.07 (-0.295, -0.7) -> (-0.095, -0.7)
+    path @M1 w=0.07 (-0.295, -0.15) -> (-0.095, -0.15)
+    path @M2 w=0.07 (-0.25, -0.86) -> (0.315, -0.86)
+    path @M2 w=0.07 (-0.345, -0.7) -> (-0.045, -0.7)
+    path @M2 w=0.07 (-0.345, -0.15) -> (-0.045, -0.15)
+    path @M2 w=0.07 (-0.25, 0.32) -> (0.185, 0.32)
+    path @M1 w=0.07 (0.13, 0) -> (0.13, 0.5)
+    path @M1 w=0.07 (0.26, -1.3) -> (0.26, -0.8)
+    path @M3 w=0.07 (-0.195, -1.155) -> (-0.195, 0.925)
+  }
+
+  route &TAIL {
+    viastack @M1..@M2 at (-0.035, -1.3) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, -1.755) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, -1.755) size=0.11x0.11 via=1x1
+    path @M2 w=0.07 (-0.185, -1.7) -> (0.185, -1.7)
+    path @M1 w=0.07 (-0.13, -2.14) -> (-0.13, -1.64)
+    path @M1 w=0.07 (0, -1.3) -> (0, -0.8)
+    path @M1 w=0.07 (0.13, -2.14) -> (0.13, -1.64)
+    path @M2 w=0.07 (0, -1.7) -> (0, -1.19)
+  }
+
+  route &VDD {
+    viastack @M1..@M2 at (-0.77, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.315, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.055, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.205, 0.145) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.66, 0.145) size=0.11x0.11 via=1x1
+    path @M1 w=0.07 (-0.75, -0.31) -> (0.75, -0.31)
+    path @M1 w=0.07 (-0.75, 0.81) -> (0.75, 0.81)
+    path @M2 w=0.07 (-0.77, 0.2) -> (0.77, 0.2)
+    path @M1 w=0.07 (-0.715, -0.345) -> (-0.715, 0.845)
+    path @M1 w=0.07 (-0.26, 0) -> (-0.26, 0.5)
+    path @M1 w=0.07 (0, 0) -> (0, 0.5)
+    path @M1 w=0.07 (0.26, 0) -> (0.26, 0.5)
+    path @M1 w=0.07 (0.715, -0.345) -> (0.715, 0.845)
+  }
+
+  route &VINN {
+    viastack @M1..@M2 at (0.16, -1.525) size=0.07x0.11 via=1x1
+    viastack @M2..@M3 at (0.16, -1.525) size=0.07x0.11 via2=1x1
+    path @M1 w=0.07 (0.03, -1.4) -> (0.23, -1.4)
+    path @M1 w=0.07 (0.195, -1.575) -> (0.195, -1.365)
+    path @M2 w=0.07 (0.195, -1.6) -> (0.195, -1.34)
+    path @M3 w=0.07 (0.195, -2.515) -> (0.195, -1.415)
+  }
+
+  route &VINP {
+    viastack @M1..@M2 at (-0.23, -1.525) size=0.07x0.11 via=1x1
+    viastack @M2..@M3 at (-0.23, -1.525) size=0.07x0.11 via2=1x1
+    path @M1 w=0.07 (-0.23, -1.4) -> (-0.03, -1.4)
+    path @M1 w=0.07 (-0.195, -1.575) -> (-0.195, -1.365)
+    path @M2 w=0.07 (-0.195, -1.6) -> (-0.195, -1.34)
+    path @M3 w=0.07 (-0.195, -2.515) -> (-0.195, -1.415)
+  }
+
+  route &VSS {
+    viastack @M1..@M2 at (-0.64, -2.055) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.055, -2.055) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.53, -2.055) size=0.11x0.11 via=1x1
+    path @M1 w=0.07 (-0.62, -2.4) -> (0.62, -2.4)
+    path @M1 w=0.07 (-0.62, -0.54) -> (0.62, -0.54)
+    path @M2 w=0.07 (-0.64, -2) -> (0.64, -2)
+    path @M1 w=0.07 (-0.585, -2.435) -> (-0.585, -0.505)
+    path @M1 w=0.07 (0, -2.14) -> (0, -1.64)
+    path @M1 w=0.07 (0.585, -2.435) -> (0.585, -0.505)
+  }
+
+  route &X {
+    viastack @M1..@M2 at (0.355, 0.385) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (0.205, -1.875) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (0.075, -1.035) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (0.355, 0.385) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (0.335, -1.875) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (0.335, -1.035) size=0.11x0.11 via2=1x1
+    path @M2 w=0.07 (0.205, -1.82) -> (0.445, -1.82)
+    path @M2 w=0.07 (0.075, -0.98) -> (0.445, -0.98)
+    path @M1 w=0.07 (0.13, -1.3) -> (0.13, -0.8)
+    path @M1 w=0.07 (0.26, -2.14) -> (0.26, -1.64)
+    path @M1 w=0.07 (0.39, 0) -> (0.39, 0.5)
+    path @M2 w=0.07 (0.39, 0.29) -> (0.39, 0.59)
+    path @M3 w=0.07 (0.39, -1.875) -> (0.39, 0.495)
+  }
+
+  route &Y {
+    viastack @M1..@M2 at (-0.425, 0.385) size=0.07x0.11 via=1x1
+    viastack @M1..@M2 at (-0.315, -1.875) size=0.11x0.11 via=1x1
+    viastack @M1..@M2 at (-0.185, -1.035) size=0.11x0.11 via=1x1
+    viastack @M2..@M3 at (-0.425, 0.385) size=0.07x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.445, -1.875) size=0.11x0.11 via2=1x1
+    viastack @M2..@M3 at (-0.445, -1.035) size=0.11x0.11 via2=1x1
+    path @M2 w=0.07 (-0.445, -1.82) -> (-0.205, -1.82)
+    path @M2 w=0.07 (-0.445, -0.98) -> (-0.075, -0.98)
+    path @M1 w=0.07 (-0.39, 0) -> (-0.39, 0.5)
+    path @M1 w=0.07 (-0.26, -2.14) -> (-0.26, -1.64)
+    path @M1 w=0.07 (-0.13, -1.3) -> (-0.13, -0.8)
+    path @M2 w=0.07 (-0.39, 0.29) -> (-0.39, 0.59)
+    path @M3 w=0.07 (-0.39, -1.875) -> (-0.39, 0.495)
+  }
+
+  cell_port VDD @M1 [-0.05, 0.76]..[0.05, 0.86] label (0, 0.81)
+  cell_port VSS @M1 [-0.05, -2.45]..[0.05, -2.35] label (0, -2.4)
+  cell_port OUTP @M3 [-0.245, 0.805]..[-0.145, 0.905] label (-0.195, 0.855)
+  cell_port CLK @M3 [-0.05, 0.805]..[0.05, 0.905] label (0, 0.855)
+  cell_port OUTN @M3 [0.145, 0.805]..[0.245, 0.905] label (0.195, 0.855)
+  cell_port VINP @M3 [-0.245, -2.495]..[-0.145, -2.395] label (-0.195, -2.445)
+  cell_port VINN @M3 [0.145, -2.495]..[0.245, -2.395] label (0.195, -2.445)
+}
+top sar_strongarm_t28_core

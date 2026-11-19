@@ -1,37 +1,49 @@
-# Layout 工作流
+# Layout Workflow
 
-电气设计以[前端 manifest](../../design/manifest.json)为准，物理规划及所有权以[Layout manifest](../design/manifest.json)为准。迁移验证组织及输入等价，CDAC 性能修复另做。
+Use the front-end manifest for the electrical design and the layout manifest for physical planning and ownership. The migration verifies repository organization and input equivalence. Track CDAC performance fixes separately. [Front-end manifest](../../design/manifest.json) · [Layout manifest](../design/manifest.json)
 
-## 从整机到模块再回整机
+## From the Top Level to Modules and Back
 
-1. 更新 [floorplan](../design/floorplan.json)、[接口](../specs/interfaces.json)和[约束](../specs/constraints.json)：确定核心、模块位置/朝向、信号出口、电源/隔离/走线空间，区分实测尺寸与预留。
-2. `python -m Layout check` 检查当前电气身份、端口顺序、实例覆盖、边界和重叠；`render` 生成集中规划图及面积表。未分配的寄生/时序预算保持空值。
-3. 逐模块做器件匹配 placement、原生 PCell/标准单元参数读回和内部 routing。功能编辑落在固定 core cell，保留功能 dummy、body contact、guard 和屏蔽。
-4. 模块完成局部 DRC/LVS、prefill PEX 和接口测量后，用实测 bbox、负载和时序反馈整体规划。当前只有 CDAC 已有物理实现，其他模块未完成此步骤。
-5. 完成顶层连接、电源与隔离；统一分配填充归属，避免模块与顶层重复填充。最终 filled PEX 和整机后仿使用同一 GDS/规则/输入身份。
+The revised CDAC shares TOP row wiring and uses the `layout_paired_balanced` review view. `python -m Layout generate --module cdac-paired` produces SKILL, an independent CDL, and placement coordinates. After native deployment, `python -m Layout physical UNIQUE_ID --view layout_paired_balanced --through pex` reads the saved OA view for DRC, LVS, and coupling extraction. `python -m Layout prepare-tt UNIQUE_ID RUN_ID --prefill` integrates that extraction into the current ADC. [Revised CDAC geometry, view identity, and simulation results](../results/cdac_paired.json)
 
-当前图是初步空间安排。新走线层、via、guard ring 和数值寄生预算须先由 native pin access、PDK 规则及电气预算确定，不能仅凭示意图决定。
+For a standalone rerun, use `python -m Layout.tools.simulation.prepare_full_sim UNIQUE_ID RUN_ID --adc-solver`. It uses the current ADC solver settings and the paired CDAC pre- and post-layout stimuli, a 260 ns run, and a 5 ps maximum step. Run both physical revisions with these settings to compare bit weights and settling time.
 
-查询 OA 实例、引脚、图形或坐标变换时，先读[版图查询说明](layout-query.md)，复用已有 bridge 接口；查询示例和使用约定统一维护在该页。
+Generate the current CDAC (`layout_paired_stacked`) with `python -m Layout generate --module cdac-paired --planned-fill --center stacked`. `--center stacked` orders the small bits by weight from the switch side so that each small-bit trunk length, and thus its TOP coupling, follows its unit count. Without `--center`, the generator reproduces the published central-inversion center of `layout_paired_balanced` and `layout_paired_planned`. The wrapper references the separate `sar8_cdac_fill_plan` cell. For acceptance, add foundry OD/PO and metal fill outside the array using the fill-exclusion layers, then run DRC, LVS, and coupling PEX on the combined stream. Add `--planned-fill` to `prepare_full_sim` for standalone testing and `prepare-tt` for ADC integration. Defer only the 125 µm metal-density rules (Mn.DN.1, Mn.DN.3, M9.DN.3) to the top level. Close OD/PO density and Mx.DN.7 within the module. For the filled netlist, use `--rss-mib 2560`. Compare ADC codes using the gain-corrected check and take k from the standalone test of the same revision. [Gain-corrected code comparison](../tools/analysis/gain_corrected_codes.py)
 
-## 本地与远端
+1. Update the floorplan, interfaces, and constraints. Set the core and module locations, orientations, signal exits, and space for power, isolation, and routing. Identify which dimensions are measured and which are reserved. [Floorplan](../design/floorplan.json) · [Interfaces](../specs/interfaces.json) · [Constraints](../specs/constraints.json)
+2. Run `python -m Layout check` to check electrical identity, port order, instance coverage, boundaries, and overlap. Use `render` for the planning figure and area table. Leave unallocated parasitic and timing budgets empty.
+3. Place devices for matching, read back native PCell and standard-cell parameters, and route each module. Make functional edits in the fixed core cell. Retain functional dummies, body contacts, guard rings, and shielding.
+4. Complete local geometry and connectivity checks, LVS, prefill PEX, and interface measurements. Use measured bounding boxes, loads, and timing to revise the floorplan. Track deferred density and top-level context rules according to the fill policy. Base module status on current evidence. [Fill policy](../specs/fill-policy.md)
+5. Complete top-level connections, power, and isolation. Assign one fill owner to each region. Use the same GDS, rule identity, and input identity for final filled PEX and ADC post-layout simulation.
 
-本地职责见[入口](../README.md)。生成输入、私有回收、运行配方、迁移检查点在忽略的 `work/layout/`、`work/decks/`、`work/output/`；不修改已冻结输入。
+The current floorplan is preliminary. Select new routing layers, vias, guard rings, and parasitic budgets based on native pin access, PDK rules, and electrical budgets.
 
-配置使用 `site.local.yaml:layout`，示例在 [site.example.yaml](../../site.example.yaml)。部署器核对主机、账户所有权和实际路径，沿用旧 `layout.lock`；运行器核对配置和执行目录。新目录只有：
+Consult the fill policy when placing or routing a module, generating or importing fill, interpreting density DRC, preparing PEX, or integrating the top level. It defines what belongs in the core, who owns fill, how to qualify each stage, and how to show layout in review. Use the filled commands below for fill evaluation when the task calls for it. [Dummy and Density Fill Policy](../specs/fill-policy.md)
+
+## Layout Queries
+
+For placement, pins and routing, query the target OA cellview through Virtuoso Bridge. Read the active edit in its owning Virtuoso session to include unsaved changes. When the question explicitly concerns a saved view, use the isolated read-only OA reader. [OA query guide](layout-query.md)
+
+For verification of an export, use the matching stream-out manifest and the native Calibre DRC, LVS or PEX evidence for that run. The T28 query and handoff workflow has retired the LayoutML importer, mapping snapshots and the LayoutQ KLayout query backend.
+
+## Local and Remote Layout Data
+
+Put generated inputs, privately collected artifacts, run recipes, and migration checkpoints under the ignored `work/layout/`, `work/decks/`, and `work/output/` directories. Preserve frozen inputs. [Layout index](../README.md)
+
+Configure `site.local.yaml:layout`. The deployment tool checks host, account ownership, and actual paths and uses the existing `layout.lock`. The runner checks configuration and execution directories. [Site configuration example](../../site.example.yaml)
 
 ```text
 <configured remote_root>/
-├─ runtime/        # 当前脚本、SKILL/CDL、workspace.json、cds.lib
-├─ state/          # 提交防重回执、检查点、驱动日志
-└─ evidence/<id>/  # 该次 native 输入、GDS、manifest、原始报告
+├─ runtime/        # Active scripts, SKILL/CDL, workspace.json, cds.lib
+├─ state/          # Submission receipts, checkpoints, driver logs
+└─ evidence/<id>/  # Frozen native inputs, GDS, manifest, and raw reports
 ```
 
-OA 路径独立配置，保持 `llm_IO/SAR_ADC_T28_LAYOUT`，不复制进执行树。旧证据原址解析，新旧同名 ID 报歧义；历史失败、告警、路径不改写。部署及原生操作共用锁，不修改正在执行任务的 runtime。旧脚本仅作历史留存，日常不直接调用。
+Configure the OA path separately at `llm_IO/SAR_ADC_T28_LAYOUT`. Resolve historical evidence at its original location and report ambiguity if old and new IDs collide. Keep historical failures, warnings, and paths as recorded. Deployment and native operations share one lock. Leave the runtime used by a running task intact. Use the current entry points for daily work and retain the original scripts for historical reference.
 
-## 执行现有 CDAC 验证
+## Run CDAC Verification
 
-在项目根使用 `.venv/Scripts/python.exe`；下面的 ID 均应是未使用的新证据身份：
+From the repository root, run the following commands with `.venv/Scripts/python.exe`. Use new IDs for the two evidence records.
 
 ```powershell
 python -m Layout check
@@ -46,24 +58,69 @@ python -m tools.saradc analyze UNIQUE_TT_ID --queue
 python -m tools.saradc collect UNIQUE_TT_ID
 ```
 
-`physical` 只验证现有 OA。它在启动前创建不可覆盖的提交回执，已有目录或回执均拒绝重提；网络返回不确定时先查该 ID 和 `state/<id>.driver`。失败要定位实际阶段，不靠换 ID 重复运行。原生流程保留 DRC marker、LVS 结论、同源 GDS/PEX 散列、退出码和告警；脚本成功不代表 DRC clean。Spectre 准入由既有 managed 执行策略控制。
+`physical` verifies existing OA. It creates an immutable submission receipt before launch and rejects IDs with an existing directory or receipt. After an uncertain network response, check the exact ID and `state/<id>.driver`. Diagnose failures at the actual stage. The native flow retains DRC markers, LVS verdicts, matching GDS and PEX digests, exit codes, and warnings. Use the DRC report for the rule verdict. Spectre admission follows the managed execution policy.
 
-`prepare-tt` 仅把 CDAC 换成实际 PEX，保留当前参考/SAR和原十帧激励。其余模块是前仿，不能称整机后仿签核。分布 PEX 的内部 bottom plate/支路电流与原理图命名不一致，当前分析器将相关建立/重叠电流项标为缺测，仍测码字、采样沿、握手、转换时间。无超时不代表精确模拟建立合格。旧 B 对照分析器 `Layout.tools.analysis.compare_integrated` 不用于当前参考版。
+`prepare-tt` substitutes actual PEX for the CDAC while retaining the current reference, SAR, and original ten-frame stimulus. This test uses a mixed hierarchy, with the other modules in their pre-layout form. Distributed PEX names internal bottom plates and branch currents differently from the schematic. The analyzer marks the affected settling and overlap-current measurements as unavailable and still measures codes, sampling edges, handshakes, and conversion time. Evaluate precision analog settling with direct evidence. `Layout.tools.analysis.compare_integrated` applies to the historical B comparison.
 
-单位/三颗 MOM 入口为 `Layout.tools.simulation.prepare_sim`，完整 CDAC 独立阶跃为 `prepare_full_sim`；输入见 [tb](../tb/)。独立阶跃以 TOP=0.45V 初态测位权与0.1%建立，不替代整机性能。
+Use `Layout.tools.simulation.prepare_sim` for the unit or three-unit MOM and `prepare_full_sim` for the standalone full-CDAC step test. The standalone test starts at TOP = 0.45 V and measures bit weights and 0.1% settling. [Layout testbench inputs](../tb/)
 
-## 结果适用性
+## Comparator Module
 
-[current.json](../results/current.json)关联规划、物理证据、TT 运行及限制。`check` 对比电气源与规划依赖散列；源变化报告失效，不静默重新绑定。`render` 只刷新规划投影，不更新旧资格证据的依赖散列。实时 OA 不能由本地哈希证明，改图后须重新 stream/native 验证。
+`design/comparator.il` creates the 11-transistor `sar_strongarm_t28_core/layout`. `design/comparator-wrapper.il` maintains `sar_strongarm_t28/layout` and references the same core through XCORE. The wrapper owns the two native fill masters `sar8_comp_fill_odpo` and `sar8_comp_fill_metal`. The seven electrical ports match the front-end `sar_strongarm_t28`. Three MOM loads on the outputs and clock model the top-level load in pre-layout simulation. Omit these model loads from the layout and top-level LVS reference and use top-level extraction for the actual load.
 
-功能核心变化会影响 fill、PEX 和后仿；填充变化影响密度与寄生；顶层 routing 变化影响顶层提取与电气证据。原结果保留为历史。DRC、LVS、功能、时序、寄生和端压分别记录。初步 floorplan 的未定预算不算通过。
+```powershell
+python -m Layout generate --module comparator
+python -m Layout deploy
+python -m Layout physical UNIQUE_ID --module comparator --through pex
+python -m Layout.tools.simulation.prepare_comparator UNIQUE_ID UNIQUE_TT_RUN
+# For optional fill sensitivity evaluation, first refresh and verify the fill source.
+python -m Layout physical UNIQUE_FILLED_ID --module comparator-filled --through pex
+python -m Layout.tools.simulation.prepare_comparator UNIQUE_FILLED_ID UNIQUE_FILLED_TT_RUN
+```
 
-## 恢复与同版迭代
+`generate --module comparator` creates an independent CDL from the current electrical source and records its SHA256. `physical` normally verifies existing OA. For a new generator-owned core or an explicit rebuild, use `--module comparator --rebuild`. The executor checks the edit lock and checkpoints the current OA cell. Incorporate manual edits into the source or save them in a checkpoint before deciding whether to rebuild. Core geometry changes invalidate earlier fill and post-layout qualification.
 
-源码原处修改，Git 保存已提交历史；本次开始时 Layout 尚未跟踪，真实恢复点是 `work/layout/restructure/source-before.zip` 和 `checkpoint.json`，不能声称已有 Git 历史保护。迁移映射在同目录 `relocation.json`。不覆盖原恢复点。
+For native comparator fill, reuse `fill_cdac.py --module comparator --bounds x0 y0 x1 y1`. Read the bounds from the same GDS and record fill parameters and foundry tool identity in `fill_manifest.json`. Before import, `apply_comparator_fill.py FILL_ID` compares structural digests for the current core and fill source. It checkpoints the wrapper and attaches the fill to that wrapper. Resolve ownership when integrating modules and the top level.
 
-OA 不由 Git 管理。已有 native 备份记录在 [manifest](../design/manifest.json)；它是核心/填充分层之前的备份，不能冒充此后修改的快照。每次后续写 OA 前确认打开/未保存 view 和编辑者，保存受支持的 OA 检查点及 cell/GDS 身份；只恢复授权工作 cell，不覆盖同库其他模块或用户未保存修改。恢复后重新核对几何、端口及必要 DRC/LVS。
+`prepare_comparator` defaults to the native MOM and receiving-gate loads of the standalone module. Use `--schematic` for a matching pre-layout control and `--integrated` for the current ten-frame ADC interface test. The integrated test defaults to TT. Use `--corner ssc|ssh|ffc|ffh` to select a condition in `specs/corners.json`. Passive devices use their TT sections. Run through the managed `register/submit/analyze/collect` flow and record the standalone TT and ADC interface measurement scopes in the respective result contexts. [Comparator evidence](../results/comparator.md)
 
-当前采用 `oa_owned_current`，默认 `allow_regeneration: false`。手工修改记录为 OA 所有，不承诺旧生成器完整重建。接受手工改动后，将其纳入 patch/参数并验证重建，或继续使用已检查的 OA checkpoint。完整 batch SKILL 含 `exit(0)`，不得载入交互 CIW。库及 cell 名不为每次改动新增版本。
+## SAR timing core and filled wrapper
 
-填充分组诊断仍可用 `run_physical.py ... --source-stream ID --omit-fill metal|odpo`，它只修改运行内 stream，不改 OA；需要完整 DRC/LVS/PEX，保留密度失败，不能把诊断 stream 当工作版本。寄生数值分析须绑定真实完成源，经 managed analysis-only 执行。
+Use `python -m Layout generate --module sar-timing --quiet-stages N` to reproduce a standard-delay placement and its independent transistor-level reference, with `N` equal to 5, 6 or 9. For five DEL250 cells followed by a DEL200, pass `--quiet-stages 6 --quiet-final-ps 200`. The five- and six-stage generators place the sample-enable cells alongside QUIET on 13 rows. Each placement gets its own Innovus routing abstract, detailed route and extracted reference. The nine-stage generator reproduces the earlier route inputs. The integrated testbench preparation reads the delay-cell variant from the native LVS reference and selects the external-cell LPE model from the macro extraction corner. [Stage comparison](../results/sar_quiet_lpe_20261119.md) · [Nine-stage baseline](../results/sar_std_static_candidate_c_20261119.md)
+
+Generate compact placement and source-bound nets with `python -m Layout generate --module sar-timing`. The saved OA views are listed in the layout manifest. The core uses native standard cells, custom RC banks and metal added by Innovus. The wrapper adds the OD/PO and metal density cells. The signoff evidence contains the pre-ECO routing abstract, Innovus Tcl, routed DEF, metal repairs, final intent, fill inventory and audit in its `review/` directory.
+
+For the revised bit rows, local decoupling and distributed supply network, run `python -m Layout generate --module sar-timing --array`. The generated `work/layout/sar-refinement/seed` contains the placement, independent array CDL, native helpers and electrical intent. Build the private OA seed, stream it with its terminal readback, then run `python -m Layout.tools.physical.sar_route INTENT CHECKPOINT ROUTE_DIR`. Run the SAR Innovus Tcl in that directory and use `python -m Layout.tools.physical.sar_overlay INTENT CHECKPOINT ROUTE_DIR` to check connectivity and emit the native route geometry. Run the generated `apply-route.il` with `sar_timing.il` and the staging `cds.lib` available, and set `SAR_ROUTED_VIEW` to a fresh private view. The recorded seed and route hashes identify the physical inputs. Regenerate the abstract and detailed route whenever the placement changes.
+
+Use the array CDL for transistor LVS and request both rails in xRC. The revised flow checks that each rail contributes extracted resistors. The filled wrapper exposes the continuous M5 headers for multiple top-level connections. Keep the foundry metal fill and generate the resistor-channel diffusion fill from the verified utility output using `Layout.tools.physical.sar_resistor_fill`. The full-chip run owns the final M9 sliding windows. [Physical comparison and supply measurements](../results/sar_timing_refinement.md)
+
+```text
+python -m Layout physical UNIQUE_CORE_ID --module sar-timing --through pex
+python -m Layout physical UNIQUE_FILLED_ID --module sar-timing-filled --through pex
+python -m Layout.tools.analysis.check_sar_timing FINAL_INTENT_JSON CORE_CHECKPOINT --require-complete
+python -m Layout.tools.simulation.prepare_sar_timing FILLED_XRC_DIR FILLED_CHECKPOINT RUN_ID --core CORE_CHECKPOINT --corner ssc
+```
+
+Use the managed runner to register, submit, analyze and collect the generated recipe at TT, SS cold/hot and FF cold/hot. For each run, its extracted netlist, raw stream digest, receiver coordinates and source hashes are bound in the receipt. Device usage is the union of legal standard-cell sites and native PCell bounds. The filled view is the interface for top-level integration. [Verified OA views, timing and scope](../results/sar_timing.md)
+
+## Bootstrap Module
+
+`python -m Layout generate --module bootstrap` produces an LVS reference from the current electrical netlist. Verify the work library's existing core with `python -m Layout physical ID --module bootstrap --through pex`. An explicit `--rebuild` uses the deployed Bootstrap generator. The executor checks the OA edit lock and saves a recovery point for the existing work cell.
+
+After LVS and prefill PEX complete, prepare the standalone TT test with `python -m Layout.tools.simulation.prepare_bootstrap PHYSICAL_ID TT_ID`. Use another TT_ID and add `--schematic` for the schematic control. Both recipes use managed registration, simulation, analysis, and collection. [Bootstrap pins, interconnect RC, sampling results, and independent OD/PO trial fill](../results/bootstrap.json)
+
+## Applicability of Results
+
+`current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)
+
+A core change affects fill, PEX, and post-layout results. A fill change affects density and parasitics. A top-level routing change affects top-level extraction and electrical evidence. Retain dated results. Report DRC, LVS, function, timing, parasitics, and terminal voltages at their measured scope. Treat unallocated floorplan budgets as open items.
+
+## Recovery and In-Place Iteration
+
+Edit source files in place and use Git for committed history. The layout files were untracked at the start of the migration. Use `work/layout/restructure/source-before.zip` and `checkpoint.json` as the original recovery point. `relocation.json` in the same directory maps the move. Preserve the original recovery point.
+
+OA uses native checkpoints. The backup in the manifest predates the core/fill split. Before each later OA write, check which views are open or unsaved and who owns the edit. Save a supported OA checkpoint and the cell/GDS identity. Restore only the authorized work cell and protect other modules and unsaved user edits. After restoring, check geometry, ports, and any required DRC or LVS. [Native backup record](../design/manifest.json)
+
+The current policy is `oa_owned_current`, with `allow_regeneration: false` by default. OA owns manual edits. After accepting an edit, incorporate it into a patch or parameters and verify the rebuild, or continue with the verified OA checkpoint. Run full batch SKILL containing `exit(0)` in batch mode. Iterate in the established library and cell names.
+
+For fill-group diagnosis, use `run_physical.py ... --source-stream ID --omit-fill metal|odpo`. It changes the stream inside the run directory. Run full DRC, LVS, and PEX, retain density failures, and label the stream as diagnostic. Bind numerical parasitic analysis to a real completed source and run it as a managed analysis-only task.

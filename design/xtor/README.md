@@ -1,8 +1,8 @@
-# 管级实现与候选
+# Transistor Implementations and Candidates
 
-当前实现保持在各模块原路径。候选登记与默认选择的真源是 [candidates.json](../../specs/candidates.json)；当前 reference 选择 `minimal_msb_d2`、sar 选择 `reset_data_or`，其余四个模块选择 `b`。直接 include 入口和实现清单同步采用此选择；加 OR 版已通过 FF 冷 18 帧功能时序与端压筛查，其他角尚未验证。
+The current ADC pairs `sar=std_delay_qualified` with `timing=std_delay`. Reference uses `minimal_msb_d2`. Sampler, CDAC and comparator use `b`. The previous RC design pairs `sar=reset_data_or` with `timing=quiet8p5`. [Candidate registry](../../specs/candidates.json) · [Measured schematic](../../results/design/sar_std_delay_20261119.json)
 
-新增候选可放在 `design/xtor/<module>/<name>.scs` 或该目录的同名子目录，原实现保留。候选文件提供本模块全部需要的定义；公共 master 与端口顺序须符合登记的接口，内部结构可不同。平台 include、PDK 和标准库由测试台统一提供。
+Place a new candidate in `design/xtor/<module>/<name>.scs` or a same-named subdirectory. Retain the existing implementation. Provide all definitions needed by the module and preserve its registered public master and port order. Internal structure may vary. The testbench supplies platform includes, the PDK, and standard cells.
 
 ```powershell
 python -m tools.saradc candidates list
@@ -11,8 +11,8 @@ python -m tools.saradc block sim --module comparator --candidate comparator=tria
 python -m tools.saradc sim tt_short --candidate comparator=trial --run-id ANOTHER_NEW_ID
 ```
 
-登记保持默认候选不变。每次实验的 `--candidate module=name` 只改变生成包；运行回执保留候选 ID、实际文件及哈希。接口、重复定义、未声明依赖和调用端口数在打包时检查，功能及性能由真实测试判断。
+Registration leaves the active selection in the registry. A per-run `--candidate module=name` changes the generated package and records the candidate ID, file, and digest in the receipt. Packaging checks interfaces, duplicate definitions, undeclared dependencies, and argument counts. Use actual tests for function and performance.
 
-正式换入当前设计是显式的设计变更：同时更新默认选择、规范设计入口和实现清单，验证相关模块及整机接口。候选登记、相同文件名、相同种子均不转移旧结果的资格。历史冻结 B 始终通过 `--view frozen-b` 独立回归。
+Adopt a candidate through an explicit design change. Update the default selection, canonical design entry, and implementation manifest, then verify affected modules and the ADC interface. Qualify each run against its own inputs. Use `--view frozen-b` for the historical B regression.
 
-当前不引入排行榜、自动晋升或 CI；原生仿真复用现有 managed 队列。模块验收见 [独立测试](../../tb/blocks/README.md)，实际证据见 [结果索引](../../results/README.md)。
+Candidate adoption is manual. Native simulation uses the existing managed queue. [Standalone tests](../../tb/blocks/README.md) · [Results](../../results/README.md)

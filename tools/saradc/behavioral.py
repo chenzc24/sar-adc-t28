@@ -30,66 +30,78 @@ def generated():
     header+=''.join('`define B_%s %.17g\n'%(key.upper(),value) for key,value in t.items())
     header+='`endif\n'
     lsb=a['input']['lsb_v'];budget=a['error_budget'];ref=a['reference']
+    gain=a['targets']['gain_error'];galloc=budget['gain_error_allocation'];lin=budget['layout_systematic_linearity_lsb']
     noise={k:budget[k]*lsb for k in ['sampling_noise_rms_lsb','comparator_noise_rms_lsb','reference_noise_rms_lsb','unmodeled_distortion_rms_lsb']}
     amplitude=ref['high_v']*10**(a['targets']['test_level_dbfs']/20)
     jitter=2*math.pi*budget['jitter_frequency_hz']*budget['jitter_rms_s']*amplitude/math.sqrt(2)
     quant=lsb/math.sqrt(12)
     rss=math.sqrt(quant**2+jitter**2+sum(x*x for x in noise.values()))
     projected=20*math.log10(amplitude/math.sqrt(2)/rss)
-    lines=['# SAR8 总设计规格','',
-      '本页由 [specs/arch.json](../specs/arch.json) 生成。当前电气实现为 `'+a['design_id']+'`。版本及验收状态见 [采用记录](../'+a['qualification']['adoption_record']+')。行为模型仍是 B 的算法与协议近似，未拟合最简参考路径和数据复位 OR 的电气延迟。','',
-      '## 架构与外部接口','',
-      '- 8 bit、10 MS/s，全差分异步 SAR，flat binary CDAC；每侧 255 单位二进制电容加 1 单位 dummy，无桥电容。',
-      '- 顶层端口顺序：`'+' '.join(a['interface']['port_order'])+'`。',
-      '- 数字输出为 D0..D7，无外部位时钟、BUSY、VALID 或 EOC 引脚。SAMPLE 高电平采样并复位 SAR；下降沿结束采样，内部自主推进 8 位。',
-      '- 码字在转换中逐位变化，完成后、下一采样开始前读取。正差分极性为 VINP−VINN。','',
-      '| 项目 | 当前定义 |','| --- | --- |',
-      '| 核心电源 | 标称 %g V，验证范围 %g–%g V |'%(corners['tt']['vdd_v'],*a['supply_v']),
-      '| 参考 | VREFN=%g V、VREFP=%g V，独立于核心电源 |'%(ref['low_v'],ref['high_v']),
-      '| 输入 | 标称共模 %g V；差分 %g..%g V，单端 %g..%g V；完整共模范围尚未签核 |'%(a['input']['nominal_common_mode_v'],*a['input']['differential_range_v'],*a['input']['single_ended_nominal_range_v']),
-      '| 量化 | 256 码，LSB=%.8f mV；理想边界 −0.9+k·LSB，上边码处理精确相等 |'%(lsb*1e3),
-      '| 帧时序 | %g ns：高 %g ns 采样、低 %g ns 转换；启动先低 %g ns 预充，再进入正常周期 |'%tuple(clock[k]*1e9 for k in ['period_s','high_s','conversion_allocation_s','initial_low_s']),
-      '| 实际激励 | delay=%g ns，rise/fall=%g/%g ps，width=%g ns；首次下降阈值在 %g ns |'%(clock['spectre_pulse_delay_s']*1e9,clock['source_rise_s']*1e12,clock['source_fall_s']*1e12,clock['spectre_pulse_width_s']*1e9,clock['first_falling_threshold_s']*1e9),
-      '| 输入源 | 每端理想源串联 %g Ω |'%a['input']['source_resistance_ohm_per_pin'],
-      '| 参考源 | 每轨理想源串联 %g Ω、旁路 %g pF，无片上参考缓冲器 |'%(ref['source_resistance_ohm_per_rail'],ref['decoupling_f_per_rail']*1e12),
-      '| 输出负载 | 每位 %g fF；比较器输出及其时钟另有原生 MOM 负载 |'%(a['loading']['digital_output_capacitance_f_each']*1e15),'',
-      '## 工况定义','',
-      '| 工况 | MOS corner | 温度/°C | VDD/V |','| --- | --- | ---: | ---: |']
+    timing_text = ('The SAR uses input-qualified native delay cells. The analog and boosted circuits remain transistor-level.'
+                   if 'active_delay_cells' in a['blocks']['timing_reference'] else
+                   'The SAR RC, clear transistor, and analog and boosted circuits remain transistor-level.')
+    lines=['# SAR8 Design Specification','',
+      'This page is generated from [specs/arch.json](../specs/arch.json). The current electrical implementation is `'+a['design_id']+'`. The behavioral models approximate the B algorithm and protocol. Use native measurements for the minimal reference and data-reset OR path delays. [Adoption and qualification record](../'+a['qualification']['adoption_record']+')','',
+      '## Architecture and External Interface','',
+      '- An 8-bit, 10 MS/s, fully differential asynchronous SAR with a flat binary CDAC. Each side connects 255 binary-weighted unit capacitors and one unit dummy to its top plate without a bridge capacitor.',
+      '- Top-level port order is `'+' '.join(a['interface']['port_order'])+'`.',
+      '- Digital outputs are D0..D7. SAMPLE high samples and resets the SAR. Its falling edge ends sampling and starts the autonomous eight-bit sequence. The interface has no external bit clock, BUSY, VALID, or EOC pin.',
+      '- The code changes bit by bit during conversion. Read it after conversion and before the next sample. Positive differential voltage is VINP−VINN.','',
+      '| Item | Definition |','| --- | --- |',
+      '| Core supply | %g V nominal, %g–%g V verification range |'%(corners['tt']['vdd_v'],*a['supply_v']),
+      '| References | VREFN=%g V and VREFP=%g V, independent of the core supply |'%(ref['low_v'],ref['high_v']),
+      '| Input | %g V nominal common mode, %g..%g V differential, %g..%g V single-ended. Full common-mode range is unqualified. |'%(a['input']['nominal_common_mode_v'],*a['input']['differential_range_v'],*a['input']['single_ended_nominal_range_v']),
+      '| Quantization | 256 codes, LSB=%.8f mV. Ideal boundaries are −0.9+k·LSB. Use the upper code at equality. |'%(lsb*1e3),
+      '| Frame timing | %g ns total, with %g ns high for sampling and %g ns low for conversion. Start with %g ns low for precharge before normal cycling. |'%tuple(clock[k]*1e9 for k in ['period_s','high_s','conversion_allocation_s','initial_low_s']),
+      '| Actual stimulus | Delay=%g ns, rise/fall=%g/%g ps, width=%g ns. The first falling-edge threshold crossing is at %g ns. |'%(clock['spectre_pulse_delay_s']*1e9,clock['source_rise_s']*1e12,clock['source_fall_s']*1e12,clock['spectre_pulse_width_s']*1e9,clock['first_falling_threshold_s']*1e9),
+      '| Input source | Ideal source with %g Ω series resistance per pin |'%a['input']['source_resistance_ohm_per_pin'],
+      '| Reference source | Ideal source with %g Ω series resistance and %g pF bypass per rail. The fixture drives the reference directly. |'%(ref['source_resistance_ohm_per_rail'],ref['decoupling_f_per_rail']*1e12),
+      '| Output load | %g fF per bit. The comparator outputs and clock use native MOM model loads in pre-layout simulation only. |'%(a['loading']['digital_output_capacitance_f_each']*1e15),'',
+      '## Corners','',
+      '| Condition | MOS corner | Temperature (°C) | VDD (V) |','| --- | --- | ---: | ---: |']
     lines += ['| %s | %s | %g | %g |'%(name,c['mos'],c['temperature_c'],c['vdd_v']) for name,c in corners.items() if isinstance(c,dict)]
     lines += ['',
-      '各工况的实际 MOS、MOM 与无源模型 section 由冻结用例的 include 决定，不能从 MOS corner 名字推断其他器件角。用例身份见 [tests.json](../specs/tests.json)。','',
-      '## 当前晶体管实现','',
-      '- Bootstrap：每路 %d 只并联 %g µm/%g nm 的 `%s` 主开关，原生 MOM bootstrap 电容 multi=%d。'%(boot['main_switch_parallel_devices'],boot['main_switch_w_m_each']*1e6,boot['main_switch_l_m']*1e9,boot['main_switch_model'],boot['bootstrap_capacitor']['multi']),
-      '- CDAC：18 个 `cfmom_2t` 实例；单位几何 nr=8、lr=2 µm、w=s=50 nm、stm=1、spm=3，multi 按 1..128 缩放。N/P 侧 dummy 分别接 VREFN/VREFP。同单位几何的既有低频 AC 提取约 4.00407 fF，每侧 256 单位约 1.02504 pF；这是有偏置/频率条件的表征值，不是恒定器件值。旧 6.86047 fF 比较值和 512 独立单元的失配统计不归给当前 18 个分组实例。',
-      '- 参考开关：L=%g nm，NMOS W=%g nm、PMOS W=%g nm，multi=%d·2^bit。'%(cdac['reference_switch_l_m']*1e9,cdac['n_switch_w_m']*1e9,cdac['p_switch_w_m']*1e9,cdac['switch_multi_lsb_first'][0]),
-      '- 比较器：%d MOS StrongARM；输入对 W=%g µm/L=%g nm，尾管 W=%g µm，再生 N/P W=%g/%g nm。'%(comp['MOS_count'],comp['input_pair_w_m']*1e6,comp['input_pair_l_m']*1e9,comp['tail_w_m']*1e6,comp['regeneration_n_w_m']*1e9,comp['regeneration_p_w_m']*1e9),
-      '- 数字路径：原生标准单元；SAR 的 RC、清除管及模拟/升压域电路保留。参考侧采用 CODE + 公共 PRESET + 正反相驱动，取消额外 DFF/MUX、逐位复位/捕获、非交叠发生器及栅极串联电阻。',
-      '- 原生标准单元 masters：`'+'`、`'.join(a['blocks']['standard_cells']['external_masters'])+'`。','',
-      '## 时序合同','',
-      '当前最简版每帧要求 8 次比较与写入，按实际 CODE/栅控及逐位底板建立验证参考状态；参考侧已无捕获电路，不再要求 16 次捕获。新采样取消未完成事件，外部采样关闭沿保持不变。60 ns 是帧内转换分配，不代表硬件有超时检测引脚。历史冻结 B 与 B 行为模型仍有 8 次参考更新、16 次捕获的独立合同。',
-      '下表 TT 行为事件间隔取历史 B 十帧原生边沿的中位数，不能作为最简版实测时序。转换预算来自外部低相位，20 ps 输出平滑和算术正则化属于模型设定。cmp→write 包括比较器及数字接收流水，不是纯比较器再生常数。外部高相位为 40 ns，真实 Bootstrap 导通窗仍由内部栅控波形确定。','',
-      '| 行为间隔 | 配置值/ns |','| --- | ---: |']
+      'Read the frozen case includes for actual MOS, MOM, and passive model sections. The MOS corner name identifies MOS conditions. [Test identities](../specs/tests.json)','',
+      '## Current Transistor Implementation','',
+      '- Bootstrap uses %d parallel %g µm/%g nm `%s` main switches per channel and a native MOM capacitor with multi=%d.'%(boot['main_switch_parallel_devices'],boot['main_switch_w_m_each']*1e6,boot['main_switch_l_m']*1e9,boot['main_switch_model'],boot['bootstrap_capacitor']['multi']),
+      '- The CDAC uses 18 `cfmom_2t` instances. The unit geometry is nr=8, lr=2 µm, w=s=50 nm, stm=1, and spm=3, with multi from 1 to 128. The N and P dummies connect to VREFN and VREFP, respectively. The prior low-frequency AC characterization of this unit geometry gave about 4.00407 fF per unit and 1.02504 pF per 256-unit side at its specified bias and frequency. The older 6.86047 fF comparison and the 512-independent-unit mismatch results apply to their original models.',
+      '- Reference switches use L=%g nm, NMOS W=%g nm, PMOS W=%g nm, and multi=%d·2^bit.'%(cdac['reference_switch_l_m']*1e9,cdac['n_switch_w_m']*1e9,cdac['p_switch_w_m']*1e9,cdac['switch_multi_lsb_first'][0]),
+      '- The %d-MOS StrongARM comparator uses input pairs of W=%g µm and L=%g nm, a tail width of %g µm, and N/P regeneration widths of %g/%g nm.'%(comp['MOS_count'],comp['input_pair_w_m']*1e6,comp['input_pair_l_m']*1e9,comp['tail_w_m']*1e6,comp['regeneration_n_w_m']*1e9,comp['regeneration_p_w_m']*1e9),
+      '- The digital path uses native standard cells. '+timing_text+' The reference uses CODE, a shared PRESET, and true and complementary drive. The minimal reference removes the extra DFF/MUX, per-bit reset and capture, non-overlap generator, and series gate resistors.',
+      '- Native standard-cell masters are `'+'`, `'.join(a['blocks']['standard_cells']['external_masters'])+'`.','',
+      '## Timing Contract','',
+      'The minimal design requires eight comparisons and writes per frame. Verify reference state from actual CODE, gate control, and per-bit bottom-plate settling. The current reference path has no capture events. A new sample cancels unfinished events at the established external timing. The 60 ns conversion allocation comes from the frame. The interface exposes no timeout pin. Frozen B and its behavioral model use their own contract of eight reference updates and 16 captures.',
+      'The TT behavioral intervals below are medians of native edges across ten historical B frames. The low phase sets the conversion budget. The 20 ps output smoothing and arithmetic regularization are model settings. The compare-to-write interval covers the comparator and digital receive pipeline. The high phase is 40 ns, and internal gate waveforms determine the actual Bootstrap conduction window.','',
+      '| Behavioral interval | Value (ns) |','| --- | ---: |']
     for key,value in t.items():
         if key.endswith('_s'):lines.append('| `%s` | %.9f |'%(key,value*1e9))
     lines += ['',
-      '该近似未拟合 SS/FF 角，也未包括晶体管局部失配引起的延时分布。真实时序资格由闭环逐位测量确定。模块比较器的 0.75 ns 探针和同 draw 保持差的 0.25 LSB 属于独立诊断 screen，不能代替整帧 deadline 或器件可靠性判据。','',
-      '## 性能目标与工程误差分配','',
-      '沿用已有 8-bit 工程目标：−1 dBFS 输入时 ENOB≥7 bit（SNDR≥43.9 dB），无缺码、单调，|DNL|≤1 LSB、端点 |INL|≤1 LSB，功耗预算≤1 mW。这些是工程目标；已完成测量的条件和范围见 [results](../results/README.md)。','',
-      '| 分配 | RMS/mV |','| --- | ---: |','| 理想量化 | %.6f |'%(quant*1e3)]
+      'The model uses TT intervals. Use native per-bit closed-loop measurements for timing qualification, including SS, FF, and mismatch. The 0.75 ns comparator probe and the same-draw extended-hold comparison with a 0.25 LSB limit are module diagnostics. Use separate evidence for full-frame deadlines and device reliability.','',
+      '## Performance Targets and Error Budget','',
+      'Engineering targets are ENOB ≥7 bits (SNDR ≥43.9 dB) at −1 dBFS, monotonicity with no missing codes, absolute DNL and endpoint INL ≤1 LSB, and power ≤1 mW. Consult measured results for actual conditions and coverage. [Results](../results/README.md)','',
+      '| Allocation | RMS (mV) |','| --- | ---: |','| Ideal quantization | %.6f |'%(quant*1e3)]
     lines += ['| `%s` | %.6f |'%(k,v*1e3) for k,v in noise.items()]
-    lines += ['| 20 ps、4.5 MHz 抖动 | %.6f |'%(jitter*1e3),
-      '', 'RSS=%.6f mV，分配投影 SNDR=%.6f dB、ENOB=%.6f bit；该 RSS 不是当前 B 版的噪声实测。'%(rss*1e3,projected,(projected-1.76)/6.02),
-      'CDAC 建立误差分配 0.25 LSB=%.7f mV。固定增益、偏置、延迟单列，避免并入随机噪声重复计数。'%(0.25*lsb*1e3),
-      '', '## 校准、统计与未定项','',
-      '- 当前未实现校准器。比较器 200 种子极值只给出已观察到的偏移，不定义所有工艺样本的校准范围。校准范围、步进、权重字长尚未选定。',
-      '- 历史 0.25 LSB 偏移分配作为暂定校正后残差目标；当前未校准比较器没有被伪称满足这条线。',
-      '- 200 种子模块测试与 SS/FF 冷角各 50 种子闭环的抽样范围见 [monte_carlo.json](../specs/monte_carlo.json)。闭环局部失配仅开启比较器和 CDAC。',
-      '- 已有 B 版单个 TT 瞬态噪声种子，见 [噪声对照](../results/noise/comparison.json)；带宽和统计收敛尚未建立。全电路局部失配、PEX、完整共模范围、校准范围/精度、功耗积分收敛及端压可靠性仍分别保留未完成项。',
-      '- 端压工程判据唯一来源为 [soa_rule.yaml](../specs/soa_rule.yaml)。当前最简版五点短测 比较器五角通过该测量范围，FF 冷 SAR 存储 MM64 Vds 持续时间失败；设计采用不豁免违例，不代表可靠性签核。见 [逐管报告](../results/soa/msb_drive_d2_trial_20261115.md)。','',
-      '## 行为视图与交叉验证','',
-      '[Python 模型](../design/behav/python/sar_adc.py) 与 [VA 模型](../design/behav/veriloga/sar_adc_b.va) 共用总规格和生成默认参数。无噪声为默认，支持有效位权、偏移、有限建立和比较停滞等参数。',
-      '两模型的随机数流不同；确定性交叉逐例比较，随机噪声仅按各自分布建模。物理启动充电、kickback、原生 PDK MC、端压和功耗需要晶体管级模型。',
-      '[行为模型说明](../design/behav/README.md)列出模型层次、旧模型审查和运行方法。','']
+    lines += ['| Jitter of 20 ps at 4.5 MHz | %.6f |'%(jitter*1e3),
+      '', 'The allocated RSS is %.6f mV. It projects SNDR of %.6f dB and ENOB of %.6f bits. Use measured spectra for the noise of a physical run.'%(rss*1e3,projected,(projected-1.76)/6.02),
+      'The CDAC settling allocation is 0.25 LSB (%.7f mV). Report fixed gain, offset, and delay separately from random-noise RSS.'%(0.25*lsb*1e3),
+      '', '### Full Scale and Gain Error','',
+      'Nominal full scale is ±(VREFP−VREFN)=±%g V with ideal binary weights 2^i·LSB. Define k as the sum of measured effective bit weights divided by the sum of ideal weights. Actual full scale is ±%g·k V. The code-domain gain error is GE=1/k−1, positive when codes exceed the ideal. Reference −1 dBFS to nominal full scale. Endpoint INL and DNL exclude offset and gain.'%(ref['high_v']-ref['low_v'],ref['high_v']-ref['low_v']),
+      '','| Gain error | Limit |','| --- | ---: |',
+      '| TT | %g%% |'%(gain['max_tt']*100),'| Any corner | %g%% |'%(gain['max_any_corner']*100),
+      '| Hard limit for an unclipped −1 dBFS sine | %g%% |'%(gain['hard_limit']*100),'',
+      'At TT, allocate ≤%g%% to the CDAC including planned fill, ≤%g%% to top-level TOP routing and device layout, and %g%% to margin. Measure the CDAC share from standalone bit weights for the same extracted view. Use gain-normalized extracted weights to check layout systematic linearity, with |DNL|≤%g LSB and endpoint |INL|≤%g LSB. Leave the rest of the budget for mismatch, noise, and the comparator.'%(galloc['cdac_with_planned_fill']*100,galloc['top_level_top_wiring_and_device_layout']*100,galloc['margin']*100,lin['dnl_abs_max'],lin['inl_endpoint_abs_max']),
+      'Accept the measured gain against these limits. Digital gain correction of the 8-bit output would merge or drop codes. The 0.9 V core level already sets the upper reference.',
+      'For short ADC tests, compute the expected code as `clip(128+floor(Vin/(LSB·k)), 0, 255)`. Use k from an independent CDAC test of the same physical view, or k=1 for the schematic. The functional check allows ±%d code with `%s`. Evaluate gain, linearity, and dynamic performance against their own limits.'%(a['targets']['integrated_code_check']['tolerance_codes'],a['targets']['integrated_code_check']['tool']),
+      '', '## Calibration, Statistics, and Open Items','',
+      '- The current design is uncalibrated. Comparator extremes among 200 seeds describe the offsets observed in those samples. Calibration range, step size, and weight word length are open.',
+      '- The historical 0.25 LSB offset allocation is a provisional residual target after correction. The current comparator offset is reported as measured.',
+      '- The Monte Carlo specification defines the 200-seed module tests and the 50-seed closed-loop tests at each of SS cold and FF cold. Closed-loop local mismatch is enabled only in the comparator and CDAC. [Sampling scope](../specs/monte_carlo.json)',
+      '- The B version has one TT transient-noise seed. Bandwidth and statistical convergence are open, as are full-circuit local mismatch, PEX, full common-mode range, calibration range and accuracy, power integration convergence, and terminal-voltage reliability. [Noise comparison](../results/noise/comparison.json)',
+      '- Use the terminal-voltage rule for engineering acceptance. The five-point minimal-reference D2 trial passed the comparator screen at all five corners within its measurement scope. At FF cold, SAR storage device MM64 failed the Vds duration limit. Apply the rule to the adopted design and rely on separate evidence for reliability signoff. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Per-device results](../results/soa/msb_drive_d2_trial_20261115.md)','',
+      '## Behavioral Views and Cross-Checks','',
+      'The Python and Verilog-A models share the specification and generated defaults. The default is noiseless. Both support effective bit weights, offset, finite settling, and a stalled comparator. [Python model](../design/behav/python/sar_adc.py) · [Verilog-A model](../design/behav/veriloga/sar_adc_b.va)',
+      'Compare deterministic cases individually. The models use different random streams and model noise according to their respective distributions. Use transistor-level models for physical startup charging, kickback, native PDK Monte Carlo, terminal voltages, and power.',
+      'See the model guide for view hierarchy, legacy review, and commands. [Behavioral model guide](../design/behav/README.md)','']
     return {'design/behav/veriloga/b_defaults.vh':header,'docs/specification.md':'\n'.join(lines)}
 
 

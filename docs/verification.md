@@ -1,32 +1,32 @@
-# 验证方法
+# Verification Guide
 
-每次结论同时说明输入身份、工况、激励、模型范围、测量方法和未覆盖项。功能正确、静态线性度、动态频谱、时序和器件端压分别判定。
+For each conclusion, record input identity, corner, stimulus, model scope, measurement method, and coverage gaps. Evaluate function, static linearity, dynamic spectra, timing, and device terminal voltages within their respective tests.
 
-TT 短测分开记录首帧与正常周期，核对码字、采样关闭沿、比较/写入/更新/捕获计数和建立时间。TT 全码用转换边界求 DNL/端点 INL，FFT 保留相干频点、预热帧和噪声开关。
+In a TT short test, report the first frame and normal cycles separately. Check codes, sampling close edges, decision, write, update and capture counts, and settling. Use conversion boundaries for TT full-code DNL and endpoint INL. Record coherent bins, warm-up frames, and noise settings for FFT.
 
-模块 Monte Carlo 在 TT 分别测比较器阈值和 MOM 静态位权，共 200 个局部失配样本。冷角闭环保留真实 SAR、Bootstrap 和参考驱动，但局部失配只作用于比较器与 CDAC；每角 50 个样本不能说明全电路失配或高 sigma 良率。
+The TT module Monte Carlo measures the comparator threshold and MOM static bit weights over 200 local-mismatch samples. The closed-loop cold tests use the actual SAR, Bootstrap, and reference driver, with local mismatch applied only to the comparator and CDAC. Each corner has 50 samples and covers that selective boundary. Full-circuit mismatch and high-sigma yield require separate evidence.
 
-闭环按帧、位和真实边沿检查超时。同 draw 延长保持对照用于分离建立问题；参照自身超时、无效 draw 和监测延迟分别记录。SS 5115 的 q45 参照失败及 q38 复查具有不同运行身份。
+Check closed-loop timeouts by frame, bit, and actual edge. Use a same-draw extended-hold control to isolate settling effects. Record reference timeouts, invalid draws, and monitoring latency separately. The SS 5115 q45 reference failure and q38 retest have distinct run identities.
 
-已有测量与告警保持原始内容。重分析绑定完成源并生成新的 analysis-only 身份。目录迁移检查字节与子电路一致性，再用单次新 TT 短测验证分模块打包；既有结果保持原来源，不重新贴标。
+Preserve original measurements and warnings. Bind reanalysis to a completed source under a new analysis-only ID. For a directory migration, check byte and subcircuit equivalence, then verify module packaging with one new TT short test. Keep previous results attributed to their original sources.
 
-## 端压工程验收
+## Terminal-Voltage Engineering Acceptance
 
-唯一规则源为 [specs/soa_rule.yaml](../specs/soa_rule.yaml)。2026-11-15 按用户指示采用 [ADC-12b-100M Issue #136](https://github.com/many-question/ADC-12b-100M/issues/136) 及其 `44f52bc` 配置中的工程限值。上游明确没有器件或 PDK 依据，因此本项目通过此规则只表示工程筛查通过，不代表 foundry 可靠性或寿命签核。供电范围与 ADC 时序规格不变。
+The project adopted the engineering limits from ADC-12b-100M Issue #136 and the `44f52bc` configuration on 2026-11-15. The upstream limits are presented without device or PDK qualification. A pass qualifies the project engineering screen. Foundry reliability and lifetime require their own evidence. Use the project's existing supply and timing specifications. [Engineering rule](../specs/soa_rule.yaml) · [Upstream Issue #136](https://github.com/many-question/ADC-12b-100M/issues/136)
 
-对所有模块的每只薄栅 MOS，分别计算全瞬态的 `|Vgs|、|Vgd|、|Vds|`，包括标准单元内部器件和启动过程；薄栅 MOS 电容检查两端电压。每个器件、每对端电压满足以下任一条件才通过：
+For every thin-oxide MOS in every module, measure `|Vgs|`, `|Vgd|`, and `|Vds|` over the full transient, including standard-cell internals and startup. For a thin-oxide MOS capacitor, check its voltage across the two terminals. Each applicable device and terminal pair passes if either condition holds.
 
-- 峰值不超过 **1.1 V**；
-- 峰值不超过 **1.29 V**，且在**任意滑动 10 ns 窗口**内，严格超过 1.1 V 的**累计时间不超过 100 ps**。
+- The peak is **at most 1.1 V**.
+- The peak is **at most 1.29 V**, and the total time strictly above 1.1 V is **at most 100 ps in every sliding 10 ns window**.
 
-100 ps 是窗口内所有超限片段之和，不是单个脉冲时长或周期平均占空比。峰值和时间上限取闭区间。峰值采用上游 YAML 的字面值 1.29 V；其注释中的 `0.99 × 1.3` 实际为 1.287 V，不用该算式暗中替换阈值。
+The 100 ps is the sum of all over-limit intervals in the window. The peak and duration caps are inclusive. Use the literal 1.29 V from the upstream YAML. The comment's expression `0.99 × 1.3` evaluates to 1.287 V.
 
-厚栅 1.8 V 器件及 `Vgb/Vbs/Vbd` 不在此规则的豁免范围，单独保留诊断和未验证状态。未识别器件模型也不得默认为通过。PDK 原有核心管 0.99 V、1.8 V 器件 1.98 V 等模型告警阈值不修改、不屏蔽；模型告警、工程规则判定和可靠性资格分别报告。
+Report thick-oxide 1.8 V devices and `Vgb/Vbs/Vbd` separately as diagnostics or unverified where applicable. Treat unrecognized device models as unverified. Keep the original PDK model warning thresholds, including 0.99 V for core devices and 1.98 V for 1.8 V devices. Report model warnings, the engineering verdict, and reliability qualification from their respective evidence.
 
-判定使用原生时间点的端压波形，阈值交点插值，并核对时间分辨率是否足以捕获峰值和 100 ps 事件。结果记录运行/冻结网表身份、规则版本及散列、逐管端对峰值、最大滑窗超限时长和最差事件位置。日志中的有限次 CMI 打印及绘图降采样数据都不能代替完整测量。缺波形、出错、未复核、仅行为模型或缺任一要求角时，记为**端压未验证**，不得给候选完整端压合格结论。
+Use native-time terminal waveforms with interpolated threshold crossings. Check time resolution against narrow peaks and 100 ps events. Record run and frozen netlist identity, rule version and digest, per-device and per-pair peaks, the maximum duration above the limit in a sliding window, and the worst event location. Use full waveforms for measurement. Mark the terminal voltage **unverified** when waveforms are missing, execution fails, resolution review is pending, only behavioral models are present, or any required corner is missing.
 
-既有仿真不因新规则而失去原始功能证据。波形足够时通过绑定完成源的 managed analysis-only 生成独立重判结果，保留旧结果；缺失内部节点时需要新的受管波形采集。该配置是判定契约，写入文件本身不会使现有功能分析器自动完成逐管 SOA 测量。
+For existing simulations with sufficient waveforms, create an independent managed analysis-only verdict bound to the completed source. Preserve original functional evidence and results. Collect new managed waveforms when required internal nodes are absent. Use an explicit per-device SOA analyzer for this rule.
 
-## 当前最简版的采用与验收状态
+## Adoption and Verification of the Minimal Design
 
-2026-11-15 用户明确采用 `reference=minimal_msb_d2` 与 `sar=reset_data_or`，详见[采用记录](../results/design/reset_data_or_adoption_20261115.json)。采用表示后续设计与默认网表的选择，不等于电气签核；加 OR 版已通过 FF 冷 18 帧功能时序与端压筛查，其他角仍待验证。当前参考侧无捕获电路，不沿用 B 的 16 次捕获要求；使用 `reference_short` 的实际 CODE/栅控、8 次比较/写入及逐位底板建立测量。B 的旧短测分析器、行为时序和历史 FFT/全码/MC，以及此前 D2 的五角结果，不能自动给新版本授予资格。
+On 2026-11-15, the user adopted `reference=minimal_msb_d2` and `sar=reset_data_or` for the default design and subsequent development. At adoption, the OR design had passed 18 frames of function, timing, and terminal-voltage screening at FF cold. The other corners were pending at that checkpoint. The current reference has no capture block. Use `reference_short` for actual CODE and gate-control data, eight decisions and writes, and per-bit bottom-plate settling. The B analyzer, behavioral timing, historical FFT, full-code and Monte Carlo runs, and earlier D2 five-corner results qualify their own inputs. [Adoption record](../results/design/reset_data_or_adoption_20261115.json)

@@ -1,4 +1,4 @@
-"""Bind filled CDAC xRC to the explicitly recorded current transistor TT design."""
+"""Bind a verified CDAC xRC view to the current transistor TT design."""
 import argparse
 import hashlib
 import json
@@ -6,7 +6,8 @@ import re
 from pathlib import Path
 
 from Layout.design.cdac import PORTS
-from Layout.tools.simulation.prepare_full_sim import pull, sha
+from Layout.tools.physical.run_physical import FULL_CONTEXT_RULES
+from Layout.tools.simulation.prepare_full_sim import planned_fill_state, pull, sha
 from Layout.project import evidence
 from tools.saradc.__main__ import ROOT
 from tools.saradc.reference_short import prepare as prepare_current_short
@@ -16,7 +17,18 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('evidence')
     parser.add_argument('run_id')
+    parser.add_argument('--prefill',action='store_true',help='Use a verified core before density fill')
+    parser.add_argument('--planned-fill',action='store_true',
+                        help='Use the CDAC with its planned array fill and utility fill outside it')
+    parser.add_argument('--rss-mib',type=int,help='Simulation RSS limit; filled extractions need more than prefill')
+    parser.add_argument('--corner',choices=['tt','ssc','ssh','ffc','ffh'],default='tt',
+                        help='PVT corner of the short ADC fixture (specs/corners.json)')
+    parser.add_argument('--acquisition-ns',type=float,
+                        help='Diagnostic override of the 40 ns SAMPLE-high time for this run only; '
+                             'specs/arch.json and the shared testbenches are unchanged')
     args=parser.parse_args()
+    assert not (args.prefill and args.planned_fill)
+    assert args.acquisition_ns is None or 40<args.acquisition_ns<=55, 'Acquisition override must be in (40, 55] ns'
     for value in [args.evidence,args.run_id]:
         assert re.fullmatch(r'[a-z][a-z0-9-]{1,55}',value)
     # Never alter any previously prepared or registered execution identity.
@@ -26,8 +38,16 @@ def main():
     raw=pull(remote+'/manifest.json');manifest=json.loads(raw)
     assert manifest['case']=='full' and not manifest.get('error')
     assert manifest['checks']['lvs']['verdict']=='CORRECT'
-    assert manifest['checks']['drc']['markers_by_rule'].keys() <= {
-        'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1','DIODMY_L:WARNING'}
+    labels=manifest['gds']['labels']
+    expected_fill={'sar8_cdac_fill_odpo','sar8_cdac_fill_metal'}
+    assert expected_fill.intersection(labels)==(set() if args.prefill else expected_fill)
+    drc=manifest['checks']['drc']
+    allowed={'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1','DIODMY_L:WARNING'}
+    if args.prefill:
+        allowed.update(FULL_CONTEXT_RULES)
+    if args.planned_fill:
+        allowed.update(planned_fill_state(manifest))
+    assert set(drc['markers_by_rule']) <= allowed
     assert manifest['decks']['pex']['support']['mom_runset']['mom_device_exclusions']==7
     originals={'extracted.scs':manifest['checks']['pex']['sha256'],
                **manifest['checks']['pex']['companion_sha256']}
@@ -54,7 +74,7 @@ def main():
     # Reuse the current handshake stimulus/observer, not the old B CAP_CLK reducer.
     # This staging identity is never registered or submitted.
     codes=json.loads((ROOT/'tb/top/short/context.json').read_text())['expected_codes']
-    staging_recipe=ROOT/prepare_current_short('current','tt',args.run_id,
+    staging_recipe=ROOT/prepare_current_short('current',args.corner,args.run_id,
                                              codes=codes,max_output_mib=4096)
     recipe=json.loads(staging_recipe.read_text())
     dest.mkdir(parents=True)
@@ -82,14 +102,35 @@ def main():
     payload['test.scs']=tb.encode()
     context['required_signals']=[s for s in context['required_signals'] if not s.startswith('xdut.xcdac.')]
     context['unavailable_pex_diagnostics']=['lumped_bottom_plate_screen','schematic_switch_terminal_currents']
+    if args.acquisition_ns is not None:
+        # The period stays 100 ns; only the SAMPLE-high time grows and the conversion phase shrinks.
+        width=round(args.acquisition_ns-0.1,4)
+        bench=(dest/'tb.scs').read_text()
+        bench,n=re.subn(r'(?m)^(VSAMPLE \(SAMPLE 0\) .*?\bwidth=)39\.9n\b',lambda m:m[1]+'%gn'%width,bench)
+        assert n==1, 'Expected the standard 40 ns SAMPLE source'
+        payload['tb.scs']=bench.encode()
+        # Keep reading the output pins 5 ns before the next acquisition, as the 55 ns probe does at 40 ns.
+        probe=round(95-args.acquisition_ns,4)
+        tb,n=re.subn(r'(?m)^(XPROBE \([^)]*\) b_behavior_observer)[ \t]*$',lambda m:m[1]+' probe_delay_s=%gn'%probe,tb)
+        assert n==1, 'Expected one pin observer'
+        payload['test.scs']=tb.encode()
+        context.update(acquisition_s=args.acquisition_ns*1e-9,sample_pulse_width_s=width*1e-9,
+                       observer_probe_delay_s=probe*1e-9,
+                       acquisition_override='Per-run diagnostic; specs/arch.json and shared testbenches keep 40 ns')
     base_design_id=json.loads((ROOT/'design/manifest.json').read_text())['design_id']
-    scope=('Filled CDAC native RC extraction inside current transistor ADC '+base_design_id+'; TT 0.9V 27C, '
+    fill_state='Prefill' if args.prefill else 'Planned-fill' if args.planned_fill else 'Filled'
+    corner=json.loads((ROOT/'specs/corners.json').read_text(encoding='utf-8'))[args.corner]
+    condition=('TT 0.9V 27C' if args.corner=='tt' else '%s %s %gV %dC (reference 0.9V, TT passive sections, typical-RC extraction)'
+               %(args.corner,corner['mos'],corner['vdd_v'],corner['temperature_c']))
+    if args.acquisition_ns is not None:
+        condition+=', DIAGNOSTIC %g ns acquisition / %g ns conversion phase'%(args.acquisition_ns,100-args.acquisition_ns)
+    scope=(fill_state+' CDAC native RC extraction inside current transistor ADC '+base_design_id+'; '+condition+', '
            '10 unchanged low/mid/high/startup frames, 60ns low-first clock phase. '
            'Other modules remain pre-layout. No noise/mismatch or whole-chip signoff.')
     context.update(PEX=True,pex=True,pex_modules=['cdac'],design_view='current_with_cdac_pex',
                    prelayout_design_id=base_design_id,
                    prelayout_dut_sha256=sha(original_dut),dut_sha256=sha(payload['dut.scs']),
-                   physical_evidence=remote,gds_sha256=manifest['gds']['sha256'],
+                   physical_evidence=remote,gds_sha256=manifest['gds']['sha256'],cdac_fill_state=fill_state.lower(),
                    prelayout_cdac_sha256=sha(old_cdac),
                    extracted_original_sha256=originals,extracted_ports=pins,
                    cdac_wrapper_ports=PORTS,qualification_scope=scope)
@@ -103,6 +144,9 @@ def main():
         inputs[name]={'name':name,'source':(dest/name).relative_to(ROOT).as_posix(),'sha256':sha(blob)}
     recipe.update(inputs=list(inputs.values()),design_id=base_design_id+'_cdac_pex',analyzer='measure_integrated.py',
                   qualification_scope=scope,test_conditions=context)
+    if args.rss_mib:
+        recipe['resources'].update(simulation_rss_mib=args.rss_mib,
+                                   simulation_virtual_mib=max(recipe['resources'].get('simulation_virtual_mib',0),4*args.rss_mib))
     recipe_path.write_text(json.dumps(recipe,indent=2)+'\n')
     print(recipe_path.relative_to(ROOT).as_posix())
 

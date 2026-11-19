@@ -1,19 +1,19 @@
-# B 版模块化行为模型
+# Modular Behavioral Models for B
 
-总规格见 [arch.json](../../specs/arch.json)。晶体管设计保持 B 版原值；行为实现和混合验证不构成新的物理基线。
+The models use the shared specification. Their B references and mixed-hierarchy tests have the scope recorded in their evidence. Use native transistor-level runs to qualify a physical baseline. [Shared specification](../../specs/arch.json)
 
-| 功能 | Python | Verilog-A |
+| Function | Python | Verilog-A |
 | --- | --- | --- |
-| 配置与结果 | [config.py](python/config.py) | [b_defaults.vh](veriloga/b_defaults.vh)，由总规格生成 |
-| 采样 | [sampler.py](python/sampler.py) | [sampler.va](veriloga/sampler.va) |
+| Configuration and results | [config.py](python/config.py) | [b_defaults.vh](veriloga/b_defaults.vh), generated from the specification |
+| Sampling | [sampler.py](python/sampler.py) | [sampler.va](veriloga/sampler.va) |
 | CDAC | [cdac.py](python/cdac.py) | [cdac.va](veriloga/cdac.va) |
-| 比较器 | [comparator.py](python/comparator.py) | [comparator.va](veriloga/comparator.va) |
-| 异步 SAR | [sar.py](python/sar.py) | [sar.va](veriloga/sar.va) |
-| 参考控制与延时 | [reference.py](python/reference.py) | [reference.va](veriloga/reference.va) |
-| RC / clear 非对称延时 | 独立表征配置 | [timing.va](veriloga/timing.va) |
-| 整机组合 | [sar_adc.py](python/sar_adc.py) | [sar_adc_b.va](veriloga/sar_adc_b.va) |
+| Comparator | [comparator.py](python/comparator.py) | [comparator.va](veriloga/comparator.va) |
+| Asynchronous SAR | [sar.py](python/sar.py) | [sar.va](veriloga/sar.va) |
+| Reference control and delay | [reference.py](python/reference.py) | [reference.va](veriloga/reference.va) |
+| Asymmetric RC and clear delays | Separate characterization settings | [timing.va](veriloga/timing.va) |
+| ADC assembly | [sar_adc.py](python/sar_adc.py) | [sar_adc_b.va](veriloga/sar_adc_b.va) |
 
-Python 顶层接收独立的 `sampler/cdac/comparator/sar/reference` 实现，默认使用上表模块。公开的 `AdcSpec`、`AnalogConfig`、`FrameResult`、`SarAdcModel` 导入方式保留。数值模型采用有效位权和一阶 trial 建立近似，保留原 8 种情形的事件/码字定义；它适合算法、误差分配和校准研究。
+The Python top level accepts separate `sampler/cdac/comparator/sar/reference` implementations and defaults to those listed above. The public imports are `AdcSpec`, `AnalogConfig`, `FrameResult`, and `SarAdcModel`. The numerical model uses effective bit weights and a first-order trial-settling approximation. It retains the event and code definitions for the original eight scenarios and supports algorithm, error-budget, and calibration studies.
 
 ```python
 from design.behav.python import SarAdcModel, AnalogConfig
@@ -26,39 +26,39 @@ held = sampler.acquire(0.2, duration_s=40e-9)
 frame = adc.convert(held)
 ```
 
-Python `convert(vin)` 接收采样关闭时的理想差分值。研究有限采样窗时，先用 `acquire` 求已建立电压，或注入含跟踪历史的 `capture` 实现；不会因设置独立 `acquire` 的时间常数而静默改变原来的整机标量输入定义。VA 采样器则直接接时变电压源及电容网络。
+Python `convert(vin)` takes the ideal differential value at sampling close. To study a finite sample window, first obtain the settled voltage with `acquire` or inject a `capture` implementation with tracking history. The independent `acquire` time constant applies only to that acquisition. The Verilog-A sampler connects directly to a time-varying source and capacitor network.
 
-## 电气 VA 模型
+## Electrical Verilog-A Models
 
-VA 顶层实际连接各功能模块，保持与 B 顶层相同的 15 个端口顺序；局部供电标识符使用 `VDD/VSS`。各模块的接口、参数和约束直接定义在各自 `.va` 中。
+The Verilog-A top level connects all modules and uses B's 15-port order, with local supply names `VDD/VSS`. Each `.va` source defines its interface, parameters, and constraints.
 
-- 采样器是有限开/关电阻，保持电荷由外部电容承担；不会用理想电压源钳住 CDAC 顶板。可设增益、偏移及按帧的近似噪声电荷注入。
-- CDAC 使用每侧 255 单位二进制电容和 1 单位 dummy，以 `C·ddt(V)` 和有限开关电阻连接真实顶板/参考节点。位权误差按 LSB→MSB 设置。
-- 比较器低相位双端预充，高相位经过输入相关延时后判决；输入电容和输出电阻显式保留，可注入偏移、噪声或强制不响应。
-- SAR 从比较器实际输出接收有效判决，再产生写入、参考更新和下一位比较。新的采样优先取消旧事件；没有额外 BUSY/VALID/EOC 端口。
-- 参考控制两次捕获 D/CODE，先关闭开关再经过 deadtime 开启新状态；初始预置字为 128。延时模块提供有限传播时间及边沿。
+- The sampler uses finite on- and off-resistance. The external capacitor stores charge on the CDAC top plate. Configure gain, offset, and approximate per-frame noise charge injection.
+- Each CDAC side has 255 binary-weighted unit capacitors and one unit dummy. The model connects actual top-plate and reference nodes through `C·ddt(V)` and finite switch resistance. Set weight errors from LSB to MSB.
+- The comparator precharges both outputs in the low phase and resolves after an input-dependent delay in the high phase. The model includes input capacitance and output resistance. It supports offset, noise, and a forced stall.
+- The SAR consumes the comparator outputs and issues writes, reference updates, and the next comparison. New sampling cancels older pending events. The module uses the existing public interface without additional BUSY, VALID, or EOC ports.
+- The reference captures D and CODE twice. It turns off the switches and waits for dead time before applying the next state. Its preset code is 128. The timing module supplies finite propagation times and edge rates.
 
-默认单位电容约 4.00407 fF，来自总规格中的同几何低频表征；它是定电容近似。50 Ω 采样开关、10 kΩ 单位参考开关、100 Ω 行为输出、2 fF 比较器输入及 100 ps 非交叠是明确的行为默认值，未被冒充为提取后的 B 参数。默认噪声为零；Python 与 Spectre 的随机数流不同。VA 的外部参考噪声应由测试台参考源注入，Python 的每次判决参考噪声是另一种数值抽象。
+The default unit capacitance is about 4.00407 fF, a constant-capacitance approximation taken from low-frequency characterization of the same geometry. The behavioral defaults are 50 Ω sampler resistance, 10 kΩ unit reference switch resistance, 100 Ω output resistance, 2 fF comparator input capacitance, and 100 ps non-overlap. The default noise is zero. Python and Spectre use independent random streams. Inject external Verilog-A reference noise through the testbench source. In Python, reference noise is a per-decision numerical parameter.
 
-Python `weight_errors` 修改折合后的有效阈值系数；VA `weight_error0..7` 修改实际电容，阵列总容量和负载响应也随之变化。两者不能直接逐参数互拷，比较非理想位权时需先从电气模型提取有效系数。
+Python `weight_errors` changes effective threshold coefficients. Verilog-A `weight_error0..7` changes capacitors and therefore also changes total capacitance and load response. Extract effective coefficients from the electrical model before comparing nonideal weights.
 
-物理 Bootstrap 的冷启动充电、非线性 MOM、kickback、PVT/原生失配、端压、功耗与 PEX 继续由管级实现验证。VA 模型初始化与有限 R/C 不能证明实际升压电路的启动历史。数值 trial 模型与电气电容网络是两个层次，不把二者的时间或所有边界码强行视为完全相同。
+Use transistor-level evidence for physical Bootstrap startup, nonlinear MOM behavior, kickback, PVT and native mismatch, terminal voltages, power, and PEX. The finite R/C and initialization in Verilog-A describe its own startup. Compare numerical trial timing and electrical network timing within their respective models.
 
-当前 CDAC 行为模型的门控输入只感知电压，尚未拟合真实开关的栅电荷。`control_xtor` 因此用于控制接口与功能检查，不能据此签核实际栅控建立或驱动功耗；这些结论使用 `current` 管级视图。启用 VA 多实例噪声时，应为各实例指定独立的 `noise_seed`，本轮未做噪声统计资格验证。
+The behavioral CDAC gate inputs sense voltage. Use `control_xtor` for control interfaces and function, and the transistor-level `current` view for real gate settling and drive power. Assign independent `noise_seed` values to Verilog-A instances when enabling noise. Noise statistics remain unqualified for this round.
 
-## 模块选择与测试
+## Module Selection and Testing
 
-[views.json](../../specs/views.json) 是统一选择配置。默认 `current` 使用当前管级设计；`frozen-b` 只用于历史回归。混合视图使用原有 B 顶层连接，在生成测试包中选择实现，不编辑晶体管源码。
+The view registry is the configuration source. `current` uses the current transistor-level design. `frozen-b` selects the historical regression. Mixed views use B's top-level connectivity and select implementations in generated test packages. [View registry](../../specs/views.json)
 
-| 视图 | 管级实现 | 其余核心模块 |
+| View | Transistor-level implementation | Other core modules |
 | --- | --- | --- |
-| `behavioral` | 原生外围负载 | VA |
-| `comparator_xtor` | 比较器 | VA |
-| `cdac_xtor` | CDAC/开关 | VA |
-| `sampler_xtor` | Bootstrap 采样 | VA |
-| `control_xtor` | SAR、参考控制与实际延时 | VA |
+| `behavioral` | Native peripheral loads | Verilog-A |
+| `comparator_xtor` | Comparator | Verilog-A |
+| `cdac_xtor` | CDAC and switches | Verilog-A |
+| `sampler_xtor` | Bootstrap sampler | Verilog-A |
+| `control_xtor` | SAR, reference control, and actual delays | Verilog-A |
 
-三端、使用全局电源的 Bootstrap 用生成的小包装适配五端采样行为模型；其他模块保持声明的标量端口顺序。Virtuoso 沿用已有接入，OA 数据库不由本次文本重构修改。
+A generated wrapper adapts the three-terminal Bootstrap with global supplies to the five-port sampler model. Other modules use their declared scalar port order. Use the existing Virtuoso connection for native work. These packages select the text netlist views.
 
 ```powershell
 .venv/Scripts/python.exe -m tools.saradc check
@@ -68,10 +68,10 @@ Python `weight_errors` 修改折合后的有效阈值系数；VA `weight_error0.
 .venv/Scripts/python.exe -m tools.saradc behav follow --run-id sar8-modules-v3
 ```
 
-`follow` 是一次性的等待、分析、回收流程：只接续已经登记的运行，仿真成功后才启动分析，失败则保留并退出，不重提仿真。也可继续分别使用 `status / analyze / collect`。
+`follow` waits once for a registered run, starts analysis when simulation succeeds, and collects results. It retains a failure for review. `status / analyze / collect` also work individually.
 
-模块测试条件见 [tb/behav](../../tb/behav/README.md)，实际证据见 [results/behav](../../results/behav/README.md)。旧 10-bit、旧外部位时钟及专用实验模型继续留在历史区，审查索引见 [model_audit.json](../../results/behav/model_audit.json)。
+Use the behavioral testbench guide for conditions and the results index for measured evidence. The model audit tracks historical 10-bit, external bit-clock, and experiment-specific models. [Testbench guide](../../tb/behav/README.md) · [Results](../../results/behav/README.md) · [Model audit](../../results/behav/model_audit.json)
 
-六模块可在命名视图后逐项覆盖：`--view current --view comparator=va --view reference=va`。`sar_xtor / reference_xtor / timing_xtor` 提供相应独立视图；完整六类模块测试见 [tb/blocks](../../tb/blocks/README.md)。
+Override any of the six modules after selecting a view, for example `--view current --view comparator=va --view reference=va`. `sar_xtor / reference_xtor / timing_xtor` provide separate views. [Six standalone block tests](../../tb/blocks/README.md)
 
-`timing.va` 的 RC/clear 近似分别保留上升与快速复位延时，来源与数值由 `specs/views.json` 的 `timing_approximations` 给出。其来源是独立 TT 接收门负载表征，不代表实际 SAR 全扇出或 PVT 拟合。旧 `sar8-modules-v3` 证据仍绑定其原模型/选择配置；本轮新测试以各自运行回执为准。
+`timing.va` retains independent rising and fast reset delays for RC and clear. See the `timing_approximations` in `specs/views.json` for values and sources. The source is a standalone TT receiving-gate characterization. Full SAR fanout and PVT timing need native evidence. The archived `sar8-modules-v3` result applies to its original models and selections. Use each new run receipt for its own evidence.

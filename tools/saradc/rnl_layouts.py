@@ -106,6 +106,7 @@ def delay(s):
     s.text(-18,-44,'R/C values and multiplicities are read from the netlist; clear transistors are retained.',.9)
 
 def simple(s):
+    sr = {'X000':(0,-24),'X001':(38,20),'X002':(76,20),'X003':(76,-24)}
     presets={
         'sar8p_inv':{'XLIB':(0,0)},'sar8p_nand2':{'XLIB':(0,0)},
         'sar8p_clkbuf':{'X000':(0,0),'XFINAL':(34,0)},
@@ -115,7 +116,7 @@ def simple(s):
         'sar8p_xor2':{'X000':(0,0),'X001':(40,20),'X002':(40,-20),'X003':(80,0)},
         'sar8p_mux2':{'X000':(0,-26),'X001':(42,15),'X002':(42,-15),'X003':(84,0)},
         'sar8p_dffr':{'XRESET':(0,-20),'XFF':(43,0)},
-        'sar8p_sr':{'X000':(0,-24),'X001':(38,20),'X002':(76,20),'X003':(76,-24),'CQB':(108,-37)},
+        'sar8p_sr':{**sr,'CQB':(108,-37)}, 'sar8p_sr_static':sr,
         'sar8r_edge':{'XD':(0,-20),'XA':(43,0),'XB':(80,0)},
         'sar8p_bit':{'XMUX':(0,0),'XSTORE':(43,0),'X002':(84,0)},
         'sar8p_nonoverlap':{'X000':(0,18),'XD_LD':(36,18),'XD_HD':(36,-18),'X004':(76,18),'X002':(76,-18)},
@@ -168,7 +169,7 @@ def timing(s):
     for n,(x,y) in pos.items():s.place(n,x,y)
     s.local(exclude=('SAMPLE','SN','CMP_CLK','PHI_U','PHI_W'),distance=90)
     s.text(109,49,'VALID → WRITE → UPDATE',1.3);s.text(78,-46,'QUIET detection → SET / RESET latch → CMP_CLK',1.3)
-    s.text(-18,-140,'Named inter-row clocks are the same electrical nets. Expand each RC delay or latch to inspect implementation.',1)
+    s.text(-18,-140,'Expand the delay and clock latch instances to inspect the timing path.',1)
 
 def sar(s):
     s.text(-23,82,'8-bit SAR / one token, eight bit stores, asynchronous handshake',1.5)

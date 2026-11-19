@@ -1,0 +1,3014 @@
+{
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3",
+  "source_scope": "Transistor schematic. Frozen test packages used the former include names.",
+  "previous_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
+  "previous_record": "results/design/sar_timing_quiet8p5_20261118.json",
+  "pvt": {
+    "ffc": {
+      "run_id": "sar8-delx-ffc-qbuf18-20261119a",
+      "recipe_sha256": "c4b5e14928160adb4ae645ec37bc5346daf1085cffe79d54aed6c62fadeda51c",
+      "result_sha256": "a5422e694566fd7e3677ec2fee85f25540647eee616a05ba1df1cef3eef7114b",
+      "host": "thu-wei",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ffc",
+      "temperature_c": -40,
+      "vdd_v": 0.99,
+      "frames": 18,
+      "codes_90": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "codes_98": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "expected_codes": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "nominal_center_matches": 18,
+      "sample_close_max_abs_lsb": 0.009958112779694753,
+      "weighted_bottom_max_lsb": 0.01576051420660128,
+      "receiver_margin_min_ps": 139.52792210476736,
+      "update_to_compare_min_ns": 1.1714843899834846,
+      "read_margin_min_ns": 34.974213217852146,
+      "latest_update_to_preset_range_ns": [
+        3.3819821717197414,
+        3.3827588964602513
+      ],
+      "events": {
+        "compare": 144,
+        "write": 144,
+        "update": 144
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -2.3443903260305654,
+        "smallest_accepted": -0.010890263966778502
+      },
+      "requests": [
+        {
+          "min_low_ns": 1.1457660785264665,
+          "min_rise_ns": 0.09809347988161786,
+          "max_rise_ns": 0.09966333172759213,
+          "input": "xctrl.xtim.raw",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.raw_d"
+        },
+        {
+          "min_low_ns": 1.290048221714258,
+          "min_rise_ns": 0.2668114490326142,
+          "max_rise_ns": 0.26810466103027536,
+          "input": "xctrl.phi_w",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.write_d"
+        },
+        {
+          "min_low_ns": 0.5472366482196972,
+          "min_rise_ns": 1.0337040342003774,
+          "max_rise_ns": 1.0349922377280087,
+          "input": "xctrl.xtim.quiet",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.quiet_d"
+        },
+        {
+          "min_low_ns": 60.00823279420103,
+          "min_rise_ns": 1.1453274397298188,
+          "max_rise_ns": 1.1457521684444951,
+          "input": "sample_match",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xseq.ad"
+        },
+        {
+          "min_low_ns": 53.70067904612657,
+          "min_rise_ns": 3.3236476423372188,
+          "max_rise_ns": 3.324917857014279,
+          "input": "xidle.idle",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xidle.idle_d"
+        }
+      ],
+      "mean_delivered_uW": {
+        "external_clock": 0.0004899584160068661,
+        "core": 56.175242607772056,
+        "reference_high": 12.956531755545916
+      }
+    },
+    "ffh": {
+      "run_id": "sar8-delx-ffh-qbuf18-20261119a",
+      "recipe_sha256": "19065e4c15ac24f430c4a7fdf9873209f77751d92f43809649e518820e212f18",
+      "result_sha256": "5e4c878075bf0c253990caca79170bd4ce0015267afa4b07b9b954ea7b100bd9",
+      "host": "thu-song",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ffh",
+      "temperature_c": 125,
+      "vdd_v": 0.99,
+      "frames": 18,
+      "codes_90": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "codes_98": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "expected_codes": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "nominal_center_matches": 18,
+      "sample_close_max_abs_lsb": 0.007174452197489245,
+      "weighted_bottom_max_lsb": 0.02873079544846816,
+      "receiver_margin_min_ps": 155.32093878158395,
+      "update_to_compare_min_ns": 1.3052496238909854,
+      "read_margin_min_ns": 33.90673710744654,
+      "latest_update_to_preset_range_ns": [
+        3.7763196452625385,
+        3.776889363228681
+      ],
+      "events": {
+        "compare": 144,
+        "write": 144,
+        "update": 144
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -2.0561192334491163,
+        "smallest_accepted": 0.33311615453279764
+      },
+      "requests": [
+        {
+          "min_low_ns": 1.2720389479877523,
+          "min_rise_ns": 0.11006665615713665,
+          "max_rise_ns": 0.1108134763195051,
+          "input": "xctrl.xtim.raw",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.raw_d"
+        },
+        {
+          "min_low_ns": 1.4324678887299795,
+          "min_rise_ns": 0.2977522119663099,
+          "max_rise_ns": 0.29859867091554654,
+          "input": "xctrl.phi_w",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.write_d"
+        },
+        {
+          "min_low_ns": 0.6052642724068968,
+          "min_rise_ns": 1.1548574888952776,
+          "max_rise_ns": 1.1556832257739607,
+          "input": "xctrl.xtim.quiet",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.quiet_d"
+        },
+        {
+          "min_low_ns": 60.01576757618863,
+          "min_rise_ns": 1.278784000153212,
+          "max_rise_ns": 1.2793884070841128,
+          "input": "sample_match",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xseq.ad"
+        },
+        {
+          "min_low_ns": 54.848640541339705,
+          "min_rise_ns": 3.7124541405877025,
+          "max_rise_ns": 3.7133838616999197,
+          "input": "xidle.idle",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xidle.idle_d"
+        }
+      ],
+      "mean_delivered_uW": {
+        "external_clock": 0.00051123465382234,
+        "core": 357.6906616201812,
+        "reference_high": 20.31327491415631
+      }
+    },
+    "ssc": {
+      "run_id": "sar8-delx-ssc-qbuf18-20261119a",
+      "recipe_sha256": "952da3369730c6bd90e4f5a43f06c6166db5427899567da16164c7a2bb066fa8",
+      "result_sha256": "039d6bb164e0ec0dd3beade3ec5ebb61f557fd3a4d8f9a2bb4df9dfb7588f3ed",
+      "host": "thu-wei",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ssc",
+      "temperature_c": -40,
+      "vdd_v": 0.81,
+      "frames": 18,
+      "codes_90": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "codes_98": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "expected_codes": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "nominal_center_matches": 18,
+      "sample_close_max_abs_lsb": 0.04668596017279943,
+      "weighted_bottom_max_lsb": 0.0004104471205209289,
+      "receiver_margin_min_ps": 327.7319497007834,
+      "update_to_compare_min_ns": 2.8709509087779206,
+      "read_margin_min_ns": 13.399180317187096,
+      "latest_update_to_preset_range_ns": [
+        8.4429970781839,
+        8.44352490267212
+      ],
+      "events": {
+        "compare": 144,
+        "write": 144,
+        "update": 144
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -2.666070106917995,
+        "smallest_accepted": 2.538078745123684
+      },
+      "requests": [
+        {
+          "min_low_ns": 2.8216103410412843,
+          "min_rise_ns": 0.24328370644094147,
+          "max_rise_ns": 0.24418006356111732,
+          "input": "xctrl.xtim.raw",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.raw_d"
+        },
+        {
+          "min_low_ns": 3.1701260799621087,
+          "min_rise_ns": 0.6605458753746422,
+          "max_rise_ns": 0.6610982971910054,
+          "input": "xctrl.phi_w",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.write_d"
+        },
+        {
+          "min_low_ns": 1.2936599072557908,
+          "min_rise_ns": 2.587864893001855,
+          "max_rise_ns": 2.5885924594588343,
+          "input": "xctrl.xtim.quiet",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.quiet_d"
+        },
+        {
+          "min_low_ns": 60.01547983926437,
+          "min_rise_ns": 2.8665023833331134,
+          "max_rise_ns": 2.86698923354605,
+          "input": "sample_match",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xseq.ad"
+        },
+        {
+          "min_low_ns": 74.53657020906716,
+          "min_rise_ns": 8.320768894335652,
+          "max_rise_ns": 8.321163868369808,
+          "input": "xidle.idle",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xidle.idle_d"
+        }
+      ],
+      "mean_delivered_uW": {
+        "external_clock": 0.0005741990598181869,
+        "core": 33.66667859911526,
+        "reference_high": 13.445089982875093
+      }
+    },
+    "ssh": {
+      "run_id": "sar8-delx-ssh-qbuf18-20261119a",
+      "recipe_sha256": "d246b03e6c2456fa86a2684216c010df625bcdcf738bdd8cd02d2239f5380e4c",
+      "result_sha256": "57291c6f29037a511e2443508c228b830eb65dc5f6d9e82a33f21c6516b66a1f",
+      "host": "thu-song",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ssh",
+      "temperature_c": 125,
+      "vdd_v": 0.81,
+      "frames": 18,
+      "codes_90": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "codes_98": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "expected_codes": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "nominal_center_matches": 18,
+      "sample_close_max_abs_lsb": 0.002954578674392552,
+      "weighted_bottom_max_lsb": 0.006695964495688784,
+      "receiver_margin_min_ps": 321.3716162353049,
+      "update_to_compare_min_ns": 2.7829161784121035,
+      "read_margin_min_ns": 17.088349019040873,
+      "latest_update_to_preset_range_ns": [
+        8.172444387994,
+        8.172656135929676
+      ],
+      "events": {
+        "compare": 144,
+        "write": 144,
+        "update": 144
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -2.4262161148595474,
+        "smallest_accepted": 2.323305929232855
+      },
+      "requests": [
+        {
+          "min_low_ns": 2.7207988177701923,
+          "min_rise_ns": 0.2365060630524299,
+          "max_rise_ns": 0.2371793632188367,
+          "input": "xctrl.xtim.raw",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.raw_d"
+        },
+        {
+          "min_low_ns": 3.0581128674747204,
+          "min_rise_ns": 0.6403230050916124,
+          "max_rise_ns": 0.6408087065860476,
+          "input": "xctrl.phi_w",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.write_d"
+        },
+        {
+          "min_low_ns": 1.2537549153418135,
+          "min_rise_ns": 2.504652613381466,
+          "max_rise_ns": 2.5050515132835245,
+          "input": "xctrl.xtim.quiet",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.quiet_d"
+        },
+        {
+          "min_low_ns": 60.018549027356734,
+          "min_rise_ns": 2.773991920397213,
+          "max_rise_ns": 2.7742606810623593,
+          "input": "sample_match",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xseq.ad"
+        },
+        {
+          "min_low_ns": 71.55132054550079,
+          "min_rise_ns": 8.051432159510574,
+          "max_rise_ns": 8.051776079472397,
+          "input": "xidle.idle",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xidle.idle_d"
+        }
+      ],
+      "mean_delivered_uW": {
+        "external_clock": 0.00040520099856280036,
+        "core": 54.326283427104634,
+        "reference_high": 16.65711255330209
+      }
+    },
+    "tt": {
+      "run_id": "sar8-delx-tt-qbuf18-20261119a",
+      "recipe_sha256": "07fd28ff855acc6b0ad50038739e37144fa19db46cca52ac5964353a8b292a9c",
+      "result_sha256": "a865a58b39cd9500cee8b883dcb653ae52acc6a91f51b32a37385ff20c94121e",
+      "host": "thu-song",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "tt",
+      "temperature_c": 27,
+      "vdd_v": 0.9,
+      "frames": 18,
+      "codes_90": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "codes_98": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "expected_codes": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        12,
+        63,
+        64,
+        127,
+        128,
+        191,
+        243,
+        255,
+        255,
+        0,
+        255,
+        128,
+        127
+      ],
+      "nominal_center_matches": 18,
+      "sample_close_max_abs_lsb": 0.005190496536992366,
+      "weighted_bottom_max_lsb": 0.008335660228559692,
+      "receiver_margin_min_ps": 202.94263188466616,
+      "update_to_compare_min_ns": 1.7291867847016869,
+      "read_margin_min_ns": 28.732971074370656,
+      "latest_update_to_preset_range_ns": [
+        5.032993857151276,
+        5.033341809196074
+      ],
+      "events": {
+        "compare": 144,
+        "write": 144,
+        "update": 144
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -2.7021328846494885,
+        "smallest_accepted": 2.5149755225906123
+      },
+      "requests": [
+        {
+          "min_low_ns": 1.6906599051285471,
+          "min_rise_ns": 0.14603226509390674,
+          "max_rise_ns": 0.14711954892641435,
+          "input": "xctrl.xtim.raw",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.raw_d"
+        },
+        {
+          "min_low_ns": 1.9029623761686902,
+          "min_rise_ns": 0.39598946695760273,
+          "max_rise_ns": 0.39693145695798426,
+          "input": "xctrl.phi_w",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.write_d"
+        },
+        {
+          "min_low_ns": 0.7957776778863714,
+          "min_rise_ns": 1.5404057520932983,
+          "max_rise_ns": 1.541196543242195,
+          "input": "xctrl.xtim.quiet",
+          "qualified_rises": 144,
+          "orphan_rises": 0,
+          "output": "xctrl.xtim.quiet_d"
+        },
+        {
+          "min_low_ns": 60.0105958646443,
+          "min_rise_ns": 1.7059470988826215,
+          "max_rise_ns": 1.7064719054130952,
+          "input": "sample_match",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xseq.ad"
+        },
+        {
+          "min_low_ns": 59.946431276690696,
+          "min_rise_ns": 4.951966648355638,
+          "max_rise_ns": 4.9527417147098225,
+          "input": "xidle.idle",
+          "qualified_rises": 18,
+          "orphan_rises": 0,
+          "output": "xidle.idle_d"
+        }
+      ],
+      "mean_delivered_uW": {
+        "external_clock": 0.0005056381236915096,
+        "core": 47.67720285990916,
+        "reference_high": 13.756595057856273
+      }
+    }
+  },
+  "long_run": {
+    "run_id": "sar8-delx-ssc-qbuf64-20261119b",
+    "recipe_sha256": "1edea7b85cc2465b3d4d6ad1461a3bde48752a5f999143cc238d8f5a60d02fe8",
+    "result_sha256": "354f18ad2fcb4ab845cf598a023fb6888f56acd79f45d963440319e574abac79",
+    "host": "thu-song",
+    "tested_source_sha256": {
+      "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+      "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+      "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+      "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+      "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+      "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+      "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+      "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+      "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+    },
+    "spectre_args": [
+      "+preset=mx",
+      "+mt=4",
+      "-preset_override",
+      "+lqtimeout",
+      "900"
+    ],
+    "corner": "ssc",
+    "temperature_c": -40,
+    "vdd_v": 0.81,
+    "frames": 64,
+    "codes_90": [
+      0,
+      255,
+      0,
+      255,
+      127,
+      128,
+      127,
+      128,
+      85,
+      170,
+      85,
+      170,
+      0,
+      0,
+      255,
+      255,
+      246,
+      110,
+      10,
+      130,
+      227,
+      185,
+      28,
+      140,
+      25,
+      93,
+      144,
+      14,
+      249,
+      169,
+      153,
+      110,
+      29,
+      3,
+      118,
+      115,
+      244,
+      31,
+      85,
+      161,
+      198,
+      1,
+      28,
+      71,
+      160,
+      108,
+      105,
+      135,
+      45,
+      219,
+      225,
+      114,
+      154,
+      22,
+      113,
+      180,
+      12,
+      43,
+      49,
+      239,
+      90,
+      211,
+      206,
+      26
+    ],
+    "codes_98": [
+      0,
+      255,
+      0,
+      255,
+      127,
+      128,
+      127,
+      128,
+      85,
+      170,
+      85,
+      170,
+      0,
+      0,
+      255,
+      255,
+      246,
+      110,
+      10,
+      130,
+      227,
+      185,
+      28,
+      140,
+      25,
+      93,
+      144,
+      14,
+      249,
+      169,
+      153,
+      110,
+      29,
+      3,
+      118,
+      115,
+      244,
+      31,
+      85,
+      161,
+      198,
+      1,
+      28,
+      71,
+      160,
+      108,
+      105,
+      135,
+      45,
+      219,
+      225,
+      114,
+      154,
+      22,
+      113,
+      180,
+      12,
+      43,
+      49,
+      239,
+      90,
+      211,
+      206,
+      26
+    ],
+    "expected_codes": [
+      0,
+      255,
+      0,
+      255,
+      127,
+      128,
+      127,
+      128,
+      85,
+      170,
+      85,
+      170,
+      0,
+      0,
+      255,
+      255,
+      246,
+      110,
+      10,
+      130,
+      227,
+      185,
+      28,
+      140,
+      25,
+      93,
+      144,
+      14,
+      249,
+      169,
+      153,
+      110,
+      29,
+      3,
+      118,
+      115,
+      244,
+      31,
+      85,
+      161,
+      198,
+      1,
+      28,
+      71,
+      160,
+      108,
+      105,
+      135,
+      45,
+      219,
+      225,
+      114,
+      154,
+      22,
+      113,
+      180,
+      12,
+      43,
+      49,
+      239,
+      90,
+      211,
+      206,
+      26
+    ],
+    "nominal_center_matches": 64,
+    "sample_close_max_abs_lsb": 0.04659236241909386,
+    "weighted_bottom_max_lsb": 0.0004104033581870579,
+    "receiver_margin_min_ps": 327.7222934064942,
+    "update_to_compare_min_ns": 2.8709508923471754,
+    "read_margin_min_ns": 13.109536477850884,
+    "latest_update_to_preset_range_ns": [
+      8.44299900616705,
+      8.44352989012578
+    ],
+    "events": {
+      "compare": 512,
+      "write": 512,
+      "update": 512
+    },
+    "all_outputs_stable": true,
+    "timing_pass": true,
+    "all_screens_pass": true,
+    "warning_codes": [
+      "CMI-2755",
+      "CMI-2756",
+      "SFE-1131",
+      "SFE-2453",
+      "SFE-3014",
+      "SFE-3016",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ],
+    "first_issue": null,
+    "observed_decision_levels_mV": {
+      "largest_rejected": -2.5743187648999966,
+      "smallest_accepted": 2.5954839825378384
+    },
+    "requests": [
+      {
+        "min_low_ns": 2.8216103410412843,
+        "min_rise_ns": 0.24328199980232515,
+        "max_rise_ns": 0.24418273405652374,
+        "input": "xctrl.xtim.raw",
+        "qualified_rises": 512,
+        "orphan_rises": 0,
+        "output": "xctrl.xtim.raw_d"
+      },
+      {
+        "min_low_ns": 3.170125247735827,
+        "min_rise_ns": 0.6605496878615733,
+        "max_rise_ns": 0.6611161029016179,
+        "input": "xctrl.phi_w",
+        "qualified_rises": 512,
+        "orphan_rises": 0,
+        "output": "xctrl.xtim.write_d"
+      },
+      {
+        "min_low_ns": 1.2936007386262458,
+        "min_rise_ns": 2.587865174265286,
+        "max_rise_ns": 2.5885913306092374,
+        "input": "xctrl.xtim.quiet",
+        "qualified_rises": 512,
+        "orphan_rises": 0,
+        "output": "xctrl.xtim.quiet_d"
+      },
+      {
+        "min_low_ns": 60.01547982971683,
+        "min_rise_ns": 2.8665018404539744,
+        "max_rise_ns": 2.866989361660207,
+        "input": "sample_match",
+        "qualified_rises": 64,
+        "orphan_rises": 0,
+        "output": "xseq.ad"
+      },
+      {
+        "min_low_ns": 74.53658756346235,
+        "min_rise_ns": 8.32076200522378,
+        "max_rise_ns": 8.321170858058265,
+        "input": "xidle.idle",
+        "qualified_rises": 64,
+        "orphan_rises": 0,
+        "output": "xidle.idle_d"
+      }
+    ],
+    "mean_delivered_uW": {
+      "external_clock": 0.0005771149486982636,
+      "core": 33.63179419572427,
+      "reference_high": 13.304438413510569
+    }
+  },
+  "local_mismatch": {
+    "15303": {
+      "run_id": "sar8-delx-ffc-qbufmc15303-20261119b",
+      "recipe_sha256": "29098c9944203198551285a6987963eedc1afa215be6134e6ea7d3a60336ef36",
+      "result_sha256": "c80ea37f140e27b75a715388a3377ea81ec1df521cb2a1d2e72e6cd6b081805c",
+      "host": "thu-song",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ffc",
+      "temperature_c": -40,
+      "vdd_v": 0.99,
+      "frames": 8,
+      "codes_90": [
+        3,
+        255,
+        4,
+        255,
+        130,
+        131,
+        88,
+        173
+      ],
+      "codes_98": [
+        3,
+        255,
+        4,
+        255,
+        130,
+        131,
+        88,
+        173
+      ],
+      "expected_codes": [
+        0,
+        255,
+        1,
+        254,
+        127,
+        128,
+        85,
+        170
+      ],
+      "nominal_center_matches": 1,
+      "sample_close_max_abs_lsb": 0.00991064839400091,
+      "weighted_bottom_max_lsb": 0.011520098205218201,
+      "receiver_margin_min_ps": 153.54125214677134,
+      "update_to_compare_min_ns": 1.2821033421924972,
+      "read_margin_min_ns": 33.36860996709894,
+      "latest_update_to_preset_range_ns": [
+        3.7200401586482346,
+        3.7205189841676436
+      ],
+      "events": {
+        "compare": 64,
+        "write": 64,
+        "update": 64
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16900",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -23.983678085907567,
+        "smallest_accepted": -17.8431448470725
+      },
+      "seed": 15303,
+      "draw": {
+        "labels_sha256": "3527f84d23bd333d1c0cfdf4c59f2ac7f7536bebdb1116ae3d81ec6036ce631d",
+        "values_sha256": "5a139ce23c8c47d0b4e4484fb5c629de24b4a6737a068590abcb7d7c8aa019c0",
+        "all_groups_present": true,
+        "nonzero_device_rows": {
+          "XCOMP": 11,
+          "XCTRL.XTIM.XD_WRITE_D": 123,
+          "XSEQ.XD": 465,
+          "XCDAC": 66,
+          "XIDLE.XD": 1354,
+          "XCTRL.XTIM.XD_QUIET_D": 424,
+          "XCTRL.XTIM.XD_RAW_D": 48
+        }
+      },
+      "settling_screen_pass": true,
+      "max_conservative_settling_lsb": 0.02889538608883413,
+      "nominal_code_deltas": [
+        3,
+        0,
+        3,
+        1,
+        3,
+        3,
+        3,
+        3
+      ],
+      "mos_section": "FFGlobalCorner_LocalMC_MOS_MOSCAP",
+      "mom_section": "TTGlobalCorner_LocalMC_MOM"
+    },
+    "15308": {
+      "run_id": "sar8-delx-ffc-qbufmc15308-20261119b",
+      "recipe_sha256": "68af8062c8d648b186a69b5fc2c30457ea9457860db26ac54126dbe218481a48",
+      "result_sha256": "4603e78495207e9ef897d4b38020fa636bd66180d56b0420191bafaa02498237",
+      "host": "thu-wei",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ffc",
+      "temperature_c": -40,
+      "vdd_v": 0.99,
+      "frames": 8,
+      "codes_90": [
+        2,
+        255,
+        3,
+        255,
+        129,
+        130,
+        87,
+        172
+      ],
+      "codes_98": [
+        2,
+        255,
+        3,
+        255,
+        129,
+        130,
+        87,
+        172
+      ],
+      "expected_codes": [
+        0,
+        255,
+        1,
+        254,
+        127,
+        128,
+        85,
+        170
+      ],
+      "nominal_center_matches": 1,
+      "sample_close_max_abs_lsb": 0.009016143751207689,
+      "weighted_bottom_max_lsb": 0.011807695927341797,
+      "receiver_margin_min_ps": 152.80317362302833,
+      "update_to_compare_min_ns": 1.2803673159352724,
+      "read_margin_min_ns": 33.453241916245894,
+      "latest_update_to_preset_range_ns": [
+        3.716814393190543,
+        3.7175856507949585
+      ],
+      "events": {
+        "compare": 64,
+        "write": 64,
+        "update": 64
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -17.403793562095814,
+        "smallest_accepted": -11.052611062546958
+      },
+      "seed": 15308,
+      "draw": {
+        "labels_sha256": "3527f84d23bd333d1c0cfdf4c59f2ac7f7536bebdb1116ae3d81ec6036ce631d",
+        "values_sha256": "fbd7dccd0f9568f04749ed8459d6f02503c86490969cb0e7281b9423d4db1ac7",
+        "all_groups_present": true,
+        "nonzero_device_rows": {
+          "XCOMP": 11,
+          "XCTRL.XTIM.XD_WRITE_D": 123,
+          "XSEQ.XD": 465,
+          "XCDAC": 66,
+          "XIDLE.XD": 1354,
+          "XCTRL.XTIM.XD_QUIET_D": 424,
+          "XCTRL.XTIM.XD_RAW_D": 48
+        }
+      },
+      "settling_screen_pass": true,
+      "max_conservative_settling_lsb": 0.030262486685962306,
+      "nominal_code_deltas": [
+        2,
+        0,
+        2,
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "mos_section": "FFGlobalCorner_LocalMC_MOS_MOSCAP",
+      "mom_section": "TTGlobalCorner_LocalMC_MOM"
+    },
+    "15206": {
+      "run_id": "sar8-delx-ssc-qbufmc15206-20261119b",
+      "recipe_sha256": "9a56164dc22ccb5196cd65f20ee5510f47076d54fedf26089359addf1241d06c",
+      "result_sha256": "a7c0b22e9496ccee199cc6056ea04ff752696d7a814ee9f607fba23e32a3619e",
+      "host": "thu-song",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ssc",
+      "temperature_c": -40,
+      "vdd_v": 0.81,
+      "frames": 8,
+      "codes_90": [
+        0,
+        253,
+        0,
+        252,
+        125,
+        126,
+        83,
+        168
+      ],
+      "codes_98": [
+        0,
+        253,
+        0,
+        252,
+        125,
+        126,
+        83,
+        168
+      ],
+      "expected_codes": [
+        0,
+        255,
+        1,
+        254,
+        127,
+        128,
+        85,
+        170
+      ],
+      "nominal_center_matches": 1,
+      "sample_close_max_abs_lsb": 0.028619554707497562,
+      "weighted_bottom_max_lsb": 0.0005812190395719965,
+      "receiver_margin_min_ps": 288.08979800341217,
+      "update_to_compare_min_ns": 2.4629729606828166,
+      "read_margin_min_ns": 18.77476240452363,
+      "latest_update_to_preset_range_ns": [
+        7.2234688210813545,
+        7.223704833753241
+      ],
+      "events": {
+        "compare": 64,
+        "write": 64,
+        "update": 64
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": 11.612049454585993,
+        "smallest_accepted": 17.31441666149597
+      },
+      "seed": 15206,
+      "draw": {
+        "labels_sha256": "3527f84d23bd333d1c0cfdf4c59f2ac7f7536bebdb1116ae3d81ec6036ce631d",
+        "values_sha256": "f1c933278ed1e56b8305c9b4802e1fdbf4e67886ade8f108ed9b2cbdc4860d5c",
+        "all_groups_present": true,
+        "nonzero_device_rows": {
+          "XCOMP": 11,
+          "XCTRL.XTIM.XD_WRITE_D": 123,
+          "XSEQ.XD": 465,
+          "XCDAC": 66,
+          "XIDLE.XD": 1354,
+          "XCTRL.XTIM.XD_QUIET_D": 424,
+          "XCTRL.XTIM.XD_RAW_D": 48
+        }
+      },
+      "settling_screen_pass": true,
+      "max_conservative_settling_lsb": 0.0008347145869278291,
+      "nominal_code_deltas": [
+        0,
+        -2,
+        -1,
+        -2,
+        -2,
+        -2,
+        -2,
+        -2
+      ],
+      "mos_section": "SSGlobalCorner_LocalMC_MOS_MOSCAP",
+      "mom_section": "TTGlobalCorner_LocalMC_MOM"
+    },
+    "15212": {
+      "run_id": "sar8-delx-ssc-qbufmc15212-20261119b",
+      "recipe_sha256": "e951e5f3cab448d8c35e717a01f82b9b1b34ef8610162131ee0382e634413821",
+      "result_sha256": "90dfef8cf54a6c4fa64400f9dbdd254fca417ac09fcd435504634140e0341ed0",
+      "host": "thu-wei",
+      "tested_source_sha256": {
+        "xtor/clock/delays_quiet8p5.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+        "dut.scs": "fda1410d8af755a8b77dfdd8ad0457dc9af9007eaf1fe955ebb9f795026cba02",
+        "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+        "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+        "xtor/sar/reset_data_or.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+        "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+        "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+        "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+        "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5"
+      },
+      "spectre_args": [
+        "+preset=mx",
+        "+mt=4",
+        "-preset_override",
+        "+lqtimeout",
+        "900"
+      ],
+      "corner": "ssc",
+      "temperature_c": -40,
+      "vdd_v": 0.81,
+      "frames": 8,
+      "codes_90": [
+        3,
+        255,
+        4,
+        255,
+        130,
+        131,
+        88,
+        173
+      ],
+      "codes_98": [
+        3,
+        255,
+        4,
+        255,
+        130,
+        131,
+        88,
+        173
+      ],
+      "expected_codes": [
+        0,
+        255,
+        1,
+        254,
+        127,
+        128,
+        85,
+        170
+      ],
+      "nominal_center_matches": 1,
+      "sample_close_max_abs_lsb": 0.024369791641708122,
+      "weighted_bottom_max_lsb": 0.0006261769587210148,
+      "receiver_margin_min_ps": 288.9989595074111,
+      "update_to_compare_min_ns": 2.4959050829983735,
+      "read_margin_min_ns": 18.386835679426515,
+      "latest_update_to_preset_range_ns": [
+        7.203583730765273,
+        7.203867699162657
+      ],
+      "events": {
+        "compare": 64,
+        "write": 64,
+        "update": 64
+      },
+      "all_outputs_stable": true,
+      "timing_pass": true,
+      "all_screens_pass": true,
+      "warning_codes": [
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-3014",
+        "SFE-3016",
+        "SPECTRE-16780",
+        "SPECTRE-16900",
+        "VACOMP-2435"
+      ],
+      "first_issue": null,
+      "observed_decision_levels_mV": {
+        "largest_rejected": -24.14998746337932,
+        "smallest_accepted": -18.250356090858453
+      },
+      "seed": 15212,
+      "draw": {
+        "labels_sha256": "3527f84d23bd333d1c0cfdf4c59f2ac7f7536bebdb1116ae3d81ec6036ce631d",
+        "values_sha256": "4bb6dc8944ceff08d0a4b98b1c8d5df3cfd17ce17902e9e3181f836f47d64dac",
+        "all_groups_present": true,
+        "nonzero_device_rows": {
+          "XCOMP": 11,
+          "XCTRL.XTIM.XD_WRITE_D": 123,
+          "XSEQ.XD": 465,
+          "XCDAC": 66,
+          "XIDLE.XD": 1354,
+          "XCTRL.XTIM.XD_QUIET_D": 424,
+          "XCTRL.XTIM.XD_RAW_D": 48
+        }
+      },
+      "settling_screen_pass": true,
+      "max_conservative_settling_lsb": 0.0006888470922874969,
+      "nominal_code_deltas": [
+        3,
+        0,
+        3,
+        1,
+        3,
+        3,
+        3,
+        3
+      ],
+      "mos_section": "SSGlobalCorner_LocalMC_MOS_MOSCAP",
+      "mom_section": "TTGlobalCorner_LocalMC_MOM"
+    }
+  },
+  "block": {
+    "run_id": "sar8-delx-qbuf-clock-sar-20261119b",
+    "recipe_sha256": "b263b2c31b9ee430dc47a74b234950fc9cd75116dd64888953315e6ecb492207",
+    "result_sha256": "9c4c1b9fffdc9131c3ce176076bbcff740e42151c0faa7a07c557a7b61ac82fd",
+    "host": "thu-song",
+    "pass_validation": true,
+    "metrics": {
+      "timing": [
+        {
+          "fall_delay_s": 1.691774793154439e-11,
+          "pulse_width_s": 3.986190106654274e-08,
+          "helper": 0,
+          "rise_delay_s": 1.5501668138880755e-10
+        },
+        {
+          "fall_delay_s": 1.691774751182633e-11,
+          "pulse_width_s": 3.9614157795181005e-08,
+          "helper": 1,
+          "rise_delay_s": 4.0275995233082203e-10
+        },
+        {
+          "fall_delay_s": 1.691774850792384e-11,
+          "pulse_width_s": 3.8468733093887365e-08,
+          "helper": 2,
+          "rise_delay_s": 1.54818465462056e-09
+        },
+        {
+          "fall_delay_s": 1.6917435335199877e-11,
+          "pulse_width_s": 3.9130966696316197e-08,
+          "helper": 3,
+          "rise_delay_s": 8.859507390190041e-10
+        },
+        {
+          "fall_delay_s": 1.691774793154439e-11,
+          "pulse_width_s": 3.986190106654274e-08,
+          "helper": 4,
+          "rise_delay_s": 1.5501668138880755e-10
+        },
+        {
+          "fall_delay_s": 1.6917748495747743e-11,
+          "pulse_width_s": 3.830352621854629e-08,
+          "helper": 5,
+          "rise_delay_s": 1.713391529949458e-09
+        },
+        {
+          "fall_delay_s": 1.6917747651097076e-11,
+          "pulse_width_s": 3.9448936427971315e-08,
+          "helper": 6,
+          "rise_delay_s": 5.679813196797827e-10
+        },
+        {
+          "fall_delay_s": 1.691774850792384e-11,
+          "pulse_width_s": 3.505961543900323e-08,
+          "helper": 7,
+          "rise_delay_s": 4.957302309504694e-09
+        },
+        {
+          "fall_delay_s": 2.3882032611161733e-11,
+          "pulse_width_s": 3.829361476048905e-08,
+          "helper": 8,
+          "rise_delay_s": 1.7302672721221113e-09
+        },
+        {
+          "fall_delay_s": 1.582424372289294e-11,
+          "pulse_width_s": 4.000255935978113e-08,
+          "helper": 9,
+          "rise_delay_s": 1.3264883941765674e-11
+        }
+      ],
+      "sar": [
+        {
+          "code": 0,
+          "updates": 8,
+          "expected": 0,
+          "comparisons": 8,
+          "conversion_s": 2.048342562546937e-08,
+          "startup": true,
+          "frame": 0
+        },
+        {
+          "code": 12,
+          "updates": 8,
+          "expected": 12,
+          "comparisons": 8,
+          "conversion_s": 2.0484417300657247e-08,
+          "startup": false,
+          "frame": 1
+        },
+        {
+          "code": 127,
+          "updates": 8,
+          "expected": 127,
+          "comparisons": 8,
+          "conversion_s": 2.0486854571263547e-08,
+          "startup": false,
+          "frame": 2
+        },
+        {
+          "code": 128,
+          "updates": 8,
+          "expected": 128,
+          "comparisons": 8,
+          "conversion_s": 2.0483847763812874e-08,
+          "startup": false,
+          "frame": 3
+        },
+        {
+          "code": 243,
+          "updates": 8,
+          "expected": 243,
+          "comparisons": 8,
+          "conversion_s": 2.048629741894028e-08,
+          "startup": false,
+          "frame": 4
+        },
+        {
+          "code": 255,
+          "updates": 8,
+          "expected": 255,
+          "comparisons": 8,
+          "conversion_s": 2.048729978456611e-08,
+          "startup": false,
+          "frame": 5
+        }
+      ],
+      "sar_stalled": [
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 0
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 1
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 2
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 3
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 4
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 5
+        }
+      ]
+    },
+    "warning_codes": [
+      "CMI-2751",
+      "CMI-2752",
+      "CMI-2753",
+      "CMI-2754",
+      "CMI-2755",
+      "CMI-2756",
+      "SFE-1131",
+      "SFE-2453",
+      "SPECTRE-16780",
+      "VACOMP-2435"
+    ]
+  },
+  "terminal_stress": {
+    "before": {
+      "run_id": "sar8-minref-soa-ffc-song-delx-stress-20261119b",
+      "recipe_sha256": "8d5bc598a2f132a04cd7f5c22257d4c05b256b64412fd257dd984db7989ed49c",
+      "result_sha256": "5e442358762e0f072c888020bf6ab46e0818a633694f7f697acba2659755e25e",
+      "host": "thu-song",
+      "device_count": 3309,
+      "checked_device_count": 3283,
+      "checked_pair_count": 9849,
+      "violation_pair_count": 2,
+      "violations": [
+        {
+          "total_over_s": 9.542921151660375e-10,
+          "max_sliding_over_s": 3.5786010763819805e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 2.0970244117210054e-07,
+          "instance": "XDUT.XCTRL.XTIM.X022.X000.XLIB.MM4",
+          "verdict": "violation",
+          "peak_abs_V": 1.1078769316623043,
+          "peak_time_s": 1.114223673404834e-07,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 16,
+          "nodes": [
+            "xdut.xctrl.xtim.x022.n",
+            "xdut.xctrl.xtim.x022.x000.xlib.net10"
+          ]
+        },
+        {
+          "total_over_s": 1.2202791432895328e-09,
+          "max_sliding_over_s": 4.577977717417847e-10,
+          "terminal_pair": "ds",
+          "in_rule": true,
+          "worst_window_end_s": 1.1037813035436336e-07,
+          "instance": "XDUT.XCTRL.XTIM.X008.X000.XLIB.MM4",
+          "verdict": "violation",
+          "peak_abs_V": 1.1108554047992696,
+          "peak_time_s": 1.085369840837608e-07,
+          "model": "nch_mac",
+          "numeric_pass": false,
+          "over_pulse_count": 16,
+          "nodes": [
+            "xdut.xctrl.xtim.x008.n",
+            "xdut.xctrl.xtim.x008.x000.xlib.net10"
+          ]
+        }
+      ],
+      "worst_peak": {
+        "total_over_s": 4.76531305844755e-11,
+        "max_sliding_over_s": 4.76531305844755e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.0183784264756562e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.1949140851862596,
+        "peak_time_s": 1.018158121927501e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 1,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 1.2202791432895328e-09,
+        "max_sliding_over_s": 4.577977717417847e-10,
+        "terminal_pair": "ds",
+        "in_rule": true,
+        "worst_window_end_s": 1.1037813035436336e-07,
+        "instance": "XDUT.XCTRL.XTIM.X008.X000.XLIB.MM4",
+        "verdict": "violation",
+        "peak_abs_V": 1.1108554047992696,
+        "peak_time_s": 1.085369840837608e-07,
+        "model": "nch_mac",
+        "numeric_pass": false,
+        "over_pulse_count": 16,
+        "nodes": [
+          "xdut.xctrl.xtim.x008.n",
+          "xdut.xctrl.xtim.x008.x000.xlib.net10"
+        ]
+      },
+      "observer_codes": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          255
+        ]
+      ],
+      "observer_codes_pass": true,
+      "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+      "max_native_step_s": 1.0000000000117218e-11,
+      "verdict": "violation"
+    },
+    "ff_cold": {
+      "run_id": "sar8-minref-soa-ffc-song-delx-qbuf-20261119a",
+      "recipe_sha256": "69431fc0c35fe8d2aaff396eb9c4559d1a8ee8b2785ba01a95d6a674efc76e0c",
+      "result_sha256": "19cb1dbebac6479703540484a4a7ff8deaf90d137685e9474871734d08d4eb67",
+      "host": "thu-song",
+      "device_count": 3305,
+      "checked_device_count": 3279,
+      "checked_pair_count": 9837,
+      "violation_pair_count": 0,
+      "violations": [],
+      "worst_peak": {
+        "total_over_s": 4.765303372510655e-11,
+        "max_sliding_over_s": 4.765303372510655e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.0183051980253416e-07,
+        "instance": "XDUT.XCOMP.MNINP",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.194912717691888,
+        "peak_time_s": 1.018085468619035e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 1,
+        "nodes": [
+          "xdut.topp",
+          "xdut.xcomp.y"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 1.9999665170344436e-10,
+        "max_sliding_over_s": 7.500073490576212e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.0960337702060888e-07,
+        "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.XD7.MM24",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.1393014037923326,
+        "peak_time_s": 1.131633172931836e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 32,
+        "nodes": [
+          "xdut.xctrl.xtim.xd_quiet_d.xd7.net132",
+          "xdut.xctrl.xtim.xd_quiet_d.xd7.net136"
+        ]
+      },
+      "observer_codes": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          255
+        ]
+      ],
+      "observer_codes_pass": true,
+      "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+      "max_native_step_s": 1.0000000000117218e-11,
+      "verdict": "numeric_pass_pending_resolution_review"
+    },
+    "ff_hot": {
+      "run_id": "sar8-minref-soa-ffh-song-delx-qbuf-20261119a",
+      "recipe_sha256": "d66f757879c5c0b21d93ea42113201d49e3320eee4a62ff2d8d5b06c20962a59",
+      "result_sha256": "392ed0ffd5779fd80396e867922d11426ab596bc23f061ff69f85ce2785faaf3",
+      "host": "thu-song",
+      "device_count": 3305,
+      "checked_device_count": 3279,
+      "checked_pair_count": 9837,
+      "violation_pair_count": 0,
+      "violations": [],
+      "worst_peak": {
+        "total_over_s": 1.151114562954612e-10,
+        "max_sliding_over_s": 4.316735657092628e-11,
+        "terminal_pair": "gs",
+        "in_rule": true,
+        "worst_window_end_s": 2.1245515146780076e-07,
+        "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.XD7.MM24",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.146184655242898,
+        "peak_time_s": 1.10561713163067e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 16,
+        "nodes": [
+          "0",
+          "xdut.xctrl.xtim.xd_quiet_d.xd7.net132"
+        ]
+      },
+      "worst_duration": {
+        "total_over_s": 1.9939156220045304e-10,
+        "max_sliding_over_s": 7.478033616669231e-11,
+        "terminal_pair": "gd",
+        "in_rule": true,
+        "worst_window_end_s": 1.1245237452577083e-07,
+        "instance": "XDUT.XCTRL.XTIM.XD_QUIET_D.XD7.MM24",
+        "verdict": "numeric_pass_pending_review",
+        "peak_abs_V": 1.1384324616067873,
+        "peak_time_s": 1.105630966896386e-07,
+        "model": "nch_mac",
+        "numeric_pass": true,
+        "over_pulse_count": 32,
+        "nodes": [
+          "xdut.xctrl.xtim.xd_quiet_d.xd7.net132",
+          "xdut.xctrl.xtim.xd_quiet_d.xd7.net136"
+        ]
+      },
+      "observer_codes": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          255
+        ]
+      ],
+      "observer_codes_pass": true,
+      "rule_sha256": "f328f83638e9793d15f86665bcb958a7091c04fc1ca2a0f5aebfd5a1b73d4615",
+      "max_native_step_s": 1.0000000000117218e-11,
+      "verdict": "numeric_pass_pending_resolution_review"
+    }
+  },
+  "short_pulse": {
+    "tt": {
+      "run_id": "sar8-delx-rearm-tt-20261119a",
+      "recipe_sha256": "d9bd4ae98116188592c610de73cb0dda5ff898c5ee05b99fe01a2ed48c7f2feb",
+      "result_sha256": "c5c912a6237791c8e10892f74be4a25164ab6b28b36b0ad062962381dacb7a36",
+      "host": "thu-song",
+      "short_pulse_rejected": true,
+      "helpers": {
+        "sar8p_delay_valid": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 4,
+            "recovered_fraction": 0.999936147059279
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 0.9999958180579053
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000005237627416
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000009112711308
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000004485595553
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.000000531293962
+          }
+        ],
+        "sar8p_delay_write": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000015432223415
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000023570969747
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.000001687533336
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000016136918237
+          }
+        ],
+        "sar8p_delay_quiet": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 0.9999932348318439
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.000000597260409
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000009773705638
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000012202377382
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000009570401425
+          }
+        ],
+        "sar8r_delay": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.000000604989125
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.000000958375829
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000013828940708
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000011596843479
+          }
+        ],
+        "sar8i_guard": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 34,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 0.9999978033495047
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.000001142997533
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000011713028818
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.000001250870624
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000012044721514
+          }
+        ]
+      }
+    },
+    "ffc": {
+      "run_id": "sar8-delx-rearm-ffc-20261119a",
+      "recipe_sha256": "ab7b6ee5de0fb59dac8a4b2e8caf4e0c0393c5899b3d9487b0b54782c908b575",
+      "result_sha256": "3c538df1cb735aff40a4603dcba4b111cbdb98d6645841b1e2721997662e65c9",
+      "host": "thu-wei",
+      "short_pulse_rejected": true,
+      "helpers": {
+        "sar8p_delay_valid": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 4,
+            "recovered_fraction": 0.9999940890688319
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 1.000003222065876
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000025354436177
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000032448599931
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000022872569427
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.000003036075338
+          }
+        ],
+        "sar8p_delay_write": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 1.0000024032877932
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000023126977824
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000018820003227
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000021948283975
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.000001991175406
+          }
+        ],
+        "sar8p_delay_quiet": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 12,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 1.000001827637753
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000015504968711
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000014448348091
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000015137733076
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000020063401254
+          }
+        ],
+        "sar8r_delay": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 1.0000017338262344
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.00000167107789
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000015028545395
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000016242783276
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.000002028672654
+          }
+        ],
+        "sar8i_guard": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 32,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 1.0000020459391061
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000019014079986
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000017846449465
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000019719695667
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000018848863985
+          }
+        ]
+      }
+    },
+    "ssc": {
+      "run_id": "sar8-delx-rearm-ssc-20261119a",
+      "recipe_sha256": "f31e89272839c9ac3885f3c410c4de270c9772d58df8a5fc8a944103159bb0c3",
+      "result_sha256": "4d4c7cf039e814f600ca7b715eaaa05621ebca86dee2ff91b8be3a82148d2af4",
+      "host": "thu-song",
+      "short_pulse_rejected": true,
+      "helpers": {
+        "sar8p_delay_valid": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 4,
+            "recovered_fraction": 0.9999942401594614
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000018990638353
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000010639296928
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.000002242730234
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.000002342094536
+          }
+        ],
+        "sar8p_delay_write": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 6,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000008287868916
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000003695379813
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000011371514521
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000004435844878
+          }
+        ],
+        "sar8p_delay_quiet": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 12,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000008734971557
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000006915546649
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000007929308683
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000002639712506
+          }
+        ],
+        "sar8r_delay": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 14,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000005852446545
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000008074997457
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.0000008208365743
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000003819073355
+          }
+        ],
+        "sar8i_guard": [
+          {
+            "low_gap_ns": 0.15,
+            "edges": 24,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.3,
+            "edges": 32,
+            "recovered_fraction": null
+          },
+          {
+            "low_gap_ns": 0.6,
+            "edges": 4,
+            "recovered_fraction": 1.0000005724967573
+          },
+          {
+            "low_gap_ns": 1.2,
+            "edges": 4,
+            "recovered_fraction": 1.0000006218004622
+          },
+          {
+            "low_gap_ns": 2.4,
+            "edges": 4,
+            "recovered_fraction": 1.000000583477948
+          },
+          {
+            "low_gap_ns": 4.8,
+            "edges": 4,
+            "recovered_fraction": 1.0000006140436906
+          }
+        ]
+      }
+    }
+  },
+  "selected_candidates": {
+    "sampler": "b",
+    "cdac": "b",
+    "comparator": "b",
+    "sar": "std_delay_qualified",
+    "reference": "minimal_msb_d2",
+    "timing": "std_delay"
+  },
+  "source_sha256": {
+    "xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+    "xtor/clock/delays_std.scs": "99c3af45714af99e683a30548aadb358b0527fcae1bdfc2e1289b9a9c3193368",
+    "xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+    "xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "xtor/sar/reset_data_or_std_delay.scs": "d3d32dccfdffce5d4e2c50518fd22e913652a446c9df5b3de6d712fb0eb9b267",
+    "top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+    "dut.scs": "5907380ce5e34972f2102a3f677975e1ade3770a1776f60607153dfe32a9e973"
+  },
+  "original_test_include_names": {
+    "xtor/sar/reset_data_or_std_delay.scs": "xtor/sar/reset_data_or.scs",
+    "xtor/clock/delays_std.scs": "xtor/clock/delays_quiet8p5.scs"
+  },
+  "tt_rc_and_initial_trial": {
+    "rc": {
+      "run": "sar8-delx-rc-clock-sar-tt-20261118a",
+      "pass_functional": true,
+      "failures": [],
+      "diagnostics": [],
+      "timing_ps": {
+        "VALID": [
+          151.42,
+          14.64
+        ],
+        "WRITE": [
+          397.18,
+          27.57
+        ],
+        "QUIET": [
+          1419.95,
+          73.09
+        ],
+        "CAPTURE": [
+          885.15,
+          42.09
+        ],
+        "BBM": [
+          151.42,
+          14.64
+        ],
+        "SAMPLE_DELAY": [
+          1695.78,
+          58.43
+        ],
+        "STEP": [
+          560.11,
+          33.23
+        ],
+        "IDLE_GUARD": [
+          4932.81,
+          114.95
+        ],
+        "EDGE": [
+          1723.5,
+          23.61
+        ],
+        "CLKBUF": [
+          13.26,
+          15.82
+        ]
+      },
+      "sar": [
+        {
+          "code": 0,
+          "updates": 8,
+          "expected": 0,
+          "comparisons": 8,
+          "conversion_s": 2.0597710428221123e-08,
+          "startup": true,
+          "frame": 0
+        },
+        {
+          "code": 12,
+          "updates": 8,
+          "expected": 12,
+          "comparisons": 8,
+          "conversion_s": 2.0598740922504345e-08,
+          "startup": false,
+          "frame": 1
+        },
+        {
+          "code": 127,
+          "updates": 8,
+          "expected": 127,
+          "comparisons": 8,
+          "conversion_s": 2.0601408370718195e-08,
+          "startup": false,
+          "frame": 2
+        },
+        {
+          "code": 128,
+          "updates": 8,
+          "expected": 128,
+          "comparisons": 8,
+          "conversion_s": 2.059857963457336e-08,
+          "startup": false,
+          "frame": 3
+        },
+        {
+          "code": 243,
+          "updates": 8,
+          "expected": 243,
+          "comparisons": 8,
+          "conversion_s": 2.0600828137555608e-08,
+          "startup": false,
+          "frame": 4
+        },
+        {
+          "code": 255,
+          "updates": 8,
+          "expected": 255,
+          "comparisons": 8,
+          "conversion_s": 2.06017602255277e-08,
+          "startup": false,
+          "frame": 5
+        }
+      ],
+      "stalled": [
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 0
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 1
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 2
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 3
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 4
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 5
+        }
+      ],
+      "native_messages": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "SFE-1131",
+        "SFE-2453",
+        "VACOMP-2435"
+      ],
+      "simulator_summary": [
+        "spectre completes with 0 errors, 34 warnings, and 12 notices"
+      ]
+    },
+    "pilot": {
+      "run": "sar8-delx-pilot-clock-sar-tt-20261118a",
+      "pass_functional": false,
+      "failures": [
+        {
+          "issue": "code_or_handshake",
+          "first_uncompleted_bit": 0,
+          "module": "sar",
+          "measurement": {
+            "code": 64,
+            "updates": 8,
+            "expected": 0,
+            "comparisons": 8,
+            "conversion_s": 1.290753714199442e-08,
+            "startup": true,
+            "frame": 0
+          }
+        },
+        {
+          "issue": "code_or_handshake",
+          "first_uncompleted_bit": 0,
+          "module": "sar",
+          "measurement": {
+            "code": 64,
+            "updates": 8,
+            "expected": 12,
+            "comparisons": 8,
+            "conversion_s": 1.290753484277203e-08,
+            "startup": false,
+            "frame": 1
+          }
+        },
+        {
+          "issue": "code_or_handshake",
+          "first_uncompleted_bit": 0,
+          "module": "sar",
+          "measurement": {
+            "code": 192,
+            "updates": 8,
+            "expected": 128,
+            "comparisons": 8,
+            "conversion_s": 1.2907989798417106e-08,
+            "startup": false,
+            "frame": 3
+          }
+        },
+        {
+          "issue": "code_or_handshake",
+          "first_uncompleted_bit": 0,
+          "module": "sar",
+          "measurement": {
+            "code": 248,
+            "updates": 8,
+            "expected": 243,
+            "comparisons": 8,
+            "conversion_s": 1.2909514016922989e-08,
+            "startup": false,
+            "frame": 4
+          }
+        }
+      ],
+      "diagnostics": [],
+      "timing_ps": {
+        "VALID": [
+          115.45,
+          16.92
+        ],
+        "WRITE": [
+          240.68,
+          16.92
+        ],
+        "QUIET": [
+          796.72,
+          16.92
+        ],
+        "CAPTURE": [
+          545.08,
+          16.92
+        ],
+        "BBM": [
+          115.45,
+          16.92
+        ],
+        "SAMPLE_DELAY": [
+          1031.63,
+          16.92
+        ],
+        "STEP": [
+          349.92,
+          16.92
+        ],
+        "IDLE_GUARD": [
+          2911.81,
+          16.92
+        ],
+        "EDGE": [
+          1048.48,
+          23.88
+        ],
+        "CLKBUF": [
+          13.26,
+          15.82
+        ]
+      },
+      "sar": [
+        {
+          "code": 64,
+          "updates": 8,
+          "expected": 0,
+          "comparisons": 8,
+          "conversion_s": 1.290753714199442e-08,
+          "startup": true,
+          "frame": 0
+        },
+        {
+          "code": 64,
+          "updates": 8,
+          "expected": 12,
+          "comparisons": 8,
+          "conversion_s": 1.290753484277203e-08,
+          "startup": false,
+          "frame": 1
+        },
+        {
+          "code": 127,
+          "updates": 8,
+          "expected": 127,
+          "comparisons": 8,
+          "conversion_s": 1.2910688414528272e-08,
+          "startup": false,
+          "frame": 2
+        },
+        {
+          "code": 192,
+          "updates": 8,
+          "expected": 128,
+          "comparisons": 8,
+          "conversion_s": 1.2907989798417106e-08,
+          "startup": false,
+          "frame": 3
+        },
+        {
+          "code": 248,
+          "updates": 8,
+          "expected": 243,
+          "comparisons": 8,
+          "conversion_s": 1.2909514016922989e-08,
+          "startup": false,
+          "frame": 4
+        },
+        {
+          "code": 255,
+          "updates": 8,
+          "expected": 255,
+          "comparisons": 8,
+          "conversion_s": 1.2911146090168989e-08,
+          "startup": false,
+          "frame": 5
+        }
+      ],
+      "stalled": [
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 0
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 1
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 2
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 3
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 4
+        },
+        {
+          "comparisons": 1,
+          "cleared_during_acquisition": true,
+          "blocked_bit": 7,
+          "updates": 0,
+          "frame": 5
+        }
+      ],
+      "native_messages": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "simulator_summary": [
+        "spectre completes with 0 errors, 41 warnings, and 12 notices"
+      ]
+    }
+  },
+  "active_delay_cells": 52,
+  "active_qualifier_and2": 28,
+  "retired_delay_passives": {
+    "polysilicon_resistors": 10,
+    "MOM_units": 230
+  },
+  "coverage": "Five schematic corners, two full-device FF transient screens, one continuous 64-frame stress and four fixed-corner local mismatch draws. Historical extracted RC, FFT and static metrics belong to their original sources."
+}

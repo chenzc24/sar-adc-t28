@@ -23,27 +23,39 @@ def change(text,pattern,replacement):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('source');p.add_argument('evidence')
+    p.add_argument('--module', choices=('cdac','comparator','sar-timing'), default='cdac')
+    p.add_argument('--bounds', type=float, nargs=4, help='Native module stream boundary, x0 y0 x1 y1')
     p.add_argument('--core-od-width',type=float,default=0.1)
     p.add_argument('--core-only-clearance',action='store_true')
     p.add_argument('--mos-dummy-length',type=float,default=0.3)
     p.add_argument('--resume',action='store_true',help='Finish bookkeeping/remaining stages after a successful native stage')
+    p.add_argument('--wait-for-lock',action='store_true',help='Queue behind the active physical job')
     a=p.parse_args()
     if a.core_od_width not in (0.1,0.2,0.3):raise ValueError('Unsupported dummy geometry')
     if a.mos_dummy_length not in (0.3,1.0):raise ValueError('Unsupported MOS dummy length')
     if a.mos_dummy_length!=0.3 and not a.core_only_clearance:raise ValueError('Require verified core-only region')
     for value in [a.source,a.evidence]:
-        if not re.match(r'^cdac-full-[a-z0-9-]+$',value):raise ValueError('Unsafe identity')
+        if not re.match(r'^[a-z][a-z0-9-]{1,55}$',value):raise ValueError('Unsafe identity')
     configured=workspace.paths();root=configured['runtime']
-    lock=open(configured['lock'],'a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    lock=open(configured['lock'],'a');fcntl.flock(lock,fcntl.LOCK_EX if a.wait_for_lock else fcntl.LOCK_EX|fcntl.LOCK_NB)
     prior=workspace.evidence(a.source);m=json.load(open(join(prior,'manifest.json')))
-    if m['case']!='full' or m['checks']['lvs']['verdict']!='CORRECT':raise ValueError('Need verified CDAC source')
+    expected_case = 'full' if a.module == 'cdac' else a.module
+    if m['case']!=expected_case or m['checks']['lvs']['verdict']!='CORRECT':raise ValueError('Need verified module source')
+    top = m['top']
+    boundary = BOUNDARY
+    if a.module in ('comparator','sar-timing'):
+        if not a.bounds or a.bounds[0]>=a.bounds[2] or a.bounds[1]>=a.bounds[3]:
+            raise ValueError('Module needs a measured stream boundary')
+        boundary = dict(zip(('xLB','yLB','xRT','yRT'),a.bounds))
+    elif a.bounds:
+        raise ValueError('CDAC retains its measured boundary')
     source_gds=join(prior,'fixture.gds')
     if digest(source_gds)!=m['gds']['sha256']:raise ValueError('Source identity changed')
     out=join(configured['evidence'],a.evidence)
     if not a.resume and os.path.exists(join(configured['legacy_root'],'evidence',a.evidence)):
         raise ValueError('Historical evidence identity cannot be reused')
-    record={'source_evidence':a.source,'source_gds_sha256':digest(source_gds),'top':'sar8j_r1_cdac',
-            'boundary_um':BOUNDARY,'threads':4,'steps':{},'physical_signoff':False,
+    record={'source_evidence':a.source,'source_gds_sha256':digest(source_gds),'top':top,
+            'boundary_um':boundary,'threads':4,'steps':{},'physical_signoff':False,
             'core_dummy_od_width_um':a.core_od_width,
             'core_only_clearance':a.core_only_clearance,
             'mos_dummy_od_length_um':a.mos_dummy_length,
@@ -66,10 +78,10 @@ def main():
         assert digest(join(work,'source.gds'))==record['source_gds_sha256']
         path=join(SOURCES,'dummy_script_'+kind);text=open(path).read()
         text=change(text,r'^LAYOUT PATH[^\n]*','LAYOUT PATH "source.gds"')
-        text=change(text,r'^LAYOUT PRIMARY[^\n]*','LAYOUT PRIMARY "sar8j_r1_cdac"')
+        text=change(text,r'^LAYOUT PRIMARY[^\n]*','LAYOUT PRIMARY "'+top+'"')
         text=change(text,r'^\s*//#DEFINE dmOnCorner[^\n]*','#DEFINE dmOnCorner')
         text=change(text,r'^#DEFINE WithSealring[^\n]*','//#DEFINE WithSealring')
-        for name,value in BOUNDARY.items():
+        for name,value in boundary.items():
             text=change(text,r'^VARIABLE '+name+r'\s+[^\n]*','VARIABLE '+name+' '+str(value))
         # The installed metal stack is M1..M7 thin, M8 Z, M9 U (6X1Z1U).
         if kind=='metal':

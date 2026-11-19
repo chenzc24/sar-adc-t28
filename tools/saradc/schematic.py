@@ -160,19 +160,20 @@ def build(root=None,rnl=None,package=None,annotate_sources=False):
         annotate_native(root,ports)
         levels,ports,origin,hashes=sources(root,package=package)
     native={n:b for n,b in levels.items() if origin[n].startswith(('design/xtor','design/top'))}
-    if any('// BEGIN SARADC RNL' not in b for b in native.values()):
-        raise ValueError('Native sources need drawing records: run draw --annotate once')
     native_paths=sorted(set(origin[n] for n in native))
+    generated_paths={origin[n] for n,b in native.items() if '// BEGIN SARADC RNL' not in b}
     folder=root/'design/rnl';folder.mkdir(parents=True,exist_ok=True)
-    fixtures=['// Generated display-only testbench / behavioral / external interfaces.',record(header('sar8.rnl')),'simulator lang=spectre']
+    fixtures=['// Display-only drawings for unannotated native files, fixtures and external interfaces.',record(header('sar8.rnl')),'simulator lang=spectre']
     for n,b in levels.items():
-        if n not in native:
-            drawn,_=annotate(n,b,ports)
+        if n not in native or origin[n] in generated_paths:
+            drawn=b if '// BEGIN SARADC RNL' in b else annotate(n,b,ports)[0]
             if electrical_statements(b)!=electrical_statements(drawn):raise ValueError('Fixture altered: '+n)
             fixtures.append(drawn)
+            if n in native:
+                levels[n]=drawn
     (folder/'testbenches.scs').write_text('\n\n'.join(fixtures)+'\n',encoding='utf-8')
     text=['// RNL workspace entry. DISPLAY ONLY: use design/dut.scs for simulation.',record(header('sar8.rnl')),'simulator lang=spectre']
-    text+=['include "'+os.path.relpath(root/p,folder).replace('\\','/')+'"' for p in native_paths]
+    text+=['include "'+os.path.relpath(root/p,folder).replace('\\','/')+'"' for p in native_paths if p not in generated_paths]
     text+=['include "testbenches.scs"']
     entry=folder/'current.scs';entry.write_text('\n'.join(text)+'\n',encoding='utf-8')
     diagnostics=validate(rnl,entry)
@@ -193,6 +194,7 @@ def build(root=None,rnl=None,package=None,annotate_sources=False):
                   electrical_body_sha256=sha('\n'.join(electrical_statements(body)).encode()),
                   kind='native' if name in native else 'testbench' if name.startswith('tb_') else 'interface',
                   children=[{'instance':n,'level':m,'nets':ns} for n,(ns,m,_) in instances(body).items() if m in levels])
+        if origin[name] in generated_paths:meta['drawing']='generated from exact native statements'
         metadata[name]=meta;drawings[name]=dict(svg=file.read_text(encoding='utf-8'),source=body,meta=meta)
     # A portable flattened export for downloading or opening without a server.
     flat={n:b if n in native else annotate(n,b,ports)[0] for n,b in levels.items()}

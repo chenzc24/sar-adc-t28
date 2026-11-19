@@ -1,0 +1,975 @@
+// Generated from frozen B by scripts/sar8_entry.py build.
+// BEGIN SARADC RNL
+// @RNL(type="header") { @VERSION("0.3");
+// @USE-PACKAGE(name="sar8",version="0.1",path="../../rnl/sar8.rnl");
+// @USE-PACKAGE(name="rnl-std-fill") {}; }
+// END SARADC RNL
+// Electrical subcircuit statements are preserved verbatim.
+
+subckt sar8p_delay_valid A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8p_delay_valid / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8p_delay_valid
+
+subckt sar8p_delay_write A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=4 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8p_delay_write / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8p_delay_write
+
+subckt sar8p_delay_quiet A VDD VSS Y
+R1 (B RC1 ) rupolym l=8.5u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=8.5u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=30 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=30 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8p_delay_quiet / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=8.5u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=8.5u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=30",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=30",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8p_delay_quiet
+
+subckt sar8p_delay_capture A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=10 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8p_delay_capture / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=10",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=10",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8p_delay_capture
+
+subckt sar8p_delay_bbm A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=1 \
+        mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n \
+        ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730 \
+        sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n \
+        sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n \
+        spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n \
+        dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n \
+        ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246 \
+        nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
+        sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
+        spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
+        spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
+        spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8p_delay_bbm / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8p_delay_bbm
+
+subckt sar8r_delay A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=20  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8r_delay / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=20",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=20",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8r_delay
+
+subckt sar8r_edge A VDD VSS Y
+    XD (A VDD VSS AD) sar8r_delay
+    XA (A AD VDD VSS QUAL) sar8p_and2
+    XB (QUAL VDD VSS Y) sar8p_clkbuf
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// #XD @SET-SYMBOL $S_sar8r_delay;
+// #XD @PLACE(0,-20) => @ORIENT("R0");
+// #XA @SET-SYMBOL $S_sar8p_and2;
+// #XA @PLACE(43,0) => @ORIENT("R0");
+// #XB @SET-SYMBOL $S_sar8p_clkbuf;
+// #XB @PLACE(80,0) => @ORIENT("R0");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XD:1 (11.5,-20) (11.5,1.7) #XA:1};
+// &"AD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XD:4 (24.5,-20) (24.5,-1.7) #XA:2};
+// &"QUAL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XA:5 (61.5,0) (61.5,0) #XB:1};
+// (-16,46) @TEXT("sar8r_edge / native standard-cell composition",size=1.3,halign="start",textcolor="#223d52");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XD:2 (0,-9)};
+// (0,-8.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XD:3 (0,-31)};
+// (0,-31.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XA:3 (43,10)};
+// (43,10.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XA:4 (43,-10)};
+// (43,-10.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XB:2 (80,10)};
+// (80,10.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XB:3 (80,-10)};
+// (80,-10.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XB:4 (90,0)};
+// (90.4,0) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8r_edge
+
+subckt sar8s_step A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=6  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8s_step / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=6",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=6",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8s_step
+
+subckt sar8i_guard A VDD VSS Y
+R1 (B RC1 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+R0 (A RC0 ) rupolym l=17.13u w=1u m=1 multi=(1)
+
+    C1 (RC1 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    C0 (RC0 VSS) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=60  mismatchflag=1
+    X006 (A VDD VSS AB) sar8p_inv
+    X005 (RC1 VDD VSS Y) sar8p_inv
+    X002 (RC0 VDD VSS B) sar8p_inv
+    MN_CLEAR (RC0 AB VSS VSS) nch_mac l=30n w=2u multi=1 nf=1 sd=100n  ad=1.5e-13 as=1.5e-13 pd=4.15u ps=4.15u nrd=0.144730 nrs=0.144730  sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n sa4=75.0n  sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n spa2=100n  spa3=100n sap=91.9776n sapb=114.444n spba=115.715n spba1=117.043n  dfm_flag=0 spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60  spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    MP_CLEAR (RC1 A VDD VDD) pch_mac l=30n w=3u multi=1 nf=1 sd=100n  ad=2.25e-13 as=2.25e-13 pd=6.15u ps=6.15u nrd=0.055246  nrs=0.055246 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n  sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n  spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n  spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0  spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+// BEGIN SARADC RNL
+// @RNL(author="saradc topology") {
+// (-18,47) @TEXT("sar8i_guard / two RC stages with active clear",size=1.4,halign="start",textcolor="#223d52");
+// #R0 @SET-SYMBOL $RESISTOR;
+// #R0 @PLACE(12,15) => @ORIENT("R90");
+// #R0 @TEXT("R0",key="name",size=1.3,halign="start") => @PLACE(15,18);
+// #R0 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(15,11);
+// #R0 @TEXT("",key="model");
+// #X002 @SET-SYMBOL $S_sar8p_inv;
+// #X002 @PLACE(42,15) => @ORIENT("R0");
+// #R1 @SET-SYMBOL $RESISTOR;
+// #R1 @PLACE(70,15) => @ORIENT("R90");
+// #R1 @TEXT("R1",key="name",size=1.3,halign="start") => @PLACE(73,18);
+// #R1 @TEXT("l=17.13u w=1u multi=(1)",key="value",size=0.9,halign="start") => @PLACE(73,11);
+// #R1 @TEXT("",key="model");
+// #X005 @SET-SYMBOL $S_sar8p_inv;
+// #X005 @PLACE(104,15) => @ORIENT("R0");
+// #C0 @SET-SYMBOL $CAPACITOR;
+// #C0 @PLACE(28,-4) => @ORIENT("R0");
+// #C0 @TEXT("C0",key="name",size=1.3,halign="start") => @PLACE(31,-1);
+// #C0 @TEXT("nr=8 lr=2.5u w=50n multi=60",key="value",size=0.9,halign="start") => @PLACE(31,-8);
+// #C0 @TEXT("",key="model");
+// #C1 @SET-SYMBOL $CAPACITOR;
+// #C1 @PLACE(86,-4) => @ORIENT("R0");
+// #C1 @TEXT("C1",key="name",size=1.3,halign="start") => @PLACE(89,-1);
+// #C1 @TEXT("nr=8 lr=2.5u w=50n multi=60",key="value",size=0.9,halign="start") => @PLACE(89,-8);
+// #C1 @TEXT("",key="model");
+// #MN_CLEAR @SET-SYMBOL $NMOS_4TERM;
+// #MN_CLEAR @PLACE(17,-23) => @ORIENT("R0");
+// #MN_CLEAR @TEXT("MN_CLEAR",key="name",size=1.3,halign="start") => @PLACE(20,-20);
+// #MN_CLEAR @TEXT("l=30n w=2u multi=1",key="value",size=0.9,halign="start") => @PLACE(20,-27);
+// #MN_CLEAR @TEXT("",key="model");
+// #MP_CLEAR @SET-SYMBOL $PMOS_4TERM;
+// #MP_CLEAR @PLACE(76,39) => @ORIENT("R0");
+// #MP_CLEAR @TEXT("MP_CLEAR",key="name",size=1.3,halign="start") => @PLACE(79,42);
+// #MP_CLEAR @TEXT("l=30n w=3u multi=1",key="value",size=0.9,halign="start") => @PLACE(79,35);
+// #MP_CLEAR @TEXT("",key="model");
+// #X006 @SET-SYMBOL $S_sar8p_inv;
+// #X006 @PLACE(-14,-23) => @ORIENT("R0");
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(28,-21) (28,-2) (28,15)};
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:2 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:1 (28,-2)};
+// $JUNCTION @ATTACH (28,-2);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:1 (28,15)};
+// $JUNCTION @ATTACH (28,15);
+// &"RC0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:1 (28,-21)};
+// $JUNCTION @ATTACH (28,-21);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(86,-2) (86,15) (86,37)};
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R1:2 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:1 (86,-2)};
+// $JUNCTION @ATTACH (86,-2);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:1 (86,15)};
+// $JUNCTION @ATTACH (86,15);
+// &"RC1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:1 (86,37)};
+// $JUNCTION @ATTACH (86,37);
+// &"B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:4 (58.5,15) (58.5,15) #R1:1};
+// &"AB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:4 (3.5,-23) (3.5,-23) #MN_CLEAR:2};
+// (-18,-44) @TEXT("R/C values and multiplicities are read from the netlist; clear transistors are retained.",size=0.9,halign="start",textcolor="#223d52");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#R0:1 (7,15)};
+// (6.6,15) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C1:2 (86,-9)};
+// (86,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#C0:2 (28,-9)};
+// (28,-9.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:1 (-24,-23)};
+// (-24.4,-23) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:2 (-14,-13)};
+// (-14,-12.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X006:3 (-14,-33)};
+// (-14,-33.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:2 (104,25)};
+// (104,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:3 (104,5)};
+// (104,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"Y" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X005:4 (114,15)};
+// (114.4,15) @TEXT("Y",size=1.1,halign="start",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:2 (42,25)};
+// (42,25.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#X002:3 (42,5)};
+// (42,4.6) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:3 (17,-28)};
+// (17,-28.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_CLEAR:4 (21,-23)};
+// (21.4,-23) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// &"A" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:2 (70,39)};
+// (69.6,39) @TEXT("A",size=1.1,halign="end",valign="middle");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:3 (76,44)};
+// (76,44.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_CLEAR:4 (80,39)};
+// (80.4,39) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// }
+// END SARADC RNL
+ends sar8i_guard

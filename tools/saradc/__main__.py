@@ -97,8 +97,11 @@ def prepare(case_name, run_id=None, seed=None, split_design=None, view=None, can
         if member.is_absolute() or any(p in {'.', '..'} for p in member.parts) or '\\' in row['name']:
             raise ValueError('Unsafe case member')
         blobs[row['name']] = checked_source(row).read_bytes()
+    context = json.loads(blobs['context.json'].decode('utf-8'))
     if 'dut.scs' in blobs:
         blobs.update(views.build(view,ROOT,overrides))
+        if not frozen and 'library_include.scs' in blobs:
+            blobs['library_include.scs'] = views.standard_cell_library(ROOT, blobs['dut.scs'], context.get('corner'))
     elif not frozen and case_name=='mc_comparator_tt':
         # This frozen module fixture embeds its comparator; replace that one
         # definition with the current leaf, retaining receiver/load conditions.
@@ -116,7 +119,6 @@ def prepare(case_name, run_id=None, seed=None, split_design=None, view=None, can
         if len(parameters)!=18 or set(parameters)!={m.group(1) for m in caps.finditer(original)}:
             raise ValueError('The CDAC characterization template must match the current 18-instance MOM interface')
         blobs['test.scs']=caps.sub(lambda m:m.group(1)+' ('+m.group(2)+') '+parameters[m.group(1)],original).encode('utf-8')
-    context = json.loads(blobs['context.json'].decode('utf-8'))
     context['run_id'] = run_id
     if not frozen and 'dut.scs' in blobs:
         # The aggregate hash and input manifest bind the actual split source.

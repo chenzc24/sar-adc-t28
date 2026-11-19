@@ -1,0 +1,456 @@
+{
+  "date": "2026-11-18",
+  "status": "isolated_routing_review",
+  "working_core_report": "Layout/results/bootstrap.json",
+  "electrical_source_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+  "figure": "Layout/results/figures/bootstrap_routing_review.png",
+  "scope": "13 extracted 1.8 V MOS, 200 MOMs, five exterior ports. No writes to the published layout.",
+  "resistance_definition": "Pure distributed interconnect plus contacts to the device diffusion. Each plate is driven at the M4 PMOS diffusion (BTOP) or Msin NMOS diffusion (BBOT). Inject equal currents at the 200 native plate terminals and solve the extracted resistor network. Req = dissipated power / total current squared. Worst single-unit resistance uses one terminal at a time. MOS channel resistance and device capacitance are excluded from these DC metrics.",
+  "tt_scope": "Same independent TT 0.9 V, 27 C sampler fixture as baseline. 50 ohm VIN source, 256-unit MOM hold load, maxstep 5 ps, first 0.2 V and second 0.8 V. VDD distribution is excluded by the project runset.",
+  "baseline_m4_centerline_um": {
+    "BTOP": 16.725,
+    "BBOT": 23.205
+  },
+  "baseline_launch_to_first_center_row_access_um": {
+    "BTOP": 3.835,
+    "BBOT": 4.695
+  },
+  "baseline_rows": {
+    "upper_continuous_rows": 6,
+    "units_on_upper_six_rows": 162,
+    "units_on_lower_two_notched_rows": 38
+  },
+  "bottom_left_first_row_tap": {
+    "definition": "Manhattan centerline from the MOS-side plate-feed launch to the M3/M4 tap of the left half of the lowest row. Excludes cut height, local diffusion and routing inside a MOM.",
+    "xy_um": {
+      "current": {
+        "BTOP": [
+          [
+            -1.01,
+            5.31
+          ],
+          [
+            -1.01,
+            9.145
+          ],
+          [
+            -3.89,
+            9.145
+          ],
+          [
+            -3.89,
+            2.865
+          ]
+        ],
+        "BBOT": [
+          [
+            -0.515,
+            1.64
+          ],
+          [
+            -0.515,
+            6.335
+          ],
+          [
+            -3.47,
+            6.335
+          ],
+          [
+            -3.47,
+            0.055
+          ]
+        ]
+      },
+      "compact": {
+        "BTOP": [
+          [
+            -1.01,
+            4.1
+          ],
+          [
+            -3.47,
+            4.1
+          ],
+          [
+            -3.47,
+            2.865
+          ]
+        ],
+        "BBOT": [
+          [
+            -0.515,
+            1.64
+          ],
+          [
+            -3.89,
+            1.64
+          ],
+          [
+            -3.89,
+            0.055
+          ]
+        ]
+      }
+    },
+    "length_um": {
+      "current": {
+        "BTOP": 12.995,
+        "BBOT": 13.93
+      },
+      "compact": {
+        "BTOP": 3.695,
+        "BBOT": 4.96
+      }
+    }
+  },
+  "trials": {
+    "current": {
+      "physical_evidence": "boot-core-20261118",
+      "scope": "Published unfilled baseline",
+      "library": "SAR_ADC_T28_LAYOUT",
+      "gds_sha256": "d5f975b5aca9b61bc4ed5ec801f16a2fcca7409687f8bbce1f42aa6e38542025",
+      "structural_sha256": "a77327c667de8e754e3abe1bcf94b84c64471ffa6fd48889022d02de5ab7dbb8",
+      "xrc_sha256": "bbc11d450541a0dea12f40e5d1a1f5d112b6f25ed59e85b734a98b3156a5fa87",
+      "size_um": [
+        24.68,
+        24.99
+      ],
+      "area_um2": 616.7532,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 46.13837,
+        "BBOT": 47.61473
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 72.78182,
+        "BBOT": 80.2678
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 67.75683,
+        "BBOT": 62.54977
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 30.454774496072414,
+        "BBOT_ground": 33.24299211005661,
+        "plate_to_plate": 188.24737805098547,
+        "VOUT_attached": 0.2785319318,
+        "G_attached": 2.1092981370000006,
+        "G_to_VOUT": 0.13088494,
+        "BBOT_to_VOUT": 0.0,
+        "control_to_G": 0.36959918699999994
+      },
+      "standalone_tt": {
+        "run_id": "boot-post-tt-20261118",
+        "recipe_sha256": "4762e35a67852a140a129589a54f0a548a7ae228d2038ed71189e88505718c95",
+        "result_sha256": "64d701f4dca10c75bcc8d2635684716dfa1e9499dbc2bb6cb0866c80a9b8e790",
+        "sample_error_limit_mV": 3.515625,
+        "first_error_mV": -0.8453866527666776,
+        "second_error_mV": -1.1349287090445248,
+        "first_hold_drift_uV": 55.75869672957978,
+        "second_hold_drift_uV": 0.1680817557359049,
+        "passed": true
+      }
+    },
+    "split": {
+      "physical_evidence": "boot-route-split-20261118",
+      "scope": "Separate left and right M4 feeds with M5 crossbars at the MOS launch points",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "12af4c558394c9505e5dcb39ec75f2d37ff60eece7d6ebe0ccfdba30a3bfbb79",
+      "structural_sha256": "24045283b224c06a5b36618dc8eb0df500d5c6806c5f5c02977dd242da758402",
+      "xrc_sha256": "175a3908466cbcd8e95a95c199df69f3f0311e61f9001f4b79cf1e7243d7f79a",
+      "size_um": [
+        24.68,
+        24.99
+      ],
+      "area_um2": 616.7532,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 48.72197,
+        "BBOT": 48.84109
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 65.96585,
+        "BBOT": 68.84476
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 56.85175,
+        "BBOT": 54.13868
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 30.871052655544055,
+        "BBOT_ground": 33.63853058175665,
+        "plate_to_plate": 190.90219397298569,
+        "VOUT_attached": 0.2857101718,
+        "G_attached": 2.090619107,
+        "G_to_VOUT": 0.13088494,
+        "BBOT_to_VOUT": 0.0071782400000000015,
+        "control_to_G": 0.37710677699999995
+      },
+      "standalone_tt": {
+        "run_id": "boot-route-split-tt-20261118",
+        "recipe_sha256": "589ec7dd8ec52033968769deb30c55bb40d1cb5027b99da41cb2cd71bbf39100",
+        "result_sha256": "bcdba4a795df3e4bb670f5c8874bc32728c49f81fd0f24dc1207950848261109",
+        "sample_error_limit_mV": 3.515625,
+        "first_error_mV": -0.8456950512912009,
+        "second_error_mV": -1.1398277952573421,
+        "first_hold_drift_uV": 55.735387580191365,
+        "second_hold_drift_uV": 0.0933909070077732,
+        "passed": true
+      }
+    },
+    "wide": {
+      "physical_evidence": "boot-route-wide-20261118",
+      "scope": "Change vertical M4 feed widths from 0.20 to 0.30 um with unchanged centerline endpoints",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "4076c41e79c11feb54c6a6393d1058402989a3ac09937f27ed5721322caea138",
+      "structural_sha256": "bd8c891a4888051f473e064e6afd4899b700ca6a67b7ec20ef56ce559ac78370",
+      "xrc_sha256": "fb1311604172d5745e21e860e3b0b598d1f320a0da57e83151945c03facae10e",
+      "size_um": [
+        24.68,
+        25.09
+      ],
+      "area_um2": 619.2212,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 43.40388,
+        "BBOT": 43.72246
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 66.536,
+        "BBOT": 69.99788
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 63.25781,
+        "BBOT": 58.82058
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 30.514219148702,
+        "BBOT_ground": 33.34908369345659,
+        "plate_to_plate": 188.57844882598553,
+        "VOUT_attached": 0.2785319318,
+        "G_attached": 2.1079077450000003,
+        "G_to_VOUT": 0.13088494,
+        "BBOT_to_VOUT": 0.0,
+        "control_to_G": 0.36715941700000004
+      }
+    },
+    "roots": {
+      "physical_evidence": "boot-route-roots-20261118",
+      "scope": "Move the BTOP pickup to its shared PMOS diffusion and parallel the local VIA1/VIA2 cuts on both plates",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "9c2c23ebdda322859ea17e73a4e23fc3cd91b38ae5622425fd970d8515882fa7",
+      "structural_sha256": "7f22a9314ddf1ccc464b26caee0f2dfb411ee04fc5082d528aade44005a8ffb8",
+      "xrc_sha256": "4d073e8bec4a2b1bc64f784c0f03059def2f8bcf4ceac3ec46edd0e7c27f8e26",
+      "size_um": [
+        24.68,
+        24.99
+      ],
+      "area_um2": 616.7532,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 37.24963,
+        "BBOT": 39.51426
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 63.89308,
+        "BBOT": 72.16733
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 58.86809,
+        "BBOT": 54.4493
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 30.45856813607242,
+        "BBOT_ground": 33.1870337890566,
+        "plate_to_plate": 188.26917868598545,
+        "VOUT_attached": 0.2785319318,
+        "G_attached": 2.1323805930000006,
+        "G_to_VOUT": 0.13088494,
+        "BBOT_to_VOUT": 0.0,
+        "control_to_G": 0.36927436999999996
+      }
+    },
+    "pitch": {
+      "physical_evidence": "boot-route-pitch-20261118",
+      "scope": "Reduce only capacitor column pitch from 0.92 to 0.88 um",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "5bd72765171422ed0e4f67015356b51b4f0038e6c8d02368e97336c970098653",
+      "structural_sha256": "a360fdb836923874bec294d9fd54c5b81f43863ea2c008300df5c2be94608789",
+      "xrc_sha256": "a28ce399e1b0f06a5d81542f526695b4457db05e76ba2734ebea0813ffad033d",
+      "size_um": [
+        23.64,
+        24.99
+      ],
+      "area_um2": 590.7636,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 46.0941,
+        "BBOT": 47.57843
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 71.29327,
+        "BBOT": 78.8922
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 66.75734,
+        "BBOT": 61.68989
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 29.151930974820477,
+        "BBOT_ground": 31.935106675398824,
+        "plate_to_plate": 194.94657982999024,
+        "VOUT_attached": 0.2798948888,
+        "G_attached": 2.1055500140000007,
+        "G_to_VOUT": 0.129904759,
+        "BBOT_to_VOUT": 0.0,
+        "control_to_G": 0.36959918699999994
+      }
+    },
+    "local": {
+      "physical_evidence": "boot-route-local2-20261118",
+      "scope": "Combine compact pitch, direct pickups, wide central M4 and local wing feeds, with a lower M3 BBOT crossover",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "3dd96f62b275d10f5ff459e58ddeb3032e69c562f1aa2efd730905d9674537bb",
+      "structural_sha256": "fc809b9dc5d170f8569c578e01f4d9827619acff280ec13a4b107f2ea44bca0a",
+      "xrc_sha256": "b818bf24cc9e659b05219f7afd9209d49c6e860e7ea45a4b818623147c912878",
+      "size_um": [
+        23.64,
+        25.04
+      ],
+      "area_um2": 591.9456,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 30.87642,
+        "BBOT": 33.05967
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 53.27168,
+        "BBOT": 59.41393
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 37.70224,
+        "BBOT": 38.31984
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 29.60987080242045,
+        "BBOT_ground": 32.36755383729886,
+        "plate_to_plate": 196.28583338699016,
+        "VOUT_attached": 0.28822883080000006,
+        "G_attached": 2.1524146180000003,
+        "G_to_VOUT": 0.129904759,
+        "BBOT_to_VOUT": 0.0163896,
+        "control_to_G": 0.36434096699999996
+      },
+      "standalone_tt": {
+        "run_id": "boot-route-local2-tt-20261118",
+        "recipe_sha256": "30d39c9c0fadcf40ed0d2cf200a5dfd1a98a598d3bc69f586b838d65d84ca6a8",
+        "result_sha256": "154c1bbce18f4f8309ef99484389c34eb1ca75056d05db45621f8648f4931ee0",
+        "sample_error_limit_mV": 3.515625,
+        "first_error_mV": -0.8447549949123223,
+        "second_error_mV": -1.1467622275926903,
+        "first_hold_drift_uV": 54.036773380589096,
+        "second_hold_drift_uV": -0.014670833548002804,
+        "passed": true
+      }
+    },
+    "compact": {
+      "physical_evidence": "boot-route-compact-20261118",
+      "scope": "Use the compact pitch and direct pickups. Feed BBOT to both wings on M4 at y=1.64 um, and locally cross to the right BTOP feed on M3 above the wells. Keep baseline vertical extent.",
+      "library": "BS_ROUTE_TRIAL",
+      "gds_sha256": "2fb9aba1f008820667a4f0e27ad5078edaa3c9711dd73c7dd02f91da78e33fcc",
+      "structural_sha256": "f60ac53372020dd642fca197150f42650e31848c5951d055728ee085e6bf1391",
+      "xrc_sha256": "ad448c3971d230af9655cb81a26da6e43c17d1599ff3e27853ac19bf94e82237",
+      "size_um": [
+        23.64,
+        24.99
+      ],
+      "area_um2": 590.7636,
+      "lvs": "CORRECT",
+      "same_prefill_drc_markers": true,
+      "same_ports_wells_and_active_geometry": true,
+      "uniform_current_plate_resistance_ohm": {
+        "BTOP": 30.87449,
+        "BBOT": 32.68322
+      },
+      "maximum_single_unit_resistance_ohm": {
+        "BTOP": 53.269,
+        "BBOT": 59.13892
+      },
+      "bottom_two_rows_median_single_unit_resistance_ohm": {
+        "BTOP": 37.70526,
+        "BBOT": 38.07694
+      },
+      "extracted_capacitance_fF": {
+        "BTOP_ground": 29.60163646242045,
+        "BBOT_ground": 32.258547057098845,
+        "plate_to_plate": 196.32085150699024,
+        "VOUT_attached": 0.2881958188,
+        "G_attached": 2.1995760360000003,
+        "G_to_VOUT": 0.129904759,
+        "BBOT_to_VOUT": 0.008300930000000002,
+        "control_to_G": 0.36444147299999996
+      },
+      "standalone_tt": {
+        "run_id": "boot-route-compact-tt-20261118",
+        "recipe_sha256": "1e9de7c17e4c08940fa42c047a973f51164fc966339416e97191c32982e427f9",
+        "result_sha256": "ab222697e70dcc568f52c8c40b7f25dad10414c1efe94a81f3c8a2f1e2be3fdb",
+        "sample_error_limit_mV": 3.515625,
+        "first_error_mV": -0.842342065568491,
+        "second_error_mV": -1.1402535329912977,
+        "first_hold_drift_uV": 55.28053636605357,
+        "second_hold_drift_uV": 0.07954698122425441,
+        "passed": true
+      }
+    }
+  },
+  "preferred_trial": "compact",
+  "preferred_native_gds": "work/layout/bootstrap/routing/boot-route-compact-20261118/fixture.gds",
+  "preferred_generator_private": "work/layout/bootstrap/routing/boot-route-compact-20261118/production_variant.il",
+  "preferred_fill_probe": {
+    "source": "2fb9aba1f008820667a4f0e27ad5078edaa3c9711dd73c7dd02f91da78e33fcc",
+    "job": "2abcd4ad3638cc0dab5d67203521d33c9633dabd88f29896b71c22af6f2f4092",
+    "fill": "0bcf162efdfd9b1a23672a697a3c976b0f3b0b097dcdc11e2243cb6cbff74e80",
+    "deck": "76a394c529ba941d3564a4a1559ffec935ee652baffef1baff65eb5b7cc936c0",
+    "drc": {
+      "rules": {
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+        "DIODMY_L:WARNING": 1
+      },
+      "job": "f99f6c4219893f7ac279b5585137ecb32a1fc0c371080aeda05f9236f822a337",
+      "gds": "236d6b9f92ad6ec168a746d68d7c585fac1640693c3c09107e211789bf622b8d",
+      "deck": "f3f9264811dd566400bef7b5c07447b4ea9695956befd0a4bfc52a57f65032dc"
+    },
+    "bbox_um": [
+      -11.82,
+      -0.045,
+      11.82,
+      24.945
+    ]
+  },
+  "prefill_drc_markers": {
+    "DIODMY_L:WARNING": 1,
+    "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+    "OD.DN.3": 1,
+    "OD.S.14": 1,
+    "PO.DN.3": 1,
+    "PO.DN.3.1": 1
+  },
+  "full_physical_signoff": false,
+  "intermediate_drc": "The first combined trial, boot-route-local-20261118, had four short M3 jog edge markers at the left BBOT crossover. The final trial collects the lower wings on M4 instead.",
+  "qualification_limits": [
+    "Standalone nominal prefill only. The isolated OD/PO trial checks fill feasibility. Final fill, integrated sampling, terminal stress, PVT/mismatch and power distribution remain open."
+  ],
+  "archive_index": "results/storage/bootstrap_routing_review_archive_20261118.json"
+}

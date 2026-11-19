@@ -11,6 +11,8 @@ EXTERNAL = {'INVD1BWP12T30P140':['A','Y','VDD','VSS'],
             'ND2D1BWP12T30P140':['A','B','Y','VDD','VSS'],
             'DFCNQD1BWP12T30P140':['D','CK','RN','Q','VDD','VSS'],
             'iprobe':['p','n']}  # Native ideal current probe, two connected terminals.
+EXTERNAL.update({f'DEL{size:03d}D1BWP12T30P140':['I','Z','VDD','VSS']
+                 for size in (25,50,75,100,150,200,250)})
 POWER = {'VDD','VDD!','AVDD','DVDD'}
 GROUND = {'VSS','0'}
 COLORS = {'wire':'#30485d','clock':'#94601a','analog':'#226e85','power':'#647584'}
@@ -45,7 +47,7 @@ def symbol(master, ports):
     if master in {'sar8i_ctrl','sar_logic_8b_physical','sar8p_timing','b_sar'}:outputs|={'CMP_CLK','PHI_U','PHI_W'}
     if master=='sar8p_bit':outputs|={'CODE','D'}
     if 'refdrv' in master:outputs|={'GNN','GNP','GPN','GPP'}
-    if master=='sar8p_sr':outputs|={'Q'}
+    if master in {'sar8p_sr', 'sar8p_sr_static'}:outputs|={'Q'}
     exact={'sar8i_idle':{'PRESET','SAMPLE_MATCH'},'sar8p_timing':{'CMP_CLK','DATA','PHI_U','PHI_W'},
            'sar8p_bit':{'CODE','D'},'sar_bootstrap_flat_8b_p':{'VOUT'},'sar_strongarm_t28':{'OUTN','OUTP'}}
     if master in exact:outputs=exact[master]

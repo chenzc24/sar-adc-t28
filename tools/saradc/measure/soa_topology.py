@@ -6,6 +6,11 @@ import re
 import sys
 
 
+def save_voltage_node(name):
+    """Escape literal colons in foundry LPE node names for a Spectre voltage save."""
+    return re.sub(r'(?<!\\):', r'\\:', name)
+
+
 def statements(source):
     result = []
     pending = ''
@@ -52,6 +57,9 @@ def definitions(source, spice=False):
                 elif words[0][0].lower() == 'x':
                     pos = next((i for i,w in enumerate(words) if '=' in w), len(words))
                     name, nodes, model = words[0], words[1:pos-1], words[pos-1]
+                elif words[0][0].lower() in ('r','c') and len(words) >= 4:
+                    name, nodes = words[0], words[1:3]
+                    model = 'resistor' if name[0].lower() == 'r' else 'capacitor'
                 elif words[0].startswith('.'):
                     raise ValueError('Unsupported library directive: '+words[0])
                 else:

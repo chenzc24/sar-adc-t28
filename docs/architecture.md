@@ -1,9 +1,9 @@
-# 当前架构
+# Current Architecture
 
-完整定义见 [总设计规格](specification.md)，机器真源为 [specs/arch.json](../specs/arch.json)；[行为视图](../design/behav/README.md)与晶体管实现分别验证。
+The design specification gives the complete definition and identifies the machine-readable source. Verify the behavioral views and transistor implementation separately. [Design specification](specification.md) · [specs/arch.json](../specs/arch.json) · [Behavioral views](../design/behav/README.md)
 
-8 bit、10 MS/s、全差分异步 SAR ADC。Bootstrap 采样到差分顶板；18 个 MOM 构成 CDAC；StrongARM 的真实输出由异步 SAR 接收，逐位更新参考控制。
+An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The Bootstrap sampler drives the differential top plates. Eighteen MOM capacitors form the CDAC. The asynchronous SAR consumes the StrongARM outputs and updates the reference controls bit by bit.
 
-电路从 [顶层](../design/top/adc_top.scs) 阅读，模块和端口见 [电路索引](../design/README.md)。外部时钟周期 100 ns，初始低 60 ns、高 40 ns。内部比较、写入和参考更新由真实握手与 RC 延时产生。
+The external clock period is 100 ns, starting low for 60 ns and then high for 40 ns. Internal decisions, writes, and reference updates follow the actual handshake and qualified standard-cell delays. [ADC top](../design/top/adc_top.scs) · [Modules and ports](../design/README.md)
 
-数字逻辑使用原生标准单元；Bootstrap、CDAC 开关和比较器保留晶体管实现。PDK、标准库和 OA 独立保管。网表与 OA 的同步资格分别记录。
+Digital logic uses native standard cells. The Bootstrap, CDAC switches, and comparator use transistor implementations. The PDK, standard-cell library, and OA are stored separately. Record netlist and OA synchronization evidence for each view.

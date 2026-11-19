@@ -108,7 +108,7 @@ tran_modules tran stop=665n maxstep=100p errpreset=moderate
     deck.append('save '+' '.join(saves))
     blobs['test.scs']=('\n'.join(deck)+'\n').encode('utf-8')
     blobs['observer.va']=(ROOT/'tb/behav/observer.va').read_bytes()
-    blobs['library_include.scs']=(ROOT/'tb/common/platform/library_include.scs').read_bytes()
+    blobs['library_include.scs']=views.standard_cell_library(ROOT)
     for filename in ['analyze_modules.py','native_stream.py']:
         blobs[filename]=(ROOT/'tools/saradc/measure'/filename).read_bytes()
     sources=[ROOT/'specs/views.json',ROOT/'specs/arch.json',*sorted((ROOT/'design/behav').rglob('*.py')),*sorted((ROOT/'design/behav/veriloga').glob('*.*'))]

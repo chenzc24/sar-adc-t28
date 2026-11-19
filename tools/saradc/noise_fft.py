@@ -15,10 +15,11 @@ def prepare(run_id, pilot=False):
     frames, warmup, count = (8, 0, 8) if pilot else (1032, 8, 1024)
     stop = 59e-9+frames*100e-9
     blobs = views.build('current', ROOT, {})
-    adopted = read('results/design/reset_data_or_adoption_20261115.json')['source_sha256']
+    manifest = read('design/manifest.json')
+    adopted = read(manifest['validation'])['source_sha256']
     assert all(hashlib.sha256(blobs[k]).hexdigest() == h for k, h in adopted.items())
     blobs['tb.scs'] = (ROOT/'tb/top/fft/tb.scs').read_bytes()
-    blobs['library_include.scs'] = (ROOT/'tb/common/platform/library_include.scs').read_bytes()
+    blobs['library_include.scs'] = views.standard_cell_library(ROOT, blobs['dut.scs'])
     for dest, source in [('sar8_fft_monitor.va','tb/common/veriloga/sar8_fft_monitor.va'),
                          ('noise_fft_reduce.py','tools/saradc/measure/noise_fft_reduce.py'),
                          ('dynamic_reduce.py','tools/saradc/measure/dynamic_reduce.py'),
@@ -39,7 +40,7 @@ def prepare(run_id, pilot=False):
                    noise_model_section='noise_worst', noise_scope='All enabled device models and four external 50 ohm resistors; ideal sources noiseless',
                    noise_bandwidth_convergence='not_established',
                    observer_capture_clock='absent; legacy field is zero',
-                   design_id=read('specs/arch.json')['design_id'],
+                   design_id=manifest['design_id'],
                    dut_sha256=hashlib.sha256(blobs['dut.scs']).hexdigest(),
                    source_hashes={k:hashlib.sha256(v).hexdigest() for k,v in blobs.items()},
                    checkpoint_scope='Periodic save enabled; no recovery or stitched output authorized by this recipe; noisy recovery equivalence unverified')

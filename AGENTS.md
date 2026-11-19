@@ -7,7 +7,7 @@ Use [docs/development-workflow.md](docs/development-workflow.md) for implementat
 
 - Use the original project skills in [.agents/skills/](.agents/skills/).
   Honor each skill's invocation policy, dependencies, human checkpoints and review separation.
-- Choose the stage through [the workflow table](docs/development-workflow.md#阶段与-skill).
+- Choose the stage through [the workflow table](docs/development-workflow.md#workflow-stages-and-skills).
   Run the selected original method and its dependencies.
 - Issue tracker configuration is in [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md).
   Domain documentation is in [docs/agents/domain.md](docs/agents/domain.md).
@@ -41,10 +41,13 @@ Use [docs/development-workflow.md](docs/development-workflow.md) for implementat
   Report functionality, performance and electrical qualification at their measured scope.
 - Foundry PDKs and shared libraries remain read-only. Keep proprietary model text,
   credentials and OA databases outside Git.
+- For layout queries, use the [Virtuoso OA workflow](Layout/docs/workflow.md#layout-queries) for the active edit, saved views and verification reports.
 - When OA work is requested, use supported Virtuoso APIs and verify the changed view.
 
 ## Documentation
 
+- Use English for maintained documentation, workflows, handoffs, issues, and pull requests.
+  Quote original tool output and preserve frozen evidence as recorded.
 - Give each current rule or interface one authoritative home and link to it.
 - Update documentation when requirements, interfaces, limits or design decisions change.
 - Put run configuration and measurements in machine-readable manifests and results.

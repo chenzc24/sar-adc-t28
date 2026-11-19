@@ -72,7 +72,23 @@ def stimulus(codes, sign):
     return ' '.join(points)
 
 
-def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None):
+def resetor_20261115_sources():
+    """Load the proven inputs used by the dated 45-corner and MC campaigns."""
+    adoption = read('results/design/reset_data_or_adoption_20261115.json')
+    sources = {}
+    for name, digest in adoption['source_sha256'].items():
+        path = ROOT/'design'/name
+        if name == 'dut.scs' and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            path = ROOT/'design/frozen/resetor_20261115/dut.scs'
+        data = path.read_bytes()
+        if hashlib.sha256(data).hexdigest() != digest:
+            raise ValueError('Dated reset-OR source changed: '+name)
+        sources[name] = data
+    return adoption, sources
+
+
+def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None, source_blobs=None,
+            cell_library=None):
     if version not in ('b', 'minimal', 'current'):
         raise ValueError('Unknown reference short version')
     ensure_candidate()
@@ -86,8 +102,11 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
             condition['mos'] not in ('TT','SS','FF','FS','SF') or
             condition['temperature_c'] not in (-40,27,125) or condition['vdd_v'] not in (.81,.9,.99)):
         raise ValueError('Unsupported PVT condition')
-    blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT,
-                        {'reference':'minimal_direct'} if version == 'minimal' else None)
+    if source_blobs is None:
+        blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT,
+                            {'reference':'minimal_direct'} if version == 'minimal' else None)
+    else:
+        blobs = dict(source_blobs)
     tb = text('tb/top/short/tb.scs')
     for source, node, sign in [('VVINP', 'VINP_SRC', 1), ('VVINN', 'VINN_SRC', -1)]:
         tb = re.sub(r'(?m)^'+source+r' .*$', source+' ('+node+' 0) vsource type=pwl wave=['+stimulus(codes, sign)+']', tb)
@@ -112,7 +131,7 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
     deck += 'save '+' '.join(signal_names+currents)+'\n'
     blobs['test.scs'] = deck.encode()
     blobs['observer.va'] = (ROOT/'tb/behav/observer.va').read_bytes()
-    blobs['library_include.scs'] = (ROOT/'tb/common/platform/library_include.scs').read_bytes()
+    blobs['library_include.scs'] = cell_library if cell_library is not None else views.standard_cell_library(ROOT, blobs['dut.scs'], condition['mos'])
     for filename in ['reference_short.py', 'native_stream.py']:
         blobs[filename] = (ROOT/'tools/saradc/measure'/filename).read_bytes()
     ctx = dict(run_id=run_id, issue=2, version=version, corner=corner, **condition,

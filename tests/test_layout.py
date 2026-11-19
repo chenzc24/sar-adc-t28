@@ -21,6 +21,15 @@ class LayoutPlanTests(unittest.TestCase):
             dest = self.root/'Layout'/name
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(project.ROOT/'Layout'/name, dest)
+        # Exercise the released physical plan with the electrical manifest it actually used.
+        physical = json.loads((self.root/'Layout/design/manifest.json').read_text())
+        current = self.root/'design/manifest.json'
+        expected = physical['electrical_sources_sha256']['design/manifest.json']
+        if planning.digest(current) != expected:
+            released = next(path for path in (self.root/'design/frozen').glob('*/manifest.json')
+                            if planning.digest(path) == expected)
+            shutil.copyfile(released, current)
+            shutil.copyfile(released.with_name('dut.scs'), self.root/'design/dut.scs')
         (self.root/'Layout/results').mkdir()
 
     def tearDown(self):
@@ -48,7 +57,15 @@ class LayoutPlanTests(unittest.TestCase):
         self.mutate('design/floorplan.json', lambda d: d['blocks'].append(copy.deepcopy(d['blocks'][0])))
         errors = planning.check(self.root)['errors']
         self.assertTrue(any('Overlapping' in e for e in errors))
-        self.assertIn('Floorplan must allocate each top instance exactly once', errors)
+        self.assertIn('Floorplan must allocate each drawn top instance exactly once', errors)
+
+    def test_not_drawn_instances_stay_out_of_the_floorplan(self):
+        not_drawn = json.loads((self.root/'Layout/specs/interfaces.json').read_text(encoding='utf-8'))['not_drawn_instances']
+        self.assertEqual(sorted(not_drawn), ['CL_CMP_CLK', 'CL_COMP_N', 'CL_COMP_P'])
+        self.mutate('design/floorplan.json', lambda d: d['blocks'][0]['instances'].append('CL_COMP_N'))
+        self.assertIn('Floorplan must allocate each drawn top instance exactly once', planning.check(self.root)['errors'])
+        self.mutate('specs/interfaces.json', lambda d: d['not_drawn_instances'].update(CL_UNKNOWN={}))
+        self.assertIn('Not-drawn instances must be top instances', planning.check(self.root)['errors'])
 
     def test_new_render_cannot_refresh_old_qualification(self):
         planning.render(self.root)
@@ -59,6 +76,15 @@ class LayoutPlanTests(unittest.TestCase):
         self.assertTrue(planning.check(self.root)['planning_projection_stale'])
         planning.render(self.root)
         self.assertEqual(planning.check(self.root)['qualification_applicability'], 'stale')
+
+    def test_current_schematic_cannot_inherit_another_layout(self):
+        manifest = self.root/'design/manifest.json'
+        data = json.loads(manifest.read_text())
+        data['design_id'] += '_new_schematic'
+        manifest.write_text(json.dumps(data))
+        result = planning.check(self.root)
+        self.assertFalse(result['valid'])
+        self.assertIn('Physical plan is bound to a different electrical design', result['errors'])
 
     def test_changed_electrical_source_is_not_rebound_silently(self):
         with (self.root/'design/top/adc_top.scs').open('a') as f:f.write('\n// changed\n')

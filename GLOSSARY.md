@@ -1,15 +1,15 @@
-# 术语
+# Glossary
 
-| 术语 | 项目中的含义 |
+| Term | Project meaning |
 | --- | --- |
-| DUT | 本次测试实例化的被测电路，由源路径和散列确定身份 |
-| Fixture / TB | DUT 的激励、负载、模型和测量环境 |
-| Corner | 一组固定的工艺、供电和温度条件，模型 section 由测试定义 |
-| Seed | 随机序列的起点；实际器件抽样需结合网表、模型及随机参数记录核对 |
-| Run | 一个具有唯一 ID、冻结输入和运行回执的仿真或分析任务 |
-| Mismatch | 器件之间的局部随机制造差异 |
-| Process variation | 统计模型定义的全局制造差异 |
-| CDAC | 电容式数模转换阵列 |
-| SAR | 逐次逼近控制及其判决、锁存、更新和复位过程 |
-| Source / projection | 源文件及由源生成的视图；生成关系记录在相应 manifest 中 |
-| Qualification | 明确指标和覆盖范围下的验证结论，由实际测量证据支持 |
+| DUT | Circuit instantiated by the test, identified by its source path and digest |
+| Fixture / TB | The stimulus, load, models, and measurement environment for the DUT |
+| Corner | Fixed process, supply, and temperature conditions, with model sections specified by the test |
+| Seed | Starting point of a random sequence. Verify actual device draws against the netlist, models, and recorded random parameters |
+| Run | A simulation or analysis task with a unique ID, frozen inputs, and a run receipt |
+| Mismatch | Local random manufacturing variation between devices |
+| Process variation | Global manufacturing variation defined by the statistical model |
+| CDAC | Capacitive digital-to-analog converter array |
+| SAR | Successive-approximation control, including decisions, latching, updates, and reset |
+| Source / projection | A source file and a generated view. The manifest records how the view derives from its source |
+| Qualification | A verification conclusion against specified metrics and coverage, supported by measured evidence |

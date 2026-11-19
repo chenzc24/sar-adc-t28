@@ -1,12 +1,12 @@
 {
-  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
   "electrical_authority": "design/manifest.json",
   "electrical_sources_sha256": {
-    "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
+    "design/manifest.json": "0bb38ca3699e28bd2bf82a6387f9ba81f7edf89d37f845ea70d3afb374a99825",
     "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
     "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
-    "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+    "design/xtor/clock/delays_quiet8p5.scs": "e0554fdd3b15f98d1670bb10ea03908bbba7f4ba0a69348b9f3ed7f0157fb60d",
     "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
     "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
@@ -17,6 +17,39 @@
   "ownership": "oa_owned_current; generation is not certified to reproduce accepted manual edits",
   "allow_regeneration": false,
   "cells": {
+    "bootstrap": {
+      "core": "sar_bootstrap_flat_8b_p_core",
+      "view": "layout",
+      "electrical_master": "sar_bootstrap_flat_8b_p",
+      "top_instances": [
+        "XBOOTP",
+        "XBOOTN"
+      ],
+      "generator": "Layout/design/bootstrap.il",
+      "generator_sha256": "f6aae0acf0eec590c3a8e5e4e82039526030307381e69a13fe237f62ab9bb2e1",
+      "lvs_reference_generator": "Layout/design/bootstrap.py",
+      "electrical_port_mapping": {
+        "Vin": "VIN",
+        "VOUT": "VOUT",
+        "CLKS": "CLKS",
+        "VDD!": "VDD",
+        "0": "VSS"
+      },
+      "core_bbox_um": [
+        [
+          -12.34,
+          -0.045
+        ],
+        [
+          12.34,
+          24.945
+        ]
+      ],
+      "core_evidence": "boot-core-20261118",
+      "fill_owner": "Top-level integration owns density fill. The core retains native PCell structures and the three contacted rings.",
+      "status": "prefill_core_verified",
+      "report": "Layout/results/bootstrap.json"
+    },
     "cdac": {
       "core": "sar8j_r1_cdac_core",
       "filled": "sar8j_r1_cdac",
@@ -30,7 +63,111 @@
         "VDD!": "VDD",
         "0": "VSS"
       },
+      "paired_review": {
+        "view": "layout_paired_balanced",
+        "generator": "Layout/design/cdac_paired.py",
+        "physical_evidence": "cdac-balanced-native-20261118",
+        "report": "Layout/results/cdac_paired.json",
+        "integration_floorplan": "Layout/design/floorplan_paired.json",
+        "fill_state": "prefill"
+      },
       "status": "existing_candidate_not_qualified"
+    },
+    "comparator": {
+      "core": "sar_strongarm_t28_core",
+      "filled": "sar_strongarm_t28",
+      "view": "layout",
+      "electrical_master": "sar_strongarm_t28",
+      "generator": "Layout/design/comparator.il",
+      "wrapper_generator": "Layout/design/comparator-wrapper.il",
+      "fill_owner": "filled wrapper; XCORE references the same functional master",
+      "fill_masters": [
+        "sar8_comp_fill_odpo",
+        "sar8_comp_fill_metal"
+      ],
+      "ports": [
+        "CLK",
+        "OUTN",
+        "OUTP",
+        "VDD",
+        "VINN",
+        "VINP",
+        "VSS"
+      ],
+      "core_bbox_um": [
+        [
+          -0.815,
+          -2.645
+        ],
+        [
+          0.815,
+          0.875
+        ]
+      ],
+      "core_evidence": "comp-v7-20261118-pex",
+      "status": "prefill_module_delivered_not_full_signoff",
+      "report": "Layout/results/comparator.json",
+      "fill_status": "stale_after_core_reroute_do_not_integrate",
+      "generator_sha256": "24dc9d50aa84bef623ab934df5a6276a4aad6450c7701df418ef1e49c006e4ee",
+      "generator_provenance": "Byte-identical to the comp-v7-20261118-pex native build input: V4 rows with one nf=1 PCell instance per finger, bound terminals, N+/P+ guard rings; same structural GDS hash as scratch exploration v7c",
+      "oa_recovery": {
+        "root_key": "remote_root",
+        "relative_path": "evidence/comp-v7-20261118-pex/before-comparator-oa.tar.gz",
+        "scope": "Pre-v7 checkpoint holding the v6 core; earlier cores are in the comp-v6, comp-v4 and comp-v3 evidence checkpoints"
+      },
+      "not_drawn_top_loads": {
+        "instances": [
+          "CL_COMP_N",
+          "CL_COMP_P",
+          "CL_CMP_CLK"
+        ],
+        "authority": "Layout/specs/interfaces.json#not_drawn_instances"
+      }
+    },
+    "sar_timing": {
+      "core": "sar8_sar_timing_core",
+      "view": "layout_compact_eco",
+      "top_instances": [
+        "XCTRL",
+        "XSEQ",
+        "XIDLE",
+        "XSAMPLE"
+      ],
+      "generator": "Layout/design/sar_timing.py",
+      "native_helpers": "Layout/design/sar_timing.il",
+      "core_bbox_um": [
+        [
+          0.069,
+          2.755
+        ],
+        [
+          39.954,
+          54.355
+        ]
+      ],
+      "core_evidence": "sar-timing-core-signoff-20261118",
+      "status": "routed_filled_and_five_corner_verified",
+      "report": "Layout/results/sar_timing.json",
+      "fill_wrapper": "sar8_sar_timing",
+      "fill_view": "layout_eco",
+      "fill_evidence": "sar-timing-fill-signoff-20261118",
+      "fill_bbox_um": [
+        [
+          -0.181,
+          2.755
+        ],
+        [
+          39.954,
+          54.355
+        ]
+      ],
+      "fill_masters": {
+        "FILL_ODPO": "sar8_timing_fill_eco85_odpo",
+        "FILL_METAL": "sar8_timing_fill_eco85_metal"
+      },
+      "detail_routing": "Layout/design/sar-route.tcl",
+      "route_repairs": "Layout/design/sar-route-repairs.json",
+      "area_figure": "Layout/results/figures/sar_timing_compact.png"
     }
   },
   "oa_recovery": {
@@ -38,7 +175,7 @@
     "root_key": "legacy_root",
     "relative_path": "evidence/cdac-core-fill-20261116/before-oa.tar.gz",
     "scope": "before core/fill hierarchy edit; preserve current evidence stream for subsequent recovery",
-    "procedure": "Layout/docs/workflow.md#恢复与同版迭代"
+    "procedure": "Layout/docs/workflow.md#recovery-and-in-place-iteration"
   },
   "source_checkpoint": "work/layout/restructure/checkpoint.json",
   "history": "Source remains untracked until an authorized Git commit; the owned zip checkpoint protects this migration."

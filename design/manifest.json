@@ -1,10 +1,10 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_v1",
+  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3",
   "source": "design/frozen/b/dut.scs",
   "source_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "top": "sar_adc8_join_r4",
-  "status": "user_adopted_ffc_short_pass_other_corners_unverified",
-  "validation": "results/design/reset_data_or_adoption_20261115.json",
+  "status": "adopted_schematic_timing_regression",
+  "validation": "results/design/sar_std_delay_20261119.json",
   "standard_cell_include": "tb/common/platform/library_include.scs",
   "reachable_from_top": [
     "sar8i_ctrl",
@@ -50,10 +50,15 @@
     "sar_logic_8b_physical"
   ],
   "external_standard_cell_masters": [
+    "DEL050D1BWP12T30P140",
+    "DEL075D1BWP12T30P140",
+    "DEL200D1BWP12T30P140",
+    "DEL250D1BWP12T30P140",
     "DFCNQD1BWP12T30P140",
     "INVD1BWP12T30P140",
     "INVD2BWP12T30P140",
-    "ND2D1BWP12T30P140"
+    "ND2D1BWP12T30P140",
+    "OR2D1BWP12T30P140"
   ],
   "subcircuits": {
     "sar8p_inv": {
@@ -296,8 +301,8 @@
       "text_sha256": "b23622c2204310c76a65520535056a30db143b924ae30ac82faae2a00849f06c"
     },
     "sar8p_delay_valid": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 386,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 3,
       "ports": [
         "A",
         "VDD",
@@ -306,23 +311,19 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL200D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL1",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "e5d30f2a490067ee40ea2e753d134e06773b57bad64ab0efa12385444c9c2913"
+      "text_sha256": "da9508d15075a3164db00ea4736f0230b5fc46e8a44d9f7b955a53abf99dc9bb"
     },
     "sar8p_delay_write": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 418,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 8,
       "ports": [
         "A",
         "VDD",
@@ -331,23 +332,31 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL075D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL3",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "15a9f5295969258575fb155116fd90422ae48a3a124ebcc771f8fa9d2989b56c"
+      "text_sha256": "cef296f6815dc008f2ae82aaa646de8ae07248e15f4d0560462ab4f63180c9e4"
     },
     "sar8p_delay_quiet": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 450,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 16,
       "ports": [
         "A",
         "VDD",
@@ -356,23 +365,67 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD4",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL4",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD5",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD6",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL6",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD7",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD8",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL8",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD9",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL9",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "2a65b86bf8bedaa834c198993a918d2d9cccac304eaba3083709d89b28cf4362"
+      "text_sha256": "3257808a76dfba116df3a55035dc0285b70814342847ecbfcd74c202a2695170"
     },
     "sar8p_delay_capture": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 612,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 33,
       "ports": [
         "A",
         "VDD",
@@ -381,23 +434,47 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD4",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL4",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD5",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD6",
+          "master": "DEL050D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL6",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "d3e26095ace53862059fc13c5927234f60cf1850d5206b4cbe706734e68cb150"
+      "text_sha256": "2f652dfd249864762b27ce8488d565abc97222512bc10b6bb55a45440d402613"
     },
     "sar8p_delay_bbm": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 644,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 45,
       "ports": [
         "A",
         "VDD",
@@ -406,23 +483,19 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL200D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
-        },
-        {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL1",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "b189bf12bdd8bd615276cdad7bae149efcf1fc023825482f80e3330c01a5db1f"
+      "text_sha256": "b948e462426cb03fd9ddf03036d145d85bc05659f71b2fc7d8ba1620e336a333"
     },
     "sar8r_delay": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 1702,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 50,
       "ports": [
         "A",
         "VDD",
@@ -431,23 +504,71 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD4",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL4",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD5",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD6",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL6",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD7",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD8",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL8",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD9",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD10",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL10",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "779b8df6c214b65280afed0ae9f06a608d8f23678f4075f0962ab2310b86d776"
+      "text_sha256": "3a2db08fd56163cae71d120154c0fb51735a93fa0c9ca17e2d730959820d2b5d"
     },
     "sar8r_edge": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 1715,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 68,
       "ports": [
         "A",
         "VDD",
@@ -471,8 +592,8 @@
       "text_sha256": "180cc2c73f0a6b3ec00e06da4d435b7f77949333be5ce074fc23fb9a8a882ade"
     },
     "sar8s_step": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 1736,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 74,
       "ports": [
         "A",
         "VDD",
@@ -481,23 +602,35 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD4",
+          "master": "DEL075D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL4",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "792cf641b18f07b3bb585be06047b2e48fbbf5751277228df5e13aec8fe21539"
+      "text_sha256": "4f760c693b5b091441fb693689c9eaa899afafe97cc348ae693bd57a29c75ebc"
     },
     "sar8i_guard": {
-      "file": "xtor/clock/delays.scs",
-      "source_line": 1891,
+      "file": "xtor/clock/delays_std.scs",
+      "source_line": 83,
       "ports": [
         "A",
         "VDD",
@@ -506,19 +639,183 @@
       ],
       "instances": [
         {
-          "instance": "X006",
-          "master": "sar8p_inv"
+          "instance": "XD1",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X005",
-          "master": "sar8p_inv"
+          "instance": "XD2",
+          "master": "DEL250D1BWP12T30P140"
         },
         {
-          "instance": "X002",
-          "master": "sar8p_inv"
+          "instance": "XQUAL2",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD3",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD4",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL4",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD5",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD6",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL6",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD7",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD8",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL8",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD9",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD10",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL10",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD11",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD12",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL12",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD13",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD14",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL14",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD15",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD16",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL16",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD17",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD18",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL18",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD19",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD20",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL20",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD21",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD22",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL22",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD23",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD24",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL24",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD25",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD26",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL26",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD27",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XD28",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL28",
+          "master": "sar8p_and2"
+        },
+        {
+          "instance": "XD29",
+          "master": "DEL250D1BWP12T30P140"
+        },
+        {
+          "instance": "XQUAL29",
+          "master": "sar8p_and2"
         }
       ],
-      "text_sha256": "91da770772f4f82d06f10b9eecb546ad65f6bf3871e67aa8531aeb9ead165793"
+      "text_sha256": "089df94776a87aa8cddc54f89b304526e2fb85829038747fd0ab314c8eccc33e"
     },
     "sar_bootstrap_flat_8b_p": {
       "file": "xtor/bootstrap/bootstrap.scs",
@@ -778,8 +1075,8 @@
       "text_sha256": "e7effa6aeeac3dd126bf9d3e062009f83138a63f01cc7779cf25a9070c2b6e82"
     },
     "sar8p_timing": {
-      "file": "xtor/sar/reset_data_or.scs",
-      "source_line": 6,
+      "file": "xtor/sar/reset_data_or_std_delay.scs",
+      "source_line": 2,
       "ports": [
         "ACTIVE",
         "CMP_CLK",
@@ -815,7 +1112,7 @@
         },
         {
           "instance": "X022",
-          "master": "sar8p_and2"
+          "master": "sar8p_buf"
         },
         {
           "instance": "X020",
@@ -847,7 +1144,7 @@
         },
         {
           "instance": "X008",
-          "master": "sar8p_and2"
+          "master": "sar8p_buf"
         },
         {
           "instance": "X005",
@@ -898,11 +1195,11 @@
           "master": "sar8p_sr"
         }
       ],
-      "text_sha256": "df74500d1a18b098438d9360a8f7ab300d51683efb8f7acc24d0f4310cd213e5"
+      "text_sha256": "e84bf67126edef2a01817341da6532d343f4d0646852afcc8e95377cd87c9aae"
     },
     "sar8p_bitseq8": {
-      "file": "xtor/sar/reset_data_or.scs",
-      "source_line": 36,
+      "file": "xtor/sar/reset_data_or_std_delay.scs",
+      "source_line": 32,
       "ports": [
         "PHI_U",
         "SAMPLE",
@@ -958,8 +1255,8 @@
       "text_sha256": "d1737cbafde38c4567d52a6fa355bec5848bf7764a40837dedef748389cdf87c"
     },
     "sar8p_bit": {
-      "file": "xtor/sar/reset_data_or.scs",
-      "source_line": 48,
+      "file": "xtor/sar/reset_data_or_std_delay.scs",
+      "source_line": 44,
       "ports": [
         "CODE",
         "D",
@@ -991,8 +1288,8 @@
       "text_sha256": "e85db82e26fd7314882b9daccca5888ab561f3ffa2b50a6502346e1e752cba8c"
     },
     "sar_logic_8b_physical": {
-      "file": "xtor/sar/reset_data_or.scs",
-      "source_line": 55,
+      "file": "xtor/sar/reset_data_or_std_delay.scs",
+      "source_line": 51,
       "ports": [
         "CMP_CLK",
         "CODE0",
@@ -1091,8 +1388,8 @@
       "text_sha256": "4efe80d878e0344f6f3ae8c7c1c8599837c6aea51f599758197ae5c35ef66bca"
     },
     "sar8i_ctrl": {
-      "file": "xtor/sar/reset_data_or.scs",
-      "source_line": 78,
+      "file": "xtor/sar/reset_data_or_std_delay.scs",
+      "source_line": 74,
       "ports": [
         "CMP_CLK",
         "CODE0",

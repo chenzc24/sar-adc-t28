@@ -1,22 +1,22 @@
-# 运行与监测
+# Simulation and Monitoring
 
-实验收尾、提交大批任务或释放磁盘时，执行[波形归档与清理](waveform-retention.md)：归档测量与图表所需证据后可按清单删除原始大波形。现有 managed 执行器不会自动删除。
+At experiment closeout, before submitting a large batch, or when reclaiming disk space, archive the evidence needed for measurements and figures. Use the retention checklist to release eligible raw waveforms. The current managed executor leaves deletion to the checklist. [Waveform Retention and Cleanup](waveform-retention.md)
 
-45 点扩展由 `python -m tools.saradc.pvt_short --revision NEW_ID` 准备，按 `specs/pvt_short.json` 排除原五点，冻结当前 OR 版的其余 40 个角。每角 10 个中心码、1.059 µs、10 ps 最大步长、4 线程、4 GiB 输出预算；仅保存真实接口和时序测量信号，不据此判断完整逐管端压。参考固定 0/0.9 V，无源模型固定 TT，没有独立 1.8 V 供电轨。
+Prepare the 45-point extension with `python -m tools.saradc.pvt_short --revision NEW_ID`. It uses `specs/pvt_short.json` to exclude the original five and freeze the other 40 corners for the current OR design. Each corner uses ten code centers, a 1.059 µs duration, a 10 ps maximum step, four threads, and a 4 GiB output budget. The saved signals cover the actual interfaces and timing measurements. Use the all-terminal flow for a device-by-device terminal-voltage verdict. The references are fixed at 0 V and 0.9 V, passive models use TT, and the setup has a single supply domain with no separate 1.8 V rail.
 
-`tools/saradc/managed/batch_follow.py` 是有限批次的服务器调度器，读取已登记 run ID 与 recipe hash，沿用 managed 准入、仿真和分析接口，自动接续分析；同批次有唯一控制器锁。失败或结果不确定的任务保留并标记待核对，不自动重提，其余工况继续。调度器不删波形，完整结果回收和归档后按清理规则另行处理。
+`tools/saradc/managed/batch_follow.py` schedules a finite batch on the server. It reads registered run IDs and recipe hashes, uses managed admission, simulation, and analysis, and starts analysis automatically. Each batch has one controller lock. It retains failures and uncertain results for review and continues other corners. Use the retention policy after collecting and archiving the complete results.
 
-VA/Python 行为视图使用 `python -m tools.saradc behav generate` 同步总规格，`behav check` 做数值交叉，`behav sim --run-id sar8-modules-v3` 提交模块与混合层次原生验证；`behav follow --run-id ID` 一次性等待该运行完成后分析、回收，失败不自动重跑。详细范围见 [行为模型](../design/behav/README.md)。已登记的 ID 绑定冻结输入，修改源后使用新 ID。
+Use `python -m tools.saradc behav generate` to synchronize Verilog-A and Python behavioral views with the specification. Use `behav check` for numerical cross-checks, `behav sim --run-id sar8-modules-v3` for native module and mixed-hierarchy verification, and `behav follow --run-id ID` to wait once, analyze, and collect. Review failures before rerunning. Registered IDs bind frozen inputs. Assign a new ID after changing the source. [Behavioral models](../design/behav/README.md)
 
-在项目根目录使用 `.venv/Scripts/python.exe -m tools.saradc`。执行器沿用已验证的 managed 机制：唯一运行身份、冻结输入、资源排队、独立分析和有散列的回收。
+Run `.venv/Scripts/python.exe -m tools.saradc` from the project root. The managed executor uses unique run identities, frozen inputs, resource queues, independent analysis, and digest-verified collection.
 
-当前最简参考版采用独立短测入口（不套用 B 的内部捕获计数）：
+For the current minimal reference, use the dedicated short test with its own event counts.
 
 ```powershell
 .venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version current --corner tt --revision current-v1
 ```
 
-下面保留历史 B 回归示例；普通 `prepare` 负责打包当前选择，但旧用例分析器不会自动适配最简参考状态机，当前原生整机短测应使用上面的 `reference_short` 入口。
+The following commands are for frozen-B regression. General `prepare` packages the selected view. The legacy analyzer uses B's state machine. Use `reference_short` above for a native short test of the current ADC.
 
 ```powershell
 .venv/Scripts/python.exe -m tools.saradc check
@@ -27,11 +27,11 @@ VA/Python 行为视图使用 `python -m tools.saradc behav generate` 同步总�
 .venv/Scripts/python.exe -m tools.saradc collect sar8-frozen-short-v1
 ```
 
-日常默认 `--view current`，打包实际 `design/dut.scs` 及其当前子模块；`--view frozen-b` 明确选择冻结 B 回归。`check` 校验当前端口和冻结来源，单列当前实现与冻结 B 是否相同，允许在日常设计中修改声明过的模块实现。
+The default `--view current` packages the actual `design/dut.scs` and its modules. Select `--view frozen-b` explicitly for frozen B. `check` verifies current ports and frozen provenance and reports separately whether the current design matches B. Daily design work can change declared module implementations.
 
-混合视图由 [specs/views.json](../specs/views.json) 选择。目前支持 `tt_short --view behavioral|comparator_xtor|cdac_xtor|sampler_xtor|control_xtor`；其余用例继续使用当前管级设计或显式冻结回归。混合短测使用公开端口观察器，不套用依赖管级内部节点的历史分析器，不把行为模型当作原生 MC 或端压验证。
+The view registry selects the mixed hierarchy. Currently, `tt_short` supports `--view behavioral|comparator_xtor|cdac_xtor|sampler_xtor|control_xtor`. Other cases use the current transistor-level design or an explicit frozen regression. Mixed-hierarchy short tests use public-port observers. Use native transistor-level tests for Monte Carlo and terminal-voltage verification. [View registry](../specs/views.json)
 
-现在也支持逐模块覆盖及物理候选：
+Use per-module overrides and physical candidates when needed.
 
 ```powershell
 python -m tools.saradc prepare tt_short --view current --view reference=va --view comparator=va --view timing=va --run-id NEW_ID
@@ -42,13 +42,13 @@ python -m tools.saradc block follow --run-id NEW_BLOCK_ID
 python -m tools.saradc draw --check
 ```
 
-原理图使用源网表内的 RNL 注释。`draw` 生成展示，`draw --serve` 打开本机官方查看器服务；这两项不提交仿真。编辑与导出见 [RNL 原理图](schematics/README.md)。
+The source netlists carry RNL drawing annotations. `draw` generates the schematic views, and `draw --serve` starts the official viewer locally. Simulation uses the separate managed entry point. [RNL schematic guide](schematics/README.md)
 
-六项选择为 `sampler / cdac / comparator / sar / reference / timing`，每项可选 `xtor` 或 `va`。不修改源网表的拓扑连接；RC/clear 模型使用明确的非对称上升/下降延时。候选为 VA 时拒绝同时指定该模块的物理候选。冻结回归拒绝模块覆盖。完整说明见 [独立模块测试](../tb/blocks/README.md) 和 [候选约定](../design/xtor/README.md)。
+Select `xtor` or `va` for any of `sampler / cdac / comparator / sar / reference / timing`. The generated hierarchy preserves source netlist connections. RC and clear models use explicit, asymmetric rising and falling delays. Specify a physical candidate only for an `xtor` module. Use frozen regression with the frozen module selections. [Standalone block tests](../tb/blocks/README.md) · [Candidate conventions](../design/xtor/README.md)
 
-Virtuoso 沿用工作区已经接入的 bridge/ADE 环境。本次不重建连接、不修改 OA；相同模块选择通过生成的 Spectre/VA 网表实现。连接可用与 OA 是否同步当前文本设计分别记录。
+Reuse the workspace's existing Virtuoso Bridge and ADE connection. The generated Spectre and Verilog-A netlists implement the same module selections. Record connectivity to the environment and OA synchronization with the text design as separate findings.
 
-`sim` 登记后提交一次仿真，分析与回收显式执行。相同 ID 的不同输入会被拒绝；网络不确定时先查询该 ID，不改 ID 重提。运行记录和冻结包在 `work/state/runs/` 与 `work/output/managed_execution/`。
+`sim` registers and submits a simulation once. Run analysis and collection explicitly. The executor rejects different inputs under the same ID. If the network response is uncertain, look up that ID before retrying. Run records and frozen packages are in `work/state/runs/` and `work/output/managed_execution/`.
 
 ```powershell
 .venv/Scripts/python.exe -m tools.saradc observe modules
@@ -58,22 +58,22 @@ Virtuoso 沿用工作区已经接入的 bridge/ADE 环境。本次不重建连�
 .venv/Scripts/python.exe -m tools.saradc module-results
 ```
 
-监测器通过原有 launch 回执连接现有只读数据库，游标保存在 `work/state/timing_mc/`。远端 refs 队列继续执行已有任务，旧 cold 控制器 held 记录保持历史身份。目录整理不重新登记这些任务。
+Use the existing launch receipt to connect to the read-only monitoring database. The cursors live in `work/state/timing_mc/`. The remote refs queue continues registered tasks. The old cold controller's held record identifies the historical run. Reuse the existing registrations when reorganizing local directories.
 
-本机配置由 `site.local.yaml` 保管，配置结构参考 [site.example.yaml](../site.example.yaml)。当前远端 T28 适配器保留原账户、服务器工作区与 PDK 限制；7 个重任务槽，单个既有案例 4 线程，仿真 1 GiB、分析 256 MiB、回收 32 MiB；实际准入还检查服务器资源。
+Local settings are in `site.local.yaml`. The remote T28 adapter uses the existing account, server workspace, and PDK restrictions. It allows seven heavy-task slots. An existing case uses four threads, 1 GiB for simulation, 256 MiB for analysis, and 32 MiB for collection. Admission also checks actual server resources. [Site configuration example](../site.example.yaml)
 
-分析器接口为 `--run-dir DIR --output-dir DIR`，analysis-only 额外绑定实际完成源。原始波形留在服务器，正常回收仅取小结果。
+Analyzers accept `--run-dir DIR --output-dir DIR`. An analysis-only task also binds a real completed source. Raw waveforms stay on the server during normal collection, which retrieves compact results.
 
-最简参考候选的五点逐管端压采集入口为 `python -m tools.saradc.soa prepare|submit --corner tt|ssc|ssh|ffc|ffh --revision NEW_ID`，固定提交到 `thu-song`。它读取既有最简版短测的冻结输入，保持电路和 18 帧激励不变，增加全部 MOS 端点保存；可显式用 `--maxstep-ps` 收紧时间步长。标准库只读，保存端点清单及库文件散列，不复制库参数进仓库。运行仍由 managed 执行器控制，完成后 `analyze ID --queue`、`collect ID`。
+To collect all device terminals at the five corners for the minimal reference, use `python -m tools.saradc.soa prepare|submit --corner tt|ssc|ssh|ffc|ffh --revision NEW_ID`. It submits to `thu-song`, starts from the frozen minimal-design short test, and adds all MOS terminals while preserving the circuit and 18-frame stimulus. Use `--maxstep-ps` to tighten the time step. Treat the standard-cell library as read-only. Record terminal names and library digests. Keep the library parameters in their original files. The managed executor handles the run. When it finishes, use `analyze ID --queue` and `collect ID`.
 
-该分析读取 [端压工程规则](../specs/soa_rule.yaml)，对原生波形作分段线性阈值交点和滑动窗口累计时间测量，输出 `derived/terminal_results.json` 与 `derived/result.json`。全端点缺失或未分类模型会导致分析失败；数值通过先标为待时间分辨率复核。原始 CMI/LTE 告警保留。退出成功、18 帧码字正确与端压通过分开报告。
+The terminal-voltage analyzer finds piecewise-linear threshold crossings and cumulative duration in moving windows from native waveforms. It writes `derived/terminal_results.json` and `derived/result.json`. A missing required terminal or unclassified model fails analysis. Numerical passes carry a time-resolution review flag. Retain original CMI and LTE warnings. Report execution, correctness for the 18 frames, and terminal-voltage findings from their respective evidence. [Terminal-voltage engineering rule](../specs/soa_rule.yaml)
 
-同一冻结激励的单变量候选可显式加 `--candidate reference=NAME`（也支持其他已登记模块）。该入口按模块接口绑定历史包中的实际文件，记录替换前后散列并重建端点清单；默认设计不随实验改变。功能分析器 `reference_short.py` 支持 managed 的 `--source-run-dir`，可对已完成的全端点运行作独立 analysis-only 时序复核。
+For a single-variable candidate on the same frozen stimulus, specify `--candidate reference=NAME` or another registered module. The flow resolves the actual archived replacement files by module interface, records before-and-after digests, and rebuilds the terminal list. Experiments use their declared implementations. The `reference_short.py` functional analyzer accepts managed `--source-run-dir` for independent timing analysis of a completed all-terminal run.
 
-同一 managed 执行器支持 `thu-wei`、`thu-sui` 与 `thu-song`。新登记可用 `engine().register(recipe, host='thu-song')` 选择服务器；初始化用 `engine().storage(host='thu-song')`。运行记录绑定主机，后续查询、分析、回收自动路由；无主机字段的历史记录归属 `thu-wei`。不得通过修改默认服务器迁移已有运行。
+The same managed executor supports `thu-wei`, `thu-sui`, and `thu-song`. Use `engine().register(recipe, host='thu-song')` to choose the host for a new registration and `engine().storage(host='thu-song')` for storage initialization. Run records bind the host and route later queries, analysis, and collection automatically. Historical records without a host belong to `thu-wei`. Follow the transfer procedure below for an existing experiment.
 
-这些服务器的 `/home` 用户目录及 PDK 为共享 NFS，`/server_local_ssd` 为各自本地磁盘。队列锁和资源检查按主机执行；转移未完成实验时保留原运行，用新 ID 登记目的主机，记录对应关系并先停止原任务，避免重复运行。停止接口仅处理经启动时间、进程组、账户和命令确认的对应 worker/child，保留原始日志与取消原因。
+The hosts share `/home` user directories and PDKs through NFS. Each host has its own `/server_local_ssd`. Queue locks and resource checks are per host. To transfer an unfinished experiment, keep the original record, register a new ID on the destination, and record the mapping. Stop the original task before starting the replacement. The stop interface acts on the matching worker and child processes after verifying start time, process group, account, and command. Keep raw logs and the cancellation reason.
 
-当前 OR 版含噪声动态测试用 `python -m tools.saradc.noise_fft --run-id NEW_ID` 准备；`--pilot` 生成 8 帧的观察器/协议预检（2 MHz 噪声着色低频拐点，非正式频谱），完整包为 8 帧预热＋连续 1024 帧（10 kHz–2 GHz 配置、noise seed 101）。新观察器不依赖已移除的参考捕获时钟，原生波形解码与 VA 输出码交叉检查。`managed/noise_fft_follow.py` 读取两个已登记身份的冻结清单，预检通过后提交完整运行并自动接续分析；不自动重试、不拼接、不删波形。实际启动见[记录](../results/noise/resetor_1024_launch_20261115.md)。
+For the current OR design's noisy dynamic test, use `python -m tools.saradc.noise_fft --run-id NEW_ID`. `--pilot` makes an eight-frame observer and protocol check with a 2 MHz low-frequency noise-shaping corner. The full package uses eight warm-up frames followed by 1024 consecutive frames with 10 kHz–2 GHz noise settings and noise seed 101. The observer uses the current interface after removal of the reference capture clock. Cross-check native waveform decoding against the Verilog-A output codes. `managed/noise_fft_follow.py` reads the frozen manifests of both registered IDs and submits the full run after the pilot passes. It then starts analysis. It uses the original continuous waveform and leaves retries and waveform retention to their respective procedures. [Noise FFT launch record](../results/noise/resetor_1024_launch_20261115.md)
 
-整机全局＋局部 MC 的准备入口为 `python -m tools.saradc.mc_short --revision NEW_ID`，固定三组电压/温度、各 12 种子、每种子 10 点。`managed/mc_short_follow.py` 消费已登记的精确身份，每组前两个样本通过后自动补齐；原生参数文件核对实际随机覆盖，码字偏移与时序错误分开。已有批次从检查点查询，不重复运行准备/提交命令。当前批次和 analysis-only 源复用见[启动记录](../results/mc/resetor_global_local_launch_20261115.md)。
+Prepare full-circuit global-plus-local Monte Carlo with `python -m tools.saradc.mc_short --revision NEW_ID`. It uses three fixed voltage and temperature conditions, 12 seeds per condition, and ten points per seed. `managed/mc_short_follow.py` consumes exact registered IDs and expands each group once its first two samples pass. Check actual random coverage in the native parameter file. Report code offset and timing errors separately. Checkpoint queries resume work on existing batches. [MC launch and analysis-only reuse record](../results/mc/resetor_global_local_launch_20261115.md)

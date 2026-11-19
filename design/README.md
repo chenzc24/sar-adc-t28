@@ -1,21 +1,21 @@
-# 电路
+# Circuit Design
 
-顶层为 [top/adc_top.scs](top/adc_top.scs)，master `sar_adc8_join_r4`。完整 include 入口为 [dut.scs](dut.scs)。端口、子电路归属和原始来源见 [manifest.json](manifest.json)。
+The top-level master is `sar_adc8_join_r4`. Use the DUT file for the complete include chain and the manifest for ports, subcircuit ownership, and provenance. [ADC top](top/adc_top.scs) · [DUT entry point](dut.scs) · [Design manifest](manifest.json)
 
-| 模块 | 实现 |
+| Module | Implementation |
 | --- | --- |
-| Bootstrap 采样 | [xtor/bootstrap/bootstrap.scs](xtor/bootstrap/bootstrap.scs) |
-| 18 个 MOM 与分位参考开关 | [xtor/cdac/cdac.scs](xtor/cdac/cdac.scs) |
-| 11 MOS StrongARM | [xtor/comparator/comparator.scs](xtor/comparator/comparator.scs) |
-| 异步 SAR | [xtor/sar/reset_data_or.scs](xtor/sar/reset_data_or.scs)，数据位 D 输入增加原生复位 OR |
-| 最简参考驱动与公共空闲控制 | [xtor/reference/minimal_msb_d2.scs](xtor/reference/minimal_msb_d2.scs)，[设计说明](xtor/reference/minimal_direct.md) |
-| RC 与握手延时 | [xtor/clock/delays.scs](xtor/clock/delays.scs) |
-| 原生标准单元包装 | [xtor/common/standard_cells.scs](xtor/common/standard_cells.scs) |
+| Bootstrap sampling | [bootstrap.scs](xtor/bootstrap/bootstrap.scs) |
+| Eighteen MOM capacitors and bit-scaled reference switches | [cdac.scs](xtor/cdac/cdac.scs) |
+| 11-MOS StrongARM | [comparator.scs](xtor/comparator/comparator.scs) |
+| Asynchronous SAR with a native reset OR at the data D input | [reset_data_or_std_delay.scs](xtor/sar/reset_data_or_std_delay.scs) |
+| Minimal reference driver and shared idle control | [minimal_msb_d2.scs](xtor/reference/minimal_msb_d2.scs) · [Design notes](xtor/reference/minimal_direct.md) |
+| Qualified standard-cell delay chains | [delays_std.scs](xtor/clock/delays_std.scs) |
+| Native standard-cell wrappers | [standard_cells.scs](xtor/common/standard_cells.scs) |
 
-[frozen/b/dut.scs](frozen/b/dut.scs) 是历史实测的字节级输入，供原案例复现。当前分模块视图已换入最简参考 MSB D2 驱动与 SAR 数据复位 OR，实际定义与可达性以 manifest 为准。旧参考实现保存在 `xtor/reference/reference.scs`；既有结果的来源散列保持原值。
+Frozen B preserves the byte-level inputs for reproducing its measured cases. The current modular view uses the minimal MSB D2 reference driver and the SAR data-reset OR. Use the manifest for exact definitions and reachability. The previous reference implementation is in `xtor/reference/reference.scs`. Existing results retain their original source digests. [Frozen B DUT](frozen/b/dut.scs)
 
-PDK 和原生标准库保存在服务器；各测试 deck 显式引用模型 section。
+The PDK and native standard-cell libraries are stored on the server. Each test deck specifies the model sections.
 
-现有 [RNL 原理图](../docs/schematics/README.md) 是此前 B 版生成快照，尚未更新为本次最简版，不可作为当前连接真源。绘图记录直接保存在上表源网表的 `// @RNL` 注释中，共用符号位于 [rnl/sar8.rnl](rnl/sar8.rnl)。官方查看器支持逐层进入、缩放、源网表和 SVG 导出；[离线页](../docs/schematics/index.html) 也可直接打开。展示入口和来源散列见 [rnl/manifest.json](rnl/manifest.json)。注释不改变 Spectre 电路，也不代表 OA 已同步。管级候选约定见 [xtor/README.md](xtor/README.md)。
+The current RNL views include the standard delay chains and the native reset OR. The exported drawings and the electrical source use the same device parameters. Drawing records are `// @RNL` comments in source netlists. The viewer supports hierarchy navigation, zoom, source browsing, and SVG export. The offline page can be opened directly. The RNL manifest records sources and digests. Spectre consumes the text circuit and OA synchronization has its own evidence. [RNL guide](../docs/schematics/README.md) · [Symbols](rnl/sar8.rnl) · [Offline viewer](../docs/schematics/index.html) · [Drawing manifest](rnl/manifest.json) · [Candidate conventions](xtor/README.md)
 
-保留 B 时序近似、与外部接口对齐的 [VA/Python 行为视图](behav/README.md) 用于算法、误差参数和协议交叉验证。现有晶体管测量继续绑定原物理输入，行为视图的结论独立记录。
+The Verilog-A and Python views approximate B timing and follow the external interface. Use them for algorithms, error parameters, and protocol cross-checks. Native measurements belong to their respective physical inputs. [Behavioral model guide](behav/README.md)

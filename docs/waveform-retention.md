@@ -1,43 +1,43 @@
-# 波形归档与清理
+# Waveform Retention and Cleanup
 
-2026-11-15 用户决定：结论与图表所需证据归档后，原始大波形可以删除。此规则替代“所有历史波形永久保留”的做法，限于本账户、本项目的运行。
+On 2026-11-15, the user authorized deletion of large raw waveforms after archiving the evidence required for the conclusions and figures. This policy applies to this project's runs in the authorized account.
 
-## 清理条件
+## Cleanup Eligibility
 
-实验收尾时，同时满足以下条件即可清理，无须等待固定天数，也不按文件年龄直接删除：
+At experiment closeout, clean up a run when all of the following hold. Eligibility depends on evidence and consumers, independent of file age.
 
-1. **测量结束**：仿真和所需分析已结束；结论、通过/失败及未覆盖项已记录。已定位并关闭的失败实验也可清理，不能只保留通过结果。
-2. **证据归档**：下表的小数据、图表、原始告警及输入身份已回收到持久位置，文件存在且散列核验一致。服务器 scratch 上只有一份不算归档。不适用图表的用例注明原因，不为清理制作无意义图片。
-3. **没有消费者**：没有运行、排队或已计划的 analysis-only、对照、步长复核或调试继续读取该波形；没有保留标记。检查源运行、引用它的任务及待提交批次。
+1. **Measurements are complete.** Simulation and required analysis have finished. Results, pass or fail verdicts, and coverage gaps are recorded. Diagnosed and closed failures are eligible on the same basis.
+2. **Evidence is archived.** Collect the compact data, figures, original warnings, and input identities listed below to a durable location and verify file existence and digests. A sole copy on server scratch is insufficient. For cases where figures do not apply, record the reason.
+3. **Consumers are finished.** Check the source run, its dependent tasks, and pending batches. Confirm that no running, queued, or planned analysis-only task, control, time-step review, or debug session needs the waveform and that no hold is active.
 
-当前基线也不要求永久保留完整大波形，归档后可清理。正在运行、分析未完、异常未定位、结论有争议或需要重分析的波形保留，记录具体原因与解除条件。网络不通、状态未知或依赖不明时保留该运行，其他合格运行仍可处理。
+The current baseline is eligible once it meets the archive requirements. Retain waveforms for active runs, unfinished analysis, unresolved anomalies, disputed findings, and required reanalysis. Record the hold reason and release condition. If network, status, or dependencies are uncertain, hold that run and continue processing other eligible runs.
 
-用户已授权按本规则做常规清理，不逐文件重复询问。超出项目/账户范围或仍需使用原始证据的例外清理，不能由本规则推定授权。
+The user has authorized routine cleanup under this policy. Obtain separate authorization for exceptions outside the project or account or when raw evidence is still needed.
 
-## 必须留下的证据
+## Evidence to Retain
 
-| 类别 | 内容 |
+| Category | Required evidence |
 | --- | --- |
-| 运行与重跑条件 | 主机、run ID、recipe hash、设计提交及输入散列、冻结网表/激励/分析器、模型与库的路径/身份、引擎版本和选项、PVT、seed 与统计模式 |
-| 结论 | 数值、阈值、通过/失败、未知项及适用范围，报告链接 |
-| 告警与执行记录 | 原始 Spectre 日志、仿真/分析状态、退出码、analysis-only 源绑定及回收回执，不只存告警计数 |
-| 可重画的小数据 | 图使用的数值、单位、采样时刻与绘图脚本/参数；图片不能替代数值数据 |
-| 清理回执 | 精确路径、文件身份、归档散列、删除/保留读回及空间变化 |
+| Run and reproduction conditions | Host, run ID, recipe hash, design commit and input digests, frozen netlist, stimulus and analyzer, model and library paths and identities, engine version and options, PVT, seed, and statistical mode |
+| Conclusions | Values, thresholds, pass or fail status, unknown items, scope, and report links |
+| Warnings and execution | Original Spectre logs, simulation and analysis status, exit codes, analysis-only source binding, and collection receipts |
+| Compact data for reproducing figures | Values, units, sample times, plotting scripts or settings, and the relevant figures |
+| Cleanup receipt | Exact paths, file identities, archive digests, verification of deleted and retained files, and space change |
 
-按实验类型保存必要的小数据：
+Save the compact data needed by the experiment.
 
-- **FFT**：实际参与 FFT 的输出码/采样时刻、输入频率、采样率、截取范围、窗函数及频点分组，指标 JSON 与频谱图。
-- **静态/MC**：转换边界、码字或位权、逐 seed 测量及失败样本身份，不能只留均值、标准差或直方图。
-- **PVT/时序**：逐帧码字、采样关闭沿、逐位握手/比较/建立测量，最小余量及异常帧/位对应的波形片段。
-- **端压**：逐管/端对峰值、超限区间、滑动窗口统计、规则版本和步长复核结论；最坏及异常事件的原生时间点片段。片段覆盖事件前后和完整判定窗口，不能抽稀隐藏窄尖峰。
+- **FFT.** Keep the actual output codes and sample times used in the FFT, input frequency, sample rate, selected range, window and bin groupings, metrics JSON, and spectrum.
+- **Static tests and MC.** Keep conversion boundaries, codes or bit weights, per-seed measurements, and failed sample identities along with any summary statistics.
+- **PVT and timing.** Keep per-frame codes, sampling close edges, per-bit handshake, decision, and settling measurements, minimum margin, and waveform excerpts for anomalous frames and bits.
+- **Terminal voltages.** Keep peaks by device and terminal pair, over-limit intervals, window statistics, rule version, time-step review, and native-time excerpts of worst and anomalous events. Retain enough context before and after each event for the full evaluation window. Preserve narrow peaks at their native resolution.
 
-报告与小数据放在 `results/` 或明确登记的持久位置。大波形不直接塞进 Git；foundry 模型、库正文、许可证和凭据不进入仓库，继续只读引用。
+Put reports and compact data in `results/` or a registered durable location. Keep large waveforms outside Git. Reference foundry models and library content read-only and store licenses and credentials outside the repository.
 
-归档只支持已保存信号和测量范围。以后需要新信号或更高分辨率时，从冻结输入新建运行；原结论仍绑定原运行，不把重跑声称为原始波形恢复。
+An archive supports its saved signals and measurement scope. If new signals or higher resolution are needed, start a new run with frozen inputs. Keep original conclusions bound to the original run and label the new data with its own identity.
 
-## 清单式执行
+## Checklist
 
-草稿放 `work/storage/`，完成回执与归档索引放 `results/storage/`。每批至少记录如下字段；模板中的占位值不能用于执行：
+Use `work/storage/` for drafts and `results/storage/` for completed receipts and archive indexes. Record at least these fields per batch. Substitute verified values before execution.
 
 ```json
 {
@@ -55,18 +55,18 @@
 }
 ```
 
-1. 列出可回收空间，优先处理被替代的大波形与重复调试案例，逐运行检查清理条件。不要清空整个 `runs/`、`raw/` 或 `test.raw/` 目录，其中可能有需保留的日志。
-2. 删除前在实际主机复核账户、规范化绝对路径、运行身份及文件大小/device/inode/mtime；拒绝符号链接和越出该运行的路径。排除活跃读写者；执行窗口内阻止源启动新消费者，无法保证互斥时不删除。旧目录也需精确登记，不按宽泛前缀或日期匹配删除。
-3. 只删除清单里的波形文件。网表、PDK、标准库、OA、日志、小结果、图、运行记录与用户笔记不在删除范围。片段导出和大文件哈希用受限流式处理，重分析仍走 managed。
-4. 逐文件记录成功、失败、跳过，并读回确认删除及保留结果。分别记录逻辑/分配字节与磁盘实际可用空间变化；并发写入或打开文件可能使空间暂不增加，不能把删除字节数当净释放量。
-5. 保留原仿真/分析状态，在清理回执另标 `raw_deleted`、日期、归档路径及无法继续的重分析范围。原 run ID 不复用；已删除源不能伪报重分析通过，需使用适用的归档或新运行。
+1. List reclaimable space. Start with superseded large waveforms and redundant debug runs. Check eligibility one run at a time. Keep logs in `runs/`, `raw/`, and `test.raw/` by targeting individual manifest entries.
+2. On the actual host, verify account, canonical absolute path, run identity, byte size, device, inode, and mtime. Reject symbolic links and paths outside the run. Exclude active readers and writers. Prevent new consumers during cleanup and require exclusive access before deletion. Register older directories by exact path.
+3. Delete waveform files listed in the manifest. Protect netlists, PDK and standard-cell files, OA, logs, compact results, figures, run records, and user notes. Use bounded streaming for excerpts and large digests. Keep reanalysis in the managed flow.
+4. Record success, failure, or skip per file. Read back deletion and retention state. Measure logical bytes, allocated bytes, and actual free-space change separately. Concurrent writes or open files may delay free-space recovery.
+5. Keep original simulation and analysis status. Record `raw_deleted` in the cleanup receipt with the date, archive path, and reanalysis scope lost. Assign new IDs to new runs. Use an applicable archive or run new data when the raw source has been deleted.
 
-受管运行目录的 `raw_cleanup.json` 标记用于执行保护：存在该标记时拒绝重提原运行或将它登记为新的原始重分析源；状态查询仍保留原完成/失败状态并显示清理记录。清理进行中或部分失败的标记同样阻止重分析，不能直接删除标记来绕过。
+The managed run directory's `raw_cleanup.json` protects execution. If present, including while cleanup is in progress or partially failed, it blocks resubmission and registration as a fresh raw analysis source. Status queries retain the original completion or failure verdict and show the cleanup record. Keep this marker with the run.
 
-## 容量与执行频率
+## Capacity and Frequency
 
-每批结果收尾和下一批大仿真提交前盘点一次，不另建定时任务。按在跑任务预计增量、下一批输出预算和 managed 磁盘余量规则判断空间，不只看当前 `df`。
+Review capacity at batch closeout and before submitting the next large batch. Use the expected growth of running tasks, the next batch's output budget, and managed disk headroom rules along with current `df`.
 
-空间不足先清理已归档候选；仍不足则减少并发、调整保存方案或保留队列。不得删除待分析证据、隐藏失败或放松资源限制。
+When space is short, start with eligible archived runs. Then reduce concurrency, adjust saved signals, or leave tasks queued as needed. Retain pending evidence and record failures. Apply the current resource limits.
 
-目前 managed 执行器只有磁盘准入与运行中限额，**不内置自动波形删除**。本页是人工/代理执行的清单规则，不表示已有自动清理服务。服务器 scratch 的管理员保留/备份承诺尚未确认，不依赖服务器替我们归档或清理。
+The managed executor enforces disk admission and limits during runs. Use the manual or agent checklist to delete eligible waveforms. Maintain a durable archive under this policy while server scratch retention and backup guarantees are unconfirmed.

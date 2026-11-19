@@ -17,12 +17,13 @@ SECTIONS = {'ttmacro_mos_moscap':'GlobalMC_LocalMC_MOS_MOSCAP',
 def prepare(group, seed, revision='v1'):
     supply,temp,first = GROUPS[group]
     assert first <= seed < first+12
-    # Reuse the verified real-load, ten-frame PVT fixture, without registering it.
+    adopted, original_sources = reference_short.resetor_20261115_sources()
+    # Keep the ten-frame global/local campaign bound to its dated reset-OR sources.
     base = ROOT/reference_short.prepare('current',group,'mc-template-'+revision,
-        condition=dict(mos='TT',vdd_v=supply,temperature_c=temp),codes=CODES,max_output_mib=3072)
+        condition=dict(mos='TT',vdd_v=supply,temperature_c=temp),codes=CODES,max_output_mib=3072,
+        source_blobs=original_sources)
     old = json.loads(base.read_text())
     blobs = {r['name']:(ROOT/r['source']).read_bytes() for r in old['inputs']}
-    adopted = json.loads((ROOT/'results/design/reset_data_or_adoption_20261115.json').read_text())
     assert all(hashlib.sha256(blobs[k]).hexdigest()==v for k,v in adopted['source_sha256'].items())
     rid = 'sar8-resetor-mcgl-%s-s%d-%s' % (group,seed,revision)
     test = blobs['test.scs'].decode()
