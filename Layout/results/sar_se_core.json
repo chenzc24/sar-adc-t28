@@ -1,0 +1,465 @@
+{
+  "cell": "sar8_se_core",
+  "library": "SAR_ADC_T28_LAYOUT",
+  "date": "2026-11-20",
+  "design_id": "sar8_single_edge_bitwise_v1",
+  "group": [
+    "XCTRL",
+    "XSEQ",
+    "XDONE",
+    "XPRESET",
+    "XSAMPLE"
+  ],
+  "flow": [
+    "Layout/design/sar_single_edge.py flattens the group to native cells and writes the Innovus netlist and script",
+    "Layout/tools/physical/sar_se_route.py runs Innovus place and route (M1-M4 signals, M6 supply stripes)",
+    "Layout/tools/physical/sar_se_def.py converts the routed DEF to net-bound OA records, XOR-checked against the Innovus stream",
+    "Layout/tools/physical/sar_se_physical.py builds the view in SAR_ADC_T28_LAYOUT and runs Calibre DRC, LVS and source-named xRC",
+    "Layout/tools/simulation/prepare_sar_se.py substitutes the extraction for the five top instances in single_edge_lpe"
+  ],
+  "views": {
+    "layout_r2": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "cell": "sar8_se_core",
+      "view": "layout_r2",
+      "physical_id": "sar-se-r2-lib",
+      "boundary_um": [
+        21.195,
+        18.0
+      ],
+      "rows": 14,
+      "logic_cells": 174,
+      "physical_cells": {
+        "BOUNDARY_LEFT": 14,
+        "BOUNDARY_RIGHT": 14,
+        "DCAP4": 21,
+        "FILL2": 40,
+        "DCAP8": 4,
+        "FILL3": 43,
+        "DCAP16": 15,
+        "TAPCELL": 28
+      },
+      "oa_readback": {
+        "instances": 353,
+        "terminals": 26,
+        "nets": 179,
+        "shapes": 5557
+      },
+      "source_sha256": {
+        "design/dut.scs": "087bceaf9d6b1372160e8071e74f3c7b5c28d987b83842935ce69f37f73492e8",
+        "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
+        "design/xtor/sar/single_edge.scs": "5bd23b0027f20cd9cb3bc4037150afeddfbd597d7c8d29e9da0a15666f86c4aa"
+      },
+      "def_sha256": "65ad22530ce5889a04744bd006337d874889858d875eb179d84f67a3a64ec44a",
+      "innovus_stream_sha256": "3c25bd5b6977e7620cc870b2a00fa37a247f70bb76d96eefe3c2bc5bbfc1c718",
+      "def_to_oa_xor_um2": {
+        "M1": 0.0,
+        "M2": 0.0,
+        "M3": 0.0,
+        "M4": 0.0,
+        "M5": 0.0,
+        "M6": 0.0,
+        "VIA1": 0.0,
+        "VIA2": 0.0,
+        "VIA3": 0.0,
+        "VIA4": 0.0,
+        "VIA5": 0.0
+      },
+      "innovus": {
+        "nanoroute_drc": "clean",
+        "verify_geometry_viaenclosure_markers": 2,
+        "note": "Innovus M2 via-enclosure markers; the foundry Calibre DRC of the same geometry reports none"
+      },
+      "gds_sha256": "2d0c483605a462b08fc5b3d95cdfc55902f022f221a4de9286bee36a70bbf5db",
+      "structural_sha256": "130e59d35e7352521846464ada6ac41e5a0965a622f64a68d64ced26655c8758",
+      "drc": {
+        "blocking": {},
+        "deferred_density": {},
+        "markers": 2,
+        "markers_by_rule": {
+          "DIODMY_L:WARNING": 1,
+          "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+        }
+      },
+      "lvs": "CORRECT",
+      "pex": {
+        "netlist_names": "SOURCENAMES",
+        "interconnect_corner": "typical (deck default rules)",
+        "sha256": "0344a37bf5513d37e15ee4d581a5225ee749a8c90e1247c763584c21a2ca1f55",
+        "bytes": 2057470,
+        "distributed_rail_resistors": {
+          "VDD": 5751,
+          "VSS": 4585
+        }
+      }
+    },
+    "layout_r3": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "cell": "sar8_se_core",
+      "view": "layout_r3",
+      "physical_id": "sar-se-r3-lib",
+      "boundary_um": [
+        18.495,
+        16.8
+      ],
+      "rows": 13,
+      "logic_cells": 174,
+      "physical_cells": {
+        "BOUNDARY_LEFT": 13,
+        "BOUNDARY_RIGHT": 13,
+        "FILL3": 33,
+        "FILL2": 15,
+        "DCAP8": 3,
+        "DCAP4": 6,
+        "DCAP16": 1,
+        "TAPCELL": 26
+      },
+      "oa_readback": {
+        "instances": 284,
+        "terminals": 26,
+        "nets": 179,
+        "shapes": 5178
+      },
+      "source_sha256": {
+        "design/dut.scs": "087bceaf9d6b1372160e8071e74f3c7b5c28d987b83842935ce69f37f73492e8",
+        "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
+        "design/xtor/sar/single_edge.scs": "5bd23b0027f20cd9cb3bc4037150afeddfbd597d7c8d29e9da0a15666f86c4aa"
+      },
+      "def_sha256": "54bf6f9e6dbe69bb9554569b5f4851b6a6c684d55fb148acf6c32b3111fdf733",
+      "innovus_stream_sha256": "3e87e434c420624562a8037ea81911d283a26e048be57f830ae58ef72e036391",
+      "def_to_oa_xor_um2": {
+        "M1": 0.0,
+        "M2": 0.0,
+        "M3": 0.0,
+        "M4": 0.0,
+        "M5": 0.0,
+        "M6": 0.0,
+        "VIA1": 0.0,
+        "VIA2": 0.0,
+        "VIA3": 0.0,
+        "VIA4": 0.0,
+        "VIA5": 0.0
+      },
+      "innovus": {
+        "nanoroute_drc": "clean",
+        "verify_geometry_viaenclosure_markers": 5,
+        "note": "Innovus M2 via-enclosure markers; the foundry Calibre DRC of the same geometry reports none"
+      },
+      "gds_sha256": "e65ccb875c8266b13d46b1b18eff429b29d37a93a44b99e16333d339957ddbba",
+      "structural_sha256": "7a43d83afd44ba69048e0a9b154f020639eb86fe2171df3b9297507ab30f4df8",
+      "drc": {
+        "blocking": {},
+        "deferred_density": {},
+        "markers": 2,
+        "markers_by_rule": {
+          "DIODMY_L:WARNING": 1,
+          "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+        }
+      },
+      "lvs": "CORRECT",
+      "pex": {
+        "netlist_names": "SOURCENAMES",
+        "interconnect_corner": "typical (deck default rules)",
+        "sha256": "027086dec591d49a9cccbf095301071151e63100ab22ab7cdcb668f1876b65b7",
+        "bytes": 1946755,
+        "distributed_rail_resistors": {
+          "VDD": 4501,
+          "VSS": 4042
+        }
+      }
+    }
+  },
+  "selected_view": "layout_r3",
+  "post_layout_runs": [
+    {
+      "run_id": "sar8-sepl-ssc-cw-verify-r3a",
+      "host": "thu-song",
+      "recipe_hash": "7731532ac413aa16f74b3265f2c6474027ef0990f4fbc138740e967dcd4c5dd4",
+      "corner": "ssc",
+      "mos": "SS",
+      "temperature_c": -40,
+      "vdd_v": 0.81,
+      "cell_lpe_other_cells": "cworst_t",
+      "cdac_view": "cworst",
+      "codes": [
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          128,
+          128,
+          128,
+          128
+        ],
+        [
+          85,
+          83,
+          83,
+          83
+        ],
+        [
+          170,
+          172,
+          172,
+          172
+        ],
+        [
+          127,
+          127,
+          127,
+          127
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "frame_pass": [
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "all_pass": false,
+      "min_read_margin_ns": 7.603,
+      "pre_layout_min_read_margin_ns": 7.591,
+      "pre_layout_run": "sar8-sebit-ssc-cw-verify-b",
+      "max_abs_signed_settling_lsb": 0.0014,
+      "max_abs_sample_close_error_lsb": 0.074,
+      "setup_hold_slack_ps": [
+        433.2,
+        96.9
+      ],
+      "min_commit_high_ps": 373.9,
+      "warnings": [
+        "CMI-2751",
+        "CMI-2753",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-2649",
+        "SFE-3014",
+        "SFE-3016",
+        "SFE-3031",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "failed_frames": [
+        {
+          "frame": 0,
+          "track_pass": false,
+          "control_pass": false,
+          "analog_code_pass": true,
+          "track_overlaps": [
+            {
+              "ns": 1.606097757153119,
+              "event": "high at opening"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "sar8-sepl-ffc-cw-scan-r3a",
+      "host": "thu-song",
+      "recipe_hash": "13513e3fcb58d48da34927c777af358cd6580252158a27b7253e35660ebf30a9",
+      "corner": "ffc",
+      "mos": "FF",
+      "temperature_c": -40,
+      "vdd_v": 0.99,
+      "cell_lpe_other_cells": "cbest_t",
+      "cdac_view": "cworst",
+      "codes": [
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          85,
+          83,
+          83,
+          83
+        ],
+        [
+          170,
+          172,
+          172,
+          172
+        ]
+      ],
+      "frame_pass": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "all_pass": true,
+      "min_read_margin_ns": 30.228,
+      "pre_layout_min_read_margin_ns": 30.703,
+      "pre_layout_run": "sar8-sebit-ffc-cw-scan-b",
+      "max_abs_signed_settling_lsb": 0.1066,
+      "max_abs_sample_close_error_lsb": 0.0076,
+      "setup_hold_slack_ps": [
+        168.5,
+        38.5
+      ],
+      "min_commit_high_ps": 174.4,
+      "warnings": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-2649",
+        "SFE-3014",
+        "SFE-3016",
+        "SFE-3031",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ]
+    },
+    {
+      "run_id": "sar8-sepl-tt-nom-verify-r3a",
+      "host": "thu-song",
+      "recipe_hash": "f55ca02be479f5eb57bcc2060f0553afd8c9f3931b70dc7c284620fcc9b12b8a",
+      "corner": "tt",
+      "mos": "TT",
+      "temperature_c": 27,
+      "vdd_v": 0.9,
+      "cell_lpe_other_cells": "typical",
+      "cdac_view": "nominal",
+      "codes": [
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          128,
+          128,
+          128,
+          128
+        ],
+        [
+          85,
+          83,
+          83,
+          83
+        ],
+        [
+          170,
+          172,
+          172,
+          172
+        ],
+        [
+          127,
+          127,
+          127,
+          127
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "frame_pass": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "all_pass": true,
+      "min_read_margin_ns": 24.424,
+      "pre_layout_min_read_margin_ns": 24.92,
+      "pre_layout_run": "sar8-sebit-tt-nom-verify-b",
+      "max_abs_signed_settling_lsb": 0.0257,
+      "max_abs_sample_close_error_lsb": 0.0032,
+      "setup_hold_slack_ps": [
+        246.2,
+        56.7
+      ],
+      "min_commit_high_ps": 237.2,
+      "warnings": [
+        "CMI-2751",
+        "CMI-2752",
+        "CMI-2753",
+        "CMI-2754",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-2649",
+        "SFE-3014",
+        "SFE-3016",
+        "SFE-3031",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ]
+    }
+  ],
+  "analyzer_note": "The three r3a runs packaged a native_stream.py with a rename hook; the committed analyzers apply the same context signal_aliases mapping in their own samples() reader so the frozen native_stream.py of the B cases stays byte-identical.",
+  "post_layout_scope": "Extracted SAR macro and extracted CDAC; reference word with cell LPE; comparator and bootstrap schematic; ideal top-level wiring and supplies.",
+  "findings": [
+    "SS cold frame 0 fails the control check: at t=0 the DC solution leaves the comparator latch balanced with its clock high (COMP_P/COMP_N 0.42/0.70 V with 256 mV input, unchanged for 60 ns), so CMP_CLK is still high for 0.2 ns after the first tracking opening. This is a non-physical initial state; frame 0 reads its code and frame 1 with the same input passes.",
+    "The same overlap occurs in operation when a sample aborts a comparison: 71-72 ps in the pre-layout FF-cold restart runs, none at TT. The restart analyzer does not check a clock that is already high.",
+    "The SAR macro was extracted at the typical interconnect corner, while the SS and FF pre-layout runs used CWORST_T and CBEST_T cell LPE; the SS and FF post-layout margins are therefore not worst-case."
+  ],
+  "open_items": [
+    "Re-extract the macro at CWORST_T and CBEST_T and rerun SS and FF cold",
+    "Treat frame 0 as warm-up and report the clock/tracking overlap as a measured diagnostic",
+    "Top-level placement, routing, fill and terminal-voltage scan"
+  ]
+}

@@ -11,6 +11,13 @@ import re
 import native_stream
 
 
+def samples(path, ctx):
+    """Waveform samples; post-layout decks save macro nets that context signal_aliases maps to schematic names."""
+    alias = ctx.get('signal_aliases', {})
+    for t, v in native_stream.samples(path):
+        yield t, dict((alias.get(k, k), x) for k, x in v.items()) if alias else v
+
+
 def bottom_state(v, groups, lsb):
     words, total, maximum = [], 0., 0.
     for side in ('n', 'p'):
@@ -133,7 +140,7 @@ def analyze(root, out):
     pulses = {setnet: [], clrnet: [], cmpnet: [], wr: []}
     prev = None
     points = 0
-    for t, v in native_stream.samples(raw[0]):
+    for t, v in samples(raw[0], ctx):
         points += 1
         if prev is None:
             missing = set(ctx['required_signals']) - set(v)

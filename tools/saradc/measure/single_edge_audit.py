@@ -10,6 +10,13 @@ import reference_short as native
 import register_constraints
 
 
+def samples(path, ctx):
+    """Waveform samples; post-layout decks save macro nets that context signal_aliases maps to schematic names."""
+    alias = ctx.get('signal_aliases', {})
+    for t, v in native_stream.samples(path):
+        yield t, dict((alias.get(k, k), x) for k, x in v.items()) if alias else v
+
+
 def word(v, prefix):
     return sum(1 << i for i in range(8) if v[prefix + str(i)] > .5*v['vdd!'])
 
@@ -33,7 +40,7 @@ def analyze(root, out, library, bottom_measure=None):
                    register_pin_windows=[], preset_ready_lead_ns=None) for i in range(ctx['frames'])]
     previous = None
     ready_since = None
-    for t,v in native_stream.samples(raw[0]):
+    for t,v in samples(raw[0], ctx):
         threshold = v['vdd!'] / 2
         ready = False
         if v['xdut.preset'] > threshold:

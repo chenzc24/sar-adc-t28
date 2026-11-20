@@ -8,6 +8,13 @@ import os
 import native_stream
 
 
+def samples(path, ctx):
+    """Waveform samples; post-layout decks save macro nets that context signal_aliases maps to schematic names."""
+    alias = ctx.get('signal_aliases', {})
+    for t, v in native_stream.samples(path):
+        yield t, dict((alias.get(k, k), x) for k, x in v.items()) if alias else v
+
+
 def analyze(root, out):
     with open(root+'/inputs/context.json') as stream:
         ctx=json.load(stream)
@@ -25,7 +32,7 @@ def analyze(root, out):
     read_ns=[ns for start,_ in plan['reads'] for ns in (start,start+8)]
     public_stable=True
     prev=None
-    for t,v in native_stream.samples(raw[0]):
+    for t,v in samples(raw[0], ctx):
         if prev is not None:
             pt,pv=prev
             for k in names:

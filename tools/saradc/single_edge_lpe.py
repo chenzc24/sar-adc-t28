@@ -122,16 +122,19 @@ def cdac_bundle(view, corner):
                 weights_sha=weights_sha)
 
 
-def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
+def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, macro=None):
+    """macro: extracted SAR macro from Layout.tools.simulation.prepare_sar_se (files, top, probe, record)."""
     taps = tuple(taps)
     if corner not in CELL_RC or kind not in CODES:
         raise ValueError('Unknown corner or stimulus')
     if seed is not None and (corner not in ('ssc', 'ffc') or kind == 'restart'):
         raise ValueError('Local mismatch is prepared for the cold corners only')
+    if macro is not None and taps != TAPS:
+        raise ValueError('The extracted macro fixes the delay taps')
     rc = CELL_RC[corner]
     tag = '' if taps == TAPS else '-t%d' % taps[0] if len(set(taps)) == 1 else '-t' + 'x'.join(map(str, taps))
     label = {'nominal': 'nom', 'cworst': 'cw'}[cdac] + '-' + kind + tag + ('-s%d' % seed if seed is not None else '')
-    rid = 'sar8-sebit-%s-%s-%s' % (corner, label, revision)
+    rid = 'sar8-%s-%s-%s-%s' % ('sepl' if macro else 'sebit', corner, label, revision)
     dest = ROOT / 'work/decks' / rid
     bundle = cdac_bundle(cdac, corner)
     dut = (ROOT / 'design/dut.scs').read_bytes()
@@ -144,9 +147,17 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
         raise ValueError('Expected one CDAC include')
     sources['dut.scs'] = dut.replace(b'"xtor/cdac/cdac.scs"', b'"cdac_pex_wrapper.scs"')
     sources.update(bundle['files'])
+    if macro is not None:
+        # The extracted macro replaces the five SAR-group instances of the top.
+        top_include = b'include "top/adc_top.scs"'
+        if sources['dut.scs'].count(top_include) != 1:
+            raise ValueError('Expected one top include')
+        sources['dut.scs'] = sources['dut.scs'].replace(top_include, b'include "%s"\n' % macro['entry'].encode() + top_include)
+        sources['top/adc_top.scs'] = macro['top']
+        sources.update(macro['files'])
     library = (ROOT / ('tb/common/platform/library_lpe_%s.scs' % rc)).read_bytes()
-    template = ROOT / short.prepare('single_edge', corner, 'sebit-%s-%s' % (label, revision), codes=CODES[kind],
-                                    source_blobs=sources, cell_library=library)
+    template = ROOT / short.prepare('single_edge', corner, '%s-%s-%s' % ('sepl' if macro else 'sebit', label, revision),
+                                    codes=CODES[kind], source_blobs=sources, cell_library=library)
     recipe = json.loads(template.read_bytes())
     blobs = {f['name']: (ROOT / f['source']).read_bytes() for f in recipe['inputs']}
     ctx = json.loads(blobs['context.json'])
@@ -174,8 +185,14 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
     extra = [r['q'] for r in sel] + [r['trial'] for r in sel] + [n for r in sel for n in r['inputs']] + PROBES
     signals += [s for s in dict.fromkeys(extra) if s not in signals]
     ctx['required_signals'] = signals + ([] if kind == 'restart' else group_names)
-    deck, count = re.subn(rb'(?m)^save [^\r\n]+', b'save ' + ' '.join(s.upper() for s in signals).encode(),
-                          blobs['test.scs'])
+    # A macro probe returns the exact, case-sensitive node to save, or None for an unchanged net.
+    probes = [macro['probe'](s) for s in signals] if macro else [None] * len(signals)
+    saved = [p or s.upper() for s, p in zip(signals, probes)]
+    if len(set(saved)) != len(saved):
+        raise ValueError('Two schematic probes map to one saved node')
+    if macro:
+        ctx['signal_aliases'] = {p.replace('\\', '').lower(): s for s, p in zip(signals, probes) if p}
+    deck, count = re.subn(rb'(?m)^save [^\r\n]+', b'save ' + ' '.join(saved).encode(), blobs['test.scs'])
     if count != 1:
         raise ValueError('Expected one save statement')
     deck, count = re.subn(rb'(?m)^(tran_short tran [^\r\n]+)', rb'\1 strobeperiod=5p strobeoutput=strobeonly', deck)
@@ -205,6 +222,8 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
                weights_source=bundle['weights_id'], weights_result_sha256=bundle['weights_sha'],
                current_signals=[], mismatch=seed is not None, settling_limit_lsb=.25, settling_target_lsb=.125,
                first_compare_gate_limit_v=.1)
+    if macro:
+        ctx.update(pex_modules=['cdac', 'sar'], sar_macro=macro['record'])
     if kind == 'restart':
         blobs['single_edge_restart.py'] = (ROOT / 'tools/saradc/measure/single_edge_restart.py').read_bytes()
         analyzer = 'single_edge_restart.py'
@@ -220,9 +239,11 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
     recipe['resources'].update(simulation_rss_mib=3584, simulation_virtual_mib=16384, analysis_rss_mib=1024,
                                analysis_wall_seconds=10800, max_output_mib=2048 + 1200 * ctx['frames'])
     recipe['spectre_args'][recipe['spectre_args'].index('+lqtimeout') + 1] = '900'
-    recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_cell_lpe_cdac_xrc', analyzer=analyzer,
-                  qualification_scope='%s cell LPE, %s extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling'
-                                      % (rc, cdac),
+    scope = ('%s cell LPE, %s extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling' % (rc, cdac) if not macro else
+             'extracted SAR macro %s, %s cell LPE for the remaining cells, %s extracted CDAC, 45 ns sampling'
+             % (macro['record']['physical_id'], rc, cdac))
+    recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_' + ('sar_macro_xrc' if macro else 'cell_lpe_cdac_xrc'),
+                  analyzer=analyzer, qualification_scope=scope,
                   test_conditions=ctx, inputs=[dict(name=n, source=(dest / n).relative_to(ROOT).as_posix(),
                                                     sha256=digest(b)) for n, b in blobs.items()])
     blobs['recipe.yaml'] = (json.dumps(recipe, indent=2) + '\n').encode()

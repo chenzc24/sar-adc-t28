@@ -2,22 +2,33 @@
 import argparse,json,re,shlex,subprocess,sys
 from Layout.project import ROOT,config,evidence,write_json
 
-def physical(identity,through,module='cdac',rebuild=False,view='layout'):
+def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None):
     if not re.fullmatch(r'[a-z0-9][a-z0-9-]{1,55}',identity):raise ValueError('Invalid physical ID')
     c=config();root=c['remote_root'];legacy=c['legacy_root']
     q=shlex.quote
-    if rebuild and module not in ('comparator', 'bootstrap'):
-        raise ValueError('Rebuild is supported only for generator-owned cores')
-    if view != 'layout' and (module != 'cdac' or rebuild):
-        raise ValueError('Alternate views are supported for existing CDAC layouts')
-    case = {'cdac':'full', 'comparator':'comparator', 'comparator-filled':'comparator-filled', 'bootstrap':'bootstrap'}[module]
-    arguments = ['python','-u','run_physical.py',case,identity,'--through',through,'--pex-timeout','1800']
-    if not rebuild:
-        arguments.append('--existing-oa')
-        if view != 'layout':
-            arguments.extend(['--view',view])
+    if module == 'sar-se':
+        # The single-edge SAR macro: a revision view of sar8_se_core in SAR_ADC_T28_LAYOUT, built from DEF records.
+        if not staging or not re.fullmatch(r'sar-se-[a-z0-9-]+',staging):raise ValueError('Select the sar-se staging directory')
+        if not view or not re.fullmatch(r'layout_r\d+',view):raise ValueError('Select the sar8_se_core revision view, e.g. layout_r2')
+        arguments = ['python','-u','sar_se_physical.py',identity,'--staging',staging,'--view',view,'--through',through]
+        if rebuild:
+            arguments.append('--build')
     else:
-        arguments.append('--rebuild-' + module)
+        view = view or 'layout'
+        if view not in ('layout','layout_paired_balanced'):raise ValueError('Unknown layout view '+view)
+        if staging:raise ValueError('--staging applies to --module sar-se')
+        if rebuild and module not in ('comparator', 'bootstrap'):
+            raise ValueError('Rebuild is supported only for generator-owned cores')
+        if view != 'layout' and (module != 'cdac' or rebuild):
+            raise ValueError('Alternate views are supported for existing CDAC layouts')
+        case = {'cdac':'full', 'comparator':'comparator', 'comparator-filled':'comparator-filled', 'bootstrap':'bootstrap'}[module]
+        arguments = ['python','-u','run_physical.py',case,identity,'--through',through,'--pex-timeout','1800']
+        if not rebuild:
+            arguments.append('--existing-oa')
+            if view != 'layout':
+                arguments.extend(['--view',view])
+        else:
+            arguments.append('--rebuild-' + module)
     command=' '.join(q(x) for x in arguments)
     script='\n'.join(['set -eu','umask 077','cd '+q(root+'/runtime'),
         'if test -e '+q(root+'/evidence/'+identity)+' || test -e '+q(legacy+'/evidence/'+identity)+'; then echo "Evidence identity already exists; query status, do not resubmit." >&2; exit 2; fi',
@@ -44,9 +55,10 @@ def main():
     a.add_argument('--planned-fill',action='store_true',help='cdac-paired only: add the planned array fill cell')
     a.add_argument('--center',choices=['inverted','stacked'],help='cdac-paired only: small-bit layout of the two center columns')
     a=sub.add_parser('physical');a.add_argument('identity');a.add_argument('--through',choices=['stream','drc','lvs','pex'],default='pex')
-    a.add_argument('--module',choices=['cdac','comparator','comparator-filled','bootstrap'],default='cdac')
-    a.add_argument('--rebuild',action='store_true',help='Rebuild a generator-owned core after a checkpoint')
-    a.add_argument('--view',choices=['layout','layout_paired_balanced'],default='layout')
+    a.add_argument('--module',choices=['cdac','comparator','comparator-filled','bootstrap','sar-se'],default='cdac')
+    a.add_argument('--rebuild',action='store_true',help='Rebuild a generator-owned core after a checkpoint; sar-se: create the view')
+    a.add_argument('--view',help='layout or layout_paired_balanced for the CDAC; layout_rN for sar-se')
+    a.add_argument('--staging',help='sar-se only: state directory with the DEF build records')
     a=sub.add_parser('status');a.add_argument('identity')
     a=sub.add_parser('query-source', help='Locate archived layout evidence for historical runs')
     a.add_argument('selector')
@@ -55,7 +67,7 @@ def main():
     a.add_argument('--prefill',action='store_true',help='Use the extracted CDAC before density fill')
     a.add_argument('--planned-fill',action='store_true',help='Use the extracted CDAC with its planned array fill')
     args=p.parse_args()
-    if args.action=='physical':print(json.dumps(physical(args.identity,args.through,args.module,args.rebuild,args.view),indent=2))
+    if args.action=='physical':print(json.dumps(physical(args.identity,args.through,args.module,args.rebuild,args.view,args.staging),indent=2))
     elif args.action=='status':print(json.dumps(status(args.identity),indent=2))
     elif args.action=='query-source':
         from Layout.query_source import resolve
