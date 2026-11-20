@@ -1,8 +1,8 @@
 # RNL Schematics
 
-The generated views follow the current Spectre design, including the qualified native DEL paths, the minimal MSB D2 reference and the reset-data OR controller. The drawing manifest records the exact source files. [Current DUT](../../design/dut.scs) · [Drawing manifest](../../design/rnl/manifest.json)
+The generated views follow the current Spectre design: the single-edge SAR, its native reference decoder and the top. The drawing manifest records the exact source files. [Current DUT](../../design/dut.scs) · [Drawing manifest](../../design/rnl/manifest.json)
 
-The workspace contains 83 views, including 39 native circuit definitions, standalone fixtures and external interfaces. Native files with authored drawing records are included directly. The viewer generates display drawings for native source files without drawing records and verifies that their electrical statements are preserved. Open sar8p_timing for the RAW and QUIET receivers, sar8p_delay_quiet for the nine-stage DEL chain, and sar8i_guard for the idle-to-preset chain. [Netlist index](../../design/README.md) · [Shared symbols](../../design/rnl/sar8.rnl)
+The workspace contains 60 views: 19 native circuit definitions, 7 standalone fixtures and 34 external interfaces. Native files with authored drawing records are included directly. The viewer generates display drawings for native source files without drawing records and verifies that their electrical statements are preserved. Open sar8_se_window for the DEL250 chain and its registered tap multiplexers, sar8_se_timing for the phase counter and comparator clock, and sar8_se_ctrl for the sticky tap selects. [Netlist index](../../design/README.md) · [Shared symbols](../../design/rnl/sar8.rnl)
 
 ## View
 

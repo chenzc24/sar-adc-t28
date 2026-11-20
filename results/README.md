@@ -4,12 +4,13 @@ At experiment closeout, archive compact data, figures, warnings, and run identit
 
 On 2026-11-15, cleanup recovered 374.985 GiB of old waveforms on thu-song and retained the latest five-corner OR data. [Archive and deletion receipt](storage/20261115-song-waveform-cleanup.md)
 
-The standard-delay schematic passed five closed-loop corners. Its continuous and mismatch results are in the [timing regression](design/sar_std_delay_20261119.md). The previous 8.5 µm RC design passed five extracted SAR corners. [RC layout results](../Layout/results/sar_timing.md) · [Prior reset-OR adoption](design/reset_data_or_adoption_20261115.json)
+The current single-edge SAR was adopted on 2026-11-20. With foundry cell LPE and the extracted CDAC it read every expected code at FF cold, SS cold and TT, with 7.59 ns of read margin at SS cold and at most 0.114 LSB of signed settling error. The FF-cold all-terminal scan had no rule violations. [Adoption report](design/sar_single_edge_adoption_20261120.md) · [Settling reference](design/sar_single_edge_settling_reference_20261120.md)
 
-The routed standard-delay candidate removes the discrete QB MOM. The nine-stage QUIET implementation misses the 90 ns deadline at SS cold and hot. The measured cell-internal delay and the shorter return route are documented with the extracted clock-latch waveforms. [Routed SAR diagnosis](../Layout/results/sar_std_static_candidate_c_20261119.md)
+The designs removed after commit `c46d9d6` keep their results and source digests: the standard-delay [timing regression](design/sar_std_delay_20261119.md), the 8.5 µm RC [layout results](../Layout/results/sar_timing.md), the [routed standard-delay diagnosis](../Layout/results/sar_std_static_candidate_c_20261119.md), and the [reset-OR adoption](design/reset_data_or_adoption_20261115.json).
 
 | Verification | Evidence |
 | --- | --- |
+| Current single-edge SAR adoption | [Report](design/sar_single_edge_adoption_20261120.md) · [Record](design/sar_single_edge_adoption_20261120.json) · [Bit-6 aperture of the earlier 8/6 and 9/6 taps](design/sar_bit6_reference_overlay.md) |
 | Single-edge native SAR front end | [Registered 9/6 tap waveforms, bit-6 differential and 90 ns read margin](design/sar_registered_9_6.md) · [Earlier 8/6 timing gains, five PVT points, six mismatch draws and sampling restart](design/sar_single_edge_frontend.md) |
 | TT full-code test, 255 transitions and 256 code centers | [Static results](static/results.json) |
 | TT 1024-point FFT and ADCtoolbox | [FFT results](fft/results.json), [A/B spectra](fft/ab_spectrum.png), and [B's 12-plot panel](fft/b_toolbox_panel.png) |

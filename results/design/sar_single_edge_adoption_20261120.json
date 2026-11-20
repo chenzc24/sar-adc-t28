@@ -1,0 +1,933 @@
+{
+  "design_id": "sar8_single_edge_bitwise_v1",
+  "adopted_on": "2026-11-20",
+  "authority": "User decision, 2026-11-20",
+  "top": "sar_adc8_join_r4",
+  "files": {
+    "design/xtor/sar/single_edge.scs": {
+      "sha256": "5bd23b0027f20cd9cb3bc4037150afeddfbd597d7c8d29e9da0a15666f86c4aa",
+      "electrical_sha256": "9d0d4630f8a393318848e398c2aa1f59a27f63a60228d69e5b701f4a8382049c",
+      "simulated_sha256": "9d0d4630f8a393318848e398c2aa1f59a27f63a60228d69e5b701f4a8382049c"
+    },
+    "design/xtor/reference/single_edge_d2.scs": {
+      "sha256": "f269a9b35d6230f57d96ce2124b822443e6bb2265239bb61816f9e6bfb202845",
+      "electrical_sha256": "f40b1c2d835248d18b77a68e675510c0ea05ee218f0baad9bf1f028a37e6ad18",
+      "simulated_sha256": "f40b1c2d835248d18b77a68e675510c0ea05ee218f0baad9bf1f028a37e6ad18"
+    },
+    "design/xtor/bootstrap/bootstrap.scs": {
+      "sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+      "electrical_sha256": "619ad8e085417629be5393488be3a9b0bcb09af31b4f904854b73ec1df753f02",
+      "simulated_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c"
+    },
+    "design/xtor/cdac/cdac.scs": {
+      "sha256": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+      "electrical_sha256": "1085d286d7b319c1ce3c0c2e313db83f9da5d409dc78fe0ba6b04be71ada5d5f",
+      "simulated_sha256": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2"
+    },
+    "design/xtor/comparator/comparator.scs": {
+      "sha256": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+      "electrical_sha256": "b1eedf0cc09e9b0b7b9ee747f927fdae0fbc2fcff13a89a79e902628a987fa96",
+      "simulated_sha256": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3"
+    },
+    "design/top/adc_top.scs": {
+      "sha256": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
+      "simulated_as": "top/single_edge.scs",
+      "simulated_sha256": "2eb06ad52a9bfc007e563c6efaa82db8bfd078315846f4b96c628ebf0d8cfd64"
+    },
+    "design/dut.scs": {
+      "sha256": "087bceaf9d6b1372160e8071e74f3c7b5c28d987b83842935ce69f37f73492e8"
+    },
+    "design/manifest.json": {
+      "sha256": "d0a476babe166843b7d6a166177c05f93ec53ab3a9bedf054f43f7b0488323b7"
+    }
+  },
+  "external_clock": {
+    "period_ns": 100,
+    "high_ns": 45,
+    "low_ns": 55,
+    "read_points_ns": [
+      90,
+      98
+    ],
+    "note": "Rising edges keep their positions; the falling edge moved 5 ns later."
+  },
+  "architecture": {
+    "implementation": "design/xtor/sar/single_edge.scs",
+    "master": "sar8_se_ctrl",
+    "decisions_per_frame": 8,
+    "rising_event_counts": {
+      "cmp": 8,
+      "write": 8
+    },
+    "event_order": "cmp[i] < write[i] < cmp[i+1]",
+    "write_edge": "COMMIT is the only register clock; the next trial word is precomputed before DATA arrives",
+    "first_compare": "No settling window: tracking precharges every tap high. LIVE waits for SN delayed by two DEL250 cells with an AN2 qualifier so the bootstrap gates are off.",
+    "settling_window": {
+      "delay_cell": "DEL250D1BWP12T30P140",
+      "taps_by_compared_bit": {
+        "6": 11,
+        "5": 9,
+        "4": 7,
+        "3": 6,
+        "2": 5,
+        "1": 4,
+        "0": 4
+      },
+      "select": "Five sticky registers, each set by the commit of the preceding trial bit and cleared by sampling. Within a frame a tap only becomes shorter.",
+      "phase": "Two-flop Johnson counter; PHASE = PHA XOR PHB changes once per commit",
+      "criterion": "Signed TOP error from all 510 switched plates against the nominal rails: <=0.25 LSB required, <=0.125 LSB target at every comparison"
+    },
+    "acquisition": "DEL200 with an AN2 qualifier and CKBD1 delays only the rising bootstrap enable",
+    "preset": "PRESET = DONE OR SEQ_SAMPLE; DONE is registered on the eighth commit",
+    "terminal_voltage_measures": "AN2 write gate with VALID on the inner input; INV+INV+ND2 for the sticky-select ORs and the reference MSB OR; two-flop phase register"
+  },
+  "standard_cells": [
+    "AN2D1BWP12T30P140",
+    "BUFFD1BWP12T30P140",
+    "BUFFD2BWP12T30P140",
+    "CKBD1BWP12T30P140",
+    "DEL200D1BWP12T30P140",
+    "DEL250D1BWP12T30P140",
+    "DFCNQD1BWP12T30P140",
+    "INVD1BWP12T30P140",
+    "INVD2BWP12T30P140",
+    "LHCNDQD1BWP12T30P140",
+    "MUX2D1BWP12T30P140",
+    "ND2D1BWP12T30P140",
+    "OR2D1BWP12T30P140",
+    "TIEHBWP12T30P140",
+    "XOR2D1BWP12T30P140"
+  ],
+  "cdac_views": {
+    "nominal": "sar-acq-q6-xrc-s10-ssc-20261119c inputs (layout_paired_stacked, typical RC)",
+    "cworst": "work/layout/cdac-cworst package; evidence cdac-paired-plan-d-20261118-combined-cworst-t",
+    "gain_k": {
+      "nominal_ssc": 0.959355,
+      "cworst_ssc": 0.959423,
+      "cworst_ffc": 0.959421
+    }
+  },
+  "adopted_netlist_runs": {
+    "settling_and_deadline": [
+      {
+        "run_id": "sar8-sebit-ffc-cw-scan-b",
+        "analysis_run": "sar8-sebit-ffc-cw-scan-b",
+        "recipe_hash": "f6f45ae343550b1f62890e21d293c97573dea04d2f3a856536d8c9d92da8469c",
+        "scope": "FF cold, CBEST_T cells, CWORST_T CDAC, histories 255/0/85/170",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            83
+          ],
+          [
+            170,
+            172,
+            172
+          ]
+        ],
+        "min_read_margin_ns": 30.703,
+        "max_abs_signed_settling_lsb": 0.1136,
+        "max_abs_sample_close_error_lsb": 0.009,
+        "setup_hold_slack_ps": [
+          156.5,
+          33.6
+        ],
+        "min_commit_high_ps": 148.4,
+        "min_handoff_guard_ps": 441.5
+      },
+      {
+        "run_id": "sar8-sebit-ffc-cw-extreme-b",
+        "analysis_run": "sar8-sebit-ffc-cw-extreme-b",
+        "recipe_hash": "e7ce8fc88a78a6791f13caa9d3e91164b5a2b3c3f202441e33ae4b5619f92e11",
+        "scope": "FF cold, CBEST_T cells, CWORST_T CDAC, full-scale and low-to-mid steps",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            12,
+            7,
+            7
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            127.51,
+            128,
+            128
+          ]
+        ],
+        "min_read_margin_ns": 30.75,
+        "max_abs_signed_settling_lsb": 0.1139,
+        "max_abs_sample_close_error_lsb": 0.0091,
+        "setup_hold_slack_ps": [
+          156.7,
+          33.6
+        ],
+        "min_commit_high_ps": 148.4,
+        "min_handoff_guard_ps": 441.5
+      },
+      {
+        "run_id": "sar8-sebit-ssc-cw-verify-b",
+        "analysis_run": "sar8-sebit-ssc-cw-verify-b",
+        "recipe_hash": "5344bf4b9a2d6b82f6624dd7417b215aa47eb945ab8045960b277fd32d00836d",
+        "scope": "SS cold, CWORST_T cells, CWORST_T CDAC, 45 ns sampling, eight frames",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            85,
+            83,
+            83
+          ],
+          [
+            170,
+            172,
+            172
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "min_read_margin_ns": 7.591,
+        "max_abs_signed_settling_lsb": 0.0012,
+        "max_abs_sample_close_error_lsb": 0.0738,
+        "setup_hold_slack_ps": [
+          418.9,
+          88.9
+        ],
+        "min_commit_high_ps": 331.9,
+        "min_handoff_guard_ps": 1101.2
+      },
+      {
+        "run_id": "sar8-sebit-tt-nom-verify-b",
+        "analysis_run": "sar8-sebit-tt-nom-verify-b",
+        "recipe_hash": "f36a8e05ae08c0518ebb8a71d0a9a73af30e88f35356f1c7ddffaa32ac28d012",
+        "scope": "TT, typical cell LPE, nominal CDAC",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            85,
+            83,
+            83
+          ],
+          [
+            170,
+            172,
+            172
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "min_read_margin_ns": 24.92,
+        "max_abs_signed_settling_lsb": 0.0268,
+        "max_abs_sample_close_error_lsb": 0.0037,
+        "setup_hold_slack_ps": [
+          231.8,
+          50.0
+        ],
+        "min_commit_high_ps": 206.2,
+        "min_handoff_guard_ps": 631.2
+      }
+    ],
+    "restart": [
+      {
+        "run_id": "sar8-sebit-ffc-nom-restart-b",
+        "analysis_run": "sar8-sebit-ffc-nom-restart-b",
+        "recipe_hash": "2aaf4e53f0461f9cc542fbcd479953e7efba92f34cc725b60309eade21a8b9e3",
+        "scope": "accepted early sample during conversion",
+        "passed": true,
+        "writes": [
+          2,
+          8,
+          8
+        ],
+        "comparisons": [
+          3,
+          8,
+          8
+        ],
+        "reads": {
+          "307": 172,
+          "199": 83,
+          "207": 83,
+          "299": 172
+        }
+      }
+    ],
+    "terminal_voltage": {
+      "run_id": "sar8-minref-soa-ffc-song-bitwise-b",
+      "recipe_hash": "b4d07a9225d55a82fda268245e31a59440a737d08d5e4216d1bef28e7fae89e6",
+      "verdict": "numeric_pass_pending_resolution_review",
+      "violations": 0,
+      "devices_checked": 1902,
+      "devices": 1928,
+      "max_step_ps": 5.001,
+      "worst_peak": {
+        "instance": "XDUT.XCOMP.MNINP",
+        "pair": "gd",
+        "volts": 1.1879
+      },
+      "worst_duration": {
+        "instance": "XDUT.XCTRL.XTIM.XPHB.XREG.MM64",
+        "pair": "ds",
+        "sliding_ps": 75.1
+      }
+    }
+  },
+  "predecessor_netlist_runs": {
+    "note": "Same SAR except the four terminal-voltage changes (AN2 pin order, two OR forms, two-flop phase); the prior FF-cold scan had five violations.",
+    "prior_terminal_voltage_violations": [
+      {
+        "instance": "XDUT.XCTRL.XTIM.XW0.MM8",
+        "volts": 1.1053,
+        "sliding_ps": 310.2
+      },
+      {
+        "instance": "XDUT.XCTRL.XTIM.XPHASE.XREG.MM64",
+        "volts": 1.1058,
+        "sliding_ps": 100.9
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEL9_D.MM3",
+        "volts": 1.1142,
+        "sliding_ps": 154.7
+      },
+      {
+        "instance": "XDUT.XCTRL.XSEL4_D.MM3",
+        "volts": 1.1143,
+        "sliding_ps": 152.0
+      },
+      {
+        "instance": "XDUT.XREF.XINITIAL7.MM3",
+        "volts": 1.1244,
+        "sliding_ps": 222.1
+      }
+    ],
+    "corners": [
+      {
+        "run_id": "sar8-sebit-ssh-nom-verify-a",
+        "analysis_run": "sar8-sebit-ssh-nom-verify-a",
+        "recipe_hash": "896669f8294fc7e63f1d4cf9e0694ab06fe797126689700f5cbb2416029690bf",
+        "scope": "SS hot, CWORST_T cells, nominal CDAC",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            85,
+            83,
+            83
+          ],
+          [
+            170,
+            172,
+            172
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "min_read_margin_ns": 14.287,
+        "max_abs_signed_settling_lsb": 0.0424,
+        "max_abs_sample_close_error_lsb": 0.0003,
+        "setup_hold_slack_ps": [
+          378.4,
+          86.2
+        ],
+        "min_commit_high_ps": 271.3,
+        "min_handoff_guard_ps": 959.3
+      },
+      {
+        "run_id": "sar8-sebit-ffh-nom-verify-a",
+        "analysis_run": "sar8-sebit-ffh-nom-verify-a",
+        "recipe_hash": "c1fb5225068e01cab4d0545a575d9257db06832cbc7f9c13cadb5466ec20a61f",
+        "scope": "FF hot, CBEST_T cells, nominal CDAC",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            85,
+            83,
+            83
+          ],
+          [
+            170,
+            172,
+            172
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "min_read_margin_ns": 30.398,
+        "max_abs_signed_settling_lsb": 0.165,
+        "max_abs_sample_close_error_lsb": 0.001,
+        "setup_hold_slack_ps": [
+          169.3,
+          38.3
+        ],
+        "min_commit_high_ps": 138.8,
+        "min_handoff_guard_ps": 455.1
+      },
+      {
+        "run_id": "sar8-sebit-ffc-cw-boundary-a",
+        "analysis_run": "sar8-sebit-ffc-cw-boundary-a",
+        "recipe_hash": "a6e08beea25eaf9f20b9100acfa7633d6d301213837ff546fae737c3c21e2a14",
+        "scope": "FF cold, CWORST_T CDAC, 63/64 at gain-adjusted centres",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            63,
+            60,
+            60
+          ],
+          [
+            64,
+            61,
+            61
+          ],
+          [
+            65.61732835980186,
+            63,
+            63
+          ],
+          [
+            66.57674962554137,
+            64,
+            64
+          ]
+        ],
+        "min_read_margin_ns": 30.828,
+        "max_abs_signed_settling_lsb": 0.0908,
+        "max_abs_sample_close_error_lsb": 0.002,
+        "setup_hold_slack_ps": [
+          156.9,
+          36.4
+        ],
+        "min_commit_high_ps": 131.9,
+        "min_handoff_guard_ps": 451.9
+      },
+      {
+        "run_id": "sar8-sebit-ssc-cw-extreme-a",
+        "analysis_run": "sar8-sebit-ssc-cw-extreme-a",
+        "recipe_hash": "c4c051d90e0f0baa4fd130ead09cbf5635c6bb51f83804c4772e931a9fcf2ed9",
+        "scope": "SS cold, CWORST_T CDAC, full-scale and low-to-mid steps",
+        "all_pass": true,
+        "frames": 8,
+        "codes": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            128,
+            128,
+            128
+          ],
+          [
+            12,
+            7,
+            7
+          ],
+          [
+            127,
+            127,
+            127
+          ],
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            127.51,
+            128,
+            128
+          ]
+        ],
+        "min_read_margin_ns": 8.156,
+        "max_abs_signed_settling_lsb": 0.001,
+        "max_abs_sample_close_error_lsb": 0.0737,
+        "setup_hold_slack_ps": [
+          419.7,
+          94.1
+        ],
+        "min_commit_high_ps": 296.2,
+        "min_handoff_guard_ps": 1099.9
+      }
+    ],
+    "settling_reference": {
+      "run_id": "sar8-sebit-ffc-cw-scan-t24-a",
+      "worst_measured_lsb": 0.124,
+      "worst_estimate_lsb": 0.122,
+      "max_estimate_error_lsb": 0.015
+    },
+    "mismatch": [
+      {
+        "run_id": "sar8-sebit-ffc-nom-scan-s5101-a",
+        "analysis_run": "sar8-sebit-ffc-nom-scan-s5101-a-r2",
+        "recipe_hash": "65d79a60f008ec2bc33e6e85c75c7e5a733a127238b445bbf5467d9edf6c82b2",
+        "scope": "FF cold local mismatch seed 5101",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            82
+          ],
+          [
+            170,
+            172,
+            171
+          ]
+        ],
+        "min_read_margin_ns": 29.281,
+        "max_abs_signed_settling_lsb": 0.0873,
+        "max_abs_sample_close_error_lsb": 0.0091,
+        "setup_hold_slack_ps": [
+          173.0,
+          40.0
+        ],
+        "min_commit_high_ps": 141.7,
+        "min_handoff_guard_ps": 481.9
+      },
+      {
+        "run_id": "sar8-sebit-ffc-nom-scan-s5102-a",
+        "analysis_run": "sar8-sebit-ffc-nom-scan-s5102-a-r2",
+        "recipe_hash": "0f9bdbdd54d4f44ae943a1dae82cb9bc6ffe6daffbba234db039dc06dd78c16f",
+        "scope": "FF cold local mismatch seed 5102",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            82
+          ],
+          [
+            170,
+            172,
+            171
+          ]
+        ],
+        "min_read_margin_ns": 29.388,
+        "max_abs_signed_settling_lsb": 0.084,
+        "max_abs_sample_close_error_lsb": 0.0094,
+        "setup_hold_slack_ps": [
+          176.1,
+          39.9
+        ],
+        "min_commit_high_ps": 140.4,
+        "min_handoff_guard_ps": 481.9
+      },
+      {
+        "run_id": "sar8-sebit-ffc-nom-scan-s5103-a",
+        "analysis_run": "sar8-sebit-ffc-nom-scan-s5103-a-r2",
+        "recipe_hash": "819f2bdabb7f77442d7d2216a0c36123d7bdd9068c877ebff4317f630d49c333",
+        "scope": "FF cold local mismatch seed 5103",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            86
+          ],
+          [
+            170,
+            172,
+            174
+          ]
+        ],
+        "min_read_margin_ns": 29.581,
+        "max_abs_signed_settling_lsb": 0.0871,
+        "max_abs_sample_close_error_lsb": 0.0086,
+        "setup_hold_slack_ps": [
+          170.4,
+          40.0
+        ],
+        "min_commit_high_ps": 140.9,
+        "min_handoff_guard_ps": 479.9
+      },
+      {
+        "run_id": "sar8-sebit-ssc-nom-scan-s5101-a",
+        "analysis_run": "sar8-sebit-ssc-nom-scan-s5101-a-r2",
+        "recipe_hash": "8b00a062fcc83967c6e5c78d60fb75e43823912e87ee605d49e857eb037c8df1",
+        "scope": "SS cold local mismatch seed 5101",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            82
+          ],
+          [
+            170,
+            172,
+            171
+          ]
+        ],
+        "min_read_margin_ns": 12.965,
+        "max_abs_signed_settling_lsb": 0.0035,
+        "max_abs_sample_close_error_lsb": 0.0522,
+        "setup_hold_slack_ps": [
+          357.5,
+          79.5
+        ],
+        "min_commit_high_ps": 266.2,
+        "min_handoff_guard_ps": 966.3
+      },
+      {
+        "run_id": "sar8-sebit-ssc-nom-scan-s5102-a",
+        "analysis_run": "sar8-sebit-ssc-nom-scan-s5102-a-r2",
+        "recipe_hash": "e3a997cde87a3fa6b8607b332cc7ca1a7f1cba608fb5039b00ad11371149b7ef",
+        "scope": "SS cold local mismatch seed 5102",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            82
+          ],
+          [
+            170,
+            172,
+            171
+          ]
+        ],
+        "min_read_margin_ns": 13.397,
+        "max_abs_signed_settling_lsb": 0.0032,
+        "max_abs_sample_close_error_lsb": 0.0518,
+        "setup_hold_slack_ps": [
+          369.1,
+          80.6
+        ],
+        "min_commit_high_ps": 262.3,
+        "min_handoff_guard_ps": 972.8
+      },
+      {
+        "run_id": "sar8-sebit-ssc-nom-scan-s5103-a",
+        "analysis_run": "sar8-sebit-ssc-nom-scan-s5103-a-r2",
+        "recipe_hash": "e59ea257ab37261b7c0fee5afcbc5d42accd235a29fd9b25ae7649c3aaaa8778",
+        "scope": "SS cold local mismatch seed 5103",
+        "all_pass": true,
+        "frames": 4,
+        "codes": [
+          [
+            255,
+            255,
+            255
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            85,
+            83,
+            86
+          ],
+          [
+            170,
+            172,
+            174
+          ]
+        ],
+        "min_read_margin_ns": 13.845,
+        "max_abs_signed_settling_lsb": 0.0027,
+        "max_abs_sample_close_error_lsb": 0.0486,
+        "setup_hold_slack_ps": [
+          347.4,
+          79.9
+        ],
+        "min_commit_high_ps": 264.5,
+        "min_handoff_guard_ps": 948.0
+      }
+    ],
+    "restart": [
+      {
+        "run_id": "sar8-sebit-tt-nom-restart-a",
+        "analysis_run": "sar8-sebit-tt-nom-restart-a-r3",
+        "recipe_hash": "16ab656cb57481d41806a36eb71068aea1b315f1e14149264f0e9497dd1bd91a",
+        "scope": "accepted early sample during conversion",
+        "passed": true,
+        "writes": [
+          2,
+          8,
+          8
+        ],
+        "comparisons": [
+          2,
+          8,
+          8
+        ],
+        "reads": {
+          "307": 172,
+          "199": 83,
+          "207": 83,
+          "299": 172
+        }
+      },
+      {
+        "run_id": "sar8-sebit-ffc-nom-restart-a",
+        "analysis_run": "sar8-sebit-ffc-nom-restart-a-r3",
+        "recipe_hash": "336d2304d6879c73b21cc9e39ae948858e7a28f14535c9be0ddfdb41f3f7feb5",
+        "scope": "accepted early sample during conversion",
+        "passed": true,
+        "writes": [
+          2,
+          8,
+          8
+        ],
+        "comparisons": [
+          3,
+          8,
+          8
+        ],
+        "reads": {
+          "307": 172,
+          "199": 83,
+          "207": 83,
+          "299": 172
+        }
+      }
+    ]
+  },
+  "limits": [
+    "SAR inter-cell wiring is ideal; the layout is not drawn. Reserve about 5 ns of the SS-cold read margin for routing.",
+    "SS hot, FF hot, the six mismatch seeds and the 63/64 case ran on the predecessor netlist.",
+    "FF hot reads 0.165 LSB on the signed estimate. At most 0.03 LSB is plate settling; the rest is a static 0.3-0.9 mV reference-pin offset from switch leakage through the 50 ohm source.",
+    "The first comparison sees up to about 0.13 LSB of sampling-switch charge injection, roughly linear in the input.",
+    "Comparator mismatch shifted the six seeds by -1 to +3 codes; the offset has its own budget.",
+    "The LHCNDQD1 clock latch pulse widths are recorded but not yet compared with its databook limits.",
+    "Terminal voltage: numeric pass pending resolution review; repeat after layout."
+  ],
+  "removed_versions": {
+    "last_commit_with_them": "c46d9d6",
+    "design_files": [
+      "xtor/sar/{sar,reset_data_or,reset_data_or_std_delay,reset_data_or_std_static}.scs",
+      "xtor/clock/{delays,delays_quiet8p5,delays_std}.scs",
+      "xtor/common/standard_cells.scs",
+      "xtor/reference/{reference,minimal_direct,minimal_msb_d2}.scs",
+      "frozen/{quiet8p5_20261118,resetor_20261115}"
+    ],
+    "kept": "design/frozen/b as the immutable baseline of the behavioral models and B regression"
+  },
+  "report": "results/design/sar_single_edge_adoption_20261120.md"
+}

@@ -5,8 +5,8 @@ VCP (c_p 0) vsource type=pwl wave=[0 0.55000000000000004 9.900000000000001e-09 0
 XCOMP (c_clock c_outn c_outp VDD! c_n c_p 0) @COMPARATOR@
 CCN (c_outn 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1
 CCP (c_outp 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3 multi=2 mismatchflag=1
-XCRN (c_outn VDD! 0 c_unusedn) sar8p_inv
-XCRP (c_outp VDD! 0 c_unusedp) sar8p_inv
+XCRN (c_outn c_unusedn VDD! 0) INVD1BWP12T30P140
+XCRP (c_outp c_unusedp VDD! 0) INVD1BWP12T30P140
 // Independent floating-input kickback fixture, same nominal CDAC-side MOM geometry.
 VKINIT (k_init 0) vsource type=pwl wave=[0 0.9 10n 0.9 10.1n 0]
 VKP (k_sp 0) vsource dc=0.4505

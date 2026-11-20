@@ -8,7 +8,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/saradc/measure'))
 spec=importlib.util.spec_from_file_location('short_measure',ROOT/'tools/saradc/measure/reference_short.py')
 measure=importlib.util.module_from_spec(spec);spec.loader.exec_module(measure)
-from tools.saradc.reference_short import CODES, candidate_source, stimulus
+from tools.saradc.candidates import definitions
+from tools.saradc.reference_short import CODES, stimulus
 
 
 class MinimalReferenceTests(unittest.TestCase):
@@ -21,9 +22,12 @@ class MinimalReferenceTests(unittest.TestCase):
             self.assertTrue(all(0<=v<=.9 for v in points[1::2]))
             self.assertTrue(all(a<b for a,b in zip(points[::2],points[2::2])))
 
+    def reference_calls(self):
+        source=definitions((ROOT/'design/xtor/reference/single_edge_d2.scs').read_text())['sar8i_refword']
+        return re.findall(r'(?m)^\w+ \(([^)]+)\) (\w+)$',source)
+
     def test_nominal_and_preset_truth_tables(self):
-        source=candidate_source().split('ends sar8i_refword')[0]
-        calls=re.findall(r'(?m)^\w+ \(([^)]+)\) (\w+)$',source)
+        calls=self.reference_calls()
         for word in range(256):
             for preset in [False,True]:
                 nodes={'PRESET':preset,'VDD':True,'VSS':False}
@@ -33,21 +37,23 @@ class MinimalReferenceTests(unittest.TestCase):
                     if master=='iprobe':
                         if n[0] in nodes:nodes[n[1]]=nodes[n[0]]
                         else:nodes[n[0]]=nodes[n[1]]
-                    elif master=='sar8p_inv':nodes[n[-1]]=not nodes[n[0]]
-                    elif master=='sar8p_buf':nodes[n[-1]]=nodes[n[0]]
-                    elif master=='sar8p_nand2':nodes[n[-1]]=not(nodes[n[0]] and nodes[n[1]])
-                    elif master=='sar8p_or2':nodes[n[-1]]=nodes[n[0]] or nodes[n[1]]
+                        continue
+                    cell=re.match(r'(INV|BUFF|ND2|OR2)D\d',master).group(1)
+                    ins,out=n[:-3],n[-3]
+                    if cell=='INV':nodes[out]=not nodes[ins[0]]
+                    elif cell=='BUFF':nodes[out]=nodes[ins[0]]
+                    elif cell=='ND2':nodes[out]=not(nodes[ins[0]] and nodes[ins[1]])
+                    elif cell=='OR2':nodes[out]=nodes[ins[0]] or nodes[ins[1]]
                     else:self.fail(master)
                 expected=128 if preset else word
                 for bit in range(8):
                     for name in ['GPN','GPP']:self.assertEqual(nodes[name+str(bit)],bool(expected & (1<<bit)))
                     for name in ['GNN','GNP']:self.assertEqual(nodes[name+str(bit)],not bool(expected & (1<<bit)))
 
-    def test_direct_candidate_has_no_second_state_bank(self):
-        source=candidate_source().split('ends sar8i_refword')[0]
-        for token in ['sar8p_dffr','sar8p_nonoverlap','sar8s_step','CAP_CLK','rupolym']:
-            self.assertNotIn(token,source)
-        self.assertEqual(len(re.findall(r'(?m)^W\w+ .* iprobe$',source)),17)
+    def test_reference_word_has_no_storage(self):
+        masters={m for _,m in self.reference_calls()}
+        self.assertFalse(any(m.startswith(('DFCN','LHCN','DEL','MUX')) for m in masters))
+        self.assertEqual(sum(m=='iprobe' for _,m in self.reference_calls()),17)
 
     def test_code_threshold_tracks_supply(self):
         values={'vdd!':.81}

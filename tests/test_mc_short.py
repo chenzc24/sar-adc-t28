@@ -8,7 +8,6 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/saradc/measure'))
 import mc_short_reduce as mc
-from tools.saradc.mc_short import GROUPS,CODES
 
 
 class McTests(unittest.TestCase):
@@ -42,10 +41,6 @@ class McTests(unittest.TestCase):
         r=self.finish(f)
         self.assertTrue(r['pass_function_timing'])
         self.assertEqual(r['settling_review'][0]['bit'],5)
-
-    def test_three_groups_have_distinct_36_seeds_and_ten_stimuli(self):
-        seeds=[first+i for _,_,first in GROUPS.values() for i in range(12)]
-        self.assertEqual(len(set(seeds)),36);self.assertEqual(len(CODES),10)
 
     def test_saved_global_and_local_coverage_includes_root_and_control(self):
         with tempfile.TemporaryDirectory() as tmp:

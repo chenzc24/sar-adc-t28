@@ -4,19 +4,14 @@ from pathlib import Path
 import re
 from . import candidates
 ROOT=Path(__file__).resolve().parents[2]
-MODULES=('sampler','cdac','comparator','sar','reference','timing')
+MODULES=('sampler','cdac','comparator','sar','reference')
 
 
 def standard_cell_library(root=None, dut=None, mos_corner=None):
-    """Resolve the active ADC library, preserving source-bound historical transients."""
+    """Resolve the native standard-cell library include of the current ADC."""
     root = root or ROOT
     manifest = json.loads((root/'design/manifest.json').read_text(encoding='utf-8'))
-    legacy = 'tb/common/platform/library_include.scs'
     default = manifest['standard_cell_include']
-    if dut is not None and default != legacy:
-        timing_file = candidates.read(root)['modules']['timing']['target']
-        if ('include "' + timing_file + '"').encode() not in dut:
-            return (root/legacy).read_bytes()
     source = manifest.get('standard_cell_includes_by_mos', {}).get((mos_corner or '').upper(), default)
     return (root/source).read_bytes()
 
@@ -71,9 +66,6 @@ def build(name='current',root=None,candidate_overrides=None):
     # Native zero-voltage current probes join separately exposed interface pins.
     # They are ideal wires, not behavioral replacement gates or extra drivers.
     arity['iprobe']=2
-    arity['rupolym']=2  # Retained RC timing candidate.
-    # Native library header verified on thu-song: A1 A2 Z VDD VSS.
-    arity['OR2D1BWP12T30P140']=5
     # The installed DEL cells have ordered terminals I, Z, VDD, VSS.
     for size in (25, 50, 75, 100, 150, 200, 250):
         arity[f'DEL{size:03d}D1BWP12T30P140'] = 4
@@ -90,9 +82,6 @@ def build(name='current',root=None,candidate_overrides=None):
     if not any(v=='va' for v in profile.values()):return blobs
     mapping={row['master']:row['va'] for module,row in config['modules'].items() if profile[module]=='va'}
     timing=json.loads((root/'specs/arch.json').read_text())['behavior_models']['default_timing']
-    delays=config['timing_approximations']['models']
-    if profile['timing']=='va':mapping.update({old:'b_'+old for old in delays})
-    if profile['reference']=='va':mapping['sar8i_idle']='b_idle'
     for path in list(blobs):
         if path=='dut.scs':continue
         text=blobs[path].decode('utf-8')
@@ -104,7 +93,5 @@ def build(name='current',root=None,candidate_overrides=None):
     prelude=''.join('ahdl_include "'+p.name+'"\n' for p in files if p.suffix=='.va')
     prelude+='subckt b_sampler_bridge CLKS VOUT Vin\nXVA (CLKS VOUT Vin VDD! 0) b_sampler\nends b_sampler_bridge\n'
     prelude+='subckt b_sample_buffer A VDD VSS Y\nXVA (A VDD VSS Y) b_edge delay_s='+str(timing['sample_buffer_s'])+'\nends b_sample_buffer\n'
-    for old,delay in delays.items():
-        prelude+='subckt b_%s A VDD VSS Y\nXVA (A VDD VSS Y) b_delay rise_s=%.17g fall_s=%.17g\nends b_%s\n'%(old,delay['rise_s'],delay['fall_s'],old)
     blobs['dut.scs']=(prelude+blobs['dut.scs'].decode('utf-8')).encode('utf-8')
     return blobs

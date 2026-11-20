@@ -10,6 +10,14 @@ EXTERNAL = {'INVD1BWP12T30P140':['A','Y','VDD','VSS'],
             'OR2D1BWP12T30P140':['A1','A2','Z','VDD','VSS'],
             'ND2D1BWP12T30P140':['A','B','Y','VDD','VSS'],
             'DFCNQD1BWP12T30P140':['D','CK','RN','Q','VDD','VSS'],
+            'AN2D1BWP12T30P140':['A1','A2','Z','VDD','VSS'],
+            'XOR2D1BWP12T30P140':['A1','A2','Z','VDD','VSS'],
+            'MUX2D1BWP12T30P140':['I0','I1','S','Z','VDD','VSS'],
+            'BUFFD1BWP12T30P140':['I','Z','VDD','VSS'],
+            'BUFFD2BWP12T30P140':['I','Z','VDD','VSS'],
+            'CKBD1BWP12T30P140':['I','Z','VDD','VSS'],
+            'LHCNDQD1BWP12T30P140':['D','E','CDN','Q','VDD','VSS'],
+            'TIEHBWP12T30P140':['Z','VDD','VSS'],
             'iprobe':['p','n']}  # Native ideal current probe, two connected terminals.
 EXTERNAL.update({f'DEL{size:03d}D1BWP12T30P140':['I','Z','VDD','VSS']
                  for size in (25,50,75,100,150,200,250)})
@@ -43,13 +51,11 @@ def symbol(master, ports):
         members=[v for v in ports if m and re.fullmatch(re.escape(m[1])+r'\d+',v)] if m else [p]
         if len(members)<2:members=[p]
         seen.update(members);groups.append((p,members))
-    outputs={'Y','Q','OUTN','OUTP','VOUT','H','L','DATA','ACTIVE','PRESET','SAMPLE_MATCH','RST_DONE','NEXT_D','TOPN','TOPP'}
-    if master in {'sar8i_ctrl','sar_logic_8b_physical','sar8p_timing','b_sar'}:outputs|={'CMP_CLK','PHI_U','PHI_W'}
-    if master=='sar8p_bit':outputs|={'CODE','D'}
-    if 'refdrv' in master:outputs|={'GNN','GNP','GPN','GPP'}
-    if master in {'sar8p_sr', 'sar8p_sr_static'}:outputs|={'Q'}
-    exact={'sar8i_idle':{'PRESET','SAMPLE_MATCH'},'sar8p_timing':{'CMP_CLK','DATA','PHI_U','PHI_W'},
-           'sar8p_bit':{'CODE','D'},'sar_bootstrap_flat_8b_p':{'VOUT'},'sar_strongarm_t28':{'OUTN','OUTP'}}
+    outputs={'Y','Z','ZN','Q','OUTN','OUTP','VOUT','H','L','DATA','ACTIVE','PRESET','RST_DONE','TOPN','TOPP','TRACK',
+             'DELIVERED','COMMIT','NEXT0','NEXT1','NEXT2','NEXT3','NEXT4','NEXT5','NEXT6','NEXT7',
+             'TRIAL2','TRIAL3','TRIAL4','TRIAL5','TRIAL6'}
+    if master in {'sar8_se_ctrl','sar8_se_timing','b_sar'}:outputs|={'CMP_CLK','PHI_U','COMMIT','DATA'}
+    exact={'sar_bootstrap_flat_8b_p':{'VOUT'},'sar_strongarm_t28':{'OUTN','OUTP'}}
     if master in exact:outputs=exact[master]
     sides={'left':[],'right':[],'up':[],'down':[]}
     for p,members in groups:

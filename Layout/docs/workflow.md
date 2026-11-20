@@ -84,24 +84,9 @@ For native comparator fill, reuse `fill_cdac.py --module comparator --bounds x0 
 
 `prepare_comparator` defaults to the native MOM and receiving-gate loads of the standalone module. Use `--schematic` for a matching pre-layout control and `--integrated` for the current ten-frame ADC interface test. The integrated test defaults to TT. Use `--corner ssc|ssh|ffc|ffh` to select a condition in `specs/corners.json`. Passive devices use their TT sections. Run through the managed `register/submit/analyze/collect` flow and record the standalone TT and ADC interface measurement scopes in the respective result contexts. [Comparator evidence](../results/comparator.md)
 
-## SAR timing core and filled wrapper
+## SAR and Reference Modules
 
-Use `python -m Layout generate --module sar-timing --quiet-stages N` to reproduce a standard-delay placement and its independent transistor-level reference, with `N` equal to 5, 6 or 9. For five DEL250 cells followed by a DEL200, pass `--quiet-stages 6 --quiet-final-ps 200`. The five- and six-stage generators place the sample-enable cells alongside QUIET on 13 rows. Each placement gets its own Innovus routing abstract, detailed route and extracted reference. The nine-stage generator reproduces the earlier route inputs. The integrated testbench preparation reads the delay-cell variant from the native LVS reference and selects the external-cell LPE model from the macro extraction corner. [Stage comparison](../results/sar_quiet_lpe_20261119.md) · [Nine-stage baseline](../results/sar_std_static_candidate_c_20261119.md)
-
-Generate compact placement and source-bound nets with `python -m Layout generate --module sar-timing`. The saved OA views are listed in the layout manifest. The core uses native standard cells, custom RC banks and metal added by Innovus. The wrapper adds the OD/PO and metal density cells. The signoff evidence contains the pre-ECO routing abstract, Innovus Tcl, routed DEF, metal repairs, final intent, fill inventory and audit in its `review/` directory.
-
-For the revised bit rows, local decoupling and distributed supply network, run `python -m Layout generate --module sar-timing --array`. The generated `work/layout/sar-refinement/seed` contains the placement, independent array CDL, native helpers and electrical intent. Build the private OA seed, stream it with its terminal readback, then run `python -m Layout.tools.physical.sar_route INTENT CHECKPOINT ROUTE_DIR`. Run the SAR Innovus Tcl in that directory and use `python -m Layout.tools.physical.sar_overlay INTENT CHECKPOINT ROUTE_DIR` to check connectivity and emit the native route geometry. Run the generated `apply-route.il` with `sar_timing.il` and the staging `cds.lib` available, and set `SAR_ROUTED_VIEW` to a fresh private view. The recorded seed and route hashes identify the physical inputs. Regenerate the abstract and detailed route whenever the placement changes.
-
-Use the array CDL for transistor LVS and request both rails in xRC. The revised flow checks that each rail contributes extracted resistors. The filled wrapper exposes the continuous M5 headers for multiple top-level connections. Keep the foundry metal fill and generate the resistor-channel diffusion fill from the verified utility output using `Layout.tools.physical.sar_resistor_fill`. The full-chip run owns the final M9 sliding windows. [Physical comparison and supply measurements](../results/sar_timing_refinement.md)
-
-```text
-python -m Layout physical UNIQUE_CORE_ID --module sar-timing --through pex
-python -m Layout physical UNIQUE_FILLED_ID --module sar-timing-filled --through pex
-python -m Layout.tools.analysis.check_sar_timing FINAL_INTENT_JSON CORE_CHECKPOINT --require-complete
-python -m Layout.tools.simulation.prepare_sar_timing FILLED_XRC_DIR FILLED_CHECKPOINT RUN_ID --core CORE_CHECKPOINT --corner ssc
-```
-
-Use the managed runner to register, submit, analyze and collect the generated recipe at TT, SS cold/hot and FF cold/hot. For each run, its extracted netlist, raw stream digest, receiver coordinates and source hashes are bound in the receipt. Device usage is the union of legal standard-cell sites and native PCell bounds. The filled view is the interface for top-level integration. [Verified OA views, timing and scope](../results/sar_timing.md)
+The single-edge SAR (`design/xtor/sar/single_edge.scs`) and its D2 reference (`design/xtor/reference/single_edge_d2.scs`) are not drawn yet. The floorplan reserves space for them, and their masters and ports are in the interfaces. Start a new layout flow from those sources. The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
 
 ## Bootstrap Module
 

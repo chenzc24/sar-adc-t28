@@ -95,10 +95,10 @@
       }
     },
     "sar": {
-      "selected": "std_delay_qualified",
-      "target": "xtor/sar/reset_data_or_std_delay.scs",
+      "selected": "single_edge",
+      "target": "xtor/sar/single_edge.scs",
       "interfaces": {
-        "sar8i_ctrl": [
+        "sar8_se_ctrl": [
           "CMP_CLK",
           "CODE0",
           "CODE1",
@@ -118,34 +118,30 @@
           "D5",
           "D6",
           "D7",
-          "PHI_U",
+          "COMMIT",
           "SAMPLE",
           "VDD",
           "VSS",
           "ACTIVE"
+        ],
+        "sar8_se_acquire": [
+          "REQUEST",
+          "VDD",
+          "VSS",
+          "TRACK"
         ]
       },
       "candidates": {
-        "b": {
-          "file": "design/xtor/sar/sar.scs",
-          "status": "historical_implementation",
-          "evidence": "results/README.md; individual records remain bound to their source hashes"
-        },
-        "reset_data_or": {
-          "file": "design/xtor/sar/reset_data_or.scs",
-          "status": "previous_implementation",
-          "evidence": "results/design/reset_data_or_adoption_20261115.json"
-        },
-        "std_delay_qualified": {
-          "file": "design/xtor/sar/reset_data_or_std_delay.scs",
-          "status": "current_schematic_implementation",
-          "evidence": "results/design/sar_std_delay_20261119.json"
+        "single_edge": {
+          "file": "design/xtor/sar/single_edge.scs",
+          "status": "current_implementation",
+          "evidence": "results/design/sar_single_edge_adoption_20261120.json"
         }
       }
     },
     "reference": {
-      "selected": "minimal_msb_d2",
-      "target": "xtor/reference/minimal_msb_d2.scs",
+      "selected": "single_edge_d2",
+      "target": "xtor/reference/single_edge_d2.scs",
       "interfaces": {
         "sar8i_refword": [
           "CODE0",
@@ -202,102 +198,13 @@
           "VSS",
           "RST_DONE",
           "PRESET"
-        ],
-        "sar8i_idle": [
-          "ACTIVE",
-          "SAMPLE",
-          "VDD",
-          "VSS",
-          "PRESET",
-          "SAMPLE_MATCH"
         ]
       },
       "candidates": {
-        "b": {
-          "file": "design/xtor/reference/reference.scs",
-          "status": "historical_implementation",
-          "evidence": "results/README.md; individual records remain bound to their source hashes"
-        },
-        "minimal_direct": {
-          "file": "design/xtor/reference/minimal_direct.scs",
-          "status": "previous_implementation_with_open_soa_failures",
-          "evidence": "results/design/minimal_direct_adoption_20261115.json"
-        },
-        "minimal_msb_d2": {
-          "file": "design/xtor/reference/minimal_msb_d2.scs",
+        "single_edge_d2": {
+          "file": "design/xtor/reference/single_edge_d2.scs",
           "status": "current_implementation",
-          "evidence": "results/design/minimal_msb_d2_adoption_20261115.json"
-        }
-      }
-    },
-    "timing": {
-      "selected": "std_delay",
-      "target": "xtor/clock/delays_std.scs",
-      "interfaces": {
-        "sar8p_delay_valid": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8p_delay_write": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8p_delay_quiet": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8p_delay_capture": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8p_delay_bbm": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8r_edge": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8s_step": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ],
-        "sar8i_guard": [
-          "A",
-          "VDD",
-          "VSS",
-          "Y"
-        ]
-      },
-      "candidates": {
-        "b": {
-          "file": "design/xtor/clock/delays.scs",
-          "status": "previous_implementation",
-          "evidence": "results/README.md; individual records remain bound to their source hashes"
-        },
-        "quiet8p5": {
-          "file": "design/xtor/clock/delays_quiet8p5.scs",
-          "status": "previous_implementation",
-          "evidence": "results/design/sar_timing_quiet8p5_20261118.json"
-        },
-        "std_delay": {
-          "file": "design/xtor/clock/delays_std.scs",
-          "status": "current_schematic_implementation",
-          "evidence": "results/design/sar_std_delay_20261119.json"
+          "evidence": "results/design/sar_single_edge_adoption_20261120.json"
         }
       }
     }

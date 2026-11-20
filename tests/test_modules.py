@@ -93,7 +93,9 @@ class ModuleChecks(unittest.TestCase):
             if key=='sampler':continue  # Explicit three-to-five pin wrapper.
             text=(entry.ROOT/'design/behav/veriloga'/row['file']).read_text()
             pins=re.search(r'module '+row['va']+r'\(([^)]+)\)',text).group(1).split(',')
-            self.assertEqual(pins,manifest[row['master']]['ports'])
+            # The single-edge SAR drives the B update position with its COMMIT write edge.
+            physical=[{'COMMIT':'PHI_U'}.get(p,p) for p in manifest[row['master']]['ports']]
+            self.assertEqual(pins,physical)
 
     def test_edited_current_leaf_is_packaged_without_changing_frozen_regression(self):
         with tempfile.TemporaryDirectory() as d:

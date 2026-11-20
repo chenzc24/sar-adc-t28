@@ -130,10 +130,10 @@
         "XREF"
       ],
       "basis": "space_reservation",
-      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+      "uncertainty": "The single-edge D2 reference layout (design/xtor/reference/single_edge_d2.scs) is not drawn yet. Unmeasured space reservation, no statistical confidence or final fit claim"
     },
     {
-      "id": "sar_timing",
+      "id": "sar",
       "label": "SAR + timing",
       "origin": [
         123,
@@ -147,16 +147,12 @@
       "instances": [
         "XCTRL",
         "XSEQ",
-        "XIDLE",
+        "XDONE",
+        "XPRESET",
         "XSAMPLE"
       ],
       "basis": "space_reservation",
-      "uncertainty": "The filled macro fits this reservation at local origin (0.5, 0) um. The top-level interconnect and supply grid have separate allowances.",
-      "physical_progress": "Layout/results/sar_timing.json",
-      "native_placement_offset_um": [
-        0.5,
-        0
-      ]
+      "uncertainty": "The single-edge SAR layout (design/xtor/sar/single_edge.scs) is not drawn yet. This reservation was sized for the previous architecture's routed SAR macro and holds the SAR controller, acquisition delay and the top-level XDONE, XPRESET and XSAMPLE standard cells until a measured outline replaces it."
     }
   ],
   "reasoning": "CDAC anchors measured area; bootstrap and comparator sit near analog north side; reference drives CDAC switch edge from south; SAR/clock placed east across routing corridor.",

@@ -146,15 +146,6 @@ def analyze(context,trace,probes):
                                   logic_overlap_duration_s=sum(overlap.values()),overlap_by_side_bit_s=overlap,first_overlap=first_overlap,
                                   gate_settle_s=gate_last_outside,gate_settle_band_v=.09,
                                   scope='Actual CDAC gate load; gate settling to 10 percent of the rail after update; half-supply overlap proxy, not MOS-current conduction')
-    if 'timing' in modules:
-        row=[]
-        for i in range(10):
-            rises=crossing('t_out'+str(i),1,60e-9,90e-9);falls=crossing('t_out'+str(i),-1,100e-9,130e-9)
-            valid=bool(rises and falls)
-            row.append(dict(helper=i,rise_delay_s=rises[0]-60.05e-9 if rises else None,
-                            fall_delay_s=falls[0]-100.05e-9 if falls else None,pulse_width_s=falls[0]-rises[0] if valid else None))
-            if not valid:issues.append(dict(module='timing',issue='missing_edge',helper=i))
-        metrics['timing']=row
     if 'sar' in modules:
         rows=[]
         for j,want in enumerate(context['expected_codes']):

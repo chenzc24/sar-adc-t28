@@ -17,7 +17,7 @@
       "file": "comparator.va"
     },
     "sar": {
-      "master": "sar8i_ctrl",
+      "master": "sar8_se_ctrl",
       "va": "b_sar",
       "file": "sar.va"
     },
@@ -33,8 +33,7 @@
       "cdac": "xtor",
       "comparator": "xtor",
       "sar": "xtor",
-      "reference": "xtor",
-      "timing": "xtor"
+      "reference": "xtor"
     },
     "frozen-b": {
       "regression_only": true
@@ -44,8 +43,7 @@
       "cdac": "va",
       "comparator": "va",
       "sar": "va",
-      "reference": "va",
-      "timing": "va"
+      "reference": "va"
     },
     "comparator_xtor": {
       "base": "behavioral",
@@ -62,69 +60,17 @@
     "control_xtor": {
       "base": "behavioral",
       "sar": "xtor",
-      "reference": "xtor",
-      "timing": "xtor"
+      "reference": "xtor"
     },
     "sar_xtor": {
       "base": "behavioral",
-      "sar": "xtor",
-      "timing": "xtor"
+      "sar": "xtor"
     },
     "reference_xtor": {
       "base": "behavioral",
       "reference": "xtor"
-    },
-    "timing_xtor": {
-      "base": "behavioral",
-      "timing": "xtor"
     }
   },
   "scope": "Named profiles or arbitrary per-module overrides. Independent module characterization and TT top smoke tests; native MC/terminal qualification does not transfer to VA.",
-  "virtuoso": "Use the existing bridge and ADE setup. These profiles select netlist/VA cell implementations; they do not replace or modify an OA database.",
-  "timing_approximations": {
-    "source": "results/blocks/sar8-blocks-tt-v1-analysis-v1/result.json",
-    "scope": "Single native receiver-gate load at TT, 0.9 V, 100 ps edges; asymmetric RC/clear model, not extracted SAR fanout/PVT qualification",
-    "models": {
-      "sar8p_delay_valid": {
-        "rise_s": 1.5141696910499247e-10,
-        "fall_s": 1.464789039287528e-11
-      },
-      "sar8p_delay_write": {
-        "rise_s": 3.9717285297724126e-10,
-        "fall_s": 2.7570148925101733e-11
-      },
-      "sar8p_delay_quiet": {
-        "rise_s": 2.5054012195082247e-09,
-        "fall_s": 7.27909149606578e-11
-      },
-      "sar8p_delay_capture": {
-        "rise_s": 8.851498640102094e-10,
-        "fall_s": 4.209558631677038e-11
-      },
-      "sar8p_delay_bbm": {
-        "rise_s": 1.5141696910499247e-10,
-        "fall_s": 1.464789039287528e-11
-      },
-      "sar8r_delay": {
-        "rise_s": 1.6957830305477116e-09,
-        "fall_s": 5.842914947292042e-11
-      },
-      "sar8s_step": {
-        "rise_s": 5.601012176451113e-10,
-        "fall_s": 3.3235974336337837e-11
-      },
-      "sar8i_guard": {
-        "rise_s": 4.932377317322231e-09,
-        "fall_s": 1.1495248161304333e-10
-      },
-      "sar8r_edge": {
-        "rise_s": 1.7235064351746818e-09,
-        "fall_s": 2.3608349068638445e-11
-      },
-      "sar8p_clkbuf": {
-        "rise_s": 1.3265016169154159e-11,
-        "fall_s": 1.5823982658285933e-11
-      }
-    }
-  }
+  "virtuoso": "Use the existing bridge and ADE setup. These profiles select netlist/VA cell implementations; they do not replace or modify an OA database."
 }

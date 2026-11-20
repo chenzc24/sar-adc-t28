@@ -34,16 +34,14 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
     else:blobs['fixture_models.scs']=b'// VA masters already included by dut.scs\n'
     va=views.registry(root)['modules'];mapping={module:(va[module]['va'] if profile[module]=='va' else va[module]['master']) for module in va}
     substitutions={k.upper():v for k,v in mapping.items()}
-    timing_names=['sar8p_delay_valid','sar8p_delay_write','sar8p_delay_quiet','sar8p_delay_capture','sar8p_delay_bbm','sar8r_delay','sar8s_step','sar8i_guard','sar8r_edge','sar8p_clkbuf']
-    substitutions.update({name:('b_'+name if profile['timing']=='va' else name) for name in timing_names})
     for module in modules:
         text=(root/tests[module]['template']).read_text(encoding='utf-8')
         for key,value in substitutions.items():text=text.replace('@'+key+'@',value)
         if re.search(r'@\w+@',text):raise ValueError('Unresolved fixture placeholder: '+module)
         blobs[module+'_fixture.scs']=text.encode('utf-8')
     if 'sar' in modules:
-        sar_view=['behavioral','sar='+profile['sar'],'timing='+profile['timing']]
-        overrides={k:v for k,v in (candidate or {}).items() if k in {'sar','timing'}}
+        sar_view=['behavioral','sar='+profile['sar']]
+        overrides={k:v for k,v in (candidate or {}).items() if k=='sar'}
         sb=views.build(sar_view,root,overrides)
         # Applying source-level mappings changes only the generated SAR definition
         # file. Keep it private to the standalone environment when needed.
@@ -51,9 +49,6 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
         stalled=top.replace('tb_sar_top','tb_sar_stalled_top')
         stalled,count=re.subn(r'(\)\s+b_comparator)(?=\s*(?:\n|$))',r'\1 force_stuck=1',stalled)
         if count!=1:raise ValueError('SAR stalled fixture must bind exactly one behavioral comparator')
-        if profile['timing']=='va' or profile['sar']=='va':
-            # The global source files already use the same selected module views.
-            pass
         blobs['sar_environment.scs']=(top+'\n'+stalled).encode('utf-8')
     old=(root/'tb/top/short/test.scs').read_text(encoding='utf-8')
     platform='\n'.join(l for l in old.splitlines() if l.startswith('include "/home/process/') or l.startswith('include "library_include'))
@@ -66,7 +61,6 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
             'cdac':['d_pre','d_n','d_p','d_rn','d_rp'],
             'comparator':['c_clock','c_n','c_p','c_outn','c_outp','k_clock','k_n','k_p'],
             'reference':['r_phi','r_reset','r_done']+['r_'+g+str(k) for g in ['gnn','gnp','gpn','gpp'] for k in range(8)],
-            'timing':['t_clock']+['t_out'+str(k) for k in range(10)],
             'sar':['s_clock']+['s_d'+str(k) for k in range(8)]+['XSAR.'+n for n in ['CMP_CLK','PHI_U','SEQ_SAMPLE','COMP_N','COMP_P']]}
     groups['sar']+=['XSTALLED.CMP_CLK','XSTALLED.PHI_U']+['f_d'+str(k) for k in range(8)]
     for module in modules:signals.extend(groups[module])

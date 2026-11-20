@@ -8,19 +8,19 @@ import re
 from .rnl import Sheet, POWER, GROUND, instances, strip
 
 def top(s):
-    s.text(-24,105,'SAR8 / current transistor hierarchy',2)
-    s.text(-24,97,'VIN pair → Bootstrap → MOM CDAC → StrongARM → asynchronous SAR',1.15)
-    for n,x,y in [('XSAMPLE',0,67),('XIDLE',65,67),('XSEQ',130,67),
+    s.text(-24,105,'SAR8 / single-edge transistor hierarchy',2)
+    s.text(-24,97,'VIN pair → Bootstrap → MOM CDAC → StrongARM → single-edge asynchronous SAR',1.15)
+    for n,x,y in [('XSAMPLE',0,67),('XSEQ',65,67),('XDONE',150,67),('XPRESET',195,67),
                   ('XBOOTN',0,12),('XBOOTP',0,-25),('XCDAC',72,-7),
                   ('XCOMP',137,-7),('XCTRL',204,-7),('XREF',72,-91),
                   ('CL_COMP_N',168,-45),('CL_COMP_P',184,-45),('CL_CMP_CLK',222,-45)]:s.place(n,x,y)
-    for n,label in [('XSAMPLE','Sample buffer'),('XIDLE','Idle / preset'),('XSEQ','Sample edge'),
+    for n,label in [('XSAMPLE','Sample buffer'),('XSEQ','Acquire edge'),('XPRESET','Preset'),
                     ('XBOOTN','Bootstrap -'),('XBOOTP','Bootstrap +'),('XCDAC','MOM CDAC'),
-                    ('XCOMP','StrongARM'),('XCTRL','Async SAR'),('XREF','Reference word')]:
+                    ('XCOMP','StrongARM'),('XCTRL','Single-edge SAR'),('XREF','Reference word')]:
         x,y,_=s.pos[n];s.text(x-12,y+s.geometry[n].height/2+5,label,2.4)
-    s.route('XSAMPLE:Y','XIDLE:SAMPLE')
-    s.route('XIDLE:SAMPLE_MATCH','XSEQ:A')
-    s.join('SEQ_SAMPLE',['XSEQ:Y','XBOOTN:CLKS','XBOOTP:CLKS'],'x',-25,color='clock')
+    s.route('XSAMPLE:Z','XSEQ:REQUEST')
+    s.route('XDONE:Y','XPRESET:A1')
+    s.join('SEQ_SAMPLE',['XSEQ:TRACK','XBOOTN:CLKS','XBOOTP:CLKS'],'x',-25,color='clock')
     s.route('XBOOTN:VOUT','XCDAC:TOPN',[(32,12),(32,24),(98,24),(98,s.pin('XCDAC:TOPN')[0][1])])
     s.route('XBOOTP:VOUT','XCDAC:TOPP',[(36,-25),(36,-31),(101,-31),(101,s.pin('XCDAC:TOPP')[0][1])])
     for n in ['TOPN','TOPP']:

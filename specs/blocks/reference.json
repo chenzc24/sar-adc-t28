@@ -56,11 +56,11 @@
     "RST_DONE",
     "PRESET"
   ],
-  "implementation": "design/xtor/reference/minimal_msb_d2.scs",
-  "acceptance": "docs/verification.md; native full-DUT reference_short entry; historical capture-count test is not current acceptance",
+  "implementation": "design/xtor/reference/single_edge_d2.scs",
+  "acceptance": "results/design/sar_single_edge_adoption_20261120.md; native full-DUT single_edge_lpe and reference_short entries; historical capture-count test is not current acceptance",
   "system_contract": "specs/arch.json",
   "details_pointer": "/blocks/reference_control",
   "candidates": "specs/candidates.json#/modules/reference",
   "historical_independent_test": "specs/block_tests.json#/tests/reference",
-  "current_test": "python -m tools.saradc.reference_short prepare --version minimal --corner CORNER --revision NEW_ID"
+  "current_test": "python -m tools.saradc.reference_short prepare --version current --corner CORNER --revision NEW_ID"
 }

@@ -13,6 +13,31 @@ CODES = short.CODES + [0x55, 0xAA, 127, 128]
 MC_CODES = [255, 0, 128, 127, 85, 170]
 # DFCNQD1BWP12T30P140 databook CP minimum high, scalar reference in ps.
 CP_HIGH_PS = dict(tt=19.3214, ssc=30.0598, ssh=26.2451, ffc=15.7166, ffh=15.9454)
+# Accepted early sample 5 ns into the first conversion, then one normal frame.
+RESTART = dict(openings=[60, 110, 210], stop_ns=308, reads=[[199, 85], [299, 170]])
+
+
+def use_restart(blobs, ctx, recipe):
+    acquisition_ns = round(ctx['acquisition_s']*1e9, 4)
+    edges = ['0 0']
+    for t in RESTART['openings']:
+        edges += ['%gn 0' % t, '%gn SUP' % (t+.1), '%gn SUP' % (t+acquisition_ns), '%gn 0' % (t+acquisition_ns+.1)]
+    tb = re.sub(r'(?m)^VSAMPLE .*$', 'VSAMPLE (SAMPLE 0) vsource type=pwl wave=['+' '.join(edges)+']',
+                blobs['tb.scs'].decode())
+    codes = [255, 85, 170]
+    a, b = [t-.2 for t in RESTART['openings'][1:]]
+    for src, node, sign in [('VVINP', 'VINP_SRC', 1), ('VVINN', 'VINN_SRC', -1)]:
+        vals = [.45+sign*(-.9+(c+.5)*1.8/256)/2 for c in codes]
+        wave = '0 %.17g %gn %.17g %gn %.17g %gn %.17g %gn %.17g' % (vals[0], a, vals[0], a+.1, vals[1],
+                                                               b, vals[1], b+.1, vals[2])
+        tb = re.sub(r'(?m)^'+src+r' .*$', src+' ('+node+' 0) vsource type=pwl wave=['+wave+']', tb)
+    blobs['tb.scs'] = tb.encode()
+    deck = re.sub(r'(?m)^(?:XPROBE |ahdl_include "observer.va").*\n', '', blobs['test.scs'].decode())
+    stop = RESTART['stop_ns']
+    blobs['test.scs'] = re.sub(r'(tran_short tran stop=)\S+', r'\g<1>%dn' % stop, deck).encode()
+    ctx.update(expected_codes=codes, frames=3, expected_stop_s=stop*1e-9, input_code_coordinates=codes,
+               accepted_codes={}, aborted_frame=0, restart_plan=RESTART, acquisition_s=acquisition_ns*1e-9)
+    recipe['expected_stop_s'] = ctx['expected_stop_s']
 
 
 def prepare(corner, revision, seed=None, liberty_tables=None, restart=False, cell_lpe=False):
@@ -20,7 +45,7 @@ def prepare(corner, revision, seed=None, liberty_tables=None, restart=False, cel
         raise ValueError('Use a project PVT point or a cold local MC point')
     if restart and (seed is not None or corner != 'tt'):
         raise ValueError('The directed restart case uses nominal TT')
-    dut = (ROOT/'design/dut_single_edge.scs').read_bytes()
+    dut = (ROOT/'design/dut.scs').read_bytes()
     sources = {'dut.scs': dut}
     for name in re.findall(r'^include "([^"]+)"', dut.decode(), re.M):
         sources[name] = (ROOT/'design'/name).read_bytes()
@@ -79,20 +104,7 @@ def prepare(corner, revision, seed=None, liberty_tables=None, restart=False, cel
         ROOT/'work/output/managed_execution/runs/sar-qlpe-dff-ccs-five-20261119a/collected/derived/result.json')
     blobs['dff.json'] = tables.read_bytes()
     if restart:
-        tb = blobs['tb.scs'].decode()
-        pulse = '0 0 60n 0 60.1n SUP 100n SUP 100.1n 0 105n 0 105.1n SUP 145n SUP 145.1n 0 205n 0 205.1n SUP 245n SUP 245.1n 0'
-        tb = re.sub(r'(?m)^VSAMPLE .*$', 'VSAMPLE (SAMPLE 0) vsource type=pwl wave=['+pulse+']', tb)
-        for src,node,sign in [('VVINP','VINP_SRC',1),('VVINN','VINN_SRC',-1)]:
-            vals = [.45+sign*(-.9+(c+.5)*1.8/256)/2 for c in (255,85,170)]
-            wave = '0 %.17g 104.8n %.17g 104.9n %.17g 204.8n %.17g 204.9n %.17g' % (
-                vals[0],vals[0],vals[1],vals[1],vals[2])
-            tb = re.sub(r'(?m)^'+src+r' .*$', src+' ('+node+' 0) vsource type=pwl wave=['+wave+']', tb)
-        blobs['tb.scs'] = tb.encode()
-        deck = re.sub(r'(?m)^(?:XPROBE |ahdl_include "observer.va").*\n', '', deck)
-        blobs['test.scs'] = re.sub(r'(tran_short tran stop=)\S+', r'\g<1>304n', deck).encode()
-        ctx.update(expected_codes=[255,85,170], frames=3, expected_stop_s=304e-9,
-                   input_code_coordinates=[255,85,170], accepted_codes={}, aborted_frame=0)
-        recipe['expected_stop_s'] = ctx['expected_stop_s']
+        use_restart(blobs, ctx, recipe)
         blobs['single_edge_restart.py'] = (ROOT/'tools/saradc/measure/single_edge_restart.py').read_bytes()
     ctx['source_hashes'] = {k: hashlib.sha256(v).hexdigest() for k, v in blobs.items() if k != 'context.json'}
     blobs['context.json'] = (json.dumps(ctx, indent=2)+'\n').encode()

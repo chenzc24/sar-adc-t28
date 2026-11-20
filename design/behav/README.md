@@ -10,7 +10,7 @@ The models use the shared specification. Their B references and mixed-hierarchy 
 | Comparator | [comparator.py](python/comparator.py) | [comparator.va](veriloga/comparator.va) |
 | Asynchronous SAR | [sar.py](python/sar.py) | [sar.va](veriloga/sar.va) |
 | Reference control and delay | [reference.py](python/reference.py) | [reference.va](veriloga/reference.va) |
-| Asymmetric RC and clear delays | Separate characterization settings | [timing.va](veriloga/timing.va) |
+| Asymmetric RC and clear delays of the removed reset-OR SAR | None; no current view selects it | [timing.va](veriloga/timing.va) |
 | ADC assembly | [sar_adc.py](python/sar_adc.py) | [sar_adc_b.va](veriloga/sar_adc_b.va) |
 
 The Python top level accepts separate `sampler/cdac/comparator/sar/reference` implementations and defaults to those listed above. The public imports are `AdcSpec`, `AnalogConfig`, `FrameResult`, and `SarAdcModel`. The numerical model uses effective bit weights and a first-order trial-settling approximation. It retains the event and code definitions for the original eight scenarios and supports algorithm, error-budget, and calibration studies.
@@ -56,7 +56,7 @@ The view registry is the configuration source. `current` uses the current transi
 | `comparator_xtor` | Comparator | Verilog-A |
 | `cdac_xtor` | CDAC and switches | Verilog-A |
 | `sampler_xtor` | Bootstrap sampler | Verilog-A |
-| `control_xtor` | SAR, reference control, and actual delays | Verilog-A |
+| `control_xtor` | SAR with its native delay chain, and reference control | Verilog-A |
 
 A generated wrapper adapts the three-terminal Bootstrap with global supplies to the five-port sampler model. Other modules use their declared scalar port order. Use the existing Virtuoso connection for native work. These packages select the text netlist views.
 
@@ -72,6 +72,6 @@ A generated wrapper adapts the three-terminal Bootstrap with global supplies to 
 
 Use the behavioral testbench guide for conditions and the results index for measured evidence. The model audit tracks historical 10-bit, external bit-clock, and experiment-specific models. [Testbench guide](../../tb/behav/README.md) · [Results](../../results/behav/README.md) · [Model audit](../../results/behav/model_audit.json)
 
-Override any of the six modules after selecting a view, for example `--view current --view comparator=va --view reference=va`. `sar_xtor / reference_xtor / timing_xtor` provide separate views. [Six standalone block tests](../../tb/blocks/README.md)
+Override any of the five modules after selecting a view, for example `--view current --view comparator=va --view reference=va`. `sar_xtor / reference_xtor` provide separate views. [Five standalone block tests](../../tb/blocks/README.md)
 
-`timing.va` retains independent rising and fast reset delays for RC and clear. See the `timing_approximations` in `specs/views.json` for values and sources. The source is a standalone TT receiving-gate characterization. Full SAR fanout and PVT timing need native evidence. The archived `sar8-modules-v3` result applies to its original models and selections. Use each new run receipt for its own evidence.
+`timing.va` models the independent rising and fast reset delays of the RC and clear paths in the removed reset-OR SAR. Its values and their TT receiving-gate characterization were in `timing_approximations` of `specs/views.json` up to commit `c46d9d6`. The current SAR uses native DEL250 cells wherever a view selects `sar=xtor`. The archived `sar8-modules-v3` result applies to its original models and selections. Use each new run receipt for its own evidence.

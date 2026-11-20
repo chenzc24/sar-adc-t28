@@ -41,7 +41,6 @@ def sources(root,view='current',candidate=None,package=None):
     for path in va_files:
         for match in re.finditer(r'\bmodule\s+(\w+)\s*\(([^)]*)\)\s*;',path.read_text(encoding='utf-8'),re.S):ports[match.group(1)]=[p.strip() for p in match.group(2).split(',')]
     ports.update(b_sampler_bridge=['CLKS','VOUT','Vin'],b_tb_switch=['A','B','EN','VDD','VSS'])
-    for name in ['sar8p_delay_valid','sar8p_delay_write','sar8p_delay_quiet','sar8p_delay_capture','sar8p_delay_bbm','sar8r_delay','sar8s_step','sar8i_guard','sar8r_edge','sar8p_clkbuf']:ports['b_'+name]=['A','VDD','VSS','Y']
     for name,terms in list(ports.items()):
         if name not in levels:
             levels[name]='subckt '+name+' '+' '.join(terms)+'\nends '+name

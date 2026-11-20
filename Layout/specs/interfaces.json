@@ -1,7 +1,7 @@
 {
   "electrical_source": "design/manifest.json",
   "masters": {
-    "sar8i_ctrl": {
+    "sar8_se_ctrl": {
       "ports": [
         "CMP_CLK",
         "CODE0",
@@ -22,24 +22,26 @@
         "D5",
         "D6",
         "D7",
-        "PHI_U",
+        "COMMIT",
         "SAMPLE",
         "VDD",
         "VSS",
         "ACTIVE"
       ],
-      "source": "design/xtor/sar/reset_data_or.scs"
+      "source": "design/xtor/sar/single_edge.scs",
+      "layout": "not_drawn",
+      "layout_note": "The single-edge SAR layout is not drawn yet. The routed sar8_sar_timing views belong to the previous architecture."
     },
-    "sar8i_idle": {
+    "sar8_se_acquire": {
       "ports": [
-        "ACTIVE",
-        "SAMPLE",
+        "REQUEST",
         "VDD",
         "VSS",
-        "PRESET",
-        "SAMPLE_MATCH"
+        "TRACK"
       ],
-      "source": "design/xtor/reference/minimal_msb_d2.scs"
+      "source": "design/xtor/sar/single_edge.scs",
+      "layout": "not_drawn",
+      "layout_note": "The single-edge SAR layout is not drawn yet. The routed sar8_sar_timing views belong to the previous architecture."
     },
     "sar8i_refword": {
       "ports": [
@@ -98,7 +100,9 @@
         "RST_DONE",
         "PRESET"
       ],
-      "source": "design/xtor/reference/minimal_msb_d2.scs"
+      "source": "design/xtor/reference/single_edge_d2.scs",
+      "layout": "not_drawn",
+      "layout_note": "The single-edge D2 reference layout is not drawn yet. The earlier gate-driver layout belongs to the previous architecture."
     },
     "sar8j_r1_cdac": {
       "ports": [
@@ -143,24 +147,6 @@
       ],
       "source": "design/xtor/cdac/cdac.scs"
     },
-    "sar8p_clkbuf": {
-      "ports": [
-        "A",
-        "VDD",
-        "VSS",
-        "Y"
-      ],
-      "source": "design/xtor/common/standard_cells.scs"
-    },
-    "sar8r_edge": {
-      "ports": [
-        "A",
-        "VDD",
-        "VSS",
-        "Y"
-      ],
-      "source": "design/xtor/clock/delays.scs"
-    },
     "sar_bootstrap_flat_8b_p": {
       "ports": [
         "CLKS",
@@ -185,32 +171,40 @@
   "top_instances": {
     "XSEQ": {
       "nodes": [
-        "SAMPLE_MATCH",
+        "SAMPLE_INT",
         "VDD!",
         "0",
         "SEQ_SAMPLE"
       ],
-      "master": "sar8r_edge"
+      "master": "sar8_se_acquire"
     },
-    "XIDLE": {
+    "XDONE": {
       "nodes": [
         "ACTIVE",
-        "SAMPLE_INT",
+        "DONE",
         "VDD!",
-        "0",
-        "PRESET",
-        "SAMPLE_MATCH"
+        "0"
       ],
-      "master": "sar8i_idle"
+      "master": "INVD1BWP12T30P140"
+    },
+    "XPRESET": {
+      "nodes": [
+        "DONE",
+        "SEQ_SAMPLE",
+        "PRESET",
+        "VDD!",
+        "0"
+      ],
+      "master": "OR2D1BWP12T30P140"
     },
     "XSAMPLE": {
       "nodes": [
         "SAMPLE",
+        "SAMPLE_INT",
         "VDD!",
-        "0",
-        "SAMPLE_INT"
+        "0"
       ],
-      "master": "sar8p_clkbuf"
+      "master": "CKBD1BWP12T30P140"
     },
     "XBOOTN": {
       "nodes": [
@@ -293,12 +287,12 @@
         "D6",
         "D7",
         "PHI_U",
-        "SAMPLE_INT",
+        "SEQ_SAMPLE",
         "VDD!",
         "0",
         "ACTIVE"
       ],
-      "master": "sar8i_ctrl"
+      "master": "sar8_se_ctrl"
     },
     "XREF": {
       "nodes": [

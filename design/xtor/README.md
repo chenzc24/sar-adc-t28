@@ -1,36 +1,34 @@
 # Transistor Implementations and Candidates
 
-The [single-edge SAR front end](../dut_single_edge.scs) has its own complete DUT entry because
-the controller and sampling/preset connections change together. It uses the existing comparator,
-sampler, CDAC, reference switches and T28 cell libraries. The eight-bit trial register feeds
-the reference directly. Its lowest set bit selects the current trial while ACTIVE is high.
-One accepted decision updates the word and clocks the phase flip-flop. The last write holds
-the output word and starts the next reference preset. The [native reference decoder](reference/single_edge_d2.scs)
-and controller instantiate foundry gates directly, including XOR2, MUX2, clock buffers and
-the active-high latch with asynchronous clear.
+The current ADC uses `sar=single_edge` and `reference=single_edge_d2`. Sampler, CDAC and comparator use `b`. [Candidate registry](../../specs/candidates.json) · [Adoption report](../../results/design/sar_single_edge_adoption_20261120.md)
 
-The falling edge of the tracking clock starts the first delay transition. Each commit then launches the
-opposite phase. The comparator stays in reset until that transition arrives and the buffered
-comparator outputs have returned to their common precharge state. The first three trials use
-nine DEL250 cells and the remaining five use six. The bit-5 write clocks the registered tap
-select high. It stays high until the next accepted sample clears it. The next-word decoder
-still uses its combinational prefix OR. The tracking gate drives the controller and both bootstraps.
+## Single-edge SAR
 
-Prepare a standard PVT point with `python -m tools.saradc.single_edge tt REVISION --cell-lpe`. The same
-entry accepts `ssc`, `ssh`, `ffc` and `ffh`. Add `--seed SEED` at a cold corner to enable
-whole-DUT local mismatch. Use `--restart` at TT for a valid sampling request during conversion.
-The cell-LPE runs use TYPICAL at TT, CWORST_T at SS and CBEST_T at FF. Omit
-`--cell-lpe` to reproduce the shorter schematic-cell delays. The measurement uses the project's previously extracted DFCNQ
-Liberty tables or an explicit `--liberty-tables PATH`. [Earlier 8/6 front-end verification](../../results/design/sar_single_edge_frontend.md)
+The [SAR](sar/single_edge.scs) and the [native reference decoder](reference/single_edge_d2.scs) instantiate foundry gates directly, including XOR2, MUX2, clock buffers and the active-high latch with asynchronous clear. The eight-bit trial register feeds the reference directly, and its lowest set bit marks the current trial. COMMIT is the only register clock. The next trial word is precomputed, and the eighth commit registers DONE, which asserts the reference preset.
 
-Use `python -m tools.saradc.single_edge_lpe ffc 9 6 boundary REVISION` for the
-gain-normalized 63-to-64 transition, `ffc 9 6 reversal REVISION` for the 0-to-128 transition,
-and `ssc 9 6 verify REVISION` for the matched eight-frame 90 ns read check.
-These tests take the archived stacked CDAC,
-its 510 physical terminals and the measured corner gain from the managed run store.
-[Registered 9/6 tap measurements](../../results/design/sar_registered_9_6.md) · [Earlier combinational tap calibration](../../results/design/sar_single_edge_taps.md)
+After each commit, the comparator stays in reset until the delay transition reaches the selected tap and the buffered comparator outputs have returned to precharge. The taps are 11, 9, 7, 6, 5 and 4 DEL250 stages for bits 6, 5, 4, 3 and 2–0. Five sticky registers select them. Each is set by the commit before the tap is first used and cleared by sampling, so a tap only becomes shorter within a frame. Tracking precharges every tap high. The first comparison therefore waits only for the bootstrap gates to turn off, through two DEL250 cells and an AN2 qualifier. A two-flop Johnson counter supplies the phase, PHASE = PHA XOR PHB.
 
-The current ADC pairs `sar=std_delay_qualified` with `timing=std_delay`. Reference uses `minimal_msb_d2`. Sampler, CDAC and comparator use `b`. The previous RC design pairs `sar=reset_data_or` with `timing=quiet8p5`. [Candidate registry](../../specs/candidates.json) · [Measured schematic](../../results/design/sar_std_delay_20261119.json)
+Three choices keep internal nodes within the terminal-voltage rule:
+
+- The write AND has VALID on its inner input.
+- The sticky-select ORs and the reference MSB OR use INV+INV+ND2.
+- The phase register is the two-flop counter.
+
+## Simulation entries
+
+Use `python -m tools.saradc.single_edge_lpe CORNER KIND --cdac nominal|cworst --revision REVISION` for foundry cell LPE with the extracted CDAC and its 510 physical terminals. KIND is one of:
+
+- `verify`: eight frames;
+- `scan`: 255, 0, 85, 170;
+- `boundary`: 63/64 at gain-adjusted centres;
+- `extreme`: full-scale and low-to-mid steps;
+- `restart`: an accepted sample during conversion.
+
+Add `--taps 11,9,7,6,5,4` to override the chain, or `--seed SEED` at a cold corner for whole-DUT local mismatch. The CWORST_T CDAC exists for the cold corners only. The cell-LPE library is TYPICAL at TT, CWORST_T at SS and CBEST_T at FF.
+
+`python -m tools.saradc.single_edge CORNER REVISION [--cell-lpe] [--seed SEED] [--restart]` runs the schematic CDAC. Both entries use the adopted 45 ns high phase from `specs/arch.json`.
+
+## Candidates
 
 Place a new candidate in `design/xtor/<module>/<name>.scs` or a same-named subdirectory. Retain the existing implementation. Provide all definitions needed by the module and preserve its registered public master and port order. Internal structure may vary. The testbench supplies platform includes, the PDK, and standard cells.
 

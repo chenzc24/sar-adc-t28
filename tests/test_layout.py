@@ -21,15 +21,6 @@ class LayoutPlanTests(unittest.TestCase):
             dest = self.root/'Layout'/name
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(project.ROOT/'Layout'/name, dest)
-        # Exercise the released physical plan with the electrical manifest it actually used.
-        physical = json.loads((self.root/'Layout/design/manifest.json').read_text())
-        current = self.root/'design/manifest.json'
-        expected = physical['electrical_sources_sha256']['design/manifest.json']
-        if planning.digest(current) != expected:
-            released = next(path for path in (self.root/'design/frozen').glob('*/manifest.json')
-                            if planning.digest(path) == expected)
-            shutil.copyfile(released, current)
-            shutil.copyfile(released.with_name('dut.scs'), self.root/'design/dut.scs')
         (self.root/'Layout/results').mkdir()
 
     def tearDown(self):

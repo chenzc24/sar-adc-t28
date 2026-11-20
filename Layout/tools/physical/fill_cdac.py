@@ -23,7 +23,7 @@ def change(text,pattern,replacement):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('source');p.add_argument('evidence')
-    p.add_argument('--module', choices=('cdac','comparator','sar-timing'), default='cdac')
+    p.add_argument('--module', choices=('cdac','comparator'), default='cdac')
     p.add_argument('--bounds', type=float, nargs=4, help='Native module stream boundary, x0 y0 x1 y1')
     p.add_argument('--core-od-width',type=float,default=0.1)
     p.add_argument('--core-only-clearance',action='store_true')
@@ -43,7 +43,7 @@ def main():
     if m['case']!=expected_case or m['checks']['lvs']['verdict']!='CORRECT':raise ValueError('Need verified module source')
     top = m['top']
     boundary = BOUNDARY
-    if a.module in ('comparator','sar-timing'):
+    if a.module == 'comparator':
         if not a.bounds or a.bounds[0]>=a.bounds[2] or a.bounds[1]>=a.bounds[3]:
             raise ValueError('Module needs a measured stream boundary')
         boundary = dict(zip(('xLB','yLB','xRT','yRT'),a.bounds))

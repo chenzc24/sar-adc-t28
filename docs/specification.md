@@ -1,6 +1,6 @@
 # SAR8 Design Specification
 
-This page is generated from [specs/arch.json](../specs/arch.json). The current electrical implementation is `sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3`. The behavioral models approximate the B algorithm and protocol. Use native measurements for the minimal reference and data-reset OR path delays. [Adoption and qualification record](../results/design/sar_std_delay_20261119.json)
+This page is generated from [specs/arch.json](../specs/arch.json). The current electrical implementation is `sar8_single_edge_bitwise_v1`. The behavioral models approximate the B algorithm and protocol. Use native measurements for the single-edge SAR timing and settling. [Adoption and qualification record](../results/design/sar_single_edge_adoption_20261120.json)
 
 ## Architecture and External Interface
 
@@ -15,8 +15,8 @@ This page is generated from [specs/arch.json](../specs/arch.json). The current e
 | References | VREFN=0 V and VREFP=0.9 V, independent of the core supply |
 | Input | 0.45 V nominal common mode, -0.9..0.9 V differential, 0..0.9 V single-ended. Full common-mode range is unqualified. |
 | Quantization | 256 codes, LSB=7.03125000 mV. Ideal boundaries are −0.9+k·LSB. Use the upper code at equality. |
-| Frame timing | 100 ns total, with 40 ns high for sampling and 60 ns low for conversion. Start with 60 ns low for precharge before normal cycling. |
-| Actual stimulus | Delay=60 ns, rise/fall=100/100 ps, width=39.9 ns. The first falling-edge threshold crossing is at 100.05 ns. |
+| Frame timing | 100 ns total, with 45 ns high for sampling and 55 ns low for conversion. Start with 60 ns low for precharge before normal cycling. |
+| Actual stimulus | Delay=60 ns, rise/fall=100/100 ps, width=44.9 ns. The first falling-edge threshold crossing is at 105.05 ns. |
 | Input source | Ideal source with 50 Ω series resistance per pin |
 | Reference source | Ideal source with 50 Ω series resistance and 4 pF bypass per rail. The fixture drives the reference directly. |
 | Output load | 5 fF per bit. The comparator outputs and clock use native MOM model loads in pre-layout simulation only. |
@@ -39,13 +39,13 @@ Read the frozen case includes for actual MOS, MOM, and passive model sections. T
 - The CDAC uses 18 `cfmom_2t` instances. The unit geometry is nr=8, lr=2 µm, w=s=50 nm, stm=1, and spm=3, with multi from 1 to 128. The N and P dummies connect to VREFN and VREFP, respectively. The prior low-frequency AC characterization of this unit geometry gave about 4.00407 fF per unit and 1.02504 pF per 256-unit side at its specified bias and frequency. The older 6.86047 fF comparison and the 512-independent-unit mismatch results apply to their original models.
 - Reference switches use L=90 nm, NMOS W=150 nm, PMOS W=175 nm, and multi=3·2^bit.
 - The 11-MOS StrongARM comparator uses input pairs of W=1 µm and L=30 nm, a tail width of 1 µm, and N/P regeneration widths of 500/500 nm.
-- The digital path uses native standard cells. The SAR uses input-qualified native delay cells. The analog and boosted circuits remain transistor-level. The reference uses CODE, a shared PRESET, and true and complementary drive. The minimal reference removes the extra DFF/MUX, per-bit reset and capture, non-overlap generator, and series gate resistors.
-- Native standard-cell masters are `DEL050D1BWP12T30P140`, `DEL075D1BWP12T30P140`, `DEL200D1BWP12T30P140`, `DEL250D1BWP12T30P140`, `DFCNQD1BWP12T30P140`, `INVD1BWP12T30P140`, `INVD2BWP12T30P140`, `ND2D1BWP12T30P140`, `OR2D1BWP12T30P140`.
+- The digital path uses native standard cells. The SAR uses one COMMIT write edge, a precomputed next trial word and a DEL250 settling chain with registered per-bit taps. The analog and boosted circuits remain transistor-level. The reference word uses CODE, a shared PRESET, and true and complementary drive without reference-side storage.
+- Native standard-cell masters are `AN2D1BWP12T30P140`, `BUFFD1BWP12T30P140`, `BUFFD2BWP12T30P140`, `CKBD1BWP12T30P140`, `DEL200D1BWP12T30P140`, `DEL250D1BWP12T30P140`, `DFCNQD1BWP12T30P140`, `INVD1BWP12T30P140`, `INVD2BWP12T30P140`, `LHCNDQD1BWP12T30P140`, `MUX2D1BWP12T30P140`, `ND2D1BWP12T30P140`, `OR2D1BWP12T30P140`, `TIEHBWP12T30P140`, `XOR2D1BWP12T30P140`.
 
 ## Timing Contract
 
-The minimal design requires eight comparisons and writes per frame. Verify reference state from actual CODE, gate control, and per-bit bottom-plate settling. The current reference path has no capture events. A new sample cancels unfinished events at the established external timing. The 60 ns conversion allocation comes from the frame. The interface exposes no timeout pin. Frozen B and its behavioral model use their own contract of eight reference updates and 16 captures.
-The TT behavioral intervals below are medians of native edges across ten historical B frames. The low phase sets the conversion budget. The 20 ps output smoothing and arithmetic regularization are model settings. The compare-to-write interval covers the comparator and digital receive pipeline. The high phase is 40 ns, and internal gate waveforms determine the actual Bootstrap conduction window.
+Each frame requires eight comparisons and eight COMMIT writes. The first comparison follows sampling once the bootstrap gates are off; each later comparison waits for its per-bit DEL250 tap. Verify reference state from actual CODE and gate control, and verify settling as the signed TOP error of all 510 switched plates against the nominal rails: at most 0.25 LSB, with a 0.125 LSB target, at every comparison. A new sample cancels unfinished events. The 55 ns conversion allocation comes from the frame. The interface exposes no timeout pin. Frozen B and its behavioral model use their own contract of eight reference updates and 16 captures.
+The TT behavioral intervals below are medians of native edges across ten historical B frames, measured with a 40 ns high phase. The low phase sets the conversion budget. The 20 ps output smoothing and arithmetic regularization are model settings. The compare-to-write interval covers the comparator and digital receive pipeline. The current external high phase is 45 ns, and internal gate waveforms determine the actual Bootstrap conduction window.
 
 | Behavioral interval | Value (ns) |
 | --- | ---: |
@@ -99,7 +99,7 @@ For short ADC tests, compute the expected code as `clip(128+floor(Vin/(LSB·k)),
 - The historical 0.25 LSB offset allocation is a provisional residual target after correction. The current comparator offset is reported as measured.
 - The Monte Carlo specification defines the 200-seed module tests and the 50-seed closed-loop tests at each of SS cold and FF cold. Closed-loop local mismatch is enabled only in the comparator and CDAC. [Sampling scope](../specs/monte_carlo.json)
 - The B version has one TT transient-noise seed. Bandwidth and statistical convergence are open, as are full-circuit local mismatch, PEX, full common-mode range, calibration range and accuracy, power integration convergence, and terminal-voltage reliability. [Noise comparison](../results/noise/comparison.json)
-- Use the terminal-voltage rule for engineering acceptance. The five-point minimal-reference D2 trial passed the comparator screen at all five corners within its measurement scope. At FF cold, SAR storage device MM64 failed the Vds duration limit. Apply the rule to the adopted design and rely on separate evidence for reliability signoff. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Per-device results](../results/soa/msb_drive_d2_trial_20261115.md)
+- Use the terminal-voltage rule for engineering acceptance. The FF-cold full-terminal scan of the adopted netlist has no rule violations, pending the usual resolution review. Repeat it after layout and rely on separate evidence for reliability signoff. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Adoption record](../results/design/sar_single_edge_adoption_20261120.json)
 
 ## Behavioral Views and Cross-Checks
 

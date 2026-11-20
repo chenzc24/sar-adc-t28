@@ -1,16 +1,12 @@
 {
-  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
+  "electrical_design_id": "sar8_single_edge_bitwise_v1",
   "electrical_authority": "design/manifest.json",
   "electrical_sources_sha256": {
-    "design/manifest.json": "0bb38ca3699e28bd2bf82a6387f9ba81f7edf89d37f845ea70d3afb374a99825",
-    "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+    "design/manifest.json": "d0a476babe166843b7d6a166177c05f93ec53ab3a9bedf054f43f7b0488323b7",
+    "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
     "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
-    "design/xtor/clock/delays_quiet8p5.scs": "e0554fdd3b15f98d1670bb10ea03908bbba7f4ba0a69348b9f3ed7f0157fb60d",
-    "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
-    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
-    "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
-    "design/xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
+    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3"
   },
   "library_config": "site.local.yaml:layout",
   "technology": "tsmcN28",
@@ -123,51 +119,6 @@
         ],
         "authority": "Layout/specs/interfaces.json#not_drawn_instances"
       }
-    },
-    "sar_timing": {
-      "core": "sar8_sar_timing_core",
-      "view": "layout_compact_eco",
-      "top_instances": [
-        "XCTRL",
-        "XSEQ",
-        "XIDLE",
-        "XSAMPLE"
-      ],
-      "generator": "Layout/design/sar_timing.py",
-      "native_helpers": "Layout/design/sar_timing.il",
-      "core_bbox_um": [
-        [
-          0.069,
-          2.755
-        ],
-        [
-          39.954,
-          54.355
-        ]
-      ],
-      "core_evidence": "sar-timing-core-signoff-20261118",
-      "status": "routed_filled_and_five_corner_verified",
-      "report": "Layout/results/sar_timing.json",
-      "fill_wrapper": "sar8_sar_timing",
-      "fill_view": "layout_eco",
-      "fill_evidence": "sar-timing-fill-signoff-20261118",
-      "fill_bbox_um": [
-        [
-          -0.181,
-          2.755
-        ],
-        [
-          39.954,
-          54.355
-        ]
-      ],
-      "fill_masters": {
-        "FILL_ODPO": "sar8_timing_fill_eco85_odpo",
-        "FILL_METAL": "sar8_timing_fill_eco85_metal"
-      },
-      "detail_routing": "Layout/design/sar-route.tcl",
-      "route_repairs": "Layout/design/sar-route-repairs.json",
-      "area_figure": "Layout/results/figures/sar_timing_compact.png"
     }
   },
   "oa_recovery": {

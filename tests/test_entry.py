@@ -17,7 +17,7 @@ class EntryChecks(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
 
     def test_current_physical_sources_and_all_frozen_cases(self):
-        self.assertEqual(entry.check()['exact_subcircuits'],39)
+        self.assertEqual(entry.check()['exact_subcircuits'],19)
         self.assertEqual(entry.check()['locked_cases'],7)
 
     def test_all_case_packages_keep_declared_dependencies_and_frozen_bytes(self):

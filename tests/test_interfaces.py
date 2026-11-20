@@ -44,23 +44,23 @@ class Interfaces(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'external'):
             candidates.add('comparator','bad',p.relative_to(self.root).as_posix(),self.root)
 
-    def test_views_can_mix_reference_and_timing_inside_native_sar(self):
-        profile=['current','reference=va','timing=va','comparator=va']
+    def test_views_can_mix_reference_and_comparator_around_native_sar(self):
+        profile=['current','reference=va','comparator=va']
         blob=views.build(profile,self.root)
         self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+b_reference')
-        self.assertRegex(blob[candidates.read(self.root)['modules']['sar']['target']].decode(),r'\)\s+b_sar8p_delay_write')
-        self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+sar8i_ctrl')
+        self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+b_comparator')
+        self.assertRegex(blob['top/adc_top.scs'].decode(),r'\)\s+sar8_se_ctrl')
+        self.assertIn(candidates.read(self.root)['modules']['sar']['target'],blob)
         with self.assertRaisesRegex(ValueError,'Frozen B'):
             views.build(['frozen-b','comparator=va'],self.root)
 
-    def test_all_64_module_combinations_resolve_and_unknown_candidate_dependency_fails(self):
-        for choices in product(['xtor','va'],repeat=6):
+    def test_all_32_module_combinations_resolve_and_unknown_candidate_dependency_fails(self):
+        for choices in product(['xtor','va'],repeat=5):
             blobs=views.build([m+'='+v for m,v in zip(views.MODULES,choices)],self.root)
             top=blobs['top/adc_top.scs'].decode()
             expected=[('XBOOTN','sar_bootstrap_flat_8b_p','b_sampler_bridge'),
                       ('XCDAC','sar8j_r1_cdac','b_cdac'),('XCOMP','sar_strongarm_t28','b_comparator'),
-                      ('XCTRL','sar8i_ctrl','b_sar'),('XREF','sar8i_refword','b_reference'),
-                      ('XSEQ','sar8r_edge','b_sar8r_edge')]
+                      ('XCTRL','sar8_se_ctrl','b_sar'),('XREF','sar8i_refword','b_reference')]
             for view,(instance,physical,behavioral) in zip(choices,expected):
                 call=re.search(r'(?m)^\s*'+instance+r'\s+\([^)]*\)\s+(\S+)',top)
                 self.assertIsNotNone(call)
@@ -99,7 +99,7 @@ class Interfaces(unittest.TestCase):
         levels,ports,origin,hashes=schematic.sources(self.root)
         self.assertFalse((self.root/'work').exists())
         native=[n for n in levels if origin[n].startswith(('design/xtor','design/top'))]
-        self.assertEqual(len(native),39)
+        self.assertEqual(len(native),19)
         self.assertIn('tb_reference',levels)
         self.assertIn('XRLOAD',levels['tb_reference'])
         self.assertIn('tb_sar_stalled_top',levels)

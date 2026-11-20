@@ -133,12 +133,12 @@ def analyze(root, out, library, bottom_measure=None):
     with open(library) as stream:
         tables=json.load(stream)
     result['ccs']=register_constraints.evaluate(result,tables)
-    select_pin = 'xdut.xctrl.xlow.din'
-    if select_pin in pins:
-        idx=pins.index(select_pin)
+    select_pins = [i for i,p in enumerate(pins) if p.startswith('xdut.xctrl.xsel')]
+    if select_pins:
         selected=[dict(frame=f['frame'], register_pin_windows=[
-            row for row in f['register_pin_windows'] if row['bit']==idx]) for f in frames]
+            row for row in f['register_pin_windows'] if row['bit'] in select_pins]) for f in frames]
         result['selector_ccs']=register_constraints.evaluate(dict(context=ctx,frames=selected),tables)
+    result['register_pins']=pins
     for f in frames:
         del f['register_pin_windows']
     return result

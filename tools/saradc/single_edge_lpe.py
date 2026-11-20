@@ -1,4 +1,4 @@
-"""Prepare a dual-tap SAR with foundry cell LPE and the archived 510-terminal CDAC."""
+"""Prepare the per-bit-tap single-edge SAR with foundry cell LPE and a 510-terminal extracted CDAC."""
 import argparse
 import hashlib
 import json
@@ -6,35 +6,59 @@ import re
 from pathlib import Path
 
 from . import reference_short as short
-from .single_edge import CP_HIGH_PS
+from .single_edge import CP_HIGH_PS, use_restart
 
 ROOT = short.ROOT
+RUNS = ROOT / 'work/output/managed_execution/runs'
 SOURCE = 'sar-acq-q6-xrc-s10-ssc-20261119c'
-COLD = {'ffc': 'cbest_t', 'ssc': 'cworst_t'}
+CWORST = ROOT / 'work/layout/cdac-cworst'
+CDAC_FILES = ['cdac_pex_wrapper.scs', 'cdac_xrc.scs', 'cdac_xrc.scs.pex', 'cdac_xrc.scs.sar8j_r1_cdac.pxi']
+CELL_RC = {'tt': 'typical', 'ssc': 'cworst_t', 'ssh': 'cworst_t', 'ffc': 'cbest_t', 'ffh': 'cbest_t'}
+# DEL250 stages before the comparison of bits 6, 5, 4, 3, 2 and 1-0. Bit 7 follows sampling directly.
+TAPS = (11, 9, 7, 6, 5, 4)
+# (select register, trial bit whose commit sets it, commit index within the frame)
+SELECTS = ((9, 6, 1), (7, 5, 2), (6, 4, 3), (5, 3, 4), (4, 2, 5))
 CODES = {'scan': [255, 0, 85, 170], 'verify': [255, 255, 0, 128, 85, 170, 127, 1],
-         'boundary':[63,64,63,64], 'reversal': [255, 255, 0, 128]}
+         'boundary': [63, 64, 63, 64], 'reversal': [255, 255, 0, 128],
+         # Full-scale reversals, low-to-mid steps and a final input 0.01 LSB above mid-scale.
+         'extreme': [0, 255, 0, 128, 12, 127, 255, 128], 'restart': [255, 85, 170],
+         'smoke': [0, 255]}
 CTRL = 'xtor/sar/single_edge.scs'
-PHASE = ['XDUT.XCTRL.XTIM.' + s for s in ('PHASE_REQUEST', 'DELIVERED')]
+WINDOW = 'xdut.xctrl.xtim.xwindow.'
+PROBES = ['xdut.xctrl.xtim.' + s for s in ('phase_request', 'delivered', 'ready', 'set', 'clr_n', 'sn_d')]
 
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def set_taps(source, high, low):
-    if min(high, low) < 1 or max(high, low) > 32:
-        raise ValueError('Expected taps between 1 and 32')
-    lines = []
-    previous = 'PHASE_REQUEST'
-    for i in range(1, max(high, low) + 1):
-        lines.append('XDEL%d (%s T%d VDD VSS) DEL250D1BWP12T30P140' % (i, previous, i))
-        previous = 'T%d' % i
-    lines.append('XTAP (T%d T%d' % (high, low))
-    source, count = re.subn(rb'(?m)^XDEL1 \(PHASE_REQUEST[^\r\n]*(?:\r?\nXDEL\d+ [^\r\n]*)*\r?\nXTAP \(T\d+ T\d+(?= )',
-                            '\n'.join(lines).encode(), source)
+def set_window(source, taps=TAPS):
+    """Rewrite the delay chain and the priority multiplexers for the given taps."""
+    taps = tuple(taps)
+    if len(taps) != 6 or any(a < b for a, b in zip(taps, taps[1:])) or taps[-1] < 1 or taps[0] > 32:
+        raise ValueError('Expected six nonincreasing taps between 1 and 32')
+    lines = ['XDEL%d (%s T%d VDD VSS) DEL250D1BWP12T30P140' % (i, 'PHASE_REQUEST' if i == 1 else 'T%d' % (i-1), i)
+             for i in range(1, taps[0]+1)]
+    upstream = 'T%d' % taps[0]
+    for (name, _, _), tap in zip(SELECTS, taps[1:]):
+        out = 'DELIVERED' if name == SELECTS[-1][0] else 'W%d' % name
+        lines.append('XTAP%d (%s T%d SEL%d %s VDD VSS) MUX2D1BWP12T30P140' % (name, upstream, tap, name, out))
+        upstream = out
+    newline = b'\r\n' if b'\r\n' in source else b'\n'
+    pattern = rb'(?m)^XDEL1 \(PHASE_REQUEST[^\r\n]*(?:\r?\nXDEL\d+ [^\r\n]*)*(?:\r?\nXTAP\d+ [^\r\n]*){5}'
+    source, count = re.subn(pattern, newline.join(s.encode() for s in lines), source)
     if count != 1:
-        raise ValueError('Expected one physical delay chain and one mux')
+        raise ValueError('Expected one delay chain and five tap multiplexers')
     return source
+
+
+def selectors(taps=TAPS):
+    rows, upstream = [], WINDOW + 't%d' % taps[0]
+    for (name, trial, index), tap in zip(SELECTS, taps[1:]):
+        rows.append(dict(name='sel%d' % name, q='xdut.xctrl.sel%d' % name, trial='xdut.xctrl.trial%d' % trial,
+                         commit_index=index, inputs=[upstream, WINDOW + 't%d' % tap]))
+        upstream = WINDOW + 'w%d' % name
+    return rows
 
 
 def retained_inputs(folder, names):
@@ -47,117 +71,179 @@ def retained_inputs(folder, names):
     return out
 
 
-def prepare(corner, high, low, kind, revision):
-    rc = COLD[corner]
-    rid = 'sar8-setap-%s-h%dl%d-%s-%s' % (corner, high, low, kind, revision)
-    dest = ROOT / 'work/decks' / rid
-    runs = ROOT / 'work/output/managed_execution/runs'
-    extracted = ['cdac_pex_wrapper.scs', 'cdac_xrc.scs', 'cdac_xrc.scs.pex', 'cdac_xrc.scs.sar8j_r1_cdac.pxi']
-    archive = retained_inputs(runs / SOURCE, extracted + ['context.json', 'test.scs', 'xtor/cdac/cdac.scs'])
+def measured_weights(run_id, gds):
+    root = RUNS / run_id
+    physical = json.loads(retained_inputs(root, ['physical.json'])['physical.json'])
+    if physical['gds']['sha256'] != gds:
+        raise ValueError('Independent CDAC weights use a different layout: ' + run_id)
+    data = (root / 'collected/derived/result.json').read_bytes()
+    receipt = json.loads((root / 'collected/collection_receipt.json').read_bytes())
+    if not any(f['name'] == 'derived/result.json' and f['sha256'] == digest(data) for f in receipt['files']):
+        raise ValueError('Independent CDAC weights do not match their receipt: ' + run_id)
+    return json.loads(data)['post']['metrics']['effective_weights_v'], digest(data)
+
+
+def cdac_bundle(view, corner):
+    archive = retained_inputs(RUNS / SOURCE, CDAC_FILES + ['context.json', 'test.scs', 'xtor/cdac/cdac.scs'])
     control = json.loads(archive['context.json'])
-    dut = (ROOT/'design/dut_single_edge.scs').read_bytes()
+    gds = control['cdac_physical_gds_sha256']
+    groups = control['cdac_plate_nodes']
+    saves = [line for line in archive['test.scs'].splitlines() if line.startswith(b'save XDUT.XCDAC.XPEX.')]
+    if view == 'nominal':
+        files = {n: archive[n] for n in CDAC_FILES}
+        weights_id = 'cdac-stacked-mx-20261118' if corner == 'tt' else 'cdac-stacked-mx-%s-20261118' % corner
+        source = SOURCE
+    elif view == 'cworst':
+        # Same GDS and LVS reference re-extracted with the CWORST_T xRC rules (work/layout/cdac-cworst).
+        package = json.loads((CWORST / 'package.json').read_text())
+        if package['gds_sha256'] != gds or package['interconnect_rc']['corner'] != 'cworst_T':
+            raise ValueError('CWORST package uses a different CDAC layout or corner')
+        if package['plate_names_match'] != {'n': True, 'p': True}:
+            raise ValueError('CWORST plate terminals need a name map')
+        files = {n: (CWORST / 'package' / n).read_bytes() for n in CDAC_FILES}
+        for n, data in files.items():
+            if digest(data) != package['package'][n]:
+                raise ValueError('Packaged CWORST file differs from package.json: ' + n)
+        if corner not in ('ssc', 'ffc'):
+            raise ValueError('CWORST CDAC weights exist for the cold corners only')
+        weights_id = 'cdac-stacked-cw-%s-20261120' % corner
+        source = package['evidence']
+    else:
+        raise ValueError('Unknown CDAC view')
+    names = [s.decode().replace('\\', '').lower() for line in saves for s in line.split()[1:]]
+    flat = [s for side in ('n', 'p') for group in groups[side] for s in group]
+    if sorted(names) != sorted(flat) or len(set(names)) != 510:
+        raise ValueError('Expected all 510 physical capacitor terminals')
+    if any([len(g) for g in groups[side]] != [1 << i for i in range(8)] for side in ('n', 'p')):
+        raise ValueError('Unexpected terminal grouping')
+    weights, weights_sha = measured_weights(weights_id, gds)
+    return dict(view=view, files=files, groups=groups, saves=saves, gds=gds, source=source,
+                schematic=archive['xtor/cdac/cdac.scs'], weights=weights, weights_id=weights_id,
+                weights_sha=weights_sha)
+
+
+def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None):
+    taps = tuple(taps)
+    if corner not in CELL_RC or kind not in CODES:
+        raise ValueError('Unknown corner or stimulus')
+    if seed is not None and (corner not in ('ssc', 'ffc') or kind == 'restart'):
+        raise ValueError('Local mismatch is prepared for the cold corners only')
+    rc = CELL_RC[corner]
+    tag = '' if taps == TAPS else '-t%d' % taps[0] if len(set(taps)) == 1 else '-t' + 'x'.join(map(str, taps))
+    label = {'nominal': 'nom', 'cworst': 'cw'}[cdac] + '-' + kind + tag + ('-s%d' % seed if seed is not None else '')
+    rid = 'sar8-sebit-%s-%s-%s' % (corner, label, revision)
+    dest = ROOT / 'work/decks' / rid
+    bundle = cdac_bundle(cdac, corner)
+    dut = (ROOT / 'design/dut.scs').read_bytes()
     sources = {name: (ROOT / 'design' / name).read_bytes()
                for name in re.findall(r'^include "([^"]+)"', dut.decode(), re.M)}
-    if sources['xtor/cdac/cdac.scs'] != archive['xtor/cdac/cdac.scs']:
+    if sources['xtor/cdac/cdac.scs'] != bundle['schematic']:
         raise ValueError('Schematic CDAC identity differs from extraction control')
-    sources[CTRL] = set_taps(sources[CTRL], high, low)
+    sources[CTRL] = set_window(sources[CTRL], taps)
+    if dut.count(b'"xtor/cdac/cdac.scs"') != 1:
+        raise ValueError('Expected one CDAC include')
     sources['dut.scs'] = dut.replace(b'"xtor/cdac/cdac.scs"', b'"cdac_pex_wrapper.scs"')
-    sources.update({n: archive[n] for n in extracted})
-    library = 'tb/common/platform/library_lpe_%s.scs' % rc
-    template_id='tap-h%dl%d-%s-%s' % (high,low,kind,revision)
-    template = ROOT / short.prepare('single_edge', corner, template_id, codes=CODES[kind], source_blobs=sources,
-                                    cell_library=(ROOT/library).read_bytes())
+    sources.update(bundle['files'])
+    library = (ROOT / ('tb/common/platform/library_lpe_%s.scs' % rc)).read_bytes()
+    template = ROOT / short.prepare('single_edge', corner, 'sebit-%s-%s' % (label, revision), codes=CODES[kind],
+                                    source_blobs=sources, cell_library=library)
     recipe = json.loads(template.read_bytes())
-    blobs = {f['name']: (ROOT/f['source']).read_bytes() for f in recipe['inputs']}
+    blobs = {f['name']: (ROOT / f['source']).read_bytes() for f in recipe['inputs']}
     ctx = json.loads(blobs['context.json'])
-    # Native PSF trace names omit the escape on slash-delimited pin names.
-    groups = control['cdac_plate_nodes']
-    group_names = [s for side in ('n','p') for group in groups[side] for s in group]
-    plate_saves = [line for line in archive['test.scs'].splitlines() if line.startswith(b'save XDUT.XCDAC.XPEX.')]
-    actual = [s.decode().replace('\\','').lower() for line in plate_saves for s in line.split()[1:]]
-    if sorted(actual) != sorted(group_names) or len(set(actual)) != 510:
-        raise ValueError('Expected all 510 physical capacitor terminals')
-    weights_id = 'cdac-stacked-mx-%s-20261118' % corner
-    weights_root = runs / weights_id
-    physical = json.loads(retained_inputs(weights_root, ['physical.json'])['physical.json'])
-    if physical['gds']['sha256'] != control['cdac_physical_gds_sha256']:
-        raise ValueError('Independent CDAC weights use a different layout')
-    wdata = (weights_root/'collected/derived/result.json').read_bytes()
-    receipt = json.loads((weights_root/'collected/collection_receipt.json').read_bytes())
-    if not any(f['name']=='derived/result.json' and f['sha256']==digest(wdata) for f in receipt['files']):
-        raise ValueError('Independent CDAC weights do not match their receipt')
-    weights = json.loads(wdata)['post']['metrics']['effective_weights_v']
-    ctx.update(run_id=rid, kind=kind, tap_high=high, tap_low=low, pex=True, pex_modules=['cdac'], cell_lpe=rc,
-               cdac_source=SOURCE, cdac_physical_gds_sha256=physical['gds']['sha256'], cdac_plate_nodes=groups,
-               independent_cdac_gain=sum(weights)/(ctx['lsb_v']*255), weights_source=weights_id,
-               weights_result_sha256=digest(wdata), current_signals=[])
-    if kind=='boundary':
-        gain=ctx['independent_cdac_gain']
-        points=[63,64]+[127.5+gain*(x-127.5) for x in (63,64)]
-        ctx['input_code_coordinates']=points
-        tb=blobs['tb.scs'].decode()
-        for node,sign in [('P',1),('N',-1)]:
-            line='VVIN'+node+' (VIN'+node+'_SRC 0) vsource type=pwl wave=['+short.stimulus(points,sign)+']'
-            tb,count=re.subn(r'(?m)^VVIN'+node+r' .*$',line,tb)
-            if count!=1:raise ValueError('Missing differential input')
-        blobs['tb.scs']=tb.encode()
+    weights = bundle['weights']
+    gain = sum(weights) / (ctx['lsb_v'] * 255)
+    coords = None
+    if kind == 'boundary':
+        coords = [63, 64] + [127.5 + gain * (x - 127.5) for x in (63, 64)]
+    elif kind == 'extreme':
+        coords = CODES[kind][:-1] + [127.51]
+    if coords:
+        tb = blobs['tb.scs'].decode()
+        for node, sign in (('P', 1), ('N', -1)):
+            line = 'VVIN'+node+' (VIN'+node+'_SRC 0) vsource type=pwl wave=['+short.stimulus(coords, sign)+']'
+            tb, count = re.subn(r'(?m)^VVIN'+node+r' .*$', line, tb)
+            if count != 1:
+                raise ValueError('Missing differential input')
+        blobs['tb.scs'] = tb.encode()
+        ctx['input_code_coordinates'] = coords
+    if kind == 'restart':
+        use_restart(blobs, ctx, recipe)
+    group_names = [s for side in ('n', 'p') for group in bundle['groups'][side] for s in group]
+    sel = selectors(taps)
     signals = [s for s in ctx['required_signals'] if not s.startswith('xdut.xcdac.')]
-    ctrl = 'xdut.xctrl.'
-    window = ctrl + 'xtim.xwindow.'
-    ctx['selector_probes'] = dict(q=ctrl+'low_q', high=window+'t%d'%high, low=window+'t%d'%low)
-    signals += [ctrl+'trial5', ctrl+'xword.low_bits']
-    signals += sorted(set(ctx['selector_probes'].values()))
-    ctx['required_signals'] = signals + [s.lower() for s in PHASE] + group_names
-    deck = re.sub(rb'(?m)^save [^\r\n]+', b'save '+(' '.join([s.upper() for s in signals] + PHASE)).encode(), blobs['test.scs'])
-    strobe = 'strobeperiod=5p strobeoutput=strobeonly'
-    if kind in ('boundary', 'reversal') and corner == 'ffc':
-        # The previous double crossing was shorter than the 5 ps output grid.
-        # Keep periodic samples elsewhere, with 0.5 ps samples across the handoff
-        # and bit 3 in the last (directed) frame.
-        stop_ps = round(ctx['expected_stop_s'] * 1e12)
-        last_ps = round((ctx['frame_origin_s'] + (ctx['frames']-1)*ctx['period_s']) * 1e12)
-        start, end = last_ps + 45500, last_ps + 52000
-        ctx['fine_window_frame_ns'] = [45.5, 52.0]
-        ticks = sorted(set(range(10, 2*stop_ps+1, 10)).union(range(2*start, 2*end+1)))
-        times = ['%.1fp' % (tick / 2) for tick in ticks]
-        rows = [' '.join(times[i:i+32]) for i in range(0,len(times),32)]
-        strobe = 'strobetimes=['+' \\\n'.join(rows)+'] strobeoutput=strobeonly'
-    deck = re.sub(rb'(?m)^(tran_short tran [^\r\n]+)', lambda m: m[1]+b' '+strobe.encode(), deck)
-    blobs['test.scs'] = deck+b'\n'+b'\n'.join(plate_saves)+b'\n'
-    blobs['single_edge_lpe.py'] = (ROOT/'tools/saradc/measure/single_edge_lpe.py').read_bytes()
-    if kind in ('verify','boundary','reversal'):
-        ctx['min_cp_high_ps']=CP_HIGH_PS[corner]
-        blobs['single_edge_audit.py']=(ROOT/'tools/saradc/measure/single_edge_audit.py').read_bytes()
-        blobs['register_constraints.py']=(ROOT/'Layout/tools/analysis/register_constraints.py').read_bytes()
-        dff_tables=runs/'sar-qlpe-dff-ccs-five-20261119a/collected/derived/result.json'
-        blobs['dff.json']=dff_tables.read_bytes()
-    ctx['source_hashes'] = {k:digest(v) for k,v in blobs.items() if k!='context.json'}
-    blobs['context.json'] = (json.dumps(ctx,indent=2)+'\n').encode()
-    recipe['resources'].update(simulation_rss_mib=3584,simulation_virtual_mib=16384,analysis_rss_mib=768,
-        analysis_wall_seconds=10800,max_output_mib=2048+1200*len(CODES[kind]))
-    recipe['spectre_args'][recipe['spectre_args'].index('+lqtimeout')+1] = '900'
-    recipe.update(run_id=rid, design_id='sar8_single_edge_cell_lpe_cdac_xrc',analyzer='single_edge_lpe.py',
-                  qualification_scope='Cold-cell LPE, extracted nominal-RC CDAC, ideal SAR inter-cell wiring',
-                  test_conditions=ctx, inputs=[dict(name=n,source=(dest/n).relative_to(ROOT).as_posix(),
-                                                    sha256=digest(b)) for n,b in blobs.items()])
-    blobs['recipe.yaml'] = (json.dumps(recipe,indent=2)+'\n').encode()
-    for n,b in blobs.items():
-        path=dest/n
-        if path.exists() and path.read_bytes()!=b:
-            raise ValueError('Frozen path differs: '+str(path))
-    for n,b in blobs.items():
-        path=dest/n
-        path.parent.mkdir(parents=True,exist_ok=True)
+    extra = [r['q'] for r in sel] + [r['trial'] for r in sel] + [n for r in sel for n in r['inputs']] + PROBES
+    signals += [s for s in dict.fromkeys(extra) if s not in signals]
+    ctx['required_signals'] = signals + ([] if kind == 'restart' else group_names)
+    deck, count = re.subn(rb'(?m)^save [^\r\n]+', b'save ' + ' '.join(s.upper() for s in signals).encode(),
+                          blobs['test.scs'])
+    if count != 1:
+        raise ValueError('Expected one save statement')
+    deck, count = re.subn(rb'(?m)^(tran_short tran [^\r\n]+)', rb'\1 strobeperiod=5p strobeoutput=strobeonly', deck)
+    if count != 1:
+        raise ValueError('Missing unique transient')
+    if seed is not None:
+        mos = ctx['mos']
+        text = deck.decode()
+        for old, new in (('section='+mos.lower()+'macro_mos_moscap', 'section='+mos+'GlobalCorner_LocalMC_MOS_MOSCAP'),
+                         ('section=tt_mom', 'section=TTGlobalCorner_LocalMC_MOM')):
+            if old not in text:
+                raise ValueError('Missing model section ' + old)
+            text = text.replace(old, new)
+        mc = ('mc montecarlo numruns=1 seed=%d variations=mismatch dut=[XDUT] sampling=standard '
+              'donominal=no savemismatchparams=yes mismatchparamfile="mismatch.params" '
+              'mismatchscalarfile="mismatch.values" savefamilyplots=yes savedatainseparatedir=yes {\n')
+        text = re.sub(r'(?m)^(tran_short tran .*)$', lambda m: mc % seed + m[1] + '\n}', text)
+        deck = text.encode()
+        ctx.update(seed=seed, statistical_mode='fixed process, whole-DUT local mismatch',
+                   mos_section=mos+'GlobalCorner_LocalMC_MOS_MOSCAP',
+                   passive_sections=['TTGlobalCorner_LocalMC_MOM' if s == 'tt_mom' else s
+                                     for s in ctx['passive_sections']])
+    blobs['test.scs'] = deck + (b'' if kind == 'restart' else b'\n' + b'\n'.join(bundle['saves'])) + b'\n'
+    ctx.update(run_id=rid, kind=kind, taps=list(taps), selectors=sel, pex=True, pex_modules=['cdac'], cell_lpe=rc,
+               cdac_view=cdac, cdac_source=bundle['source'], cdac_physical_gds_sha256=bundle['gds'],
+               cdac_plate_nodes=bundle['groups'], cdac_weights_v=weights, independent_cdac_gain=gain,
+               weights_source=bundle['weights_id'], weights_result_sha256=bundle['weights_sha'],
+               current_signals=[], mismatch=seed is not None, settling_limit_lsb=.25, settling_target_lsb=.125,
+               first_compare_gate_limit_v=.1)
+    if kind == 'restart':
+        blobs['single_edge_restart.py'] = (ROOT / 'tools/saradc/measure/single_edge_restart.py').read_bytes()
+        analyzer = 'single_edge_restart.py'
+    else:
+        blobs['single_edge_lpe.py'] = (ROOT / 'tools/saradc/measure/single_edge_lpe.py').read_bytes()
+        blobs['single_edge_audit.py'] = (ROOT / 'tools/saradc/measure/single_edge_audit.py').read_bytes()
+        blobs['register_constraints.py'] = (ROOT / 'Layout/tools/analysis/register_constraints.py').read_bytes()
+        blobs['dff.json'] = (RUNS / 'sar-qlpe-dff-ccs-five-20261119a/collected/derived/result.json').read_bytes()
+        ctx['min_cp_high_ps'] = CP_HIGH_PS[corner]
+        analyzer = 'single_edge_lpe.py'
+    ctx['source_hashes'] = {k: digest(v) for k, v in blobs.items() if k != 'context.json'}
+    blobs['context.json'] = (json.dumps(ctx, indent=2) + '\n').encode()
+    recipe['resources'].update(simulation_rss_mib=3584, simulation_virtual_mib=16384, analysis_rss_mib=1024,
+                               analysis_wall_seconds=10800, max_output_mib=2048 + 1200 * ctx['frames'])
+    recipe['spectre_args'][recipe['spectre_args'].index('+lqtimeout') + 1] = '900'
+    recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_cell_lpe_cdac_xrc', analyzer=analyzer,
+                  qualification_scope='%s cell LPE, %s extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling'
+                                      % (rc, cdac),
+                  test_conditions=ctx, inputs=[dict(name=n, source=(dest / n).relative_to(ROOT).as_posix(),
+                                                    sha256=digest(b)) for n, b in blobs.items()])
+    blobs['recipe.yaml'] = (json.dumps(recipe, indent=2) + '\n').encode()
+    for n, b in blobs.items():
+        path = dest / n
+        if path.exists() and path.read_bytes() != b:
+            raise ValueError('Frozen path differs: ' + str(path))
+    for n, b in blobs.items():
+        path = dest / n
+        path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b)
-    return dest/'recipe.yaml'
+    return dest / 'recipe.yaml'
 
 
 if __name__ == '__main__':
-    p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('corner',choices=COLD)
-    p.add_argument('high',type=int)
-    p.add_argument('low',type=int)
-    p.add_argument('kind',choices=CODES)
-    p.add_argument('revision')
-    a=p.parse_args()
-    print(prepare(a.corner,a.high,a.low,a.kind,a.revision))
+    p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('corner', choices=CELL_RC)
+    p.add_argument('kind', choices=CODES)
+    p.add_argument('--cdac', choices=['nominal', 'cworst'], default='nominal')
+    p.add_argument('--revision', default='a')
+    p.add_argument('--taps', type=lambda s: tuple(int(x) for x in s.split(',')), default=TAPS)
+    p.add_argument('--seed', type=int)
+    a = p.parse_args()
+    print(prepare(a.corner, a.kind, a.cdac, a.revision, a.taps, a.seed))

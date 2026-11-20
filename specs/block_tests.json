@@ -57,20 +57,6 @@
       },
       "limit_kind": "logic threshold nonoverlap diagnostic, not MOS-current or terminal-reliability qualification"
     },
-    "timing": {
-      "template": "tb/blocks/clock/acceptance.scs",
-      "metrics": [
-        "rise_delay_s",
-        "fall_delay_s",
-        "pulse_width_s",
-        "missing_edges"
-      ],
-      "stimulus": "normal external clock; all exported RC/edge helpers loaded by native receiver gates",
-      "limits": {
-        "missing_edges": 0
-      },
-      "limit_kind": "delay characterization; per-helper maximum delay not yet allocated"
-    },
     "sar": {
       "template": "tb/blocks/sar/acceptance.scs",
       "metrics": [

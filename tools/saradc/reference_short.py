@@ -1,4 +1,4 @@
-"""Issue #2: paired native short runs for minimal reference switching."""
+"""Native closed-loop short runs of the current single-edge ADC, or of frozen B for regression."""
 import argparse
 import hashlib
 import json
@@ -21,47 +21,6 @@ def read(path):
     return json.loads(text(path))
 
 
-def candidate_source():
-    baseline = candidates.definitions(text('design/xtor/reference/reference.scs'))
-    header = baseline['sar8i_refword'].splitlines()[0]
-    lines = ['// Minimal reference candidate, Issue #2. No extra state or dead-time.',
-             '// D/PHI_U/SAMPLE ports are retained only for interface compatibility.',
-             '// iprobe joins are ideal wires between the existing separate gate pins.',
-             header, 'XPRESET_N (PRESET VDD VSS RUN) sar8p_inv']
-    for bit in range(8):
-        # QN is the desired N-side common gate value; PMOS and NMOS share it.
-        if bit == 7:
-            lines += ['XINITIAL7 (CODE7 PRESET VDD VSS Q7) sar8p_or2',
-                      'XINV7 (Q7 VDD VSS QN7) sar8p_inv']
-        else:
-            lines += ['XINITIAL%d (CODE%d RUN VDD VSS QN%d) sar8p_nand2' % (bit, bit, bit)]
-        # Initial polarity logic is lightly loaded; final INV/BUF drives both gates.
-        lines += ['XPN%d (QN%d VDD VSS GPN%d) sar8p_inv' % (bit, bit, bit),
-                  'XNN%d (QN%d VDD VSS GNN%d) sar8p_buf' % (bit, bit, bit),
-                  'WNP%d (GNN%d GNP%d) iprobe' % (bit, bit, bit),
-                  'WPP%d (GPN%d GPP%d) iprobe' % (bit, bit, bit)]
-    # This output has no consumer in the physical top. No fake completion event.
-    lines += ['WUNUSED (RST_DONE VSS) iprobe', 'ends sar8i_refword', '', baseline['sar8i_idle'], '']
-    lines = [line for line in '\n'.join(lines).splitlines() if not line.lstrip().startswith('// #')]
-    # All drawing annotations are stale after a topology change; retain only electrical idle body.
-    from .rnl import strip
-    return strip('\n'.join(lines)) + '\n'
-
-
-def ensure_candidate():
-    filename = 'design/xtor/reference/minimal_direct.scs'
-    path = ROOT / filename
-    source = candidate_source()
-    if path.exists() and path.read_text(encoding='utf-8') != source:
-        raise ValueError('Candidate source changed; inspect rather than overwrite')
-    if not path.exists():
-        path.write_text(source, encoding='utf-8', newline='\n')
-    row = candidates.read()['modules']['reference']
-    if 'minimal_direct' not in row['candidates']:
-        candidates.add('reference', 'minimal_direct', filename)
-    return filename
-
-
 def stimulus(codes, sign):
     values = [.45 + sign * (-.9 + (k + .5) * 1.8 / 256) / 2 for k in codes]
     points = ['0 %.17g' % values[0]]
@@ -72,28 +31,12 @@ def stimulus(codes, sign):
     return ' '.join(points)
 
 
-def resetor_20261115_sources():
-    """Load the proven inputs used by the dated 45-corner and MC campaigns."""
-    adoption = read('results/design/reset_data_or_adoption_20261115.json')
-    sources = {}
-    for name, digest in adoption['source_sha256'].items():
-        path = ROOT/'design'/name
-        if name == 'dut.scs' and hashlib.sha256(path.read_bytes()).hexdigest() != digest:
-            path = ROOT/'design/frozen/resetor_20261115/dut.scs'
-        data = path.read_bytes()
-        if hashlib.sha256(data).hexdigest() != digest:
-            raise ValueError('Dated reset-OR source changed: '+name)
-        sources[name] = data
-    return adoption, sources
-
-
 def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None, source_blobs=None,
             cell_library=None):
-    if version not in ('b', 'minimal', 'current', 'single_edge'):
+    if version not in ('b', 'current', 'single_edge'):
         raise ValueError('Unknown reference short version')
     if version == 'single_edge' and source_blobs is None:
         raise ValueError('Single-edge runs require their dedicated DUT package')
-    ensure_candidate()
     run_id = '%s-%s-%s-%s' % (PREFIX, version, corner, revision)
     engine().valid_id(run_id)
     condition = read('specs/corners.json')[corner] if condition is None else dict(condition)
@@ -105,13 +48,22 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
             condition['temperature_c'] not in (-40,27,125) or condition['vdd_v'] not in (.81,.9,.99)):
         raise ValueError('Unsupported PVT condition')
     if source_blobs is None:
-        blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT,
-                            {'reference':'minimal_direct'} if version == 'minimal' else None)
+        blobs = views.build('frozen-b' if version == 'b' else 'current', ROOT)
     else:
         blobs = dict(source_blobs)
     tb = text('tb/top/short/tb.scs')
     for source, node, sign in [('VVINP', 'VINP_SRC', 1), ('VVINN', 'VINN_SRC', -1)]:
         tb = re.sub(r'(?m)^'+source+r' .*$', source+' ('+node+' 0) vsource type=pwl wave=['+stimulus(codes, sign)+']', tb)
+    # Frozen B keeps its 40 ns high phase; the current design uses the adopted external clock.
+    acquisition_ns = 40. if version == 'b' else round(read('specs/arch.json')['external_clock']['high_s']*1e9, 4)
+    probe = ''
+    if acquisition_ns != 40.:
+        tb, count = re.subn(r'(?m)^(VSAMPLE \(SAMPLE 0\) .*?\bwidth=)39\.9n\b',
+                            lambda m: m[1]+'%gn' % round(acquisition_ns-.1, 4), tb)
+        if count != 1:
+            raise ValueError('Expected the shared 40 ns SAMPLE source')
+        # The pin observer keeps reading 5 ns before the next sample.
+        probe = ' probe_delay_s=%gn' % round(95-acquisition_ns, 4)
     blobs['tb.scs'] = tb.encode()
     deck = text('tb/top/short/test.scs').splitlines()
     deck = [line for line in deck if not line.startswith(('XMEASURE ', 'ahdl_include ', 'tran_ab ', 'save '))]
@@ -125,17 +77,18 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
     for bit in range(8):
         signal_names += ['XDUT.'+s+str(bit) for s in ['GNN','GNP','GPN','GPP','CODE']]
         signal_names += ['XDUT.XCDAC.B'+side+str(bit) for side in ['N','P']]
-    if version == 'single_edge':
+    if version != 'b':
         signal_names.remove('XDUT.XCTRL.PHI_W')
         signal_names += ['XDUT.XCTRL.XBIT%d.DIN' % i for i in range(8)]
         signal_names.append('XDUT.XCTRL.XDONE.DIN')
-        signal_names.append('XDUT.XCTRL.XTIM.XPHASE.DIN')
-        if b'XLOW (COMMIT ' in blobs.get('xtor/sar/single_edge.scs',b''):
-            signal_names.append('XDUT.XCTRL.XLOW.DIN')
+        for name in re.findall(rb'(?m)^(XPH\w*) \(COMMIT ', blobs.get('xtor/sar/single_edge.scs',b'')):
+            signal_names.append('XDUT.XCTRL.XTIM.%s.DIN' % name.decode())
+        for name in re.findall(rb'(?m)^(XSEL\d+) \(COMMIT ', blobs.get('xtor/sar/single_edge.scs',b'')):
+            signal_names.append('XDUT.XCTRL.%s.DIN' % name.decode())
     currents = ['XDUT.XCDAC.XS%s%d.%s:1'%(side,bit,mos)
                 for side in ['N','P'] for bit in range(8) for mos in ['MN_LOW','MP_HIGH']]
     stop = (59+100*len(codes))*1e-9
-    deck += '\nahdl_include "observer.va"\nXPROBE ('+' '.join('D%d'%i for i in range(8))+' SAMPLE VDD! 0) b_behavior_observer\n'
+    deck += '\nahdl_include "observer.va"\nXPROBE ('+' '.join('D%d'%i for i in range(8))+' SAMPLE VDD! 0) b_behavior_observer'+probe+'\n'
     deck += 'tran_short tran stop=%.17g maxstep=10p errpreset=moderate lteratio=10\n'%stop
     deck += 'save '+' '.join(signal_names+currents)+'\n'
     blobs['test.scs'] = deck.encode()
@@ -144,6 +97,8 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
     for filename in ['reference_short.py', 'native_stream.py']:
         blobs[filename] = (ROOT/'tools/saradc/measure'/filename).read_bytes()
     ctx = dict(run_id=run_id, issue=2, version=version, corner=corner, **condition,
+               acquisition_s=acquisition_ns*1e-9, sample_pulse_width_s=round(acquisition_ns-.1, 4)*1e-9,
+               observer_probe_delay_s=round(95-acquisition_ns, 4)*1e-9,
                expected_codes=codes, frames=len(codes), period_s=100e-9, frame_origin_s=59e-9,
                expected_stop_s=stop, lsb_v=1.8/256, settling_band_lsb=.25,
                required_signals=[s.lower() for s in signal_names], current_signals=[s.lower() for s in currents],
@@ -180,7 +135,7 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('action',choices=['prepare','submit','status','analyze','collect'])
-    p.add_argument('--version',choices=['b','minimal','current'],required=True)
+    p.add_argument('--version',choices=['b','current'],required=True)
     p.add_argument('--corner',choices=['tt','ssc','ssh','ffc','ffh'],required=True)
     p.add_argument('--revision',default='v1')
     p.add_argument('--host',choices=['thu-wei','thu-sui','thu-song'],help='Host for a new submission; existing runs retain their host')

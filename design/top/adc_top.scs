@@ -1,19 +1,18 @@
-// Generated from frozen B by scripts/sar8_entry.py build.
+// Single-edge ADC top. Electrical statements are authoritative; RNL comments are drawing only.
 // BEGIN SARADC RNL
 // @RNL(type="header") { @VERSION("0.3");
 // @USE-PACKAGE(name="sar8",version="0.1",path="../rnl/sar8.rnl");
 // @USE-PACKAGE(name="rnl-std-fill") {}; }
 // END SARADC RNL
-// Electrical subcircuit statements are preserved verbatim.
-
 subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VREFP 0
-    XSEQ (SAMPLE_MATCH VDD! 0 SEQ_SAMPLE) sar8r_edge
-    XIDLE (ACTIVE SAMPLE_INT VDD! 0 PRESET SAMPLE_MATCH) sar8i_idle
-    XSAMPLE (SAMPLE VDD! 0 SAMPLE_INT) sar8p_clkbuf
+    XSEQ (SAMPLE_INT VDD! 0 SEQ_SAMPLE) sar8_se_acquire
+    XDONE (ACTIVE DONE VDD! 0) INVD1BWP12T30P140
+    XPRESET (DONE SEQ_SAMPLE PRESET VDD! 0) OR2D1BWP12T30P140
+    XSAMPLE (SAMPLE SAMPLE_INT VDD! 0) CKBD1BWP12T30P140
     XBOOTN (SEQ_SAMPLE TOPN VINN) sar_bootstrap_flat_8b_p
     XBOOTP (SEQ_SAMPLE TOPP VINP) sar_bootstrap_flat_8b_p
     XCDAC (GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2 GNP3  GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7 GPP0  GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
-    XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SAMPLE_INT VDD! 0 ACTIVE)  sar8i_ctrl
+    XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SEQ_SAMPLE VDD! 0 ACTIVE) sar8_se_ctrl
     XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 D2 D3 D4  D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2  GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7  GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE_INT VDD! 0 RST_DONE PRESET)  sar8i_refword
     XCOMP (CMP_CLK COMP_N COMP_P VDD! TOPN TOPP 0) sar_strongarm_t28
     CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
@@ -21,14 +20,16 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
     CL_CMP_CLK (CMP_CLK 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
-// (-24,105) @TEXT("SAR8 / current transistor hierarchy",size=2,halign="start",textcolor="#223d52");
-// (-24,97) @TEXT("VIN pair -> Bootstrap -> MOM CDAC -> StrongARM -> asynchronous SAR",size=1.15,halign="start",textcolor="#223d52");
-// #XSAMPLE @SET-SYMBOL $S_sar8p_clkbuf;
+// (-24,105) @TEXT("SAR8 / single-edge transistor hierarchy",size=2,halign="start",textcolor="#223d52");
+// (-24,97) @TEXT("VIN pair -> Bootstrap -> MOM CDAC -> StrongARM -> single-edge asynchronous SAR",size=1.15,halign="start",textcolor="#223d52");
+// #XSAMPLE @SET-SYMBOL $S_CKBD1BWP12T30P140;
 // #XSAMPLE @PLACE(0,67) => @ORIENT("R0");
-// #XIDLE @SET-SYMBOL $S_sar8i_idle;
-// #XIDLE @PLACE(65,67) => @ORIENT("R0");
-// #XSEQ @SET-SYMBOL $S_sar8r_edge;
-// #XSEQ @PLACE(130,67) => @ORIENT("R0");
+// #XSEQ @SET-SYMBOL $S_sar8_se_acquire;
+// #XSEQ @PLACE(65,67) => @ORIENT("R0");
+// #XDONE @SET-SYMBOL $S_INVD1BWP12T30P140;
+// #XDONE @PLACE(150,67) => @ORIENT("R0");
+// #XPRESET @SET-SYMBOL $S_OR2D1BWP12T30P140;
+// #XPRESET @PLACE(195,67) => @ORIENT("R0");
 // #XBOOTN @SET-SYMBOL $S_sar_bootstrap_flat_8b_p;
 // #XBOOTN @PLACE(0,12) => @ORIENT("R0");
 // #XBOOTP @SET-SYMBOL $S_sar_bootstrap_flat_8b_p;
@@ -37,7 +38,7 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // #XCDAC @PLACE(72,-7) => @ORIENT("R0");
 // #XCOMP @SET-SYMBOL $S_sar_strongarm_t28;
 // #XCOMP @PLACE(137,-7) => @ORIENT("R0");
-// #XCTRL @SET-SYMBOL $S_sar8i_ctrl;
+// #XCTRL @SET-SYMBOL $S_sar8_se_ctrl;
 // #XCTRL @PLACE(204,-7) => @ORIENT("R0");
 // #XREF @SET-SYMBOL $S_sar8i_refword;
 // #XREF @PLACE(72,-91) => @ORIENT("R0");
@@ -56,17 +57,17 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // #CL_CMP_CLK @TEXT("CL_CMP_CLK",key="name",size=1.3,halign="start") => @PLACE(225,-42);
 // #CL_CMP_CLK @TEXT("nr=8 lr=2.5u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(225,-49);
 // #CL_CMP_CLK @TEXT("",key="model");
-// (-12,81) @TEXT("Sample buffer",size=2.4,halign="start",textcolor="#223d52");
-// (53,82) @TEXT("Idle / preset",size=2.4,halign="start",textcolor="#223d52");
-// (118,82) @TEXT("Sample edge",size=2.4,halign="start",textcolor="#223d52");
+// (-12,82) @TEXT("Sample buffer",size=2.4,halign="start",textcolor="#223d52");
+// (53,82) @TEXT("Acquire edge",size=2.4,halign="start",textcolor="#223d52");
+// (183,82) @TEXT("Preset",size=2.4,halign="start",textcolor="#223d52");
 // (-12,27) @TEXT("Bootstrap -",size=2.4,halign="start",textcolor="#223d52");
 // (-12,-10) @TEXT("Bootstrap +",size=2.4,halign="start",textcolor="#223d52");
 // (60,13.55) @TEXT("MOM CDAC",size=2.4,halign="start",textcolor="#223d52");
 // (125,8.6) @TEXT("StrongARM",size=2.4,halign="start",textcolor="#223d52");
-// (192,11.9) @TEXT("Async SAR",size=2.4,halign="start",textcolor="#223d52");
+// (192,11.9) @TEXT("Single-edge SAR",size=2.4,halign="start",textcolor="#223d52");
 // (60,-70.45) @TEXT("Reference word",size=2.4,halign="start",textcolor="#223d52");
-// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:4 (29.5,67) (29.5,65.35) #XIDLE:2};
-// &"SAMPLE_MATCH" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:6 (97.5,65.35) (97.5,67) #XSEQ:1};
+// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:2 (32.5,67) (32.5,67) #XSEQ:1};
+// &"DONE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XDONE:2 (169.5,67) (169.5,68.65) #XPRESET:1};
 // &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {(-25,-23.35) (-25,13.65) (-25,67)};
 // &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#XSEQ:4 (-25,67)};
 // $JUNCTION @ATTACH (-25,67);
@@ -107,24 +108,30 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // {&"D0" &"D1" &"D2" &"D3" &"D4" &"D5" &"D6" &"D7"} @WIRE(mode="straight",linewidth=0.3) {#XCTRL:12 (248,-7) (248,-136) (39,-136) (39,-89.35) #XREF:9};
 // (155,-128) @TEXT("CODE[7:0] / D[7:0] feedback",size=0.95,halign="start",textcolor="#223d52");
 // (-24,-145) @TEXT("All three physical comparator/clock MOM loads are shown. VDD! / 0 are global rails.",size=0.95,halign="start",textcolor="#223d52");
-// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:2 (130,78)};
-// (130,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
-// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:3 (130,56)};
-// (130,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
-// &"ACTIVE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:1 (49,68.65)};
-// (48.6,68.65) @TEXT("ACTIVE",size=1.1,halign="end",valign="middle");
-// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:3 (65,78)};
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:2 (65,78)};
 // (65,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
-// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:4 (65,56)};
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:3 (65,56)};
 // (65,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
-// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XIDLE:5 (81,68.65)};
-// (81.4,68.65) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
-// &"SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:1 (-10,67)};
-// (-10.4,67) @TEXT("SAMPLE",size=1.1,halign="end",valign="middle");
-// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:2 (0,77)};
-// (0,77.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
-// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:3 (0,57)};
-// (0,56.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"ACTIVE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XDONE:1 (140,67)};
+// (139.6,67) @TEXT("ACTIVE",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XDONE:3 (150,77)};
+// (150,77.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XDONE:4 (150,57)};
+// (150,56.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET:2 (179,65.35)};
+// (178.6,65.35) @TEXT("SEQ_SAMPLE",size=1.1,halign="end",valign="middle");
+// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET:3 (211,67)};
+// (211.4,67) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET:4 (195,78)};
+// (195,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET:5 (195,56)};
+// (195,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:1 (-16,67)};
+// (-16.4,67) @TEXT("SAMPLE",size=1.1,halign="end",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:3 (0,78)};
+// (0,78.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:4 (0,56)};
+// (0,55.6) @TEXT("0",size=1.1,halign="middle",valign="top");
 // &"VINN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTN:3 (-16,10.35)};
 // (-16.4,10.35) @TEXT("VINN",size=1.1,halign="end",valign="middle");
 // &"VINP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTP:3 (-16,-26.65)};
@@ -139,8 +146,8 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // (72,-23.95) @TEXT("0",size=1.1,halign="middle",valign="top");
 // &"PHI_U" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:20 (220,-10.3)};
 // (220.4,-10.3) @TEXT("PHI_U",size=1.1,halign="start",valign="middle");
-// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:21 (188,-10.3)};
-// (187.6,-10.3) @TEXT("SAMPLE_INT",size=1.1,halign="end",valign="middle");
+// &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:21 (188,-10.3)};
+// (187.6,-10.3) @TEXT("SEQ_SAMPLE",size=1.1,halign="end",valign="middle");
 // &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:22 (204,7.9)};
 // (204,8.3) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
 // &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:23 (204,-21.9)};

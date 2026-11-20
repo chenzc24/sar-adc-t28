@@ -1,5 +1,5 @@
 {
-  "design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_std_delay_v3",
+  "design_id": "sar8_single_edge_bitwise_v1",
   "resolution_bits": 8,
   "sample_rate_hz": 10000000.0,
   "supply_v": [
@@ -13,25 +13,26 @@
   "external_clock": {
     "period_s": 1e-07,
     "initial_low_s": 6e-08,
-    "high_s": 4e-08,
-    "acquisition_s": 4e-08,
-    "conversion_allocation_s": 6e-08,
+    "high_s": 4.5e-08,
+    "acquisition_s": 4.5e-08,
+    "conversion_allocation_s": 5.5e-08,
     "source_rise_s": 1e-10,
     "source_fall_s": 1e-10,
     "spectre_pulse_delay_s": 6e-08,
-    "spectre_pulse_width_s": 3.99e-08,
-    "first_falling_threshold_s": 1.0005e-07,
+    "spectre_pulse_width_s": 4.49e-08,
+    "first_falling_threshold_s": 1.0505e-07,
     "startup": "One normal initial low interval precharges bootstrap; no artificial 101 ns hold",
-    "cancellation_priority": "New SAMPLE high wins over outstanding bit events"
+    "cancellation_priority": "New SAMPLE high wins over outstanding bit events",
+    "frozen_b_regression": "Frozen B case inputs keep their recorded 40 ns high phase"
   },
   "top": "sar_adc8_join_r4",
   "frozen_b_sha256": "f31b66c8fb35003bf7e8ad1a23d9c230b39f1f9651ccc469953e5e52ecf493ea",
   "qualification": {
-    "terminal_voltage": "Two frames at FF cold and FF hot screened against the project thin-oxide GS/GD/DS rule. See measured coverage and model warnings.",
-    "oa": "Prior quiet8p5 routed macro belongs to the previous design.",
-    "pex": "Standard-delay candidate is schematic only.",
+    "terminal_voltage": "FF cold 0.99 V full-terminal scan of the adopted netlist: 0 rule violations; numeric pass pending resolution review, as for earlier adoptions.",
+    "oa": "The single-edge SAR and its reference word are not drawn yet. Earlier routed SAR macros belong to superseded designs.",
+    "pex": "Foundry cell LPE with the nominal-RC and CWORST_T CDAC extractions; SAR inter-cell wiring is ideal.",
     "virtuoso_connection": "existing_integration_reused",
-    "adoption_record": "results/design/sar_std_delay_20261119.json"
+    "adoption_record": "results/design/sar_single_edge_adoption_20261120.json"
   },
   "schema_version": 2,
   "authority": {
@@ -40,15 +41,15 @@
     "immutable_measured_source": "design/frozen/b/dut.scs",
     "top_ports_source": "design/manifest.json",
     "physical_source_sha256": null,
-    "requirements_status": "Existing ADC interface, 10 MS/s, five-corner schematic short regression.",
-    "current_source_hashes": "results/design/sar_std_delay_20261119.json"
+    "requirements_status": "Existing ADC interface at 10 MS/s with a 45 ns / 55 ns external clock; cell-LPE and extracted-CDAC cold-corner qualification, five schematic-CDAC corners and cold local mismatch.",
+    "current_source_hashes": "results/design/sar_single_edge_adoption_20261120.json"
   },
   "architecture": {
     "kind": "fully_differential_asynchronous_SAR",
     "sampling": "top_plate_bootstrap",
     "cdac": "flat_binary_8bit_plus_one_dummy_per_side",
     "comparator": "11_MOS_StrongARM",
-    "control": "native_standard_cells_with_input_qualified_delay_chains",
+    "control": "native_standard_cells_single_write_edge_with_registered_per_bit_delay_taps",
     "output_encoding": "unsigned_binary",
     "decision_order": "MSB_first",
     "external_bit_clock": false,
@@ -221,110 +222,61 @@
       "uncalibrated_offset_requirement_v": null
     },
     "sar": {
-      "implementation": "design/xtor/sar/reset_data_or_std_delay.scs",
+      "implementation": "design/xtor/sar/single_edge.scs",
+      "master": "sar8_se_ctrl",
       "decisions_per_frame": 8,
       "rising_event_counts": {
         "cmp": 8,
-        "write": 8,
-        "update": 8
+        "write": 8
       },
-      "event_order": "cmp[i] < write[i] < update[i] < cmp[i+1]; no reference-side capture circuit in minimal_direct",
-      "no_fixed_bit_clock": true,
-      "reference_capture": "not_applicable_in_current_implementation",
-      "reset_data_logic": "D_pin = NEXT_D OR SAMPLE; native OR2D1 per data bit; asynchronous CDN clear retained"
+      "event_order": "cmp[i] < write[i] < cmp[i+1]",
+      "write_edge": "COMMIT is the only register clock; the next trial word is precomputed before DATA arrives",
+      "first_compare": "No settling window: tracking precharges every tap high. LIVE waits for SN delayed by two DEL250 cells with an AN2 qualifier so the bootstrap gates are off.",
+      "settling_window": {
+        "delay_cell": "DEL250D1BWP12T30P140",
+        "taps_by_compared_bit": {
+          "6": 11,
+          "5": 9,
+          "4": 7,
+          "3": 6,
+          "2": 5,
+          "1": 4,
+          "0": 4
+        },
+        "select": "Five sticky registers, each set by the commit of the preceding trial bit and cleared by sampling. Within a frame a tap only becomes shorter.",
+        "phase": "Two-flop Johnson counter; PHASE = PHA XOR PHB changes once per commit",
+        "criterion": "Signed TOP error from all 510 switched plates against the nominal rails: <=0.25 LSB required, <=0.125 LSB target at every comparison"
+      },
+      "acquisition": "DEL200 with an AN2 qualifier and CKBD1 delays only the rising bootstrap enable",
+      "preset": "PRESET = DONE OR SEQ_SAMPLE; DONE is registered on the eighth commit",
+      "terminal_voltage_measures": "AN2 write gate with VALID on the inner input; INV+INV+ND2 for the sticky-select ORs and the reference MSB OR; two-flop phase register"
     },
     "standard_cells": {
-      "implementation": "design/xtor/common/standard_cells.scs",
+      "implementation": "Native library cells instantiated directly in design/xtor/sar/single_edge.scs, design/xtor/reference/single_edge_d2.scs and design/top/adc_top.scs",
       "external_masters": [
-        "DEL050D1BWP12T30P140",
-        "DEL075D1BWP12T30P140",
+        "AN2D1BWP12T30P140",
+        "BUFFD1BWP12T30P140",
+        "BUFFD2BWP12T30P140",
+        "CKBD1BWP12T30P140",
         "DEL200D1BWP12T30P140",
         "DEL250D1BWP12T30P140",
         "DFCNQD1BWP12T30P140",
         "INVD1BWP12T30P140",
         "INVD2BWP12T30P140",
+        "LHCNDQD1BWP12T30P140",
+        "MUX2D1BWP12T30P140",
         "ND2D1BWP12T30P140",
-        "OR2D1BWP12T30P140"
+        "OR2D1BWP12T30P140",
+        "TIEHBWP12T30P140",
+        "XOR2D1BWP12T30P140"
       ]
     },
-    "timing_reference": {
-      "implementation": "design/xtor/clock/delays_std.scs",
-      "active": {
-        "valid": [
-          "DEL200"
-        ],
-        "write": [
-          "DEL250",
-          "DEL250",
-          "DEL075"
-        ],
-        "quiet": [
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250"
-        ],
-        "sample": [
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250"
-        ],
-        "idle_guard": [
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250",
-          "DEL250"
-        ]
-      },
-      "qualification": "Input AND every second DEL and at the final tap. RAW_D and QUIET_D drive buffers.",
-      "active_delay_cells": 52,
-      "active_qualifier_and2": 28,
-      "retained_storage_cap": "XCTRL.XTIM.XCLOCK.CQB"
-    },
     "reference_control": {
-      "implementation": "design/xtor/reference/minimal_msb_d2.scs",
+      "implementation": "design/xtor/reference/single_edge_d2.scs",
       "features": [
         "CODE_direct",
         "common_PRESET_initial_state",
-        "native_gate_drivers",
-        "unchanged_common_idle"
+        "native_gate_drivers"
       ],
       "reference_side_storage": false,
       "nonoverlap_guaranteed": false
@@ -560,7 +512,7 @@
       "reference_deadtime_s": 1e-10,
       "qualification": "Engineering behavioral defaults; unit C uses the existing nominal characterization, remaining values are not extracted physical B parameters"
     },
-    "physical_calibration_source": "historical frozen B; not recalibrated to minimal_direct",
+    "physical_calibration_source": "historical frozen B; not recalibrated to the single-edge SAR",
     "historical_b_rising_event_counts": {
       "cmp": 8,
       "write": 8,

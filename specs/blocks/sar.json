@@ -1,5 +1,5 @@
 {
-  "master": "sar8i_ctrl",
+  "master": "sar8_se_ctrl",
   "ports": [
     "CMP_CLK",
     "CODE0",
@@ -20,14 +20,14 @@
     "D5",
     "D6",
     "D7",
-    "PHI_U",
+    "COMMIT",
     "SAMPLE",
     "VDD",
     "VSS",
     "ACTIVE"
   ],
-  "implementation": "design/xtor/sar/reset_data_or.scs",
-  "acceptance": "See specs/tests.json and docs/verification.md",
+  "implementation": "design/xtor/sar/single_edge.scs",
+  "acceptance": "results/design/sar_single_edge_adoption_20261120.md; native full-DUT entry python -m tools.saradc.single_edge_lpe CORNER KIND --cdac nominal|cworst --revision NEW_ID",
   "system_contract": "specs/arch.json",
   "details_pointer": "/blocks/sar",
   "independent_test": "specs/block_tests.json#/tests/sar",

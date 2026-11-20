@@ -27,6 +27,8 @@ Use native-time terminal waveforms with interpolated threshold crossings. Check 
 
 For existing simulations with sufficient waveforms, create an independent managed analysis-only verdict bound to the completed source. Preserve original functional evidence and results. Collect new managed waveforms when required internal nodes are absent. Use an explicit per-device SOA analyzer for this rule.
 
-## Adoption and Verification of the Minimal Design
+## Adoption and Verification of the Current Design
 
-On 2026-11-15, the user adopted `reference=minimal_msb_d2` and `sar=reset_data_or` for the default design and subsequent development. At adoption, the OR design had passed 18 frames of function, timing, and terminal-voltage screening at FF cold. The other corners were pending at that checkpoint. The current reference has no capture block. Use `reference_short` for actual CODE and gate-control data, eight decisions and writes, and per-bit bottom-plate settling. The B analyzer, behavioral timing, historical FFT, full-code and Monte Carlo runs, and earlier D2 five-corner results qualify their own inputs. [Adoption record](../results/design/reset_data_or_adoption_20261115.json)
+On 2026-11-20, the user adopted the single-edge SAR with registered per-bit delay taps and the 45 ns high / 55 ns low external clock. The adoption runs use foundry cell LPE and the extracted CDAC with its 510 switched terminals; the SAR inter-cell wiring is ideal. For each frame, `single_edge_lpe` checks the gain-adjusted code at the 90 and 98 ns reads, the signed TOP settling error against the nominal rails, each tap hand-off, register setup and hold, and the COMMIT pulse width. Settling must be at most 0.25 LSB, with a 0.125 LSB target. Repeat the terminal-voltage scan after layout.
+
+The reset-OR adoption of 2026-11-15, the B analyzer, behavioral timing, historical FFT, full-code and Monte Carlo runs, and earlier D2 five-corner results qualify their own inputs. [Adoption report](../results/design/sar_single_edge_adoption_20261120.md) · [Reset-OR adoption record](../results/design/reset_data_or_adoption_20261115.json)
