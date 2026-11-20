@@ -12,22 +12,23 @@ the active-high latch with asynchronous clear.
 The falling edge of the tracking clock starts the first delay transition. Each commit then launches the
 opposite phase. The comparator stays in reset until that transition arrives and the buffered
 comparator outputs have returned to their common precharge state. The first three trials use
-eight DEL250 cells and the remaining five use six. The tracking gate drives the controller
-sampling input and both bootstraps.
+nine DEL250 cells and the remaining five use six. The bit-5 write clocks the registered tap
+select high. It stays high until the next accepted sample clears it. The next-word decoder
+still uses its combinational prefix OR. The tracking gate drives the controller and both bootstraps.
 
 Prepare a standard PVT point with `python -m tools.saradc.single_edge tt REVISION --cell-lpe`. The same
 entry accepts `ssc`, `ssh`, `ffc` and `ffh`. Add `--seed SEED` at a cold corner to enable
 whole-DUT local mismatch. Use `--restart` at TT for a valid sampling request during conversion.
 The cell-LPE runs use TYPICAL at TT, CWORST_T at SS and CBEST_T at FF. Omit
 `--cell-lpe` to reproduce the shorter schematic-cell delays. The measurement uses the project's previously extracted DFCNQ
-Liberty tables or an explicit `--liberty-tables PATH`. [Front-end verification](../../results/design/sar_single_edge_frontend.md)
+Liberty tables or an explicit `--liberty-tables PATH`. [Earlier 8/6 front-end verification](../../results/design/sar_single_edge_frontend.md)
 
-Use `python -m tools.saradc.single_edge_lpe ffc 8 6 verify REVISION` to prepare the
-fast-cold cell-LPE and extracted-CDAC verification. Use `ssc` for slow cold,
-`scan` for the four-frame tap sweep or `boundary` for the 63-to-64 transition.
+Use `python -m tools.saradc.single_edge_lpe ffc 9 6 boundary REVISION` for the
+gain-normalized 63-to-64 transition, `ffc 9 6 reversal REVISION` for the 0-to-128 transition,
+and `ssc 9 6 verify REVISION` for the matched eight-frame 90 ns read check.
 These tests take the archived stacked CDAC,
 its 510 physical terminals and the measured corner gain from the managed run store.
-[Physical tap calibration](../../results/design/sar_single_edge_taps.md)
+[Registered 9/6 tap measurements](../../results/design/sar_registered_9_6.md) · [Earlier combinational tap calibration](../../results/design/sar_single_edge_taps.md)
 
 The current ADC pairs `sar=std_delay_qualified` with `timing=std_delay`. Reference uses `minimal_msb_d2`. Sampler, CDAC and comparator use `b`. The previous RC design pairs `sar=reset_data_or` with `timing=quiet8p5`. [Candidate registry](../../specs/candidates.json) · [Measured schematic](../../results/design/sar_std_delay_20261119.json)
 

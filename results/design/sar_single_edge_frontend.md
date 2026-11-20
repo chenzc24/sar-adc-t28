@@ -1,6 +1,6 @@
 # Single-edge SAR front-end verification
 
-One integrated native-cell SAR was tested at 10 MS/s with the transistor-level sampler, comparator, reference switches and CDAC. The conversion interval is measured from a 100 ns frame origin. The external sampling pulse is 40 ns and the two output reads are at 90 and 98 ns. The runs use 5 ps saved strobes. [DUT](../../design/dut_single_edge.scs) · [Compact native measurements and run identities](sar_single_edge_frontend.json) · [Baseline](sar_std_delay_20261119.md)
+The combinational 8/6 native-cell SAR was tested at 10 MS/s with the transistor-level sampler, comparator, reference switches and CDAC. The conversion interval is measured from a 100 ns frame origin. The external sampling pulse is 40 ns and the two output reads are at 90 and 98 ns. The runs use 5 ps saved strobes. [Compact native measurements and run identities](sar_single_edge_frontend.json) · [Baseline](sar_std_delay_20261119.md) · [Subsequent registered 9/6 tap measurements](sar_registered_9_6.md)
 
 ## Five project corners with standard-cell LPE
 

@@ -130,6 +130,8 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
         signal_names += ['XDUT.XCTRL.XBIT%d.DIN' % i for i in range(8)]
         signal_names.append('XDUT.XCTRL.XDONE.DIN')
         signal_names.append('XDUT.XCTRL.XTIM.XPHASE.DIN')
+        if b'XLOW (COMMIT ' in blobs.get('xtor/sar/single_edge.scs',b''):
+            signal_names.append('XDUT.XCTRL.XLOW.DIN')
     currents = ['XDUT.XCDAC.XS%s%d.%s:1'%(side,bit,mos)
                 for side in ['N','P'] for bit in range(8) for mos in ['MN_LOW','MP_HIGH']]
     stop = (59+100*len(codes))*1e-9

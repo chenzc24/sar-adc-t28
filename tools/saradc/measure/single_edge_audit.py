@@ -131,7 +131,14 @@ def analyze(root, out, library, bottom_measure=None):
                     setup_slew_ps=before[2],hold_slew_ps=after[2]))
     result=dict(context=ctx,frames=frames)
     with open(library) as stream:
-        result['ccs']=register_constraints.evaluate(result,json.load(stream))
+        tables=json.load(stream)
+    result['ccs']=register_constraints.evaluate(result,tables)
+    select_pin = 'xdut.xctrl.xlow.din'
+    if select_pin in pins:
+        idx=pins.index(select_pin)
+        selected=[dict(frame=f['frame'], register_pin_windows=[
+            row for row in f['register_pin_windows'] if row['bit']==idx]) for f in frames]
+        result['selector_ccs']=register_constraints.evaluate(dict(context=ctx,frames=selected),tables)
     for f in frames:
         del f['register_pin_windows']
     return result
@@ -143,6 +150,12 @@ if __name__=='__main__':
     ap.add_argument('--output-dir', required=True)
     ap.add_argument('--source-run-dir', required=True)
     a=ap.parse_args()
-    result = analyze(a.source_run_dir,a.output_dir,os.path.join(a.run_dir,'inputs/dff.json'))
+    with open(os.path.join(a.source_run_dir,'inputs/context.json')) as stream:
+        groups=json.load(stream).get('cdac_plate_nodes')
+    bottom_measure=None
+    if groups:
+        from single_edge_lpe import bottom_state
+        bottom_measure=lambda v,lsb:bottom_state(v,groups,lsb)
+    result = analyze(a.source_run_dir,a.output_dir,os.path.join(a.run_dir,'inputs/dff.json'),bottom_measure)
     with open(os.path.join(a.output_dir,'result.json'),'w') as stream:
         json.dump(result,stream,indent=2)

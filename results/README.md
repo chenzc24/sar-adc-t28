@@ -10,7 +10,7 @@ The routed standard-delay candidate removes the discrete QB MOM. The nine-stage 
 
 | Verification | Evidence |
 | --- | --- |
-| Single-edge native SAR front end | [Matched timing gains, five PVT points, six local mismatch draws and a sampling restart](design/sar_single_edge_frontend.md) |
+| Single-edge native SAR front end | [Registered 9/6 tap waveforms, bit-6 differential and 90 ns read margin](design/sar_registered_9_6.md) · [Earlier 8/6 timing gains, five PVT points, six mismatch draws and sampling restart](design/sar_single_edge_frontend.md) |
 | TT full-code test, 255 transitions and 256 code centers | [Static results](static/results.json) |
 | TT 1024-point FFT and ADCtoolbox | [FFT results](fft/results.json), [A/B spectra](fft/ab_spectrum.png), and [B's 12-plot panel](fft/b_toolbox_panel.png) |
 | 17.13 µm reset-OR design, continuous 1024-point noisy FFT | SNR 48.576 dB, SNDR 48.554 dB, ENOB 7.773 bits, and SFDR 65.495 dBc. All 1032 frame protocols passed. The test uses one noise seed and retains terminal-voltage and LTE warnings and convergence limits. [Final results and spectrum](noise/resetor_1024_20261116/README.md) |

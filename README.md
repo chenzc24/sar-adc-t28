@@ -6,7 +6,7 @@ An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The current schemati
 | --- | --- |
 | Design specification | [Specification](docs/specification.md) and its machine-readable source [specs/arch.json](specs/arch.json) |
 | Top level | [ADC top](design/top/adc_top.scs) and [complete DUT includes](design/dut.scs) |
-| Single-edge SAR front end | [Native-cell DUT](design/dut_single_edge.scs) and [five-corner, mismatch and restart results](results/design/sar_single_edge_frontend.md) |
+| Single-edge SAR front end | [Native-cell DUT](design/dut_single_edge.scs), [registered 9/6 tap handoff and cold-corner reads](results/design/sar_registered_9_6.md), and [earlier 8/6 five-corner, mismatch and restart results](results/design/sar_single_edge_frontend.md) |
 | Modules | [Design index](design/README.md) |
 | RNL schematics and hierarchy | [Offline viewer](docs/schematics/index.html) and [viewer and editing guide](docs/schematics/README.md) |
 | Standalone module tests | [Block testbenches](tb/blocks/README.md) |

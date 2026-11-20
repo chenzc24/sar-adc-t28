@@ -12,7 +12,7 @@ ROOT = short.ROOT
 SOURCE = 'sar-acq-q6-xrc-s10-ssc-20261119c'
 COLD = {'ffc': 'cbest_t', 'ssc': 'cworst_t'}
 CODES = {'scan': [255, 0, 85, 170], 'verify': [255, 255, 0, 128, 85, 170, 127, 1],
-         'boundary':[63,64,63,64]}
+         'boundary':[63,64,63,64], 'reversal': [255, 255, 0, 128]}
 CTRL = 'xtor/sar/single_edge.scs'
 PHASE = ['XDUT.XCTRL.XTIM.' + s for s in ('PHASE_REQUEST', 'DELIVERED')]
 
@@ -29,8 +29,8 @@ def set_taps(source, high, low):
     for i in range(1, max(high, low) + 1):
         lines.append('XDEL%d (%s T%d VDD VSS) DEL250D1BWP12T30P140' % (i, previous, i))
         previous = 'T%d' % i
-    lines.append('XTAP (T%d T%d LOW_BITS DELIVERED VDD VSS) MUX2D1BWP12T30P140' % (high, low))
-    source, count = re.subn(rb'(?m)^XDEL1 \(PHASE_REQUEST[^\r\n]*(?:\r?\nXDEL\d+ [^\r\n]*)*\r?\nXTAP [^\r\n]*',
+    lines.append('XTAP (T%d T%d' % (high, low))
+    source, count = re.subn(rb'(?m)^XDEL1 \(PHASE_REQUEST[^\r\n]*(?:\r?\nXDEL\d+ [^\r\n]*)*\r?\nXTAP \(T\d+ T\d+(?= )',
                             '\n'.join(lines).encode(), source)
     if count != 1:
         raise ValueError('Expected one physical delay chain and one mux')
@@ -102,12 +102,30 @@ def prepare(corner, high, low, kind, revision):
             if count!=1:raise ValueError('Missing differential input')
         blobs['tb.scs']=tb.encode()
     signals = [s for s in ctx['required_signals'] if not s.startswith('xdut.xcdac.')]
+    ctrl = 'xdut.xctrl.'
+    window = ctrl + 'xtim.xwindow.'
+    ctx['selector_probes'] = dict(q=ctrl+'low_q', high=window+'t%d'%high, low=window+'t%d'%low)
+    signals += [ctrl+'trial5', ctrl+'xword.low_bits']
+    signals += sorted(set(ctx['selector_probes'].values()))
     ctx['required_signals'] = signals + [s.lower() for s in PHASE] + group_names
     deck = re.sub(rb'(?m)^save [^\r\n]+', b'save '+(' '.join([s.upper() for s in signals] + PHASE)).encode(), blobs['test.scs'])
-    deck = re.sub(rb'(?m)^(tran_short tran [^\r\n]+)', rb'\1 strobeperiod=5p strobeoutput=strobeonly', deck)
+    strobe = 'strobeperiod=5p strobeoutput=strobeonly'
+    if kind in ('boundary', 'reversal') and corner == 'ffc':
+        # The previous double crossing was shorter than the 5 ps output grid.
+        # Keep periodic samples elsewhere, with 0.5 ps samples across the handoff
+        # and bit 3 in the last (directed) frame.
+        stop_ps = round(ctx['expected_stop_s'] * 1e12)
+        last_ps = round((ctx['frame_origin_s'] + (ctx['frames']-1)*ctx['period_s']) * 1e12)
+        start, end = last_ps + 45500, last_ps + 52000
+        ctx['fine_window_frame_ns'] = [45.5, 52.0]
+        ticks = sorted(set(range(10, 2*stop_ps+1, 10)).union(range(2*start, 2*end+1)))
+        times = ['%.1fp' % (tick / 2) for tick in ticks]
+        rows = [' '.join(times[i:i+32]) for i in range(0,len(times),32)]
+        strobe = 'strobetimes=['+' \\\n'.join(rows)+'] strobeoutput=strobeonly'
+    deck = re.sub(rb'(?m)^(tran_short tran [^\r\n]+)', lambda m: m[1]+b' '+strobe.encode(), deck)
     blobs['test.scs'] = deck+b'\n'+b'\n'.join(plate_saves)+b'\n'
     blobs['single_edge_lpe.py'] = (ROOT/'tools/saradc/measure/single_edge_lpe.py').read_bytes()
-    if kind=='verify':
+    if kind in ('verify','boundary','reversal'):
         ctx['min_cp_high_ps']=CP_HIGH_PS[corner]
         blobs['single_edge_audit.py']=(ROOT/'tools/saradc/measure/single_edge_audit.py').read_bytes()
         blobs['register_constraints.py']=(ROOT/'Layout/tools/analysis/register_constraints.py').read_bytes()
