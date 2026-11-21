@@ -1,0 +1,417 @@
+{
+  "design_id": "sar8_single_edge_bitwise_v1",
+  "adopted_on": "2026-11-21",
+  "authority": "User decision, 2026-11-21",
+  "change": "Sampler main switch widened from two to four parallel 1 um/150 nm nch_18_mac devices (Mmain_U2, Mmain_U3 added). All other devices and the 200-unit MOM bootstrap capacitor are unchanged.",
+  "reason": "With the extracted Bootstrap inside the ADC, SS 0.81 V -40 C sampling failed: 7 of 10 frames over the 0.25 LSB residual screen, worst 4.83 LSB. Removing extracted well proximity alone left 1.52 LSB, so layout alone could not close it.",
+  "files": {
+    "design/xtor/bootstrap/bootstrap.scs": {
+      "sha256": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
+      "previous_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+      "electrical_equivalent": "work/layout/bootstrap/mmain/bootstrap_mmain4.scs (e47f7fcff5a9847b01fc383ec1f1124009a587b3a090ede18b4939f1175fa46b): identical LVS reference apart from its source-hash line"
+    },
+    "specs/arch.json": {
+      "sha256": "7c8bb92a4fa8b1b74224333ea9615df5d9b7fa2271f3242342d55ea17d1f3711",
+      "field": "/blocks/bootstrap/main_switch_parallel_devices = 4"
+    },
+    "design/manifest.json": {
+      "sha256": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69"
+    }
+  },
+  "sizing": {
+    "rule": "Smallest width whose schematic SS-cold settling time constant is at most half that of the two-finger schematic, to absorb the roughly 2x layout slowdown, while FF-cold charge injection stays within the 3.52 mV standalone screen.",
+    "chosen": "4 x 1 um",
+    "rejected": {
+      "6 x 1 um": "FF-cold schematic sample error -4.36 mV exceeds the 3.52 mV screen"
+    },
+    "runs": [
+      {
+        "run_id": "boot-sch-ssc-20261120",
+        "host": "thu-wei",
+        "recipe_hash": "93e6a69e90cf91e0dd3e4aef3d09259062868ac5e8858305668d8e5a75a4a0e4",
+        "result_sha256": "99fa48ab64ed83681a1424d2940881a63fc97917a614ef59d3910fa7f2c76e87",
+        "view": "2 x 1 um schematic",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -0.5062,
+        "second_error_mV": -0.7281,
+        "first_hold_drift_uV": 0.037,
+        "second_hold_drift_uV": -0.014
+      },
+      {
+        "run_id": "boot-m4-sch-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "8ea901b7c23adfc4179498eddf91f7cd4e7d9257521e705f39b0eb3445c05bd9",
+        "result_sha256": "0ade3dd06fd8a760b525e5f17350dc47cb3200a2b283fe980a72b0b398711e1c",
+        "view": "4 x 1 um schematic",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -1.0317,
+        "second_error_mV": -1.4117,
+        "first_hold_drift_uV": -0.162,
+        "second_hold_drift_uV": -1.194
+      },
+      {
+        "run_id": "boot-m6-sch-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "265cd01c03aed5b5ef1230afe1dc5aaa30d7d4bb6ed0857e7159aa04791a5940",
+        "result_sha256": "f08ecf4d42e28090e27bebc9b8f1db15e64951318a7b82cef4c64a8c8ed72e74",
+        "view": "6 x 1 um schematic",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -1.5562,
+        "second_error_mV": -2.0857,
+        "first_hold_drift_uV": -4.516,
+        "second_hold_drift_uV": -26.665
+      },
+      {
+        "run_id": "boot-sch-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "78993e7884b75cc74fbfbeb4047ee9a7c78c14f4110157ba9e13ead5f893220c",
+        "result_sha256": "4af741ea1997a9250ecfbd3f0cccf659b8fc3ae594f7dd9195ca96b3ec51f910",
+        "view": "2 x 1 um schematic",
+        "corner": "FF 0.99 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -1.0183,
+        "second_error_mV": -1.3639,
+        "first_hold_drift_uV": 0.04,
+        "second_hold_drift_uV": -0.001
+      },
+      {
+        "run_id": "boot-m4-sch-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "73abea056aa43f71d24235311e2b69276c5257019866d6d4c63a07231cb4949c",
+        "result_sha256": "c7d7f646517316e581c78d0cc9a6aff001a7111a2beb5783247120e7106502d0",
+        "view": "4 x 1 um schematic",
+        "corner": "FF 0.99 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -2.159,
+        "second_error_mV": -2.8296,
+        "first_hold_drift_uV": 0.08,
+        "second_hold_drift_uV": -0.002
+      },
+      {
+        "run_id": "boot-m6-sch-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "c94333597ddcb185987c8736cab3af6052d2c782f058536bfb9fc01d25b4dfdd",
+        "result_sha256": "67cfad8339f1dc0707f4bce30549c4daa618b0e41b0ebaa8ec02bc4f4fb39637",
+        "view": "6 x 1 um schematic",
+        "corner": "FF 0.99 V -40 C",
+        "pass_functional": false,
+        "first_error_mV": -3.3575,
+        "second_error_mV": -4.3605,
+        "first_hold_drift_uV": 0.12,
+        "second_hold_drift_uV": -0.003
+      }
+    ]
+  },
+  "physical": {
+    "published_view": "SAR_ADC_T28_LAYOUT/sar_bootstrap_flat_8b_p_core/layout",
+    "evidence": "boot-core-20261121",
+    "candidate_view": "layout_mmain4",
+    "candidate_evidence": "boot-mmain4-20261121a",
+    "geometry_sha256": "987efe8c45ba5497de9746f032eda154d8b899956509bc5caf723721f587fa5f",
+    "geometry_identical": true,
+    "size_um": [
+      24.52,
+      24.99
+    ],
+    "lvs": "CORRECT",
+    "drc": "Same six markers as earlier cores: four fill-dependent plus two warnings",
+    "report": "Layout/results/bootstrap.json"
+  },
+  "standalone_extracted": [
+    {
+      "run_id": "boot-od18-ssc-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "5ab796351c0e54d77dfa945a7fa5ac22f9eae89b4477ffb54cb41e543d8eb262",
+      "result_sha256": "5b24fc8d99fee76b96693f9695dfe8265c9ff1dccd2f905cf4b5b50181a22553",
+      "view": "2 x 1 um extracted, boot-od18-20261121b",
+      "corner": "SS 0.81 V -40 C",
+      "pass_functional": true,
+      "first_error_mV": -0.5857,
+      "second_error_mV": -2.2605,
+      "first_hold_drift_uV": 6.348,
+      "second_hold_drift_uV": -269.118
+    },
+    {
+      "run_id": "boot-m4-ext-ssc-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "3e8ee3b1fcbb094f2b88a520e86aa2eaa34fe8486346381acc15ae19e547091a",
+      "result_sha256": "0a8e2b6bbb0aa55c635739c20abe3b6e0bac68f3cceead7b8147e694cddbdbf0",
+      "view": "4 x 1 um extracted, boot-mmain4-20261121a",
+      "corner": "SS 0.81 V -40 C",
+      "pass_functional": true,
+      "first_error_mV": -1.016,
+      "second_error_mV": -1.1163,
+      "first_hold_drift_uV": -159.916,
+      "second_hold_drift_uV": -734.401
+    },
+    {
+      "run_id": "boot-m4-ext-ffc-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "9fd47bc5f5ed633e2b3dd7c80c357335516d8882d801f8f0dae658bf6f957b8c",
+      "result_sha256": "3a5dc5ffad8bb18a24bc8a70a3c7523cb64e3b0fbf2246ee003a5a2622e93eea",
+      "view": "4 x 1 um extracted, boot-mmain4-20261121a",
+      "corner": "FF 0.99 V -40 C",
+      "pass_functional": true,
+      "first_error_mV": -2.3826,
+      "second_error_mV": -3.1549,
+      "first_hold_drift_uV": 115.703,
+      "second_hold_drift_uV": -0.196
+    },
+    {
+      "run_id": "boot-core-tt-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "190793c39845d639839a387afbea950332aa50da7b47cceb5eb312719e7c3a9a",
+      "result_sha256": "8d780dd0611a3e841f59f177909805e0c761f3af940d9fa1dca3c3700effce5a",
+      "view": "4 x 1 um extracted, published view boot-core-20261121",
+      "corner": "TT 0.9 V 27 C",
+      "pass_functional": true,
+      "first_error_mV": -1.8831,
+      "second_error_mV": -2.5123,
+      "first_hold_drift_uV": 115.185,
+      "second_hold_drift_uV": -0.143
+    }
+  ],
+  "integrated": {
+    "scope": "Current transistor ADC with the planned-fill extracted CDAC (cdac-paired-plan-d-20261118-combined); Bootstrap as noted; SAR, reference and comparator schematic; 10 frames",
+    "runs": [
+      {
+        "run_id": "int-cdac-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "595249ab4cadc965cdf1ba4feee9cb614d2f059a7f8d324eb74bae8a3c0dc049",
+        "result_sha256": "b44cb92153229ab804d6ca029e9780b1fb4d312bfd34e9be0da12d839f046fad",
+        "view": "SS 0.81 V -40 C; schematic Bootstrap (control)",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.0151,
+          0.0013,
+          -0.0053,
+          -0.0424,
+          -0.0,
+          -0.0115,
+          -0.0062,
+          -0.0013,
+          0.0178,
+          -0.0672
+        ],
+        "worst_residual_lsb": 0.0672,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 32.577
+      },
+      {
+        "run_id": "int-cdacboot-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "1570f80b35cde1297d59f1e6762d799a6b1b6bd722b10a5cedeaf557aa53dab8",
+        "result_sha256": "b0dc21b53c745c572bd064dd3bc96eca37e2392e0d6be3e4c516d18185b90a43",
+        "view": "SS 0.81 V -40 C; 2 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          6,
+          124,
+          128,
+          248,
+          255,
+          255,
+          0,
+          123
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.6342,
+          0.0528,
+          -0.5855,
+          -3.4805,
+          -0.0069,
+          -0.4976,
+          -0.3664,
+          -0.0314,
+          0.7489,
+          -4.8257
+        ],
+        "worst_residual_lsb": 4.8257,
+        "frames_over_screen": 7,
+        "min_deadline_margin_ns": 31.92
+      },
+      {
+        "run_id": "int-cdacboot-nowpe-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "6a5626b014c84d1df56ce0f4a8509b2c86e9cc40099ae7485b1b704db2405429",
+        "result_sha256": "e4323ae021dfe31d7fe8b38f03ebc58df2e8e73bcb60633407a353f447ee0d54",
+        "view": "SS 0.81 V -40 C; 2 x 1 um extracted, well proximity removed (diagnostic)",
+        "codes": [
+          0,
+          0,
+          7,
+          126,
+          128,
+          248,
+          255,
+          255,
+          0,
+          127
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.2947,
+          0.0106,
+          -0.2377,
+          -1.0103,
+          -0.001,
+          -0.2237,
+          -0.1545,
+          -0.0056,
+          0.313,
+          -1.5226
+        ],
+        "worst_residual_lsb": 1.5226,
+        "frames_over_screen": 4,
+        "min_deadline_margin_ns": 32.564
+      },
+      {
+        "run_id": "int-m4-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1ac3f59444d7cca30ea2cac65baee900eaa5e7e52454c3ee76b94cadd60b0ea6",
+        "result_sha256": "2cfa67fc08982bbc96c39893ec085ee8e457bb69c6a5965f5f167d48ed07fd9b",
+        "view": "SS 0.81 V -40 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.0504,
+          0.0003,
+          -0.0464,
+          -0.0079,
+          0.0,
+          -0.0312,
+          -0.0333,
+          -0.0002,
+          0.0455,
+          -0.0122
+        ],
+        "worst_residual_lsb": 0.0504,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 32.525
+      },
+      {
+        "run_id": "int-m4-tt-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1a340c455a9dbd758b27223251b846a9627d505a708e2708da19efaf69c42367",
+        "result_sha256": "553dccdac7d5e1e2dab6e998c291e0e042127a5f194c723c920fd3da9ed0dc07",
+        "view": "TT 0.9 V 27 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          -0.0061,
+          -0.0061,
+          -0.0053,
+          -0.0,
+          0.0,
+          0.0053,
+          0.0062,
+          0.0062,
+          -0.0061,
+          0.0
+        ],
+        "worst_residual_lsb": 0.0062,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 42.701
+      }
+    ]
+  },
+  "open": [
+    "Integrated FF cold (differential charge injection), SS hot and FF hot",
+    "Terminal-voltage stress of the widened switch",
+    "Mismatch, noise and top-level fill/routing"
+  ]
+}

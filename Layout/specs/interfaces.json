@@ -480,18 +480,18 @@
   "implemented_pin_access": {
     "bootstrap": {
       "cell": "sar_bootstrap_flat_8b_p_core",
-      "evidence": "boot-core-20261118",
+      "evidence": "boot-core-20261121",
       "coordinate_frame": "Local core origin in R0, um",
       "ports": {
         "VIN": {
-          "layer": "M2",
+          "layer": "M5",
           "center_um": [
             -2.165,
-            0.07
+            24.825
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            0.3,
+            0.24
           ]
         },
         "VOUT": {
@@ -501,19 +501,19 @@
             0.07
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            0.2,
+            0.2
           ]
         },
         "VDD": {
-          "layer": "M3",
+          "layer": "M5",
           "center_um": [
-            1.8,
-            0.07
+            -0.1,
+            0.72
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            6.84,
+            0.2
           ]
         },
         "CLKS": {
@@ -528,19 +528,19 @@
           ]
         },
         "VSS": {
-          "layer": "M2",
+          "layer": "M5",
           "center_um": [
-            3.15,
-            0.07
+            -0.1,
+            0.36
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            6.84,
+            0.24
           ]
         }
       },
-      "top_integration": "Each channel uses this master. VOUT connects to TOPP or TOPN, VIN to VINP or VINN, and CLKS to SEQ_SAMPLE. All five ports face the lower edge in R0.",
-      "sensitive_regions": "VIN and VOUT below the main switch, the internal boosted G, and the M3/M4 BTOP and BBOT array feeds. Route the clock from the control side and check coupling in the integrated layout."
+      "top_integration": "Each channel uses this master. VOUT connects to TOPP or TOPN and leaves the lower edge on a 0.20 um M2 exit toward the CDAC. VIN enters the north edge on a 0.30 um M5 trunk. CLKS connects to SEQ_SAMPLE at the lower edge on M2. VDD and VSS are M5 rails across the switch bank for the top-level grid. Place XBOOTN as the MY mirror of XBOOTP.",
+      "sensitive_regions": "VOUT below the main switch, the internal boosted G, and the M3/M4 BTOP and BBOT array feeds. The M5 VIN trunk crosses the array above the plate feeds (about 0.87 fF to BTOP and 0.60 fF to BBOT in prefill xRC); keep other top-level M5/M6 routing off it. Route the clock from the control side and check coupling in the integrated layout."
     },
     "comparator": {
       "cell": "sar_strongarm_t28_core",

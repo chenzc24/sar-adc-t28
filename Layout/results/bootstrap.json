@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "date": "2026-11-18",
+  "date": "2026-11-21",
   "status": "prefill_core_verified",
   "library": "SAR_ADC_T28_LAYOUT",
   "core": "sar_bootstrap_flat_8b_p_core",
@@ -11,40 +11,40 @@
     "XBOOTN"
   ],
   "electrical_source": "design/xtor/bootstrap/bootstrap.scs",
-  "electrical_source_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+  "electrical_source_sha256": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
   "generator": "Layout/design/bootstrap.il",
-  "generator_sha256": "f6aae0acf0eec590c3a8e5e4e82039526030307381e69a13fe237f62ab9bb2e1",
-  "reference_cdl_sha256": "50dd85e89eb04405ee408d421294a0e282df9e47a1a7b58f19dbb9239d7ddcd0",
-  "physical_evidence": "boot-core-20261118",
+  "generator_sha256": "0427d7ed8c5566e44c6dd207f714758f6547679338d08733a211bf371d4b67f6",
+  "reference_cdl_sha256": "3924ff7fd3630a98a9da46c28d8a55ca69afc0c156522f193da5e6fee4747d0d",
+  "physical_evidence": "boot-core-20261121",
   "physical_evidence_root_key": "remote_root",
-  "gds_sha256": "d5f975b5aca9b61bc4ed5ec801f16a2fcca7409687f8bbce1f42aa6e38542025",
-  "geometry_sha256": "a77327c667de8e754e3abe1bcf94b84c64471ffa6fd48889022d02de5ab7dbb8",
-  "figure": "Layout/results/figures/bootstrap_core.png",
+  "gds_sha256": "f0c6f9bb8e07ff308bb7355845b21a579db3b1f556de14ffa5f30d9e850227b9",
+  "geometry_sha256": "987efe8c45ba5497de9746f032eda154d8b899956509bc5caf723721f587fa5f",
+  "figure": null,
   "bbox_um": [
     [
-      -12.34,
+      -11.82,
       -0.045
     ],
     [
-      12.34,
+      12.7,
       24.945
     ]
   ],
   "size_um": [
-    24.68,
+    24.52,
     24.99
   ],
-  "area_um2": 616.7532,
+  "area_um2": 612.7548,
   "ports": {
     "VIN": {
-      "layer": "M2",
+      "layer": "M5",
       "center_um": [
         -2.165,
-        0.07
+        24.825
       ],
       "pin_size_um": [
-        0.12,
-        0.12
+        0.3,
+        0.24
       ]
     },
     "VOUT": {
@@ -54,30 +54,30 @@
         0.07
       ],
       "pin_size_um": [
-        0.12,
-        0.12
+        0.2,
+        0.2
       ]
     },
     "VDD": {
-      "layer": "M3",
+      "layer": "M5",
       "center_um": [
-        1.8,
-        0.07
+        -0.1,
+        0.72
       ],
       "pin_size_um": [
-        0.12,
-        0.12
+        6.84,
+        0.2
       ]
     },
     "VSS": {
-      "layer": "M2",
+      "layer": "M5",
       "center_um": [
-        3.15,
-        0.07
+        -0.1,
+        0.36
       ],
       "pin_size_um": [
-        0.12,
-        0.12
+        6.84,
+        0.24
       ]
     },
     "CLKS": {
@@ -103,20 +103,20 @@
     "scope": "One Bootstrap channel. All coordinates are local R0, in micrometres.",
     "pcell_instances": {
       "native_mos": 11,
-      "mos_fingers": 13,
+      "mos_fingers": 15,
       "native_mom": 200
     },
     "cboot": {
       "model": "cfmom_2t",
       "units_by_row": [
-        19,
-        19,
-        27,
-        27,
-        27,
-        27,
-        27,
-        27
+        16,
+        16,
+        28,
+        28,
+        28,
+        28,
+        28,
+        28
       ],
       "unit_bbox_size_um": [
         0.76,
@@ -124,7 +124,7 @@
       ],
       "unit_bbox_area_sum_um2": 443.84,
       "pitch_um": [
-        0.92,
+        0.88,
         3.14
       ],
       "row_orientations": [
@@ -141,16 +141,21 @@
         "PLUS": "BTOP",
         "MINUS": "BBOT"
       },
-      "routing": "Adjacent M3 plate terminals joined on their native y coordinates. M4 feeds use paired M3/M4 vias. The switch bank occupies the opening in the two lower rows."
+      "routing": "Compact routing (boot-route-compact-20261118): adjacent M3 plate terminals joined on their native y coordinates; plates picked up at the shared switch diffusion; an M4 bar at y=1.64 um feeds both lower BBOT wings and a short M3 crossing feeds the right BTOP wing.",
+      "notch": "The two lower rows leave 12 central sites for the switch bank; 28 columns keep 200 units (28*8-24)."
     },
     "sharing": {
       "shared_interfaces": 9,
       "main_group": [
         "Mmain",
         "Mmain_U1",
+        "Mmain_U2",
+        "Mmain_U3",
         "Msin"
       ],
       "diffusion_order": [
+        "VIN",
+        "VOUT",
         "VIN",
         "VOUT",
         "VIN",
@@ -158,8 +163,8 @@
       ],
       "native_mos_terminals": {
         "S": "VIN",
-        "D": "VOUT",
-        "D_1": "BBOT",
+        "rightmost D": "BBOT (Msin)",
+        "other D": "VOUT",
         "G": "G",
         "B": "VSS"
       },
@@ -167,13 +172,8 @@
       "gate_strap": "Native M2 Top",
       "internal_only_diffusion": "GRESET between Maux and MRSTG",
       "pin_escape": {
-        "nets": [
-          "VIN",
-          "VOUT"
-        ],
-        "layer": "M2",
-        "horizontal_offset_um": 0,
-        "length_to_pin_center_um": 0.81
+        "VOUT": "Three VIA1 cuts on each drain column; a 0.20 um M2 bar joins them to the 0.20 um M2 exit at the lower edge",
+        "VIN": "Every source column, three VIA1 cuts each and two cuts per level to a 0.30 um M5 trunk leaving the north edge"
       }
     },
     "bodies": {
@@ -191,7 +191,43 @@
       "well_contacts": "N+ contacted ring in each N-well",
       "nwell_space_um": 1.02
     },
-    "interface": "VIN and VOUT are adjacent at the lower edge, aligned to their diffusion contacts. VDD, CLKS and VSS exits are to the right. The boosted G trunk and the two capacitor feeds stay inside the cell."
+    "interface": "VOUT exits the lower edge on M2 toward the CDAC. VIN enters the north edge on M5. CLKS exits the lower edge on M2. VDD and VSS are M5 rails across the switch bank. XBOOTN is planned as the MY mirror of XBOOTP.",
+    "robustness": {
+      "vias": "Signal, control and supply transitions use two or three cuts; the lower CTRL pickup between G and the BBOT bar keeps one cut per level for spacing.",
+      "supply_rails": "M5 VDD (0.20 um) and VSS (0.24 um) rails span the switch bank, tied down by two-cut towers."
+    },
+    "thick_oxide": {
+      "layer": "OD_18 drawing",
+      "bbox_um": [
+        [
+          -3.76,
+          0.1
+        ],
+        [
+          3.72,
+          5.72
+        ]
+      ],
+      "reason": "The LVS/xRC deck takes 1.8 V NMOS well proximity (sca/scb/scc) from the OD_18 NOT NW boundary. Per-device OD_18 boxes put that edge about 0.2 um from each gate. One region over the switch bank moves it 0.7 um or more away and encloses both N-wells by 0.25 um (OD2.EX.2).",
+      "extracted_sca": {
+        "nmos": [
+          1.67,
+          2.5
+        ],
+        "pmos": [
+          4.13,
+          4.28
+        ],
+        "previous_nmos": [
+          13.3,
+          20.3
+        ],
+        "previous_pmos": [
+          17.5,
+          17.5
+        ]
+      }
+    }
   },
   "drc": {
     "verdict": "NOT_CLEAN",
@@ -210,7 +246,11 @@
       "PO.DN.3",
       "PO.DN.3.1"
     ],
-    "other_geometry_markers": 0
+    "other_geometry_markers": 0,
+    "warnings_to_waive": {
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": "1.8 V thick-oxide devices on 0.9 V core nets, as designed; needs a written waiver.",
+      "DIODMY_L:WARNING": "Well diode of the boosted BTOP N-well; needs review and a written waiver."
+    }
   },
   "fill_feasibility": {
     "scope": "Scratch OD/PO GDS assessment only, same placement, routing and bounding box. No fill imported to core.",
@@ -225,14 +265,15 @@
       "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
       "DIODMY_L:WARNING": 1
     },
-    "final_owner": "Top-level integration with actual neighboring cells and routing."
+    "final_owner": "Top-level integration with actual neighboring cells and routing.",
+    "applies_to": "boot-core-20261118 GDS only; repeat the OD/PO probe on this GDS before relying on it."
   },
   "lvs": {
     "verdict": "CORRECT",
     "matched_ports": 5,
     "matched_nets": 11,
     "before_reduction": {
-      "nmos": 9,
+      "nmos": 11,
       "pmos": 4,
       "mom": 200,
       "additional_layout_well_diodes": 2
@@ -253,69 +294,77 @@
       "format": 0
     },
     "extraction_sha256": {
-      "extracted.scs": "bbc11d450541a0dea12f40e5d1a1f5d112b6f25ed59e85b734a98b3156a5fa87",
-      "extracted.scs.pex": "3235b537146c61fc63d24d3c55449f00ee997f03c9c27d4ed07c6904ffb764ee",
-      "extracted.scs.sar_bootstrap_flat_8b_p_core.pxi": "499d0b721207eb771d61423a390517e086d87f39ada37be6211156a45c1b849e"
+      "extracted.scs": "8a98b8bb427c2a423ffc43ce466b5f42be6c604a49ca898cd0e5e020e1d4a799",
+      "extracted.scs.pex": "b57e7504f03769a2e6ba882e413f94bc41ca68b14994dcdf871d11537b75e707",
+      "extracted.scs.sar_bootstrap_flat_8b_p_core.pxi": "e7f1c892bfa200e617bb32ca7049c42ac6874066e06def091c5b57562b2ff9a5"
     },
     "capacitance_scope": "Explicit xRC interconnect only. Attached capacitance sums distinct-net and extraction-ground capacitors with other nodes fixed. MOS, well-diode and native MOM compact-model capacitances are excluded.",
     "attached_fF": {
-      "BBOT": 222.16045704004208,
-      "BTOP": 219.00429450505789,
-      "CLKS": 1.448642857,
-      "CLKSB": 1.286295964,
-      "CTRL": 1.3361108339999999,
-      "G": 2.1092981370000006,
-      "GRESET": 0.10999904200000002,
-      "VIN": 0.6102473958000002,
-      "VOUT": 0.2785319318,
-      "VSS": 1.3611764109200002
+      "BBOT": 230.58891697560404,
+      "BTOP": 227.1172630951108,
+      "CLKS": 1.6332040319999996,
+      "CLKSB": 1.406211243,
+      "CTRL": 1.498876961,
+      "G": 2.745445248900001,
+      "GRESET": 0.11656719200000003,
+      "VIN": 2.969613239000001,
+      "VOUT": 0.6673818716000001,
+      "VSS": 2.07810737772
     },
     "ground_fF": {
-      "BBOT": 33.24299211005661,
-      "BTOP": 30.454774496072414,
-      "CLKS": 0.5942403700000001,
-      "CLKSB": 0.56614416,
-      "CTRL": 0.574600714,
-      "G": 0.707657398,
-      "GRESET": 0.0381388,
-      "VIN": 0.1620437018,
-      "VOUT": 0.03712132580000001,
-      "VSS": 0.62134245592
+      "BBOT": 32.69368272861367,
+      "BTOP": 29.786226206120446,
+      "CLKS": 0.656607397,
+      "CLKSB": 0.5698821120000002,
+      "CTRL": 0.5726082900000001,
+      "G": 0.7712140579000001,
+      "GRESET": 0.042837400000000005,
+      "VIN": 0.7491469920000003,
+      "VOUT": 0.0950981176,
+      "VSS": 1.1356144567200002
     },
     "coupling_fF": {
-      "BBOT / BTOP": 188.24737805098547,
-      "BBOT / CLKS": 0.070089319,
-      "BBOT / CLKSB": 0.07197614900000002,
-      "BBOT / CTRL": 0.1238144,
-      "BBOT / G": 0.326059375,
-      "BBOT / VIN": 0.029041490000000003,
-      "BBOT / VSS": 0.049106145999999996,
-      "BTOP / CTRL": 0.13129555099999998,
-      "BTOP / G": 0.13398915599999997,
-      "BTOP / VSS": 0.03685725100000001,
-      "CLKS / CLKSB": 0.31784061,
-      "CLKS / CTRL": 0.126920444,
-      "CLKS / G": 0.054876505000000006,
-      "CLKS / GRESET": 0.00416602,
-      "CLKS / VSS": 0.280509589,
-      "CLKSB / G": 0.049311803,
+      "BBOT / BTOP": 196.18701244499033,
+      "BBOT / CLKS": 0.090920396,
+      "BBOT / CLKSB": 0.167573671,
+      "BBOT / CTRL": 0.180724833,
+      "BBOT / G": 0.449562176,
+      "BBOT / GRESET": 0.00275626,
+      "BBOT / VIN": 0.684851483,
+      "BBOT / VOUT": 0.01802993,
+      "BBOT / VSS": 0.11380305300000003,
+      "BTOP / CLKS": 0.0028208200000000004,
+      "BTOP / CLKSB": 0.0017351700000000003,
+      "BTOP / CTRL": 0.22860555500000004,
+      "BTOP / G": 0.161455539,
+      "BTOP / VIN": 0.7415442600000002,
+      "BTOP / VSS": 0.007863100000000001,
+      "CLKS / CLKSB": 0.335127952,
+      "CLKS / CTRL": 0.128345856,
+      "CLKS / G": 0.052363532000000004,
+      "CLKS / GRESET": 0.0032793100000000006,
+      "CLKS / VSS": 0.3637387689999999,
+      "CLKSB / CTRL": 0.001686181,
+      "CLKSB / G": 0.044511617,
       "CLKSB / GRESET": 0.04225472200000001,
-      "CLKSB / VSS": 0.23876851999999996,
-      "CTRL / G": 0.36959918699999994,
-      "CTRL / VIN": 0.00200568,
-      "CTRL / VSS": 0.007874858,
+      "CLKSB / VSS": 0.243439818,
+      "CTRL / G": 0.37333989100000003,
+      "CTRL / VIN": 0.005969206,
+      "CTRL / VSS": 0.007597149,
       "G / GRESET": 0.012250900000000002,
-      "G / VIN": 0.27410998300000017,
-      "G / VOUT": 0.13088494,
-      "G / VSS": 0.05055889,
+      "G / VIN": 0.5257276240000006,
+      "G / VOUT": 0.292132724,
+      "G / VSS": 0.06288718800000001,
       "GRESET / VSS": 0.0131886,
-      "VIN / VOUT": 0.09530105300000001,
-      "VIN / VSS": 0.047745488,
-      "VOUT / VSS": 0.015224613000000003
+      "VIN / VOUT": 0.197259765,
+      "VIN / VSS": 0.06511390899999998,
+      "VOUT / VSS": 0.064861335
     },
     "vout_port_to_switch_diffusion_ohm": {
-      "N_VOUT_M0_d": 21.90890007130505,
-      "N_VOUT_M1_s": 21.905200071305053
+      "N_VOUT_M0_d": 16.194344455784037,
+      "N_VOUT_M1_s": 16.190644455784035,
+      "N_VOUT_M2_d": 15.396857655784265,
+      "N_VOUT_M3_s": 15.393157655784265
     },
     "resistance_scope": "Effective resistance of the interconnect, port to each main transistor terminal with other terminals open.",
     "model_plate_order": "All 200 native PCells use PLUS=BTOP, MINUS=BBOT. The xRC two-terminal models are emitted in BBOT, BTOP order. The present compact model has an even differential voltage coefficient. The extracted netlist was used as emitted.",
@@ -372,24 +421,17 @@
         ]
       },
       "prefill": {
-        "run_id": "boot-post-tt-20261118",
-        "recipe_hash": "4762e35a67852a140a129589a54f0a548a7ae228d2038ed71189e88505718c95",
-        "result_sha256": "64d701f4dca10c75bcc8d2635684716dfa1e9499dbc2bb6cb0866c80a9b8e790",
+        "run_id": "boot-core-tt-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "190793c39845d639839a387afbea950332aa50da7b47cceb5eb312719e7c3a9a",
+        "result_sha256": "8d780dd0611a3e841f59f177909805e0c761f3af940d9fa1dca3c3700effce5a",
+        "view": "4 x 1 um extracted, published view boot-core-20261121",
+        "corner": "TT 0.9 V 27 C",
         "pass_functional": true,
-        "max_saved_step_s": 5.000000000111549e-12,
-        "metrics_v": {
-          "startup_error_v": -0.0008453866527666776,
-          "hold_droop_v": 5.575869672957978e-05,
-          "normal_hold_droop_v": 1.680817557359049e-07,
-          "first_hold_droop_v": 5.575869672957978e-05,
-          "normal_error_v": -0.0011349287090445248
-        },
-        "warning_codes": [
-          "SFE-1131",
-          "SFE-2453",
-          "SFE-3031",
-          "VACOMP-2435"
-        ]
+        "first_error_mV": -1.8831,
+        "second_error_mV": -2.5123,
+        "first_hold_drift_uV": 115.185,
+        "second_hold_drift_uV": -0.143
       }
     },
     "netlist_warnings": "Spectre mapped a subcircuit reference terminal to ground and removed a 0.0302 fF floating capacitance on the VSS network in the extracted run. Original warnings are in the native logs."
@@ -397,11 +439,367 @@
   "physical_signoff": false,
   "limits": [
     "Final top-level fill, routing, power distribution and coupled extraction remain open.",
-    "Standalone nominal sampling only. Differential integration, PVT, mismatch, noise and terminal stress were outside this run."
+    "Integrated runs cover SS 0.81 V -40 C and TT only. SS/FF hot, integrated FF cold (differential injection), mismatch, noise and terminal stress remain open.",
+    "Standalone FF-cold injection passes with 0.36 mV of margin to the single-ended 3.52 mV screen."
   ],
   "raw": {
-    "private_gds": "work/layout/bootstrap/boot-core-20261118/fixture.gds",
-    "physical_reports": "work/layout/bootstrap/boot-core-20261118",
-    "local_archive_index": "results/storage/bootstrap_archive_20261118.json"
-  }
+    "physical_reports": "thu-wei:/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/boot-core-20261121",
+    "oa_backup_before_rebuild": "thu-wei:/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/boot-core-20261121/before-bootstrap-oa.tar.gz",
+    "candidate_view_evidence": "thu-wei:/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/boot-mmain4-20261121a"
+  },
+  "execution_host": "thu-wei",
+  "oa_checkpoint_sha256_before_rebuild": "a876309061d2fc7c179c700782cf9b331693f39774e3acf71abecafaf360ba56",
+  "ss_cold": {
+    "scope": "Independent sampling block, same fixture as TT; MOM and passive sections TT",
+    "process": "SS",
+    "vdd_v": 0.81,
+    "temperature_c": -40,
+    "sample_error_limit_v": 0.003515625,
+    "runs": {
+      "schematic": {
+        "run_id": "boot-m4-sch-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "8ea901b7c23adfc4179498eddf91f7cd4e7d9257521e705f39b0eb3445c05bd9",
+        "result_sha256": "0ade3dd06fd8a760b525e5f17350dc47cb3200a2b283fe980a72b0b398711e1c",
+        "view": "4 x 1 um schematic",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -1.0317,
+        "second_error_mV": -1.4117,
+        "first_hold_drift_uV": -0.162,
+        "second_hold_drift_uV": -1.194
+      },
+      "prefill": {
+        "run_id": "boot-m4-ext-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "3e8ee3b1fcbb094f2b88a520e86aa2eaa34fe8486346381acc15ae19e547091a",
+        "result_sha256": "0a8e2b6bbb0aa55c635739c20abe3b6e0bac68f3cceead7b8147e694cddbdbf0",
+        "view": "4 x 1 um extracted, boot-mmain4-20261121a",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -1.016,
+        "second_error_mV": -1.1163,
+        "first_hold_drift_uV": -159.916,
+        "second_hold_drift_uV": -734.401
+      }
+    },
+    "settling_tau_ns_end_of_window": {
+      "two_finger_schematic": 4.57,
+      "two_finger_prefill": 8.72,
+      "four_finger_schematic": 2.34,
+      "four_finger_prefill": 4.43
+    },
+    "history": {
+      "two_finger_prefill_boot-od18-20261121b": {
+        "run_id": "boot-od18-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "5ab796351c0e54d77dfa945a7fa5ac22f9eae89b4477ffb54cb41e543d8eb262",
+        "result_sha256": "5b24fc8d99fee76b96693f9695dfe8265c9ff1dccd2f905cf4b5b50181a22553",
+        "view": "2 x 1 um extracted, boot-od18-20261121b",
+        "corner": "SS 0.81 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -0.5857,
+        "second_error_mV": -2.2605,
+        "first_hold_drift_uV": 6.348,
+        "second_hold_drift_uV": -269.118
+      }
+    }
+  },
+  "supersedes": {
+    "physical_evidence": "boot-od18-20261121b",
+    "gds_sha256": "b75caeb9e358b2f5f59f15e65fdde70c8f7e959ccf29b7b061ea0397de8d1195",
+    "geometry_sha256": "4c4c30befc606b818a85b3d6fabefe5e1c77f6fd2eff79dfa50ff22b28f2782f",
+    "generator_sha256": "79b7e05d9b2e21749392403e35e56552a5e0e9185920cb672371377c522c998a",
+    "electrical_source_sha256": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "size_um": [
+      23.64,
+      24.99
+    ],
+    "reason": "Two-finger main switch: the integrated SS 0.81 V -40 C run (int-cdacboot-ssc-20261121) had 7 of 10 frames over the 0.25 LSB screen, worst 4.83 LSB, and frames 3 and 9 decoded 3 and 5 codes low.",
+    "earlier": {
+      "physical_evidence": "boot-core-20261118",
+      "gds_sha256": "d5f975b5aca9b61bc4ed5ec801f16a2fcca7409687f8bbce1f42aa6e38542025",
+      "generator_sha256": "f6aae0acf0eec590c3a8e5e4e82039526030307381e69a13fe237f62ab9bb2e1",
+      "reason": "Failed SS 0.81 V -40 C sampling by 83.6 mV from 1.8 V NMOS well proximity."
+    }
+  },
+  "equivalent_candidate_build": {
+    "physical_evidence": "boot-mmain4-20261121a",
+    "view": "layout_mmain4",
+    "geometry_sha256": "987efe8c45ba5497de9746f032eda154d8b899956509bc5caf723721f587fa5f",
+    "note": "Same generator inputs and identical structural geometry; the candidate-view runs below apply to this core."
+  },
+  "ff_cold": {
+    "scope": "Charge injection screen, same fixture",
+    "process": "FF",
+    "vdd_v": 0.99,
+    "temperature_c": -40,
+    "sample_error_limit_v": 0.003515625,
+    "runs": {
+      "schematic": {
+        "run_id": "boot-m4-sch-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "73abea056aa43f71d24235311e2b69276c5257019866d6d4c63a07231cb4949c",
+        "result_sha256": "c7d7f646517316e581c78d0cc9a6aff001a7111a2beb5783247120e7106502d0",
+        "view": "4 x 1 um schematic",
+        "corner": "FF 0.99 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -2.159,
+        "second_error_mV": -2.8296,
+        "first_hold_drift_uV": 0.08,
+        "second_hold_drift_uV": -0.002
+      },
+      "prefill": {
+        "run_id": "boot-m4-ext-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "9fd47bc5f5ed633e2b3dd7c80c357335516d8882d801f8f0dae658bf6f957b8c",
+        "result_sha256": "3a5dc5ffad8bb18a24bc8a70a3c7523cb64e3b0fbf2246ee003a5a2622e93eea",
+        "view": "4 x 1 um extracted, boot-mmain4-20261121a",
+        "corner": "FF 0.99 V -40 C",
+        "pass_functional": true,
+        "first_error_mV": -2.3826,
+        "second_error_mV": -3.1549,
+        "first_hold_drift_uV": 115.703,
+        "second_hold_drift_uV": -0.196
+      }
+    },
+    "margin_mV": 0.361,
+    "note": "Single-ended screen; differential cancellation in the ADC is not measured at FF cold."
+  },
+  "integrated": {
+    "scope": "Current transistor ADC with the planned-fill extracted CDAC (cdac-paired-plan-d-20261118-combined) and this extracted core on XBOOTP and XBOOTN; other modules schematic; 10 frames; 0.25 LSB sample-close residual screen",
+    "runs": {
+      "int-cdac-ssc-20261121-a2": {
+        "run_id": "int-cdac-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "595249ab4cadc965cdf1ba4feee9cb614d2f059a7f8d324eb74bae8a3c0dc049",
+        "result_sha256": "b44cb92153229ab804d6ca029e9780b1fb4d312bfd34e9be0da12d839f046fad",
+        "view": "SS 0.81 V -40 C; schematic Bootstrap (control)",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.0151,
+          0.0013,
+          -0.0053,
+          -0.0424,
+          -0.0,
+          -0.0115,
+          -0.0062,
+          -0.0013,
+          0.0178,
+          -0.0672
+        ],
+        "worst_residual_lsb": 0.0672,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 32.577
+      },
+      "int-cdacboot-ssc-20261121-a2": {
+        "run_id": "int-cdacboot-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "1570f80b35cde1297d59f1e6762d799a6b1b6bd722b10a5cedeaf557aa53dab8",
+        "result_sha256": "b0dc21b53c745c572bd064dd3bc96eca37e2392e0d6be3e4c516d18185b90a43",
+        "view": "SS 0.81 V -40 C; 2 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          6,
+          124,
+          128,
+          248,
+          255,
+          255,
+          0,
+          123
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.6342,
+          0.0528,
+          -0.5855,
+          -3.4805,
+          -0.0069,
+          -0.4976,
+          -0.3664,
+          -0.0314,
+          0.7489,
+          -4.8257
+        ],
+        "worst_residual_lsb": 4.8257,
+        "frames_over_screen": 7,
+        "min_deadline_margin_ns": 31.92
+      },
+      "int-cdacboot-nowpe-ssc-20261121-a2": {
+        "run_id": "int-cdacboot-nowpe-ssc-20261121-a2",
+        "host": "thu-wei",
+        "recipe_hash": "6a5626b014c84d1df56ce0f4a8509b2c86e9cc40099ae7485b1b704db2405429",
+        "result_sha256": "e4323ae021dfe31d7fe8b38f03ebc58df2e8e73bcb60633407a353f447ee0d54",
+        "view": "SS 0.81 V -40 C; 2 x 1 um extracted, well proximity removed (diagnostic)",
+        "codes": [
+          0,
+          0,
+          7,
+          126,
+          128,
+          248,
+          255,
+          255,
+          0,
+          127
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.2947,
+          0.0106,
+          -0.2377,
+          -1.0103,
+          -0.001,
+          -0.2237,
+          -0.1545,
+          -0.0056,
+          0.313,
+          -1.5226
+        ],
+        "worst_residual_lsb": 1.5226,
+        "frames_over_screen": 4,
+        "min_deadline_margin_ns": 32.564
+      },
+      "int-m4-ssc-20261121": {
+        "run_id": "int-m4-ssc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1ac3f59444d7cca30ea2cac65baee900eaa5e7e52454c3ee76b94cadd60b0ea6",
+        "result_sha256": "2cfa67fc08982bbc96c39893ec085ee8e457bb69c6a5965f5f167d48ed07fd9b",
+        "view": "SS 0.81 V -40 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          0.0504,
+          0.0003,
+          -0.0464,
+          -0.0079,
+          0.0,
+          -0.0312,
+          -0.0333,
+          -0.0002,
+          0.0455,
+          -0.0122
+        ],
+        "worst_residual_lsb": 0.0504,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 32.525
+      },
+      "int-m4-tt-20261121": {
+        "run_id": "int-m4-tt-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1a340c455a9dbd758b27223251b846a9627d505a708e2708da19efaf69c42367",
+        "result_sha256": "553dccdac7d5e1e2dab6e998c291e0e042127a5f194c723c920fd3da9ed0dc07",
+        "view": "TT 0.9 V 27 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          -0.0061,
+          -0.0061,
+          -0.0053,
+          -0.0,
+          0.0,
+          0.0053,
+          0.0062,
+          0.0062,
+          -0.0061,
+          0.0
+        ],
+        "worst_residual_lsb": 0.0062,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 42.701
+      }
+    }
+  },
+  "adoption": "results/design/sampler_mmain4_adoption_20261121.json"
 }

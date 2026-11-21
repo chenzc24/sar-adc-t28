@@ -35,7 +35,7 @@ Read the frozen case includes for actual MOS, MOM, and passive model sections. T
 
 ## Current Transistor Implementation
 
-- Bootstrap uses 2 parallel 1 µm/150 nm `nch_18_mac` main switches per channel and a native MOM capacitor with multi=200.
+- Bootstrap uses 4 parallel 1 µm/150 nm `nch_18_mac` main switches per channel and a native MOM capacitor with multi=200.
 - The CDAC uses 18 `cfmom_2t` instances. The unit geometry is nr=8, lr=2 µm, w=s=50 nm, stm=1, and spm=3, with multi from 1 to 128. The N and P dummies connect to VREFN and VREFP, respectively. The prior low-frequency AC characterization of this unit geometry gave about 4.00407 fF per unit and 1.02504 pF per 256-unit side at its specified bias and frequency. The older 6.86047 fF comparison and the 512-independent-unit mismatch results apply to their original models.
 - Reference switches use L=90 nm, NMOS W=150 nm, PMOS W=175 nm, and multi=3·2^bit.
 - The 11-MOS StrongARM comparator uses input pairs of W=1 µm and L=30 nm, a tail width of 1 µm, and N/P regeneration widths of 500/500 nm.

@@ -264,8 +264,11 @@ def tool(setup, args, cwd, log, seconds):
 
 def run(root, out, case, through, source_stream=None, extract_only=False, existing_oa=False, pex_timeout=300, omit_fill=None, view='layout'):
     top, extension, open_b1 = CASES[case]
-    if view != 'layout' and not (view == 'layout_paired_balanced' and case == 'full' and existing_oa and not source_stream):
-        raise ValueError('Alternate view requires an existing CDAC layout')
+    # A Bootstrap sampler candidate lives in its own view, layout_mmain<N>.
+    candidate = re.match(r"\Alayout_(mmain([1-9][0-9]?))\Z", view) if case == 'bootstrap' else None
+    if view != 'layout' and not (view == 'layout_paired_balanced' and case == 'full' and existing_oa and not source_stream) \
+            and not (candidate and not source_stream):
+        raise ValueError('Alternate view requires an existing CDAC layout or a Bootstrap candidate view')
     log = {"case": case, "top": top, "library": LIB, "library_path": LIB_PATH, "b1_extension_um": extension,
            "open_b1": open_b1, "checks": {}, "decks": {}}
     log['execution_host']=socket.gethostname()
@@ -300,6 +303,9 @@ def run(root, out, case, through, source_stream=None, extract_only=False, existi
         if view == 'layout_paired_balanced':
             generator = 'cdac-paired.il'
         reference = join(root, {"compact": "compact-reference.cdl", "full": "cdac-full-reference.cdl", "comparator": "comparator-reference.cdl", "comparator-filled": "comparator-filled-reference.cdl", "bootstrap": "bootstrap-reference.cdl"}.get(case, "reference.cdl"))
+        if candidate:
+            reference = join(root, "bootstrap-" + candidate.group(1) + "-reference.cdl")
+            log["sampler_candidate"] = candidate.group(1)
         log["source_sha256"] = {basename(p): sha(raw(p)) for p in (join(root, generator), reference)}
         for path in (join(root, generator), reference):
             put(join(out, basename(path)), raw(path))
@@ -379,6 +385,8 @@ exit(0)
                             archive.add(cell_path, arcname=top)
                         log['oa_checkpoint_sha256'] = sha(raw(backup))
                 build = 'load("{}")\n'.format(join(out, generator))
+                if candidate:
+                    build = 'bsView = "{}"\nbsMainFingers = {}\n'.format(view, int(candidate.group(2))) + build
             else:
                 build = 'pilotCell = "{}"\npilotB1Extension = {}\npilotOpenB1 = {}\nload("mom.il")\n'.format(
                     top, extension, "t" if open_b1 else "nil"
@@ -508,7 +516,8 @@ def main():
                         help="Diagnostic stream only: omit one top-level fill instance; rerun DRC/LVS/PEX")
     parser.add_argument("--pex-timeout",type=int,choices=(300,1800),default=300,help="RCC wall limit; filled macros may need 1800s")
     parser.add_argument("--existing-oa", action="store_true", help="Verify the current owned full CDAC without rebuilding it")
-    parser.add_argument('--view', choices=('layout','layout_paired_balanced'), default='layout')
+    parser.add_argument('--view', default='layout',
+                        help='layout, layout_paired_balanced (existing CDAC) or layout_mmain<N> (Bootstrap candidate)')
     parser.add_argument("--rebuild-comparator", action="store_true", help="Explicitly rebuild the generator-owned comparator core")
     parser.add_argument("--rebuild-bootstrap", action="store_true", help="Explicitly rebuild the generator-owned Bootstrap core")
     parser.add_argument("--checkpoint", action="store_true", help="Save this verified working baseline as the rollback point")

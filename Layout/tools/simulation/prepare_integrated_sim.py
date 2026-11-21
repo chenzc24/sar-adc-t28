@@ -5,8 +5,10 @@ import json
 import re
 from pathlib import Path
 
+from Layout.design.bootstrap import (CORE as BOOT_CORE, MASTER as BOOT_MASTER, candidate_of as boot_candidate_of,
+                                     output as boot_output, reference as boot_reference, source as boot_source)
 from Layout.design.cdac import PORTS
-from Layout.tools.physical.run_physical import FULL_CONTEXT_RULES
+from Layout.tools.physical.run_physical import BOOTSTRAP_FILL_RULES, FULL_CONTEXT_RULES
 from Layout.tools.simulation.prepare_full_sim import planned_fill_state, pull, sha
 from Layout.project import evidence
 from tools.saradc.__main__ import ROOT
@@ -26,6 +28,8 @@ def main():
     parser.add_argument('--acquisition-ns',type=float,
                         help='Diagnostic override of the 40 ns SAMPLE-high time for this run only; '
                              'specs/arch.json and the shared testbenches are unchanged')
+    parser.add_argument('--bootstrap',metavar='EVIDENCE',
+                        help='Also replace both Bootstrap channels with this verified prefill core extraction')
     args=parser.parse_args()
     assert not (args.prefill and args.planned_fill)
     assert args.acquisition_ns is None or 40<args.acquisition_ns<=55, 'Acquisition override must be in (40, 55] ns'
@@ -91,6 +95,9 @@ def main():
                               re.sub(r'\\\s*\n\s*',' ',old_cdac.decode()))[1].split()
     assert original_header==PORTS, 'Original positional interface changed'
     original_dut=(dest/'dut.scs').read_bytes()
+    # The analyzer's event order depends on the SAR actually included, not the view name.
+    if b'include "xtor/sar/single_edge.scs"' in original_dut:
+        context['version']='single_edge'
     needle=b'include "xtor/cdac/cdac.scs"'
     assert original_dut.count(needle)==1
     payload['dut.scs']=original_dut.replace(needle,b'include "cdac_pex_wrapper.scs"')
@@ -102,6 +109,53 @@ def main():
     payload['test.scs']=tb.encode()
     context['required_signals']=[s for s in context['required_signals'] if not s.startswith('xdut.xcdac.')]
     context['unavailable_pex_diagnostics']=['lumped_bottom_plate_screen','schematic_switch_terminal_currents']
+    pex_modules=['cdac']
+    if args.bootstrap:
+        # One extracted channel serves XBOOTP and XBOOTN; its files carry a boot_ prefix
+        # so they cannot collide with the CDAC extraction.
+        boot_remote=evidence(args.bootstrap)
+        boot_raw=pull(boot_remote+'/manifest.json');boot=json.loads(boot_raw)
+        checks=boot['checks']
+        assert boot['case']=='bootstrap' and boot['top']==BOOT_CORE and not boot.get('error')
+        assert checks['lvs']['verdict']=='CORRECT' and 'sha256' in checks['pex']
+        assert set(checks['drc']['markers_by_rule']) <= BOOTSTRAP_FILL_RULES|{'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1','DIODMY_L:WARNING'}
+        # A candidate view (layout_mmainN) is checked against its own netlist.
+        built=boot_candidate_of(boot.get('oa_view','layout'))
+        ref=pull(boot_remote+'/reference.cdl')
+        assert sha(ref)==boot['source_sha256'][boot_output(built).name]
+        assert ref.decode('ascii').splitlines()==boot_reference(boot_source(built).read_bytes()).splitlines(), \
+            'The extracted Bootstrap and its schematic differ'
+        if built:context['sampler_candidate']=built
+        boot_originals={'extracted.scs':checks['pex']['sha256'],**checks['pex']['companion_sha256']}
+        renamed={}
+        for name,digest in boot_originals.items():
+            assert re.fullmatch(r'extracted\.scs(?:\.[\w.-]+)?',name)
+            blob=pull(boot_remote+'/pex/'+name);assert sha(blob)==digest
+            renamed[name]='boot_'+name;payload['boot_'+name]=blob
+        main=payload['boot_extracted.scs'].decode('ascii')
+        for name,new in renamed.items():
+            if name!='extracted.scs':
+                main,n=re.subn(r'(?m)^include "'+re.escape(name)+'"',lambda m:'include "'+new+'"',main);assert n==1
+        payload['boot_extracted.scs']=main.encode('ascii')
+        header=re.search(r'(?im)^subckt\s+'+BOOT_CORE+r'\s*\(([^)]+)\)',re.sub(r'\\\s*\n\s*',' ',main))
+        boot_ports=header[1].split() if header else []
+        interface={'CLKS':'CLKS','VIN':'Vin','VOUT':'VOUT','VDD':'VDD!','VSS':'0'}
+        assert sorted(boot_ports)==sorted(interface), 'Unexpected extracted Bootstrap ports'
+        payload['bootstrap_pex.scs']=('simulator lang=spectre\ninclude "boot_extracted.scs"\n'
+            'subckt '+BOOT_MASTER+' CLKS VOUT Vin\nXcore ('+' '.join(interface[n] for n in boot_ports)+') '+BOOT_CORE+'\n'
+            'ends '+BOOT_MASTER+'\n').encode()
+        needle=b'include "xtor/bootstrap/bootstrap.scs"'
+        assert payload['dut.scs'].count(needle)==1
+        payload['dut.scs']=payload['dut.scs'].replace(needle,b'include "bootstrap_pex.scs"')
+        # The extracted channel has its own internal node names.
+        tb=re.sub(r'(?m)^save (.*)$',lambda m:'save '+' '.join(
+            token for token in m[1].split() if not token.upper().startswith(('XDUT.XBOOTP.','XDUT.XBOOTN.'))),tb)
+        payload['test.scs']=tb.encode()
+        context['required_signals']=[s for s in context['required_signals'] if not s.startswith(('xdut.xbootp.','xdut.xbootn.'))]
+        context.update(bootstrap_physical_evidence=boot_remote,bootstrap_gds_sha256=boot['gds']['sha256'],
+                       bootstrap_extracted_original_sha256=boot_originals,bootstrap_extracted_ports=boot_ports)
+        payload['bootstrap_physical.json']=boot_raw
+        pex_modules.append('bootstrap')
     if args.acquisition_ns is not None:
         # The period stays 100 ns; only the SAMPLE-high time grows and the conversion phase shrinks.
         width=round(args.acquisition_ns-0.1,4)
@@ -124,10 +178,12 @@ def main():
                %(args.corner,corner['mos'],corner['vdd_v'],corner['temperature_c']))
     if args.acquisition_ns is not None:
         condition+=', DIAGNOSTIC %g ns acquisition / %g ns conversion phase'%(args.acquisition_ns,100-args.acquisition_ns)
-    scope=(fill_state+' CDAC native RC extraction inside current transistor ADC '+base_design_id+'; '+condition+', '
+    boot_scope=' and prefill Bootstrap RC extraction (both channels)' if args.bootstrap else ''
+    scope=(fill_state+' CDAC native RC extraction'+boot_scope+' inside current transistor ADC '+base_design_id+'; '+condition+', '
            '10 unchanged low/mid/high/startup frames, 60ns low-first clock phase. '
            'Other modules remain pre-layout. No noise/mismatch or whole-chip signoff.')
-    context.update(PEX=True,pex=True,pex_modules=['cdac'],design_view='current_with_cdac_pex',
+    view='current_with_'+'_'.join(pex_modules)+'_pex'
+    context.update(PEX=True,pex=True,pex_modules=pex_modules,design_view=view,
                    prelayout_design_id=base_design_id,
                    prelayout_dut_sha256=sha(original_dut),dut_sha256=sha(payload['dut.scs']),
                    physical_evidence=remote,gds_sha256=manifest['gds']['sha256'],cdac_fill_state=fill_state.lower(),
@@ -142,7 +198,7 @@ def main():
     inputs={row['name']:row for row in recipe['inputs']}
     for name,blob in payload.items():
         inputs[name]={'name':name,'source':(dest/name).relative_to(ROOT).as_posix(),'sha256':sha(blob)}
-    recipe.update(inputs=list(inputs.values()),design_id=base_design_id+'_cdac_pex',analyzer='measure_integrated.py',
+    recipe.update(inputs=list(inputs.values()),design_id=base_design_id+'_'+'_'.join(pex_modules)+'_pex',analyzer='measure_integrated.py',
                   qualification_scope=scope,test_conditions=context)
     if args.rss_mib:
         recipe['resources'].update(simulation_rss_mib=args.rss_mib,
