@@ -439,8 +439,8 @@
   "physical_signoff": false,
   "limits": [
     "Final top-level fill, routing, power distribution and coupled extraction remain open.",
-    "Integrated runs cover SS 0.81 V -40 C and TT only. SS/FF hot, integrated FF cold (differential injection), mismatch, noise and terminal stress remain open.",
-    "Standalone FF-cold injection passes with 0.36 mV of margin to the single-ended 3.52 mV screen."
+    "Integrated runs cover SS 0.81 V -40 C, TT and FF 0.99 V -40 C with the typical-RC CDAC. SS cold with the CWORST_T CDAC, restart, code-boundary injection, terminal stress, mismatch and noise remain open.",
+    "Standalone FF-hot injection passes with 0.13 mV of margin to the single-ended 3.52 mV screen."
   ],
   "raw": {
     "physical_reports": "thu-wei:/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/boot-core-20261121",
@@ -798,8 +798,102 @@
         "worst_residual_lsb": 0.0062,
         "frames_over_screen": 0,
         "min_deadline_margin_ns": 42.701
+      },
+      "int-m4-ffc-20261121": {
+        "run_id": "int-m4-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1b5375d3df01e0999e793d42399eba2f3ed9b10cc3b13939b7f50635d4d82e6d",
+        "result_sha256": "3eb607b3f89360ddd9a33e787f18ecb9b90ad0bac6109821a5c7cd4aba5e53e9",
+        "view": "FF 0.99 V -40 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          -0.0152,
+          -0.0153,
+          -0.0142,
+          -0.0001,
+          0.0001,
+          0.0142,
+          0.0154,
+          0.0154,
+          -0.0152,
+          0.0001
+        ],
+        "worst_residual_lsb": 0.0154,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 46.435
       }
-    }
+    },
+    "ff_cold_note": "Codes match TT and the worst sample-close residual is 0.015 LSB, so most of the single-ended FF injection cancels differentially. The residual is taken at sample close, and code-centre inputs would not flip on an offset below about half an LSB; a code-boundary stimulus would quantify the remainder."
   },
-  "adoption": "results/design/sampler_mmain4_adoption_20261121.json"
+  "adoption": "results/design/sampler_mmain4_adoption_20261121.json",
+  "ss_hot": {
+    "scope": "Independent sampling block, same fixture; MOM and passive sections TT",
+    "process": "SS",
+    "vdd_v": 0.81,
+    "temperature_c": 125,
+    "sample_error_limit_v": 0.003515625,
+    "runs": {
+      "prefill": {
+        "run_id": "boot-core-ssh-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "dba0582827eb074d071684ff8353dcf0540010e3ce1e1070a279dc81c58eeec0",
+        "result_sha256": "6ce049c1c7358209b1727675d94376bcc78f2407796a5cd26956cd707afc45b7",
+        "view": "4 x 1 um extracted, published view boot-core-20261121",
+        "corner": "SS 0.81 V 125 C",
+        "pass_functional": true,
+        "first_error_mV": -1.5538,
+        "second_error_mV": -2.0331,
+        "first_hold_drift_uV": 113.684,
+        "second_hold_drift_uV": -27.343
+      }
+    },
+    "note": "Hold drift after the second sample is 27 uV (about 0.004 LSB); cold, not hot, sets the hold error."
+  },
+  "ff_hot": {
+    "scope": "Charge injection screen, same fixture",
+    "process": "FF",
+    "vdd_v": 0.99,
+    "temperature_c": 125,
+    "sample_error_limit_v": 0.003515625,
+    "runs": {
+      "prefill": {
+        "run_id": "boot-core-ffh-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "d6c7a367a7e218904668ec0c8a5c59b560b981eeb75cac52e1b88a922903ef24",
+        "result_sha256": "a78f2c0ce5bd7e0f724d2c3211bde7a5b732f53471caf205de99c68b53108cff",
+        "view": "4 x 1 um extracted, published view boot-core-20261121",
+        "corner": "FF 0.99 V 125 C",
+        "pass_functional": true,
+        "first_error_mV": -2.6458,
+        "second_error_mV": -3.3903,
+        "first_hold_drift_uV": 116.527,
+        "second_hold_drift_uV": -0.214
+      }
+    },
+    "margin_mV": 0.125,
+    "note": "Tightest standalone corner; single-ended screen."
+  }
 }

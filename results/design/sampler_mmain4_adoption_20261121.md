@@ -25,11 +25,16 @@ The layout is `SAR_ADC_T28_LAYOUT/sar_bootstrap_flat_8b_p_core/layout` (`boot-co
 | `boot-m4-ext-ssc-20261121` | Standalone extracted, SS cold | −1.12 mV, τ 4.4 ns (two-finger core: −2.26 mV, τ 8.7 ns) |
 | `boot-m4-ext-ffc-20261121` | Standalone extracted, FF cold | −3.16 mV, 0.36 mV margin |
 | `boot-core-tt-20261121` | Standalone extracted, TT, published view | −2.51 mV (two-finger core: −1.25 mV) |
+| `boot-core-ssh-20261121` | Standalone extracted, SS hot | −2.03 mV; hold drift 27 µV |
+| `boot-core-ffh-20261121` | Standalone extracted, FF hot | −3.39 mV, 0.13 mV margin (tightest corner) |
 | `int-m4-ssc-20261121` | ADC, extracted CDAC and Bootstrap, SS cold | All codes match the control; worst residual **0.050 LSB** (control 0.067, two-finger 4.83) |
 | `int-m4-tt-20261121` | Same, TT | All codes match; worst residual 0.006 LSB |
+| `int-m4-ffc-20261121` | Same, FF cold | All codes match TT; worst residual 0.015 LSB |
 
 Codes 12→7 and 243→248 are the CDAC's 4.2% gain error and appear in the schematic-Bootstrap control as well.
 
+At FF the single-ended injection is about 0.5 LSB, while the ADC's differential residual is 0.015 LSB, so most of it cancels. The residual is taken at sample close, and the code-centre inputs would not flip on an offset below about half an LSB. Hot leakage is small: the hold drift is largest at SS cold (about 0.1 LSB), not at 125 °C.
+
 ## Open
 
-Integrated FF cold (differential cancellation of the larger injection), SS and FF hot, terminal-voltage stress, mismatch, noise, and top-level fill and routing.
+SS cold with the CWORST_T CDAC, the restart case, a code-boundary measurement of differential injection, terminal-voltage stress, mismatch, noise, and top-level fill and routing.

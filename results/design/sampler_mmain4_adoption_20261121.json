@@ -172,6 +172,32 @@
       "second_error_mV": -2.5123,
       "first_hold_drift_uV": 115.185,
       "second_hold_drift_uV": -0.143
+    },
+    {
+      "run_id": "boot-core-ssh-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "dba0582827eb074d071684ff8353dcf0540010e3ce1e1070a279dc81c58eeec0",
+      "result_sha256": "6ce049c1c7358209b1727675d94376bcc78f2407796a5cd26956cd707afc45b7",
+      "view": "4 x 1 um extracted, published view boot-core-20261121",
+      "corner": "SS 0.81 V 125 C",
+      "pass_functional": true,
+      "first_error_mV": -1.5538,
+      "second_error_mV": -2.0331,
+      "first_hold_drift_uV": 113.684,
+      "second_hold_drift_uV": -27.343
+    },
+    {
+      "run_id": "boot-core-ffh-20261121",
+      "host": "thu-wei",
+      "recipe_hash": "d6c7a367a7e218904668ec0c8a5c59b560b981eeb75cac52e1b88a922903ef24",
+      "result_sha256": "a78f2c0ce5bd7e0f724d2c3211bde7a5b732f53471caf205de99c68b53108cff",
+      "view": "4 x 1 um extracted, published view boot-core-20261121",
+      "corner": "FF 0.99 V 125 C",
+      "pass_functional": true,
+      "first_error_mV": -2.6458,
+      "second_error_mV": -3.3903,
+      "first_hold_drift_uV": 116.527,
+      "second_hold_drift_uV": -0.214
     }
   ],
   "integrated": {
@@ -406,11 +432,57 @@
         "worst_residual_lsb": 0.0062,
         "frames_over_screen": 0,
         "min_deadline_margin_ns": 42.701
+      },
+      {
+        "run_id": "int-m4-ffc-20261121",
+        "host": "thu-wei",
+        "recipe_hash": "1b5375d3df01e0999e793d42399eba2f3ed9b10cc3b13939b7f50635d4d82e6d",
+        "result_sha256": "3eb607b3f89360ddd9a33e787f18ecb9b90ad0bac6109821a5c7cd4aba5e53e9",
+        "view": "FF 0.99 V -40 C; 4 x 1 um extracted Bootstrap",
+        "codes": [
+          0,
+          0,
+          7,
+          127,
+          128,
+          248,
+          255,
+          255,
+          0,
+          128
+        ],
+        "expected": [
+          0,
+          0,
+          12,
+          127,
+          128,
+          243,
+          255,
+          255,
+          0,
+          128
+        ],
+        "residual_lsb": [
+          -0.0152,
+          -0.0153,
+          -0.0142,
+          -0.0001,
+          0.0001,
+          0.0142,
+          0.0154,
+          0.0154,
+          -0.0152,
+          0.0001
+        ],
+        "worst_residual_lsb": 0.0154,
+        "frames_over_screen": 0,
+        "min_deadline_margin_ns": 46.435
       }
     ]
   },
   "open": [
-    "Integrated FF cold (differential charge injection), SS hot and FF hot",
+    "Integrated SS cold with the CWORST_T CDAC, restart, and code-boundary measurement of differential injection",
     "Terminal-voltage stress of the widened switch",
     "Mismatch, noise and top-level fill/routing"
   ]
