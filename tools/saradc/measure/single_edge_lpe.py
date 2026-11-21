@@ -186,7 +186,9 @@ def analyze(root, out):
             elif net == track:
                 sample = at(frac)
                 if up and any(sample[n] > .5*sample['vdd!'] for n in (cmpnet, wr)):
-                    f['track_overlaps'].append(dict(ns=tm, event='high at opening'))
+                    f['track_overlaps'].append(dict(ns=tm, event='high at opening',
+                                                    nets=[n for n in (cmpnet, wr) if sample[n] > .5*sample['vdd!']],
+                                                    clock_low_ns=None))
                 top = sample['xdut.topp']-sample['xdut.topn']
                 residual = (top-sample['vinp_src']+sample['vinn_src'])/lsb
                 f['track'].append(dict(ns=tm, up=up, close_error_lsb=None if up else residual, top_diff_v=top,
@@ -227,6 +229,12 @@ def analyze(root, out):
                         top_drift_lsb=(top-closes[-1]['top_diff_v'])/lsb if closes else None,
                         residual_lsb=(top-sample['vinp_src']+sample['vinn_src'])/lsb)
                 f['bits'].append(bit)
+            elif net == cmpnet:
+                # Close the duration of a comparator clock found high when tracking opened.
+                for o in f['track_overlaps']:
+                    if o['event'] == 'high at opening' and o.get('clock_low_ns') is None and tm >= o['ns']:
+                        o['clock_low_ns'] = tm
+                        o['overlap_ps'] = (tm-o['ns'])*1e3
         i = int(math.floor((t-origin)/period))
         for j in (i-1, i):
             if 0 <= j < len(frames):
@@ -299,12 +307,17 @@ def analyze(root, out):
                                  and f['track'][1]['ns'] < bits[0]['cmp_ns'] and len(f['preset']) == 1
                                  and writes[-1]['ns'] < f['preset'][0])
         f['handoff'] = selector_handoffs(f, sels)
+        f['warmup'] = f['frame'] < ctx.get('warmup_frames', 0)
         f['pass'] = bool(f['digital_pass'] and (f['analog_code_pass'] or ctx.get('mismatch')) and f['settling_pass']
                          and f['control_pass'] and f['track_pass'] and f['margin_ns'] > 0 and f['handoff']['passed']
                          and f['first_compare_pass'])
         del f['selector_edges']
-    margins = [f['margin_ns'] for f in frames if f['margin_ns'] is not None]
-    floor_ok = len(margins) == len(frames) and min(margins) >= 3
+    # Warm-up frames start from the DC solution; they are reported but do not enter the verdict.
+    scored = [f for f in frames if not f['warmup']]
+    margins = [f['margin_ns'] for f in scored if f['margin_ns'] is not None]
+    floor_ok = len(margins) == len(scored) and min(margins) >= 3
+    overlaps = [dict(frame=f['frame'], warmup=f['warmup'], **o) for f in frames for o in f['track_overlaps']
+                if o['event'] == 'high at opening']
     closes = [abs(f['track'][1]['close_error_lsb']) for f in frames if len(f['track']) == 2]
     recovery = [f['writes'][0]['ns']-f['track'][1]['ns'] for f in frames if f['writes'] and len(f['track']) == 2]
     removal = [100+b['track'][0]['ns']-a['writes'][-1]['ns'] for a, b in zip(frames, frames[1:])
@@ -312,7 +325,10 @@ def analyze(root, out):
     result = dict(run_id=ctx['run_id'], cell_lpe=ctx['cell_lpe'], taps=ctx['taps'], cdac_view=ctx['cdac_view'],
                   cdac_gds=ctx['cdac_physical_gds_sha256'], native_points=points, ports=510, frames=frames,
                   min_margin_ns=min(margins) if margins else None, routing_floor_3ns_pass=floor_ok,
-                  routing_target_5ns_pass=len(margins) == len(frames) and min(margins) >= 5,
+                  routing_target_5ns_pass=len(margins) == len(scored) and min(margins) >= 5,
+                  warmup_frames=[{'frame': f['frame'], 'pass': f['pass'], 'code90': f['code90']} for f in frames if f['warmup']],
+                  clock_high_at_opening=overlaps,
+                  max_clock_high_at_opening_ps=max([o.get('overlap_ps') or 0 for o in overlaps] or [0]),
                   max_abs_close_error_lsb=max(closes) if closes else None,
                   max_abs_signed_settling_lsb=max(f['max_abs_signed_settling_lsb'] or 0 for f in frames),
                   settling_target_pass=all(f['settling_target_pass'] for f in frames),
@@ -325,7 +341,7 @@ def analyze(root, out):
                                 commit_high_min=min(widths(pulses[wr], True) or [None])),
                   close_to_first_commit_min_ns=min(recovery) if recovery else None,
                   last_commit_to_next_open_min_ns=min(removal) if removal else None,
-                  all_pass=all(f['pass'] for f in frames) and (ctx['corner'] != 'ssc' or floor_ok),
+                  all_pass=all(f['pass'] for f in scored) and (ctx['corner'] != 'ssc' or floor_ok),
                   warnings=sorted(warnings))
     if 'min_cp_high_ps' in ctx:
         import single_edge_audit as audit

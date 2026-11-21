@@ -2,7 +2,7 @@
 import argparse,json,re,shlex,subprocess,sys
 from Layout.project import ROOT,config,evidence,write_json
 
-def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None):
+def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None,rc_corner=None):
     if not re.fullmatch(r'[a-z0-9][a-z0-9-]{1,55}',identity):raise ValueError('Invalid physical ID')
     c=config();root=c['remote_root'];legacy=c['legacy_root']
     q=shlex.quote
@@ -13,11 +13,13 @@ def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None
         arguments = ['python','-u','sar_se_physical.py',identity,'--staging',staging,'--view',view,'--through',through]
         if rebuild:
             arguments.append('--build')
+        if rc_corner:
+            arguments.extend(['--rc-corner',rc_corner])
     else:
         view = view or 'layout'
         candidate_view = module == 'bootstrap' and re.fullmatch(r'layout_mmain\d{1,2}', view)
         if view not in ('layout','layout_paired_balanced') and not candidate_view:raise ValueError('Unknown layout view '+view)
-        if staging:raise ValueError('--staging applies to --module sar-se')
+        if staging or rc_corner:raise ValueError('--staging and --rc-corner apply to --module sar-se')
         if rebuild and module not in ('comparator', 'bootstrap'):
             raise ValueError('Rebuild is supported only for generator-owned cores')
         if view != 'layout' and not candidate_view and (module != 'cdac' or rebuild):
@@ -63,6 +65,7 @@ def main():
     a.add_argument('--rebuild',action='store_true',help='Rebuild a generator-owned core after a checkpoint; sar-se: create the view')
     a.add_argument('--view',help='layout or layout_paired_balanced for the CDAC; layout_rN for sar-se')
     a.add_argument('--staging',help='sar-se only: state directory with the DEF build records')
+    a.add_argument('--rc-corner',choices=['cworst_T','cbest_T'],help='sar-se only: foundry interconnect corner for PEX')
     a=sub.add_parser('status');a.add_argument('identity')
     a=sub.add_parser('query-source', help='Locate archived layout evidence for historical runs')
     a.add_argument('selector')
@@ -71,7 +74,7 @@ def main():
     a.add_argument('--prefill',action='store_true',help='Use the extracted CDAC before density fill')
     a.add_argument('--planned-fill',action='store_true',help='Use the extracted CDAC with its planned array fill')
     args=p.parse_args()
-    if args.action=='physical':print(json.dumps(physical(args.identity,args.through,args.module,args.rebuild,args.view,args.staging),indent=2))
+    if args.action=='physical':print(json.dumps(physical(args.identity,args.through,args.module,args.rebuild,args.view,args.staging,args.rc_corner),indent=2))
     elif args.action=='status':print(json.dumps(status(args.identity),indent=2))
     elif args.action=='query-source':
         from Layout.query_source import resolve

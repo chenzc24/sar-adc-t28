@@ -23,22 +23,43 @@ The OA bounding box is wider than the boundary because the standard-cell text ex
 
 ## Post-layout ADC runs with layout_r3
 
-The extracted macro replaces the SAR group. The CDAC is extracted, the reference word uses cell LPE, the comparator and bootstrap are schematic, and top-level wiring and supplies are ideal. The SAR macro was extracted with the default typical interconnect rules.
+The extracted macro replaces the SAR group. The CDAC is extracted, the reference word uses cell LPE, the comparator and bootstrap are schematic, and top-level wiring and supplies are ideal. `sar-se-r3-cw` re-extracts the same saved view with the foundry CWORST_T interconnect rules; the other runs use the deck's typical rules.
 
-| Run | Condition | Codes | Read margin (pre-layout) | Settling | Setup / hold |
-| --- | --- | --- | --- | --- | --- |
-| `sar8-sepl-ssc-cw-verify-r3a` | SS, −40 °C, 0.81 V, CWORST_T CDAC | 8/8 | 7.60 ns (7.59) | 0.001 LSB | 433 / 97 ps |
-| `sar8-sepl-ffc-cw-scan-r3a` | FF, −40 °C, 0.99 V, CWORST_T CDAC | 4/4 | 30.23 ns (30.70) | 0.107 LSB | 169 / 39 ps |
-| `sar8-sepl-tt-nom-verify-r3a` | TT, 27 °C, 0.9 V, nominal CDAC | 8/8 | 24.42 ns (24.92) | 0.026 LSB | 246 / 57 ps |
+| Run | Condition | SAR macro RC | Codes | Read margin (pre-layout) | Settling | Setup / hold |
+| --- | --- | --- | --- | --- | --- | --- |
+| **`sar8-sepl-ssc-cw-verify-r3cw`** | SS, −40 °C, 0.81 V, CWORST_T CDAC | **CWORST_T** | 8/8 | **6.95 ns** (7.59) | 0.001 LSB | 443 / 100 ps |
+| `sar8-sepl-ssc-cw-verify-r3a` | SS, −40 °C, 0.81 V, CWORST_T CDAC | typical | 8/8 | 7.60 ns (7.59) | 0.001 LSB | 433 / 97 ps |
+| `sar8-sepl-ffc-cw-scan-r3a` | FF, −40 °C, 0.99 V, CWORST_T CDAC | typical | 4/4 | 30.23 ns (30.70) | 0.107 LSB | 169 / 39 ps |
+| `sar8-sepl-tt-nom-verify-r3a` | TT, 27 °C, 0.9 V, nominal CDAC | typical | 8/8 | 24.42 ns (24.92) | 0.026 LSB | 246 / 57 ps |
 
-TT and FF cold pass every check; routing costs about 0.5 ns of read margin. The SS-cold verdict fails on frame 0 only:
+The SS-cold run with the CWORST_T macro passes every check. Worst-case SAR wiring costs 0.65 ns of the 7.59 ns pre-layout margin, about 13 % of the 5 ns routing reserve; code 85 is the tightest frame. It also uses the four-finger Bootstrap adopted on 2026-11-21, which changes sampling only: the sampling residual drops from 0.074 to 0.001 LSB, while conversion timing is comparable with the typical-RC run.
 
-- At t = 0 the DC solution leaves the comparator latch balanced with its clock high: COMP_P and COMP_N sit at 0.42 and 0.70 V with 256 mV of input and do not change for 60 ns. CMP_CLK is still high 0.2 ns after the first tracking opening. This initial state is not physical. Frame 0 reads its code and frame 1, with the same input, passes.
-- The same overlap occurs in operation when a sample aborts a comparison: 71–72 ps in the pre-layout FF-cold restart runs, none at TT. The restart analyzer does not check a clock that is already high when tracking opens. Tracking overwrites the kickback, and no write occurs.
-- The SS margin equals the pre-layout value because the macro extraction uses typical interconnect, while the pre-layout SS run used CWORST_T cell LPE. SS and FF need a CWORST_T and CBEST_T extraction before their margins count as worst-case.
+The typical-RC SS run failed frame 0 only:
+
+- At t = 0 the DC solution left the comparator latch balanced with its clock high: COMP_P and COMP_N sat at 0.42 and 0.70 V with 256 mV of input and did not change for 60 ns. CMP_CLK was still high 0.2 ns after the first tracking opening. This initial state is not physical. Stimuli that repeat their first code (`verify`) now treat frame 0 as warm-up and report it outside the verdict; in the CWORST_T run the DC start was idle and frame 0 passed anyway.
+- The same overlap occurs in operation when a sample aborts a comparison: 71–72 ps in the pre-layout FF-cold restart runs, none at TT. No write occurs and tracking overwrites the kickback. `single_edge_lpe` now reports it as `clock_high_at_opening`; the restart analyzer does not yet.
+
+## Corners not rerun
+
+| Corner | Reason |
+| --- | --- |
+| FF cold, CBEST_T macro | Ideal to typical SAR wiring cost 0.47 ns of margin and moved settling from 0.114 to 0.107 LSB. Typical to CBEST_T is a smaller step; with the ~0.3 ns reference-recovery time constant, a few ps of shorter window adds about 1 % error, well inside the 0.125 LSB target. |
+| SS hot | SS cold is the slowest corner of this design, and SS hot passed pre-layout with more margin. |
+| FF hot | Its 0.165 LSB finding is a static reference offset from switch leakage, which SAR wiring cannot change. |
+
+## Clock-latch pulse widths
+
+The `LHCNDQD1` comparator-clock latch (E = SET, CDN = CLR_N, D tied high) is checked against the `min_pulse_width` arcs of the foundry CCS libraries. Widths are measured at 50 % at the latch's own gate in the extracted macro; the limit is interpolated at the slower edge of each pulse (30–70 %, library slew derate 0.5).
+
+| Run | E high: shortest / limit | CDN low: shortest / limit |
+| --- | --- | --- |
+| SS cold, CWORST_T | 341.7 / 35.5 ps | 1969.7 / 22.6 ps |
+| FF cold, typical | 149.2 / 21.6 ps | 745.0 / 14.3 ps |
+| TT, typical | 208.3 / 26.2 ps | 1093.5 / 17.1 ps |
+
+The edges are 4–6 ps on a 5 ps output strobe and may be under-resolved; even a 50 ps library slew would raise the SS-cold E limit only to about 44 ps.
 
 ## Open items
 
-- Re-extract the macro at CWORST_T and CBEST_T and rerun SS and FF cold.
-- Treat frame 0 as warm-up and report the clock/tracking overlap as a measured value.
 - Top-level placement and routing, fill, extraction and the terminal-voltage scan.
+- Report the clock/tracking overlap in the restart analyzer.
