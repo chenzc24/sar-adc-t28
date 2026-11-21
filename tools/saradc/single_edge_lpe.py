@@ -221,7 +221,9 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
                cdac_plate_nodes=bundle['groups'], cdac_weights_v=weights, independent_cdac_gain=gain,
                weights_source=bundle['weights_id'], weights_result_sha256=bundle['weights_sha'],
                current_signals=[], mismatch=seed is not None, settling_limit_lsb=.25, settling_target_lsb=.125,
-               first_compare_gate_limit_v=.1)
+               first_compare_gate_limit_v=.1,
+               # A repeated first code makes frame 0 a warm-up frame: it starts from the DC solution.
+               warmup_frames=1 if len(CODES[kind]) > 1 and CODES[kind][0] == CODES[kind][1] else 0)
     if macro:
         ctx.update(pex_modules=['cdac', 'sar'], sar_macro=macro['record'])
     if kind == 'restart':
@@ -240,8 +242,8 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
                                analysis_wall_seconds=10800, max_output_mib=2048 + 1200 * ctx['frames'])
     recipe['spectre_args'][recipe['spectre_args'].index('+lqtimeout') + 1] = '900'
     scope = ('%s cell LPE, %s extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling' % (rc, cdac) if not macro else
-             'extracted SAR macro %s, %s cell LPE for the remaining cells, %s extracted CDAC, 45 ns sampling'
-             % (macro['record']['physical_id'], rc, cdac))
+             'extracted SAR macro %s (%s interconnect), %s cell LPE for the remaining cells, %s extracted CDAC, 45 ns sampling'
+             % (macro['record']['physical_id'], macro['record'].get('interconnect_rc', 'typical'), rc, cdac))
     recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_' + ('sar_macro_xrc' if macro else 'cell_lpe_cdac_xrc'),
                   analyzer=analyzer, qualification_scope=scope,
                   test_conditions=ctx, inputs=[dict(name=n, source=(dest / n).relative_to(ROOT).as_posix(),

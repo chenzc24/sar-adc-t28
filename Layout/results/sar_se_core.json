@@ -166,6 +166,22 @@
           "VDD": 4501,
           "VSS": 4042
         }
+      },
+      "corner_extractions": {
+        "cworst_T": {
+          "physical_id": "sar-se-r3-cw",
+          "lvs": "CORRECT",
+          "drc_blocking": {},
+          "sha256": "db29e7154c48c63224ed010f69b55f09a357d4dde2d25bbb2c7dfecd4b4729b3",
+          "bytes": 1946755,
+          "distributed_rail_resistors": {
+            "VDD": 4501,
+            "VSS": 4042
+          },
+          "rules_archive": "/home/process/tsmc28n/PDK_mmWave/Calibre_xRC1p9m/RC_xCalibre_crn28hpc+_1p09m+ut-alrdl_6x1z1u_cworst_T.tar.gz",
+          "rules_archive_sha256": "fb2a4b7ea29b57813e071719474e4f83b1830ff765c6ad0af2bc7e25b5484df5",
+          "note": "Same saved OA view and structural GDS hash as the typical extraction; only the xRC rules differ."
+        }
       }
     }
   },
@@ -448,18 +464,247 @@
         "SPECTRE-16780",
         "VACOMP-2435"
       ]
+    },
+    {
+      "run_id": "sar8-sepl-ssc-cw-verify-r3cw",
+      "host": "thu-song",
+      "recipe_hash": "209cc5767d49f234f128e60377dbc6b8cbb6fb3bfcc1b0b733d78f9b52674ef9",
+      "corner": "ssc",
+      "mos": "SS",
+      "temperature_c": -40,
+      "vdd_v": 0.81,
+      "cell_lpe_other_cells": "cworst_t",
+      "cdac_view": "cworst",
+      "sar_macro_extraction": "sar-se-r3-cw",
+      "sar_macro_interconnect": "cworst_T",
+      "codes": [
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          255,
+          255,
+          255,
+          255
+        ],
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          128,
+          128,
+          128,
+          128
+        ],
+        [
+          85,
+          83,
+          83,
+          83
+        ],
+        [
+          170,
+          172,
+          172,
+          172
+        ],
+        [
+          127,
+          127,
+          127,
+          127
+        ],
+        [
+          1,
+          0,
+          0,
+          0
+        ]
+      ],
+      "frame_pass": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "warmup_frames": [
+        {
+          "frame": 0,
+          "code90": 255,
+          "pass": true
+        }
+      ],
+      "all_pass": true,
+      "min_read_margin_ns": 6.95,
+      "pre_layout_min_read_margin_ns": 7.591,
+      "pre_layout_run": "sar8-sebit-ssc-cw-verify-b",
+      "typical_rc_run": "sar8-sepl-ssc-cw-verify-r3a",
+      "max_abs_signed_settling_lsb": 0.0012,
+      "max_abs_sample_close_error_lsb": 0.0008,
+      "setup_hold_slack_ps": [
+        442.5,
+        99.8
+      ],
+      "min_commit_high_ps": 382.2,
+      "clock_high_at_opening": [],
+      "warnings": [
+        "CMI-2751",
+        "CMI-2753",
+        "CMI-2755",
+        "CMI-2756",
+        "SFE-1131",
+        "SFE-2453",
+        "SFE-2649",
+        "SFE-3014",
+        "SFE-3016",
+        "SFE-3031",
+        "SPECTRE-16780",
+        "VACOMP-2435"
+      ],
+      "bootstrap_note": "Uses the four-finger Bootstrap main switch adopted on main on 2026-11-21; it changes sampling only, which explains the lower sampling residual than the typical-RC run."
     }
   ],
   "analyzer_note": "The three r3a runs packaged a native_stream.py with a rename hook; the committed analyzers apply the same context signal_aliases mapping in their own samples() reader so the frozen native_stream.py of the B cases stays byte-identical.",
   "post_layout_scope": "Extracted SAR macro and extracted CDAC; reference word with cell LPE; comparator and bootstrap schematic; ideal top-level wiring and supplies.",
   "findings": [
-    "SS cold frame 0 fails the control check: at t=0 the DC solution leaves the comparator latch balanced with its clock high (COMP_P/COMP_N 0.42/0.70 V with 256 mV input, unchanged for 60 ns), so CMP_CLK is still high for 0.2 ns after the first tracking opening. This is a non-physical initial state; frame 0 reads its code and frame 1 with the same input passes.",
-    "The same overlap occurs in operation when a sample aborts a comparison: 71-72 ps in the pre-layout FF-cold restart runs, none at TT. The restart analyzer does not check a clock that is already high.",
-    "The SAR macro was extracted at the typical interconnect corner, while the SS and FF pre-layout runs used CWORST_T and CBEST_T cell LPE; the SS and FF post-layout margins are therefore not worst-case."
+    "With the CWORST_T macro, SS cold passes all 8 frames with 6.95 ns of read margin: SAR wiring at worst-case interconnect costs 0.65 ns of the 7.59 ns pre-layout margin, about 13 % of the 5 ns routing reserve.",
+    "The typical-RC SS run failed frame 0 because the DC solution left the comparator latch balanced with its clock high (COMP_P/COMP_N 0.42/0.70 V with 256 mV input, unchanged for 60 ns). That start is not physical. Repeated-code stimuli now treat frame 0 as warm-up; in the CWORST_T run the DC start was idle and frame 0 passed anyway.",
+    "A sample that aborts a comparison keeps the comparator clock high for 71-72 ps after tracking opens in the pre-layout FF-cold restart runs. No write occurs and tracking overwrites the kickback. single_edge_lpe now reports this overlap as clock_high_at_opening; the restart analyzer does not yet.",
+    "The LHCNDQD1 clock latch meets its library minimum pulse widths with large margin at SS cold, FF cold and TT; the tightest is the E high pulse at FF cold, 149 ps against 22 ps."
   ],
   "open_items": [
-    "Re-extract the macro at CWORST_T and CBEST_T and rerun SS and FF cold",
-    "Treat frame 0 as warm-up and report the clock/tracking overlap as a measured diagnostic",
-    "Top-level placement, routing, fill and terminal-voltage scan"
+    "Top-level placement and routing, fill, extraction and the terminal-voltage scan",
+    "Report the clock/tracking overlap in the restart analyzer"
+  ],
+  "latch_pulse_width_check": {
+    "cell": "LHCNDQD1BWP12T30P140",
+    "instance": "XCTRL/XTIM/XCLOCK",
+    "D": "HIGH (TIEH)",
+    "E": "SET",
+    "CDN": "CLR_N",
+    "thresholds": "50 % width, 30-70 % edge, slew_derate_from_library 0.5",
+    "conservative": "limit uses the slower of the two edges of each pulse",
+    "runs": {
+      "sar8-sepl-ssc-cw-verify-r3cw": {
+        "corner": "ssc",
+        "library": "ssg0p81vm40c",
+        "E": {
+          "arc": "CDN&D",
+          "pulses": 64,
+          "min_width_ps": 341.7,
+          "worst": {
+            "width_ps": 341.7,
+            "edge_3070_ps": 4.1,
+            "library_slew_ps": 8.2,
+            "limit_ps": 35.5,
+            "margin_ps": 306.2
+          }
+        },
+        "CDN": {
+          "arc": "D&!E",
+          "pulses": 72,
+          "min_width_ps": 1969.7,
+          "worst": {
+            "width_ps": 1969.8,
+            "edge_3070_ps": 6.0,
+            "library_slew_ps": 12.0,
+            "limit_ps": 22.6,
+            "margin_ps": 1947.2
+          }
+        }
+      },
+      "sar8-sepl-ffc-cw-scan-r3a": {
+        "corner": "ffc",
+        "library": "ffg0p99vm40c",
+        "E": {
+          "arc": "CDN&D",
+          "pulses": 32,
+          "min_width_ps": 149.2,
+          "worst": {
+            "width_ps": 149.2,
+            "edge_3070_ps": 4.1,
+            "library_slew_ps": 8.1,
+            "limit_ps": 21.6,
+            "margin_ps": 127.6
+          }
+        },
+        "CDN": {
+          "arc": "D&!E",
+          "pulses": 36,
+          "min_width_ps": 745.0,
+          "worst": {
+            "width_ps": 745.3,
+            "edge_3070_ps": 4.2,
+            "library_slew_ps": 8.4,
+            "limit_ps": 14.3,
+            "margin_ps": 731.1
+          }
+        }
+      },
+      "sar8-sepl-tt-nom-verify-r3a": {
+        "corner": "tt",
+        "library": "tt0p9v25c",
+        "E": {
+          "arc": "CDN&D",
+          "pulses": 64,
+          "min_width_ps": 208.3,
+          "worst": {
+            "width_ps": 208.3,
+            "edge_3070_ps": 4.1,
+            "library_slew_ps": 8.1,
+            "limit_ps": 26.2,
+            "margin_ps": 182.2
+          }
+        },
+        "CDN": {
+          "arc": "D&!E",
+          "pulses": 72,
+          "min_width_ps": 1093.5,
+          "worst": {
+            "width_ps": 1093.5,
+            "edge_3070_ps": 4.8,
+            "library_slew_ps": 9.5,
+            "limit_ps": 17.1,
+            "margin_ps": 1076.4
+          }
+        }
+      }
+    },
+    "limit_source": "min_pulse_width arcs of LHCNDQD1BWP12T30P140 in the tcbn28hpcplusbwp12t30p140 180a CCS libraries ssg0p81vm40c, ffg0p99vm40c and tt0p9v25c; E high uses when CDN&D, CDN low uses D&!E",
+    "resolution_note": "Edges are 4-6 ps (30-70 %) on a 5 ps output strobe, so they may be under-resolved; a 50 ps library slew would raise the SS-cold E limit only to about 44 ps.",
+    "pass": true
+  },
+  "corner_decisions": [
+    {
+      "corner": "SS cold, CWORST_T macro",
+      "decision": "run",
+      "run_id": "sar8-sepl-ssc-cw-verify-r3cw",
+      "reason": "Sets the read margin; the only corner whose result typical RC could not bound."
+    },
+    {
+      "corner": "FF cold, CBEST_T macro",
+      "decision": "skipped",
+      "reason": "Ideal to typical SAR wiring cost 0.47 ns of FF-cold margin and moved settling from 0.114 to 0.107 LSB. Typical to CBEST_T is a smaller step; with the ~0.3 ns reference-recovery time constant a few ps of shorter window adds about 1 % error, well inside the 0.125 LSB target."
+    },
+    {
+      "corner": "SS hot",
+      "decision": "skipped",
+      "reason": "SS cold is the slowest corner of this design and SS hot passed pre-layout with more margin."
+    },
+    {
+      "corner": "FF hot",
+      "decision": "skipped",
+      "reason": "Its 0.165 LSB finding is a static reference offset from switch leakage; SAR wiring cannot change it."
+    }
   ]
 }

@@ -2,10 +2,10 @@
   "planning_inputs_sha256": {
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "ea65493b335f5a7492c633d55431bad45c24cdc719b41523d2e62bb4613d4755",
-    "Layout/design/floorplan.json": "c06638e8404df562990f95a5f2f153683f257c71fa2a25596a2697ffcf922672",
-    "Layout/specs/interfaces.json": "2c3b9ae77ed18b06caac4128b4b1a3d8954628c8e5f544129326001fb5370b88",
-    "Layout/specs/constraints.json": "497abd758411d778a60b343f6e4edf8d1dbfdd940ed341c36c41ae871862e932",
+    "Layout/design/manifest.json": "2290d364c0045666c845e8deedb754c9421eac94870de4a50c338f295a85df26",
+    "Layout/design/floorplan.json": "2e3f4e62846e4d38d72bc3a05744e8f2788500d9edf8553b224abc22ec3ab574",
+    "Layout/specs/interfaces.json": "e61414c56df2391fcde2d4228df58bf2530abbc7d2316c679e43dcab1a66f908",
+    "Layout/specs/constraints.json": "b794a31cae57e46cb9337285d9aab485eb59ebd7ea14a6525c93db6d80337f8a",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
@@ -91,16 +91,29 @@
     "functional_geometry_sha256": "840f7de58d2770fb68b58599bf1457e935fb1a9f2a71636bc24cc6058f9d8998",
     "report": "cdac.md"
   },
-  "sar_timing": {
-    "status": "routed_native_core_and_filled_macro_qualified",
-    "core_evidence": "sar-timing-core-signoff-20261118",
-    "filled_evidence": "sar-timing-fill-signoff-20261118",
-    "geometry_sha256": "132702182ecbeb3bcf96f822751a99173822049953f77bc9e87f35b948782d13",
-    "native_lvs": "CORRECT",
-    "drc_geometry_or_density": 0,
+  "sar_macro": {
+    "status": "prefill_module_delivered_not_full_signoff",
+    "view": "layout_r3",
+    "physical_evidence": "sar-se-r3-lib",
+    "cworst_extraction": "sar-se-r3-cw",
+    "geometry_sha256": "7a43d83afd44ba69048e0a9b154f020639eb86fe2171df3b9297507ab30f4df8",
+    "lvs": "CORRECT",
     "drc_advisories": 2,
-    "accepted_corners": 5,
-    "frames": 50,
-    "report": "sar_timing.json"
+    "worst_corner_run": "sar8-sepl-ssc-cw-verify-r3cw",
+    "ss_cold_read_margin_ns": 6.95,
+    "report": "sar_se_core.md",
+    "previous_architecture": {
+      "status": "routed_native_core_and_filled_macro_qualified",
+      "core_evidence": "sar-timing-core-signoff-20261118",
+      "filled_evidence": "sar-timing-fill-signoff-20261118",
+      "geometry_sha256": "132702182ecbeb3bcf96f822751a99173822049953f77bc9e87f35b948782d13",
+      "native_lvs": "CORRECT",
+      "drc_geometry_or_density": 0,
+      "drc_advisories": 2,
+      "accepted_corners": 5,
+      "frames": 50,
+      "report": "sar_timing.json",
+      "note": "sar8_sar_timing views of the previous architecture; see the layout index"
+    }
   }
 }

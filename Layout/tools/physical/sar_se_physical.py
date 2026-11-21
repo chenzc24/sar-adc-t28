@@ -76,10 +76,10 @@ def build(cfg, out, staging, view):
         raise RuntimeError("OA build failed; see build.log")
 
 
-def verify(cfg, out, identity, staging, view, through, built):
+def verify(cfg, out, identity, staging, view, through, built, rc_corner=None):
     pins, source_hash, library_hash = reference(staging, out)
     report = dict(id=identity, case="sar-se", library=native.LIB, library_path=cfg["library_path"], staging=staging,
-                  top=CORE, oa_view=view, built_by_this_run=built,
+                  top=CORE, oa_view=view, built_by_this_run=built, interconnect_rc=rc_corner or "typical",
                   reference_sha256=source_hash, standard_library_sha256=library_hash,
                   build_records_sha256=native.sha(native.raw(join(staging, "build.txt"))), checks={}, decks={})
 
@@ -130,6 +130,10 @@ def verify(cfg, out, identity, staging, view, through, built):
                 native.put(join(work, "pex.svrf"), deck)
                 report["decks"][stage]["netlist_names"] = "SOURCENAMES"
                 report["decks"][stage]["job_sha256"] = native.sha(deck)
+                if rc_corner:
+                    # Swap the deck's typical interconnect rules for the foundry corner package.
+                    from sar_rc_corner import select
+                    select(work, cfg, native.PDK, join(native.RULES, "rcx"), report["decks"][stage], rc_corner)
             if stage == "drc":
                 run(stage, native.CALIBRE, ["calibre", "-drc", "-hier", "-turbo", "4", "-nowait", "drc.svrf"], 900)
                 markers = native.drc_rules(join(work, "DRC_RES.db"))
@@ -190,7 +194,10 @@ def main():
     parser.add_argument("--view", required=True, help="View of sar8_se_core in SAR_ADC_T28_LAYOUT, e.g. layout_r2")
     parser.add_argument("--build", action="store_true", help="Create the view in SAR_ADC_T28_LAYOUT before verification")
     parser.add_argument("--through", choices=("stream", "drc", "lvs", "pex"), default="pex")
+    parser.add_argument("--rc-corner", choices=("cworst_T", "cbest_T"), help="Foundry interconnect corner for the extraction")
     args = parser.parse_args()
+    if args.rc_corner and args.through != "pex":
+        parser.error("--rc-corner requires --through pex")
     if not re.match(r"\Alayout[a-z0-9_]*\Z", args.view):
         raise ValueError("Invalid OA view")
     cfg = workspace.paths()
@@ -205,7 +212,7 @@ def main():
         shutil.copyfile(join(cfg["runtime"], "sar_single_edge.il"), join(out, "sar_single_edge.il"))
         if args.build:
             build(cfg, out, staging, args.view)
-        verify(cfg, out, args.identity, staging, args.view, args.through, args.build)
+        verify(cfg, out, args.identity, staging, args.view, args.through, args.build, args.rc_corner)
 
 
 if __name__ == "__main__":

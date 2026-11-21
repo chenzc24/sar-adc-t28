@@ -95,10 +95,11 @@ python -m Layout.tools.physical.sar_se_def r3
 # Upload work/layout/sar-se/r3/build.txt and sar-se-leaves.cdl to <remote_root>/state/sar-se-r3, then deploy.
 python -m Layout deploy
 python -m Layout physical UNIQUE_ID --module sar-se --staging sar-se-r3 --view layout_r3 --rebuild --through pex
+python -m Layout physical ANOTHER_ID --module sar-se --staging sar-se-r3 --view layout_r3 --rc-corner cworst_T --through pex
 python -m Layout.tools.simulation.prepare_sar_se UNIQUE_ID ssc verify --cdac cworst --revision NEW_ID
 ```
 
-`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction currently uses the typical interconnect rules. The D2 reference (`design/xtor/reference/single_edge_d2.scs`) is not drawn yet. The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) · [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
+`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction uses the deck's typical interconnect rules; add `--rc-corner cworst_T` or `cbest_T` to verify the saved view with the foundry corner rules instead (the new evidence ID gets its own extraction). For `verify` stimuli, frame 0 starts from the DC solution and is reported as warm-up outside the verdict. The D2 reference (`design/xtor/reference/single_edge_d2.scs`) is not drawn yet. The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) · [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
 
 ## Bootstrap Module
 

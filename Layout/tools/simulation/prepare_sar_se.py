@@ -144,6 +144,7 @@ def macro(identity):
                   gds_sha256=manifest["gds"]["sha256"], structural_sha256=manifest["gds"]["structural_sha256"],
                   lvs=manifest["checks"]["lvs"]["verdict"], drc_blocking=manifest["checks"]["drc"]["blocking"],
                   extracted_sha256=manifest["checks"]["pex"]["sha256"], def_sha256=convert["def_sha256"],
+                  interconnect_rc=manifest.get("interconnect_rc", "typical"),
                   ports=ports, internal_nets=sorted(internal), probes=chosen,
                   probe_rule="internal SAR nets read at the gate node of one receiving cell in the extracted RC network")
     return dict(entry=ENTRY, files=files, top=top_with_macro(ports), probe=probe, record=record)
