@@ -1300,7 +1300,7 @@
     "MNINP, MNINN and MNTAIL are each two parallel 0.5u nf=1 instances for the schematic nf=1 W=1u device (the input fingers in two rows); LVS-equivalent after parallel reduction, LDE differs from the schematic model",
     "The N1 OUTP strap is the track nearest the input channel: OUTP couples ~0.005-0.007 fF more than OUTN to the inputs and TAIL; the fixture TT screen shows no measurable offset from it, which is not a statistical offset bound",
     "CLK runs on the centre trunk past the N1 input gates: 0.014 fF to each input, symmetric (V4 0.058, v6 0.003)",
-    "Standalone PVT (five corners with matched RC), kickback into the extracted CDAC and SS-cold ADC pair measured (pre_merge_verification); post-layout MC offset and noise in progress; no terminal-reliability qualification",
+    "Standalone PVT (five corners with matched RC), kickback into the extracted CDAC, the SS-cold ADC pair, 200-seed post-layout MC offset and input-referred noise measured (pre_merge_verification); the smaller post-layout offset spread is unexplained; no terminal-reliability qualification",
     "No final filled or complete top-level RC qualification; VDD/VSS are guard-ring M1 and need top-level straps",
     "Module access routing still needs placement in the 16x14 um reservation; the three model MOM loads (CL_COMP_N/P, CL_CMP_CLK) are not drawn and a top-level LVS reference must omit them"
   ],
@@ -16327,7 +16327,7 @@
   },
   "pre_merge_verification": {
     "date": "2026-11-21",
-    "status": "partial",
+    "status": "complete",
     "issue": "#4 standalone gaps before merge",
     "scope": "Standalone comparator checks of v8 against the schematic in matched fixtures; physical signoff, final fill and top-level RC remain open",
     "extractions": {
@@ -16622,7 +16622,7 @@
       "note": "First packaging (comp-v8-kick-*) failed at read-in: the CDAC wrapper master duplicated the schematic CDAC in dut.scs; the -b packages rename the wrapper to cdac_kick_extracted"
     },
     "mc_offset": {
-      "status": "in_progress",
+      "status": "complete",
       "fixture": "tb/blocks/comparator/test.scs (200-seed schematic baseline fixture), comparator replaced by the typical supply-extracted v8 netlist; seeds 4101-4300, TT local mismatch",
       "packager": "Layout/tools/simulation/comparator_checks/make_mc.py",
       "packaging_check": {
@@ -16630,21 +16630,60 @@
         "offset_mv": 5.312499999999999,
         "baseline_offset_mv": 5.312499999999999
       },
-      "collected": 181,
       "invalid_seeds": [],
-      "v8_sd_mv": 11.81508693792935,
-      "v8_mean_mv": -1.8781077348066297,
+      "schematic_baseline": "results/mc/modules_200.json (sd 14.19 mV)",
+      "note": "The post-layout spread is smaller than the schematic one beyond resampling error (ratio CI excludes 1). The cause is not established; candidates are per-finger mismatch scaling of the model for the split nf=1 fingers and layout-dependent instance parameters.",
+      "valid_seeds": 200,
+      "v8_sd_mv": 12.050520469144114,
+      "v8_mean_mv": -1.549375,
       "v8_range_mv": [
         -34.6875,
-        30.6875
+        34.0625
       ],
-      "schematic_same_seeds_sd_mv": 14.057577049078974,
-      "schematic_same_seeds_mean_mv": -1.0093232044198894,
-      "schematic_baseline": "results/mc/modules_200.json (sd 14.19 mV)",
-      "note": "Mismatch reaches every extracted finger (XX3/XX12/XX5/XX14 draws recorded). Draws are not paired across the netlists; compare distributions only. The smaller post-layout spread is not yet explained (candidates: per-finger mismatch scaling of the model, layout-dependent instance parameters)."
+      "schematic_sd_mv": 14.187702359480411,
+      "schematic_mean_mv": -0.5425,
+      "schematic_range_mv": [
+        -29.9375,
+        37.6875
+      ],
+      "sd_ratio": 0.8493637774330525,
+      "sd_ratio_ci95": [
+        0.7441681815148853,
+        0.965654117343109
+      ],
+      "sd_ratio_ci_method": "independent bootstrap over seeds (draws are not paired across netlists), 4000 resamples",
+      "max_receiver_decision_ns": 0.33275254298280205,
+      "reanalysis": {
+        "seeds": [
+          4105,
+          4112,
+          4122,
+          4123,
+          4124,
+          4128,
+          4140,
+          4142,
+          4146,
+          4186,
+          4190,
+          4216,
+          4227,
+          4267,
+          4269,
+          4273,
+          4281,
+          4282,
+          4290
+        ],
+        "suffix": "-a3",
+        "packager": "Layout/tools/simulation/comparator_checks/make_mc_reanalysis.py",
+        "reason": "queued analysis workers were started from a login session that later ended, so they sat outside the user memory cgroup and the admission gate reported user_cgroup_observation_missing; analysis-only runs read the completed simulations with the same analyzer",
+        "control": "seed 4101 reanalyzed: identical decision records, mismatch draws and offset (-12.3125 mV)",
+        "superseded": "comp-v8-mc-s*-a2 failed at import (native_stream.py not packaged); no outputs"
+      }
     },
     "noise": {
-      "status": "in_progress",
+      "status": "complete",
       "fixture": "MC fixture with nominal models, noiseless stepped input (9 levels x 128 decisions, 0.4 mV step) and Spectre transient noise (noise_worst section, 100 kHz to fmax, seed 301); probit maximum-likelihood fit",
       "files": [
         "Layout/tools/simulation/comparator_checks/make_noise.py",
@@ -16654,34 +16693,80 @@
       "budget": "specs/arch.json comparator_noise_rms_lsb 0.18 (1.27 mV)",
       "runs": {
         "comp-v8-nz-tt-sch-f20": {
+          "corner": "tt",
+          "comparator": "schematic",
+          "noisefmax_ghz": 20,
           "sigma_mv": 0.5973436027633039,
           "sigma_se_mv": 0.029276352482042238,
           "sigma_lsb": 0.08495553461522544,
           "mu_mv": -0.009528412118956567,
           "unresolved": 0,
+          "within_budget": true,
           "result_sha256": "62bdc9a133f0f9822c745899395a768e59c15cb96aa2042d2046aaf171dadc25"
         },
         "comp-v8-nz-tt-sch-f50": {
+          "corner": "tt",
+          "comparator": "schematic",
+          "noisefmax_ghz": 50,
           "sigma_mv": 0.5025921756696001,
           "sigma_se_mv": 0.026679711903219164,
           "sigma_lsb": 0.07147977609523201,
           "mu_mv": 0.031730914491121164,
           "unresolved": 0,
+          "within_budget": true,
           "result_sha256": "67e79d57622d370ac55fc53fbf919aceba12971b9aa883e5b970818f0cf86000"
         },
-        "comp-v8-nz-tt-sch-f100-b": "running",
-        "comp-v8-nz-tt-rc-f50-b": "running",
+        "comp-v8-nz-tt-sch-f100-b": {
+          "corner": "tt",
+          "comparator": "schematic",
+          "noisefmax_ghz": 100,
+          "sigma_mv": 0.6062575371760652,
+          "sigma_se_mv": 0.03018987330658562,
+          "sigma_lsb": 0.0862232941761515,
+          "mu_mv": -0.11453154911839995,
+          "unresolved": 0,
+          "within_budget": true,
+          "result_sha256": "8411113a3befa480f56cf15a1e9c760f2c82d255bc6ec6e91af693f036508fa5"
+        },
+        "comp-v8-nz-tt-rc-f50-b-fit2": {
+          "corner": "tt",
+          "comparator": "v8",
+          "noisefmax_ghz": 50,
+          "sigma_mv": 0.6008216295820558,
+          "sigma_se_mv": 0.029397512170677223,
+          "sigma_lsb": 0.08545018731833681,
+          "mu_mv": -0.09368415288327792,
+          "unresolved": 0,
+          "within_budget": true,
+          "result_sha256": "8811150d77b557507487f08133e98ded499141328be865d4fe461eccce286df9"
+        },
         "comp-v8-nz-ssh-sch-f50-b": {
+          "corner": "ssh",
+          "comparator": "schematic",
+          "noisefmax_ghz": 50,
           "sigma_mv": 0.8363885090370226,
           "sigma_se_mv": 0.03975272782258386,
           "sigma_lsb": 0.11895303239637654,
           "mu_mv": 0.02629800182325583,
           "unresolved": 0,
+          "within_budget": true,
           "result_sha256": "bac9b13f3eea3ba71f2ee4e69fe50913b4fc8d33a90830d166bb8391b91597b1"
         },
-        "comp-v8-nz-ssh-rc-f50-b": "running"
+        "comp-v8-nz-ssh-rc-f50-b": {
+          "corner": "ssh",
+          "comparator": "v8",
+          "noisefmax_ghz": 50,
+          "sigma_mv": 0.7972044700514626,
+          "sigma_se_mv": 0.03783607274532092,
+          "sigma_lsb": 0.113380191296208,
+          "mu_mv": -0.019902565975739233,
+          "unresolved": 0,
+          "within_budget": true,
+          "result_sha256": "5b73155cf74c2e56b75a965a6392b4361d496ed3006248abdba9d6261e5f25b8"
+        }
       },
-      "note": "comp-v8-nz-{tt-sch-f100,tt-rc-f50,ssh-sch-f50,ssh-rc-f50} stopped at the 1024 MiB output cap; superseded by -b packages with strobe-only output (decisions come from spectre.out)"
+      "note": "comp-v8-nz-{tt-sch-f100,tt-rc-f50,ssh-sch-f50,ssh-rc-f50} stopped at the 1024 MiB output cap and were rerun as -b with strobe-only output. The analysis of comp-v8-nz-tt-rc-f50-b divided by a zero determinant; the corrected fit (scaled finite differences, damped steps, fresh Hessian at the optimum) reproduces the three earlier fits to four digits and was applied by the analysis-only rerun -fit2. Bandwidth: 20 and 100 GHz agree (0.597 / 0.606 mV); the 50 GHz schematic value (0.503 mV) is single-seed scatter.",
+      "worst_sigma_lsb": 0.11895303239637654
     },
     "raw_retention": {
       "receipt": "results/storage/20261121-wei-comparator-superseded.json",
