@@ -34,7 +34,7 @@ class LayoutPlanTests(unittest.TestCase):
     def test_actual_plan_and_area_projection(self):
         result = planning.check(self.root)
         self.assertTrue(result['valid'], result['errors'])
-        self.assertEqual(result['area']['core_allocation'], 29920)
+        self.assertEqual(result['area']['core_allocation'], 13542)
         self.assertIsNone(result['area']['die_area'])
         planning.render(self.root)
         self.assertFalse(planning.check(self.root)['planning_projection_stale'])
@@ -58,12 +58,32 @@ class LayoutPlanTests(unittest.TestCase):
         self.mutate('specs/interfaces.json', lambda d: d['not_drawn_instances'].update(CL_UNKNOWN={}))
         self.assertIn('Not-drawn instances must be top instances', planning.check(self.root)['errors'])
 
+    def test_planned_route_faults_are_rejected(self):
+        p = self.root/'Layout/design/floorplan.json'; original = p.read_text(encoding='utf-8')
+        self.assertEqual(planning.check(self.root)['routing']['matched_wire_um'], {'COMP_P': 57.045, 'COMP_N': 57.045})
+        def onto_outp_track(d):
+            for point in d['planned_paths']['OUTN']['points_um'][1:3]: point[1] = 73.8
+        point = lambda name, i, axis, value: lambda d: d['planned_paths'][name]['points_um'][i].__setitem__(axis, value)
+        cases = [(onto_outp_track, 'share a track'),
+                 (lambda d: d['crossings'].pop(0), 'Undeclared crossing'),
+                 (lambda d: d['over_block'].pop(), 'without a declaration'),
+                 (point('TOPP_to_sampler', 2, 0, 59.0), 'Mirrored paths differ'),
+                 (point('SEQ_SAMPLE_to_XBOOTP', -1, 1, 76.0), 'not anchored'),
+                 (lambda d: d['planned_paths'].pop('OUTP_clk_balance'), 'Matched nets differ'),
+                 (lambda d: d['planned_paths'].pop('D3'), 'Pin has no planned path: SAR.D3'),
+                 (lambda d: d['planned_paths']['CMP_CLK'].__setitem__('manhattan_length_um', 50), 'Recorded length')]
+        for change, message in cases:
+            p.write_text(original, encoding='utf-8')
+            self.mutate('design/floorplan.json', change)
+            errors = planning.check(self.root)['errors']
+            self.assertTrue(any(message in e for e in errors), (message, errors))
+
     def test_new_render_cannot_refresh_old_qualification(self):
         planning.render(self.root)
         p = self.root/'Layout/results/current.json'; data = json.loads(p.read_text())
         data['qualification_inputs_sha256'] = data['planning_inputs_sha256']
         p.write_text(json.dumps(data))
-        self.mutate('design/floorplan.json', lambda d: d['blocks'][0]['origin'].__setitem__(0, 21))
+        self.mutate('design/floorplan.json', lambda d: d['blocks'][0]['origin'].__setitem__(0, d['blocks'][0]['origin'][0] + 1))
         self.assertTrue(planning.check(self.root)['planning_projection_stale'])
         planning.render(self.root)
         self.assertEqual(planning.check(self.root)['qualification_applicability'], 'stale')

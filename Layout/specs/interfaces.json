@@ -465,22 +465,27 @@
   "port_policy": "Preserve exact electrical order. Local VDD/VSS map only to top VDD!/0. Do not short CDAC gates internally.",
   "proposed_faces": {
     "cdac": {
-      "TOPN_TOPP": "north/centre, existing exits may require a separately verified change",
-      "gates": "south/east toward reference",
-      "VREFN_VREFP": "south/west"
+      "TOPN_TOPP": "north/centre M3 exits, unchanged",
+      "gates": "south, routed to XREF inside sar8_cdac_with_xref",
+      "VREFN_VREFP": "south-west, into the west ends of the pair M5 global rails"
     },
     "comparator": {
-      "inputs": "south toward CDAC",
-      "outputs_clock": "east toward SAR"
+      "inputs": "south toward the CDAC TOP exits (instance MY: VINN west, VINP east)",
+      "outputs": "north into the output channel on shielded tracks, OUTP below CMP_CLK below OUTN, then east to the corridor",
+      "clock": "M4 drop on the mirror axis from its channel track onto the top end of the M3 CLK trunk; it never enters the TOP channel. Accepted on 2026-11-21 as an exception to the core M4 keep-out; confirm its coupling with top-level extraction."
     },
     "bootstrap": {
       "VIN": "north",
-      "TOP": "toward respective CDAC side",
-      "clock": "outer digital side"
+      "TOP": "VOUT drops south to the TOP tee on each CDAC side",
+      "clock": "CLKS on the outer lower corner of each cell, fed by a balanced tree with mirror-image arms from a centre tap"
     },
     "reference": {
-      "gates": "north toward CDAC switches",
-      "code_controls": "east toward SAR"
+      "gates": "north toward CDAC switches (routed)",
+      "code_controls": "east M3 ports toward the SAR"
+    },
+    "sar": {
+      "signals": "all 24 M3 pins on the west edge: reference-side buses low, comparator-side signals high. D0-D7 and SAMPLE stack up just west of the macro and cross it on M7 to the east edge; PHI_U and SAMPLE_INT stay unconnected at top level.",
+      "supplies": "M6 stripes"
     }
   },
   "routing_layers": {
@@ -523,20 +528,32 @@
       "from": "XCOMP",
       "to": "XCTRL",
       "priority": 2,
-      "intent": "match COMP_N/COMP_P loads and preserve asynchronous handshake"
+      "intent": "COMP_N/COMP_P on shielded tracks with equal wire and the same crossings: each output crosses the other output, CMP_CLK, SEQ_SAMPLE and the TOPP drop once. Preserve the asynchronous handshake."
     },
     "compare_clock": {
       "from": "XCTRL",
       "to": "XCOMP",
       "priority": 2,
-      "intent": "route away from TOP and VIN; CMP_CLK load is the extracted wiring (CL_CMP_CLK is not drawn)"
+      "intent": "Shielded channel track between the comparator outputs and an M4 drop on the comparator axis; away from TOP and VIN. CMP_CLK load is the extracted wiring (CL_CMP_CLK is not drawn)."
+    },
+    "sample_clock": {
+      "from": "XSEQ",
+      "to": "XBOOTP",
+      "intent": "SEQ_SAMPLE to XBOOTP and XBOOTN through a balanced tree: the trunk reaches the centre tap on its own track and the two arms are mirror images, so the channels close sampling together; keep it off the TOP tee and the VIN trunks.",
+      "priority": 1
+    },
+    "code_bus": {
+      "from": "XCTRL",
+      "to": "XREF",
+      "intent": "CODE0-7 and PRESET from the SAR west edge to the XREF east ports on corridor tracks with CODE0 eastmost, so the bus has no crossings; part of the bit-cycle loop, so count it with the comparator outputs.",
+      "priority": 2
     }
   },
   "external_routes": {
     "VINN_VINP": "north analog entry, local to bootstrap",
-    "VREFN_VREFP": "south/west dedicated distribution to CDAC",
-    "SAMPLE_D0_D7": "east digital edge",
-    "VDD_VSS": "perimeter straps and explicit local returns; isolation/guard topology pending"
+    "VREFN_VREFP": "Two interleaved, double-bonded pads per rail, each on its own west-edge boundary pin, through the reference network into the west ends of the pair M5 global rails (io_ring.json)",
+    "SAMPLE_D0_D7": "east digital edge, on M7 across the SAR macro from via stacks just west of its pins",
+    "VDD_VSS": "analog trunk from the north edge, pair supply from the south-west, SAR from the east, each branch on its own AVDD/AVSS pad pair (io_ring.json); the branches join only at the ADC boundary pins; no top-level metal over the CDAC array"
   },
   "implemented_pin_access": {
     "bootstrap": {
@@ -686,8 +703,283 @@
           ]
         }
       },
-      "top_integration": "VINP leaves the west edge and VINN the east edge on M2 at y=-1.60, straight out of the N1/N2 channel; OUTP/OUTN leave the north edge on M3 trunks (OUTP west); CLK enters the south edge on the centre M3 trunk. VDD/VSS pins are full-width M2 straps over the top N+ and bottom P+ ring sides (via1 every 0.13 um to the ring); strap them to the top-level power grid and place local decoupling next to the core. Route toward the east SAR with paired output topology and keep CLK on the south side, away from the outputs and inputs.",
-      "sensitive_regions": "Input gates at x=+/-0.065 (N1) and +/-0.195 (N2) with their M2 exits at y=-1.60; X/Y M3 trunks at x=+/-0.39 and output M3 trunks at x=-/+0.195; CLK M3 trunk at x=0 from the south edge to y=-0.23. The core uses M1-M3 only; keep digital routing off M4+ above it and qualify final coupling."
+      "top_integration": "VINP leaves the west edge and VINN the east edge on M2 at y=-1.60, straight out of the N1/N2 channel; OUTP/OUTN leave the north edge on M3 trunks (OUTP west); CLK enters the south edge on the centre M3 trunk. VDD/VSS pins are full-width M2 straps over the top N+ and bottom P+ ring sides (via1 every 0.13 um to the ring); strap them to the top-level power grid and place local decoupling next to the core. Route toward the east SAR with paired output topology. The TOP tee fills the space below the core, so at top level CLK lands on the top end of its trunk (y=-0.28) from the north on an M4 drop along x=0, between the output trunks; this exception to the M4 keep-out was accepted on 2026-11-21 (Layout/design/floorplan.json decisions).",
+      "sensitive_regions": "Input gates at x=+/-0.065 (N1) and +/-0.195 (N2) with their M2 exits at y=-1.60; X/Y M3 trunks at x=+/-0.39 and output M3 trunks at x=-/+0.195; CLK M3 trunk at x=0 from the south edge to y=-0.23. The core uses M1-M3 only; keep top-level routing off M4+ above it except the accepted CMP_CLK drop along x=0, and qualify final coupling with top-level extraction."
+    },
+    "cdac_xref": {
+      "cell": "sar8_cdac_with_xref",
+      "view": "layout_se_d2_r2",
+      "evidence": "se-xref-full-b",
+      "coordinate_frame": "Local pair origin in R0, um",
+      "ports": {
+        "TOPN": {
+          "layer": "M3",
+          "center_um": [
+            33.84,
+            25.78
+          ],
+          "source": "layout_paired_balanced readback; same core outline in layout_paired_stacked; confirm on the pair before routing"
+        },
+        "TOPP": {
+          "layer": "M3",
+          "center_um": [
+            34.96,
+            25.78
+          ],
+          "source": "as TOPN"
+        },
+        "CODE0": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -31.31
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE1": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -31.09
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE2": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -30.87
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE3": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -30.65
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE4": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -30.43
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE5": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -30.21
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE6": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -29.99
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "CODE7": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -29.77
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        },
+        "PRESET": {
+          "layer": "M3",
+          "center_um": [
+            64.57,
+            -29.55
+          ],
+          "source": "single_edge_xref.json m3_bus_centers_local_um"
+        }
+      },
+      "top_integration": "Place the pair, not the CDAC and XREF separately. VREFN/VREFP and the supplies keep the native M5 rails at the CDAC south edge; feed them from the south-west."
+    },
+    "sar": {
+      "cell": "sar8_se_core",
+      "view": "layout_r3",
+      "evidence": "sar-se-r3-lib",
+      "coordinate_frame": "Local macro origin at the lower-left of the 18.495 x 16.8 um boundary, um",
+      "ports": {
+        "D0": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            1.4
+          ]
+        },
+        "CODE0": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            2.0
+          ]
+        },
+        "D1": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            2.6
+          ]
+        },
+        "CODE1": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            3.2
+          ]
+        },
+        "D2": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            3.8
+          ]
+        },
+        "CODE2": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            4.4
+          ]
+        },
+        "D3": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            5.0
+          ]
+        },
+        "CODE3": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            5.6
+          ]
+        },
+        "D4": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            6.2
+          ]
+        },
+        "CODE4": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            6.8
+          ]
+        },
+        "D5": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            7.4
+          ]
+        },
+        "CODE5": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            8.0
+          ]
+        },
+        "D6": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            8.6
+          ]
+        },
+        "CODE6": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            9.2
+          ]
+        },
+        "D7": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            9.8
+          ]
+        },
+        "CODE7": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            10.4
+          ]
+        },
+        "PHI_U": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            11.0
+          ]
+        },
+        "PRESET": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            11.6
+          ]
+        },
+        "SAMPLE_INT": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            12.2
+          ]
+        },
+        "SEQ_SAMPLE": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            12.8
+          ]
+        },
+        "SAMPLE": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            13.4
+          ]
+        },
+        "COMP_N": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            14.0
+          ]
+        },
+        "COMP_P": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            14.6
+          ]
+        },
+        "CMP_CLK": {
+          "layer": "M3",
+          "center_um": [
+            0.17,
+            15.2
+          ]
+        }
+      },
+      "source": "Innovus editPin -side Left -layer M3 -spacing 0.6 -spreadType center (Layout/design/sar_single_edge.py); CODE0-7 and PRESET match single_edge_xref.json",
+      "top_integration": "VDD/VSS on the M6 stripes. D0-D7 and SAMPLE leave the west edge and cross the macro on M7 to the ADC east edge."
     }
   }
 }

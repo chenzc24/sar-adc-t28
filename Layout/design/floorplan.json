@@ -4,18 +4,33 @@
   "core_bbox": [
     0,
     0,
-    176,
-    170
+    122.0,
+    111.0
   ],
-  "die_bbox": null,
-  "io_ring": null,
+  "die_bbox": [
+    -243.885,
+    -329.0,
+    396.115,
+    311.0
+  ],
+  "io_ring": {
+    "plan": "Layout/design/io_ring.json",
+    "review_view": "Layout/results/io_ring.png",
+    "ring": "7 x 7, 28 pads (PAD60GU, 60 um pitch), 640 x 640 um outline",
+    "core_origin_in_die_um": [
+      243.885,
+      329.0
+    ],
+    "frame_note": "die_bbox is in this file's core frame; io_ring.json uses die coordinates.",
+    "status": "preliminary_proposal_not_applied_to_OA"
+  },
   "blocks": [
     {
       "id": "cdac",
       "label": "MOM CDAC + switches",
       "origin": [
-        20.0,
-        40.0
+        10.0,
+        16.565
       ],
       "orientation": "R0",
       "size": [
@@ -43,121 +58,16 @@
         "report": "Layout/results/single_edge_xref.json"
       },
       "native_origin_translation": [
-        21.715,
-        65.9
-      ]
-    },
-    {
-      "id": "comparator",
-      "label": "Comparator",
-      "origin": [
-        57,
-        140
-      ],
-      "orientation": "R0",
-      "size": [
-        16,
-        14
-      ],
-      "instances": [
-        "XCOMP"
-      ],
-      "basis": "space_reservation",
-      "uncertainty": "Core measured 1.63 x 3.52 um (guard rings included). The 16 x 14 um reservation keeps room for access routing; the three model MOM loads are no longer drawn, so it can shrink once the comparator-to-SAR routing is planned.",
-      "core_measurement": {
-        "cell": "sar_strongarm_t28_core",
-        "bbox_um": [
-          [
-            -0.815,
-            -2.645
-          ],
-          [
-            0.815,
-            0.875
-          ]
-        ],
-        "evidence": "comp-v8-20261120-pex"
-      }
-    },
-    {
-      "id": "bootstrap_n",
-      "label": "Bootstrap N",
-      "origin": [
-        20,
-        140
-      ],
-      "orientation": "R0",
-      "size": [
-        24.52,
-        24.99
-      ],
-      "instances": [
-        "XBOOTN"
-      ],
-      "basis": "measured_oa_bbox",
-      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added",
-      "evidence": {
-        "physical_id": "boot-core-20261121",
-        "file": "oa.console",
-        "native_bbox": [
-          [
-            -11.82,
-            -0.045
-          ],
-          [
-            12.7,
-            24.945
-          ]
-        ]
-      },
-      "native_origin_translation": [
-        31.82,
-        140.045
-      ],
-      "placement_note": "Instantiate XBOOTN as the MY mirror of XBOOTP; the planner models the R0 bounding box only."
-    },
-    {
-      "id": "bootstrap_p",
-      "label": "Bootstrap P",
-      "origin": [
-        87,
-        140
-      ],
-      "orientation": "R0",
-      "size": [
-        24.52,
-        24.99
-      ],
-      "instances": [
-        "XBOOTP"
-      ],
-      "basis": "measured_oa_bbox",
-      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added",
-      "evidence": {
-        "physical_id": "boot-core-20261121",
-        "file": "oa.console",
-        "native_bbox": [
-          [
-            -11.82,
-            -0.045
-          ],
-          [
-            12.7,
-            24.945
-          ]
-        ]
-      },
-      "native_origin_translation": [
-        98.82,
-        140.045
+        11.715,
+        42.465
       ]
     },
     {
       "id": "reference",
       "label": "Reference drivers",
       "origin": [
-        25.195,
-        33.435
+        15.195,
+        10.0
       ],
       "orientation": "R0",
       "size": [
@@ -170,8 +80,8 @@
       "basis": "measured_oa_bbox",
       "uncertainty": "Measured in the routed XREF/CDAC pair. Absolute ADC top placement and surrounding density fill remain preliminary.",
       "native_origin_translation": [
-        21.715,
-        65.9
+        11.715,
+        42.465
       ],
       "evidence": {
         "physical_id": "se-xref-full-b",
@@ -190,16 +100,128 @@
       }
     },
     {
-      "id": "sar",
-      "label": "SAR + timing",
+      "id": "comparator",
+      "label": "Comparator",
       "origin": [
-        123,
-        30
+        45.3,
+        69.965
       ],
       "orientation": "R0",
       "size": [
-        41,
-        56
+        1.63,
+        3.52
+      ],
+      "instances": [
+        "XCOMP"
+      ],
+      "basis": "measured_oa_bbox",
+      "instance_orientation": "MY",
+      "uncertainty": "Measured v8 core including guard rings. Instantiated MY so VINN faces TOPN. Local NMOS decoupling sits in the mirrored strips beside it; bulk decoupling in the slot between the Bootstrap cells.",
+      "evidence": {
+        "physical_id": "comp-v8-20261120-pex",
+        "cellview": "sar_strongarm_t28_core/layout",
+        "native_bbox": [
+          [
+            -0.815,
+            -2.645
+          ],
+          [
+            0.815,
+            0.875
+          ]
+        ],
+        "report": "Layout/results/comparator.json"
+      },
+      "native_origin_translation": [
+        46.115,
+        72.61
+      ]
+    },
+    {
+      "id": "bootstrap_n",
+      "label": "Bootstrap N",
+      "origin": [
+        18.475,
+        76.2
+      ],
+      "orientation": "R0",
+      "size": [
+        24.52,
+        24.99
+      ],
+      "instances": [
+        "XBOOTN"
+      ],
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch), frozen at Stage 0 on 2026-11-21. A core change reruns its standalone checks and pairwise ADC run; keep the VOUT and CLKS exits on the same lines and re-run Layout check.",
+      "evidence": {
+        "physical_id": "boot-core-20261121",
+        "file": "oa.console",
+        "native_bbox": [
+          [
+            -11.82,
+            -0.045
+          ],
+          [
+            12.7,
+            24.945
+          ]
+        ]
+      },
+      "native_origin_translation": [
+        31.175,
+        76.245
+      ],
+      "instance_orientation": "MY"
+    },
+    {
+      "id": "bootstrap_p",
+      "label": "Bootstrap P",
+      "origin": [
+        49.235,
+        76.2
+      ],
+      "orientation": "R0",
+      "size": [
+        24.52,
+        24.99
+      ],
+      "instances": [
+        "XBOOTP"
+      ],
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch), frozen at Stage 0 on 2026-11-21. A core change reruns its standalone checks and pairwise ADC run; keep the VOUT and CLKS exits on the same lines and re-run Layout check.",
+      "evidence": {
+        "physical_id": "boot-core-20261121",
+        "file": "oa.console",
+        "native_bbox": [
+          [
+            -11.82,
+            -0.045
+          ],
+          [
+            12.7,
+            24.945
+          ]
+        ]
+      },
+      "native_origin_translation": [
+        61.055,
+        76.245
+      ],
+      "instance_orientation": "R0"
+    },
+    {
+      "id": "sar",
+      "label": "SAR macro",
+      "origin": [
+        92.23,
+        52.0
+      ],
+      "orientation": "R0",
+      "size": [
+        18.495,
+        16.8
       ],
       "instances": [
         "XCTRL",
@@ -208,11 +230,1708 @@
         "XPRESET",
         "XSAMPLE"
       ],
-      "basis": "space_reservation",
-      "uncertainty": "Space reservation. The single-edge SAR macro sar8_se_core/layout_r3, which also holds the top-level XDONE, XPRESET and XSAMPLE cells, measures 18.495 x 16.8 um (sar-se-r3-lib); the rest of the reservation, sized for the previous architecture, is routing and supply space that can shrink at top-level planning."
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Routed boundary of sar8_se_core/layout_r3 (the OA bbox is wider only by standard-cell text). All 24 signal pins are M3 on its west edge; D0-D7 and SAMPLE reach the east edge around the macro.",
+      "evidence": {
+        "physical_id": "sar-se-r3-lib",
+        "cellview": "sar8_se_core/layout_r3",
+        "report": "Layout/results/sar_se_core.json"
+      },
+      "native_origin_translation": [
+        92.23,
+        52.0
+      ]
     }
   ],
-  "reasoning": "CDAC anchors measured area; bootstrap and comparator sit near analog north side; reference drives CDAC switch edge from south; SAR/clock placed east across routing corridor.",
-  "reserve": "All unallocated space belongs to routing, supplies, isolation, guard/boundary planning; it is not a routed utilization measurement.",
-  "next": "Read actual comparator/standard-cell/power footprints, assign verified pin access layers and numeric parasitic budgets before freezing this plan. The existing CDAC shape is revisable."
+  "reserved_regions": [
+    {
+      "id": "output_channel",
+      "kind": "channel",
+      "bbox": [
+        [
+          28.215,
+          73.485
+        ],
+        [
+          82.23,
+          76.2
+        ]
+      ],
+      "use": "Comparator outputs, CMP_CLK and the SEQ_SAMPLE tree on their own 0.3 um tracks with VSS shields between the signals. It crosses the two TOP drops only at right angles.",
+      "tracks": [
+        {
+          "y_um": 73.5,
+          "net": "VSS",
+          "x_um": [
+            47.3,
+            82.23
+          ]
+        },
+        {
+          "y_um": 73.8,
+          "net": "COMP_P"
+        },
+        {
+          "y_um": 74.1,
+          "net": "VSS",
+          "x_um": [
+            46.4,
+            82.23
+          ]
+        },
+        {
+          "y_um": 74.4,
+          "net": "CMP_CLK"
+        },
+        {
+          "y_um": 74.7,
+          "net": "VSS",
+          "x_um": [
+            46.2,
+            82.23
+          ]
+        },
+        {
+          "y_um": 75.0,
+          "net": "COMP_N"
+        },
+        {
+          "y_um": 75.3,
+          "net": "VSS",
+          "x_um": [
+            45.6,
+            82.23
+          ]
+        },
+        {
+          "y_um": 75.6,
+          "net": "SEQ_SAMPLE trunk"
+        },
+        {
+          "y_um": 75.9,
+          "net": "SEQ_SAMPLE arms"
+        }
+      ]
+    },
+    {
+      "id": "top_fill_exclusion_tee",
+      "kind": "fill_exclusion",
+      "bbox": [
+        [
+          32.01,
+          68.325
+        ],
+        [
+          60.22,
+          70.085
+        ]
+      ],
+      "use": "TOP tee. DM1EXCL-DM9EXCL and ODBLK/POBLK 1 um around the TOP centrelines; no other net runs parallel inside. Mirrored about the comparator axis."
+    },
+    {
+      "id": "top_fill_exclusion_inputs",
+      "kind": "fill_exclusion",
+      "bbox": [
+        [
+          44.015,
+          68.325
+        ],
+        [
+          48.215,
+          73.485
+        ]
+      ],
+      "use": "TOP stubs into the comparator inputs and the prefill-qualified comparator core."
+    },
+    {
+      "id": "top_fill_exclusion_n_drop",
+      "kind": "fill_exclusion",
+      "bbox": [
+        [
+          32.01,
+          68.325
+        ],
+        [
+          34.01,
+          76.2
+        ]
+      ],
+      "use": "TOPN drop to XBOOTN.VOUT."
+    },
+    {
+      "id": "top_fill_exclusion_p_drop",
+      "kind": "fill_exclusion",
+      "bbox": [
+        [
+          58.22,
+          68.325
+        ],
+        [
+          60.22,
+          76.2
+        ]
+      ],
+      "use": "TOPP drop to XBOOTP.VOUT."
+    },
+    {
+      "id": "comparator_decap_west",
+      "kind": "decap",
+      "bbox": [
+        [
+          34.51,
+          70.585
+        ],
+        [
+          43.515,
+          73.2
+        ]
+      ],
+      "use": "Local comparator decoupling, about 0.2355 pF; the pair meets the Stage 1 45 mV droop limit behind the in-core straps (24 mV modelled). NMOS only, so no N-well sits near the input pair. VDD from the top M2 pin; VSS from the P+ ring sides above y 71.5 so no strap crosses a TOP stub."
+    },
+    {
+      "id": "comparator_decap_east",
+      "kind": "decap",
+      "bbox": [
+        [
+          48.715,
+          70.585
+        ],
+        [
+          57.72,
+          73.2
+        ]
+      ],
+      "use": "Mirror image of comparator_decap_west."
+    },
+    {
+      "id": "analog_decap_slot",
+      "kind": "decap",
+      "bbox": [
+        [
+          42.995,
+          76.2
+        ],
+        [
+          49.235,
+          101.19
+        ]
+      ],
+      "use": "Bulk comparator and Bootstrap decoupling (up to about 1.5594 pF less the trunk) and the analog VDD/VSS trunk from the north edge, between the two VIN trunks. No digital routing. With analog_decap_west and analog_decap_east about 9.3 pF, the Stage 1 requirement of 9 pF."
+    },
+    {
+      "id": "analog_decap_west",
+      "kind": "decap",
+      "bbox": [
+        [
+          1.0,
+          76.2
+        ],
+        [
+          17.475,
+          110.0
+        ]
+      ],
+      "use": "Analog VDD/VSS decoupling west of Bootstrap N, about 5.57 pF, fed from the analog trunk along the north edge clear of the VINN drop (x 33.3)."
+    },
+    {
+      "id": "analog_decap_east",
+      "kind": "decap",
+      "bbox": [
+        [
+          74.755,
+          76.2
+        ],
+        [
+          81.23,
+          110.0
+        ]
+      ],
+      "use": "Analog VDD/VSS decoupling east of Bootstrap P, about 2.19 pF, mirroring analog_decap_west's role for the P channel."
+    },
+    {
+      "id": "spare_decap_northeast",
+      "kind": "decap",
+      "bbox": [
+        [
+          82.23,
+          77.2
+        ],
+        [
+          121.0,
+          110.0
+        ]
+      ],
+      "use": "Unassigned decoupling reserve, about 12.7 pF, for the branch that Stage 2 or Stage 6 shows short, first the Bootstrap upper bound. No planned route crosses it."
+    },
+    {
+      "id": "digital_corridor",
+      "kind": "channel",
+      "bbox": [
+        [
+          82.23,
+          10.0
+        ],
+        [
+          92.23,
+          76.2
+        ]
+      ],
+      "use": "CODE0-7/PRESET from the XREF east ports, CODE0 on the eastmost track. The comparator group turns south on shielded verticals and reorders to the frozen SAR pin order here. D0-D7/SAMPLE via stacks sit at via_stack_x_um. SAR supply straps.",
+      "code_bus_x_um": {
+        "CODE0": 85.7,
+        "CODE1": 85.4,
+        "CODE2": 85.1,
+        "CODE3": 84.8,
+        "CODE4": 84.5,
+        "CODE5": 84.2,
+        "CODE6": 83.9,
+        "CODE7": 83.6,
+        "PRESET": 83.3
+      },
+      "comparator_group_x_um": {
+        "COMP_P": 88.0,
+        "CMP_CLK": 88.8,
+        "COMP_N": 89.6,
+        "SEQ_SAMPLE": 90.4
+      },
+      "vss_shield_x_um": [
+        87.6,
+        88.4,
+        89.2,
+        90.0,
+        90.8
+      ],
+      "via_stack_x_um": 91.9
+    },
+    {
+      "id": "vref_decap_west",
+      "kind": "decap",
+      "bbox": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          9.0,
+          75.2
+        ]
+      ],
+      "use": "Reference network beside the west ends of the pair M5 global rails (core y VREFP 16.725, VREFN 17.155): a 15 ohm series resistor per rail between the boundary pins and the rail ends, and part of the 8 pF between VREFP and VREFN. Extended north to y 75.2 so the capacitor and the two resistors fit. No capacitor from VREFN to VSS."
+    },
+    {
+      "id": "vref_decap_south",
+      "kind": "decap",
+      "bbox": [
+        [
+          9.0,
+          1.0
+        ],
+        [
+          42.0,
+          9.0
+        ]
+      ],
+      "use": "Reference decoupling, continued. With vref_decap_west about 8.6 pF of area for the Stage 1 requirement of 8 pF (+-25%) between VREFP and VREFN and the two series resistors."
+    },
+    {
+      "id": "xref_decap",
+      "kind": "decap",
+      "bbox": [
+        [
+          42.0,
+          1.0
+        ],
+        [
+          78.549,
+          9.0
+        ]
+      ],
+      "use": "XREF gate-driver VDD/VSS decoupling, about 2.9239 pF, joined to the pair supply at its south-west feed. With xref_decap_east and pair_decap_southeast about 10.1 pF, the Stage 1 requirement of 10 pF."
+    },
+    {
+      "id": "xref_decap_east",
+      "kind": "decap",
+      "bbox": [
+        [
+          78.549,
+          1.0
+        ],
+        [
+          121.0,
+          9.0
+        ]
+      ],
+      "use": "Pair VDD/VSS decoupling continued east of xref_decap, about 3.40 pF, below the digital corridor and the CODE bus (y >= 11.2)."
+    },
+    {
+      "id": "pair_decap_southeast",
+      "kind": "decap",
+      "bbox": [
+        [
+          93.23,
+          10.0
+        ],
+        [
+          121.0,
+          23.5
+        ]
+      ],
+      "use": "Pair VDD/VSS decoupling, about 3.75 pF, reached by extending the pair M5 global rails (core y 17.585/18.015) east across the digital corridor under the M3 CODE bus."
+    },
+    {
+      "id": "sar_supply_and_decap",
+      "kind": "decap",
+      "bbox": [
+        [
+          93.23,
+          24.5
+        ],
+        [
+          121.0,
+          50.0
+        ]
+      ],
+      "use": "SAR VDD/VSS feed and decoupling, about 7.08 pF; with sar_decap_north about 8.25 pF, the Stage 1 requirement of 8 pF. The macro DCAP fillers add margin."
+    },
+    {
+      "id": "sar_decap_north",
+      "kind": "decap",
+      "bbox": [
+        [
+          93.23,
+          70.8
+        ],
+        [
+          121.0,
+          75.0
+        ]
+      ],
+      "use": "SAR VDD/VSS decoupling north of the guard ring, about 1.17 pF. The strip east of the macro stays clear for the D0-D7/SAMPLE outputs."
+    },
+    {
+      "id": "sar_guard_ring",
+      "kind": "guard",
+      "bbox": [
+        [
+          91.23,
+          51.0
+        ],
+        [
+          111.725,
+          69.8
+        ]
+      ],
+      "use": "1 um P+ substrate ring around the digital macro with its own VSS strap to the boundary. Corridor M3 stubs and the via stacks pass over it."
+    },
+    {
+      "id": "cdac_array_keepout",
+      "kind": "keepout",
+      "bbox": [
+        [
+          10.0,
+          16.565
+        ],
+        [
+          82.23,
+          68.325
+        ]
+      ],
+      "use": "No top-level routing, power grid or fill on any layer over the array: its planned fill cell and DM1EXCL-DM9EXCL own it, and floating or fixed metal above it shifts bit weights."
+    },
+    {
+      "id": "comparator_keepout",
+      "kind": "keepout",
+      "bbox": [
+        [
+          45.3,
+          69.965
+        ],
+        [
+          46.93,
+          73.485
+        ]
+      ],
+      "use": "No top-level routing on M4 and above except the accepted CMP_CLK drop on the axis."
+    }
+  ],
+  "routing_rules": {
+    "scope": "Plan-view centrelines checked by Layout check: anchored ends, one net per track, declared crossings, declared block intrusions, mirrored and matched paths. Layer intents are proposals; interfaces.json routing_layers stays unassigned until native rule review.",
+    "symmetry_axis_x_um": 46.115,
+    "pin_access_margin_um": 0.3,
+    "mirrored_paths": [
+      [
+        "TOPN_to_comparator",
+        "TOPP_to_comparator"
+      ],
+      [
+        "TOPN_to_sampler",
+        "TOPP_to_sampler"
+      ],
+      [
+        "SEQ_SAMPLE_to_XBOOTN",
+        "SEQ_SAMPLE_to_XBOOTP"
+      ],
+      [
+        "VINN",
+        "VINP"
+      ]
+    ],
+    "matched_nets": [
+      {
+        "nets": [
+          "COMP_P",
+          "COMP_N"
+        ],
+        "tolerance_um": 0.05,
+        "basis": "Same wire, shielding and crossings on both latch output nodes; the v8 core holds its mirror coupling differences to 0.0074 fF."
+      }
+    ],
+    "track_pitch_um": {
+      "output_channel": 0.3,
+      "comparator_group_corridor": 0.4,
+      "code_bus_corridor": 0.3,
+      "xref_ports": 0.22,
+      "sar_pins": 0.6
+    }
+  },
+  "planned_paths": {
+    "TOPN_to_comparator": {
+      "net": "TOPN",
+      "points_um": [
+        [
+          45.555,
+          68.245
+        ],
+        [
+          45.555,
+          69.085
+        ],
+        [
+          45.015,
+          69.085
+        ],
+        [
+          45.015,
+          71.01
+        ],
+        [
+          45.35,
+          71.01
+        ]
+      ],
+      "manhattan_length_um": 3.64,
+      "layer_intent": "M3 exit and tee, M2 up the comparator side into the VIN pin"
+    },
+    "TOPN_to_sampler": {
+      "net": "TOPN",
+      "points_um": [
+        [
+          45.555,
+          68.245
+        ],
+        [
+          45.555,
+          69.085
+        ],
+        [
+          33.01,
+          69.085
+        ],
+        [
+          33.01,
+          76.315
+        ]
+      ],
+      "manhattan_length_um": 20.615,
+      "layer_intent": "M3 exit and tee, M2 drop into the Bootstrap VOUT pin"
+    },
+    "TOPP_to_comparator": {
+      "net": "TOPP",
+      "points_um": [
+        [
+          46.675,
+          68.245
+        ],
+        [
+          46.675,
+          69.085
+        ],
+        [
+          47.215,
+          69.085
+        ],
+        [
+          47.215,
+          71.01
+        ],
+        [
+          46.88,
+          71.01
+        ]
+      ],
+      "manhattan_length_um": 3.64,
+      "layer_intent": "M3 exit and tee, M2 up the comparator side into the VIN pin"
+    },
+    "TOPP_to_sampler": {
+      "net": "TOPP",
+      "points_um": [
+        [
+          46.675,
+          68.245
+        ],
+        [
+          46.675,
+          69.085
+        ],
+        [
+          59.22,
+          69.085
+        ],
+        [
+          59.22,
+          76.315
+        ]
+      ],
+      "manhattan_length_um": 20.615,
+      "layer_intent": "M3 exit and tee, M2 drop into the Bootstrap VOUT pin"
+    },
+    "OUTP": {
+      "net": "COMP_P",
+      "points_um": [
+        [
+          46.31,
+          73.435
+        ],
+        [
+          46.31,
+          73.8
+        ],
+        [
+          88.0,
+          73.8
+        ],
+        [
+          88.0,
+          71.0
+        ],
+        [
+          87.055,
+          71.0
+        ],
+        [
+          87.055,
+          70.4
+        ],
+        [
+          88.0,
+          70.4
+        ],
+        [
+          88.0,
+          66.6
+        ],
+        [
+          92.4,
+          66.6
+        ]
+      ],
+      "manhattan_length_um": 55.545,
+      "layer_intent": "M3 riser from the comparator pin, M5 channel track, M4 corridor vertical, M3 into the SAR pin",
+      "note": "The 0.945 um west jog in the corridor makes COMP_P as long as COMP_N."
+    },
+    "OUTN": {
+      "net": "COMP_N",
+      "points_um": [
+        [
+          45.92,
+          73.435
+        ],
+        [
+          45.92,
+          75.0
+        ],
+        [
+          89.6,
+          75.0
+        ],
+        [
+          89.6,
+          66.0
+        ],
+        [
+          92.4,
+          66.0
+        ]
+      ],
+      "manhattan_length_um": 57.045,
+      "layer_intent": "M3 riser from the comparator pin, M5 channel track, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "OUTP_riser_balance": {
+      "net": "COMP_P",
+      "points_um": [
+        [
+          46.31,
+          73.8
+        ],
+        [
+          46.31,
+          74.3
+        ]
+      ],
+      "manhattan_length_um": 0.5,
+      "layer_intent": "M3, continuing the OUTP riser",
+      "dummy": true,
+      "note": "The CMP_CLK drop runs between the output risers; this stub gives OUTP 0.815 um of riser beside it above the core against 0.915 um for OUTN."
+    },
+    "OUTP_clk_balance": {
+      "net": "COMP_P",
+      "points_um": [
+        [
+          88.0,
+          67.8
+        ],
+        [
+          89.0,
+          67.8
+        ]
+      ],
+      "manhattan_length_um": 1.0,
+      "layer_intent": "M3 under the M4 CMP_CLK vertical",
+      "dummy": true,
+      "note": "Crosses CMP_CLK once, as COMP_N must, so both outputs see one CMP_CLK crossing."
+    },
+    "CMP_CLK": {
+      "net": "CMP_CLK",
+      "points_um": [
+        [
+          92.4,
+          67.2
+        ],
+        [
+          88.8,
+          67.2
+        ],
+        [
+          88.8,
+          74.4
+        ],
+        [
+          46.115,
+          74.4
+        ],
+        [
+          46.115,
+          72.33
+        ]
+      ],
+      "manhattan_length_um": 55.555,
+      "layer_intent": "M3 from the SAR pin, M4 corridor vertical, M5 channel track, M4 drop on the comparator axis onto the M3 CLK trunk"
+    },
+    "SEQ_SAMPLE_trunk": {
+      "net": "SEQ_SAMPLE",
+      "points_um": [
+        [
+          92.4,
+          64.8
+        ],
+        [
+          90.4,
+          64.8
+        ],
+        [
+          90.4,
+          75.6
+        ],
+        [
+          46.115,
+          75.6
+        ]
+      ],
+      "manhattan_length_um": 57.085,
+      "layer_intent": "M3 from the SAR pin, M4 corridor vertical, M5 channel track to the centre tap"
+    },
+    "SEQ_SAMPLE_to_XBOOTN": {
+      "net": "SEQ_SAMPLE",
+      "points_um": [
+        [
+          46.115,
+          75.6
+        ],
+        [
+          46.115,
+          75.9
+        ],
+        [
+          28.715,
+          75.9
+        ],
+        [
+          28.715,
+          76.315
+        ]
+      ],
+      "manhattan_length_um": 18.115,
+      "layer_intent": "Via up at the tap, M5 arm, via stack down to the M2 CLKS pin"
+    },
+    "SEQ_SAMPLE_to_XBOOTP": {
+      "net": "SEQ_SAMPLE",
+      "points_um": [
+        [
+          46.115,
+          75.6
+        ],
+        [
+          46.115,
+          75.9
+        ],
+        [
+          63.515,
+          75.9
+        ],
+        [
+          63.515,
+          76.315
+        ]
+      ],
+      "manhattan_length_um": 18.115,
+      "layer_intent": "Via up at the tap, M5 arm, via stack down to the M2 CLKS pin"
+    },
+    "CODE0": {
+      "net": "CODE0",
+      "points_um": [
+        [
+          76.285,
+          11.155
+        ],
+        [
+          85.7,
+          11.155
+        ],
+        [
+          85.7,
+          54.0
+        ],
+        [
+          92.4,
+          54.0
+        ]
+      ],
+      "manhattan_length_um": 58.96,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE1": {
+      "net": "CODE1",
+      "points_um": [
+        [
+          76.285,
+          11.375
+        ],
+        [
+          85.4,
+          11.375
+        ],
+        [
+          85.4,
+          55.2
+        ],
+        [
+          92.4,
+          55.2
+        ]
+      ],
+      "manhattan_length_um": 59.94,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE2": {
+      "net": "CODE2",
+      "points_um": [
+        [
+          76.285,
+          11.595
+        ],
+        [
+          85.1,
+          11.595
+        ],
+        [
+          85.1,
+          56.4
+        ],
+        [
+          92.4,
+          56.4
+        ]
+      ],
+      "manhattan_length_um": 60.92,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE3": {
+      "net": "CODE3",
+      "points_um": [
+        [
+          76.285,
+          11.815
+        ],
+        [
+          84.8,
+          11.815
+        ],
+        [
+          84.8,
+          57.6
+        ],
+        [
+          92.4,
+          57.6
+        ]
+      ],
+      "manhattan_length_um": 61.9,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE4": {
+      "net": "CODE4",
+      "points_um": [
+        [
+          76.285,
+          12.035
+        ],
+        [
+          84.5,
+          12.035
+        ],
+        [
+          84.5,
+          58.8
+        ],
+        [
+          92.4,
+          58.8
+        ]
+      ],
+      "manhattan_length_um": 62.88,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE5": {
+      "net": "CODE5",
+      "points_um": [
+        [
+          76.285,
+          12.255
+        ],
+        [
+          84.2,
+          12.255
+        ],
+        [
+          84.2,
+          60.0
+        ],
+        [
+          92.4,
+          60.0
+        ]
+      ],
+      "manhattan_length_um": 63.86,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE6": {
+      "net": "CODE6",
+      "points_um": [
+        [
+          76.285,
+          12.475
+        ],
+        [
+          83.9,
+          12.475
+        ],
+        [
+          83.9,
+          61.2
+        ],
+        [
+          92.4,
+          61.2
+        ]
+      ],
+      "manhattan_length_um": 64.84,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "CODE7": {
+      "net": "CODE7",
+      "points_um": [
+        [
+          76.285,
+          12.695
+        ],
+        [
+          83.6,
+          12.695
+        ],
+        [
+          83.6,
+          62.4
+        ],
+        [
+          92.4,
+          62.4
+        ]
+      ],
+      "manhattan_length_um": 65.82,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "PRESET": {
+      "net": "PRESET",
+      "points_um": [
+        [
+          76.285,
+          12.915
+        ],
+        [
+          83.3,
+          12.915
+        ],
+        [
+          83.3,
+          63.6
+        ],
+        [
+          92.4,
+          63.6
+        ]
+      ],
+      "manhattan_length_um": 66.8,
+      "layer_intent": "M3 continuing the XREF bus, M4 corridor vertical, M3 into the SAR pin"
+    },
+    "D0": {
+      "net": "D0",
+      "points_um": [
+        [
+          92.4,
+          53.4
+        ],
+        [
+          122.0,
+          53.4
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D1": {
+      "net": "D1",
+      "points_um": [
+        [
+          92.4,
+          54.6
+        ],
+        [
+          122.0,
+          54.6
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D2": {
+      "net": "D2",
+      "points_um": [
+        [
+          92.4,
+          55.8
+        ],
+        [
+          122.0,
+          55.8
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D3": {
+      "net": "D3",
+      "points_um": [
+        [
+          92.4,
+          57.0
+        ],
+        [
+          122.0,
+          57.0
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D4": {
+      "net": "D4",
+      "points_um": [
+        [
+          92.4,
+          58.2
+        ],
+        [
+          122.0,
+          58.2
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D5": {
+      "net": "D5",
+      "points_um": [
+        [
+          92.4,
+          59.4
+        ],
+        [
+          122.0,
+          59.4
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D6": {
+      "net": "D6",
+      "points_um": [
+        [
+          92.4,
+          60.6
+        ],
+        [
+          122.0,
+          60.6
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "D7": {
+      "net": "D7",
+      "points_um": [
+        [
+          92.4,
+          61.8
+        ],
+        [
+          122.0,
+          61.8
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M3 pin, via stack at x 91.9 just west of the macro, M7 across the macro to the east edge"
+    },
+    "SAMPLE": {
+      "net": "SAMPLE",
+      "points_um": [
+        [
+          122.0,
+          65.4
+        ],
+        [
+          92.4,
+          65.4
+        ]
+      ],
+      "manhattan_length_um": 29.6,
+      "layer_intent": "M7 across the macro from the east edge with VSS neighbour tracks, via stack at x 91.9 down to the M3 pin"
+    },
+    "VINN": {
+      "net": "VINN",
+      "points_um": [
+        [
+          33.34,
+          111.0
+        ],
+        [
+          33.34,
+          101.07
+        ]
+      ],
+      "manhattan_length_um": 9.93,
+      "layer_intent": "M5 straight from the north edge onto the Bootstrap VIN pin; no other top-level M5/M6 over the VIN trunk"
+    },
+    "VINP": {
+      "net": "VINP",
+      "points_um": [
+        [
+          58.89,
+          111.0
+        ],
+        [
+          58.89,
+          101.07
+        ]
+      ],
+      "manhattan_length_um": 9.93,
+      "layer_intent": "M5 straight from the north edge onto the Bootstrap VIN pin; no other top-level M5/M6 over the VIN trunk"
+    }
+  },
+  "crossings": [
+    {
+      "nets": [
+        "SEQ_SAMPLE",
+        "TOPN"
+      ],
+      "at_um": [
+        33.01,
+        75.9
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "COMP_P",
+        "TOPP"
+      ],
+      "at_um": [
+        59.22,
+        73.8
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "CMP_CLK",
+        "TOPP"
+      ],
+      "at_um": [
+        59.22,
+        74.4
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "COMP_N",
+        "TOPP"
+      ],
+      "at_um": [
+        59.22,
+        75.0
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "SEQ_SAMPLE",
+        "TOPP"
+      ],
+      "at_um": [
+        59.22,
+        75.6
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "SEQ_SAMPLE",
+        "TOPP"
+      ],
+      "at_um": [
+        59.22,
+        75.9
+      ],
+      "note": "Right angle over the M2 Bootstrap VOUT drop, M3 and M4 between; static <= 0.01 fF."
+    },
+    {
+      "nets": [
+        "CMP_CLK",
+        "COMP_P"
+      ],
+      "at_um": [
+        88.8,
+        67.8
+      ],
+      "note": "Balance crossing: matches the forced CMP_CLK/COMP_N crossing."
+    },
+    {
+      "nets": [
+        "COMP_N",
+        "COMP_P"
+      ],
+      "at_um": [
+        89.6,
+        66.6
+      ],
+      "note": "Corridor reorder forced by the comparator pin order against the frozen SAR pin order; M3 stub under an M4 vertical."
+    },
+    {
+      "nets": [
+        "CMP_CLK",
+        "COMP_N"
+      ],
+      "at_um": [
+        89.6,
+        67.2
+      ],
+      "note": "Corridor reorder forced by the comparator pin order against the frozen SAR pin order; M3 stub under an M4 vertical."
+    },
+    {
+      "nets": [
+        "COMP_N",
+        "SEQ_SAMPLE"
+      ],
+      "at_um": [
+        90.4,
+        66.0
+      ],
+      "note": "Corridor reorder forced by the comparator pin order against the frozen SAR pin order; M3 stub under an M4 vertical."
+    },
+    {
+      "nets": [
+        "COMP_P",
+        "SEQ_SAMPLE"
+      ],
+      "at_um": [
+        90.4,
+        66.6
+      ],
+      "note": "Corridor reorder forced by the comparator pin order against the frozen SAR pin order; M3 stub under an M4 vertical."
+    },
+    {
+      "nets": [
+        "CMP_CLK",
+        "SEQ_SAMPLE"
+      ],
+      "at_um": [
+        90.4,
+        67.2
+      ],
+      "note": "Corridor reorder forced by the comparator pin order against the frozen SAR pin order; M3 stub under an M4 vertical."
+    }
+  ],
+  "over_block": [
+    {
+      "path": "CODE0",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE1",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE2",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE3",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE4",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE5",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE6",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CODE7",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "PRESET",
+      "block": "reference",
+      "reason": "The XREF east-edge M3 bus ends 2.26 um inside the cell outline; the route extends it east over the row-end cells."
+    },
+    {
+      "path": "CMP_CLK",
+      "block": "comparator",
+      "decided": "2026-11-21",
+      "reason": "M4 drop on the mirror axis onto the top end of the M3 CLK trunk, 1.155 um over the core between the OUTP/OUTN trunks; an accepted exception to the core M4 keep-out (decisions.cmp_clk_north_drop)."
+    },
+    {
+      "path": "D0",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D1",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D2",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D3",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D4",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D5",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D6",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "D7",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    },
+    {
+      "path": "SAMPLE",
+      "block": "sar",
+      "reason": "M7 across the macro, whose routing uses M1-M4 and M6 stripes; confirm its obstructions and keep top-level via7 off these tracks."
+    }
+  ],
+  "pins_um": {
+    "XCDAC.TOPN": [
+      45.555,
+      68.245
+    ],
+    "XCDAC.TOPP": [
+      46.675,
+      68.245
+    ],
+    "XREF.CODE0": [
+      76.285,
+      11.155
+    ],
+    "XREF.CODE1": [
+      76.285,
+      11.375
+    ],
+    "XREF.CODE2": [
+      76.285,
+      11.595
+    ],
+    "XREF.CODE3": [
+      76.285,
+      11.815
+    ],
+    "XREF.CODE4": [
+      76.285,
+      12.035
+    ],
+    "XREF.CODE5": [
+      76.285,
+      12.255
+    ],
+    "XREF.CODE6": [
+      76.285,
+      12.475
+    ],
+    "XREF.CODE7": [
+      76.285,
+      12.695
+    ],
+    "XREF.PRESET": [
+      76.285,
+      12.915
+    ],
+    "XCOMP.VINN": [
+      45.35,
+      71.01
+    ],
+    "XCOMP.VINP": [
+      46.88,
+      71.01
+    ],
+    "XCOMP.OUTN": [
+      45.92,
+      73.435
+    ],
+    "XCOMP.OUTP": [
+      46.31,
+      73.435
+    ],
+    "XCOMP.CLK": [
+      46.115,
+      70.015
+    ],
+    "XCOMP.CLK@trunk_top": [
+      46.115,
+      72.33
+    ],
+    "XBOOTN.VOUT": [
+      33.01,
+      76.315
+    ],
+    "XBOOTN.CLKS": [
+      28.715,
+      76.315
+    ],
+    "XBOOTN.VIN": [
+      33.34,
+      101.07
+    ],
+    "XBOOTP.VOUT": [
+      59.22,
+      76.315
+    ],
+    "XBOOTP.CLKS": [
+      63.515,
+      76.315
+    ],
+    "XBOOTP.VIN": [
+      58.89,
+      101.07
+    ],
+    "SAR.D0": [
+      92.4,
+      53.4
+    ],
+    "SAR.CODE0": [
+      92.4,
+      54.0
+    ],
+    "SAR.D1": [
+      92.4,
+      54.6
+    ],
+    "SAR.CODE1": [
+      92.4,
+      55.2
+    ],
+    "SAR.D2": [
+      92.4,
+      55.8
+    ],
+    "SAR.CODE2": [
+      92.4,
+      56.4
+    ],
+    "SAR.D3": [
+      92.4,
+      57.0
+    ],
+    "SAR.CODE3": [
+      92.4,
+      57.6
+    ],
+    "SAR.D4": [
+      92.4,
+      58.2
+    ],
+    "SAR.CODE4": [
+      92.4,
+      58.8
+    ],
+    "SAR.D5": [
+      92.4,
+      59.4
+    ],
+    "SAR.CODE5": [
+      92.4,
+      60.0
+    ],
+    "SAR.D6": [
+      92.4,
+      60.6
+    ],
+    "SAR.CODE6": [
+      92.4,
+      61.2
+    ],
+    "SAR.D7": [
+      92.4,
+      61.8
+    ],
+    "SAR.CODE7": [
+      92.4,
+      62.4
+    ],
+    "SAR.PHI_U": [
+      92.4,
+      63.0
+    ],
+    "SAR.PRESET": [
+      92.4,
+      63.6
+    ],
+    "SAR.SAMPLE_INT": [
+      92.4,
+      64.2
+    ],
+    "SAR.SEQ_SAMPLE": [
+      92.4,
+      64.8
+    ],
+    "SAR.SAMPLE": [
+      92.4,
+      65.4
+    ],
+    "SAR.COMP_N": [
+      92.4,
+      66.0
+    ],
+    "SAR.COMP_P": [
+      92.4,
+      66.6
+    ],
+    "SAR.CMP_CLK": [
+      92.4,
+      67.2
+    ],
+    "ADC.D0": [
+      122.0,
+      53.4
+    ],
+    "ADC.D1": [
+      122.0,
+      54.6
+    ],
+    "ADC.D2": [
+      122.0,
+      55.8
+    ],
+    "ADC.D3": [
+      122.0,
+      57.0
+    ],
+    "ADC.D4": [
+      122.0,
+      58.2
+    ],
+    "ADC.D5": [
+      122.0,
+      59.4
+    ],
+    "ADC.D6": [
+      122.0,
+      60.6
+    ],
+    "ADC.D7": [
+      122.0,
+      61.8
+    ],
+    "ADC.SAMPLE": [
+      122.0,
+      65.4
+    ],
+    "ADC.VINN": [
+      33.34,
+      111.0
+    ],
+    "ADC.VINP": [
+      58.89,
+      111.0
+    ],
+    "ADC.VREFP@a": [
+      0.0,
+      67.0
+    ],
+    "ADC.VREFN@a": [
+      0.0,
+      61.0
+    ],
+    "ADC.VREFP@b": [
+      0.0,
+      55.0
+    ],
+    "ADC.VREFN@b": [
+      0.0,
+      49.0
+    ],
+    "ADC.VDD!@north": [
+      44.115,
+      111.0
+    ],
+    "ADC.0@north": [
+      48.115,
+      111.0
+    ],
+    "ADC.VDD!@pair": [
+      44.0,
+      0.0
+    ],
+    "ADC.0@pair": [
+      48.0,
+      0.0
+    ],
+    "ADC.VDD!@sar": [
+      122.0,
+      74.0
+    ],
+    "ADC.0@sar": [
+      122.0,
+      71.0
+    ]
+  },
+  "unrouted_pins": {
+    "XCOMP.CLK": "South-edge end of the CLK trunk. The TOP tee fills the space below the comparator, so the route lands on the top end of the same trunk (XCOMP.CLK@trunk_top).",
+    "SAR.PHI_U": "No top-level load: PHI_U is an unused compatibility input of the physical XREF.",
+    "SAR.SAMPLE_INT": "Used inside the macro (XSAMPLE to XSEQ); the XREF SAMPLE input it feeds in the netlist is unused in the physical XREF.",
+    "ADC.VREFP@a": "Reference bond boundary pin from io_ring.json. Its in-core feed through the rail's 15 ohm resistor to the pair rail west end is in power_plan.reference, not a planned centreline.",
+    "ADC.VREFN@a": "Reference bond boundary pin from io_ring.json. Its in-core feed through the rail's 15 ohm resistor to the pair rail west end is in power_plan.reference, not a planned centreline.",
+    "ADC.VREFP@b": "Reference bond boundary pin from io_ring.json. Its in-core feed through the rail's 15 ohm resistor to the pair rail west end is in power_plan.reference, not a planned centreline.",
+    "ADC.VREFN@b": "Reference bond boundary pin from io_ring.json. Its in-core feed through the rail's 15 ohm resistor to the pair rail west end is in power_plan.reference, not a planned centreline.",
+    "ADC.VDD!@north": "Analog trunk boundary pin from io_ring.json; the in-core feed runs through analog_decap_slot (power_plan.analog).",
+    "ADC.0@north": "Analog trunk boundary pin from io_ring.json; the in-core feed runs through analog_decap_slot (power_plan.analog).",
+    "ADC.VDD!@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed starts at xref_decap's south-west corner (power_plan.pair_supply).",
+    "ADC.0@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed starts at xref_decap's south-west corner (power_plan.pair_supply).",
+    "ADC.VDD!@sar": "SAR supply boundary pin from io_ring.json; the in-core feed enters sar_decap_north (power_plan.digital).",
+    "ADC.0@sar": "SAR supply boundary pin from io_ring.json; the in-core feed enters sar_decap_north (power_plan.digital)."
+  },
+  "power_plan": {
+    "status": "Decoupling sized on 2026-11-21 by the Stage 1 reference/supply budget (chenzc24/sar-adc-t28#15) for the Stage 6 package model: two bonds per reference rail on interleaved VREFP/VREFN/VREFP/VREFN pads (1 nH + 0.1 ohm per rail), one 2 nH + 0.2 ohm bond per VDD/VSS pin, stiff off-chip sources with 100 nF at the pins. The core meets the budget on its own, without IO-ring decoupling; blocks, outline and planned signal routes are unchanged. Stage 2 and Stage 6 confirm it.",
+    "decap_planning_density_fF_per_um2": 10,
+    "decap_basis": "Thin-oxide MOS capacitance including contacts and straps; replace with the PDK decap characterization.",
+    "budget": "Layout/results/rail_budget.md and Layout/specs/constraints.json (electrical_budgets, stage6_supply_model) on branch budget/stage1-supply-reference. Per-branch requirement for a 45 mV VDD-VSS droop at the block pins, with the largest measured 1 ns event times 1.3: pair 10 pF, SAR 8 pF, analog 9 pF, comparator local 0.47 pF.",
+    "reference": "VREFP/VREFN enter on the west edge, two boundary pins each, interleaved like their double-bonded pads (external_edges.south_west); the two pins of a rail join inside vref_decap_west ahead of its resistor, with one VREFP/VREFN crossing on the pad side. Each rail passes a 15 ohm series resistor (+-20%) to the west ends of the pair M5 reference rails, and 8 pF (+-25%) sits between VREFP and VREFN there, in vref_decap_west/vref_decap_south (about 8.6 pF of area). Without the series resistors the bond inductance and the decap ring at each CDAC update (2.7-7.3 LSB at the next decision with single 2 nH bonds); with them and the double bonds, 0.028 LSB at FF cold over the whole tolerance box. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert. Keep the substrate coupling of the reference capacitor to VSS small. Reference bulk at the pads makes the decision error worse.",
+    "pair_supply": "XREF/CDAC VDD/VSS global M5 rails (core y 17.585/18.015) fed from the south-west (ADC.VDD!@pair/ADC.0@pair at xref_decap's south-west corner), extended east across the digital corridor. xref_decap, xref_decap_east and pair_decap_southeast hold about 10.1 pF. The largest measured XREF event is about 0.48 pC (255 toggled units); 40 mV droop modelled with a 12 ohm feed.",
+    "analog": "Comparator and Bootstrap VDD/VSS from the north edge (ADC.VDD!@north/ADC.0@north) through analog_decap_slot, plus the mirrored comparator strips and analog_decap_west/east beside the Bootstrap cells, about 9.3 pF in total. Each comparison draws about 25 fC with 0.3-0.4 mA peaks; the Bootstrap event is bounded by 0.454 pC per 1 ns, not measured. 40 mV droop modelled with a 12 ohm feed.",
+    "digital": "SAR macro M6 stripes, fed at ADC.VDD!@sar/ADC.0@sar on the east edge above SAMPLE into sar_decap_north; DCAP fillers inside the macro, sar_supply_and_decap below it and sar_decap_north above the guard ring, about 8.25 pF without the fillers; P+ guard ring around it. 28 mV droop modelled with a 5 ohm feed.",
+    "spare": "spare_decap_northeast (about 12.7 pF) is held free of routes for whichever branch Stage 2 or Stage 6 shows short.",
+    "io_ring": "Applied in io_ring.json: one AVDD/AVSS pad pair per branch (analog, reference pair, SAR) with about 100 pF of bulk and about 2 ohm ESR on its route, 13-92 um from the core (budget: at most 6 ohm feed); no reference bulk at the pads (30-335 pF there raises the decision error to 0.15-0.96 LSB undamped); VREFP and VREFN on two pads each, interleaved VREFP, VREFN, VREFP, VREFN, which takes a 7 x 7 ring (640 um).",
+    "join": "The analog, reference/pair and digital branches meet only at the ADC VDD!/0 boundary pins, so digital return current never flows through analog straps.",
+    "grid": "Top-level VDD/VSS on M8/M9 outside the CDAC array, the TOP fill exclusions, the comparator and the Bootstrap VIN trunks.",
+    "density": "The whole core fits inside one 125 um M8/M9 density window. The CDAC array keep-out and the TOP fill exclusions take 25% of such a window, so the rest of it, including area outside the core, must carry the density."
+  },
+  "external_edges": {
+    "north": "VINN/VINP straight onto the two Bootstrap VIN pins (M5, 9.93 um each, mirrored); the analog VDD/VSS trunk enters between them at ADC.VDD!@north/ADC.0@north (x 44.115/48.115) through analog_decap_slot.",
+    "east": "D0-D7 out and SAMPLE in on M7 across the SAR macro; SAR VDD/VSS at ADC.VDD!@sar/ADC.0@sar (y 74/71) above SAMPLE, into sar_decap_north.",
+    "south_west": "VREFP/VREFN on four west-edge pins interleaved like their pads (ADC.VREFP@a/b at y 67/55, ADC.VREFN@a/b at y 61/49) into the reference network; pair VDD/VSS at ADC.VDD!@pair/ADC.0@pair on the south edge (x 44/48), xref_decap's south-west feed.",
+    "die_and_io": "Layout/design/io_ring.json: 7 x 7 ring, 640 x 640 um outline, core origin at die (243.885, 329). Not applied to OA."
+  },
+  "reasoning": "The XREF + CDAC pair anchors the plan. The comparator sits on the CDAC TOP exits, flanked by the two Bootstrap cells so TOPN and TOPP see mirrored branches. The Bootstrap cells are lifted 2.7 um above the comparator to leave a channel for its outputs, CMP_CLK and the SEQ_SAMPLE tree. The comparator pins fix the channel order (OUTP lowest, CMP_CLK, OUTN), so nothing crosses near the comparator. The frozen SAR pin order (SEQ_SAMPLE, COMP_N, COMP_P, CMP_CLK from south to north) then forces five crossings, placed in the corridor; a balance stub gives OUTP the CMP_CLK crossing that OUTN cannot avoid. The CODE bus runs CODE0 on the eastmost corridor track and has no crossings. D0-D7 and SAMPLE cross the SAR macro to the east edge.",
+  "reserve": "Unallocated space belongs to routing, supplies, isolation, guard rings and decoupling; it is not a routed utilization measurement. Decoupling regions are sized at the planning density in power_plan.",
+  "decisions": {
+    "cmp_clk_north_drop": {
+      "decided": "2026-11-21",
+      "decision": "CMP_CLK lands on the top end of the comparator M3 CLK trunk from the north, on an M4 drop along the mirror axis that runs 1.155 um over the core between the OUTP/OUTN trunks. This is an exception to the core note that keeps M4 and above clear.",
+      "basis": "The TOP tee fills the 1.64 um between the comparator and the CDAC, so a south entry would run along or across the TOPP tee. On the axis the drop couples equally to both outputs and both inputs; the OUTP riser stub matches its exposure above the core.",
+      "verify": "Top-level extraction: CLK coupling to OUTP/OUTN and to VINP/VINN stays mirror-matched to the v8 core level (largest mirror difference 0.0074 fF), and the comparator TT decision screen still passes with the extracted environment."
+    }
+  },
+  "open_items": [
+    "Confirm the accepted CMP_CLK north drop with top-level extraction (decisions.cmp_clk_north_drop.verify).",
+    "The TOPN/TOPP exit coordinates come from the layout_paired_balanced readback; confirm them on sar8_cdac_with_xref/layout_se_d2_r2.",
+    "The SAR pin coordinates assume the layout_r3 origin is the lower-left corner of its boundary; confirm on the OA.",
+    "The XREF CODE/PRESET ports sit 2.26 um inside the XREF outline; confirm the M3 bus can extend east over the row-end cells.",
+    "D0-D7/SAMPLE cross the SAR macro on M7: confirm the macro obstructions and keep top-level via7 to the grid off those tracks.",
+    "The TOP crossings are not mirrored: the TOPP drop is crossed by COMP_P, CMP_CLK, COMP_N and twice by SEQ_SAMPLE, the TOPN drop once by SEQ_SAMPLE. Estimated <= 0.05 fF static imbalance against the 1 fF limit and about 0.001 LSB of comparison-time coupling per crossing, which acts as offset; confirm in top-level PEX.",
+    "Decoupling follows the Stage 1 budget (power_plan, chenzc24/sar-adc-t28#15). Confirm the Bootstrap branch event and the per-branch charge with Stage 2, and the decap device, density and leakage with the PDK decap characterization.",
+    "Equalize COMP_P/COMP_N and the SEQ_SAMPLE arms on extracted capacitance once routed; the plan matches centreline length, shielding and crossings.",
+    "Feed the new boundary pins inside the core (io_ring.json): join the two pins of each reference rail in vref_decap_west ahead of its 15 ohm resistor (one VREFP/VREFN crossing on the pad side); bring the pair feed from xref_decap's south-west corner to the rail west ends without running alongside the reference network; connect sar_decap_north to sar_supply_and_decap for the SAR feed."
+  ],
+  "supersedes": "Layout/design/floorplan_paired.json (2026-11-18 proposal for the previous architecture) and the 176 x 170 um planning envelope.",
+  "next": "Resolve the open items, assign the route budgets from the Stage 2 all-extracted ADC run, then route against this plan and extract."
 }
