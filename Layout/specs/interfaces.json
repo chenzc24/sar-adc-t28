@@ -544,7 +544,7 @@
     },
     "comparator": {
       "cell": "sar_strongarm_t28_core",
-      "evidence": "comp-v7-20261118-pex",
+      "evidence": "comp-v8-20261120-pex",
       "coordinate_frame": "Local core origin, um",
       "ports": {
         "VINP": {
@@ -603,29 +603,29 @@
           ]
         },
         "VDD": {
-          "layer": "M1",
+          "layer": "M2",
           "center_um": [
-            -0.7,
-            0.16
+            0.0,
+            0.76
           ],
           "pin_size_um": [
-            0.07,
-            0.2
+            1.47,
+            0.07
           ]
         },
         "VSS": {
-          "layer": "M1",
+          "layer": "M2",
           "center_um": [
-            -0.7,
-            -1.18
+            0.0,
+            -2.53
           ],
           "pin_size_um": [
-            0.07,
-            0.2
+            1.47,
+            0.07
           ]
         }
       },
-      "top_integration": "VINP leaves the west edge and VINN the east edge on M2 at y=-1.60, straight out of the N1/N2 channel; OUTP/OUTN leave the north edge on M3 trunks (OUTP west); CLK enters the south edge on the centre M3 trunk. VDD/VSS are the N+/P+ guard-ring M1 and need local top-level straps. Route toward the east SAR with paired output topology and keep CLK on the south side, away from the outputs and inputs.",
+      "top_integration": "VINP leaves the west edge and VINN the east edge on M2 at y=-1.60, straight out of the N1/N2 channel; OUTP/OUTN leave the north edge on M3 trunks (OUTP west); CLK enters the south edge on the centre M3 trunk. VDD/VSS pins are full-width M2 straps over the top N+ and bottom P+ ring sides (via1 every 0.13 um to the ring); strap them to the top-level power grid and place local decoupling next to the core. Route toward the east SAR with paired output topology and keep CLK on the south side, away from the outputs and inputs.",
       "sensitive_regions": "Input gates at x=+/-0.065 (N1) and +/-0.195 (N2) with their M2 exits at y=-1.60; X/Y M3 trunks at x=+/-0.39 and output M3 trunks at x=-/+0.195; CLK M3 trunk at x=0 from the south edge to y=-0.23. The core uses M1-M3 only; keep digital routing off M4+ above it and qualify final coupling."
     }
   }

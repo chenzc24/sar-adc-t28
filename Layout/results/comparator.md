@@ -1,5 +1,7 @@
 # Comparator Layout and Verification
 
+On 2026-11-20, v8 replaced v7 as a robustness revision; see [v8 robustness revision](#v8-robustness-revision). The geometry described below is v7's, which v8 keeps apart from the supply pins and vias.
+
 On 2026-11-18, v7 replaced the core at `SAR_ADC_T28_LAYOUT/sar_strongarm_t28_core/layout`. It uses V4's three shared-diffusion rows, with one nf=1 PCell instance per finger. Each D/G/S/B terminal connects to its schematic net and follows the schematic drain/source orientation. N+ and P+ guard rings surround the device rows. Native LVS is **CORRECT**. DRC retains two original fixture warnings. Prefill RC extraction, standalone TT post-layout simulation, and ten-frame integration with the current ADC completed. These checks qualify the stated scope. [Hashes and per-point results](comparator.json)
 
 ![Native GDS geometry of the comparator core](figures/comparator_core.png)
@@ -34,6 +36,38 @@ The electrical source is `design/xtor/comparator/comparator.scs`. The layout use
 - v7 restored the V4 floorplan with one instance per finger and redid the routing as described above.
 - In the scratch library, v7b to v7c moved three N1 tracks up by 0.005–0.01 µm to meet M2.S.7. The official run's geometry digest matches scratch v7c.
 
+## v8 Robustness Revision
+
+v8 (`comp-v8-20261120-pex`) keeps v7's rows, instances and tracks. The executor checkpointed the v7 core before the rebuild. DRC retains only the two original warnings; LVS is CORRECT. The official structural GDS hash matches scratch run v8d.
+
+- **Supply pins.** VDD and VSS are now 0.07 × 1.47 µm M2 straps over the top N+ and bottom P+ ring sides, with a via1 every 0.13 µm to the ring. The VSS bar from the tail source also drops on M2 along both ring sides to the strap. [interfaces.json](../specs/interfaces.json) has the new pin coordinates.
+- **Redundant vias.** Two or three cuts now on the latch gate stacks (P and N1), the tail-gate CLK stack, the input gates, the N2 TAIL drops, the Y/X P-row stacks and N2 trunk, and the tail VSS source. Single cuts remain on the output cross-coupling straps, the Y/X N1/N2 strap via1, the N1 TAIL drop and the reset-gate CLK stack, where the M2 track pitch or mirror symmetry leaves no room.
+- **Mirror balance.** Scratch v8c also doubled the reset-gate CLK stack. Its second cut sat nearer the OUTP strap; the TT screen failed (+0.1 mV decided wrong, fit offset −0.12 mV). v8 drops that cut and gives the Y/X P-row pads three cuts spaced so each output strap end faces one pad. The largest mirror coupling differences are back to v7's (≤0.0074 fF, OUT–TAIL).
+- **Supply resistance.** With VDD extracted, VDD pin to PMOS sources is 28.5–28.7 Ω (v7 29.7–30.6) and VSS pin to the tail source is 29.4 Ω (v7 38.7). Supply diagnostics `comp-scr-v8dsup-tt/ffc-20261120` give 6.0 / 6.9 mV maximum PMOS source droop and 3.9 / 4.7 mV tail source rise at TT / ffc (v7 6.3 / 7.3 and 5.1 / 6.2).
+
+Standalone TT in the current block fixture (standard-cell receivers), with v7 rerun in the same fixture:
+
+| Measurement | v7 (`comp-v7b-tt-20261120`) | **v8 (`comp-v8-tt-20261120`)** |
+| --- | ---: | ---: |
+| Correct decisions, test and screen | 10/10, pass | **10/10, pass** |
+| Maximum decision delay (ps) | 301.7 | **314.3** |
+| Maximum reset time (ps) | 33.20 | **33.31** |
+| Peak differential / common-mode kickback (µV) | 59.6 / 398.1 | **58.1 / 403.0** |
+| Delay-fit offset diagnostic (mV) | −0.013 | **−0.050** |
+
+**Current-ADC check.** The adopted single-edge SAR no longer has the `phi_w` node that the `prepare_comparator --integrated` analyzer reads, so those runs (`comp-*-int-*-20261120b`) simulated but could not be analyzed. Instead, `work/layout/comparator-redesign/make_lpe_comp.py` packages the design's own `single_edge_lpe` verify fixture (foundry cell LPE, nominal extracted CDAC, eight frames, 45 ns sampling) and swaps in each comparator extraction; the v8 and v7 packages differ only in the extraction files.
+
+| Measurement | TT v7 | **TT v8** | ffc v7 | **ffc v8** |
+| --- | ---: | ---: | ---: | ---: |
+| All checks, all frames | pass | **pass** | pass | **pass** |
+| Minimum margin (ns) | 25.084 | **25.081** | 30.883 | **30.883** |
+| Max settling error (LSB) | 0.0266 | **0.0267** | 0.1100 | **0.1098** |
+| Max sampling close error (LSB) | 0.0037 | **0.0037** | 0.0090 | **0.0090** |
+| Comparator high pulse min (ps) | 531.3 | **531.7** | 371.4 | **371.6** |
+| CCS register setup / hold slack (ps) | 232.1 / 50.0 | **232.2 / 49.9** | 157.1 / 33.6 | **157.1 / 33.6** |
+
+Runs: `sar8-sebit-{tt,ffc}-nom-verify-{compv8,compv7b}`. At the ADC level v8 and v7 agree within 0.5 ps on pulses and slacks. The standalone fit offset moved from −0.013 to −0.050 mV, still inside the ±0.1 mV bracket; this is a fixture diagnostic, not a statistical offset.
+
 ## Interface and Area
 
 The native core bounding box is `(-0.815,-2.645) → (0.815,0.875) µm`, measuring **1.63 × 3.52 µm** and **5.74 µm²**. The old core measured 7.96 × 12.46 µm and v4 measured 1.66 × 3.44 µm.
@@ -43,10 +77,10 @@ The native core bounding box is `(-0.815,-2.645) → (0.815,0.875) µm`, measuri
 | VINP / VINN | M2 | (−0.765,−1.60) / (0.765,−1.60), west/east | 0.10 × 0.05 |
 | OUTP / OUTN | M3 | (−0.195,0.825) / (0.195,0.825), north | 0.05 × 0.10 |
 | CLK | M3 | (0,−2.595), south | 0.05 × 0.10 |
-| VDD | M1, west side of the N+ ring | (−0.70,0.16) | 0.07 × 0.20 |
-| VSS | M1, west side of the P+ ring | (−0.70,−1.18) | 0.07 × 0.20 |
+| VDD | M2 strap over the top N+ ring side (v8) | (0,0.76) | 1.47 × 0.07 |
+| VSS | M2 strap over the bottom P+ ring side (v8) | (0,−2.53) | 1.47 × 0.07 |
 
-The inputs now enter from the sides and CLK from the south. Reinforce the M1 guard-ring VDD and VSS connections nearby at the top level. The core uses M1–M3. Keep top-level digital crossings away from the area above it on M4 and higher and check coupling with top-level extraction. The comparator group has a 16 × 14 µm interface-routing reservation pending actual placement. The three comparator output and clock MOM loads in the top-level netlist are pre-layout model loads, per the 2026-11-18 decision and load diagnostic below. Use top-level extraction for actual loads. [Pin access coordinates](../specs/interfaces.json)
+The inputs now enter from the sides and CLK from the south. Strap the M2 VDD and VSS pins to the top-level power grid and place local decoupling next to the core; each comparison draws about 25 fC with 0.3–0.4 mA peaks. The core uses M1–M3. Keep top-level digital crossings away from the area above it on M4 and higher and check coupling with top-level extraction. The comparator group has a 16 × 14 µm interface-routing reservation pending actual placement. The three comparator output and clock MOM loads in the top-level netlist are pre-layout model loads, per the 2026-11-18 decision and load diagnostic below. Use top-level extraction for actual loads. [Pin access coordinates](../specs/interfaces.json)
 
 ## Verification Results
 
@@ -92,6 +126,21 @@ Among these tests, v7 had the shortest decision delay and the smallest fitted of
 The FF-cold pair used ffc (FF, 0.99 V, −40 °C, passives at TT). All ten frames passed in each run, `comp-v7-int-ffc-20261118` with loads and `comp-v7-int-ffc-noload-20261118` without them. Removing the loads reduced maximum conversion time from 25.56 to 24.70 ns and median cmp↑→write↑ from 299 to 222 ps, with its range narrowing from 219–381 to 197–244 ps. Minimum update↑→cmp↓ spacing fell from 46.6 to 35.1 ps and minimum cmp↓→write↓ from 25.5 to 23.0 ps. Event order was preserved. One additional `SPECTRE-16881` warning flagged possible Verilog-A-related convergence difficulty in frame 2, which passed.
 
 TT and ffc passed function and handshake timing with both load settings. Open coverage includes ssc, ssh, ffh, mismatch, and the actual top-level load.
+
+**Supply diagnostic.** The project PEX deck lists `VDD` in `PEX EXTRACT EXCLUDE`, so the v7 post-layout runs above use an ideal VDD inside the core; VSS is extracted. A scratch extraction of the frozen v7 GDS with VDD included (`scratch/v7_vddpex`) gives 30–31 Ω from the VDD pin to each PMOS source and 38.7 Ω from the VSS pin to the shared tail source, including the diffusion contacts. Bulk taps are 3.8 Ω (VDD) and 4.2 Ω (VSS) from their pins. `comp-scr-v7sup-tt-20261120` and `comp-scr-v7sup-ffc-20261120` run that extraction in the standalone fixture with 0 V sources in series with the comparator supply pins and an ideal supply at the pins. These are diagnostics, not qualification results.
+
+| Measurement | TT | ffc |
+| --- | ---: | ---: |
+| Correct decisions, test and screen | 10/10, pass | 10/10, pass |
+| Maximum decision delay (ps) | 300.7 | 298.4 |
+| Peak differential / common-mode kickback (µV) | 59.3 / 398.1 | 77.3 / 431.4 |
+| Peak VDD / VSS pin current (µA) | 301 / 128 | 378 / 157 |
+| Average supply current (µA) | 2.3 | 2.6 |
+| Charge per comparison from VDD (fC) | 23.1 | 25.6 |
+| Maximum PMOS source droop (mV) | 6.3 | 7.3 |
+| Maximum tail source rise (mV) | 5.1 | 6.2 |
+
+At TT, delay and kickback match the ideal-VDD run within 1 ps and 0.4 µV. The largest droop is at the RSTN/RSTP sources and is equal on both sides within 0.01 mV; left/right source bounce differs by at most 0.15 mV. The core straps therefore do not limit the comparator in these conditions. The peak current, mostly reset charging of the outputs and their 10 fF fixture loads, must come from the top-level supply and local decoupling.
 
 PVT, mismatch and noise, statistical offset, full per-device terminal voltage, final fill, and full top-level parasitics still need qualification. The layout splits the 1 µm input and tail devices into two fingers, with input fingers in separate rows. Include these layout-dependent effects in subsequent MC and PVT.
 

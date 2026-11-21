@@ -43,7 +43,8 @@ def main():
     if args.integrated:
         from tools.saradc.reference_short import prepare as prepare_current
         codes = json.loads((ROOT/'tb/top/short/context.json').read_text(encoding='utf-8'))['expected_codes']
-        staging = ROOT/prepare_current('current',args.corner,args.run_id,codes=codes,max_output_mib=2048)
+        # Keep the current fixture's own output budget; it depends on what that fixture saves.
+        staging = ROOT/prepare_current('current',args.corner,args.run_id,codes=codes)
         base_recipe = json.loads(staging.read_text(encoding='utf-8'))
         blobs = {row['name']:(ROOT/row['source']).read_bytes() for row in base_recipe['inputs']}
     else:
