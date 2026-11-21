@@ -68,9 +68,9 @@ Standalone TT in the current block fixture (standard-cell receivers), with v7 re
 
 Runs: `sar8-sebit-{tt,ffc}-nom-verify-{compv8,compv7b}`. At the ADC level v8 and v7 agree within 0.5 ps on pulses and slacks. The standalone fit offset moved from −0.013 to −0.050 mV, still inside the ±0.1 mV bracket; this is a fixture diagnostic, not a statistical offset.
 
-## Pre-Merge Standalone Verification (partial, 2026-11-21)
+## Pre-Merge Standalone Verification (2026-11-21)
 
-Checks of v8 against the schematic, each pair in one fixture, for the standalone gaps listed in issue #4. Machine-readable values and run hashes: `pre_merge_verification` in [comparator.json](comparator.json). Drivers: [tools/simulation/comparator_checks](../tools/simulation/comparator_checks). **Status: MC offset and four noise runs are still running; this section will be completed with them.**
+Checks of v8 against the schematic, each pair in one fixture, for the standalone gaps listed in issue #4. Machine-readable values and run hashes: `pre_merge_verification` in [comparator.json](comparator.json). Drivers: [tools/simulation/comparator_checks](../tools/simulation/comparator_checks).
 
 **Extractions.** `comp-v8-20261120-pex-{typical,cworst-t,cbest-t}-supplies` re-extract the frozen v8 GDS (same reference, DRC and LVS). Each first rebuilds the recorded nominal deck and checks its hash, then extracts VDD and VSS as RC (`prepare_deck(distributed_supplies=…)`; the project deck excluded only VDD). CWORST_T and CBEST_T swap in the foundry xRC rules member. Against typical, grounded interconnect capacitance is 3–5 % higher at CWORST_T and 3–5 % lower at CBEST_T. The largest mirror-pair difference stays ≤ 0.011 fF (OUTN|VDD vs OUTP|VDD).
 
@@ -105,23 +105,33 @@ v8 is 10–20 % faster at 1 mV than the schematic, whose per-device diffusion pa
 
 The settled residue the SAR sees is ≤ 0.0014 LSB. The peaks are larger than with lumped MOM loads, which is consistent with the TOP wiring resistance letting the node near the comparator move first.
 
-**Mismatch offset (in progress).** The schematic 200-seed fixture (`tb/blocks/comparator/test.scs`, seeds 4101–4300) with the comparator replaced by the typical supply-extracted netlist. A schematic packaging check reproduces seed 4101 exactly (5.3125 mV). Mismatch draws reach all four extracted input fingers. At 181 of 200 seeds, all valid: **σ = 11.8 mV**, mean −1.9 mV, range −34.7 to +30.7 mV, against σ = 14.1 mV for the schematic on the same seeds (14.2 mV over all 200). The draws are not paired across netlists, so compare distributions only. The cause of the smaller spread is not yet established.
+**Mismatch offset.** The schematic 200-seed fixture (`tb/blocks/comparator/test.scs`, seeds 4101–4300) with the comparator replaced by the typical supply-extracted netlist. A schematic packaging check reproduces seed 4101 exactly (5.3125 mV). Mismatch draws reach all four extracted input fingers. All 200 seeds give a valid threshold.
 
-**Input-referred noise (in progress).** New fixture: nominal models, a noiseless stepped input (9 levels × 128 decisions, 0.4 mV step), Spectre transient noise (`noise_worst`, 100 kHz to fmax) and a probit maximum-likelihood fit. Budget 0.18 LSB (1.27 mV).
+| Offset | Schematic (`results/mc/modules_200.json`) | **v8 extracted** |
+| --- | ---: | ---: |
+| σ (mV) | 14.19 | **12.05** |
+| Mean (mV) | −0.54 | **−1.55** |
+| Range (mV) | −29.9 to +37.7 | **−34.7 to +34.1** |
+
+The σ ratio is 0.85, with a 95 % interval of 0.74–0.97 from an independent bootstrap over seeds. The draws are not paired across netlists, so only the distributions compare. The post-layout spread is smaller beyond resampling error, and the cause is not established. Candidates are the model's per-finger mismatch scaling for the split nf=1 fingers and layout-dependent instance parameters. The slowest receiver decision across all seeds is 0.33 ns. Nineteen seeds were analyzed by analysis-only reruns (`-a3`, [make_mc_reanalysis.py](../tools/simulation/comparator_checks/make_mc_reanalysis.py)) of their completed simulations, because their queued analysis workers had lost their user memory cgroup and could not pass the admission gate. Reanalyzing seed 4101 the same way reproduced its records, draws and offset exactly.
+
+**Input-referred noise.** New fixture: nominal models, a noiseless stepped input (9 levels × 128 decisions, 0.4 mV step), Spectre transient noise (`noise_worst`, 100 kHz to fmax) and a probit maximum-likelihood fit. Budget 0.18 LSB (1.27 mV). No decision was unresolved.
 
 | Run | σ (mV) | σ (LSB) |
 | --- | ---: | ---: |
-| TT schematic, 20 GHz | 0.597 ± 0.029 | 0.085 |
-| TT schematic, 50 GHz | 0.503 ± 0.027 | 0.071 |
+| TT schematic, 20 / 50 / 100 GHz | 0.597 / 0.503 / 0.606 (± 0.03) | 0.085 / 0.072 / 0.086 |
+| **TT v8, 50 GHz** | **0.601 ± 0.029** | **0.086** |
 | SS 125 °C schematic, 50 GHz | 0.836 ± 0.040 | 0.119 |
-| TT schematic 100 GHz; TT v8 and SS 125 °C v8 at 50 GHz | running | |
+| **SS 125 °C v8, 50 GHz** | **0.797 ± 0.038** | **0.113** |
 
-The 20 and 50 GHz values differ by about 2.5 standard errors in the unexpected direction; the 100 GHz run decides convergence.
+The 20 and 100 GHz values agree, so the noise is converged by 20 GHz; the low 50 GHz schematic value is single-seed scatter. v8 matches the schematic within error at both corners. The worst case, SS hot, uses 63 % of the budget.
 
 **Attempts superseded.**
 - The first kickback packages failed at read-in: the CDAC wrapper master duplicated the schematic CDAC. The `-b` packages rename it.
 - `comp-v8-ffh-rc-20261121` failed on a Spectre license checkout and was rerun as `…b`.
-- Four noise runs stopped at the 1024 MiB output cap and are rerunning as `-b` with strobe-only output.
+- Four noise runs stopped at the 1024 MiB output cap and were rerun as `-b` with strobe-only output.
+- The fit of `comp-v8-nz-tt-rc-f50-b` divided by a zero determinant. The corrected fit reproduces the three earlier fits to four digits and was applied by the analysis-only rerun `-fit2`.
+- `comp-v8-mc-s*-a2` failed at import because the analyzer helper was not packaged; no outputs.
 
 ## Interface and Area
 
@@ -197,7 +207,7 @@ TT and ffc passed function and handshake timing with both load settings. Open co
 
 At TT, delay and kickback match the ideal-VDD run within 1 ps and 0.4 µV. The largest droop is at the RSTN/RSTP sources and is equal on both sides within 0.01 mV; left/right source bounce differs by at most 0.15 mV. The core straps therefore do not limit the comparator in these conditions. The peak current, mostly reset charging of the outputs and their 10 fF fixture loads, must come from the top-level supply and local decoupling.
 
-PVT, mismatch and noise, statistical offset, full per-device terminal voltage, final fill, and full top-level parasitics still need qualification. The layout splits the 1 µm input and tail devices into two fingers, with input fingers in separate rows. Include these layout-dependent effects in subsequent MC and PVT.
+Full per-device terminal voltage, final fill, and full top-level parasitics still need qualification. v8 PVT, mismatch offset and noise are in [Pre-Merge Standalone Verification](#pre-merge-standalone-verification-2026-11-21). The layout splits the 1 µm input and tail devices into two fingers, with input fingers in separate rows; the post-layout MC includes this split.
 
 ## Maintenance and Handoff
 

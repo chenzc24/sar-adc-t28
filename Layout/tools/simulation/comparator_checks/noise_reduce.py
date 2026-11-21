@@ -20,36 +20,62 @@ def loglik(rows, mu, ls):
     return total
 
 
+def derivatives(rows, mu, ls):
+    """Gradient and Hessian in (mu, log sigma), with central differences scaled to sigma."""
+    f = lambda a, b: loglik(rows, a, b)
+    hm, hl = 1e-3 * math.exp(ls), 1e-3
+    f0 = f(mu, ls)
+    g = [(f(mu + hm, ls) - f(mu - hm, ls)) / (2 * hm), (f(mu, ls + hl) - f(mu, ls - hl)) / (2 * hl)]
+    H00 = (f(mu + hm, ls) - 2 * f0 + f(mu - hm, ls)) / hm ** 2
+    H11 = (f(mu, ls + hl) - 2 * f0 + f(mu, ls - hl)) / hl ** 2
+    H01 = (f(mu + hm, ls + hl) - f(mu + hm, ls - hl) - f(mu - hm, ls + hl) + f(mu - hm, ls - hl)) / (4 * hm * hl)
+    return g, [[H00, H01], [H01, H11]]
+
+
 def fit(rows):
-    mu = sum(v * n for v, k, n in rows) / sum(n for v, k, n in rows)
-    # Start from the spread of levels that are neither all + nor all -.
+    # Start at the level nearest 50 % positive and the spread of the mixed levels.
+    mu = min(rows, key=lambda r: abs(r[1] - r[2] / 2.))[0]
     mixed = [v for v, k, n in rows if 0 < k < n] or [v for v, k, n in rows]
-    ls = math.log(max(max(mixed) - min(mixed), 1e-5) / 2)
-    h = 1e-6
+    ls = math.log(max(max(mixed) - min(mixed), 1e-5) / 4)
     for _ in range(200):
-        f = lambda a, b: loglik(rows, a, b)
-        g = [(f(mu + h, ls) - f(mu - h, ls)) / (2 * h), (f(mu, ls + h) - f(mu, ls - h)) / (2 * h)]
-        H = [[(f(mu + h, ls) - 2 * f(mu, ls) + f(mu - h, ls)) / h ** 2, 0], [0, (f(mu, ls + h) - 2 * f(mu, ls) + f(mu, ls - h)) / h ** 2]]
-        H[0][1] = H[1][0] = (f(mu + h, ls + h) - f(mu + h, ls - h) - f(mu - h, ls + h) + f(mu - h, ls - h)) / (4 * h * h)
+        g, H = derivatives(rows, mu, ls)
         det = H[0][0] * H[1][1] - H[0][1] ** 2
-        if det <= 0 or H[0][0] >= 0:
-            # Not concave here: take a damped gradient step.
-            mu += 1e-9 * g[0]; ls += 1e-3 * (1 if g[1] > 0 else -1); continue
-        d0 = (H[1][1] * g[0] - H[0][1] * g[1]) / det; d1 = (H[0][0] * g[1] - H[0][1] * g[0]) / det
-        mu -= d0; ls -= max(min(d1, 1.), -1.)
-        if abs(d0) < 1e-12 and abs(d1) < 1e-9:
+        if det > 0 and H[0][0] < 0:
+            d0 = (H[1][1] * g[0] - H[0][1] * g[1]) / det
+            d1 = (H[0][0] * g[1] - H[0][1] * g[0]) / det
+        else:
+            # Not concave here: step along the gradient, scaled to the current sigma.
+            s = math.exp(ls)
+            d0, d1 = -0.1 * s * (1 if g[0] > 0 else -1), -0.1 * (1 if g[1] > 0 else -1)
+        # Damped step: never move mu by more than one sigma or log sigma by more than 0.5.
+        s = math.exp(ls)
+        d0, d1 = max(min(d0, s), -s), max(min(d1, .5), -.5)
+        old = loglik(rows, mu, ls)
+        for _ in range(30):
+            if loglik(rows, mu - d0, ls - d1) >= old - 1e-12:
+                break
+            d0, d1 = d0 / 2, d1 / 2
+        mu, ls = mu - d0, ls - d1
+        if abs(d0) < 1e-6 * s and abs(d1) < 1e-6:
             break
-    cov = [[H[1][1] / det * -1, H[0][1] / det], [H[0][1] / det, H[0][0] / det * -1]]
+    # Covariance from a fresh Hessian at the converged point.
+    g, H = derivatives(rows, mu, ls)
+    det = H[0][0] * H[1][1] - H[0][1] ** 2
+    if not (det > 0 and H[0][0] < 0):
+        raise ValueError('Probit likelihood not concave at the fit; widen or refine the input levels')
+    cov = [[-H[1][1] / det, H[0][1] / det], [H[0][1] / det, -H[0][0] / det]]
     sigma = math.exp(ls)
-    return dict(mu_v=mu, sigma_v=sigma, mu_se_v=math.sqrt(max(cov[0][0], 0)),
-                sigma_se_v=sigma * math.sqrt(max(cov[1][1], 0)), loglik=loglik(rows, mu, ls))
+    return dict(mu_v=mu, sigma_v=sigma, mu_se_v=math.sqrt(cov[0][0]), sigma_se_v=sigma * math.sqrt(cov[1][1]),
+                loglik=loglik(rows, mu, ls), gradient=g)
 
 
 def main():
     p = argparse.ArgumentParser(); p.add_argument('--run-dir', required=True); p.add_argument('--output-dir', required=True)
+    p.add_argument('--source-run-dir', help='Completed simulation of an analysis-only rerun')
     a = p.parse_args()
-    ctx = json.load(open(a.run_dir + '/inputs/context.json'))
-    lines = list(open(a.run_dir + '/spectre.out'))
+    data = a.source_run_dir or a.run_dir
+    ctx = json.load(open(data + '/inputs/context.json'))
+    lines = list(open(data + '/spectre.out'))
     rec = [m.group(1).split(',') for m in (re.search(r'CMPNZ,([^\r\n]+)', l) for l in lines) if m]
     rec = [(int(r[0]), int(r[1]), float(r[2]), int(r[3])) for r in rec]
     cfg = ctx['noise_fixture']
@@ -73,7 +99,7 @@ def main():
                   monotonic=all(table[i]['positive'] <= table[i + 1]['positive'] + 3 * math.sqrt(cfg['per_level'])
                                 for i in range(len(table) - 1)),
                   warning_codes=sorted(set(x for l in lines for x in re.findall(r'WARNING \(([^)]+)\)', l))),
-                  analysis_complete=True, context=ctx, electrical_verdict='deferred_not_qualified')
+                  analysis_complete=True, context=ctx, source_run_dir=a.source_run_dir, electrical_verdict='deferred_not_qualified')
     with open(a.output_dir + '/result.json', 'w') as f:
         json.dump(result, f, indent=2); f.write('\n')
     print('COMP_NOISE_ANALYSIS', round(result['sigma_v'] * 1e3, 4), 'mV', round(result['sigma_lsb'], 4), 'LSB')
