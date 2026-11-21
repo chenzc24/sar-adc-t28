@@ -79,7 +79,102 @@
     "sar_handshake_route_delay_s": {
       "limit": null,
       "basis": "Close timing against actual per-bit conversion budget; no zero-delay substitution"
+    },
+    "reference_charge_per_conversion_C": {
+      "limit": 3.7e-12,
+      "scope": "Die-side charge drawn from VREFP, and returned through VREFN, in any one 100 ns frame; every Stage 6 corner and frame",
+      "basis": "Calibrated charge model maximum 2.85 pC (code 127, full reversal plus PRESET) times the 1.3 FF 0.99 V and top-level extraction allowance. The model is the ideal CDAC charge plus 2.13 fC per toggled unit, fitted to the measured TT frames (2.80/1.43/1.25 pC). Mean over codes 2.05 pC, so the off-chip reference supplies about 21 uA at 10 MS/s, at most 37 uA.",
+      "measured": {
+        "evidence": "stage1-rail-charge-adc-post-b (analysis of se-xref-adc-post-b, TT 0.9 V 27 C, coupled XREF/CDAC extraction, 50 ohm / 4 pF fixture)",
+        "steady_frames_C": [2.7985e-12, 1.4269e-12, 1.2512e-12],
+        "vrefn_return_match": "within 0.1% of VREFP in every frame"
+      },
+      "record": "Layout/results/rail_budget.md"
+    },
+    "reference_event_charge_C": {
+      "limit": 1.9e-12,
+      "scope": "Largest die-side VREFP (and VREFN) charge within any 1 ns window",
+      "basis": "Calibrated model maximum 1.46 pC (PRESET after a full reversal) times 1.3. The on-chip reference series resistor and decoupling are sized for this event.",
+      "measured": {
+        "evidence": "stage1-rail-window-adc-post-b",
+        "worst_1ns_C": 1.313e-12
+      },
+      "record": "Layout/results/rail_budget.md"
+    },
+    "reference_pin_peak_current_A": {
+      "limit": 5.1e-3,
+      "scope": "Peak current of each reference rail, summed over its two bond pins, with the Stage 6 system model",
+      "basis": "Budgeted network model 3.25 mA nominal and 4.25 mA worst over the tolerance box, with the sharper 0.5 ns charge pulse that over-predicts the measured fixture peak (3.33 model vs 2.60 mA measured); limit = 1.2 x box worst. A higher value means the on-chip damping or decoupling differs from the budgeted network.",
+      "record": "Layout/results/rail_budget.md"
+    },
+    "reference_span_droop_V": {
+      "limit": 0.26,
+      "scope": "Peak drop of VREFP-VREFN at the CDAC reference trunk, after the on-chip series resistors",
+      "basis": "Qualified envelope: the coupled XREF/CDAC passed every TT decision of se-xref-adc-post-b with up to 259.8 mV measured span droop. Budgeted network model 109 mV nominal, 143 mV worst over the tolerance box.",
+      "record": "Layout/results/rail_budget.md"
+    },
+    "reference_decision_error_LSB": {
+      "limit": 0.1,
+      "scope": "Reference-induced plate error at each comparator edge: the signed TOP error against nominal rails minus the same error against the instantaneous CDAC-trunk rails",
+      "basis": "Share of the 0.10 LSB top-level reserve between the Stage 2 (0.15 LSB) and Stage 6 (0.25 LSB) plate-settling criteria in chenzc24/sar-adc-t28#12. The plate-settling limit stays authoritative. Budgeted network (15 ohm, 8 pF, double reference bonds): 0.028/0.011/0.004 LSB at FF cold/TT/SS cold. Over the tolerance box (series R x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail) the worst is 0.040/0.019/0.004 LSB. The single-bond alternative (20 ohm, 6 pF, 1-3 nH) reached 0.105 LSB at FF cold.",
+      "record": "Layout/results/rail_budget.md"
+    },
+    "supply_charge_per_conversion_C": {
+      "limit": 6.9e-12,
+      "scope": "Charge drawn from VDD by the whole ADC core in any one 100 ns frame; every Stage 6 corner and frame",
+      "basis": "Measured TT maximum 5.26 pC times 1.3. Average about 53 uA (48 uW) at TT, so VDD plus reference power stays far below the 1 mW target.",
+      "measured": {
+        "evidence": "stage1-rail-charge-adc-post-b",
+        "steady_frames_C": [5.2589e-12, 4.6412e-12, 4.6557e-12]
+      },
+      "record": "Layout/results/rail_budget.md"
+    },
+    "supply_event_charge_C": {
+      "limit": 1.1e-12,
+      "scope": "Largest VDD charge of the whole core within any 1 ns window",
+      "basis": "Measured TT 0.81 pC (XREF PRESET of 255 units plus SAR DONE) times 1.3. The branch decoupling below is sized from this event and its split.",
+      "measured": {
+        "evidence": "stage1-rail-window-adc-post-b",
+        "worst_1ns_C": 8.12e-13
+      },
+      "record": "Layout/results/rail_budget.md"
+    },
+    "supply_pin_peak_current_A": {
+      "limit": 5.5e-3,
+      "scope": "Sum of the VDD package-pin peak currents",
+      "basis": "Measured 3.70 mA at an ideal source (TT) times 1.48, the FF-cold/TT supply-peak ratio of the eight-bit XREF transition (Layout/results/reference_driver.json). The branch models give 1.75/1.52/1.75 mA.",
+      "record": "Layout/results/rail_budget.md"
+    },
+    "supply_droop_V": {
+      "limit": 0.045,
+      "scope": "Peak drop of VDD-VSS below the source value at the supply pins of each block (XREF, SAR, comparator, Bootstrap)",
+      "basis": "5% of 0.9 V, which keeps SS 0.81 V above 0.765 V. In-core comparator strap bounce of 5-7 mV changed no decision or delay. The timing-margin and settling criteria stay authoritative. Budgeted branch decoupling model 20-41 mV.",
+      "record": "Layout/results/rail_budget.md"
     }
+  },
+  "stage6_supply_model": {
+    "status": "Chosen 2026-11-21 for the Stage 6 top-level checks; replaces the 50 ohm / 4 pF reference fixture there. Block and Stage 2 tests keep the fixture.",
+    "reference_source": {"vrefp_V": 0.9, "vrefn_V": 0.0, "output_ohm": 1.0, "board_bypass_F": 1e-07, "board_bypass_esr_ohm": 0.01, "board_bypass_esl_H": 5e-10},
+    "supply_source": {"output_ohm": 1.0, "board_bypass_F": 1e-07, "board_bypass_esr_ohm": 0.01, "board_bypass_esl_H": 5e-10, "basis": "Same board model as the references, at the corner VDD"},
+    "package_per_pin": {"series_H": 2e-09, "series_ohm": 0.2, "pad_F": 5e-13,
+                        "pins": {"VREFP": 2, "VREFN": 2, "VDD/VSS pairs": ["analog", "reference pair (XREF/CDAC)", "digital"]},
+                        "reference_rail": {"series_H": 1e-09, "series_H_range": [5e-10, 1.5e-09], "series_ohm": 0.1,
+                                           "arrangement": "Two bonds per rail on adjacent pads in the order VREFP, VREFN, VREFP, VREFN; mutual inductance not credited"},
+                        "decided": "2026-11-21: double reference bonds accepted; the 6 x 6 IO ring is a draft"},
+    "on_chip_reference": {
+      "series_ohm_per_rail": 15.0,
+      "series_tolerance": [0.8, 1.2],
+      "span_decoupling_F": 8e-12,
+      "span_decoupling_tolerance": [0.75, 1.25],
+      "topology": "Pad - series resistor - CDAC reference trunk on each rail; the decoupling sits between VREFP and VREFN at the trunk. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert."
+    },
+    "on_chip_supply_decoupling_F": {
+      "pair_xref": {"min_F": 1e-11, "feed_ohm": 12.0},
+      "digital_sar": {"min_F": 8e-12, "feed_ohm": 5.0, "note": "Includes DCAP fillers inside the macro"},
+      "analog_bootstrap": {"min_F": 9e-12, "feed_ohm": 12.0, "note": "Bootstrap event is an upper bound; confirm with branch currents"},
+      "comparator_local": {"min_F": 4.7e-13, "feed_ohm": 30.0, "note": "The existing comparator_decap_west and comparator_decap_east"}
+    },
+    "record": "Layout/results/rail_budget.md"
   },
   "migration_acceptance": {
     "geometry": "same normalized GDS geometry and cell connectivity",
