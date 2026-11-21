@@ -99,7 +99,19 @@ python -m Layout physical ANOTHER_ID --module sar-se --staging sar-se-r3 --view 
 python -m Layout.tools.simulation.prepare_sar_se UNIQUE_ID ssc verify --cdac cworst --revision NEW_ID
 ```
 
-`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction uses the deck's typical interconnect rules; add `--rc-corner cworst_T` or `cbest_T` to verify the saved view with the foundry corner rules instead (the new evidence ID gets its own extraction). For `verify` stimuli, frame 0 starts from the DC solution and is reported as warm-up outside the verdict. The D2 reference (`design/xtor/reference/single_edge_d2.scs`) is not drawn yet. The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) · [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
+`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction uses the deck's typical interconnect rules; add `--rc-corner cworst_T` or `cbest_T` to verify the saved view with the foundry corner rules instead (the new evidence ID gets its own extraction). For `verify` stimuli, frame 0 starts from the DC solution and is reported as warm-up outside the verdict. The 28-cell D2 reference sits on the south edge of the paired CDAC. [XREF integration and verification](../results/single_edge_xref.md) The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) · [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
+
+The XREF flow reads the saved CDAC with `oaq pins`, derives the standard-cell bindings from `single_edge_d2.scs`, and creates fresh driver and integration views. For a new revision, run the B7 pilot through physical verification and the focused transient first. Then repeat the first two commands with a new ID and view, omitting `--pilot`. The ADC short uses the current 45 ns external high phase and single-edge observer. Submit each generated recipe through the managed runner.
+
+```powershell
+python -m Layout.design.reference_driver xref-b7-example --pilot --view layout_b7_example
+python -m Layout.tools.physical.submit_reference_driver xref-b7-example --default-supplies
+python -m Layout.tools.simulation.prepare_reference_driver xref-b7-example xref-b7-tt-example
+python -m Layout.tools.analysis.review_reference_routes xref-full-example
+python -m Layout.tools.simulation.prepare_reference_driver xref-full-example xref-adc-tt-example --adc --codes 12 127 128 243
+```
+
+For standalone verification of the XREF child, submit a fresh ID with `--driver-only --from-stream xref-full-example`. The runner compares the standalone stream digest with the corresponding child in the accepted integration. Use lowercase identities and fresh lowercase view names. The physical runner streams the saved pair, checks the original CDAC geometry hash and compares it to an independent transistor CDL. Omit `--default-supplies` for distributed supply RC. To compare supply modes on identical geometry, submit a fresh physical ID with `--from-stream xref-full-example`.
 
 ## Bootstrap Module
 

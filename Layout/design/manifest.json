@@ -6,7 +6,8 @@
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
-    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3"
+    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+    "design/xtor/reference/single_edge_d2.scs": "f269a9b35d6230f57d96ce2124b822443e6bb2265239bb61816f9e6bfb202845"
   },
   "library_config": "site.local.yaml:layout",
   "technology": "tsmcN28",
@@ -119,6 +120,28 @@
         ],
         "authority": "Layout/specs/interfaces.json#not_drawn_instances"
       }
+    },
+    "reference": {
+      "core": "sar8i_refword",
+      "view": "layout_se_d2_r2",
+      "electrical_master": "sar8i_refword",
+      "generator": "Layout/design/reference_driver.py",
+      "top_instances": [
+        "XREF"
+      ],
+      "integrated": "sar8_cdac_with_xref/layout_se_d2_r2",
+      "core_bbox_um": [
+        [
+          3.48,
+          -32.465
+        ],
+        [
+          66.834,
+          -27.18
+        ]
+      ],
+      "physical_evidence": "se-xref-full-b",
+      "report": "Layout/results/single_edge_xref.json"
     },
     "sar": {
       "core": "sar8_se_core",

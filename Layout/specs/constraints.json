@@ -12,7 +12,7 @@
     "reset priority",
     "asynchronous handshake",
     "real comparator/control loads",
-    "current single-edge D2 reference (design/xtor/reference/single_edge_d2.scs); its layout is not drawn yet",
+    "current single-edge D2 reference (design/xtor/reference/single_edge_d2.scs); physical driver sar8i_refword/layout_se_d2_r2",
     "current single-edge SAR (design/xtor/sar/single_edge.scs), drawn as SAR_ADC_T28_LAYOUT/sar8_se_core/layout_r3"
   ],
   "matching": [
@@ -68,7 +68,13 @@
     },
     "reference_gate_route_delay_s": {
       "limit": null,
-      "basis": "Measure actual gate transitions/establishment using the current single-edge D2 reference once its layout is drawn"
+      "basis": "TT measurements include logic-cell delay and the routed CDAC load. The top-level wiring-only allocation remains open.",
+      "measured": {
+        "run": "se-xref-drive-rails",
+        "event": "Worst command-to-50% crossing across selected physical gate contacts, both directions with all bits switching",
+        "worst_ps": 281.6,
+        "report": "Layout/results/single_edge_xref.json"
+      }
     },
     "sar_handshake_route_delay_s": {
       "limit": null,
