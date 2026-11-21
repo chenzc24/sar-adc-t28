@@ -2,7 +2,7 @@
   "planning_inputs_sha256": {
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "31ae29b6a60e9b0a54a47c27de4e1ac43b9a0058a78baed2a3da20aa6b1e6953",
+    "Layout/design/manifest.json": "082a6f6e160c99481f2f13805d1d66e70cb08b88840722849e1a49443807c06e",
     "Layout/design/floorplan.json": "0e576ec3f2ca2ae10d763ffd9a837d8b2732d4809192dc343564520b63adb1c6",
     "Layout/specs/interfaces.json": "21b1c3ef4b0bdc1c85e3c48b2b634564a9e7d36c252e7dc4d4afe34980b9de15",
     "Layout/specs/constraints.json": "ca63e35736880bcaf4dd6a711c4b57543f2b11c7a8c818889cb1b7adba729f51",
@@ -23,52 +23,30 @@
     ]
   },
   "signoff": false,
-  "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
-  "qualification_inputs_sha256": {
-    "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
-    "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
-    "Layout/design/manifest.json": "35912371f9fa9aa93a19cd45079669ee847cc7d5f2f05f7100f3df94d8814b44",
-    "Layout/design/floorplan.json": "f20af4dd86791988ddc2a9872e5bbec8f99f192a45a8fbbe49ba950f07eb90fd",
-    "Layout/specs/interfaces.json": "fdc4696be04969bc0d0cf5f0108c31e414e6b339a8cd7227b756fc3fe829cecf",
-    "Layout/specs/constraints.json": "4e4a99943dffbc9c73d51c1649bb16e4ca100307a7092682e577fb958404abef",
-    "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
-    "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
-    "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
-    "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
-    "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
-    "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
-    "design/xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
-  },
-  "qualification_scope": "Migration equivalence only, geometry/measurement identities recorded in workflow_migration.json",
-  "native": {
-    "identity": "cdac-org-native",
-    "report": "workflow_migration.json",
-    "geometry_sha256": "4d8c359255a67c247ecc85d1488b4e9f447bd9d9703805578723d612b0b60f35",
-    "drc": "NOT_CLEAN, original two warnings",
-    "lvs": "CORRECT",
-    "pex": "complete"
-  },
-  "tt": {
-    "run_id": "cdac-org-after-tt",
-    "report": "workflow_migration.json",
-    "migration_equal": true,
-    "all_code_pass": false,
-    "all_timing_pass": true,
-    "settling": "unmeasured",
-    "terminal_reliability": "unqualified"
-  },
-  "performance": {
-    "historical_report": "cdac.md",
-    "historical_amplitude_loss_percent": 15.12,
-    "status": "unresolved; not remeasured as an amplitude metric in this migration"
-  },
+  "electrical_design_id": "sar8_single_edge_bitwise_v1",
+  "qualification_scope": "Module-level only. No assembled ADC layout exists; every ADC run so far combines at most two extracted modules with schematic or cell-LPE views and ideal top-level wiring and supplies.",
   "bootstrap": {
     "status": "prefill_core_verified",
-    "physical_evidence": "boot-core-20261118",
-    "geometry_sha256": "a77327c667de8e754e3abe1bcf94b84c64471ffa6fd48889022d02de5ab7dbb8",
+    "main_switch": "4 x 1 um/150 nm nch_18_mac, adopted 2026-11-21",
+    "adoption": "results/design/sampler_mmain4_adoption_20261121.md",
+    "physical_evidence": "boot-core-20261121",
+    "equivalent_candidate_build": "boot-mmain4-20261121a",
+    "geometry_sha256": "987efe8c45ba5497de9746f032eda154d8b899956509bc5caf723721f587fa5f",
+    "gds_sha256": "f0c6f9bb8e07ff308bb7355845b21a579db3b1f556de14ffa5f30d9e850227b9",
     "lvs": "CORRECT",
-    "tt_run": "boot-post-tt-20261118",
-    "schematic_tt_run": "boot-pre-tt-20261118",
+    "drc_markers": 6,
+    "tt_run": "boot-core-tt-20261121",
+    "corner_runs": {
+      "ss_cold": "boot-m4-ext-ssc-20261121",
+      "ff_cold": "boot-m4-ext-ffc-20261121",
+      "ss_hot": "boot-core-ssh-20261121",
+      "ff_hot": "boot-core-ffh-20261121"
+    },
+    "integrated_runs": [
+      "int-m4-ssc-20261121",
+      "int-m4-tt-20261121",
+      "int-m4-ffc-20261121"
+    ],
     "physical_signoff": false,
     "report": "bootstrap.json"
   },
@@ -129,6 +107,48 @@
       "frames": 50,
       "report": "sar_timing.json",
       "note": "sar8_sar_timing views of the previous architecture; see the layout index"
+    }
+  },
+  "previous_architecture_migration": {
+    "note": "Previous-architecture workflow migration of the original CDAC layout view (2026-11-16). Its inputs no longer match the current electrical design; kept as dated evidence.",
+    "electrical_design_id": "sar8_l90_mmain2_stdcell_minref_msbd2_resetor_quiet8p5_v2",
+    "qualification_inputs_sha256": {
+      "design/manifest.json": "81c9c918f8733d665407a012d8d5ac4742c63b012c9dc33f68136cd3482c1853",
+      "design/top/adc_top.scs": "cb517a70d640cb7d4f1483b219342702caa38e7378a12c1b392a5c2826601bb5",
+      "Layout/design/manifest.json": "35912371f9fa9aa93a19cd45079669ee847cc7d5f2f05f7100f3df94d8814b44",
+      "Layout/design/floorplan.json": "f20af4dd86791988ddc2a9872e5bbec8f99f192a45a8fbbe49ba950f07eb90fd",
+      "Layout/specs/interfaces.json": "fdc4696be04969bc0d0cf5f0108c31e414e6b339a8cd7227b756fc3fe829cecf",
+      "Layout/specs/constraints.json": "4e4a99943dffbc9c73d51c1649bb16e4ca100307a7092682e577fb958404abef",
+      "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+      "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
+      "design/xtor/clock/delays.scs": "4d790791013f3b2db4c4e043288210a78ba23442a27421718d0721012fbb2bf7",
+      "design/xtor/common/standard_cells.scs": "122730cd55b671a144b839c630eba0aa63890511159146db73d6b7a319df912f",
+      "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
+      "design/xtor/reference/minimal_msb_d2.scs": "11dbe6dc4a887d021c4690915f32443c6557829a34567f102390457f494117c5",
+      "design/xtor/sar/reset_data_or.scs": "3c10f766a66213860a01ca2de3bdb41b6d69693a02fab1468ffc085dbb1d7b9d"
+    },
+    "qualification_scope": "Migration equivalence only, geometry/measurement identities recorded in workflow_migration.json",
+    "native": {
+      "identity": "cdac-org-native",
+      "report": "workflow_migration.json",
+      "geometry_sha256": "4d8c359255a67c247ecc85d1488b4e9f447bd9d9703805578723d612b0b60f35",
+      "drc": "NOT_CLEAN, original two warnings",
+      "lvs": "CORRECT",
+      "pex": "complete"
+    },
+    "tt": {
+      "run_id": "cdac-org-after-tt",
+      "report": "workflow_migration.json",
+      "migration_equal": true,
+      "all_code_pass": false,
+      "all_timing_pass": true,
+      "settling": "unmeasured",
+      "terminal_reliability": "unqualified"
+    },
+    "performance": {
+      "historical_report": "cdac.md",
+      "historical_amplitude_loss_percent": 15.12,
+      "status": "unresolved; not remeasured as an amplitude metric in this migration"
     }
   }
 }
