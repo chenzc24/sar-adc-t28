@@ -27,12 +27,21 @@ CORNERS = {'ffc': (2.14e-9, .83e-9), 'tt': (2.55e-9, .90e-9), 'ssc': (3.63e-9, 1
 FIRST_COMPARE_S = 47.6e-9
 PULSES_S = (.5e-9, .8e-9)           # bracket the measured fixture droop and peak current
 # VREFP and VREFN each use two bonds on adjacent, interleaved pads; the VDD/VSS pairs keep one.
-# Mutual inductance between the wires is ignored, which overstates the loop inductance.
+# Mutual inductance between the wires is ignored, which overstates the loop inductance. Each pad
+# adds pad_f to its rail. route_ohm and route_h are the parallel pad-to-core routes of one reference
+# rail ahead of its series resistor: VREFP 178/198 um and VREFN 144/252 um at about 4 um on M9/M8,
+# about 23 squares per rail; 0-2 ohm covers sheet resistance up to about 0.085 ohm/sq until the PDK
+# value is in, and 0.1 nH is about 0.4 nH/mm of the interleaved 6 um-pitch pair.
 SYSTEM = dict(source_ohm=1., board_bypass_f=100e-9, board_esr_ohm=.01, board_esl_h=.5e-9,
-              pin_h=1e-9, pin_ohm=.1, supply_pin_h=2e-9, supply_pin_ohm=.2, pad_f=.5e-12)
+              pin_h=1e-9, pin_ohm=.1, pad_f=.5e-12, pads_per_rail=2, route_ohm=1., route_h=.1e-9,
+              supply_pin_h=2e-9, supply_pin_ohm=.2, supply_pads_per_rail=1)
 DESIGN = dict(series_ohm=15., span_cap_f=8e-12)
-TOLERANCE = dict(series=(.8, 1.2), cap=(.75, 1.25), pin_h=(.5e-9, 1.5e-9))
-SINGLE_BOND = dict(series_ohm=20., span_cap_f=6e-12, pin_h=2e-9, pin_ohm=.2)   # earlier choice, for comparison
+TOLERANCE = dict(series=(.8, 1.2), cap=(.75, 1.25), pin_h=(.5e-9, 1.5e-9), route_ohm=(0., 2.))
+# Recommended AVDD/AVSS bulk at the pads of each supply branch, and the largest loop resistance
+# (VDD path plus VSS path) allowed from that bulk to the block decoupling.
+PAD_BULK = dict(cap_f=100e-12, esr_ohm_per_rail=2., max_feed_ohm=6.)
+# Earlier choice, for comparison: one bond and one pad per rail, no route term.
+SINGLE_BOND = dict(series_ohm=20., span_cap_f=6e-12, pin_h=2e-9, pin_ohm=.2, pads=1, route_ohm=0., route_h=0.)
 CORNER_CHARGE = 1.3                 # FF 0.99 V and top-level extraction allowance on TT charge
 
 
@@ -102,35 +111,47 @@ def expm(m):
     return e
 
 
-def loop(series_ohm, span_cap_f, pin_h=None, pin_ohm=None, **_):
-    """Two-rail loop (VREFP-VREFN or VDD-VSS): series elements doubled, shunt-to-ground halved."""
+def loop(series_ohm, span_cap_f, pin_h=None, pin_ohm=None, pads=None, route_ohm=None, route_h=None, **_):
+    """Two-rail loop (VREFP-VREFN or VDD-VSS): series elements doubled, shunt-to-ground halved.
+
+    The defaults are the reference rails; supply_check passes the VDD/VSS pin values."""
     s = SYSTEM
     pin_h = s['pin_h'] if pin_h is None else pin_h
     pin_ohm = s['pin_ohm'] if pin_ohm is None else pin_ohm
+    pads = s['pads_per_rail'] if pads is None else pads
+    route_ohm = s['route_ohm'] if route_ohm is None else route_ohm
+    route_h = s['route_h'] if route_h is None else route_h
     return dict(r1=2 * s['source_ohm'], cb=s['board_bypass_f'] / 2, rb=2 * s['board_esr_ohm'], lb=2 * s['board_esl_h'],
-                l2=2 * pin_h, r2=2 * pin_ohm, cpad=s['pad_f'] / 2, ron=2 * series_ohm + 1e-3, cdie=span_cap_f)
+                l2=2 * (pin_h + route_h), r2=2 * pin_ohm, cpad=pads * s['pad_f'] / 2,
+                ron=2 * (series_ohm + route_ohm) + 1e-3, cdie=span_cap_f)
 
 
 def response(n, pulse, dt=1e-12, tend=60e-9):
-    """Die-node voltage and pin current for one unit-charge triangular pulse (exact ZOH steps)."""
+    """Die-node voltage and pin current for one unit-charge triangular pulse (exact ZOH steps).
+
+    An optional bulk capacitor (cbulk behind rbulk) sits at the pad node, ahead of ron."""
     cn = 10e-12
-    a, b = np.zeros((6, 6)), np.zeros(6)
-    # x = [v_board, i_bypass, v_bypass, i_pin, v_pad, v_die]
+    a, b = np.zeros((7, 7)), np.zeros(7)
+    # x = [v_board, i_bypass, v_bypass, i_pin, v_pad, v_die, v_bulk]
+    gb = 1 / n['rbulk'] if n.get('cbulk') else 0.
     a[0, 0], a[0, 1], a[0, 3] = -1 / (n['r1'] * cn), -1 / cn, -1 / cn
     a[1, 0], a[1, 1], a[1, 2] = 1 / n['lb'], -n['rb'] / n['lb'], -1 / n['lb']
     a[2, 1] = 1 / n['cb']
     a[3, 0], a[3, 3], a[3, 4] = 1 / n['l2'], -n['r2'] / n['l2'], -1 / n['l2']
-    a[4, 3], a[4, 4], a[4, 5] = 1 / n['cpad'], -1 / (n['ron'] * n['cpad']), 1 / (n['ron'] * n['cpad'])
+    a[4, 3], a[4, 4], a[4, 5] = 1 / n['cpad'], -(1 / n['ron'] + gb) / n['cpad'], 1 / (n['ron'] * n['cpad'])
+    a[4, 6] = gb / n['cpad']
     a[5, 4], a[5, 5] = 1 / (n['ron'] * n['cdie']), -1 / (n['ron'] * n['cdie'])
+    if gb:
+        a[6, 4], a[6, 6] = gb / n['cbulk'], -gb / n['cbulk']
     b[5] = -1 / n['cdie']
-    m = np.zeros((7, 7))
-    m[:6, :6], m[:6, 6] = a * dt, b * dt
+    m = np.zeros((8, 8))
+    m[:7, :7], m[:7, 7] = a * dt, b * dt
     e = expm(m)
-    p, g = e[:6, :6], e[:6, 6]
+    p, g = e[:7, :7], e[:7, 7]
     t = np.arange(int(tend / dt)) * dt
     u = np.where(t < pulse, 2 / pulse * (1 - np.abs(2 * t / pulse - 1)), 0.)
     um = np.append(.5 * (u[:-1] + u[1:]), 0.)
-    x, v, i = np.zeros(6), np.empty(len(t)), np.empty(len(t))
+    x, v, i = np.zeros(7), np.empty(len(t)), np.empty(len(t))
     for j in range(len(t)):
         v[j], i[j] = x[5], x[3]
         x = p @ x + g * um[j]
@@ -164,9 +185,15 @@ def reference_check(net, gamma, compare_s, write_s, codes=range(256)):
     return worst
 
 
-def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9):
-    """VDD-VSS droop of one branch behind a VDD/VSS pin pair, for one event train per frame."""
-    net = loop(feed_ohm / 2., cap_f, pin_h=SYSTEM['supply_pin_h'], pin_ohm=SYSTEM['supply_pin_ohm'])
+def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9, bulk=False):
+    """VDD-VSS droop of one branch behind a VDD/VSS pin pair, for one event train per frame.
+
+    feed_ohm is the loop resistance from the pad to the block decoupling; with bulk, the
+    recommended pad-side bulk capacitor sits at the pad."""
+    net = loop(feed_ohm / 2., cap_f, pin_h=SYSTEM['supply_pin_h'], pin_ohm=SYSTEM['supply_pin_ohm'],
+               pads=SYSTEM['supply_pads_per_rail'], route_ohm=0., route_h=0.)
+    if bulk:
+        net.update(cbulk=PAD_BULK['cap_f'], rbulk=2 * PAD_BULK['esr_ohm_per_rail'])
     t, h, hi = response(net, pulse, tend=100e-9)
     updates, _ = schedule(compare_s, write_s)
     qs = [q_event] + [q_repeat] * 7 + [q_event]
@@ -203,15 +230,19 @@ def main():
         for corner, (cmp_s, wr_s) in CORNERS.items():
             worst = dict(decision_error_lsb=0.)
             peaks = dict(span_droop_v=0., pin_peak_a=0.)
-            for fr, fc, lh in itertools.product(TOLERANCE['series'] + (1.,), TOLERANCE['cap'] + (1.,), TOLERANCE['pin_h'] + (SYSTEM['pin_h'],)):
-                r = reference_check(loop(DESIGN['series_ohm'] * fr, DESIGN['span_cap_f'] * fc, pin_h=lh), gamma, cmp_s, wr_s, codes=range(0, 256, 5))
+            for fr, fc, lh, ro in itertools.product(TOLERANCE['series'] + (1.,), TOLERANCE['cap'] + (1.,),
+                                                    TOLERANCE['pin_h'] + (SYSTEM['pin_h'],),
+                                                    TOLERANCE['route_ohm'] + (SYSTEM['route_ohm'],)):
+                r = reference_check(loop(DESIGN['series_ohm'] * fr, DESIGN['span_cap_f'] * fc, pin_h=lh, route_ohm=ro),
+                                    gamma, cmp_s, wr_s, codes=range(0, 256, 5))
                 peaks = dict((k, max(v, r[k])) for k, v in peaks.items())
                 if r['decision_error_lsb'] > worst['decision_error_lsb']:
-                    worst = dict(r, series_ohm=DESIGN['series_ohm'] * fr, span_cap_f=DESIGN['span_cap_f'] * fc, pin_h=lh)
+                    worst = dict(r, series_ohm=DESIGN['series_ohm'] * fr, span_cap_f=DESIGN['span_cap_f'] * fc, pin_h=lh,
+                                 route_ohm=ro)
             box[corner] = dict(worst, box_max_span_droop_v=peaks['span_droop_v'], box_max_pin_peak_a=peaks['pin_peak_a'])
     fixture = reference_check(dict(r1=1e-2, cb=1e-6, rb=1e-3, lb=1e-12, l2=1e-12, r2=1e-3, cpad=1e-15, ron=100., cdie=2e-12),
                               gamma, *CORNERS['tt'], codes=[c for c in codes])
-    undamped = reference_check(loop(0., 8e-12, pin_h=SYSTEM['supply_pin_h'], pin_ohm=SYSTEM['supply_pin_ohm']),
+    undamped = reference_check(loop(**dict(SINGLE_BOND, series_ohm=0., span_cap_f=8e-12)),
                                gamma, *CORNERS['ffc'], codes=range(0, 256, 5))
     single_bond = reference_check(loop(**SINGLE_BOND), gamma, *CORNERS['ffc'], codes=range(0, 256, 5))
     steady = frames['frames'][frames['context']['first_steady_frame']:]
@@ -228,9 +259,13 @@ def main():
         'comparator_local': dict(event_c=.025e-12, repeat_c=.025e-12, cap_f=2 * .2355e-12, feed_ohm=30., placeholder_f=2 * .2355e-12,
                                  basis='Comparator charge per decision (Layout/results/comparator.md); 30 ohm in-core strap resistance'),
     }
-    for b in branches.values():
-        b['check'] = supply_check(b['event_c'] * k, b['repeat_c'] * k, b['cap_f'], b['feed_ohm'],
-                                  pulse=.2e-9 if b['event_c'] < .1e-12 else .5e-9)
+    for name, b in branches.items():
+        pulse = .2e-9 if b['event_c'] < .1e-12 else .5e-9
+        b['check'] = supply_check(b['event_c'] * k, b['repeat_c'] * k, b['cap_f'], b['feed_ohm'], pulse=pulse)
+        if name != 'comparator_local':
+            # Chip level: pad bulk at its pads and the largest allowed feed from it to the block.
+            b['check_with_pad_bulk'] = supply_check(b['event_c'] * k, b['repeat_c'] * k, b['cap_f'],
+                                                    PAD_BULK['max_feed_ohm'], pulse=pulse, bulk=True)
     result = dict(
         record='Stage 1 reference and supply current budget (chenzc24/sar-adc-t28#12)',
         measured_runs=MEASURED, source_run='se-xref-adc-post-b',
@@ -246,14 +281,15 @@ def main():
                              argmax_conversion_code=max(per_code, key=lambda r: r['conversion_c'])['code']),
         supply_measured=dict(conversion_c=dict(max=max(f['die_charge_c']['vdd'] for f in steady), min=min(f['die_charge_c']['vdd'] for f in steady)),
                              peak_a=max(f['peak_a']['vdd'] for f in frames['frames']), max_event_1ns_c=vdd_event),
-        system=SYSTEM, design=DESIGN, tolerance=TOLERANCE, corners=CORNERS, pulses_s=PULSES_S,
+        system=SYSTEM, design=DESIGN, tolerance=TOLERANCE, pad_bulk=PAD_BULK, corners=CORNERS, pulses_s=PULSES_S,
         reference_design_check=design, reference_tolerance_box=box,
         reference_fixture_check_tt=fixture, reference_undamped_single_bond_check_ffc=undamped,
         reference_single_bond_design=dict(SINGLE_BOND, check_ffc=single_bond),
         supply_branches=branches, corner_charge_allowance=k)
     (ROOT / 'Layout/results/rail_budget.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(gamma=gamma, design=design, box=box, fixture=fixture, undamped=undamped['decision_error_lsb'],
-                          branches={n: b['check'] for n, b in branches.items()}), indent=1, default=str))
+                          branches={n: (b['check'], b.get('check_with_pad_bulk')) for n, b in branches.items()}),
+                     indent=1, default=str))
 
 
 if __name__ == '__main__':

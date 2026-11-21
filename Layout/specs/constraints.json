@@ -102,21 +102,21 @@
       "record": "Layout/results/rail_budget.md"
     },
     "reference_pin_peak_current_A": {
-      "limit": 5.1e-3,
+      "limit": 5.2e-3,
       "scope": "Peak current of each reference rail, summed over its two bond pins, with the Stage 6 system model",
-      "basis": "Budgeted network model 3.25 mA nominal and 4.25 mA worst over the tolerance box, with the sharper 0.5 ns charge pulse that over-predicts the measured fixture peak (3.33 model vs 2.60 mA measured); limit = 1.2 x box worst. A higher value means the on-chip damping or decoupling differs from the budgeted network.",
+      "basis": "Budgeted network model 3.19 mA nominal and 4.31 mA worst over the tolerance box, with the sharper 0.5 ns charge pulse that over-predicts the measured fixture peak (3.33 model vs 2.60 mA measured); limit = 1.2 x box worst. A higher value means the on-chip damping or decoupling differs from the budgeted network.",
       "record": "Layout/results/rail_budget.md"
     },
     "reference_span_droop_V": {
       "limit": 0.26,
       "scope": "Peak drop of VREFP-VREFN at the CDAC reference trunk, after the on-chip series resistors",
-      "basis": "Qualified envelope: the coupled XREF/CDAC passed every TT decision of se-xref-adc-post-b with up to 259.8 mV measured span droop. Budgeted network model 109 mV nominal, 143 mV worst over the tolerance box.",
+      "basis": "Qualified envelope: the coupled XREF/CDAC passed every TT decision of se-xref-adc-post-b with up to 259.8 mV measured span droop. Budgeted network model 112 mV nominal, 148 mV worst over the tolerance box.",
       "record": "Layout/results/rail_budget.md"
     },
     "reference_decision_error_LSB": {
       "limit": 0.1,
       "scope": "Reference-induced plate error at each comparator edge: the signed TOP error against nominal rails minus the same error against the instantaneous CDAC-trunk rails",
-      "basis": "Share of the 0.10 LSB top-level reserve between the Stage 2 (0.15 LSB) and Stage 6 (0.25 LSB) plate-settling criteria in chenzc24/sar-adc-t28#12. The plate-settling limit stays authoritative. Budgeted network (15 ohm, 8 pF, double reference bonds): 0.028/0.011/0.004 LSB at FF cold/TT/SS cold. Over the tolerance box (series R x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail) the worst is 0.040/0.019/0.004 LSB. The single-bond alternative (20 ohm, 6 pF, 1-3 nH) reached 0.105 LSB at FF cold.",
+      "basis": "Share of the 0.10 LSB top-level reserve between the Stage 2 (0.15 LSB) and Stage 6 (0.25 LSB) plate-settling criteria in chenzc24/sar-adc-t28#12. The plate-settling limit stays authoritative. Budgeted network (15 ohm, 8 pF, double reference bonds, 1.0 pF of pads and about 1 ohm / 0.1 nH of pad-to-core route per rail): 0.030/0.012/0.004 LSB at FF cold/TT/SS cold. Over the tolerance box (series R x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail, route 0-2 ohm) the worst is 0.048/0.019/0.004 LSB. Before the pad and route corrections of chenzc24/sar-adc-t28#18 the model gave 0.040 LSB; the single-bond alternative (20 ohm, 6 pF, 1-3 nH) reached 0.105 LSB at FF cold.",
       "record": "Layout/results/rail_budget.md"
     },
     "supply_charge_per_conversion_C": {
@@ -148,7 +148,7 @@
     "supply_droop_V": {
       "limit": 0.045,
       "scope": "Peak drop of VDD-VSS below the source value at the supply pins of each block (XREF, SAR, comparator, Bootstrap)",
-      "basis": "5% of 0.9 V, which keeps SS 0.81 V above 0.765 V. In-core comparator strap bounce of 5-7 mV changed no decision or delay. The timing-margin and settling criteria stay authoritative. Budgeted branch decoupling model 20-41 mV.",
+      "basis": "5% of 0.9 V, which keeps SS 0.81 V above 0.765 V. In-core comparator strap bounce of 5-7 mV changed no decision or delay. The timing-margin and settling criteria stay authoritative. Budgeted branch decoupling model, ADC core alone: 24-40 mV. With the recommended 100 pF pad bulk per branch at the 6 ohm maximum feed: 14-20 mV.",
       "record": "Layout/results/rail_budget.md"
     }
   },
@@ -159,17 +159,45 @@
     "package_per_pin": {"series_H": 2e-09, "series_ohm": 0.2, "pad_F": 5e-13,
                         "pins": {"VREFP": 2, "VREFN": 2, "VDD/VSS pairs": ["analog", "reference pair (XREF/CDAC)", "digital"]},
                         "reference_rail": {"series_H": 1e-09, "series_H_range": [5e-10, 1.5e-09], "series_ohm": 0.1,
-                                           "arrangement": "Two bonds per rail on adjacent pads in the order VREFP, VREFN, VREFP, VREFN; mutual inductance not credited"},
+                                           "pad_F": 1e-12,
+                                           "arrangement": "Two bonds per rail on adjacent pads in the order VREFP, VREFN, VREFP, VREFN; mutual inductance not credited. Both pads load the rail, 2 x 0.5 pF.",
+                                           "pad_to_core_route": {"ohm": 1.0, "ohm_range": [0.0, 2.0], "H": 1e-10,
+                                                                 "basis": "Parallel routes of one rail, VREFP 178/198 um and VREFN 144/252 um at about 4 um on M9/M8 (chenzc24/sar-adc-t28#17), about 23 squares; 0-2 ohm covers sheet resistance up to about 0.085 ohm/sq until the PDK value is read. In series with the on-chip resistor."}},
                         "decided": "2026-11-21: double reference bonds accepted; the 6 x 6 IO ring is a draft"},
     "on_chip_reference": {
       "series_ohm_per_rail": 15.0,
       "series_tolerance": [0.8, 1.2],
       "span_decoupling_F": 8e-12,
       "span_decoupling_tolerance": [0.75, 1.25],
-      "topology": "Pad - series resistor - CDAC reference trunk on each rail; the decoupling sits between VREFP and VREFN at the trunk. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert."
+      "topology": "On each rail both pads join ahead of the series resistor; the resistor feeds the CDAC reference trunk, and the decoupling sits between the two trunks. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert.",
+      "netlist": {
+        "status": "Interface for the Stage 6 top and the LVS source. The resistor and capacitor devices follow the PDK decap characterization; until then the Stage 6 pre-layout netlist uses ideal elements at these values.",
+        "wrapper": "A core wrapper subcircuit holds the reference network and instantiates the unchanged sar_adc8_join_r4 with its VREFP/VREFN ports on the trunk nets, so Stage 2 keeps testing that cell with its fixture.",
+        "nets": {
+          "VREFP": "Wrapper port; both VREFP pads join here, ahead of RREFP",
+          "VREFN": "Wrapper port; both VREFN pads join here, ahead of RREFN",
+          "VREFP_TRUNK": "RREFP output, the VREFP port of sar_adc8_join_r4",
+          "VREFN_TRUNK": "RREFN output, the VREFN port of sar_adc8_join_r4"
+        },
+        "devices": {
+          "RREFP": "VREFP to VREFP_TRUNK, 15 ohm",
+          "RREFN": "VREFN to VREFN_TRUNK, 15 ohm",
+          "CREF": "VREFP_TRUNK to VREFN_TRUNK, 8 pF"
+        }
+      }
+    },
+    "pad_bulk_decoupling": {
+      "status": "Recommended for the IO ring; the ADC core meets the budget without it.",
+      "per_supply_branch_F": 1e-10,
+      "esr_ohm_per_rail": 2.0,
+      "max_feed_ohm": 6.0,
+      "feed_definition": "Loop resistance, VDD path plus VSS path, from the pad bulk to the block decoupling",
+      "reference": "None: bulk ahead of the reference series resistors raises the decision error (0.15-0.96 LSB for 30-335 pF with single bonds)."
     },
     "on_chip_supply_decoupling_F": {
-      "pair_xref": {"min_F": 1e-11, "feed_ohm": 12.0},
+      "feed_definition": "feed_ohm is the loop resistance from the boundary pins to the block decoupling with no pad bulk; with pad bulk the 6 ohm maximum applies from the bulk instead",
+      "pair_xref": {"min_F": 1e-11, "feed_ohm": 12.0,
+                    "feed_path": "The pair's own M6 supply terminals on the XREF strip, VSS at (45.215, 13.365) and VDD at (46.915, 14.565) um in core coordinates, south into the decoupling below the XREF and east along it. Nothing enters the CDAC array keep-out."},
       "digital_sar": {"min_F": 8e-12, "feed_ohm": 5.0, "note": "Includes DCAP fillers inside the macro"},
       "analog_bootstrap": {"min_F": 9e-12, "feed_ohm": 12.0, "note": "Bootstrap event is an upper bound; confirm with branch currents"},
       "comparator_local": {"min_F": 4.7e-13, "feed_ohm": 30.0, "note": "The existing comparator_decap_west and comparator_decap_east"}

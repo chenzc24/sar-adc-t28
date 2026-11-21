@@ -138,9 +138,13 @@
     "board_esl_h": 5e-10,
     "pin_h": 1e-09,
     "pin_ohm": 0.1,
+    "pad_f": 5e-13,
+    "pads_per_rail": 2,
+    "route_ohm": 1.0,
+    "route_h": 1e-10,
     "supply_pin_h": 2e-09,
     "supply_pin_ohm": 0.2,
-    "pad_f": 5e-13
+    "supply_pads_per_rail": 1
   },
   "design": {
     "series_ohm": 15.0,
@@ -158,7 +162,16 @@
     "pin_h": [
       5e-10,
       1.5e-09
+    ],
+    "route_ohm": [
+      0.0,
+      2.0
     ]
+  },
+  "pad_bulk": {
+    "cap_f": 1e-10,
+    "esr_ohm_per_rail": 2.0,
+    "max_feed_ohm": 6.0
   },
   "corners": {
     "ffc": [
@@ -180,81 +193,84 @@
   ],
   "reference_design_check": {
     "ffc": {
-      "decision_error_lsb": 0.027898094651955124,
+      "decision_error_lsb": 0.02961769990872499,
       "at": {
         "code": 0,
         "trial": 64,
         "pulse_s": 8e-10
       },
-      "span_droop_v": 0.10869798603396613,
-      "pin_peak_a": 0.003251685435170289
+      "span_droop_v": 0.11202671843871077,
+      "pin_peak_a": 0.0031942857985272715
     },
     "tt": {
-      "decision_error_lsb": 0.010890659693891061,
+      "decision_error_lsb": 0.012057237502984168,
       "at": {
         "code": 0,
         "trial": 64,
         "pulse_s": 8e-10
       },
-      "span_droop_v": 0.10869732083047172,
-      "pin_peak_a": 0.003251685770379907
+      "span_droop_v": 0.11202605528137308,
+      "pin_peak_a": 0.0031942861743514375
     },
     "ssc": {
-      "decision_error_lsb": 0.0041621528224159215,
+      "decision_error_lsb": 0.004155288197782886,
       "at": {
         "code": 0,
         "trial": 4,
         "pulse_s": 5e-10
       },
-      "span_droop_v": 0.10869546652685172,
-      "pin_peak_a": 0.003251685807036522
+      "span_droop_v": 0.11202420145550201,
+      "pin_peak_a": 0.0031942862251361963
     }
   },
   "reference_tolerance_box": {
     "ffc": {
-      "decision_error_lsb": 0.04038034017416787,
+      "decision_error_lsb": 0.04782768117818802,
       "at": {
         "code": 0,
         "trial": 64,
         "pulse_s": 8e-10
       },
-      "span_droop_v": 0.09831877330707618,
-      "pin_peak_a": 0.0028085886237880727,
+      "span_droop_v": 0.09629879525840258,
+      "pin_peak_a": 0.002319863206677715,
+      "series_ohm": 18.0,
+      "span_cap_f": 1e-11,
+      "pin_h": 5e-10,
+      "route_ohm": 2.0,
+      "box_max_span_droop_v": 0.14772460533820198,
+      "box_max_pin_peak_a": 0.004310077998571504
+    },
+    "tt": {
+      "decision_error_lsb": 0.019405829306806652,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.10129057419241536,
+      "pin_peak_a": 0.002646875890038619,
       "series_ohm": 15.0,
       "span_cap_f": 1e-11,
       "pin_h": 1.5e-09,
-      "box_max_span_droop_v": 0.1425390898716412,
-      "box_max_pin_peak_a": 0.004246207431382257
-    },
-    "tt": {
-      "decision_error_lsb": 0.018505131160408975,
-      "at": {
-        "code": 0,
-        "trial": 64,
-        "pulse_s": 8e-10
-      },
-      "span_droop_v": 0.10125176807534982,
-      "pin_peak_a": 0.002515021417123546,
-      "series_ohm": 18.0,
-      "span_cap_f": 1e-11,
-      "pin_h": 1.5e-09,
-      "box_max_span_droop_v": 0.14253846096773237,
-      "box_max_pin_peak_a": 0.0042462078317749745
+      "route_ohm": 2.0,
+      "box_max_span_droop_v": 0.1477239844076551,
+      "box_max_pin_peak_a": 0.004310078467674359
     },
     "ssc": {
-      "decision_error_lsb": 0.0041918925332208486,
+      "decision_error_lsb": 0.004195051934868584,
       "at": {
         "code": 0,
         "trial": 4,
         "pulse_s": 5e-10
       },
-      "span_droop_v": 0.13145328324717284,
-      "pin_peak_a": 0.004246207947420447,
+      "span_droop_v": 0.13355562828679526,
+      "pin_peak_a": 0.004307362368269886,
       "series_ohm": 12.0,
       "span_cap_f": 6e-12,
       "pin_h": 1.5e-09,
-      "box_max_span_droop_v": 0.1425366236665912,
-      "box_max_pin_peak_a": 0.004246207947420447
+      "route_ohm": 0.0,
+      "box_max_span_droop_v": 0.14772215028828134,
+      "box_max_pin_peak_a": 0.004310078609965587
     }
   },
   "reference_fixture_check_tt": {
@@ -282,6 +298,9 @@
     "span_cap_f": 6e-12,
     "pin_h": 2e-09,
     "pin_ohm": 0.2,
+    "pads": 1,
+    "route_ohm": 0.0,
+    "route_h": 0.0,
     "check_ffc": {
       "decision_error_lsb": 0.024846066776171703,
       "at": {
@@ -304,7 +323,12 @@
       "check": {
         "droop_v": 0.040098815293691935,
         "residual_before_next_event_v": 0.018958061658284082,
-        "pin_peak_a": 0.001744758118183723
+        "pin_peak_a": 0.0017447581181837236
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.019869324987971813,
+        "residual_before_next_event_v": 0.00715564197265499,
+        "pin_peak_a": 0.0009278471001676891
       }
     },
     "digital_sar": {
@@ -318,6 +342,11 @@
         "droop_v": 0.028172414691282323,
         "residual_before_next_event_v": 0.020359580447953857,
         "pin_peak_a": 0.0015048394745098997
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.01387307241395285,
+        "residual_before_next_event_v": 0.00865930314730777,
+        "pin_peak_a": 0.0007620497188007389
       }
     },
     "analog_bootstrap": {
@@ -328,9 +357,14 @@
       "placeholder_f": 1.5594e-12,
       "basis": "Upper bound: no 1 ns window at a sampling edge exceeded the 0.454 pC conversion-event maximum of frame 2",
       "check": {
-        "droop_v": 0.03997396667305438,
+        "droop_v": 0.03997396667305439,
         "residual_before_next_event_v": 0.001956676350376026,
-        "pin_peak_a": 0.0017214636531679422
+        "pin_peak_a": 0.0017214636531679424
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.018543570607862978,
+        "residual_before_next_event_v": 0.000952505883647149,
+        "pin_peak_a": 0.0006700585969891706
       }
     },
     "comparator_local": {

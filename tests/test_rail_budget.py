@@ -59,6 +59,21 @@ class BudgetModel(unittest.TestCase):
         self.assertEqual(sum(e['units'] for e in rail_budget.ideal_events(127)), 510)
         self.assertEqual(sum(e['units'] for e in rail_budget.ideal_events(128)), 254)
 
+    def test_reference_loop_counts_both_pads_and_the_route(self):
+        s = rail_budget.SYSTEM
+        n = rail_budget.loop(15., 8e-12)
+        # Two pads per rail to ground, seen in series around the VREFP-VREFN loop.
+        self.assertAlmostEqual(n['cpad'], s['pads_per_rail'] * s['pad_f'] / 2)
+        self.assertAlmostEqual(n['cpad'], .5e-12)
+        self.assertAlmostEqual(n['ron'], 2 * (15. + s['route_ohm']), places=2)
+        self.assertAlmostEqual(n['l2'], 2 * (s['pin_h'] + s['route_h']))
+
+    def test_pad_bulk_lowers_supply_droop(self):
+        bare = rail_budget.supply_check(.6e-12, .3e-12, 10e-12, 6.)
+        bulk = rail_budget.supply_check(.6e-12, .3e-12, 10e-12, 6., bulk=True)
+        self.assertLess(bulk['droop_v'], bare['droop_v'])
+        self.assertLess(bulk['pin_peak_a'], bare['pin_peak_a'])
+
     def test_ideal_charge_is_positive_and_bounded(self):
         total = [sum(e['charge_c'] for e in rail_budget.ideal_events(c)) for c in range(256)]
         self.assertTrue(all(q > 0 for q in total))
