@@ -24,7 +24,7 @@ Use `python -m tools.saradc.single_edge_lpe CORNER KIND --cdac nominal|cworst --
 - `extreme`: full-scale and low-to-mid steps;
 - `restart`: an accepted sample during conversion.
 
-Add `--taps 11,9,7,6,5,4` to override the chain, or `--seed SEED` at a cold corner for whole-DUT local mismatch. The CWORST_T CDAC exists for the cold corners only. The cell-LPE library is TYPICAL at TT, CWORST_T at SS and CBEST_T at FF.
+Add `--taps 11,9,7,6,5,4` to override the chain, `--seed SEED` at a cold corner for whole-DUT local mismatch, or `--bootstrap PHYSICAL_ID` to replace both Bootstrap channels with a verified core extraction. The CWORST_T CDAC exists for the cold corners only. The cell-LPE library is TYPICAL at TT, CWORST_T at SS and CBEST_T at FF.
 
 `python -m tools.saradc.single_edge CORNER REVISION [--cell-lpe] [--seed SEED] [--restart]` runs the schematic CDAC. Both entries use the adopted 45 ns high phase from `specs/arch.json`.
 
