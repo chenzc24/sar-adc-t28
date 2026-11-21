@@ -15,12 +15,12 @@ def main():
     parser.add_argument('--schematic', action='store_true')
     parser.add_argument('--integrated', action='store_true', help='Use the current ten-frame ADC interface fixture')
     parser.add_argument('--corner', choices=['tt', 'ssc', 'ssh', 'ffc', 'ffh'], default='tt',
-                        help='PVT corner of the --integrated fixture (specs/corners.json)')
+                        help='PVT corner of the fixture (specs/corners.json)')
     args = parser.parse_args()
     if not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', args.run_id):
         raise ValueError('Invalid run identity')
-    if args.corner != 'tt' and not args.integrated:
-        parser.error('--corner applies only to the --integrated fixture')
+    corner = json.loads((ROOT/'specs/corners.json').read_text(encoding='utf-8'))[args.corner]
+    condition = '%s %gV %dC' % (corner['mos'], corner['vdd_v'], corner['temperature_c'])
     destination = ROOT / 'work/layout' / args.run_id
     if destination.exists():
         raise ValueError('Identity already prepared')
@@ -90,12 +90,28 @@ def main():
         deck = blobs['test.scs'].decode().replace('stop=665n maxstep=100p errpreset=moderate',
                                                  'stop=105n maxstep=2p errpreset=conservative')
         blobs['test.scs'] = deck.encode()
-    scope = ('TT 0.9V 27C comparator ' + ('schematic' if args.schematic else manifest['case']+' RC extraction') +
-             '; signed input decisions, reset and floating-input kickback with original block fixture. '
-             'Density/final fill, PVT, mismatch/noise and integrated ADC timing remain unqualified.')
+        if args.corner != 'tt':
+            # MOS section, supply, temperature and the fixture's rail-level drives move together. Input
+            # common mode (0.45 V), MOM/passive sections and the analyzer's 0.45 V edge threshold stay TT.
+            def swap(text, old, new, count):
+                if text.count(old) != count:
+                    raise ValueError('Fixture changed: ' + old)
+                return text.replace(old, new)
+            vdd = '%g' % corner['vdd_v']
+            deck = swap(deck, 'section=ttmacro_mos_moscap', 'section=%smacro_mos_moscap' % corner['mos'].lower(), 1)
+            deck = swap(deck, 'VVDD (VDD! 0) vsource dc=0.9', 'VVDD (VDD! 0) vsource dc=' + vdd, 1)
+            deck = swap(deck, 'temp=27', 'temp=%d' % corner['temperature_c'], 1)
+            blobs['test.scs'] = deck.encode()
+            fixture = blobs['comparator_fixture.scs'].decode()
+            fixture = swap(fixture, 'val1=0.9 ', 'val1=%s ' % vdd, 2)
+            fixture = swap(fixture, 'wave=[0 0.9 10n 0.9 10.1n 0]', 'wave=[0 %s 10n %s 10.1n 0]' % (vdd, vdd), 1)
+            blobs['comparator_fixture.scs'] = fixture.encode()
+            context['corner'] = dict(corner, name=args.corner)
+    scope = (condition + ' comparator ' + ('schematic' if args.schematic else manifest['case']+' RC extraction') +
+             '; signed input decisions, reset and floating-input kickback with original block fixture'
+             + ('' if args.corner == 'tt' else '; input common mode 0.45 V, MOM sections and the 0.45 V edge threshold held at TT') +
+             '. Density/final fill, mismatch/noise and integrated ADC timing remain unqualified.')
     if args.integrated:
-        corner = json.loads((ROOT/'specs/corners.json').read_text(encoding='utf-8'))[args.corner]
-        condition = '%s %gV %dC' % (corner['mos'], corner['vdd_v'], corner['temperature_c'])
         scope = ('Current ADC ten-frame ' + condition + ' functional/timing fixture with comparator ' +
                  ('schematic' if args.schematic else manifest['case']+' RC extraction') +
                  '; remaining modules pre-layout; no noise, mismatch, PVT or terminal-reliability signoff.')

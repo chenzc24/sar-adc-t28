@@ -68,6 +68,61 @@ Standalone TT in the current block fixture (standard-cell receivers), with v7 re
 
 Runs: `sar8-sebit-{tt,ffc}-nom-verify-{compv8,compv7b}`. At the ADC level v8 and v7 agree within 0.5 ps on pulses and slacks. The standalone fit offset moved from −0.013 to −0.050 mV, still inside the ±0.1 mV bracket; this is a fixture diagnostic, not a statistical offset.
 
+## Pre-Merge Standalone Verification (partial, 2026-11-21)
+
+Checks of v8 against the schematic, each pair in one fixture, for the standalone gaps listed in issue #4. Machine-readable values and run hashes: `pre_merge_verification` in [comparator.json](comparator.json). Drivers: [tools/simulation/comparator_checks](../tools/simulation/comparator_checks). **Status: MC offset and four noise runs are still running; this section will be completed with them.**
+
+**Extractions.** `comp-v8-20261120-pex-{typical,cworst-t,cbest-t}-supplies` re-extract the frozen v8 GDS (same reference, DRC and LVS). Each first rebuilds the recorded nominal deck and checks its hash, then extracts VDD and VSS as RC (`prepare_deck(distributed_supplies=…)`; the project deck excluded only VDD). CWORST_T and CBEST_T swap in the foundry xRC rules member. Against typical, grounded interconnect capacitance is 3–5 % higher at CWORST_T and 3–5 % lower at CBEST_T. The largest mirror-pair difference stays ≤ 0.011 fF (OUTN|VDD vs OUTP|VDD).
+
+**Comparator + CDAC, SS 0.81 V −40 °C.** `single_edge_lpe` verify fixture: CWORST_T CDAC, cell LPE `cworst_t`, eight frames. The two packages differ only in the comparator files.
+
+| Measurement | Schematic (`…-compsch`) | **v8 CWORST_T (`…-compv8`)** |
+| --- | ---: | ---: |
+| All checks, all frames | pass | **pass** |
+| Minimum margin (ns) | 7.591 | **8.395** |
+| Last commit to next open, min (ns) | 19.325 | **20.129** |
+| Max sampling close error (LSB) | 0.0738 | **0.0741** |
+| Max signed settling error (LSB) | 0.0012 | **0.0012** |
+
+**Standalone five corners.** Block acceptance fixture. MOS section, VDD, temperature and rail drives follow `specs/corners.json`; the extraction's RC corner matches each MOS corner. Input common mode 0.45 V, MOM sections and the 0.45 V edge threshold stay at TT. Every run decides 10/10 and passes validation.
+
+| Corner (RC) | Delay at 1 mV, sch → **v8** (ps) | Max reset, v8 (ps) | Diff. kickback peak, sch → **v8** (mV) |
+| --- | ---: | ---: | ---: |
+| TT (typical) | 272.5 → **228.4** | 33.7 | 0.036 → **0.058** |
+| SS −40 °C (CWORST_T) | 677.4 → **541.6** | 54.4 | 0.028 → **0.051** |
+| SS 125 °C (CWORST_T) | 214.7 → **192.7** | 47.1 | 0.027 → **0.043** |
+| FF −40 °C (CBEST_T) | 272.7 → **223.2** | 21.7 | 0.046 → **0.075** |
+| FF 125 °C (CBEST_T) | 188.7 → **169.7** | 18.3 | 0.036 → **0.054** |
+
+v8 is 10–20 % faster at 1 mV than the schematic, whose per-device diffusion parameters carry more junction capacitance than the shared diffusion. Settled kickback is +0.007 to +0.008 mV for v8 at every corner, against about 0 for the schematic.
+
+**Kickback into the extracted CDAC TOP.** Same fixture, with the two 256-unit kickback MOM loads replaced by the extracted CDAC in a static MSB-trial state (50 Ω / 4 pF references).
+
+| Corner | Settled diff., sch / **v8** (mV) | Diff. peak, sch / **v8** (mV) | CM peak, sch / **v8** (mV) |
+| --- | ---: | ---: | ---: |
+| TT | −0.0004 / **+0.0091** | 0.080 / **0.137** | 0.49 / **0.76** |
+| FF −40 °C | −0.0004 / **+0.0100** | 0.212 / **0.191** | 0.54 / **0.83** |
+
+The settled residue the SAR sees is ≤ 0.0014 LSB. The peaks are larger than with lumped MOM loads, which is consistent with the TOP wiring resistance letting the node near the comparator move first.
+
+**Mismatch offset (in progress).** The schematic 200-seed fixture (`tb/blocks/comparator/test.scs`, seeds 4101–4300) with the comparator replaced by the typical supply-extracted netlist. A schematic packaging check reproduces seed 4101 exactly (5.3125 mV). Mismatch draws reach all four extracted input fingers. At 181 of 200 seeds, all valid: **σ = 11.8 mV**, mean −1.9 mV, range −34.7 to +30.7 mV, against σ = 14.1 mV for the schematic on the same seeds (14.2 mV over all 200). The draws are not paired across netlists, so compare distributions only. The cause of the smaller spread is not yet established.
+
+**Input-referred noise (in progress).** New fixture: nominal models, a noiseless stepped input (9 levels × 128 decisions, 0.4 mV step), Spectre transient noise (`noise_worst`, 100 kHz to fmax) and a probit maximum-likelihood fit. Budget 0.18 LSB (1.27 mV).
+
+| Run | σ (mV) | σ (LSB) |
+| --- | ---: | ---: |
+| TT schematic, 20 GHz | 0.597 ± 0.029 | 0.085 |
+| TT schematic, 50 GHz | 0.503 ± 0.027 | 0.071 |
+| SS 125 °C schematic, 50 GHz | 0.836 ± 0.040 | 0.119 |
+| TT schematic 100 GHz; TT v8 and SS 125 °C v8 at 50 GHz | running | |
+
+The 20 and 50 GHz values differ by about 2.5 standard errors in the unexpected direction; the 100 GHz run decides convergence.
+
+**Attempts superseded.**
+- The first kickback packages failed at read-in: the CDAC wrapper master duplicated the schematic CDAC. The `-b` packages rename it.
+- `comp-v8-ffh-rc-20261121` failed on a Spectre license checkout and was rerun as `…b`.
+- Four noise runs stopped at the 1024 MiB output cap and are rerunning as `-b` with strobe-only output.
+
 ## Interface and Area
 
 The native core bounding box is `(-0.815,-2.645) → (0.815,0.875) µm`, measuring **1.63 × 3.52 µm** and **5.74 µm²**. The old core measured 7.96 × 12.46 µm and v4 measured 1.66 × 3.44 µm.
@@ -146,7 +201,7 @@ PVT, mismatch and noise, statistical offset, full per-device terminal voltage, f
 
 ## Maintenance and Handoff
 
-`design/comparator.il` defines functional geometry. `design/comparator.py` generates the independent CDL from the electrical source. `tools/simulation/prepare_comparator.py` packages pre- and post-layout tests and the ADC interface case. Use the existing native and managed entry points. `tests/test_comparator_layout.py` verifies that each schematic device uses same-named 0.5 µm fingers, optionally with `_k` suffixes, and matches its schematic total width. [Comparator workflow](../docs/workflow.md#comparator-module)
+`design/comparator.il` defines functional geometry. `design/comparator.py` generates the independent CDL from the electrical source. `tools/simulation/prepare_comparator.py` packages pre- and post-layout tests and the ADC interface case. `tools/simulation/comparator_checks/` holds the corner re-extraction driver, and the MC, noise, CDAC-kickback and ADC-pair packagers. Use the existing native and managed entry points. `tests/test_comparator_layout.py` verifies that each schematic device uses same-named 0.5 µm fingers, optionally with `_k` suffixes, and matches its schematic total width. [Comparator workflow](../docs/workflow.md#comparator-module)
 
 The fixed wrapper `sar_strongarm_t28/layout` references the core through XCORE. Use the core for review and integration. Refresh and reverify the wrapper fill before qualifying it for the current core.
 

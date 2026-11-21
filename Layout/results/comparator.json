@@ -1300,7 +1300,7 @@
     "MNINP, MNINN and MNTAIL are each two parallel 0.5u nf=1 instances for the schematic nf=1 W=1u device (the input fingers in two rows); LVS-equivalent after parallel reduction, LDE differs from the schematic model",
     "The N1 OUTP strap is the track nearest the input channel: OUTP couples ~0.005-0.007 fF more than OUTN to the inputs and TAIL; the fixture TT screen shows no measurable offset from it, which is not a statistical offset bound",
     "CLK runs on the centre trunk past the N1 input gates: 0.014 fF to each input, symmetric (V4 0.058, v6 0.003)",
-    "No PVT/mismatch/noise/offset-distribution/terminal-reliability qualification",
+    "Standalone PVT (five corners with matched RC), kickback into the extracted CDAC and SS-cold ADC pair measured (pre_merge_verification); post-layout MC offset and noise in progress; no terminal-reliability qualification",
     "No final filled or complete top-level RC qualification; VDD/VSS are guard-ring M1 and need top-level straps",
     "Module access routing still needs placement in the 16x14 um reservation; the three model MOM loads (CL_COMP_N/P, CL_CMP_CLK) are not drawn and a top-level LVS reference must omit them"
   ],
@@ -16324,5 +16324,364 @@
       "reset-gate CLK stack (no mirror-symmetric spot for a second cut)"
     ],
     "reason_single": "M2 track pitch (about 0.115-0.13 um) leaves no room for a second cut without moving tracks; a second top CLK cut sat nearer OUTP than OUTN and was removed after scratch v8c failed the TT screen (fit offset -0.12 mV)"
+  },
+  "pre_merge_verification": {
+    "date": "2026-11-21",
+    "status": "partial",
+    "issue": "#4 standalone gaps before merge",
+    "scope": "Standalone comparator checks of v8 against the schematic in matched fixtures; physical signoff, final fill and top-level RC remain open",
+    "extractions": {
+      "source": "comp-v8-20261120-pex",
+      "driver": "Layout/tools/simulation/comparator_checks/comp_corner.py",
+      "note": "Same GDS, reference, DRC and LVS as the source run; deck rebuilt and checked against the recorded nominal deck, then prepare_deck(distributed_supplies=VDD,VSS) and, for CWORST_T/CBEST_T, the foundry xRC rules member. The project deck excluded only VDD.",
+      "corners": {
+        "typical": {
+          "physical_evidence": "comp-v8-20261120-pex-typical-supplies",
+          "pex_sha256": "5988c44505e7c064f9136a589442bd032380d39cf06f74597cc5f1ee495f4933",
+          "job_sha256": "9553052d3742722ed13691f19e4f95305c9356758ec95302e9cd71dfd81d74bf",
+          "distributed_supplies": [
+            "VDD",
+            "VSS"
+          ],
+          "rules_sha256": "typical (lab deck)"
+        },
+        "cworst_T": {
+          "physical_evidence": "comp-v8-20261120-pex-cworst-t-supplies",
+          "pex_sha256": "15f5a13111f8a759cce92fe54cb09eda9a935a567ca76d2b8eec30c70308b72f",
+          "job_sha256": "0e3bf5429c637081f05a6fb0e5fb3f134b1e5efa0c988abf680d0a9df2693b54",
+          "distributed_supplies": [
+            "VDD",
+            "VSS"
+          ],
+          "rules_sha256": "5b34e74f3dc7d8843c3b8e904ff905e28141ee018853c63cedfbb3b9a83c5483"
+        },
+        "cbest_T": {
+          "physical_evidence": "comp-v8-20261120-pex-cbest-t-supplies",
+          "pex_sha256": "6b2879777115e16103ce9d1e5c299c5be9f78f7b3451a127dff9f000065c88a9",
+          "job_sha256": "eec20ca766ed17fc49fe7bf8e1541a07d8b1be74b12876dddc034884a874db8c",
+          "distributed_supplies": [
+            "VDD",
+            "VSS"
+          ],
+          "rules_sha256": "8766da60af8ea462249e3e4f9cc301432ab300384d7a9603f085193e0f3e8f12"
+        }
+      }
+    },
+    "ssc_adc_pair": {
+      "fixture": "single_edge_lpe verify, SS 0.81 V -40 C, cell LPE cworst_t, extracted CDAC at CWORST_T; the two packages differ only in the comparator files",
+      "packager": "Layout/tools/simulation/comparator_checks/make_lpe_comp.py",
+      "schematic": {
+        "run_id": "sar8-sebit-ssc-cw-verify-compsch",
+        "result_sha256": "b910ef0adf2259ee403674df7ddc38364e3e80591d0711995fe84d4b1750cf65",
+        "all_pass": true,
+        "pin_pass": true,
+        "settling_target_pass": true,
+        "routing_target_5ns_pass": true,
+        "min_margin_ns": 7.590587915188607,
+        "close_to_first_commit_min_ns": 1.9236316993177027,
+        "last_commit_to_next_open_min_ns": 19.324607105972902,
+        "max_abs_close_error_lsb": 0.07379617045639324,
+        "max_abs_signed_settling_lsb": 0.0011910597134347385
+      },
+      "v8_cworst": {
+        "run_id": "sar8-sebit-ssc-cw-verify-compv8",
+        "result_sha256": "b090f7a7e3ae64ef3b63203ffae4f4158b22e12b6e4ec3c0d06cde8c67593977",
+        "all_pass": true,
+        "pin_pass": true,
+        "settling_target_pass": true,
+        "routing_target_5ns_pass": true,
+        "min_margin_ns": 8.395362264354134,
+        "close_to_first_commit_min_ns": 1.9311216926171042,
+        "last_commit_to_next_open_min_ns": 20.12938200522281,
+        "max_abs_close_error_lsb": 0.0740523747295738,
+        "max_abs_signed_settling_lsb": 0.0012360415017518217
+      }
+    },
+    "standalone_corners": {
+      "fixture": "tb/blocks/comparator/acceptance.scs via prepare_comparator --corner; MOS section, VDD, temperature and rail-level drives per specs/corners.json; input CM 0.45 V, MOM sections and the 0.45 V edge threshold at TT",
+      "corners": {
+        "tt": {
+          "interconnect_rc": "typical",
+          "schematic": {
+            "run_id": "comp-v8-tt-sch-20261121",
+            "result_sha256": "0680ea2def08fce314fdaee380e5d03e2cfbc093ab570891b40740519bfc8a8b",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 88.50274937626973,
+            "delay_1mv_ps": 272.51054745634735,
+            "max_delay_ps": 364.7321042211284,
+            "max_reset_ps": 32.82749683148199,
+            "settled_kickback_mv": -0.00029841708421018964,
+            "differential_kickback_peak_mv": 0.03583646791555095,
+            "common_mode_kickback_peak_mv": 0.23648919532670565
+          },
+          "v8": {
+            "run_id": "comp-v8-tt-rc-20261121",
+            "result_sha256": "bc8ec6937d0a0cd479a64e4736f5c5825eda61aabb1a55fe381574be8fb746b9",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 82.84661279441916,
+            "delay_1mv_ps": 228.37111974610946,
+            "max_delay_ps": 312.86949382338344,
+            "max_reset_ps": 33.72755857050486,
+            "settled_kickback_mv": 0.007153043909302603,
+            "differential_kickback_peak_mv": 0.057885913379907006,
+            "common_mode_kickback_peak_mv": 0.4029694481919588
+          }
+        },
+        "ssc": {
+          "interconnect_rc": "cworst_T",
+          "schematic": {
+            "run_id": "comp-v8-ssc-sch-20261121",
+            "result_sha256": "0ec92e2716c13f2df452c900c78248c57eb81ed7fce874a51c51fbcd15f2d3a5",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 146.52520349033287,
+            "delay_1mv_ps": 677.4239838451258,
+            "max_delay_ps": 711.206224804508,
+            "max_reset_ps": 53.81502111878026,
+            "settled_kickback_mv": -0.00019085087105130683,
+            "differential_kickback_peak_mv": 0.02751321011318364,
+            "common_mode_kickback_peak_mv": 0.19123180306213072
+          },
+          "v8": {
+            "run_id": "comp-v8-ssc-rc-20261121",
+            "result_sha256": "3d762b67c3834b7212fb6df4b5a1ec6a7cbd4b3be4bafc83c3d2a10e99342e9f",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 137.57163393446018,
+            "delay_1mv_ps": 541.5889348493993,
+            "max_delay_ps": 566.3654078913037,
+            "max_reset_ps": 54.42179021043042,
+            "settled_kickback_mv": 0.006843043405535543,
+            "differential_kickback_peak_mv": 0.050689646860446747,
+            "common_mode_kickback_peak_mv": 0.35607429873374397
+          }
+        },
+        "ssh": {
+          "interconnect_rc": "cworst_T",
+          "schematic": {
+            "run_id": "comp-v8-ssh-sch-20261121",
+            "result_sha256": "012fc7d1714c49cf05814c0647baaf7a70ce5379d94064b81fae76975ef5438c",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 96.76242513490317,
+            "delay_1mv_ps": 214.74116874306398,
+            "max_delay_ps": 220.94022017270828,
+            "max_reset_ps": 47.16827927638544,
+            "settled_kickback_mv": -0.00031386158261259567,
+            "differential_kickback_peak_mv": 0.0267512524063096,
+            "common_mode_kickback_peak_mv": 0.22603776690810484
+          },
+          "v8": {
+            "run_id": "comp-v8-ssh-rc-20261121",
+            "result_sha256": "8ead95937a52690cc854a9a8e5106054e53c08b3186077d20c725490e237665a",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 92.94935214216697,
+            "delay_1mv_ps": 192.73417373944923,
+            "max_delay_ps": 197.5532451832084,
+            "max_reset_ps": 47.07306142472545,
+            "settled_kickback_mv": 0.006638166328287731,
+            "differential_kickback_peak_mv": 0.04252018132872015,
+            "common_mode_kickback_peak_mv": 0.3844980996666192
+          }
+        },
+        "ffc": {
+          "interconnect_rc": "cbest_T",
+          "schematic": {
+            "run_id": "comp-v8-ffc-sch-20261121",
+            "result_sha256": "290f8ee6853dcc6148b88cb1fd9529a9ab3134e5d19d5d748ad9ca59cfc208be",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 78.16202883205884,
+            "delay_1mv_ps": 272.65980104611145,
+            "max_delay_ps": 351.1977394611535,
+            "max_reset_ps": 19.92201172491242,
+            "settled_kickback_mv": -0.0002687466947870476,
+            "differential_kickback_peak_mv": 0.0464213912940159,
+            "common_mode_kickback_peak_mv": 0.25747193913483457
+          },
+          "v8": {
+            "run_id": "comp-v8-ffc-rc-20261121",
+            "result_sha256": "8729a083d335275b630588bdabb9e151c899e691a707669656a5036e262e7141",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 71.40593633615565,
+            "delay_1mv_ps": 223.22488287025615,
+            "max_delay_ps": 304.3678410845212,
+            "max_reset_ps": 21.744057040108157,
+            "settled_kickback_mv": 0.00796552353965474,
+            "differential_kickback_peak_mv": 0.07478931137994138,
+            "common_mode_kickback_peak_mv": 0.43021024136374875
+          }
+        },
+        "ffh": {
+          "interconnect_rc": "cbest_T",
+          "schematic": {
+            "run_id": "comp-v8-ffh-sch-20261121",
+            "result_sha256": "a86b2be9a42b128b4ab43880efefccf7dbe17f6ec70988124772ea0ad4c36df5",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 67.55219088380844,
+            "delay_1mv_ps": 188.69434714528745,
+            "max_delay_ps": 251.82025310692114,
+            "max_reset_ps": 16.770303363505615,
+            "settled_kickback_mv": -0.0001543622096811248,
+            "differential_kickback_peak_mv": 0.036162177590892686,
+            "common_mode_kickback_peak_mv": 0.29293768976934587
+          },
+          "v8": {
+            "run_id": "comp-v8-ffh-rc-20261121b",
+            "result_sha256": "877d13fb82d0ca5aa39442c8656ea05a9749e5d8272949e2b05398e16447346a",
+            "pass_validation": true,
+            "wrong_decisions_above_half_lsb": 0,
+            "decided": 10,
+            "delay_100mv_ps": 63.67944155682538,
+            "delay_1mv_ps": 169.71545277111824,
+            "max_delay_ps": 276.8446371524498,
+            "max_reset_ps": 18.25646635858891,
+            "settled_kickback_mv": 0.007871633111888876,
+            "differential_kickback_peak_mv": 0.05420974873432405,
+            "common_mode_kickback_peak_mv": 0.46220221793263905
+          }
+        }
+      },
+      "note": "comp-v8-ffh-rc-20261121 failed on a Spectre license checkout (SPECTRE-209) and was repackaged as ...b; between the two packagings design/xtor/bootstrap/bootstrap.scs changed (another session), which the comparator block fixture does not instantiate"
+    },
+    "kickback_cdac": {
+      "fixture": "standalone fixture with the two 256-unit kickback MOM loads replaced by the extracted nominal CDAC (sar-acq-q6-xrc-s10-ssc-20261119c), static MSB-trial state, 50 ohm / 4 pF references",
+      "packager": "Layout/tools/simulation/comparator_checks/make_kick.py",
+      "runs": {
+        "tt_schematic": {
+          "run_id": "comp-v8-kick-tt-sch-b",
+          "result_sha256": "7d4506509a13e160158fe77700f075716145d9595bb063200e0e9e9d21d664f3",
+          "pass_validation": true,
+          "wrong_decisions_above_half_lsb": 0,
+          "decided": 10,
+          "delay_100mv_ps": 88.502752139431,
+          "delay_1mv_ps": 272.5105475622794,
+          "max_delay_ps": 364.73210468988174,
+          "max_reset_ps": 32.82749684128904,
+          "settled_kickback_mv": -0.0003822585932233835,
+          "differential_kickback_peak_mv": 0.08010229285804193,
+          "common_mode_kickback_peak_mv": 0.4878529008702781
+        },
+        "tt_v8": {
+          "run_id": "comp-v8-kick-tt-rc-b",
+          "result_sha256": "9e7fc5f232f91f449750d15ffc9652a59172ff22815c5d75be2ee406af939868",
+          "pass_validation": true,
+          "wrong_decisions_above_half_lsb": 0,
+          "decided": 10,
+          "delay_100mv_ps": 82.83656616695455,
+          "delay_1mv_ps": 228.32762805334642,
+          "max_delay_ps": 313.27470389480715,
+          "max_reset_ps": 33.72495648916872,
+          "settled_kickback_mv": 0.009055554937908994,
+          "differential_kickback_peak_mv": 0.13697811104301794,
+          "common_mode_kickback_peak_mv": 0.7582740110986252
+        },
+        "ffc_schematic": {
+          "run_id": "comp-v8-kick-ffc-sch-b",
+          "result_sha256": "772695e5a506e748243cda1fc02d16319ad6152255368786b07ee1a35698a8d7",
+          "pass_validation": true,
+          "wrong_decisions_above_half_lsb": 0,
+          "decided": 10,
+          "delay_100mv_ps": 78.16199155070684,
+          "delay_1mv_ps": 272.6598006448428,
+          "max_delay_ps": 351.1977394603594,
+          "max_reset_ps": 19.92201172496536,
+          "settled_kickback_mv": -0.00039099829196587166,
+          "differential_kickback_peak_mv": 0.2115889399285087,
+          "common_mode_kickback_peak_mv": 0.5402815742504563
+        },
+        "ffc_v8": {
+          "run_id": "comp-v8-kick-ffc-rc-b",
+          "result_sha256": "f997aae62320e6a2bf888b19cc4712d36c81e521b77b5c8d2d59e93f00837e6c",
+          "pass_validation": true,
+          "wrong_decisions_above_half_lsb": 0,
+          "decided": 10,
+          "delay_100mv_ps": 71.39877611897313,
+          "delay_1mv_ps": 223.22313880681256,
+          "max_delay_ps": 303.83727020665174,
+          "max_reset_ps": 21.74022712924607,
+          "settled_kickback_mv": 0.01000629900504979,
+          "differential_kickback_peak_mv": 0.1914030244849485,
+          "common_mode_kickback_peak_mv": 0.8259429275238594
+        }
+      },
+      "note": "First packaging (comp-v8-kick-*) failed at read-in: the CDAC wrapper master duplicated the schematic CDAC in dut.scs; the -b packages rename the wrapper to cdac_kick_extracted"
+    },
+    "mc_offset": {
+      "status": "in_progress",
+      "fixture": "tb/blocks/comparator/test.scs (200-seed schematic baseline fixture), comparator replaced by the typical supply-extracted v8 netlist; seeds 4101-4300, TT local mismatch",
+      "packager": "Layout/tools/simulation/comparator_checks/make_mc.py",
+      "packaging_check": {
+        "run_id": "comp-v8-mcsch-s4101",
+        "offset_mv": 5.312499999999999,
+        "baseline_offset_mv": 5.312499999999999
+      },
+      "collected": 181,
+      "invalid_seeds": [],
+      "v8_sd_mv": 11.81508693792935,
+      "v8_mean_mv": -1.8781077348066297,
+      "v8_range_mv": [
+        -34.6875,
+        30.6875
+      ],
+      "schematic_same_seeds_sd_mv": 14.057577049078974,
+      "schematic_same_seeds_mean_mv": -1.0093232044198894,
+      "schematic_baseline": "results/mc/modules_200.json (sd 14.19 mV)",
+      "note": "Mismatch reaches every extracted finger (XX3/XX12/XX5/XX14 draws recorded). Draws are not paired across the netlists; compare distributions only. The smaller post-layout spread is not yet explained (candidates: per-finger mismatch scaling of the model, layout-dependent instance parameters)."
+    },
+    "noise": {
+      "status": "in_progress",
+      "fixture": "MC fixture with nominal models, noiseless stepped input (9 levels x 128 decisions, 0.4 mV step) and Spectre transient noise (noise_worst section, 100 kHz to fmax, seed 301); probit maximum-likelihood fit",
+      "files": [
+        "Layout/tools/simulation/comparator_checks/make_noise.py",
+        "Layout/tools/simulation/comparator_checks/comp_noise.va",
+        "Layout/tools/simulation/comparator_checks/noise_reduce.py"
+      ],
+      "budget": "specs/arch.json comparator_noise_rms_lsb 0.18 (1.27 mV)",
+      "runs": {
+        "comp-v8-nz-tt-sch-f20": {
+          "sigma_mv": 0.5973436027633039,
+          "sigma_se_mv": 0.029276352482042238,
+          "sigma_lsb": 0.08495553461522544,
+          "mu_mv": -0.009528412118956567,
+          "unresolved": 0,
+          "result_sha256": "62bdc9a133f0f9822c745899395a768e59c15cb96aa2042d2046aaf171dadc25"
+        },
+        "comp-v8-nz-tt-sch-f50": {
+          "sigma_mv": 0.5025921756696001,
+          "sigma_se_mv": 0.026679711903219164,
+          "sigma_lsb": 0.07147977609523201,
+          "mu_mv": 0.031730914491121164,
+          "unresolved": 0,
+          "result_sha256": "67e79d57622d370ac55fc53fbf919aceba12971b9aa883e5b970818f0cf86000"
+        },
+        "comp-v8-nz-tt-sch-f100-b": "running",
+        "comp-v8-nz-tt-rc-f50-b": "running",
+        "comp-v8-nz-ssh-sch-f50-b": {
+          "sigma_mv": 0.8363885090370226,
+          "sigma_se_mv": 0.03975272782258386,
+          "sigma_lsb": 0.11895303239637654,
+          "mu_mv": 0.02629800182325583,
+          "unresolved": 0,
+          "result_sha256": "bac9b13f3eea3ba71f2ee4e69fe50913b4fc8d33a90830d166bb8391b91597b1"
+        },
+        "comp-v8-nz-ssh-rc-f50-b": "running"
+      },
+      "note": "comp-v8-nz-{tt-sch-f100,tt-rc-f50,ssh-sch-f50,ssh-rc-f50} stopped at the 1024 MiB output cap; superseded by -b packages with strobe-only output (decisions come from spectre.out)"
+    }
   }
 }
