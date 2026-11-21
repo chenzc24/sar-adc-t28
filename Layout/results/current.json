@@ -45,10 +45,23 @@
     "integrated_runs": [
       "int-m4-ssc-20261121",
       "int-m4-tt-20261121",
-      "int-m4-ffc-20261121"
+      "int-m4-ffc-20261121",
+      "sar8-sebit-ssc-cw-verify-bootx-a"
     ],
     "physical_signoff": false,
-    "report": "bootstrap.json"
+    "report": "bootstrap.json",
+    "worst_corner_run": {
+      "run_id": "sar8-sebit-ssc-cw-verify-bootx-a",
+      "condition": "SS 0.81 V -40 C, CWORST_T cell LPE, CWORST_T extracted CDAC, extracted Bootstrap on both channels, 8 verify frames",
+      "control": "sar8-sebit-ssc-cw-verify-b",
+      "all_pass": true,
+      "max_abs_close_error_lsb": 0.0528,
+      "min_read_margin_ns": 7.533,
+      "max_first_compare_gate_overdrive_v": 0.0904,
+      "gate_overdrive_screen_v": 0.1,
+      "watch": "Boosted gate 0.090 V above the signal at the first comparison against the 0.1 V screen; no code moves. Least-margin Bootstrap screen; recheck after top-level extraction.",
+      "record": "bootstrap.json#integrated_cworst (merged with PR #13)"
+    }
   },
   "comparator": {
     "status": "prefill_module_delivered_not_full_signoff",
@@ -149,6 +162,47 @@
       "historical_report": "cdac.md",
       "historical_amplitude_loss_percent": 15.12,
       "status": "unresolved; not remeasured as an amplitude metric in this migration"
+    }
+  },
+  "integration": {
+    "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
+    "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
+    "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
+    "stage": "Stage 0 block freeze recorded; Stage 2 all-extracted ADC and Stage 3 floorplan next",
+    "freeze": {
+      "date": "2026-11-21",
+      "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",
+      "blocks": {
+        "cdac_xref": {
+          "integration": "sar8_cdac_with_xref/layout_se_d2_r2",
+          "filled_stream": "se-xref-peripheral-dense",
+          "cdac_view": "layout_paired_stacked",
+          "cdac_evidence": "cdac-paired-plan-d-20261118-combined"
+        },
+        "bootstrap": {
+          "view": "sar_bootstrap_flat_8b_p_core/layout",
+          "evidence": "boot-core-20261121",
+          "integration_tooling": "Layout/tools/simulation/bootstrap_pex.py (PR #13)"
+        },
+        "comparator": {
+          "view": "sar_strongarm_t28_core/layout",
+          "evidence": "comp-v8-20261120-pex",
+          "extractions": [
+            "typical",
+            "cworst_T",
+            "cbest_T"
+          ],
+          "supplies": "VDD and VSS extracted as RC"
+        },
+        "sar_macro": {
+          "view": "sar8_se_core/layout_r3",
+          "evidence": "sar-se-r3-lib",
+          "cworst_extraction": "sar-se-r3-cw"
+        }
+      }
+    },
+    "decisions": {
+      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB)."
     }
   }
 }
