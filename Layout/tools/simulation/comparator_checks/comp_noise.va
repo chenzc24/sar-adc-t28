@@ -1,0 +1,36 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Testbench only: noiseless differential input stepped through `levels` values spaced step_v
+// around offset_v, per_level decisions each, read from the real standard-cell receivers at the
+// same report instant as sar8_mc_comp_search. One CMPNZ line per clock cycle.
+module sar8_comp_noise(VIP,VIN,PR,NR,CLK,SUP,VSS);
+  output VIP,VIN;
+  input PR,NR,CLK,SUP,VSS;
+  electrical VIP,VIN,PR,NR,CLK,SUP,VSS;
+  parameter real cm=0.45;
+  parameter real offset_v=0;
+  parameter real step_v=0.0004;
+  parameter integer levels=9;
+  parameter integer per_level=128;
+  parameter real period_s=5n;
+  parameter real first_report_s=3.775n;
+  parameter real first_update_s=4.5n;
+  integer cycle,level,polarity;
+  real probe,pending,half;
+  analog begin
+    @(initial_step) begin
+      cycle=0;level=0;half=(levels-1)/2.0;
+      probe=offset_v-half*step_v;pending=probe;
+    end
+    @(timer(first_report_s,period_s)) begin
+      polarity=V(PR,NR)>0.5*V(SUP,VSS) ? 1 : V(PR,NR)<-0.5*V(SUP,VSS) ? -1 : 0;
+      $strobe("CMPNZ,%d,%d,%.15g,%d,%.15g",cycle,level,probe,polarity,$abstime);
+      cycle=cycle+1;level=cycle/per_level;
+      pending=offset_v+(level-half)*step_v;
+    end
+    @(timer(first_update_s,period_s)) probe=pending;
+    V(VIP,VSS)<+cm+transition(probe,0,20p,20p)/2;
+    V(VIN,VSS)<+cm-transition(probe,0,20p,20p)/2;
+  end
+endmodule
