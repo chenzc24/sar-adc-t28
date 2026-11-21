@@ -16,7 +16,7 @@ class LayoutPlanTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
         shutil.copytree(project.ROOT/'design', self.root/'design')
-        for name in ['design/manifest.json', 'design/floorplan.json',
+        for name in ['design/manifest.json', 'design/floorplan.json', 'design/io_ring.json',
                      'specs/interfaces.json', 'specs/constraints.json']:
             dest = self.root/'Layout'/name
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -35,7 +35,8 @@ class LayoutPlanTests(unittest.TestCase):
         result = planning.check(self.root)
         self.assertTrue(result['valid'], result['errors'])
         self.assertEqual(result['area']['core_allocation'], 13542)
-        self.assertIsNone(result['area']['die_area'])
+        self.assertEqual(result['area']['die_area'], 640*640)
+        self.assertEqual(result['io_ring'], {'pads': 28, 'routes': 32})
         planning.render(self.root)
         self.assertFalse(planning.check(self.root)['planning_projection_stale'])
         self.assertEqual(planning.check(self.root)['qualification_applicability'], 'unmeasured')
@@ -77,6 +78,36 @@ class LayoutPlanTests(unittest.TestCase):
             self.mutate('design/floorplan.json', change)
             errors = planning.check(self.root)['errors']
             self.assertTrue(any(message in e for e in errors), (message, errors))
+
+    def test_io_ring_faults_are_rejected(self):
+        p = self.root/'Layout/design/io_ring.json'; original = p.read_text(encoding='utf-8')
+        region = lambda d, name: next(g for g in d['reserved_regions'] if g['id'] == name)
+        def shift(name, value, *points):
+            def change(d):
+                for i, axis in points: d['routes'][name]['points_um'][i][axis] = value
+            return change
+        cases = [(lambda d: region(d, 'dvdd_decap')['bbox'][1].__setitem__(1, 374.0), 'DVDD misses its decoupling dvdd_decap'),
+                 (lambda d: region(d, 'adc_guard_ring').__setitem__('cross_min_layer', 'M7'), 'VINN crosses adc_guard_ring below M7'),
+                 (lambda d: d['routes']['ADC_D0'].__setitem__('net', 'D0'), 'uses the bonded pad net D0'),
+                 (shift('SAMPLE', 410.0, (1, 0), (2, 0)), 'SAMPLE (digital_signal) enters sar_feed_channel'),
+                 (shift('VINP', 452.0, (1, 1), (2, 1)), 'not mirror images: VINN/VINP'),
+                 (lambda d: d['routes'].pop('AVSS_guard'), 'Pad has 0 IO routes: left_0'),
+                 (lambda d: region(d, 'pair_pad_decap')['bbox'][0].__setitem__(0, 112.0), 'VREFN_b enters pair_pad_decap')]
+        for change, message in cases:
+            p.write_text(original, encoding='utf-8')
+            self.mutate('design/io_ring.json', change)
+            errors = planning.check(self.root)['errors']
+            self.assertTrue(any(message in e for e in errors), (message, errors))
+        p.write_text(original, encoding='utf-8')
+        self.mutate('design/floorplan.json', lambda d: d['pins_um']['ADC.VREFP@a'].__setitem__(1, 68.0))
+        self.assertIn('ADC pin differs between floorplan and IO ring: ADC.VREFP@a', planning.check(self.root)['errors'])
+        p.unlink()
+        self.assertIn('Missing IO ring plan: Layout/design/io_ring.json', planning.check(self.root)['errors'])
+
+    def test_io_ring_change_makes_the_projection_stale(self):
+        planning.render(self.root)
+        self.mutate('design/io_ring.json', lambda d: d.__setitem__('status', 'edited'))
+        self.assertTrue(planning.check(self.root)['planning_projection_stale'])
 
     def test_new_render_cannot_refresh_old_qualification(self):
         planning.render(self.root)

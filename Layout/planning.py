@@ -50,6 +50,106 @@ def enters(s, box):
     return box[k] < s[0][k] < box[k+2] and min(hi, box[3-k]) - max(lo, box[1-k]) > EPS
 
 
+def touches(s, t):
+    """True if two Manhattan segments meet or cross anywhere, ends included."""
+    return all(max(min(s[0][k], s[1][k]), min(t[0][k], t[1][k])) <= min(max(s[0][k], s[1][k]), max(t[0][k], t[1][k])) + EPS
+               for k in (0, 1))
+
+
+def edges(bbox):
+    (x0, y0), (x1, y1) = bbox
+    c = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    return list(zip(c, c[1:] + c[:1]))
+
+
+LAYER = {f'M{i}': i for i in range(1, 11)}
+DIGITAL = {'digital_signal', 'digital_supply'}
+
+
+def io_ring(plan, ring):
+    """Chip-level checks of the IO ring plan (die coordinates) and its agreement with the floorplan."""
+    errors, place = [], ring['adc_placement']
+    pads = {p['position']: p for p in ring['pads']}
+    regions = {r['id']: r for r in ring['reserved_regions']}
+    paths, rules = ring['routes'], ring.get('route_rules', {})
+    ox, oy = place['origin_um']
+    close = lambda p, q: q is not None and abs(p[0]-q[0]) < 1e-3 and abs(p[1]-q[1]) < 1e-3
+    left, bottom, right, top = plan['core_bbox']
+    if not all(close(a, b) for a, b in zip(place['bbox_um'], [[left+ox, bottom+oy], [right+ox, top+oy]])):
+        errors.append('IO ring places a different core outline')
+    die = [v - o for v, o in zip(ring['die_bbox'], (ox, oy, ox, oy))]
+    if plan.get('die_bbox') is None or any(abs(a-b) > 1e-3 for a, b in zip(plan['die_bbox'], die)):
+        errors.append('Floorplan die_bbox differs from the IO ring plan')
+    core = {k[4:]: xy for k, xy in plan['pins_um'].items() if k.startswith('ADC.')}
+    for name in sorted(set(core) ^ set(place['pins_um'])):
+        errors.append('ADC pin in only one of floorplan and IO ring: ADC.' + name)
+    for name in sorted(set(core) & set(place['pins_um'])):
+        if not close([core[name][0]+ox, core[name][1]+oy], place['pins_um'][name]):
+            errors.append('ADC pin differs between floorplan and IO ring: ADC.' + name)
+    if len(pads) != len(ring['pads']) or len(pads) != 2*(ring['ring']['width']+ring['ring']['height']):
+        errors.append('IO ring needs one pad per ring position')
+
+    def anchored(point, ref):
+        """A route end sits on a pad's core pin, an ADC pin, or a region edge (the guard ring's centreline)."""
+        if ref in pads:
+            return close(point, pads[ref]['core_pin_um'])
+        if ref.startswith('ADC.'):
+            return close(point, place['pins_um'].get(ref[4:]))
+        return ref in regions and any(
+            on_segment(point, e) for e in edges(regions[ref].get('centerline') or regions[ref]['bbox']))
+    segs = {k: list(zip(r['points_um'], r['points_um'][1:])) for k, r in paths.items()}
+    (ax0, ay0), (ax1, ay1) = ring['ring_opening']
+    adc = (*place['bbox_um'][0], *place['bbox_um'][1])
+    for k, r in paths.items():
+        if any((abs(a[0]-b[0]) > EPS) == (abs(a[1]-b[1]) > EPS) for a, b in segs[k]):
+            errors.append('IO route is not Manhattan or repeats a point: ' + k)
+        if abs(sum(abs(a[0]-b[0]) + abs(a[1]-b[1]) for a, b in segs[k]) - r['manhattan_length_um']) > 1e-3:
+            errors.append('Recorded IO route length differs from the points: ' + k)
+        for end, ref in ((r['points_um'][0], r['from']), (r['points_um'][-1], r['to'])):
+            if not anchored(end, ref):
+                errors.append(f'IO route end is not on {ref}: {k}')
+            if ref in pads and pads[ref]['core_net'] != r['net']:
+                errors.append(f'IO route net differs from the core net of pad {ref}: {k}')
+        on_pad = [pads[ref]['core_pin_um'] for ref in (r['from'], r['to']) if ref in pads]  # pins sit inside the pad cell
+        if not all(ax0-EPS <= x <= ax1+EPS and ay0-EPS <= y <= ay1+EPS for x, y in r['points_um']
+                   if not any(close((x, y), q) for q in on_pad)):
+            errors.append('IO route leaves the ring opening: ' + k)
+        if any(enters(s, adc) for s in segs[k]):
+            errors.append('IO route runs over the ADC core: ' + k)
+        low = min(LAYER[m] for m in r['layers'])
+        for g in regions.values():
+            inside = any(enters(s, (*g['bbox'][0], *g['bbox'][1])) for s in segs[k])
+            if inside and g.get('admits') and (r['class'] in DIGITAL) != (g['admits'] == 'digital'):
+                errors.append(f'IO route {k} ({r["class"]}) enters {g["id"]}')
+            if g['kind'] == 'decap' and inside and r['branch'] != g['branch']:
+                errors.append(f'IO route {k} enters {g["id"]} of the {g["branch"]} branch')
+            if g['kind'] == 'decap' and not inside and r['branch'] == g['branch'] and r['class'].endswith('_supply'):
+                errors.append(f'IO supply route {k} misses its decoupling {g["id"]}')
+            if 'cross_min_layer' in g and r['to'] != g['id'] and low < LAYER[g['cross_min_layer']] and any(
+                    touches(s, e) for s in segs[k] for e in edges(g.get('centerline') or g['bbox'])):
+                errors.append(f'IO route {k} crosses {g["id"]} below {g["cross_min_layer"]}')
+    for a, b in itertools.combinations(paths, 2):
+        if any(touches(s, t) for s, t in itertools.product(segs[a], segs[b])):
+            errors.append(f'IO routes touch: {a}/{b}')
+    axis = rules.get('axis_die_x_um')
+    for a, b in rules.get('mirrored_routes', []):
+        pa, pb = paths[a]['points_um'], paths[b]['points_um']
+        if len(pa) != len(pb) or not all(close([2*axis-x, y], q) for (x, y), q in zip(pa, pb)):
+            errors.append(f'IO routes are not mirror images: {a}/{b}')
+    refs = [r[end] for r in paths.values() for end in ('from', 'to')]
+    for name in place['pins_um']:
+        if refs.count('ADC.' + name) != 1:
+            errors.append(f'ADC pin has {refs.count("ADC." + name)} IO routes: ADC.{name}')
+    for position, p in pads.items():
+        if refs.count(position) != (1 if p['core_net'] else 0):
+            errors.append(f'Pad has {refs.count(position)} IO routes: {position} {p["name"]}')
+        if (p['core_net'] is None) != (p['core_pin_um'] is None):
+            errors.append('Pad core net and core pin disagree: ' + position)
+    bonded = {p['name'] for p in pads.values() if p['device'] == 'PDDW16SDGZ'}
+    errors += [f'IO route {k} uses the bonded pad net {r["net"]}' for k, r in paths.items() if r['net'] in bonded]
+    return list(dict.fromkeys(errors)), {'pads': len(pads), 'routes': len(paths)}
+
+
 def pin_net(name, interfaces):
     """Net of INST.PORT[@access] from the electrical port order; SAR macro and ADC edge pins use the net name."""
     inst, port = name.split('.', 1)
@@ -135,6 +235,9 @@ def dependencies(root=ROOT):
     names = ['design/manifest.json', 'design/top/adc_top.scs',
              'Layout/design/manifest.json', 'Layout/design/floorplan.json',
              'Layout/specs/interfaces.json', 'Layout/specs/constraints.json']
+    ring = json.loads((root / 'Layout/design/floorplan.json').read_text(encoding='utf-8')).get('io_ring')
+    if ring and (root / ring['plan']).exists():
+        names.append(ring['plan'])
     design = json.loads((root / 'design/manifest.json').read_text())
     names += sorted({'design/' + entry['file'] for entry in design['subcircuits'].values()})
     return {name: digest(root / name) for name in names}
@@ -191,12 +294,24 @@ def check(root=ROOT):
             errors.append('Unknown route endpoint: ' + name)
     route_errors, routing = routes(plan, interfaces)
     errors += route_errors
+    ring, ring_summary = None, None
+    if plan.get('io_ring'):
+        if (root / plan['io_ring']['plan']).exists():
+            ring = read(plan['io_ring']['plan'])
+            ring_errors, ring_summary = io_ring(plan, ring)
+            errors += ring_errors
+        else:
+            errors.append('Missing IO ring plan: ' + plan['io_ring']['plan'])
     hashes = dependencies(root)
     saved_path = root / 'Layout/results/current.json'
     saved = read('Layout/results/current.json') if saved_path.exists() else {}
     stale = saved.get('planning_inputs_sha256') != hashes
     evidence_inputs = saved.get('qualification_inputs_sha256')
     core_area = (boundary[2]-boundary[0])*(boundary[3]-boundary[1])
+    die = plan.get('die_bbox')
+    die_area = round((die[2]-die[0])*(die[3]-die[1]), 4) if die else None
+    opening = ring['ring_opening'] if ring else None
+    io_area = round(die_area-(opening[1][0]-opening[0][0])*(opening[1][1]-opening[0][1]), 4) if ring and die else None
     rows = [{'block': b['id'], 'width_um': b['size'][0], 'height_um': b['size'][1],
              'area_um2': round(b['size'][0]*b['size'][1], 4), 'basis': b['basis'],
              'uncertainty': b['uncertainty']} for b in blocks]
@@ -204,11 +319,11 @@ def check(root=ROOT):
             'qualification_applicability': ('unmeasured' if not evidence_inputs else
                                            'matching_recorded_inputs' if evidence_inputs == hashes else 'stale'),
             'live_oa_identity': 'not_queried_by_local_check; verify with native stream before claiming applicability',
-            'routing': routing,
+            'routing': routing, 'io_ring': ring_summary,
             'planning_inputs_sha256': hashes, 'area': {'units': 'um2', 'blocks': rows,
             'core_allocation': core_area, 'block_allocation': round(sum(b['area_um2'] for b in rows), 4),
             'routing_power_isolation_boundary_reserve': round(core_area-sum(b['area_um2'] for b in rows), 4),
-            'die_area': None, 'io_area': None, 'status': 'coarse_allocation_not_final_area'},
+            'die_area': die_area, 'io_area': io_area, 'status': 'coarse_allocation_not_final_area'},
             'unresolved_budgets': [key for key, val in constraints['electrical_budgets'].items() if val['limit'] is None],
             'signoff': False}
 
