@@ -56,9 +56,9 @@ def ports(body):
     return head.replace("\n+", " ").split()
 
 
-def build(summary):
+def build(summary, references=REFERENCES):
     lib, sources = {}, {}
-    for ev in REFERENCES:
+    for ev in references:
         path = WORK / ev / "reference.cdl"
         blob = path.read_bytes()
         sources[ev] = hashlib.sha256(blob).hexdigest()
@@ -104,8 +104,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--content", required=True, help="content.json of the layout_route_full build (array summary)")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--bootstrap-reference", default=REFERENCES[-1],
+                    help="evidence ID whose reference.cdl describes the Bootstrap master (default: the frozen core)")
     args = ap.parse_args()
-    text, info = build(json.loads((ROOT / args.content).read_bytes())["summary"])
+    refs = REFERENCES[:-1] + (args.bootstrap_reference,)
+    text, info = build(json.loads((ROOT / args.content).read_bytes())["summary"], refs)
     (ROOT / args.out).parent.mkdir(parents=True, exist_ok=True)
     (ROOT / args.out).write_text(text, encoding="ascii")
     info["sha256"] = hashlib.sha256(text.encode("ascii")).hexdigest()

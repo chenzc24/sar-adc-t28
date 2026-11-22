@@ -4,6 +4,8 @@ import base64, errno, fcntl, hashlib, json, os, re, resource, signal, socket, st
 
 ROOT='/server_local_ssd/chenzc_intern25/sar-adc-t28'
 UID=596
+# Managed hosts; equal to execution.py HOSTS (this file is uploaded on its own; tests/test_managed.py checks it).
+HOSTS=('thu-wei','thu-sui','thu-song','thu-yuan','thu-tang','thu-shu','thu-xia','thu-ming')
 TERMINAL=set(['complete','failed','rejected','interrupted','limit_exceeded'])
 
 def read(p):
@@ -472,7 +474,7 @@ def legacy_artifacts(path):
     return dict(remote_path=path,files=files,skipped=skipped,total_bytes=total,read_only=True)
 def main(req):
     expected=req.get('expected_host','thu-wei')
-    assert expected in ('thu-wei','thu-sui','thu-song') and os.getuid()==UID and socket.gethostname().split('.')[0]==expected,'Unexpected execution host/account'
+    assert expected in HOSTS and os.getuid()==UID and socket.gethostname().split('.')[0]==expected,'Unexpected execution host/account'
     action=req['action']
     if action=='init':return storage_init(req)
     owned(ROOT);assert os.getuid()==UID

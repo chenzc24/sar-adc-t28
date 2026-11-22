@@ -61,6 +61,8 @@ def netlist(path, hcells):
         nets = tok[1:end - 1]
         transform = next((t.split("=")[1] for t in tok if t.startswith("$T=")), None)
         if cell not in hcells:
+            cell, nets = wrapped(cell, nets, subckts, body, hcells)
+        if cell not in hcells:
             continue
         if cell == BOOTSTRAP:
             block = BOOTSTRAP_X[transform]
@@ -71,6 +73,22 @@ def netlist(path, hcells):
             raise ValueError(f"Port count of {cell} differs from its instance")
         top.append((block, cell, list(zip(ports, nets))))
     return subckts["sar8_adc_core"], top
+
+
+def wrapped(cell, nets, subckts, body, hcells):
+    """A wrapper whose only instance is a block master at its origin (a block placed with its own fill cell, such as
+    the filled Bootstrap) stands for that block: return the block and its pins mapped to the wrapper's nets."""
+    inner = [t for t in body.get(cell, []) if t[0].upper().startswith("X")]
+    if len(inner) != 1:
+        return cell, nets
+    tok = inner[0]
+    params = [i for i, t in enumerate(tok) if "=" in t]
+    end = params[0] if params else len(tok)
+    k = next((i for i, t in enumerate(tok) if t.startswith("$T=")), None)
+    if tok[end - 1] not in hcells or k is None or tok[k] != "$T=0" or tok[k + 1:k + 4] != ["0", "0", "0"]:
+        return cell, nets
+    outer = dict(zip(subckts[cell], nets))
+    return tok[end - 1], [outer.get(p, p) for p in tok[1:end - 1]]
 
 
 def reach(top):
