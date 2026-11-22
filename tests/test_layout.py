@@ -35,8 +35,8 @@ class LayoutPlanTests(unittest.TestCase):
         result = planning.check(self.root)
         self.assertTrue(result['valid'], result['errors'])
         self.assertEqual(result['area']['core_allocation'], 13542)
-        self.assertEqual(result['area']['die_area'], 640*640)
-        self.assertEqual(result['io_ring'], {'pads': 28, 'routes': 32})
+        self.assertEqual(result['area']['die_area'], 760*760)
+        self.assertEqual(result['io_ring'], {'pads': 36, 'routes': 34})
         planning.render(self.root)
         self.assertFalse(planning.check(self.root)['planning_projection_stale'])
         self.assertEqual(planning.check(self.root)['qualification_applicability'], 'unmeasured')
@@ -82,6 +82,7 @@ class LayoutPlanTests(unittest.TestCase):
     def test_io_ring_faults_are_rejected(self):
         p = self.root/'Layout/design/io_ring.json'; original = p.read_text(encoding='utf-8')
         region = lambda d, name: next(g for g in d['reserved_regions'] if g['id'] == name)
+        pad = lambda pos, key, value: lambda d: next(q for q in d['pads'] if q['position'] == pos).__setitem__(key, value)
         def shift(name, value, *points):
             def change(d):
                 for i, axis in points: d['routes'][name]['points_um'][i][axis] = value
@@ -89,8 +90,18 @@ class LayoutPlanTests(unittest.TestCase):
         cases = [(lambda d: region(d, 'dvdd_decap')['bbox'][1].__setitem__(1, 374.0), 'DVDD misses its decoupling dvdd_decap'),
                  (lambda d: region(d, 'adc_guard_ring').__setitem__('cross_min_layer', 'M7'), 'VINN crosses adc_guard_ring below M7'),
                  (lambda d: d['routes']['ADC_D0'].__setitem__('net', 'D0'), 'uses the bonded pad net D0'),
-                 (shift('SAMPLE', 410.0, (1, 0), (2, 0)), 'SAMPLE (digital_signal) enters sar_feed_channel'),
-                 (shift('VINP', 452.0, (1, 1), (2, 1)), 'not mirror images: VINN/VINP'),
+                 (shift('SAMPLE', 522.0, (2, 1), (3, 1)), 'SAMPLE (digital_signal) enters sar_feed_channel'),
+                 (shift('VINP', 575.0, (1, 1), (2, 1)), 'not mirror images: VINN/VINP'),
+                 (lambda d: d['routes']['SAMPLE'].__setitem__('layers', ['M7', 'M8']), 'SAMPLE crosses core_vss_ring on its layer M7'),
+                 (pad('top_8', 'device', 'PVSS1AC'), 'Analog corner between top_8 and left_0 needs a bonded PVSS3AC'),
+                 (pad('bottom_8', 'device', 'PVDD2DGZ'), 'Digital corner between bottom_8 and right_0 needs a bonded PVSS2DGZ'),
+                 (pad('left_6', 'device', 'PVSS1AC'), 'Analog pad beside the power cut at left_6/left_7 must be PVDD3AC/PVSS3AC'),
+                 (pad('left_5', 'device', 'PVDD1AC'), 'Analog domain ana needs at least 3 bonded PVDD3AC, has 2'),
+                 (pad('top_7', 'device', 'PVSS3AC'), 'Analog domain ana needs at least 1 bonded PVSS2AC, has 0'),
+                 (pad('bottom_3', 'device', 'PVDD2POC'), 'Digital domain dig needs one and only one PVDD2POC, has 2'),
+                 (pad('right_6', 'device', 'PVDD2DGZ'), 'Digital domain dig needs at least 3 bonded PVDD1DGZ, has 2'),
+                 (pad('top_7', 'name', 'ESD'), "Cells supplying the global VSS bus carry different names: ['ESD', 'VSS']"),
+                 (pad('right_8', 'domain', 'dig'), 'Corner between right_8 and top_0 joins two domains'),
                  (lambda d: d['routes'].pop('AVSS_guard'), 'Pad has 0 IO routes: left_0'),
                  (lambda d: region(d, 'pair_pad_decap')['bbox'][0].__setitem__(0, 112.0), 'VREFN_b enters pair_pad_decap')]
         for change, message in cases:
