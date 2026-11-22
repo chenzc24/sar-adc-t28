@@ -1,0 +1,3237 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_pin_readback.py",
+  "source": "saved OA, read with oaq --saved (isolated read-only reader); no edit session involved",
+  "units": "um",
+  "frames": "local = cellview frame of the saved view; core = floorplan core frame after native_origin_translation and instance_orientation (MY maps x to -x before the translation)",
+  "floorplan": {
+    "file": "Layout/design/floorplan.json",
+    "status": "coarse_proposal_not_applied_to_OA",
+    "core_bbox": [
+      0,
+      0,
+      122.0,
+      111.0
+    ]
+  },
+  "cellviews": {
+    "sar8_cdac_with_xref/layout_se_d2_r2": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8_cdac_with_xref/layout_se_d2_r2",
+      "layout_oa_sha256": "e3192196da4d57d3d38968f2754bbc069bbbf27fd94eacb843b319077240580f",
+      "layout_oa_bytes": 32116,
+      "layout_oa_mtime": "2026-11-21 01:26:33.722054999 +0800"
+    },
+    "sar8_se_core/layout_r3": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8_se_core/layout_r3",
+      "layout_oa_sha256": "bec843dbb7b84c8a7c5e423d948f3336f63bc3d2a6757af7dea8065546b0a178",
+      "layout_oa_bytes": 159908,
+      "layout_oa_mtime": "2026-11-20 20:22:22.552179908 +0800"
+    },
+    "sar8i_refword/layout_se_d2_r2": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8i_refword/layout_se_d2_r2",
+      "layout_oa_sha256": "4952db29d90ffa64326d570010599c2b45005848b0a4b4736fb79450444da841",
+      "layout_oa_bytes": 43700,
+      "layout_oa_mtime": "2026-11-21 01:26:31.196062628 +0800"
+    },
+    "sar8j_r1_cdac/layout_paired_stacked": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8j_r1_cdac/layout_paired_stacked",
+      "layout_oa_sha256": "df095a240517031c0169d3b555a53469f15147374008bb045cce355d118503b9",
+      "layout_oa_bytes": 27252,
+      "layout_oa_mtime": "2026-11-18 17:45:21.068552455 +0800"
+    },
+    "sar_bootstrap_flat_8b_p_core/layout": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar_bootstrap_flat_8b_p_core/layout",
+      "layout_oa_sha256": "c23c7e3b3cc27a8478cde0459a2d6f88c587eb7ad64d3cf9b335f68a7cd3e058",
+      "layout_oa_bytes": 80860,
+      "layout_oa_mtime": "2026-11-21 12:12:56.262918175 +0800"
+    },
+    "sar_strongarm_t28_core/layout": {
+      "library": "SAR_ADC_T28_LAYOUT",
+      "path": "/home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar_strongarm_t28_core/layout",
+      "layout_oa_sha256": "fe7ca21935885afa185de55cf46bf6b5caf373154d2f15c14bd0b3be62bbf1ae",
+      "layout_oa_bytes": 53508,
+      "layout_oa_mtime": "2026-11-20 23:44:19.464582600 +0800"
+    }
+  },
+  "pair_instances": {
+    "XCDAC": {
+      "master": [
+        "SAR_ADC_T28_LAYOUT",
+        "sar8j_r1_cdac",
+        "layout_paired_stacked"
+      ],
+      "transform": [
+        [
+          0.0,
+          0.0
+        ],
+        "R0",
+        1.0
+      ],
+      "bbox": [
+        [
+          -1.715,
+          -25.9
+        ],
+        [
+          70.515,
+          25.86
+        ]
+      ]
+    },
+    "XREF": {
+      "master": [
+        "SAR_ADC_T28_LAYOUT",
+        "sar8i_refword",
+        "layout_se_d2_r2"
+      ],
+      "transform": [
+        [
+          0.0,
+          0.0
+        ],
+        "R0",
+        1.0
+      ],
+      "bbox": [
+        [
+          3.48,
+          -32.465
+        ],
+        [
+          66.834,
+          -27.18
+        ]
+      ]
+    }
+  },
+  "placements": {
+    "cdac": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "occurrence": "XCDAC",
+      "native_origin_translation": [
+        11.715,
+        42.465
+      ],
+      "instance_orientation": "R0"
+    },
+    "reference": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "occurrence": "XREF",
+      "native_origin_translation": [
+        11.715,
+        42.465
+      ],
+      "instance_orientation": "R0"
+    },
+    "comparator": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "occurrence": null,
+      "native_origin_translation": [
+        46.115,
+        72.61
+      ],
+      "instance_orientation": "MY"
+    },
+    "bootstrap_n": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "occurrence": null,
+      "native_origin_translation": [
+        31.175,
+        76.245
+      ],
+      "instance_orientation": "MY"
+    },
+    "bootstrap_p": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "occurrence": null,
+      "native_origin_translation": [
+        61.055,
+        76.245
+      ],
+      "instance_orientation": "R0"
+    },
+    "sar": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "occurrence": null,
+      "native_origin_translation": [
+        92.23,
+        52.0
+      ],
+      "instance_orientation": "R0"
+    }
+  },
+  "xref_bus_extension": {
+    "outline_local": [
+      [
+        3.48,
+        -32.465
+      ],
+      [
+        66.834,
+        -27.18
+      ]
+    ],
+    "outline_core": [
+      [
+        15.195,
+        10.0
+      ],
+      [
+        78.549,
+        15.285
+      ]
+    ],
+    "bus_pin_center_x_local": 64.57,
+    "inset_from_outline_um": 2.264,
+    "searched_local": [
+      [
+        64.71,
+        -31.58
+      ],
+      [
+        67.334,
+        -29.28
+      ]
+    ],
+    "searched_layers": [
+      "M3",
+      "VIA2/VIA3 M3 enclosures"
+    ],
+    "tracks": {
+      "CODE0": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -31.36
+          ],
+          [
+            66.834,
+            -31.26
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            11.105
+          ],
+          [
+            78.549,
+            11.205
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE1": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -31.14
+          ],
+          [
+            66.834,
+            -31.04
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            11.325
+          ],
+          [
+            78.549,
+            11.425
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE2": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -30.92
+          ],
+          [
+            66.834,
+            -30.82
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            11.545
+          ],
+          [
+            78.549,
+            11.645
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE3": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -30.7
+          ],
+          [
+            66.834,
+            -30.6
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            11.765
+          ],
+          [
+            78.549,
+            11.865
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE4": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -30.48
+          ],
+          [
+            66.834,
+            -30.38
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            11.985
+          ],
+          [
+            78.549,
+            12.085
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE5": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -30.26
+          ],
+          [
+            66.834,
+            -30.16
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            12.205
+          ],
+          [
+            78.549,
+            12.305
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE6": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -30.04
+          ],
+          [
+            66.834,
+            -29.94
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            12.425
+          ],
+          [
+            78.549,
+            12.525
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "CODE7": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -29.82
+          ],
+          [
+            66.834,
+            -29.72
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            12.645
+          ],
+          [
+            78.549,
+            12.745
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      },
+      "PRESET": {
+        "pin_east_edge_local": 64.71,
+        "extension_local": [
+          [
+            64.71,
+            -29.6
+          ],
+          [
+            66.834,
+            -29.5
+          ]
+        ],
+        "extension_core": [
+          [
+            76.425,
+            12.865
+          ],
+          [
+            78.549,
+            12.965
+          ]
+        ],
+        "m3_in_half_pitch_band": [],
+        "clear": true
+      }
+    },
+    "all_clear": true,
+    "outline_set_by": {
+      "lpp": [
+        "text",
+        "drawing"
+      ],
+      "type": "label",
+      "occurrence": "XREF/ROW_BOUNDARY_RIGHT_460",
+      "bbox": [
+        [
+          64.4,
+          -29.11
+        ],
+        [
+          66.834,
+          -29.0
+        ]
+      ]
+    },
+    "drawn_east_edge_local": 64.98,
+    "drawn_east_edge_core": 76.695,
+    "row_end_cells": [
+      "XREF/ROW_BOUNDARY_RIGHT_460"
+    ]
+  },
+  "sar_m7_tracks": {
+    "boundary_local": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        18.495,
+        16.8
+      ]
+    ],
+    "boundary_lower_left_is_origin": true,
+    "boundary_core": [
+      [
+        92.23,
+        52.0
+      ],
+      [
+        110.725,
+        68.8
+      ]
+    ],
+    "shape_counts": {
+      "M5": 56,
+      "VIA5": 112,
+      "M6": 32,
+      "VIA6": 0,
+      "M7": 0,
+      "VIA7": 0,
+      "M8": 0
+    },
+    "m6_stripes": [
+      {
+        "x": [
+          3.08,
+          3.48
+        ],
+        "y": [
+          0.6,
+          16.2
+        ],
+        "net": "VDD"
+      },
+      {
+        "x": [
+          3.88,
+          4.28
+        ],
+        "y": [
+          0.6,
+          16.2
+        ],
+        "net": "VSS"
+      },
+      {
+        "x": [
+          10.08,
+          10.48
+        ],
+        "y": [
+          0.6,
+          16.2
+        ],
+        "net": "VDD"
+      },
+      {
+        "x": [
+          10.88,
+          11.28
+        ],
+        "y": [
+          0.6,
+          16.2
+        ],
+        "net": "VSS"
+      }
+    ],
+    "m5_shapes_are": [
+      [
+        0.4,
+        0.25,
+        "VDD"
+      ],
+      [
+        0.4,
+        0.25,
+        "VSS"
+      ]
+    ],
+    "tracks": {
+      "D0": {
+        "y_local": 1.4,
+        "y_core": 53.4,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D1": {
+        "y_local": 2.6,
+        "y_core": 54.6,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D2": {
+        "y_local": 3.8,
+        "y_core": 55.8,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D3": {
+        "y_local": 5.0,
+        "y_core": 57.0,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D4": {
+        "y_local": 6.2,
+        "y_core": 58.2,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D5": {
+        "y_local": 7.4,
+        "y_core": 59.4,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D6": {
+        "y_local": 8.6,
+        "y_core": 60.6,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "D7": {
+        "y_local": 9.8,
+        "y_core": 61.8,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      },
+      "SAMPLE": {
+        "y_local": 13.4,
+        "y_core": 65.4,
+        "crossing_under_centreline": {
+          "M5": [],
+          "M6": [
+            {
+              "x": [
+                3.08,
+                3.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                3.88,
+                4.28
+              ],
+              "net": "VSS"
+            },
+            {
+              "x": [
+                10.08,
+                10.48
+              ],
+              "net": "VDD"
+            },
+            {
+              "x": [
+                10.88,
+                11.28
+              ],
+              "net": "VSS"
+            }
+          ],
+          "M7": []
+        },
+        "nearest_non_crossing_edge_um": {
+          "M5": 0.275,
+          "M6": 0.275
+        }
+      }
+    }
+  },
+  "sar_west_pins": {
+    "port_order_matches": true,
+    "on_formula": true,
+    "layers": [
+      [
+        "M3",
+        "drawing"
+      ]
+    ],
+    "pin_rect_um": [
+      [
+        0.34,
+        0.05
+      ]
+    ]
+  },
+  "block_extents": {
+    "cdac": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "occurrence": "XCDAC",
+      "native_bbox": [
+        [
+          -1.715,
+          -25.9
+        ],
+        [
+          70.515,
+          25.86
+        ]
+      ],
+      "edges": {
+        "west": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XCDAC/XCORE"
+          ]
+        },
+        "east": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XCDAC/XCORE"
+          ]
+        },
+        "south": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XCDAC",
+            "XCDAC/XCORE"
+          ]
+        },
+        "north": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XCDAC",
+            "XCDAC/XCORE",
+            "XCDAC/XCORE/XN",
+            "XCDAC/XCORE/XP"
+          ]
+        }
+      }
+    },
+    "reference": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "occurrence": "XREF",
+      "native_bbox": [
+        [
+          3.48,
+          -32.465
+        ],
+        [
+          66.834,
+          -27.18
+        ]
+      ],
+      "edges": {
+        "west": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XREF/ROW_BOUNDARY_LEFT_26"
+          ]
+        },
+        "east": {
+          "drawn_reaches_edge": false,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": []
+        },
+        "south": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XREF"
+          ]
+        },
+        "north": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "XREF"
+          ]
+        }
+      }
+    },
+    "comparator": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "occurrence": null,
+      "native_bbox": [
+        [
+          -0.815,
+          -2.645
+        ],
+        [
+          0.815,
+          0.875
+        ]
+      ],
+      "edges": {
+        "west": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.044,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "east": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.046,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "south": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "north": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        }
+      }
+    },
+    "bootstrap_n": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "occurrence": null,
+      "native_bbox": [
+        [
+          -11.82,
+          -0.045
+        ],
+        [
+          12.7,
+          24.945
+        ]
+      ],
+      "edges": {
+        "west": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "Cboot_00_00/fmom_pdk",
+            "Cboot_01_00/fmom_pdk",
+            "Cboot_02_00/fmom_pdk",
+            "Cboot_03_00/fmom_pdk"
+          ]
+        },
+        "east": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "Cboot_00_27/fmom_pdk",
+            "Cboot_01_27/fmom_pdk",
+            "Cboot_02_27/fmom_pdk",
+            "Cboot_03_27/fmom_pdk"
+          ]
+        },
+        "south": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "north": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        }
+      }
+    },
+    "bootstrap_p": {
+      "same_master_as": "bootstrap_n"
+    },
+    "sar": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "occurrence": null,
+      "native_bbox": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          18.495,
+          16.8
+        ]
+      ],
+      "edges": {
+        "west": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.081,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "east": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 1.399,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "south": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        },
+        "north": {
+          "drawn_reaches_edge": true,
+          "drawn_overhang_um": 0.0,
+          "text_overhang_um": 0.0,
+          "edge_drawn_by": [
+            "(top)"
+          ]
+        }
+      }
+    }
+  },
+  "pins": {
+    "XCDAC.TOPN": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "TOPN",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          33.76,
+          25.7
+        ],
+        [
+          33.92,
+          25.86
+        ]
+      ],
+      "local_center": [
+        33.84,
+        25.78
+      ],
+      "core_center": [
+        45.555,
+        68.245
+      ],
+      "pins_um": [
+        45.555,
+        68.245
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCDAC.TOPP": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "TOPP",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          34.88,
+          25.7
+        ],
+        [
+          35.04,
+          25.86
+        ]
+      ],
+      "local_center": [
+        34.96,
+        25.78
+      ],
+      "core_center": [
+        46.675,
+        68.245
+      ],
+      "pins_um": [
+        46.675,
+        68.245
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE0": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE0",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -31.36
+        ],
+        [
+          64.71,
+          -31.26
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -31.31
+      ],
+      "core_center": [
+        76.285,
+        11.155
+      ],
+      "pins_um": [
+        76.285,
+        11.155
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE1": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE1",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -31.14
+        ],
+        [
+          64.71,
+          -31.04
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -31.09
+      ],
+      "core_center": [
+        76.285,
+        11.375
+      ],
+      "pins_um": [
+        76.285,
+        11.375
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE2": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE2",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -30.92
+        ],
+        [
+          64.71,
+          -30.82
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -30.87
+      ],
+      "core_center": [
+        76.285,
+        11.595
+      ],
+      "pins_um": [
+        76.285,
+        11.595
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE3": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE3",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -30.7
+        ],
+        [
+          64.71,
+          -30.6
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -30.65
+      ],
+      "core_center": [
+        76.285,
+        11.815
+      ],
+      "pins_um": [
+        76.285,
+        11.815
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE4": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE4",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -30.48
+        ],
+        [
+          64.71,
+          -30.38
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -30.43
+      ],
+      "core_center": [
+        76.285,
+        12.035
+      ],
+      "pins_um": [
+        76.285,
+        12.035
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE5": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE5",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -30.26
+        ],
+        [
+          64.71,
+          -30.16
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -30.21
+      ],
+      "core_center": [
+        76.285,
+        12.255
+      ],
+      "pins_um": [
+        76.285,
+        12.255
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE6": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE6",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -30.04
+        ],
+        [
+          64.71,
+          -29.94
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -29.99
+      ],
+      "core_center": [
+        76.285,
+        12.475
+      ],
+      "pins_um": [
+        76.285,
+        12.475
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.CODE7": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "CODE7",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -29.82
+        ],
+        [
+          64.71,
+          -29.72
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -29.77
+      ],
+      "core_center": [
+        76.285,
+        12.695
+      ],
+      "pins_um": [
+        76.285,
+        12.695
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XREF.PRESET": {
+      "cellview": [
+        "sar8_cdac_with_xref",
+        "layout_se_d2_r2"
+      ],
+      "terminal": "PRESET",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          64.43,
+          -29.6
+        ],
+        [
+          64.71,
+          -29.5
+        ]
+      ],
+      "local_center": [
+        64.57,
+        -29.55
+      ],
+      "core_center": [
+        76.285,
+        12.915
+      ],
+      "pins_um": [
+        76.285,
+        12.915
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.VINN": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "VINN",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.715,
+          -1.625
+        ],
+        [
+          0.815,
+          -1.575
+        ]
+      ],
+      "local_center": [
+        0.765,
+        -1.6
+      ],
+      "core_center": [
+        45.35,
+        71.01
+      ],
+      "pins_um": [
+        45.35,
+        71.01
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.VINP": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "VINP",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -0.815,
+          -1.625
+        ],
+        [
+          -0.715,
+          -1.575
+        ]
+      ],
+      "local_center": [
+        -0.765,
+        -1.6
+      ],
+      "core_center": [
+        46.88,
+        71.01
+      ],
+      "pins_um": [
+        46.88,
+        71.01
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.OUTN": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "OUTN",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.17,
+          0.775
+        ],
+        [
+          0.22,
+          0.875
+        ]
+      ],
+      "local_center": [
+        0.195,
+        0.825
+      ],
+      "core_center": [
+        45.92,
+        73.435
+      ],
+      "pins_um": [
+        45.92,
+        73.435
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.OUTP": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "OUTP",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -0.22,
+          0.775
+        ],
+        [
+          -0.17,
+          0.875
+        ]
+      ],
+      "local_center": [
+        -0.195,
+        0.825
+      ],
+      "core_center": [
+        46.31,
+        73.435
+      ],
+      "pins_um": [
+        46.31,
+        73.435
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.CLK": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "CLK",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -0.025,
+          -2.645
+        ],
+        [
+          0.025,
+          -2.545
+        ]
+      ],
+      "local_center": [
+        0.0,
+        -2.595
+      ],
+      "core_center": [
+        46.115,
+        70.015
+      ],
+      "pins_um": [
+        46.115,
+        70.015
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTN.VOUT": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "VOUT",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -1.935,
+          -0.03
+        ],
+        [
+          -1.735,
+          0.17
+        ]
+      ],
+      "local_center": [
+        -1.835,
+        0.07
+      ],
+      "core_center": [
+        33.01,
+        76.315
+      ],
+      "pins_um": [
+        33.01,
+        76.315
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTN.CLKS": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "CLKS",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          2.4,
+          0.01
+        ],
+        [
+          2.52,
+          0.13
+        ]
+      ],
+      "local_center": [
+        2.46,
+        0.07
+      ],
+      "core_center": [
+        28.715,
+        76.315
+      ],
+      "pins_um": [
+        28.715,
+        76.315
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTN.VIN": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "VIN",
+      "lpp": [
+        "M5",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -2.315,
+          24.705
+        ],
+        [
+          -2.015,
+          24.945
+        ]
+      ],
+      "local_center": [
+        -2.165,
+        24.825
+      ],
+      "core_center": [
+        33.34,
+        101.07
+      ],
+      "pins_um": [
+        33.34,
+        101.07
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTP.VOUT": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "VOUT",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -1.935,
+          -0.03
+        ],
+        [
+          -1.735,
+          0.17
+        ]
+      ],
+      "local_center": [
+        -1.835,
+        0.07
+      ],
+      "core_center": [
+        59.22,
+        76.315
+      ],
+      "pins_um": [
+        59.22,
+        76.315
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTP.CLKS": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "CLKS",
+      "lpp": [
+        "M2",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          2.4,
+          0.01
+        ],
+        [
+          2.52,
+          0.13
+        ]
+      ],
+      "local_center": [
+        2.46,
+        0.07
+      ],
+      "core_center": [
+        63.515,
+        76.315
+      ],
+      "pins_um": [
+        63.515,
+        76.315
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XBOOTP.VIN": {
+      "cellview": [
+        "sar_bootstrap_flat_8b_p_core",
+        "layout"
+      ],
+      "terminal": "VIN",
+      "lpp": [
+        "M5",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -2.315,
+          24.705
+        ],
+        [
+          -2.015,
+          24.945
+        ]
+      ],
+      "local_center": [
+        -2.165,
+        24.825
+      ],
+      "core_center": [
+        58.89,
+        101.07
+      ],
+      "pins_um": [
+        58.89,
+        101.07
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D0": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D0",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          1.375
+        ],
+        [
+          0.34,
+          1.425
+        ]
+      ],
+      "local_center": [
+        0.17,
+        1.4
+      ],
+      "core_center": [
+        92.4,
+        53.4
+      ],
+      "pins_um": [
+        92.4,
+        53.4
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE0": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE0",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          1.975
+        ],
+        [
+          0.34,
+          2.025
+        ]
+      ],
+      "local_center": [
+        0.17,
+        2.0
+      ],
+      "core_center": [
+        92.4,
+        54.0
+      ],
+      "pins_um": [
+        92.4,
+        54.0
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D1": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D1",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          2.575
+        ],
+        [
+          0.34,
+          2.625
+        ]
+      ],
+      "local_center": [
+        0.17,
+        2.6
+      ],
+      "core_center": [
+        92.4,
+        54.6
+      ],
+      "pins_um": [
+        92.4,
+        54.6
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE1": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE1",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          3.175
+        ],
+        [
+          0.34,
+          3.225
+        ]
+      ],
+      "local_center": [
+        0.17,
+        3.2
+      ],
+      "core_center": [
+        92.4,
+        55.2
+      ],
+      "pins_um": [
+        92.4,
+        55.2
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D2": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D2",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          3.775
+        ],
+        [
+          0.34,
+          3.825
+        ]
+      ],
+      "local_center": [
+        0.17,
+        3.8
+      ],
+      "core_center": [
+        92.4,
+        55.8
+      ],
+      "pins_um": [
+        92.4,
+        55.8
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE2": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE2",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          4.375
+        ],
+        [
+          0.34,
+          4.425
+        ]
+      ],
+      "local_center": [
+        0.17,
+        4.4
+      ],
+      "core_center": [
+        92.4,
+        56.4
+      ],
+      "pins_um": [
+        92.4,
+        56.4
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D3": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D3",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          4.975
+        ],
+        [
+          0.34,
+          5.025
+        ]
+      ],
+      "local_center": [
+        0.17,
+        5.0
+      ],
+      "core_center": [
+        92.4,
+        57.0
+      ],
+      "pins_um": [
+        92.4,
+        57.0
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE3": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE3",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          5.575
+        ],
+        [
+          0.34,
+          5.625
+        ]
+      ],
+      "local_center": [
+        0.17,
+        5.6
+      ],
+      "core_center": [
+        92.4,
+        57.6
+      ],
+      "pins_um": [
+        92.4,
+        57.6
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D4": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D4",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          6.175
+        ],
+        [
+          0.34,
+          6.225
+        ]
+      ],
+      "local_center": [
+        0.17,
+        6.2
+      ],
+      "core_center": [
+        92.4,
+        58.2
+      ],
+      "pins_um": [
+        92.4,
+        58.2
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE4": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE4",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          6.775
+        ],
+        [
+          0.34,
+          6.825
+        ]
+      ],
+      "local_center": [
+        0.17,
+        6.8
+      ],
+      "core_center": [
+        92.4,
+        58.8
+      ],
+      "pins_um": [
+        92.4,
+        58.8
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D5": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D5",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          7.375
+        ],
+        [
+          0.34,
+          7.425
+        ]
+      ],
+      "local_center": [
+        0.17,
+        7.4
+      ],
+      "core_center": [
+        92.4,
+        59.4
+      ],
+      "pins_um": [
+        92.4,
+        59.4
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE5": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE5",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          7.975
+        ],
+        [
+          0.34,
+          8.025
+        ]
+      ],
+      "local_center": [
+        0.17,
+        8.0
+      ],
+      "core_center": [
+        92.4,
+        60.0
+      ],
+      "pins_um": [
+        92.4,
+        60.0
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D6": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D6",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          8.575
+        ],
+        [
+          0.34,
+          8.625
+        ]
+      ],
+      "local_center": [
+        0.17,
+        8.6
+      ],
+      "core_center": [
+        92.4,
+        60.6
+      ],
+      "pins_um": [
+        92.4,
+        60.6
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE6": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE6",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          9.175
+        ],
+        [
+          0.34,
+          9.225
+        ]
+      ],
+      "local_center": [
+        0.17,
+        9.2
+      ],
+      "core_center": [
+        92.4,
+        61.2
+      ],
+      "pins_um": [
+        92.4,
+        61.2
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.D7": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "D7",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          9.775
+        ],
+        [
+          0.34,
+          9.825
+        ]
+      ],
+      "local_center": [
+        0.17,
+        9.8
+      ],
+      "core_center": [
+        92.4,
+        61.8
+      ],
+      "pins_um": [
+        92.4,
+        61.8
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CODE7": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CODE7",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          10.375
+        ],
+        [
+          0.34,
+          10.425
+        ]
+      ],
+      "local_center": [
+        0.17,
+        10.4
+      ],
+      "core_center": [
+        92.4,
+        62.4
+      ],
+      "pins_um": [
+        92.4,
+        62.4
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.PHI_U": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "PHI_U",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          10.975
+        ],
+        [
+          0.34,
+          11.025
+        ]
+      ],
+      "local_center": [
+        0.17,
+        11.0
+      ],
+      "core_center": [
+        92.4,
+        63.0
+      ],
+      "pins_um": [
+        92.4,
+        63.0
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.PRESET": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "PRESET",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          11.575
+        ],
+        [
+          0.34,
+          11.625
+        ]
+      ],
+      "local_center": [
+        0.17,
+        11.6
+      ],
+      "core_center": [
+        92.4,
+        63.6
+      ],
+      "pins_um": [
+        92.4,
+        63.6
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.SAMPLE_INT": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "SAMPLE_INT",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          12.175
+        ],
+        [
+          0.34,
+          12.225
+        ]
+      ],
+      "local_center": [
+        0.17,
+        12.2
+      ],
+      "core_center": [
+        92.4,
+        64.2
+      ],
+      "pins_um": [
+        92.4,
+        64.2
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.SEQ_SAMPLE": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "SEQ_SAMPLE",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          12.775
+        ],
+        [
+          0.34,
+          12.825
+        ]
+      ],
+      "local_center": [
+        0.17,
+        12.8
+      ],
+      "core_center": [
+        92.4,
+        64.8
+      ],
+      "pins_um": [
+        92.4,
+        64.8
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.SAMPLE": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "SAMPLE",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          13.375
+        ],
+        [
+          0.34,
+          13.425
+        ]
+      ],
+      "local_center": [
+        0.17,
+        13.4
+      ],
+      "core_center": [
+        92.4,
+        65.4
+      ],
+      "pins_um": [
+        92.4,
+        65.4
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.COMP_N": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "COMP_N",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          13.975
+        ],
+        [
+          0.34,
+          14.025
+        ]
+      ],
+      "local_center": [
+        0.17,
+        14.0
+      ],
+      "core_center": [
+        92.4,
+        66.0
+      ],
+      "pins_um": [
+        92.4,
+        66.0
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.COMP_P": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "COMP_P",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          14.575
+        ],
+        [
+          0.34,
+          14.625
+        ]
+      ],
+      "local_center": [
+        0.17,
+        14.6
+      ],
+      "core_center": [
+        92.4,
+        66.6
+      ],
+      "pins_um": [
+        92.4,
+        66.6
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "SAR.CMP_CLK": {
+      "cellview": [
+        "sar8_se_core",
+        "layout_r3"
+      ],
+      "terminal": "CMP_CLK",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          0.0,
+          15.175
+        ],
+        [
+          0.34,
+          15.225
+        ]
+      ],
+      "local_center": [
+        0.17,
+        15.2
+      ],
+      "core_center": [
+        92.4,
+        67.2
+      ],
+      "pins_um": [
+        92.4,
+        67.2
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ]
+    },
+    "XCOMP.CLK@trunk_top": {
+      "cellview": [
+        "sar_strongarm_t28_core",
+        "layout"
+      ],
+      "terminal": "CLK",
+      "lpp": [
+        "M3",
+        "drawing"
+      ],
+      "local_bbox": [
+        [
+          -0.025,
+          -2.645
+        ],
+        [
+          0.025,
+          -0.225
+        ]
+      ],
+      "trunk_top_edge_local": [
+        0.0,
+        -0.225
+      ],
+      "trunk_top_edge_core": [
+        46.115,
+        72.385
+      ],
+      "top_via": {
+        "definition": "M3_M2",
+        "local_origin": [
+          0.0,
+          -0.28
+        ],
+        "footprints": {
+          "VIA2": [
+            [
+              -0.025,
+              -0.305
+            ],
+            [
+              0.025,
+              -0.255
+            ]
+          ],
+          "M2": [
+            [
+              -0.055,
+              -0.335
+            ],
+            [
+              0.055,
+              -0.225
+            ]
+          ],
+          "M3": [
+            [
+              -0.025,
+              -0.335
+            ],
+            [
+              0.025,
+              -0.225
+            ]
+          ]
+        }
+      },
+      "local_center": [
+        0.0,
+        -0.28
+      ],
+      "core_center": [
+        46.115,
+        72.33
+      ],
+      "pins_um": [
+        46.115,
+        72.33
+      ],
+      "delta_um": [
+        0.0,
+        0.0
+      ],
+      "definition": "pins_um is the centre of the top CLK via stack; the M3 trunk itself ends one via half-length above it"
+    }
+  },
+  "not_read": [
+    "ADC.0@north",
+    "ADC.0@pair",
+    "ADC.0@sar",
+    "ADC.D0",
+    "ADC.D1",
+    "ADC.D2",
+    "ADC.D3",
+    "ADC.D4",
+    "ADC.D5",
+    "ADC.D6",
+    "ADC.D7",
+    "ADC.SAMPLE",
+    "ADC.VDD!@north",
+    "ADC.VDD!@pair",
+    "ADC.VDD!@sar",
+    "ADC.VINN",
+    "ADC.VINP",
+    "ADC.VREFN@a",
+    "ADC.VREFN@b",
+    "ADC.VREFP@a",
+    "ADC.VREFP@b"
+  ],
+  "differences": [],
+  "paths_by_pin": {
+    "XCDAC.TOPN": [
+      "TOPN_to_comparator",
+      "TOPN_to_sampler"
+    ],
+    "XCDAC.TOPP": [
+      "TOPP_to_comparator",
+      "TOPP_to_sampler"
+    ],
+    "XREF.CODE0": [
+      "CODE0"
+    ],
+    "XREF.CODE1": [
+      "CODE1"
+    ],
+    "XREF.CODE2": [
+      "CODE2"
+    ],
+    "XREF.CODE3": [
+      "CODE3"
+    ],
+    "XREF.CODE4": [
+      "CODE4"
+    ],
+    "XREF.CODE5": [
+      "CODE5"
+    ],
+    "XREF.CODE6": [
+      "CODE6"
+    ],
+    "XREF.CODE7": [
+      "CODE7"
+    ],
+    "XREF.PRESET": [
+      "PRESET"
+    ],
+    "XCOMP.VINN": [
+      "TOPN_to_comparator"
+    ],
+    "XCOMP.VINP": [
+      "TOPP_to_comparator"
+    ],
+    "XCOMP.OUTN": [
+      "OUTN"
+    ],
+    "XCOMP.OUTP": [
+      "OUTP"
+    ],
+    "XCOMP.CLK": [],
+    "XBOOTN.VOUT": [
+      "TOPN_to_sampler"
+    ],
+    "XBOOTN.CLKS": [
+      "SEQ_SAMPLE_to_XBOOTN"
+    ],
+    "XBOOTN.VIN": [
+      "VINN"
+    ],
+    "XBOOTP.VOUT": [
+      "TOPP_to_sampler"
+    ],
+    "XBOOTP.CLKS": [
+      "SEQ_SAMPLE_to_XBOOTP"
+    ],
+    "XBOOTP.VIN": [
+      "VINP"
+    ],
+    "SAR.D0": [
+      "D0"
+    ],
+    "SAR.CODE0": [
+      "CODE0"
+    ],
+    "SAR.D1": [
+      "D1"
+    ],
+    "SAR.CODE1": [
+      "CODE1"
+    ],
+    "SAR.D2": [
+      "D2"
+    ],
+    "SAR.CODE2": [
+      "CODE2"
+    ],
+    "SAR.D3": [
+      "D3"
+    ],
+    "SAR.CODE3": [
+      "CODE3"
+    ],
+    "SAR.D4": [
+      "D4"
+    ],
+    "SAR.CODE4": [
+      "CODE4"
+    ],
+    "SAR.D5": [
+      "D5"
+    ],
+    "SAR.CODE5": [
+      "CODE5"
+    ],
+    "SAR.D6": [
+      "D6"
+    ],
+    "SAR.CODE6": [
+      "CODE6"
+    ],
+    "SAR.D7": [
+      "D7"
+    ],
+    "SAR.CODE7": [
+      "CODE7"
+    ],
+    "SAR.PHI_U": [],
+    "SAR.PRESET": [
+      "PRESET"
+    ],
+    "SAR.SAMPLE_INT": [],
+    "SAR.SEQ_SAMPLE": [
+      "SEQ_SAMPLE_trunk"
+    ],
+    "SAR.SAMPLE": [
+      "SAMPLE"
+    ],
+    "SAR.COMP_N": [
+      "OUTN"
+    ],
+    "SAR.COMP_P": [
+      "OUTP"
+    ],
+    "SAR.CMP_CLK": [
+      "CMP_CLK"
+    ],
+    "XCOMP.CLK@trunk_top": [
+      "CMP_CLK"
+    ]
+  },
+  "notes": [
+    {
+      "topic": "CMP_CLK landing",
+      "planned_paths": [
+        "CMP_CLK"
+      ],
+      "text": "pins_um XCOMP.CLK@trunk_top [46.115, 72.33] is the centre of the top M3_M2 stack at local [0.0, -0.28]. The M3 trunk ends at local y -0.225 (core y 72.385); interfaces.json rounds that edge to -0.23. The M4 drop ends on the via centre, so its via3 stacks on the existing via2."
+    },
+    {
+      "topic": "XREF bus east extension",
+      "planned_paths": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "PRESET"
+      ],
+      "text": "All nine M3 tracks are clear from the pin ends (local x 64.71) to the outline: no M3 or via M3 enclosure in their half-pitch bands, searched at full depth to local x 67.334. The row-end cell XREF/ROW_BOUNDARY_RIGHT_460 sits in the row above the bus."
+    },
+    {
+      "topic": "XREF outline",
+      "planned_paths": [],
+      "text": "The XREF east outline (local x 66.834, core x 78.549) is set by the text label of XREF/ROW_BOUNDARY_RIGHT_460; drawn XREF geometry ends at local x 64.98 (core x 76.695)."
+    },
+    {
+      "topic": "SAR bbox",
+      "planned_paths": [],
+      "text": "The layout_r3 OA bbox exceeds its prBoundary by standard-cell text only (+1.399 um east, +0.081 um west); drawn geometry stays inside the boundary. Block bbox checks use the boundary."
+    },
+    {
+      "topic": "Comparator bbox",
+      "planned_paths": [],
+      "text": "VINN/VINP pin text overhangs the native bbox by 0.044/0.046 um; drawn geometry is the native bbox."
+    },
+    {
+      "topic": "SAR metal under the M7 tracks",
+      "planned_paths": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "SAMPLE"
+      ],
+      "text": "The macro has no M7, VIA6, VIA7 or M8. M5 holds only 0.4 x 0.25 um via pads on the rail rows; M6 holds four full-height stripes (VDD x 3.08-3.48, VSS x 3.88-4.28, VDD x 10.08-10.48, VSS x 10.88-11.28), which every M7 track crosses. The nearest M5/M6 edge that does not cross a track centre is 0.275 um away. Top-level via6/via7 onto the stripes must stay off the track rows."
+    }
+  ]
+}
