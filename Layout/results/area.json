@@ -10,30 +10,6 @@
       "uncertainty": "Measured in the routed XREF/CDAC pair. Absolute ADC top placement and surrounding density fill remain preliminary."
     },
     {
-      "block": "comparator",
-      "width_um": 16,
-      "height_um": 14,
-      "area_um2": 224,
-      "basis": "space_reservation",
-      "uncertainty": "Core measured 1.63 x 3.52 um (guard rings included). The 16 x 14 um reservation keeps room for access routing; the three model MOM loads are no longer drawn, so it can shrink once the comparator-to-SAR routing is planned."
-    },
-    {
-      "block": "bootstrap_n",
-      "width_um": 24.52,
-      "height_um": 24.99,
-      "area_um2": 612.7548,
-      "basis": "measured_oa_bbox",
-      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added"
-    },
-    {
-      "block": "bootstrap_p",
-      "width_um": 24.52,
-      "height_um": 24.99,
-      "area_um2": 612.7548,
-      "basis": "measured_oa_bbox",
-      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added"
-    },
-    {
       "block": "reference",
       "width_um": 63.354,
       "height_um": 5.285,
@@ -42,18 +18,42 @@
       "uncertainty": "Measured in the routed XREF/CDAC pair. Absolute ADC top placement and surrounding density fill remain preliminary."
     },
     {
+      "block": "comparator",
+      "width_um": 1.63,
+      "height_um": 3.52,
+      "area_um2": 5.7376,
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Measured v8 core including guard rings. Instantiated MY so VINN faces TOPN. Local NMOS decoupling sits in the mirrored strips beside it; bulk decoupling in the slot between the Bootstrap cells."
+    },
+    {
+      "block": "bootstrap_n",
+      "width_um": 24.52,
+      "height_um": 24.99,
+      "area_um2": 612.7548,
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch), frozen at Stage 0 on 2026-11-21. A core change reruns its standalone checks and pairwise ADC run; keep the VOUT and CLKS exits on the same lines and re-run Layout check."
+    },
+    {
+      "block": "bootstrap_p",
+      "width_um": 24.52,
+      "height_um": 24.99,
+      "area_um2": 612.7548,
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch), frozen at Stage 0 on 2026-11-21. A core change reruns its standalone checks and pairwise ADC run; keep the VOUT and CLKS exits on the same lines and re-run Layout check."
+    },
+    {
       "block": "sar",
-      "width_um": 41,
-      "height_um": 56,
-      "area_um2": 2296,
-      "basis": "space_reservation",
-      "uncertainty": "Space reservation. The single-edge SAR macro sar8_se_core/layout_r3, which also holds the top-level XDONE, XPRESET and XSAMPLE cells, measures 18.495 x 16.8 um (sar-se-r3-lib); the rest of the reservation, sized for the previous architecture, is routing and supply space that can shrink at top-level planning."
+      "width_um": 18.495,
+      "height_um": 16.8,
+      "area_um2": 310.716,
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Routed boundary of sar8_se_core/layout_r3 (the OA bbox is wider only by standard-cell text). All 24 signal pins are M3 on its west edge; D0-D7 and SAMPLE reach the east edge around the macro."
     }
   ],
-  "core_allocation": 29920,
-  "block_allocation": 7818.9603,
-  "routing_power_isolation_boundary_reserve": 22101.0397,
-  "die_area": null,
-  "io_area": null,
+  "core_allocation": 13542.0,
+  "block_allocation": 5615.4139,
+  "routing_power_isolation_boundary_reserve": 7926.5861,
+  "die_area": 409600.0,
+  "io_area": 233200.0,
   "status": "coarse_allocation_not_final_area"
 }
