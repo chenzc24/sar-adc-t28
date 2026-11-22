@@ -69,8 +69,9 @@ def block_of(x, y):
 
 
 class Extraction:
-    def __init__(self, base):
-        self.files = {n: sha(f"{base}/{n}") for n in ("extracted.scs", "extracted.scs.pex", "extracted.scs.sar8_adc_core.pxi")}
+    def __init__(self, base, top="sar8_adc_core"):
+        pxi = f"extracted.scs.{top}.pxi"
+        self.files = {n: sha(f"{base}/{n}") for n in ("extracted.scs", "extracted.scs.pex", pxi)}
         self.networks = {}
         net = None
         for line in statements(f"{base}/extracted.scs.pex"):
@@ -91,7 +92,7 @@ class Extraction:
         self.node_net = {"0": "0"}
         self.node_local = {}  # actual node -> (net, local node)
         coupling = []
-        for path in (f"{base}/extracted.scs.sar8_adc_core.pxi", f"{base}/extracted.scs"):
+        for path in (f"{base}/{pxi}", f"{base}/extracted.scs"):
             for line in statements(path):
                 m = INSTANCE.match(line)
                 if not m:
