@@ -121,6 +121,23 @@ After LVS and prefill PEX complete, prepare the standalone test with `python -m 
 
 The generator draws the adopted four-finger main switch into `layout`. To try a different width, register a sampler candidate `mmain<N>` in `specs/candidates.json`, run `python -m Layout generate --module bootstrap --candidate mmain<N>`, and build it with `--view layout_mmain<N>`; the published view stays untouched. `prepare_bootstrap none RUN_ID --schematic --candidate mmain<N>` simulates its schematic.
 
+## ADC Core Routing
+
+`Layout/design/toplevel_routes.py` holds the core-internal route geometry on the floorplan centrelines. Check it on a stream of `sar8_adc_core/layout_place` before writing OA. `Layout/design/toplevel_route.py` merges the routes into that stream and runs the native checks in fresh evidence directories on the layout host; it never deploys the shared runtime. `build` creates a new view from `layout_place` under the layout lock and leaves `layout_place` unchanged. Use new IDs for every run. [Routing record](../results/toplevel_route_internal.json)
+
+```powershell
+python -m Layout.design.toplevel_route physical BASE_ID --view layout_place --through spice --hcells-from BASE_GDS
+python -m Layout.tools.analysis.toplevel_route_precheck BASE_GDS
+python -m Layout.design.toplevel_route generate TRIAL_ID --base BASE_GDS
+python -m Layout.design.toplevel_route build-script BUILD_ID --cell sar8_adc_core --view NEW_VIEW
+python -m Layout.design.toplevel_route build BUILD_ID
+python -m Layout.design.toplevel_route physical CHECK_ID --view NEW_VIEW --through spice --hcells-from BASE_GDS
+python -m Layout.design.toplevel_route pex-input CHECK_GDS PEX_GDS --kind routed
+python -m Layout.design.toplevel_route physical PEX_ID --gds PEX_GDS --stages pex
+```
+
+Connectivity compares Calibre's hierarchical layout netlist, with every block master kept as an HCELL, against the planned (block, port) set of each net. Added capacitance is the routed extraction minus the placement extraction with `NET__BLOCK` labels on the landing pins (`pex-input --kind pins`). Resistance and Elmore delay run between the driving and receiving device terminals, so they bound the route-only values from above.
+
 ## Applicability of Results
 
 `current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)
