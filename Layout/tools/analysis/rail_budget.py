@@ -3,7 +3,8 @@
 Inputs: the measured per-frame and windowed rail charge of se-xref-adc-post-b (rail_charge.py),
 the single-edge switching scheme (PRESET word 0x80, the eighth COMMIT re-asserts PRESET while TOP
 floats) and the Stage 6 system model chosen on 2026-11-21 (stiff reference with board bypass,
-wire bonds with two per reference rail, on-chip series resistor plus VREFP-VREFN decoupling).
+wire bonds with two per reference rail, on-chip series resistor plus VREFP-VREFN decoupling) on
+the 9 x 9 pad ring of Layout/design/io_ring.json (ring_supply.py: routes, branch feeds, shared bus).
 
 The reference charge model is the ideal CDAC charge plus a per-toggled-unit term fitted to the
 measured frames (extracted bottom-plate, junction and switch-overlap charge). Rail responses are a
@@ -15,6 +16,8 @@ import json
 from pathlib import Path
 
 import numpy as np
+
+from Layout.tools.analysis import ring_supply
 
 ROOT = Path(__file__).resolve().parents[3]
 MEASURED = ['stage1-rail-charge-adc-post-b', 'stage1-rail-window-adc-post-b']
@@ -28,20 +31,22 @@ FIRST_COMPARE_S = 47.6e-9
 PULSES_S = (.5e-9, .8e-9)           # bracket the measured fixture droop and peak current
 # VREFP and VREFN each use two bonds on adjacent, interleaved pads; the VDD/VSS pairs keep one.
 # Mutual inductance between the wires is ignored, which overstates the loop inductance. Each pad
-# adds pad_f to its rail. route_ohm and route_h are the parallel pad-to-core routes of one reference
-# rail ahead of its series resistor: VREFP 178/198 um and VREFN 144/252 um at about 4 um on M9/M8,
-# about 23 squares per rail; 0-2 ohm covers sheet resistance up to about 0.085 ohm/sq until the PDK
-# value is in, and 0.1 nH is about 0.4 nH/mm of the interleaved 6 um-pitch pair.
+# adds pad_f to its rail. route_ohm, route_h and route_f are the two pad-to-core routes of one
+# reference rail in parallel, ahead of its series resistor, from the io_ring.json lengths at 4 um
+# (ring_supply.reference_routes): M8 at 25 C is the nominal, M9 at -40 C and M8 at 125 C rcworst_T
+# bound the tolerance box.
+REFERENCE_ROUTES = ring_supply.reference_routes()
 SYSTEM = dict(source_ohm=1., board_bypass_f=100e-9, board_esr_ohm=.01, board_esl_h=.5e-9,
-              pin_h=1e-9, pin_ohm=.1, pad_f=.5e-12, pads_per_rail=2, route_ohm=1., route_h=.1e-9,
+              pin_h=1e-9, pin_ohm=.1, pad_f=.5e-12, pads_per_rail=2, route_ohm=REFERENCE_ROUTES['route_ohm'],
+              route_h=REFERENCE_ROUTES['route_h'], route_f=REFERENCE_ROUTES['route_f'],
               supply_pin_h=2e-9, supply_pin_ohm=.2, supply_pads_per_rail=1)
 DESIGN = dict(series_ohm=15., span_cap_f=8e-12)
-TOLERANCE = dict(series=(.8, 1.2), cap=(.75, 1.25), pin_h=(.5e-9, 1.5e-9), route_ohm=(0., 2.))
+TOLERANCE = dict(series=(.8, 1.2), cap=(.75, 1.25), pin_h=(.5e-9, 1.5e-9), route_ohm=REFERENCE_ROUTES['route_ohm_range'])
 # Recommended AVDD/AVSS bulk at the pads of each supply branch, and the largest loop resistance
 # (VDD path plus VSS path) allowed from that bulk to the block decoupling.
 PAD_BULK = dict(cap_f=100e-12, esr_ohm_per_rail=2., max_feed_ohm=6.)
 # Earlier choice, for comparison: one bond and one pad per rail, no route term.
-SINGLE_BOND = dict(series_ohm=20., span_cap_f=6e-12, pin_h=2e-9, pin_ohm=.2, pads=1, route_ohm=0., route_h=0.)
+SINGLE_BOND = dict(series_ohm=20., span_cap_f=6e-12, pin_h=2e-9, pin_ohm=.2, pads=1, route_ohm=0., route_h=0., route_f=0.)
 CORNER_CHARGE = 1.3                 # FF 0.99 V and top-level extraction allowance on TT charge
 
 
@@ -100,29 +105,23 @@ def events(final, gamma):
     return [dict(e, charge_c=e['charge_c'] + gamma * e['units']) for e in ideal_events(final)]
 
 
-def expm(m):
-    s = max(0, int(np.ceil(np.log2(max(np.abs(m).sum(axis=1).max(), 1e-300)))) + 1)
-    x, e, t = m / 2. ** s, np.eye(len(m)), np.eye(len(m))
-    for k in range(1, 20):
-        t = t @ x / k
-        e = e + t
-    for _ in range(s):
-        e = e @ e
-    return e
+expm = ring_supply.expm
 
 
-def loop(series_ohm, span_cap_f, pin_h=None, pin_ohm=None, pads=None, route_ohm=None, route_h=None, **_):
+def loop(series_ohm, span_cap_f, pin_h=None, pin_ohm=None, pads=None, route_ohm=None, route_h=None, route_f=None, **_):
     """Two-rail loop (VREFP-VREFN or VDD-VSS): series elements doubled, shunt-to-ground halved.
 
-    The defaults are the reference rails; supply_check passes the VDD/VSS pin values."""
+    The defaults are the reference rails; supply_check passes the VDD/VSS pin values. The route
+    capacitance to substrate is lumped with the pads, ahead of the route resistance."""
     s = SYSTEM
     pin_h = s['pin_h'] if pin_h is None else pin_h
     pin_ohm = s['pin_ohm'] if pin_ohm is None else pin_ohm
     pads = s['pads_per_rail'] if pads is None else pads
     route_ohm = s['route_ohm'] if route_ohm is None else route_ohm
     route_h = s['route_h'] if route_h is None else route_h
+    route_f = s['route_f'] if route_f is None else route_f
     return dict(r1=2 * s['source_ohm'], cb=s['board_bypass_f'] / 2, rb=2 * s['board_esr_ohm'], lb=2 * s['board_esl_h'],
-                l2=2 * (pin_h + route_h), r2=2 * pin_ohm, cpad=pads * s['pad_f'] / 2,
+                l2=2 * (pin_h + route_h), r2=2 * pin_ohm, cpad=(pads * s['pad_f'] + route_f) / 2,
                 ron=2 * (series_ohm + route_ohm) + 1e-3, cdie=span_cap_f)
 
 
@@ -185,15 +184,15 @@ def reference_check(net, gamma, compare_s, write_s, codes=range(256)):
     return worst
 
 
-def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9, bulk=False):
+def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9, bulk=False, bulk_f=None):
     """VDD-VSS droop of one branch behind a VDD/VSS pin pair, for one event train per frame.
 
     feed_ohm is the loop resistance from the pad to the block decoupling; with bulk, the
     recommended pad-side bulk capacitor sits at the pad."""
     net = loop(feed_ohm / 2., cap_f, pin_h=SYSTEM['supply_pin_h'], pin_ohm=SYSTEM['supply_pin_ohm'],
-               pads=SYSTEM['supply_pads_per_rail'], route_ohm=0., route_h=0.)
+               pads=SYSTEM['supply_pads_per_rail'], route_ohm=0., route_h=0., route_f=0.)
     if bulk:
-        net.update(cbulk=PAD_BULK['cap_f'], rbulk=2 * PAD_BULK['esr_ohm_per_rail'])
+        net.update(cbulk=bulk_f or PAD_BULK['cap_f'], rbulk=2 * PAD_BULK['esr_ohm_per_rail'])
     t, h, hi = response(net, pulse, tend=100e-9)
     updates, _ = schedule(compare_s, write_s)
     qs = [q_event] + [q_repeat] * 7 + [q_event]
@@ -259,13 +258,30 @@ def main():
         'comparator_local': dict(event_c=.025e-12, repeat_c=.025e-12, cap_f=2 * .2355e-12, feed_ohm=30., placeholder_f=2 * .2355e-12,
                                  basis='Comparator charge per decision (Layout/results/comparator.md); 30 ohm in-core strap resistance'),
     }
+    ring = ring_supply.load_ring()
+    ring_branch = dict(pair_xref='pair', digital_sar='sar', analog_bootstrap='analog')
+    ring_bulk = {n: ring['supply_plan']['adc_branches'][r]['pad_decap_planning_pF'] * 1e-12 for n, r in ring_branch.items()}
     for name, b in branches.items():
         pulse = .2e-9 if b['event_c'] < .1e-12 else .5e-9
         b['check'] = supply_check(b['event_c'] * k, b['repeat_c'] * k, b['cap_f'], b['feed_ohm'], pulse=pulse)
         if name != 'comparator_local':
-            # Chip level: pad bulk at its pads and the largest allowed feed from it to the block.
+            # Chip level: the ring's planned pad bulk and the largest allowed feed from it to the block.
+            b['pad_bulk_f'] = ring_bulk[name]
             b['check_with_pad_bulk'] = supply_check(b['event_c'] * k, b['repeat_c'] * k, b['cap_f'],
-                                                    PAD_BULK['max_feed_ohm'], pulse=pulse, bulk=True)
+                                                    PAD_BULK['max_feed_ohm'], pulse=pulse, bulk=True, bulk_f=ring_bulk[name])
+    # Coupled pad ring: the three branches on the shared TACVDD/TACVSS bus, at FF-cold timing.
+    charges = {r: (branches[n]['event_c'] * k, branches[n]['repeat_c'] * k) for n, r in ring_branch.items()}
+    ring_result = dict(
+        source='Layout/design/io_ring.json (9 x 9 ring)',
+        sheet_resistance=dict(table=ring_supply.SHEET, source='PDK tech LEF tsmcn28_9lm6X1Z1URDL.tlef RPERSQ at 25 C; '
+                              'TC1/TC2 and rcworst_T thickness from RC_IRCX_CRN28HPC+_1P9M+UT-ALRDL_6X1Z1U QA reports'),
+        bus=dict(width_um=ring_supply.BUS_WIDTH_UM, layers='M3-M7', h_per_um_per_rail=ring_supply.BUS_H_PER_UM,
+                 ohm_per_um=dict(vdd_25c=ring_supply.rsh('Mx') / ring_supply.BUS_WIDTH_UM['vdd'],
+                                 vss_25c=ring_supply.rsh('Mx') / ring_supply.BUS_WIDTH_UM['vss'],
+                                 vdd_125c_rcworst=ring_supply.rsh('Mx', 125, True) / ring_supply.BUS_WIDTH_UM['vdd']),
+                 source='tphn28hpcpgv18 9-metal LEF: narrowest TACVDD/TACVSS strips of PVDD3AC_V_G, PVSS3AC_V_G, PFILLER20A_G'),
+        reference_routes=REFERENCE_ROUTES, feeds=ring_supply.feed_table(ring),
+        coupled=ring_supply.ring_checks(*schedule(*CORNERS['ffc']), charges, ring=ring))
     result = dict(
         record='Stage 1 reference and supply current budget (chenzc24/sar-adc-t28#12)',
         measured_runs=MEASURED, source_run='se-xref-adc-post-b',
@@ -285,7 +301,7 @@ def main():
         reference_design_check=design, reference_tolerance_box=box,
         reference_fixture_check_tt=fixture, reference_undamped_single_bond_check_ffc=undamped,
         reference_single_bond_design=dict(SINGLE_BOND, check_ffc=single_bond),
-        supply_branches=branches, corner_charge_allowance=k)
+        supply_branches=branches, corner_charge_allowance=k, pad_ring=ring_result)
     (ROOT / 'Layout/results/rail_budget.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(gamma=gamma, design=design, box=box, fixture=fixture, undamped=undamped['decision_error_lsb'],
                           branches={n: (b['check'], b.get('check_with_pad_bulk')) for n, b in branches.items()}),
