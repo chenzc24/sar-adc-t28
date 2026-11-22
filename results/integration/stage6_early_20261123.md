@@ -53,13 +53,13 @@ Early Stage 6 of the [top-level integration plan](https://github.com/chenzc24/sa
 
 The rail analysis ([measure_stage6_rails.py](../../Layout/tools/analysis/measure_stage6_rails.py), `-rails3` runs) separates static current, measured over 88–98 ns of every frame, from switching charge. The charge budgets are scored on the switching part, and the totals are kept.
 
-| | SS cold (verify / extreme / carry) | FF hot (verify / extreme) | Limit |
+| | SS cold (verify / extreme / carry) | FF hot (verify / extreme / carry) | Limit |
 | --- | ---: | ---: | ---: |
-| Static current, VDD | 0.94–0.97 µA | 226–227 µA (SAR macro branch 195 µA) | — |
+| Static current, VDD | 0.94–0.97 µA | 226–227 µA (SAR macro branch 194–195 µA) | — |
 | Static current, VREFP / VREFN | 0.37 µA | 7.9 µA | — |
-| Reference charge per conversion, switching | 2.80–2.83 pC | 3.35 / 3.52 pC | 3.7 pC |
+| Reference charge per conversion, switching | 2.80–2.83 pC | 3.26–3.52 pC | 3.7 pC |
 | Reference 1 ns event | 1.33 pC | 1.52 pC | 1.9 pC |
-| Supply charge per conversion, switching | 4.62–4.66 pC | **7.54 / 7.56 pC** | 6.9 pC |
+| Supply charge per conversion, switching | 4.62–4.66 pC | **7.54–7.57 pC** | 6.9 pC |
 | Supply 1 ns event, switching | 0.66 pC | **1.11 pC** | 1.1 pC |
 | Supply droop | 12 mV | 28 mV | 45 mV |
 | Reference span droop | 0.089 V | 0.129 V | 0.26 V |
@@ -77,7 +77,6 @@ The rail analysis ([measure_stage6_rails.py](../../Layout/tools/analysis/measure
 ## Still pending
 
 - The Bootstrap r2 gate verdict (`sar8-s6e-ssc-{extreme,verify}-r2`).
-- The FF-hot carry split and rail analyses (queued).
 - The final Stage 6 on `sar8_adc_core_filled/layout_fill5` at TT, SS cold and FF hot. It will use the corner wiring extractions `adc-core-fill5-wire-xtr[-cw|-cb]`, the refilled pair `se-xref-peripheral-routed` with its corner weights, `boot-fill-r2-20261122[-cworst-t|-cbest-t]`, and the drawn pad bulk (85.1 / 112.1 / 104.5 pF).
 - The FF terminal-voltage scan, the Bootstrap FF-hot injection recheck, and the final TT FFT.
 

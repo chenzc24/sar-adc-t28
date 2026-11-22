@@ -28,7 +28,6 @@
   "fft_pilot": "sar8-s6e-tt-verify-b-fftp: 8/8 frames valid, 8/8/8 events, monitor and native decode agree; 21 min per frame at 8 threads",
   "pending": [
    "Bootstrap r2 gate verdict (sar8-s6e-ssc-{extreme,verify}-r2, simulating)",
-   "FF-hot carry split and rails (-split, -rails3, queued)",
    "Final Stage 6 on layout_fill5 at TT/SS/FF",
    "Split 1024-point TT FFT"
   ]
@@ -7398,6 +7397,23 @@
      "SFE-3016",
      "VACOMP-2435"
     ],
+    "reference_split": {
+     "run_id": "sar8-s6e-ffh-carry-a-split",
+     "recipe_sha256": "a5a7bdf90dc2588df6c68c5b8d9e2af42fbfe5394cd48e251e4da2ef5cd62d48",
+     "result_sha256": "51a632bb437bd216998b6c03031bff6355cece4ff270c76d576a3c53bfa9d0bb",
+     "quiet_pin_offset_mv": {
+      "vrefn": 0.174585609028593,
+      "vrefp": -0.17742715557822475
+     },
+     "max_abs_lsb": {
+      "pin_lsb": 0.017089916640988516,
+      "dynamic_rail_lsb": 0.01992374913610154,
+      "static_lsb": 0.023807061708121347,
+      "excluding_static_lsb": 0.010411650438719399,
+      "nominal_lsb": 0.03345314044308666
+     }
+    },
+    "settling_pass_excluding_static_offset": true,
     "stage6": {
      "wiring": "adc-core-guard-wire-xtr2",
      "core": {
@@ -7523,6 +7539,189 @@
      ],
      "routed_view": "SAR_ADC_T28_LAYOUT/sar8_adc_core/layout_route_full",
      "routed_record": "Layout/results/toplevel_route_full.json"
+    },
+    "settling_excluding_static_lsb": 0.010411650438719399,
+    "rails": {
+     "run_id": "sar8-s6e-ffh-carry-a-rails3",
+     "recipe_sha256": "cd14c835d9932ad2f68d43d71fb9c8903a673a15ee464758241158a84356f236",
+     "result_sha256": "b86746007f2af17022b25173bc93e74b7de605b6392035dc2b4d21131b1ab532",
+     "all_pass": false,
+     "all_pass_total": false,
+     "static": {
+      "power_w": {
+       "vdd": 0.00022362162841059506,
+       "reference": 7.0735930213997796e-06
+      },
+      "not_quiet": [],
+      "vdd_branch_a": {
+       "a": 9.810211689805067e-06,
+       "p": 2.2271567289055623e-05,
+       "d": 0.00019379865375910741
+      },
+      "current_a": {
+       "vrefn": {
+        "max": 7.95583478266903e-06,
+        "mean": 7.955491142159358e-06,
+        "min": 7.955199688403433e-06
+       },
+       "vdd": {
+        "max": 0.00023225548111456215,
+        "mean": 0.0002258804327379748,
+        "min": 0.00022109799310777404
+       },
+       "vrefp": {
+        "max": 7.859887316228436e-06,
+        "mean": 7.85954780155531e-06,
+        "min": 7.859253471064049e-06
+       }
+      },
+      "within_window_halves_max_rel": 1.1727158805416372e-05,
+      "quiet_ns": [
+       88.0,
+       98.0
+      ]
+     },
+     "verdict_total": {
+      "reference_span_droop_V": {
+       "limit": 0.26,
+       "pass_": true,
+       "measured": 0.1286025322611205
+      },
+      "reference_event_charge_C": {
+       "limit": 1.9e-12,
+       "pass_": true,
+       "measured": 1.5314495091690523e-12
+      },
+      "supply_pin_peak_current_A": {
+       "limit": 0.0055,
+       "pass_": true,
+       "measured": 0.0016955448584183167
+      },
+      "supply_droop_V": {
+       "limit": 0.045,
+       "pass_": true,
+       "measured": 0.02816745187052494
+      },
+      "reference_charge_per_conversion_C": {
+       "limit": 3.7e-12,
+       "pass_": false,
+       "measured": 4.05955246852835e-12
+      },
+      "reference_pin_peak_current_A": {
+       "limit": 0.0052,
+       "pass_": true,
+       "measured": 0.00421803058718807
+      },
+      "supply_event_charge_C": {
+       "limit": 1.1e-12,
+       "pass_": false,
+       "measured": 1.3314276488443111e-12
+      },
+      "supply_charge_per_conversion_C": {
+       "limit": 6.9e-12,
+       "pass_": false,
+       "measured": 2.968189052418292e-11
+      }
+     },
+     "verdict": {
+      "reference_span_droop_V": {
+       "limit": 0.26,
+       "pass_": true,
+       "measured": 0.1286025322611205,
+       "basis": "total"
+      },
+      "reference_event_charge_C": {
+       "limit": 1.9e-12,
+       "pass_": true,
+       "measured": 1.5235902556979883e-12,
+       "basis": "switching (static removed)"
+      },
+      "supply_pin_peak_current_A": {
+       "limit": 0.0055,
+       "pass_": true,
+       "measured": 0.0016955448584183167,
+       "basis": "total"
+      },
+      "supply_droop_V": {
+       "limit": 0.045,
+       "pass_": true,
+       "measured": 0.02816745187052494,
+       "basis": "total"
+      },
+      "reference_charge_per_conversion_C": {
+       "limit": 3.7e-12,
+       "pass_": true,
+       "measured": 3.2641185376956783e-12,
+       "basis": "switching (static removed)"
+      },
+      "reference_pin_peak_current_A": {
+       "limit": 0.0052,
+       "pass_": true,
+       "measured": 0.00421803058718807,
+       "basis": "total"
+      },
+      "supply_event_charge_C": {
+       "limit": 1.1e-12,
+       "pass_": false,
+       "measured": 1.1103277467298516e-12,
+       "basis": "switching (static removed)"
+      },
+      "supply_charge_per_conversion_C": {
+       "limit": 6.9e-12,
+       "pass_": false,
+       "measured": 7.572091213405517e-12,
+       "basis": "switching (static removed)"
+      }
+     },
+     "where": {
+      "supply_droop": {
+       "a": {
+        "at": {
+         "frame": 1,
+         "ns": 47.17500000015871
+        },
+        "v": 0.012874026473121525
+       },
+       "p": {
+        "at": {
+         "frame": 1,
+         "ns": 59.75500000017292
+        },
+        "v": 0.02816745187052494
+       },
+       "d": {
+        "at": {
+         "frame": 1,
+         "ns": 1.4050000001067973
+        },
+        "v": 0.018280398713167112
+       }
+      },
+      "refp_peak": {
+       "frame": 5,
+       "ns": 60.11000000011798
+      },
+      "span_droop": {
+       "frame": 1,
+       "ns": 60.07000000017331
+      },
+      "vdd_peak": {
+       "frame": 5,
+       "ns": 60.2850000001191
+      },
+      "supply_event": {
+       "frame": 7,
+       "ns": 60.36000000140517
+      },
+      "reference_event": {
+       "frame": 0,
+       "ns": 60.85000000006081
+      },
+      "refn_peak": {
+       "frame": 1,
+       "ns": 60.19000000017339
+      }
+     }
     },
     "stage6_codes": true,
     "stage6_events": true,
