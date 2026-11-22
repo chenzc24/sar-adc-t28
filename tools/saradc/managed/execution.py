@@ -28,13 +28,16 @@ def root_path(value):
     p=p.resolve()
     if not p.is_relative_to(ROOT) or not p.is_file() or p.is_symlink():raise ValueError('Input must be a project file: '+value)
     return p
+# Managed hosts. thu-yuan, thu-tang, thu-shu, thu-xia and thu-ming (added 2026-11-22) share /home, the Cadence
+# installation and the PDK and check out Spectre licenses; thu-qi and thu-liang do not (license checkout hangs).
+HOSTS=('thu-wei','thu-sui','thu-song','thu-yuan','thu-tang','thu-shu','thu-xia','thu-ming')
 def request_host(request,host=None):
     run_id=request.get('run_id') or request.get('recipe',{}).get('run_id')
     record=SPEC_ROOT/(valid_id(run_id)+'.yaml') if run_id else None
     bound=project.load(record).get('remote_host','thu-wei') if record and record.exists() else None
     if host and bound and host!=bound:raise ValueError('Run is bound to '+bound)
     chosen=bound or host or project.remote_host()
-    if chosen not in ('thu-wei','thu-sui','thu-song'):raise ValueError('Unsupported execution host')
+    if chosen not in HOSTS:raise ValueError('Unsupported execution host')
     return chosen
 
 def rpc(request,timeout=45,host=None):
@@ -212,7 +215,7 @@ def transfer(listing,dest,request):
 
 def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument('action',choices=['storage','register','submit','run-status','analyze','collect','gate'])
-    p.add_argument('--host',choices=['thu-wei','thu-sui','thu-song'],help='Destination for new registration or storage initialization')
+    p.add_argument('--host',choices=HOSTS,help='Destination for new registration or storage initialization')
     p.add_argument('target',nargs='?');p.add_argument('--queue',action='store_true');p.add_argument('--phase',choices=['simulation','analysis'],default='simulation')
     a=p.parse_args(argv)
     if a.host and a.action not in ('storage','register'):p.error('Existing runs route by their registered host')
