@@ -1,6 +1,7 @@
 """Stage 4b of chenzc24/sar-adc-t28#12: boundary routes, supply feeds, the reference network, decoupling and grid,
 built as sar8_adc_core/layout_route_full on top of layout_route_int; and the Stage 5 SAR guard ring, built as
-sar8_adc_core/layout_route_guard on top of layout_route_full (`--stage guard`).
+sar8_adc_core/layout_route_guard on top of layout_route_full (`--stage guard`); and layout_route_guard with both Bootstrap
+instances remastered on the revised filled Bootstrap, as sar8_adc_core/layout_route_boot_r2 (`--stage boot_r2`).
 
 `build-script ID CONTENT.json` writes build.il from a content file (rects with nets, labels, terminals with their
 pin shapes, PDK PCell instances); `build ID` runs it once on the layout host under the shared layout lock. The
@@ -31,6 +32,11 @@ STAGES = {
                   read_only=("layout_place", "layout_route_int", "layout_route_full"), owner=OWNER + " guard",
                   source_check=f'dbGetPropByName(src "generatorOwner")~>value=="{OWNER}" && '
                                'dbGetPropByName(src "copiedFrom")~>value=="layout_route_int"'),
+    "boot_r2": dict(view="layout_route_boot_r2", source="layout_route_guard",
+                    read_only=("layout_place", "layout_route_int", "layout_route_full", "layout_route_guard"),
+                    owner=OWNER + " boot_r2",
+                    source_check=f'dbGetPropByName(src "generatorOwner")~>value=="{OWNER} guard" && '
+                                 'dbGetPropByName(src "copiedFrom")~>value=="layout_route_full"'),
 }
 VIEW, SOURCE, READ_ONLY = (STAGES["full"][k] for k in ("view", "source", "read_only"))
 PDK_LIBRARY = "tsmcN28"
@@ -79,6 +85,23 @@ def build_script(identity, content, stage="full"):
     for a, b in content.get("merge_nets", []):
         lines.append(f"  tfNeed(dbMergeNet(tfNet(cv {sk(b)}) dbFindNetByName(cv {sk(a)})) \"Cannot merge {a}\")")
     lines.append("  foreach(n '(" + " ".join(sk(n) for n in nets) + ") tfNet(cv n))")
+    # Remaster: replace a block instance by the same name, origin and orientation on another master. The old instance
+    # must sit exactly where expected, on the expected master, with no instTerms (connectivity is by geometry).
+    for r in content.get("remaster", []):
+        x, y = r["xy"]
+        old_lib, old_cell, old_view = r["from"]
+        new_lib, new_cell, new_view = r["to"]
+        lines += [
+            f"  inst=dbFindAnyInstByName(cv {sk(r['inst'])})",
+            f"  tfNeed(inst && inst~>libName=={sk(old_lib)} && inst~>cellName=={sk(old_cell)} && inst~>viewName=={sk(old_view)}"
+            f" && inst~>orient=={sk(r['orient'])} && abs(xCoord(inst~>xy)-{num(x)})<1e-6 && abs(yCoord(inst~>xy)-{num(y)})<1e-6"
+            f" && !inst~>instTerms \"Unexpected {r['inst']}\")",
+            "  dbDeleteObject(inst)",
+            f"  old=dbOpenCellViewByType({sk(new_lib)} {sk(new_cell)} {sk(new_view)} \"maskLayout\" \"r\")",
+            f"  tfNeed(old \"Cannot open {new_cell}/{new_view}\")",
+            f"  inst=dbCreateInst(cv old {sk(r['inst'])} list({num(x)} {num(y)}) {sk(r['orient'])})",
+            f"  tfNeed(inst && inst~>viewName=={sk(new_view)} \"Cannot place {r['inst']}\")",
+        ]
     # The content goes into part procedures (statements that share inst/net/term/fig stay in one group): a single
     # function body of some 19000 calls overflows the SKILL value stack.
     groups = []
@@ -125,6 +148,8 @@ def build_script(identity, content, stage="full"):
     lines[:0] = defs
     lines += [
         f'  tfNeed(dbSave(cv) "Cannot save {view}")',
+        '  foreach(i cv~>instances unless(i~>libName==' + sk(PDK_LIBRARY) + ' printf("BLOCK %s %s %s %s %s %L\\n" i~>name'
+        ' i~>libName i~>cellName i~>viewName i~>orient i~>xy)))',
         '  foreach(i cv~>instances when(i~>libName==' + sk(PDK_LIBRARY) + ' printf("PCELL %s %s bBox=%L\\n" i~>name i~>cellName i~>bBox)'
         '   foreach(tm i~>master~>terminals foreach(p tm~>pins foreach(f list(p~>fig) printf("PIN %s %s %s %L\\n" i~>name tm~>name'
         " f~>layerName dbTransformBBox(f~>bBox i~>transform)))))))",

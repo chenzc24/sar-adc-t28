@@ -1,0 +1,1462 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_boot_record.py",
+  "stage": "Stage 5 of chenzc24/sar-adc-t28#12: the routed core on the revised filled Bootstrap (latch-up spacing fixed, planned fill); ADC qualification of the revision is the Bootstrap session's",
+  "cellview": {
+    "library": "SAR_ADC_T28_LAYOUT",
+    "cell": "sar8_adc_core",
+    "view": "layout_route_boot_r2",
+    "copied_from": "layout_route_guard",
+    "build": "adc-core-bootr2-b1",
+    "build_ok": true,
+    "remaster": [
+      {
+        "inst": "XBOOTN",
+        "xy": [
+          31.175,
+          76.245
+        ],
+        "orient": "MY",
+        "from": [
+          "SAR_ADC_T28_LAYOUT",
+          "sar_bootstrap_flat_8b_p_core",
+          "layout"
+        ],
+        "to": [
+          "SAR_ADC_T28_LAYOUT",
+          "sar_bootstrap_flat_8b_p_filled",
+          "layout_r2"
+        ]
+      },
+      {
+        "inst": "XBOOTP",
+        "xy": [
+          61.055,
+          76.245
+        ],
+        "orient": "R0",
+        "from": [
+          "SAR_ADC_T28_LAYOUT",
+          "sar_bootstrap_flat_8b_p_core",
+          "layout"
+        ],
+        "to": [
+          "SAR_ADC_T28_LAYOUT",
+          "sar_bootstrap_flat_8b_p_filled",
+          "layout_r2"
+        ]
+      }
+    ],
+    "read_only_views": [
+      "layout_place",
+      "layout_route_int",
+      "layout_route_full",
+      "layout_route_guard"
+    ],
+    "read_only_views_unchanged": true,
+    "stream": "adc-core-bootr2-b1-chk",
+    "stream_layout_oa_sha256": "e76aa76e25ee2636b364b84d706e83cdff5b7b68e078179266d652932419a6a0",
+    "stream_sha256": "751340566629529d7ee1186650077b21f57557b98b15c3d5a7ba6fae3501bb31"
+  },
+  "generator": {
+    "builder": "Layout/design/toplevel_full.py --stage boot_r2",
+    "builder_sha256": "08277afc02ad21b3bc022e33054834e192fb63362941c887b178d7e99c72dc2c"
+  },
+  "pin_check": {
+    "evidence": "boot-r2-mount-readback-20261122 (read-only OA readback, all read views guarded unchanged)",
+    "bbox": {
+      "sar_bootstrap_flat_8b_p_core/layout": "((-11.82 -0.045) (12.7 24.945))",
+      "sar_bootstrap_flat_8b_p_core/layout_r2": "((-11.82 -0.045) (12.7 24.945))",
+      "sar_bootstrap_flat_8b_p_filled/layout_r2": "((-11.82 -0.045) (12.7 24.945))"
+    },
+    "pins": {
+      "sar_bootstrap_flat_8b_p_core/layout": [
+        "CLKS M2 drawing ((2.4 0.01) (2.52 0.13))",
+        "VDD M5 drawing ((-3.52 0.62) (3.32 0.82))",
+        "VIN M5 drawing ((-2.315 24.705) (-2.015 24.945))",
+        "VOUT M2 drawing ((-1.935 -0.03) (-1.735 0.17))",
+        "VSS M5 drawing ((-3.52 0.24) (3.32 0.48))"
+      ],
+      "sar_bootstrap_flat_8b_p_filled/layout_r2": [
+        "CLKS M2 drawing ((2.4 0.01) (2.52 0.13))",
+        "VDD M5 drawing ((-3.52 0.62) (3.32 0.82))",
+        "VIN M5 drawing ((-2.315 24.705) (-2.015 24.945))",
+        "VOUT M2 drawing ((-1.935 -0.03) (-1.735 0.17))",
+        "VSS M5 drawing ((-3.52 0.24) (3.32 0.48))"
+      ]
+    },
+    "labels": {
+      "sar_bootstrap_flat_8b_p_core/layout": [
+        "CLKS M2 pin (2.46 0.07)",
+        "VDD M5 pin (-0.1 0.72)",
+        "VIN M5 pin (-2.165 24.825)",
+        "VOUT M2 pin (-1.835 0.07)",
+        "VSS M5 pin (-0.1 0.36)"
+      ],
+      "sar_bootstrap_flat_8b_p_filled/layout_r2": [
+        "CLKS M2 pin (2.46 0.07)",
+        "VDD M5 pin (-0.1 0.72)",
+        "VIN M5 pin (-2.165 24.825)",
+        "VOUT M2 pin (-1.835 0.07)",
+        "VSS M5 pin (-0.1 0.36)"
+      ]
+    },
+    "wrapper_instances": [
+      "XCORE SAR_ADC_T28_LAYOUT sar_bootstrap_flat_8b_p_core layout_r2 R0 (0.0 0.0) 5",
+      "XFILL SAR_ADC_T28_LAYOUT sar_bootstrap_flat_8b_p_fill layout_r2 R0 (0.0 0.0) 0"
+    ],
+    "core_bootstrap_instances": [
+      "XBOOTN SAR_ADC_T28_LAYOUT sar_bootstrap_flat_8b_p_core layout MY (31.175 76.245) 0",
+      "XBOOTP SAR_ADC_T28_LAYOUT sar_bootstrap_flat_8b_p_core layout R0 (61.055 76.245) 0"
+    ],
+    "identical": {
+      "bbox": true,
+      "pins": true,
+      "labels": true
+    }
+  },
+  "drc": {
+    "guard_markers": 96,
+    "boot_r2_markers": 98,
+    "delta_by_rule": {
+      "OD.S.14": [
+        6,
+        4
+      ],
+      "PO.DN.3": [
+        3,
+        5
+      ],
+      "PO.DN.3.1": [
+        1,
+        3
+      ]
+    },
+    "non_density_changes": [],
+    "failing_density_area": {
+      "PO.DN.3": {
+        "failing_um2": [
+          6362.0,
+          5962.0
+        ],
+        "inside_bootstrap_outlines_um2": [
+          1019.7,
+          619.7
+        ]
+      },
+      "PO.DN.3.1": {
+        "failing_um2": [
+          7647.0,
+          7012.0
+        ],
+        "inside_bootstrap_outlines_um2": [
+          1138.6,
+          593.5
+        ]
+      },
+      "OD.S.14": {
+        "failing_um2": [
+          1030.2,
+          605.8
+        ],
+        "inside_bootstrap_outlines_um2": [
+          265.0,
+          0
+        ]
+      },
+      "OD.DN.3": {
+        "failing_um2": [
+          8862.0,
+          8452.0
+        ],
+        "inside_bootstrap_outlines_um2": [
+          1208.4,
+          1113.5
+        ]
+      }
+    },
+    "note": "Density violations are window regions; a merged failing region that splits when part of it passes counts as more markers. The failing area is the like-for-like measure.",
+    "verdict": "only density windows changed; failing density area drops on every listed rule"
+  },
+  "connectivity": {
+    "top_ports": [
+      "CMP_CLK",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "COMP_N",
+      "COMP_P",
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "PRESET",
+      "SAMPLE",
+      "SEQ_SAMPLE",
+      "TOPN",
+      "TOPP",
+      "VDD_A",
+      "VDD_D",
+      "VDD_P",
+      "VINN",
+      "VINP",
+      "VREFN",
+      "VREFN_TRUNK",
+      "VREFP",
+      "VREFP_TRUNK",
+      "VSS_A",
+      "VSS_D",
+      "VSS_G",
+      "VSS_P"
+    ],
+    "substrate_ports_on": {
+      "VSS_P": 4
+    },
+    "nets": {
+      "TOPN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "exact": true
+      },
+      "TOPP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_P": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_N": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "exact": true
+      },
+      "CMP_CLK": {
+        "reaches": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "exact": true
+      },
+      "SEQ_SAMPLE": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE0": {
+        "reaches": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE1": {
+        "reaches": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE2": {
+        "reaches": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE3": {
+        "reaches": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE4": {
+        "reaches": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE5": {
+        "reaches": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE6": {
+        "reaches": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE7": {
+        "reaches": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "exact": true
+      },
+      "PRESET": {
+        "reaches": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "exact": true
+      },
+      "D0": {
+        "reaches": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "exact": true
+      },
+      "D1": {
+        "reaches": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "exact": true
+      },
+      "D2": {
+        "reaches": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "exact": true
+      },
+      "D3": {
+        "reaches": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "exact": true
+      },
+      "D4": {
+        "reaches": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "exact": true
+      },
+      "D5": {
+        "reaches": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "exact": true
+      },
+      "D6": {
+        "reaches": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "exact": true
+      },
+      "D7": {
+        "reaches": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "exact": true
+      },
+      "SAMPLE": {
+        "reaches": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "VINN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VINP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_D": {
+        "reaches": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_D": {
+        "reaches": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_G": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFP": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFP_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "exact": true
+      },
+      "VREFN": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFN_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "exact": true
+      }
+    },
+    "decap_devices": {
+      "per_branch": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "expected": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "stray": [],
+      "stray_count": 0
+    },
+    "reference_devices": {
+      "cref_nmoscap": {
+        "found": 164,
+        "expected": 164
+      },
+      "rref_rupolym_segments": {
+        "found": {
+          "VREFP": 52,
+          "VREFN": 52
+        },
+        "expected": {
+          "VREFP": 52,
+          "VREFN": 52
+        }
+      }
+    },
+    "text_short_messages": [],
+    "verdict": "PASS"
+  },
+  "lvs": {
+    "evidence": "adc-core-bootr2-lvs1",
+    "verdict": "CORRECT",
+    "cells": [
+      {
+        "layout": "sar8_se_core",
+        "source": "sar8_se_core",
+        "verdict": "CORRECT"
+      },
+      {
+        "layout": "sar_bootstrap_flat_8b_p_core",
+        "source": "sar_bootstrap_flat_8b_p_core",
+        "verdict": "CORRECT"
+      },
+      {
+        "layout": "sar_strongarm_t28_core",
+        "source": "sar_strongarm_t28_core",
+        "verdict": "CORRECT"
+      },
+      {
+        "layout": "sar8i_refword",
+        "source": "sar8i_refword",
+        "verdict": "CORRECT"
+      },
+      {
+        "layout": "sar8j_r1_cdac",
+        "source": "sar8j_r1_cdac",
+        "verdict": "CORRECT"
+      },
+      {
+        "layout": "sar8_adc_core",
+        "source": "sar8_adc_core",
+        "verdict": "CORRECT"
+      }
+    ],
+    "top": {
+      "layout": "sar8_adc_core",
+      "initial": {
+        "Ports": [
+          32,
+          32
+        ],
+        "Nets": [
+          48,
+          50
+        ],
+        "Instances rupolym (2 pins)": [
+          104,
+          104
+        ],
+        "Instances D (2 pins)": [
+          12,
+          0
+        ],
+        "Instances nmoscap (2 pins)": [
+          877,
+          877
+        ],
+        "Instances sar8_se_core (24 pins)": [
+          1,
+          1
+        ],
+        "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+          2,
+          2
+        ],
+        "Instances sar_strongarm_t28_core (7 pins)": [
+          1,
+          1
+        ],
+        "Instances sar8i_refword (27 pins)": [
+          1,
+          1
+        ],
+        "Instances sar8j_r1_cdac (38 pins)": [
+          1,
+          1
+        ],
+        "Total Inst": [
+          999,
+          987
+        ]
+      },
+      "after": {
+        "Ports": [
+          32,
+          32
+        ],
+        "Nets": [
+          48,
+          48
+        ],
+        "Instances rupolym (2 pins)": [
+          2,
+          2
+        ],
+        "Instances nmoscap (2 pins)": [
+          877,
+          877
+        ],
+        "Instances sar8_se_core (24 pins)": [
+          1,
+          1
+        ],
+        "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+          2,
+          2
+        ],
+        "Instances sar_strongarm_t28_core (7 pins)": [
+          1,
+          1
+        ],
+        "Instances sar8i_refword (27 pins)": [
+          1,
+          1
+        ],
+        "Instances sar8j_r1_cdac (38 pins)": [
+          1,
+          1
+        ],
+        "Total Inst": [
+          885,
+          885
+        ]
+      },
+      "warnings": [
+        "Ambiguity points were found and resolved arbitrarily."
+      ]
+    },
+    "hcells": [
+      "sar8_se_core",
+      "sar8i_refword",
+      "sar8j_r1_cdac",
+      "sar_bootstrap_flat_8b_p_core",
+      "sar_strongarm_t28_core"
+    ],
+    "virtual_connect_name": [
+      "VDD!",
+      "0"
+    ],
+    "source": {
+      "generator": "Layout/design/toplevel_lvs_source.py --bootstrap-reference boot-core-r2b-20261122",
+      "sha256": "805c6fb50f8809e7b9b8edcde6401d70fa38c5cf9145441c6179ef1c4f418fa7",
+      "note": "The r2 reference.cdl is byte-identical to the frozen core's (boot-core-20261121). The wrapper and its fill flatten into the top; the fill adds no devices or nets."
+    },
+    "well_diodes": "LVS FILTER D(pnwdio) LAYOUT OPEN (installed deck)"
+  },
+  "flat_chip_lup_esd": {
+    "substitution": "sar8_adc_core of chip-asm-a3-chk/fixture.gds replaced by this view's stream (copy of the Bootstrap session's substitute_master.py), flat chip deck with every LUP.* and ESD.* check selected",
+    "boot_r2": {
+      "evidence": "chip-bootr2-flat-lupesd2",
+      "rules_selected": 72,
+      "results_by_rule": {
+        "ESD.WARN.1": 6,
+        "ESD.18g": 540,
+        "ESD.19g": 432
+      },
+      "lup_by_bootstrap": {}
+    },
+    "control_layout_route_guard": {
+      "evidence": "chip-guard-flat-lupesd-control2",
+      "rules_selected": 72,
+      "results_by_rule": {
+        "LUP.5.2.1": 2,
+        "LUP.5.2.2": 12,
+        "ESD.WARN.1": 6,
+        "ESD.18g": 540,
+        "ESD.19g": 432
+      },
+      "lup_by_bootstrap": {
+        "LUP.5.2.1": {
+          "bootstrap_n": 1,
+          "bootstrap_p": 1
+        },
+        "LUP.5.2.2": {
+          "bootstrap_n": 6,
+          "bootstrap_p": 6
+        }
+      }
+    }
+  },
+  "xrc": {
+    "evidence": {
+      "boot_r2": "adc-core-bootr2-b1-xtr-raw",
+      "guard": "adc-core-guard-g1-xtr-raw",
+      "placement_pins_only": "adc-core-place-pex-20261122"
+    },
+    "totals": {
+      "TOPN": {
+        "guard_fF": 251.003,
+        "boot_r2_fF": 250.999,
+        "change_fF": -0.004
+      },
+      "TOPP": {
+        "guard_fF": 250.496,
+        "boot_r2_fF": 250.492,
+        "change_fF": -0.004
+      },
+      "COMP_P": {
+        "guard_fF": 6.602,
+        "boot_r2_fF": 6.602,
+        "change_fF": 0.0
+      },
+      "COMP_N": {
+        "guard_fF": 6.983,
+        "boot_r2_fF": 6.983,
+        "change_fF": 0.0
+      },
+      "CMP_CLK": {
+        "guard_fF": 7.531,
+        "boot_r2_fF": 7.531,
+        "change_fF": 0.0
+      },
+      "SEQ_SAMPLE": {
+        "guard_fF": 26.973,
+        "boot_r2_fF": 26.975,
+        "change_fF": 0.002
+      },
+      "VINN": {
+        "guard_fF": 3.563,
+        "boot_r2_fF": 3.671,
+        "change_fF": 0.108
+      },
+      "VINP": {
+        "guard_fF": 3.563,
+        "boot_r2_fF": 3.671,
+        "change_fF": 0.108
+      }
+    },
+    "top": {
+      "imbalance_fF": 0.507,
+      "guard_imbalance_fF": 0.507
+    },
+    "top_limit_fF": {
+      "imbalance": 1.0
+    },
+    "route_budgets": [
+      {
+        "item": "TOPN added capacitance",
+        "limit": 9.8,
+        "measured": -4.627,
+        "unit": "fF",
+        "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+        "pass": true
+      },
+      {
+        "item": "TOPN sampler route resistance",
+        "limit": 800.0,
+        "measured": 87.07,
+        "unit": "ohm",
+        "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+        "pass": true
+      },
+      {
+        "item": "TOPP added capacitance",
+        "limit": 9.8,
+        "measured": -3.955,
+        "unit": "fF",
+        "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+        "pass": true
+      },
+      {
+        "item": "TOPP sampler route resistance",
+        "limit": 800.0,
+        "measured": 87.07,
+        "unit": "ohm",
+        "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+        "pass": true
+      },
+      {
+        "item": "TOP side imbalance of added capacitance",
+        "limit": 1.0,
+        "measured": 0.672,
+        "unit": "fF",
+        "scope": "|added TOPN - added TOPP|",
+        "pass": true
+      },
+      {
+        "item": "COMP_P route load",
+        "limit": 11.4,
+        "measured": 5.066,
+        "unit": "fF",
+        "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+        "pass": true
+      },
+      {
+        "item": "COMP_P one-way delay (Elmore bound)",
+        "limit": 20.0,
+        "measured": 2.525,
+        "unit": "ps",
+        "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "COMP_N route load",
+        "limit": 11.4,
+        "measured": 5.186,
+        "unit": "fF",
+        "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+        "pass": true
+      },
+      {
+        "item": "COMP_N one-way delay (Elmore bound)",
+        "limit": 20.0,
+        "measured": 2.711,
+        "unit": "ps",
+        "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CMP_CLK route load",
+        "limit": 11.1,
+        "measured": 5.049,
+        "unit": "fF",
+        "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+        "pass": true
+      },
+      {
+        "item": "CMP_CLK one-way delay (Elmore bound)",
+        "limit": 20.0,
+        "measured": 3.476,
+        "unit": "ps",
+        "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE0 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.534,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE1 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.608,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE2 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.011,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE3 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.093,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE4 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 3.577,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE5 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 3.497,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE6 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.311,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "CODE7 one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 3.622,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      },
+      {
+        "item": "PRESET one-way delay (Elmore bound)",
+        "limit": 100.0,
+        "measured": 4.217,
+        "unit": "ps",
+        "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+        "pass": true
+      }
+    ],
+    "route_budgets_note": "Stage 4a method (added against the pins-only placement); the TOP rows are not like-for-like (toplevel_route_full.md). totals compares with layout_route_guard.",
+    "vin": {
+      "VINN": {
+        "total_fF": 3.671,
+        "top_partners_fF": {
+          "0": 1.4418,
+          "X81/3": 0.7383,
+          "X81/4": 0.6873,
+          "X81/8": 0.5249,
+          "TOPN": 0.197,
+          "VDD!": 0.0449,
+          "X81/5": 0.0369
+        }
+      },
+      "VINP": {
+        "total_fF": 3.6709,
+        "top_partners_fF": {
+          "0": 1.4417,
+          "X82/3": 0.7383,
+          "X82/4": 0.6873,
+          "X82/8": 0.5249,
+          "TOPP": 0.197,
+          "VDD!": 0.0449,
+          "X82/5": 0.0369
+        }
+      },
+      "mirror_difference_fF": 0.0001
+    },
+    "boot_plates": {
+      "boot_r2": {
+        "bootstrap_n": {
+          "X81/3": {
+            "to_ground_fF": 37.765,
+            "total_fF": 229.215
+          },
+          "X81/4": {
+            "to_ground_fF": 39.973,
+            "total_fF": 232.536
+          }
+        },
+        "bootstrap_p": {
+          "X82/3": {
+            "to_ground_fF": 38.637,
+            "total_fF": 232.736
+          },
+          "X82/4": {
+            "to_ground_fF": 40.179,
+            "total_fF": 234.963
+          }
+        }
+      },
+      "guard": {
+        "bootstrap_n": {
+          "X81/3": {
+            "to_ground_fF": 27.345,
+            "total_fF": 221.185
+          },
+          "X81/4": {
+            "to_ground_fF": 29.462,
+            "total_fF": 224.402
+          }
+        },
+        "bootstrap_p": {
+          "X82/3": {
+            "to_ground_fF": 29.681,
+            "total_fF": 226.768
+          },
+          "X82/4": {
+            "to_ground_fF": 31.516,
+            "total_fF": 229.27
+          }
+        }
+      },
+      "standalone_filled_r2": "boot-fill-r2-20261122 (typical): BTOP 37.9, BBOT 40.4 fF to ground"
+    }
+  },
+  "evidence": {
+    "build": "adc-core-bootr2-b1",
+    "checks": "adc-core-bootr2-b1-chk",
+    "connectivity": "adc-core-bootr2-b1-conn",
+    "lvs": "adc-core-bootr2-lvs1",
+    "xrc": "adc-core-bootr2-b1-xtr-raw",
+    "guard_xrc": "adc-core-guard-g1-xtr-raw",
+    "flat": "chip-bootr2-flat-lupesd2",
+    "flat_control": "chip-guard-flat-lupesd-control2",
+    "host": "thu-wei"
+  }
+}
