@@ -439,8 +439,9 @@
   "physical_signoff": false,
   "limits": [
     "Final top-level fill, routing, power distribution and coupled extraction remain open.",
-    "Integrated runs cover SS 0.81 V -40 C, TT and FF 0.99 V -40 C with the typical-RC CDAC. SS cold with the CWORST_T CDAC, restart, code-boundary injection, terminal stress, mismatch and noise remain open.",
-    "Standalone FF-hot injection passes with 0.13 mV of margin to the single-ended 3.52 mV screen."
+    "Integrated runs cover SS 0.81 V -40 C (typical and CWORST_T interconnect), TT and FF 0.99 V -40 C. Restart, code-boundary injection, terminal stress, mismatch and noise remain open.",
+    "Standalone FF-hot injection passes with 0.13 mV of margin to the single-ended 3.52 mV screen.",
+    "At SS cold with CWORST_T interconnect the boosted gate is 0.090 V above the signal at the first comparison, against the 0.1 V screen."
   ],
   "raw": {
     "physical_reports": "thu-wei:/server_local_ssd/chenzc_intern25/sar-adc-t28/layout/evidence/boot-core-20261121",
@@ -895,5 +896,96 @@
     },
     "margin_mV": 0.125,
     "note": "Tightest standalone corner; single-ended screen."
+  },
+  "integrated_cworst": {
+    "scope": "Single-edge ADC at SS 0.81 V -40 C, CWORST_T cell LPE, CWORST_T extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling, 8 verify frames",
+    "runs": [
+      {
+        "run_id": "sar8-sebit-ssc-cw-verify-b",
+        "host": "thu-wei",
+        "recipe_hash": "5344bf4b9a2d6b82f6624dd7417b215aa47eb945ab8045960b277fd32d00836d",
+        "result_sha256": "4aea8556d211dd9746e6154f89617c9c7a32415ec9899362d177c2b7ac93c53f",
+        "view": "two-finger schematic Bootstrap (SAR adoption control)",
+        "all_pass": true,
+        "codes": [
+          255,
+          255,
+          0,
+          128,
+          83,
+          172,
+          127,
+          0
+        ],
+        "expected": [
+          255,
+          255,
+          0,
+          128,
+          83,
+          172,
+          127,
+          0
+        ],
+        "max_abs_close_error_lsb": 0.0738,
+        "max_abs_signed_settling_lsb": 0.0012,
+        "min_read_margin_ns": 7.591,
+        "max_first_compare_gate_overdrive_v": -0.0014,
+        "first_compare_residual_lsb": [
+          -0.0502,
+          -0.0361,
+          0.0529,
+          -0.0679,
+          0.013,
+          -0.015,
+          0.0021,
+          0.0492
+        ]
+      },
+      {
+        "run_id": "sar8-sebit-ssc-cw-verify-bootx-a",
+        "host": "thu-wei",
+        "recipe_hash": "62e22aca40980b4c93c98a251a9ca9737d01d26d28fd931f0c8ae2a59c7d9999",
+        "result_sha256": "9bf9c4889fbb1f6a35a4f098d3f3512323f317a7b1b8ce04972c6a414790dc71",
+        "view": "four-finger extracted Bootstrap boot-core-20261121 on both channels",
+        "all_pass": true,
+        "codes": [
+          255,
+          255,
+          0,
+          128,
+          83,
+          172,
+          127,
+          0
+        ],
+        "expected": [
+          255,
+          255,
+          0,
+          128,
+          83,
+          172,
+          127,
+          0
+        ],
+        "max_abs_close_error_lsb": 0.0528,
+        "max_abs_signed_settling_lsb": 0.0028,
+        "min_read_margin_ns": 7.533,
+        "max_first_compare_gate_overdrive_v": 0.0904,
+        "first_compare_residual_lsb": [
+          -0.0727,
+          -0.022,
+          0.0674,
+          -0.012,
+          0.0123,
+          -0.0124,
+          0.0004,
+          0.072
+        ]
+      }
+    ],
+    "first_compare_gate_limit_v": 0.1,
+    "note": "All codes match the control. The boosted gate is 0.090 V above the signal at the first comparison, against the 0.1 V screen (control -0.001 V); likely the doubled main-switch gate capacitance on an unchanged discharge path. Not yet confirmed from waveforms."
   }
 }

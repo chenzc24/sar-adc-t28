@@ -5,10 +5,9 @@ import json
 import re
 from pathlib import Path
 
-from Layout.design.bootstrap import (CORE as BOOT_CORE, MASTER as BOOT_MASTER, candidate_of as boot_candidate_of,
-                                     output as boot_output, reference as boot_reference, source as boot_source)
 from Layout.design.cdac import PORTS
-from Layout.tools.physical.run_physical import BOOTSTRAP_FILL_RULES, FULL_CONTEXT_RULES
+from Layout.tools.physical.run_physical import FULL_CONTEXT_RULES
+from Layout.tools.simulation import bootstrap_pex
 from Layout.tools.simulation.prepare_full_sim import planned_fill_state, pull, sha
 from Layout.project import evidence
 from tools.saradc.__main__ import ROOT
@@ -113,48 +112,15 @@ def main():
     if args.bootstrap:
         # One extracted channel serves XBOOTP and XBOOTN; its files carry a boot_ prefix
         # so they cannot collide with the CDAC extraction.
-        boot_remote=evidence(args.bootstrap)
-        boot_raw=pull(boot_remote+'/manifest.json');boot=json.loads(boot_raw)
-        checks=boot['checks']
-        assert boot['case']=='bootstrap' and boot['top']==BOOT_CORE and not boot.get('error')
-        assert checks['lvs']['verdict']=='CORRECT' and 'sha256' in checks['pex']
-        assert set(checks['drc']['markers_by_rule']) <= BOOTSTRAP_FILL_RULES|{'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1','DIODMY_L:WARNING'}
-        # A candidate view (layout_mmainN) is checked against its own netlist.
-        built=boot_candidate_of(boot.get('oa_view','layout'))
-        ref=pull(boot_remote+'/reference.cdl')
-        assert sha(ref)==boot['source_sha256'][boot_output(built).name]
-        assert ref.decode('ascii').splitlines()==boot_reference(boot_source(built).read_bytes()).splitlines(), \
-            'The extracted Bootstrap and its schematic differ'
-        if built:context['sampler_candidate']=built
-        boot_originals={'extracted.scs':checks['pex']['sha256'],**checks['pex']['companion_sha256']}
-        renamed={}
-        for name,digest in boot_originals.items():
-            assert re.fullmatch(r'extracted\.scs(?:\.[\w.-]+)?',name)
-            blob=pull(boot_remote+'/pex/'+name);assert sha(blob)==digest
-            renamed[name]='boot_'+name;payload['boot_'+name]=blob
-        main=payload['boot_extracted.scs'].decode('ascii')
-        for name,new in renamed.items():
-            if name!='extracted.scs':
-                main,n=re.subn(r'(?m)^include "'+re.escape(name)+'"',lambda m:'include "'+new+'"',main);assert n==1
-        payload['boot_extracted.scs']=main.encode('ascii')
-        header=re.search(r'(?im)^subckt\s+'+BOOT_CORE+r'\s*\(([^)]+)\)',re.sub(r'\\\s*\n\s*',' ',main))
-        boot_ports=header[1].split() if header else []
-        interface={'CLKS':'CLKS','VIN':'Vin','VOUT':'VOUT','VDD':'VDD!','VSS':'0'}
-        assert sorted(boot_ports)==sorted(interface), 'Unexpected extracted Bootstrap ports'
-        payload['bootstrap_pex.scs']=('simulator lang=spectre\ninclude "boot_extracted.scs"\n'
-            'subckt '+BOOT_MASTER+' CLKS VOUT Vin\nXcore ('+' '.join(interface[n] for n in boot_ports)+') '+BOOT_CORE+'\n'
-            'ends '+BOOT_MASTER+'\n').encode()
-        needle=b'include "xtor/bootstrap/bootstrap.scs"'
-        assert payload['dut.scs'].count(needle)==1
-        payload['dut.scs']=payload['dut.scs'].replace(needle,b'include "bootstrap_pex.scs"')
+        boot=bootstrap_pex.package(args.bootstrap)
+        payload.update(boot['files'])
+        payload['dut.scs']=bootstrap_pex.use(payload['dut.scs'])
         # The extracted channel has its own internal node names.
         tb=re.sub(r'(?m)^save (.*)$',lambda m:'save '+' '.join(
             token for token in m[1].split() if not token.upper().startswith(('XDUT.XBOOTP.','XDUT.XBOOTN.'))),tb)
         payload['test.scs']=tb.encode()
         context['required_signals']=[s for s in context['required_signals'] if not s.startswith(('xdut.xbootp.','xdut.xbootn.'))]
-        context.update(bootstrap_physical_evidence=boot_remote,bootstrap_gds_sha256=boot['gds']['sha256'],
-                       bootstrap_extracted_original_sha256=boot_originals,bootstrap_extracted_ports=boot_ports)
-        payload['bootstrap_physical.json']=boot_raw
+        context.update(boot['context'])
         pex_modules.append('bootstrap')
     if args.acquisition_ns is not None:
         # The period stays 100 ns; only the SAMPLE-high time grows and the conversion phase shrinks.
