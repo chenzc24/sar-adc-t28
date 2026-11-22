@@ -66,7 +66,7 @@ Use `Layout.tools.simulation.prepare_sim` for the unit or three-unit MOM and `pr
 
 ## Comparator Module
 
-`design/comparator.il` creates the 11-transistor `sar_strongarm_t28_core/layout`. `design/comparator-wrapper.il` maintains `sar_strongarm_t28/layout` and references the same core through XCORE. The wrapper owns the two native fill masters `sar8_comp_fill_odpo` and `sar8_comp_fill_metal`. The seven electrical ports match the front-end `sar_strongarm_t28`. Three MOM loads on the outputs and clock model the top-level load in pre-layout simulation. Omit these model loads from the layout and top-level LVS reference and use top-level extraction for the actual load.
+`design/comparator.il` creates the 11-transistor `sar_strongarm_t28_core/layout`. `design/comparator-wrapper.il` maintains `sar_strongarm_t28/layout` and references the same core through XCORE. The wrapper holds the two native fill masters `sar8_comp_fill_odpo` and `sar8_comp_fill_metal`, built for an earlier core, and is not integrated; the top level owns the comparator's fill. [Fill owners](../specs/fill-policy.md#comparator) The seven electrical ports match the front-end `sar_strongarm_t28`. Three MOM loads on the outputs and clock model the top-level load in pre-layout simulation. Omit these model loads from the layout and top-level LVS reference and use top-level extraction for the actual load.
 
 ```powershell
 python -m Layout generate --module comparator
@@ -80,7 +80,7 @@ python -m Layout.tools.simulation.prepare_comparator UNIQUE_FILLED_ID UNIQUE_FIL
 
 `generate --module comparator` creates an independent CDL from the current electrical source and records its SHA256. `physical` normally verifies existing OA. For a new generator-owned core or an explicit rebuild, use `--module comparator --rebuild`. The executor checks the edit lock and checkpoints the current OA cell. Incorporate manual edits into the source or save them in a checkpoint before deciding whether to rebuild. Core geometry changes invalidate earlier fill and post-layout qualification.
 
-For native comparator fill, reuse `fill_cdac.py --module comparator --bounds x0 y0 x1 y1`. Read the bounds from the same GDS and record fill parameters and foundry tool identity in `fill_manifest.json`. Before import, `apply_comparator_fill.py FILL_ID` compares structural digests for the current core and fill source. It checkpoints the wrapper and attaches the fill to that wrapper. Resolve ownership when integrating modules and the top level.
+For native comparator fill, reuse `fill_cdac.py --module comparator --bounds x0 y0 x1 y1`. Read the bounds from the same GDS and record fill parameters and foundry tool identity in `fill_manifest.json`. Before import, `apply_comparator_fill.py FILL_ID` compares structural digests for the current core and fill source. It checkpoints the wrapper and attaches the fill to that wrapper. This flow serves standalone evaluation only; integration takes no wrapper fill.
 
 `prepare_comparator` defaults to the native MOM and receiving-gate loads of the standalone module. Use `--schematic` for a matching pre-layout control and `--integrated` for the current ten-frame ADC interface test. Both tests default to TT. Use `--corner ssc|ssh|ffc|ffh` to select a condition in `specs/corners.json`; the standalone test moves the MOS section, supply, temperature and rail-level drives and keeps the 0.45 V input common mode. Passive devices use their TT sections. Pair each MOS corner with the matching extraction RC corner (SS: CWORST_T, FF: CBEST_T); `comparator_checks/comp_corner.py` produces them, and the same folder packages the post-layout MC offset, noise and CDAC-kickback fixtures. Run through the managed `register/submit/analyze/collect` flow and record the standalone TT and ADC interface measurement scopes in the respective result contexts. [Comparator evidence](../results/comparator.md)
 
@@ -120,6 +120,23 @@ For standalone verification of the XREF child, submit a fresh ID with `--driver-
 After LVS and prefill PEX complete, prepare the standalone test with `python -m Layout.tools.simulation.prepare_bootstrap PHYSICAL_ID RUN_ID [--corner ssc]`. Use another RUN_ID and add `--schematic` for the schematic control. Both recipes use managed registration, simulation, analysis, and collection. To run the Bootstrap extraction inside the ADC, add `--bootstrap PHYSICAL_ID` to `prepare_integrated_sim`, or to `tools.saradc.single_edge_lpe` for the cell-LPE and CWORST_T CDAC benches; one extracted channel then serves XBOOTP and XBOOTN beside the extracted CDAC. Both use `Layout/tools/simulation/bootstrap_pex.py`. [Bootstrap pins, interconnect RC, sampling results, and independent OD/PO trial fill](../results/bootstrap.json)
 
 The generator draws the adopted four-finger main switch into `layout`. To try a different width, register a sampler candidate `mmain<N>` in `specs/candidates.json`, run `python -m Layout generate --module bootstrap --candidate mmain<N>`, and build it with `--view layout_mmain<N>`; the published view stays untouched. `prepare_bootstrap none RUN_ID --schematic --candidate mmain<N>` simulates its schematic.
+
+## ADC Core Routing
+
+`Layout/design/toplevel_routes.py` holds the core-internal route geometry on the floorplan centrelines. Check it on a stream of `sar8_adc_core/layout_place` before writing OA. `Layout/design/toplevel_route.py` merges the routes into that stream and runs the native checks in fresh evidence directories on the layout host; it never deploys the shared runtime. `build` creates a new view from `layout_place` under the layout lock and leaves `layout_place` unchanged. Use new IDs for every run. [Routing record](../results/toplevel_route_internal.json)
+
+```powershell
+python -m Layout.design.toplevel_route physical BASE_ID --view layout_place --through spice --hcells-from BASE_GDS
+python -m Layout.tools.analysis.toplevel_route_precheck BASE_GDS
+python -m Layout.design.toplevel_route generate TRIAL_ID --base BASE_GDS
+python -m Layout.design.toplevel_route build-script BUILD_ID --cell sar8_adc_core --view NEW_VIEW
+python -m Layout.design.toplevel_route build BUILD_ID
+python -m Layout.design.toplevel_route physical CHECK_ID --view NEW_VIEW --through spice --hcells-from BASE_GDS
+python -m Layout.design.toplevel_route pex-input CHECK_GDS PEX_GDS --kind routed
+python -m Layout.design.toplevel_route physical PEX_ID --gds PEX_GDS --stages pex
+```
+
+Connectivity compares Calibre's hierarchical layout netlist, with every block master kept as an HCELL, against the planned (block, port) set of each net. Added capacitance is the routed extraction minus the placement extraction with `NET__BLOCK` labels on the landing pins (`pex-input --kind pins`). Resistance and Elmore delay run between the driving and receiving device terminals, so they bound the route-only values from above.
 
 ## Applicability of Results
 

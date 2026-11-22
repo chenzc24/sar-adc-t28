@@ -2,11 +2,11 @@
   "planning_inputs_sha256": {
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "082a6f6e160c99481f2f13805d1d66e70cb08b88840722849e1a49443807c06e",
-    "Layout/design/floorplan.json": "b3b356be07975be849ed972c976a4d5d102cfa899c267e1916f6855f3ce253c8",
+    "Layout/design/manifest.json": "bde958452e88b369ed544270a2136a4e55728eb7140fbf9cfd9fd10551cafbdc",
+    "Layout/design/floorplan.json": "d9c4a243e598b632d8b59055485c61d775f5a76d0de46b404bc9c394cca452e9",
     "Layout/specs/interfaces.json": "a8be4cfd9babb2d609a87db761602eb6f8d5cdc1815c68ae257a593c2ffa76b6",
     "Layout/specs/constraints.json": "618d52c633cae6097ec7b95c968683c29887e13d49fe76da52f41b7ecfd5f64d",
-    "Layout/design/io_ring.json": "68f2e329fd977d390b09ddeda5c496649e0ef4ea80985dc2199f62653e87a8e7",
+    "Layout/design/io_ring.json": "b64438fe648006ec2f425e04dc17262071cbf76cba8afd41c4b2e7ca35270314",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
@@ -165,7 +165,7 @@
     "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
     "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
     "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
-    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets adopted 2026-11-22 in Layout/specs/constraints.json; Stage 3 floorplan and Stage 4 placement merged (#17, #19); Stage 4 routing next",
+    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets adopted 2026-11-22 in Layout/specs/constraints.json; Stage 3 floorplan and Stage 4 placement merged (#17, #19); Stage 4a core-internal routes in sar8_adc_core/layout_route_int (2026-11-22, toplevel_route_internal.json: no new DRC rule, exact connectivity, adopted route budgets met in extraction); boundary routes, supply feeds and the shield VSS tie wait for the IO ring",
     "freeze": {
       "date": "2026-11-21",
       "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",

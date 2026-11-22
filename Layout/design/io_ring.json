@@ -1,6 +1,7 @@
 {
  "units": "um",
- "status": "preliminary_proposal_not_applied_to_OA",
+ "status": "ring_cell_in_oa_assembly_not_applied",
+ "verification": "Layout/results/io_ring_verification.json",
  "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
  "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
@@ -35,7 +36,8 @@
   "index_convention": "left_0..8 north to south, bottom_0..8 west to east, right_0..8 south to north, top_0..8 east to west"
  },
  "generator": {
-  "tool": "t28-ioring/skills/t28-ioring-generator at a6b8437 (Steps 1 and 3-6, offline; no Virtuoso)",
+  "tool": "t28-ioring/skills/t28-ioring-generator at a6b8437 (Steps 1-10)",
+  "oa_cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring (schematic, layout): the ring cell alone, cell-level DRC 0 results, LVS CORRECT against its schematic (Layout/results/io_ring_verification.json)",
   "output_dir": "t28-ioring/output/generated/20261122_110001 (local generator run, not in this repository)",
   "results": "enrich_intent G1-G12 PASS, validate_intent OK, confirmed config with 112 components, schematic and layout SKILL generated",
   "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS",
@@ -2357,7 +2359,7 @@
   "Feed widths: size each branch route for the 6 ohm feed (with its in-core strap) and for EM at the pin peaks.",
   "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
   "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
-  "Run the generated ring in Virtuoso (Steps 7-10) with DRC/LVS once the plan is accepted, into SAR_ADC_T28_LAYOUT."
+  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): review its ERC results, label the POC rail, and run chip-level DRC and LVS once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items)."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."
 }
