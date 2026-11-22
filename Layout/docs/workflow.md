@@ -210,6 +210,29 @@ python -m Layout.tools.analysis.chip_record --build BUILD_ID --readback READBACK
 
 [Chip assembly record](../results/chip_assembly.md)
 
+### Chip-Level Objects and the Integrated Chip
+
+The chip-level objects of `io_ring.json` are their own cells in die coordinates, placed at the origin: the output register `sar8_out_reg`, the clamps `sar8_esd_clamps`, the pad decaps `sar8_decap_{analog,pair,sar,dvdd}`, the core VSS ring `sar8_core_vss_ring` and the ADC guard ring `sar8_adc_guard_ring`. `Layout/design/output_register.py` places and routes the register from `design/chip/output_register.scs` with Innovus and converts the routed DEF; `Layout/design/chip_objects_geometry.py` draws the other objects. `Layout/design/chip_objects.py` builds any object cell under the layout lock (it replaces only its own builds, guards named views and can start from a copy of another view), writes each cell's LVS source, and runs the cell checks (`Layout/tools/physical/cell_physical.py`: cell or chip DRC deck, LVS with ERC). `Layout/design/chip_integration.py` builds `sar8_adc_chip/layout_full`, a copy of the partial assembly `sar8_adc_chip/layout` (left unchanged) with the objects and the routes that end on them; `Layout/design/chip_full_source.py` writes its LVS source, the full `chip_netlist`. Hierarchical chip DRC under-reports net-based rules (LUP), so count LUP and ESD with the flat, rule-selected run. Prove signal connectivity with LVS that joins only the supply nets by name. Revision 2 of the clamp and decap cells (`layout_r2`, `chip_objects.py content OBJECT_r2 ...`) holds the pad decaps at their planned capacitance; `chip_integration.py --objects-rev 2 --core-cell --core-view` places them with another core view in a new chip view. The register's timing check is `Layout/tools/simulation/prepare_output_register.py` through the managed runner.
+
+```powershell
+python -m Layout.design.output_register generate REV
+python -m Layout.design.output_register route REV
+python -m Layout.design.output_register convert REV
+python -m Layout.design.chip_objects content OBJECT CONTENT_JSON
+python -m Layout.design.chip_objects build-script BUILD_ID CONTENT_JSON --guard CELL/VIEW ...
+python -m Layout.design.chip_objects build BUILD_ID
+python -m Layout.design.chip_objects physical CHECK_ID --top CELL --view layout --stages drc,lvs --source CELL_CDL [--std-cells] [--virtual NET ...]
+python -m Layout.design.chip_objects physical CHECK_ID --top sar8_adc_chip --view layout_full --stages drc --deck chip --flat --select-prefix LUP.,ESD.
+python -m Layout.design.chip_objects physical CHECK_ID --top sar8_adc_chip --view layout_full --stages lvs --source CHIP_CDL --hcells CORE_MASTERS --ring-deck --virtual AVDD AVDD_CORE AVSS AVSS_CORE VSS VSSIO VDDIO DVDD
+python -m Layout.design.chip_integration BUILD_ID --readback READBACK_ID
+python -m Layout.design.chip_integration BUILD_ID --readback READBACK_ID --view NEW_VIEW --core-cell CELL --core-view VIEW --objects-rev 2
+python -m Layout.design.chip_full_source --base PARTIAL_CHIP_CDL --register REGISTER_CDL --contents CONTENT_DIR [--objects-rev 2] --out CHIP_CDL
+python -m Layout.design.chip_assembly physical CHECK_ID --view layout_full --hcells-from BASE_GDS --source CHIP_CDL
+python -m Layout.tools.analysis.chip_objects_record --chip-build BUILD_ID --chip-checks CHECK_ID
+```
+
+[Chip objects record](../results/chip_objects.md)
+
 ## Applicability of Results
 
 `current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)
