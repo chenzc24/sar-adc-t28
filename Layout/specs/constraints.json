@@ -123,19 +123,19 @@
     "reference_pin_peak_current_A": {
       "limit": 5.2e-3,
       "scope": "Peak current of each reference rail, summed over its two bond pins, with the Stage 6 system model",
-      "basis": "Budgeted network model 3.19 mA nominal and 4.31 mA worst over the tolerance box, with the sharper 0.5 ns charge pulse that over-predicts the measured fixture peak (3.33 model vs 2.60 mA measured); limit = 1.2 x box worst. A higher value means the on-chip damping or decoupling differs from the budgeted network.",
+      "basis": "Budgeted network model on the 9 x 9 ring 3.25 mA nominal and 4.33 mA worst over the tolerance box, with the sharper 0.5 ns charge pulse that over-predicts the measured fixture peak (3.33 model vs 2.60 mA measured); limit = 1.2 x box worst. A higher value means the on-chip damping or decoupling differs from the budgeted network.",
       "record": "Layout/results/rail_budget.md"
     },
     "reference_span_droop_V": {
       "limit": 0.26,
       "scope": "Peak drop of VREFP-VREFN at the CDAC reference trunk, after the on-chip series resistors",
-      "basis": "Qualified envelope: the coupled XREF/CDAC passed every TT decision of se-xref-adc-post-b with up to 259.8 mV measured span droop. Budgeted network model 112 mV nominal, 148 mV worst over the tolerance box.",
+      "basis": "Qualified envelope: the coupled XREF/CDAC passed every TT decision of se-xref-adc-post-b with up to 259.8 mV measured span droop. Budgeted network model on the 9 x 9 ring 113 mV nominal, 148 mV worst over the tolerance box.",
       "record": "Layout/results/rail_budget.md"
     },
     "reference_decision_error_LSB": {
       "limit": 0.1,
       "scope": "Reference-induced plate error at each comparator edge: the signed TOP error against nominal rails minus the same error against the instantaneous CDAC-trunk rails",
-      "basis": "Share of the 0.10 LSB top-level reserve between the Stage 2 (0.15 LSB) and Stage 6 (0.25 LSB) plate-settling criteria in chenzc24/sar-adc-t28#12. The plate-settling limit stays authoritative. Budgeted network (15 ohm, 8 pF, double reference bonds, 1.0 pF of pads and about 1 ohm / 0.1 nH of pad-to-core route per rail): 0.030/0.012/0.004 LSB at FF cold/TT/SS cold. Over the tolerance box (series R x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail, route 0-2 ohm) the worst is 0.048/0.019/0.004 LSB. Before the pad and route corrections of chenzc24/sar-adc-t28#18 the model gave 0.040 LSB; the single-bond alternative (20 ohm, 6 pF, 1-3 nH) reached 0.105 LSB at FF cold.",
+      "basis": "Share of the 0.10 LSB top-level reserve between the Stage 2 (0.15 LSB) and Stage 6 (0.25 LSB) plate-settling criteria in chenzc24/sar-adc-t28#12. The plate-settling limit stays authoritative. Budgeted network (15 ohm, 8 pF, double reference bonds, 1.0 pF of pads, and the 9 x 9 ring's pad-to-core routes: 0.85 ohm, 0.17 nH and 0.27 pF per rail): 0.030/0.012/0.004 LSB at FF cold/TT/SS cold. Over the tolerance box (series R x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail, route 0.14-1.2 ohm from M9 at -40 C to M8 at 125 C rcworst) the worst is 0.043/0.020/0.004 LSB. The 7 x 7 ring's 0-2 ohm bracket gave 0.048 LSB; coupling from the shared TACVDD/TACVSS bus through the reference pads adds at most 0.0002 LSB; the single-bond alternative (20 ohm, 6 pF, 1-3 nH) reached 0.105 LSB at FF cold.",
       "record": "Layout/results/rail_budget.md"
     },
     "supply_charge_per_conversion_C": {
@@ -167,7 +167,7 @@
     "supply_droop_V": {
       "limit": 0.045,
       "scope": "Peak drop of VDD-VSS below the source value at the supply pins of each block (XREF, SAR, comparator, Bootstrap)",
-      "basis": "5% of 0.9 V, which keeps SS 0.81 V above 0.765 V. In-core comparator strap bounce of 5-7 mV changed no decision or delay. The timing-margin and settling criteria stay authoritative. Budgeted branch decoupling model, ADC core alone: 24-40 mV. With the recommended 100 pF pad bulk per branch at the 6 ohm maximum feed: 14-20 mV.",
+      "basis": "5% of 0.9 V, which keeps SS 0.81 V above 0.765 V. In-core comparator strap bounce of 5-7 mV changed no decision or delay. The timing-margin and settling criteria stay authoritative. Budgeted branch decoupling model, ADC core alone: 24-40 mV. On the 9 x 9 ring with its planned pad bulk (114-132 pF per branch) at the 6 ohm maximum feed: 14-20 mV per branch, and 14-20 mV with the shared TACVDD/TACVSS bus and every branch firing together; cross-branch coupling through the bus at most 2.9 mV.",
       "record": "Layout/results/rail_budget.md"
     }
   },
@@ -176,13 +176,18 @@
     "reference_source": {"vrefp_V": 0.9, "vrefn_V": 0.0, "output_ohm": 1.0, "board_bypass_F": 1e-07, "board_bypass_esr_ohm": 0.01, "board_bypass_esl_H": 5e-10},
     "supply_source": {"output_ohm": 1.0, "board_bypass_F": 1e-07, "board_bypass_esr_ohm": 0.01, "board_bypass_esl_H": 5e-10, "basis": "Same board model as the references, at the corner VDD"},
     "package_per_pin": {"series_H": 2e-09, "series_ohm": 0.2, "pad_F": 5e-13,
-                        "pins": {"VREFP": 2, "VREFN": 2, "VDD/VSS pairs": ["analog", "reference pair (XREF/CDAC)", "digital"]},
+                        "pins": {"VREFP": 2, "VREFN": 2, "AVDD": 3, "AVSS": 7,
+                                 "supply_branches": "One AVDD/AVSS pad pair per branch (analog, reference pair XREF/CDAC, SAR). On the 9 x 9 ring (chenzc24/sar-adc-t28#23) every AVDD/AVSS pad is PVDD3AC/PVSS3AC, so all of them also share the TACVDD/TACVSS bus; the in-core branch meshes stay separate."},
+                        "shared_bus": {"layers": "M3-M7", "width_um": {"TACVDD": 33.66, "TACVSS": 34.22},
+                                       "ohm_per_60um_pitch_per_rail": {"25C": 0.15, "125C_rcworst": 0.19}, "loop_H_per_mm": 4.1e-10,
+                                       "basis": "Narrowest TACVDD/TACVSS strips of PVDD3AC_V_G, PVSS3AC_V_G and PFILLER20A_G in the 9-metal tphn28hpcpgv18 LEF, at 0.428 ohm/sq per layer (PDK tech LEF); coplanar strips 2.2 um apart for the inductance"},
                         "reference_rail": {"series_H": 1e-09, "series_H_range": [5e-10, 1.5e-09], "series_ohm": 0.1,
                                            "pad_F": 1e-12,
                                            "arrangement": "Two bonds per rail on adjacent pads in the order VREFP, VREFN, VREFP, VREFN; mutual inductance not credited. Both pads load the rail, 2 x 0.5 pF.",
-                                           "pad_to_core_route": {"ohm": 1.0, "ohm_range": [0.0, 2.0], "H": 1e-10,
-                                                                 "basis": "Parallel routes of one rail, VREFP 178/198 um and VREFN 144/252 um at about 4 um on M9/M8 (chenzc24/sar-adc-t28#17), about 23 squares; 0-2 ohm covers sheet resistance up to about 0.085 ohm/sq until the PDK value is read. In series with the on-chip resistor."}},
-                        "decided": "2026-11-21: double reference bonds accepted; the 6 x 6 IO ring is a draft"},
+                                           "pad_to_core_route": {"ohm": 0.85, "ohm_range": [0.14, 1.2], "H": 1.7e-10, "F": 2.7e-13,
+                                                                 "width_um": 4.0, "layer": "M8",
+                                                                 "basis": "The two routes of one rail in parallel, ahead of the on-chip resistor, on the 9 x 9 ring (chenzc24/sar-adc-t28#23): VREFP 297.9/317.9 um and VREFN 263.9/371.9 um, about 38.5 squares at 4 um. M8 0.022 ohm/sq at 25 C (PDK tech LEF) gives 0.85 ohm; the range runs from M9 at -40 C (0.0035 ohm/sq) to M8 at 125 C with rcworst_T thickness (0.031 ohm/sq). F is M8 area and edge capacitance to substrate; H scales the earlier 0.1 nH assumption with length (a coplanar-strip estimate of the interleaved bundle gives about a third of it)."}},
+                        "decided": "2026-11-21: double reference bonds accepted; 2026-11-22: 9 x 9 ring with shared TACVDD/TACVSS bus (chenzc24/sar-adc-t28#23)"},
     "on_chip_reference": {
       "series_ohm_per_rail": 15.0,
       "series_tolerance": [0.8, 1.2],
@@ -208,9 +213,17 @@
     "pad_bulk_decoupling": {
       "status": "Recommended for the IO ring; the ADC core meets the budget without it.",
       "per_supply_branch_F": 1e-10,
+      "planned_on_9x9_ring_F": {"analog": 1.142e-10, "pair": 1.136e-10, "sar": 1.322e-10},
       "esr_ohm_per_rail": 2.0,
       "max_feed_ohm": 6.0,
-      "feed_definition": "Loop resistance, VDD path plus VSS path, from the pad bulk to the block decoupling",
+      "feed_definition": "Loop resistance, VDD path plus VSS path, from the pad bulk to the block decoupling: the ring feed from the bulk to the ADC boundary pins plus the in-core strap",
+      "ring_feed_at_10um_M8_ohm": {
+        "bulk_to_pin_125C_rcworst": {"analog": 0.10, "pair": 0.04, "sar": 0.63},
+        "pad_to_pin_125C_rcworst": {"analog": 0.73, "pair": 2.85, "sar": 1.45},
+        "min_width_um": "M8 at 125 C rcworst: 4.8 um keeps the pair's pad-to-pin path under 6 ohm; 6.3 um keeps the SAR's bulk-to-pin feed under 1 ohm (1.2 um with M8 and M9 stacked)",
+        "in_core_strap": "The remaining 5.4-6.0 ohm belongs to the in-core strap. On M2-M7 (0.54 ohm/sq at 125 C rcworst) 2.7 ohm per rail is about five squares, so the in-core feeds stay on M8/M9 down to via stacks at each decap region."
+      },
+      "shared_bus_check": "With the shared TACVDD/TACVSS bus and every branch firing on the same FF-cold updates, droop at the 6 ohm feed is 17.8 (analog), 19.5 (pair) and 13.9 mV (SAR), within 1.3 mV of the per-branch model. Cross-branch coupling through the bus is at most 2.9 mV peak and 0.46 mV at the comparator edges; through the reference pads' capacitance it adds 0.0002 LSB to the reference decision error.",
       "reference": "None: bulk ahead of the reference series resistors raises the decision error (0.15-0.96 LSB for 30-335 pF with single bonds)."
     },
     "on_chip_supply_decoupling_F": {
