@@ -5,7 +5,7 @@
     "Layout/design/manifest.json": "082a6f6e160c99481f2f13805d1d66e70cb08b88840722849e1a49443807c06e",
     "Layout/design/floorplan.json": "da01186f84f884a4928908f4fc66c8b31807d0835a6200a9f82acc255d7135e1",
     "Layout/specs/interfaces.json": "a8be4cfd9babb2d609a87db761602eb6f8d5cdc1815c68ae257a593c2ffa76b6",
-    "Layout/specs/constraints.json": "08b0fac2a0fe10f42ff81c6dced39820efb96ea074aef1192c666c8fba0c135d",
+    "Layout/specs/constraints.json": "1db229764abc54d0fb22bd8d8afe7d18f77ed3023b1256d2a208ba30577022be",
     "Layout/design/io_ring.json": "6e6069b32394f11b953defb9caf6dd903d49dc4b29afae847026d0c31b0fdad7",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
@@ -165,7 +165,7 @@
     "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
     "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
     "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
-    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets proposed in Layout/specs/constraints.json, not adopted; Stage 3 floorplan in progress",
+    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets adopted 2026-11-22 in Layout/specs/constraints.json; Stage 3 floorplan and Stage 4 placement merged (#17, #19); Stage 4 routing next",
     "freeze": {
       "date": "2026-11-21",
       "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",
@@ -199,7 +199,8 @@
       }
     },
     "decisions": {
-      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB)."
+      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB).",
+      "comparator_output_load": "2026-11-22: keep the route load limits on COMP_P/COMP_N/CMP_CLK (Layout/specs/constraints.json sar_handshake_route_delay_s.load_limit_F); no comparator output buffers, so the frozen comparator core stays unchanged."
     },
     "stage2": {
       "report": "results/integration/stage2_all_extracted_20261122.md",
@@ -214,7 +215,7 @@
       "ssc_min_read_margin_ns": 7.766,
       "ffh_static_reference_offset": "VREFN +0.226 mV, VREFP -0.221 mV (0.061 LSB); decision error 0.162 LSB against nominal rails, 0.102 LSB without it",
       "bootstrap_gate_screen_ssc_v": 0.0877,
-      "proposed_budgets": {
+      "route_budgets": {
         "sar_handshake_route_delay_s": 2e-11,
         "sar_handshake_load_limit_F": {
           "COMP_P": 1.14e-14,
@@ -224,9 +225,9 @@
         "reference_gate_route_delay_s": 1e-10,
         "comparator_input_route_capacitance_F": 9.8e-15,
         "sampler_route_resistance_limit_ohm": 800,
-        "status": "proposed, not adopted"
+        "status": "adopted 2026-11-22; Layout/specs/constraints.json holds the authoritative values"
       },
-      "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um)"
+      "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um). Every Stage 2 run also kept the ~10 fF CL_COMP_P/CL_COMP_N/CL_CMP_CLK model loads, so the adopted load limits have about 10 fF of headroom."
     }
   }
 }
