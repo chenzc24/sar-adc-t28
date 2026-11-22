@@ -124,7 +124,9 @@ def register(spec_path,host=None):
     if entry not in names:raise ValueError('Entry missing from package')
     analyzer=spec.get('analyzer','native_summary.py')
     if analyzer not in names:raise ValueError('Analyzer missing from package')
-    if sum(f['bytes'] for f in files)>32*1024**2:raise ValueError('Input package exceeds 32 MiB')
+    # The remote agent checks each file against 32 MiB. The Stage 6 deck (every block extraction plus the
+    # extracted core wiring) is about 37 MB in total, so the package total is capped at 48 MiB.
+    if sum(f['bytes'] for f in files)>48*1024**2:raise ValueError('Input package exceeds 48 MiB')
     dependencies=[]
     for f in files:
         if not f['name'].endswith(('.scs','.sp','.cir')):continue

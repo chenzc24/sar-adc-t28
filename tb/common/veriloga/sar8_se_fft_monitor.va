@@ -1,0 +1,66 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+// FFT frame monitor for the single-edge SAR (Layout/tools/simulation/prepare_stage6.py fft).
+// TRACK is the Bootstrap clock SEQ_SAMPLE, CMP the comparator clock, UPDATE the SAR commit PHI_U.
+// The single-edge SAR writes its register at the commit, so the legacy write count equals the update count.
+// The record keeps the 14 FFTMEAS fields of sar8_fft_monitor; field 5 (capture clock) is always 0.
+// Testbench observer only: no voltage/current contribution on any DUT node.
+module sar8_se_fft_monitor(TRACK,CMP,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7);
+    input TRACK,CMP,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7;
+    electrical TRACK,CMP,UPDATE,VDD,VP,VN,TOPP,TOPN,D0,D1,D2,D3,D4,D5,D6,D7;
+    parameter real time_origin=0 from [0:inf);
+    // Held TOP difference read this long after the frame origin; the 45 ns acquisition closes near 46.2 ns.
+    parameter real hold_read=47n from (0:90n);
+    integer nc,nu,sequence_error,code,early,frame,valid,report_frame,late_change;
+    real rail_error,vh,sample_time,sample_vin,held_diff,last_update;
+    analog begin
+        @(initial_step) begin
+            nc=0;nu=0;sequence_error=0;early=-1;frame=0;late_change=0;
+            sample_time=0;sample_vin=0;held_diff=0;last_update=0;
+        end
+        @(cross(V(TRACK)-0.5*V(VDD),+1)) begin
+            nc=0;nu=0;sequence_error=0;late_change=0;
+        end
+        @(cross(V(TRACK)-0.5*V(VDD),-1)) begin sample_time=$abstime;sample_vin=V(VP,VN);end
+        @(cross(V(CMP)-0.5*V(VDD),+1)) begin
+            if (nc!=nu) sequence_error=1;
+            nc=nc+1;
+        end
+        @(cross(V(UPDATE)-0.5*V(VDD),+1)) begin
+            if (nc!=nu+1) sequence_error=1;
+            nu=nu+1;last_update=$abstime;
+        end
+        @(timer(time_origin+hold_read,100n)) held_diff=V(TOPP,TOPN);
+        @(cross(V(D0)-0.5*V(VDD),0) or cross(V(D1)-0.5*V(VDD),0) or
+          cross(V(D2)-0.5*V(VDD),0) or cross(V(D3)-0.5*V(VDD),0) or
+          cross(V(D4)-0.5*V(VDD),0) or cross(V(D5)-0.5*V(VDD),0) or
+          cross(V(D6)-0.5*V(VDD),0) or cross(V(D7)-0.5*V(VDD),0)) begin
+            if ($abstime>time_origin+frame*100n+90n && $abstime<time_origin+frame*100n+98n) late_change=1;
+        end
+        @(timer(time_origin+90n,100n)) begin
+            vh=0.5*V(VDD);
+            early=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+        end
+        @(timer(time_origin+98n,100n)) begin
+            vh=0.5*V(VDD);
+            code=(V(D0)>vh)+2*(V(D1)>vh)+4*(V(D2)>vh)+8*(V(D3)>vh)+
+                16*(V(D4)>vh)+32*(V(D5)>vh)+64*(V(D6)>vh)+128*(V(D7)>vh);
+            rail_error=max(min(abs(V(D0)),abs(V(D0)-V(VDD))),min(abs(V(D1)),abs(V(D1)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D2)),abs(V(D2)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D3)),abs(V(D3)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D4)),abs(V(D4)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D5)),abs(V(D5)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D6)),abs(V(D6)-V(VDD))));
+            rail_error=max(rail_error,min(abs(V(D7)),abs(V(D7)-V(VDD))));
+            valid=(nc==8 && nu==8 && sequence_error==0 && early==code && late_change==0 &&
+                   V(TRACK)<0.1*V(VDD) && V(CMP)<0.1*V(VDD) && rail_error<0.1*V(VDD));
+            report_frame=frame;
+            $strobe("FFTMEAS,%d,%d,%d,%d,%d,%d,%d,%d,%.12g,%.15g,%.12g,%.12g,%.12g,%.12g",
+                report_frame,code,nc,nu,nu,0,early,valid,rail_error,sample_time,sample_vin,
+                held_diff,V(TOPP,TOPN),last_update-sample_time);
+            frame=frame+1;
+        end
+    end
+endmodule

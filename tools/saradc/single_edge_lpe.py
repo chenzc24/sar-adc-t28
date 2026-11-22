@@ -73,9 +73,15 @@ def retained_inputs(folder, names):
     return out
 
 
+def simulation_of(run_id):
+    """The simulation behind a weight result: itself, or the source of an analysis-only rerun of its analyzer."""
+    recipe = json.loads((RUNS / run_id / 'recipe.json').read_bytes())
+    return recipe.get('test_conditions', {}).get('reanalysis_source_run_id') or run_id
+
+
 def measured_weights(run_id, gds):
     root = RUNS / run_id
-    physical = json.loads(retained_inputs(root, ['physical.json'])['physical.json'])
+    physical = json.loads(retained_inputs(RUNS / simulation_of(run_id), ['physical.json'])['physical.json'])
     if physical['gds']['sha256'] != gds:
         raise ValueError('Independent CDAC weights use a different layout: ' + run_id)
     data = (root / 'collected/derived/result.json').read_bytes()
@@ -125,13 +131,15 @@ def cdac_bundle(view, corner):
 
 
 def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, macro=None, bootstrap=None,
-            xref=None, comparator=None, family=None, settling_limit=.25, rss_mib=3584):
+            xref=None, comparator=None, family=None, settling_limit=.25, rss_mib=3584, testbench=None):
     """macro: extracted SAR macro from Layout.tools.simulation.prepare_sar_se (files, top, probe, record).
     bootstrap: physical ID of a verified Bootstrap core extraction that replaces both channels.
     xref: coupled XREF/CDAC extraction from Layout.tools.simulation.prepare_all_extracted.xref_package; it
     replaces both XCDAC and XREF, and its standalone weights replace the CDAC bundle (cdac is then ignored).
     comparator: comparator extraction from prepare_all_extracted.comparator_package.
-    family: run-ID family that replaces the default sebit/sepl label scheme."""
+    family: run-ID family that replaces the default sebit/sepl label scheme.
+    testbench: callable(blobs, ctx) that edits the generated testbench files after the stimulus is set
+    (Layout/tools/simulation/prepare_stage6.py: reference and supply system model)."""
     taps = tuple(taps)
     boot = None
     if bootstrap is not None:
@@ -205,7 +213,9 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
         ctx['input_code_coordinates'] = coords
     if kind == 'restart':
         use_restart(blobs, ctx, recipe)
-    group_names = [s for side in ('n', 'p') for group in bundle['groups'][side] for s in group]
+    if testbench:
+        testbench(blobs, ctx)
+    group_names =[s for side in ('n', 'p') for group in bundle['groups'][side] for s in group]
     sel = selectors(taps)
     signals = [s for s in ctx['required_signals'] if not s.startswith('xdut.xcdac.')]
     if boot:
