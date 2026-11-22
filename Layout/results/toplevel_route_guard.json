@@ -1,0 +1,866 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_guard_record.py",
+  "stage": "Stage 5 of chenzc24/sar-adc-t28#12: the SAR P+ guard ring (floorplan sar_guard_ring) with its own VSS strap",
+  "cellview": {
+    "library": "SAR_ADC_T28_LAYOUT",
+    "cell": "sar8_adc_core",
+    "view": "layout_route_guard",
+    "copied_from": "layout_route_full",
+    "build": "adc-core-guard-g1",
+    "build_ok": true,
+    "read_only_views": [
+      "layout_place",
+      "layout_route_int",
+      "layout_route_full"
+    ],
+    "read_only_views_unchanged": true,
+    "stream_layout_oa_sha256": "01c9df03c525b00b5a6e232935aa1e64b5c4e4295e6f71257c36dedf3a3ea449"
+  },
+  "generator": {
+    "geometry": "Layout/design/toplevel_guard_routes.py",
+    "builder": "Layout/design/toplevel_full.py --stage guard",
+    "geometry_sha256": "93c7faa79d25d9398b6a8a7989b5a5f92f6fd05ec25be09eb72dacfbb68e3e52",
+    "rects": 1738,
+    "ring": {
+      "outer": [
+        91.43,
+        51.2,
+        111.52499999999999,
+        69.6
+      ],
+      "width_um": 0.6,
+      "contacts": 1392,
+      "via1_clusters": 82,
+      "strap": [
+        111.52499999999999,
+        51.2,
+        122.0,
+        51.800000000000004
+      ],
+      "pin": {
+        "name": "0_guard",
+        "box": [
+          121.6,
+          51.2,
+          122.0,
+          51.800000000000004
+        ]
+      }
+    }
+  },
+  "evidence": {
+    "build": "adc-core-guard-g1",
+    "checks": "adc-core-guard-g1-chk",
+    "connectivity": "adc-core-guard-g1-conn",
+    "host": "thu-wei"
+  },
+  "drc": {
+    "full_markers": 95,
+    "guard_markers": 96,
+    "delta_by_rule": {
+      "OD.DN.3": [
+        1,
+        2
+      ]
+    },
+    "non_density_changes": [],
+    "verdict": "only density windows changed (deferred to fill); no new geometry rule"
+  },
+  "connectivity": {
+    "top_ports": [
+      "CMP_CLK",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "COMP_N",
+      "COMP_P",
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "PRESET",
+      "SAMPLE",
+      "SEQ_SAMPLE",
+      "TOPN",
+      "TOPP",
+      "VDD_A",
+      "VDD_D",
+      "VDD_P",
+      "VINN",
+      "VINP",
+      "VREFN",
+      "VREFN_TRUNK",
+      "VREFP",
+      "VREFP_TRUNK",
+      "VSS_A",
+      "VSS_D",
+      "VSS_G",
+      "VSS_P"
+    ],
+    "substrate_ports_on": {
+      "VSS_P": 4
+    },
+    "nets": {
+      "TOPN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "exact": true
+      },
+      "TOPP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_P": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_N": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "exact": true
+      },
+      "CMP_CLK": {
+        "reaches": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "exact": true
+      },
+      "SEQ_SAMPLE": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE0": {
+        "reaches": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE1": {
+        "reaches": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE2": {
+        "reaches": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE3": {
+        "reaches": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE4": {
+        "reaches": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE5": {
+        "reaches": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE6": {
+        "reaches": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE7": {
+        "reaches": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "exact": true
+      },
+      "PRESET": {
+        "reaches": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "exact": true
+      },
+      "D0": {
+        "reaches": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "exact": true
+      },
+      "D1": {
+        "reaches": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "exact": true
+      },
+      "D2": {
+        "reaches": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "exact": true
+      },
+      "D3": {
+        "reaches": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "exact": true
+      },
+      "D4": {
+        "reaches": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "exact": true
+      },
+      "D5": {
+        "reaches": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "exact": true
+      },
+      "D6": {
+        "reaches": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "exact": true
+      },
+      "D7": {
+        "reaches": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "exact": true
+      },
+      "SAMPLE": {
+        "reaches": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "VINN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VINP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_D": {
+        "reaches": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_D": {
+        "reaches": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_G": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFP": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFP_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "exact": true
+      },
+      "VREFN": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFN_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "exact": true
+      }
+    },
+    "decap_devices": {
+      "per_branch": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "expected": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "stray": [],
+      "stray_count": 0
+    },
+    "reference_devices": {
+      "cref_nmoscap": {
+        "found": 164,
+        "expected": 164
+      },
+      "rref_rupolym_segments": {
+        "found": {
+          "VREFP": 52,
+          "VREFN": 52
+        },
+        "expected": {
+          "VREFP": 52,
+          "VREFN": 52
+        }
+      }
+    },
+    "text_short_messages": [],
+    "verdict": "PASS"
+  }
+}

@@ -79,6 +79,8 @@ The extracted resistances include each device's contact and M1 or gate access, w
 
 ## LVS plan (Stage 6 top-level LVS of the core)
 
+Carried out in Stage 5 on `layout_route_guard`: CORRECT ([core LVS](toplevel_lvs.md)).
+
 - **Layout:** the stream of `layout_route_full`. The top-level texts (TEXT DEPTH PRIMARY) name the ports D0–D7, SAMPLE, VINN, VINP, VREFP, VREFN, VDD! and 0, and the internal nets VREFP_TRUNK and VREFN_TRUNK.
   - VDD! and 0 each have one pin per supply branch, and each VREF rail has two pins. The core does not join these pieces: the IO ring does, outside. So the deck needs `VIRTUAL CONNECT NAME "VDD!" "0" "VREFP" "VREFN"` (with `VIRTUAL CONNECT COLON` left as installed).
   - The common P-substrate ties the three VSS pieces through the blocks' P+ taps. Under the single name 0 that is consistent; LVS SOFTCHK should report no conflict.
@@ -160,7 +162,7 @@ The span droop and the pin current grow as CREF shrinks; 3 pF would exceed the 5
 ## Open items
 
 - **Decoupling below the Stage 1 requirement:** analog branch 93 %, comparator strips 78 %, pair 92 %. The droop budget passes anyway. Using more of `spare_decap_northeast` for the analog branch needs a strap path that crosses no VIN trunk.
-- **The SAR P+ guard ring** (`sar_guard_ring`) is not drawn.
+- **The SAR P+ guard ring** (`sar_guard_ring`) is not in this view; it is drawn in `layout_route_guard` ([record](toplevel_route_guard.md)).
 - **Density and fill:** the top-level grid density straps over the Bootstrap cells and the fill stage (fill policy steps 2–6). PO.DN.3 is now 3 windows, against 2 in `layout_route_int`.
 - **VSS feeds of the pair and SAR** need a deck run without the substrate soft-connection, or a VSS-only extraction.
 - **Floorplan text:** `power_plan.reference` still describes one VREFP/VREFN crossing on the pad side; the drawn pad side has two (M9 over M8 at right angles, about 8 µm² each).

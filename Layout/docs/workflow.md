@@ -156,6 +156,26 @@ python -m Layout.tools.analysis.toplevel_full_record --content CONTENT_JSON --bu
 
 [Stage 4b record](../results/toplevel_route_full.md)
 
+The SAR guard ring (`Layout/design/toplevel_guard_routes.py`) goes into `layout_route_guard` the same way, from `layout_route_full`: `build-script BUILD_ID CONTENT_JSON --stage guard`, then the same checks. `branch-labels` names the ring's own east pin VSS_G, and `toplevel_full_connectivity --guard` expects it. [Guard ring record](../results/toplevel_route_guard.md)
+
+Core LVS: `python -m Layout.design.toplevel_lvs_source --content CONTENT_JSON --out SOURCE_CDL` writes the source from the block references in their evidence directories; `python -m Layout.design.toplevel_route physical LVS_ID --view layout_route_guard --stages lvs --hcells-from BASE_GDS --source SOURCE_CDL --virtual "VDD!" 0` compares it, and `python -m Layout.tools.analysis.toplevel_lvs_record` records it. [Core LVS](../results/toplevel_lvs.md)
+
+## Chip Assembly
+
+`Layout/design/chip_routes.py` holds the chip-level geometry in die coordinates; `Layout/design/chip_assembly.py` reads the saved ring read-only, builds `sar8_adc_chip/layout` under the layout lock (it replaces only its own build and guards the ring and core views), exports the ring schematic with si, and starts the chip checks (`Layout/tools/physical/chip_physical.py`: installed chip DRC deck, and LVS with ERC using the ring deck's additions). Status and fetch go through `toplevel_route`.
+
+```powershell
+python -m Layout.design.chip_assembly readback READBACK_ID
+python -m Layout.design.chip_assembly build BUILD_ID --readback READBACK_ID
+python -m Layout.design.chip_assembly ring-cdl CDL_ID
+python -m Layout.design.chip_lvs_source --ring-cdl RING_CDL --core-cdl CORE_CDL --out CHIP_CDL
+python -m Layout.design.chip_assembly physical CHECK_ID --hcells-from BASE_GDS --source CHIP_CDL
+python -m Layout.design.chip_assembly physical RING_ID --top sar8_io_ring --view layout --stages drc
+python -m Layout.tools.analysis.chip_record --build BUILD_ID --readback READBACK_ID --checks CHECK_ID --ring-baseline RING_ID --core-baseline CORE_ID
+```
+
+[Chip assembly record](../results/chip_assembly.md)
+
 ## Applicability of Results
 
 `current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)

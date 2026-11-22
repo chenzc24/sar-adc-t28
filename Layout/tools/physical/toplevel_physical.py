@@ -4,7 +4,9 @@ The launcher (Layout/design/toplevel_route.py) uploads this file with run_physic
 the cds.lib and, for a candidate, the merged GDS. The stream comes either from a saved OA view
 (strmout under the shared layout lock) or from the uploaded GDS. Stages: drc (Calibre DRC with the
 installed cell deck), spice (hierarchical layout netlist with the installed LVS deck, no comparison),
-pex (flat Calibre xRC RC and coupling extraction, typical deck). Compatible with the host's Python 2.
+pex (flat Calibre xRC RC and coupling extraction, typical deck), lvs (hierarchical Calibre LVS against an
+uploaded source netlist, block masters as HCELLs, optional VIRTUAL CONNECT NAME nets; run in its own job).
+Compatible with the host's Python 2.
 """
 
 from __future__ import print_function
@@ -22,7 +24,7 @@ sys.path.insert(0, os.getcwd())
 import run_physical as native  # noqa: E402
 
 TOP = "sar8_adc_core"
-STAGES = ("stream", "drc", "spice", "pex")
+STAGES = ("stream", "drc", "spice", "pex", "lvs")
 
 
 def main():
@@ -35,20 +37,26 @@ def main():
     ap.add_argument("--through", choices=STAGES, default="drc")
     ap.add_argument("--stages", help="comma-separated subset of drc,spice,pex to run (default: all through --through)")
     ap.add_argument("--hcells", help="file with one block master per line, kept as a subcircuit in the netlist")
+    ap.add_argument("--source", help="uploaded LVS source netlist (CDL) for the lvs stage")
+    ap.add_argument("--virtual", default="", help="comma-separated net names for VIRTUAL CONNECT NAME (lvs)")
     args = ap.parse_args()
     out = os.getcwd()
     if os.path.basename(out) != args.identity:
         raise ValueError("Run inside the evidence directory of " + args.identity)
-    wanted = STAGES[1:STAGES.index(args.through) + 1]
+    wanted = STAGES[1:min(STAGES.index(args.through), STAGES.index("pex")) + 1]
     if args.stages:
         wanted = tuple(s for s in args.stages.split(",") if s)
         if not set(wanted) <= set(STAGES[1:]):
             raise ValueError("Unknown stage in --stages")
+    if "lvs" in wanted and (set(wanted) & set(["spice", "pex"]) or not args.source):
+        raise ValueError("Run lvs in its own job, with --source")
     report = dict(identity=args.identity, top=TOP, library=native.LIB, library_path=native.LIB_PATH,
                   source=dict(view=args.view) if args.view else dict(gds=args.gds), stages=list(wanted),
                   driver_sha256=dict((n, native.sha(native.raw(join(out, n))))
                                      for n in ("toplevel_physical.py", "run_physical.py", "workspace.py", "cds.lib")),
                   checks={}, decks={})
+    if args.source:
+        report["source_netlist"] = dict(name=args.source, sha256=native.sha(native.raw(join(out, args.source))))
 
     def save():
         native.put(join(out, "manifest.next"), (json.dumps(report, indent=2, sort_keys=True) + "\n").encode("ascii"))
@@ -62,6 +70,19 @@ def main():
         save()
         if rc:
             raise RuntimeError("%s exited %d" % (phase, rc))
+
+    def hcell_deck(work, stage):
+        # Keep every block master as a subcircuit so each top-level net lists the block ports it reaches.
+        cells = [c.strip() for c in native.read(join(out, args.hcells)).splitlines() if c.strip()]
+        if not cells or not all(re.match(r"\A[A-Za-z0-9_]+\Z", c) for c in cells):
+            raise ValueError("Invalid hcell list")
+        text = native.read(join(work, "lvs.svrf"))
+        primary = 'LAYOUT PRIMARY "%s"' % TOP
+        if text.count(primary) != 1:
+            raise ValueError("Unexpected LAYOUT PRIMARY statement")
+        text = text.replace(primary, primary + "\n" + "\n".join("HCELL %s %s" % (c, c) for c in cells))
+        native.put(join(work, "lvs.svrf"), text.encode("latin1"))
+        report["decks"][stage].update(job_sha256=native.sha(text.encode("latin1")), hcells=cells)
 
     gds = join(out, "fixture.gds")
     try:
@@ -113,23 +134,40 @@ def main():
                 native.put(join(out, "reference.cdl"), b"* extraction only\n")
                 report["decks"][stage] = native.prepare_deck(work, "lvs", TOP)
                 if args.hcells:
-                    # Keep every block master as a subcircuit so each top-level net lists the block ports it reaches.
-                    cells = [c.strip() for c in native.read(join(out, args.hcells)).splitlines() if c.strip()]
-                    if not cells or not all(re.match(r"\A[A-Za-z0-9_]+\Z", c) for c in cells):
-                        raise ValueError("Invalid hcell list")
-                    text = native.read(join(work, "lvs.svrf"))
-                    primary = 'LAYOUT PRIMARY "%s"' % TOP
-                    if text.count(primary) != 1:
-                        raise ValueError("Unexpected LAYOUT PRIMARY statement")
-                    text = text.replace(primary, primary + "\n" + "\n".join("HCELL %s %s" % (c, c) for c in cells))
-                    native.put(join(work, "lvs.svrf"), text.encode("latin1"))
-                    report["decks"][stage].update(job_sha256=native.sha(text.encode("latin1")), hcells=cells)
+                    hcell_deck(work, stage)
                 launch(stage, native.CALIBRE, ["calibre", "-spice", "layout.sp", "-hier", "-turbo", "8", "-nowait",
                                                "lvs.svrf"], work, 3600)
                 netlist = join(work, "layout.sp")
                 if not isfile(netlist) or not os.path.getsize(netlist):
                     raise RuntimeError("No layout netlist")
                 report["checks"][stage].update(sha256=native.sha(native.raw(netlist)), bytes=os.path.getsize(netlist))
+            elif stage == "lvs":
+                # Comparison against the uploaded source: prepare_deck points SOURCE PATH at ../reference.cdl.
+                shutil.copyfile(join(out, args.source), join(out, "reference.cdl"))
+                report["decks"][stage] = native.prepare_deck(work, "lvs", TOP)
+                if args.hcells:
+                    hcell_deck(work, stage)
+                names = [n for n in args.virtual.split(",") if n]
+                if names:
+                    if not all(re.match(r"\A[A-Za-z0-9_!]+\Z", n) for n in names):
+                        raise ValueError("Invalid virtual connect name")
+                    text = native.read(join(work, "lvs.svrf"))
+                    colon = "VIRTUAL CONNECT COLON YES"
+                    if text.count(colon) != 1:
+                        raise ValueError("Unexpected VIRTUAL CONNECT statement")
+                    text = text.replace(colon, colon + "\nVIRTUAL CONNECT NAME " + " ".join('"%s"' % n for n in names))
+                    native.put(join(work, "lvs.svrf"), text.encode("latin1"))
+                    report["decks"][stage].update(job_sha256=native.sha(text.encode("latin1")),
+                                                  virtual_connect_name=names)
+                launch(stage, native.CALIBRE, ["calibre", "-lvs", "-hier", "-turbo", "8", "-nowait", "lvs.svrf"],
+                       work, 3600)
+                text = native.read(join(work, "lvs.rep"))
+                verdicts = re.findall(r"(?m)^[ \t]+(CORRECT|INCORRECT|NOT COMPARED)[ \t]+(\S+)[ \t]+(\S+)[ \t]*$", text)
+                top = [v for v, a, b in verdicts if a == TOP and b == TOP]
+                if not top:
+                    raise RuntimeError("Missing LVS comparison verdict")
+                report["checks"][stage].update(verdict=top[-1], cells=[dict(verdict=v, layout=a, source=b)
+                                                                       for v, a, b in verdicts])
             else:
                 # Flat RC + coupling extraction of the whole core with the installed typical deck; nets are
                 # named by the top-level labels (TEXT DEPTH PRIMARY).

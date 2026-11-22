@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_lvs_record.py",
+  "stage": "Stage 5 of chenzc24/sar-adc-t28#12: top-level LVS of the ADC core",
+  "cellview": {
+    "library": "SAR_ADC_T28_LAYOUT",
+    "cell": "sar8_adc_core",
+    "view": "layout_route_guard",
+    "layout_oa_sha256": "01c9df03c525b00b5a6e232935aa1e64b5c4e4295e6f71257c36dedf3a3ea449",
+    "stream_sha256": "43a0ec95b2000788f0a40b2849597324e4f9e4b13659c1395e4507b9ee462bd5"
+  },
+  "source_netlist": {
+    "path": "work/layout/toplevel-lvs/sar8_adc_core.cdl",
+    "generator": "Layout/design/toplevel_lvs_source.py",
+    "sha256": "78790ba718e0fe4496f65ededd59a31f2966da1fbdae9cc335dbedda02946af1",
+    "uploaded_sha256": "78790ba718e0fe4496f65ededd59a31f2966da1fbdae9cc335dbedda02946af1",
+    "block_references": {
+      "sar-se-r3-lib": "b884569cc2f821e16046538f377105c313bb9f824f1dc438e2d7392b118fe748",
+      "se-xref-full-b": "a9b86db9c78d3ea4a07f0064a580895a4327b8d6e6271fa9cf943ca413f337e5",
+      "comp-v8-20261120-pex": "e5e3e20693a0b0123573650419d222aaffb3bb11388b388b3e0b2865ebc0aca4",
+      "boot-core-20261121": "3924ff7fd3630a98a9da46c28d8a55ca69afc0c156522f193da5e6fee4747d0d"
+    }
+  },
+  "deck": {
+    "path": "/home/dmanager/shared_lib/TSMC28/calibre_rule/lvs/calibre.lvs",
+    "sha256": "aa30dc2a6aeb9095af7554caa5a5acf816a1b74e815643fd013ec423c37c1569",
+    "job_sha256": "40f4e1635fc02230de7ec5a2f88e9ccdbbe6fb959bd5624dbac06982a0c51e4a",
+    "hcells": [
+      "sar8_se_core",
+      "sar8i_refword",
+      "sar8j_r1_cdac",
+      "sar_bootstrap_flat_8b_p_core",
+      "sar_strongarm_t28_core"
+    ],
+    "virtual_connect_name": [
+      "VDD!",
+      "0"
+    ],
+    "well_diodes": "LVS FILTER D(pnwdio) LAYOUT OPEN (installed deck)"
+  },
+  "evidence": {
+    "lvs": "adc-core-guard-lvs1",
+    "host": "thu-wei"
+  },
+  "verdict": "CORRECT",
+  "cells": [
+    {
+      "layout": "sar8_se_core",
+      "source": "sar8_se_core",
+      "verdict": "CORRECT"
+    },
+    {
+      "layout": "sar_bootstrap_flat_8b_p_core",
+      "source": "sar_bootstrap_flat_8b_p_core",
+      "verdict": "CORRECT"
+    },
+    {
+      "layout": "sar_strongarm_t28_core",
+      "source": "sar_strongarm_t28_core",
+      "verdict": "CORRECT"
+    },
+    {
+      "layout": "sar8i_refword",
+      "source": "sar8i_refword",
+      "verdict": "CORRECT"
+    },
+    {
+      "layout": "sar8j_r1_cdac",
+      "source": "sar8j_r1_cdac",
+      "verdict": "CORRECT"
+    },
+    {
+      "layout": "sar8_adc_core",
+      "source": "sar8_adc_core",
+      "verdict": "CORRECT"
+    }
+  ],
+  "top": {
+    "layout": "sar8_adc_core",
+    "initial": {
+      "Ports": [
+        32,
+        32
+      ],
+      "Nets": [
+        48,
+        50
+      ],
+      "Instances rupolym (2 pins)": [
+        104,
+        104
+      ],
+      "Instances D (2 pins)": [
+        12,
+        0
+      ],
+      "Instances nmoscap (2 pins)": [
+        877,
+        877
+      ],
+      "Instances sar8_se_core (24 pins)": [
+        1,
+        1
+      ],
+      "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+        2,
+        2
+      ],
+      "Instances sar_strongarm_t28_core (7 pins)": [
+        1,
+        1
+      ],
+      "Instances sar8i_refword (27 pins)": [
+        1,
+        1
+      ],
+      "Instances sar8j_r1_cdac (38 pins)": [
+        1,
+        1
+      ],
+      "Total Inst": [
+        999,
+        987
+      ]
+    },
+    "after": {
+      "Ports": [
+        32,
+        32
+      ],
+      "Nets": [
+        48,
+        48
+      ],
+      "Instances rupolym (2 pins)": [
+        2,
+        2
+      ],
+      "Instances nmoscap (2 pins)": [
+        877,
+        877
+      ],
+      "Instances sar8_se_core (24 pins)": [
+        1,
+        1
+      ],
+      "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+        2,
+        2
+      ],
+      "Instances sar_strongarm_t28_core (7 pins)": [
+        1,
+        1
+      ],
+      "Instances sar8i_refword (27 pins)": [
+        1,
+        1
+      ],
+      "Instances sar8j_r1_cdac (38 pins)": [
+        1,
+        1
+      ],
+      "Total Inst": [
+        885,
+        885
+      ]
+    },
+    "warnings": [
+      "Ambiguity points were found and resolved arbitrarily."
+    ]
+  }
+}
