@@ -4,7 +4,9 @@ The frozen views are Layout/results/current.json integration.freeze. Each MOS co
 interconnect corner (TT: typical, SS: CWORST_T, FF: CBEST_T) for the coupled XREF/CDAC extraction of the
 filled stream se-xref-peripheral-dense, the comparator v8 extraction with VDD/VSS RC, the SAR macro
 sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The Bootstrap core
-boot-core-20261121 is its typical extraction at every corner. Wiring between blocks is ideal.
+boot-core-20261121 is its typical extraction at every corner; --corner-bootstrap uses its re-extraction at the
+paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). Wiring
+between blocks is ideal.
 
 The deck, stimuli and analyzer are tools.saradc.single_edge_lpe. Gain-corrected code targets and signed
 plate settling use the standalone weights of the same XREF/CDAC extraction at the same MOS corner; `gain`
@@ -12,6 +14,8 @@ prepares those standalone runs from the frozen TT weight run xref-fill-tt-after-
 
   python -m Layout.tools.simulation.prepare_all_extracted gain ssc
   python -m Layout.tools.simulation.prepare_all_extracted adc tt verify --revision a
+  python -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --corner-bootstrap
+  python -m Layout.tools.simulation.prepare_all_extracted gate RUN_ID --submit SAME_HOST
 """
 import argparse
 import json
@@ -19,7 +23,7 @@ import re
 
 from Layout.design.reference_driver import COMBINED, DRIVER_SOURCE
 from Layout.project import ROOT, evidence
-from Layout.tools.simulation import prepare_sar_se
+from Layout.tools.simulation import bootstrap_pex, prepare_sar_se
 from Layout.tools.simulation.prepare_full_sim import pull, sha
 from Layout.tools.simulation.prepare_reference_driver import analog_nodes, fetch_pex, pin_order, replace_adc
 from tools.saradc import single_edge_lpe as lpe
@@ -29,11 +33,11 @@ BOOTSTRAP = 'boot-core-20261121'
 TT_GAIN = 'xref-fill-tt-after-dense'
 CORNERS = {
     'tt': dict(rc='typical', xref=FROZEN_XREF, gain=TT_GAIN,
-               comparator='comp-v8-20261120-pex-typical-supplies', sar='sar-se-r3-lib'),
+               comparator='comp-v8-20261120-pex-typical-supplies', sar='sar-se-r3-lib', boot=BOOTSTRAP),
     'ssc': dict(rc='cworst_T', xref=FROZEN_XREF + '-cworst-t', gain='xref-dense-ssc-gain-cw',
-                comparator='comp-v8-20261120-pex-cworst-t-supplies', sar='sar-se-r3-cw'),
+                comparator='comp-v8-20261120-pex-cworst-t-supplies', sar='sar-se-r3-cw', boot=BOOTSTRAP + '-cworst-t'),
     'ffh': dict(rc='cbest_T', xref=FROZEN_XREF + '-cbest-t', gain='xref-dense-ffh-gain-cb',
-                comparator='comp-v8-20261120-pex-cbest-t-supplies', sar='sar-se-r3-cb'),
+                comparator='comp-v8-20261120-pex-cbest-t-supplies', sar='sar-se-r3-cb', boot=BOOTSTRAP + '-cbest-t'),
 }
 XREF_DRC = {'M9.DN.3', 'M8.DN.1', 'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1', 'DIODMY_L:WARNING'}
 COMPARATOR_DRC = {'OD.DN.3', 'PO.DN.3', 'PO.DN.3.1', 'DIODMY_L:WARNING', 'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1'}
@@ -246,17 +250,23 @@ def sar_macro(identity, rc):
     return package
 
 
-def prepare_adc(corner, kind, revision, route_scale=None):
+def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False):
     """route_scale: route check at this multiple of the planned floorplan lengths (run family allxr, scored
-    against the routed-design limits of issue #12, Stage 6 column)."""
+    against the routed-design limits of issue #12, Stage 6 column).
+    corner_bootstrap: the Bootstrap core extraction at the paired interconnect corner (run family allxc)."""
     spec = CORNERS[corner]
     if lpe.CELL_RC[corner] != spec['rc'].lower():
         raise ValueError('Cell LPE and extraction corners differ')
+    if route_scale and corner_bootstrap:
+        raise ValueError('Route checks use the Stage 2 Bootstrap; run them separately')
+    boot = spec['boot'] if corner_bootstrap else BOOTSTRAP
+    if bootstrap_pex.interconnect(boot) != (spec['rc'] if corner_bootstrap else 'typical'):
+        raise ValueError('Bootstrap extraction interconnect corner differs: ' + boot)
     routes = route_check(route_scale) if route_scale else None
-    return lpe.prepare(corner, kind, revision=revision, macro=sar_macro(spec['sar'], spec['rc']), bootstrap=BOOTSTRAP,
+    return lpe.prepare(corner, kind, revision=revision, macro=sar_macro(spec['sar'], spec['rc']), bootstrap=boot,
                        xref=xref_package(spec['xref'], spec['gain'], spec['rc'], routes),
                        comparator=comparator_package(spec['comparator'], spec['rc']),
-                       family='allxr' if routes else 'allx',
+                       family='allxr' if routes else 'allxc' if corner_bootstrap else 'allx',
                        settling_limit=.25 if routes else SETTLING_LIMIT_LSB,
                        rss_mib=BUDGET_RSS_MIB if routes else SIMULATION_RSS_MIB)
 
@@ -335,6 +345,9 @@ ANALYSES = {
               'reference recovery'),
     'routes': ('measure_route_delay.py',
                'Analysis-only 50 %% delay and receiver transition of every top-level route of the route check %s'),
+    'gate': ('measure_bootstrap_gate.py',
+             'Analysis-only main-switch gate discharge of both Bootstrap channels after every sample close of %s: '
+             'onset, fall rate, overdrive at the first comparator clock and at fixed delays, settled hold level'),
 }
 
 
@@ -382,6 +395,8 @@ if __name__ == '__main__':
     a.add_argument('--revision', default='a')
     a.add_argument('--route-scale', type=float, metavar='SCALE',
                    help='Route check: RC routes at SCALE x the planned floorplan lengths, TOP_ROUTE_F per TOP net')
+    a.add_argument('--corner-bootstrap', action='store_true',
+                   help='Bootstrap core extraction at the paired interconnect corner (run family allxc)')
     analyses = []
     for kind in ANALYSES:
         r = sub.add_parser(kind, help='Analysis-only %s job on a completed run (same host as the source)' % kind)
@@ -397,7 +412,7 @@ if __name__ == '__main__':
     elif args.action in ANALYSES:
         path = prepare_analysis(args.action, args.source_run_id, args.run_id)
     else:
-        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale)
+        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap)
     print(path.relative_to(ROOT).as_posix())
     if args.submit:
         from tools.saradc.__main__ import engine

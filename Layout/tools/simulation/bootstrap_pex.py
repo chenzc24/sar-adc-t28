@@ -14,6 +14,11 @@ ALLOWED_DRC = BOOTSTRAP_FILL_RULES | {'IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNI
 INTERNAL = ['xdut.xboot%s.%s' % (s, n) for s in 'pn' for n in ('btop', 'bbot')]
 
 
+def interconnect(physical_id):
+    """Interconnect corner of a Bootstrap core extraction; bootstrap_rc_corner.py records it, the frozen run is typical."""
+    return json.loads(pull(evidence(physical_id) + '/manifest.json')).get('interconnect_rc', 'typical')
+
+
 def package(physical_id):
     """Files, context and probe map of a verified prefill core, with a boot_ prefix on the xRC files."""
     remote = evidence(physical_id)
@@ -56,7 +61,7 @@ def package(physical_id):
     probes = {'xdut.xboot%s.g' % s: 'XDUT.XBOOT%s.Xcore.%s' % (s.upper(), gate[1]) for s in 'pn'}
     context = dict(bootstrap_physical_evidence=remote, bootstrap_gds_sha256=boot['gds']['sha256'],
                    bootstrap_extracted_original_sha256=originals, bootstrap_extracted_ports=ports,
-                   bootstrap_gate_probe=gate[1])
+                   bootstrap_gate_probe=gate[1], bootstrap_interconnect_rc=boot.get('interconnect_rc', 'typical'))
     if built:
         context['sampler_candidate'] = built
     return dict(files=files, context=context, probes=probes)
