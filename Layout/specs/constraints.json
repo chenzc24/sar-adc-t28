@@ -63,22 +63,39 @@
       }
     },
     "comparator_input_route_capacitance_F": {
-      "limit": null,
-      "basis": "Native comparator delay/load sweep required before detailed routing freeze"
+      "limit": 9.8e-15,
+      "status": "proposed from Stage 2 (issue #12), not adopted",
+      "scope": "Added fixed capacitance per TOP net from top-level TOP wiring to the comparator and the Bootstrap output, including device-side layout",
+      "basis": "0.8% of C_eff (specs/arch.json gain_error_allocation.top_level_top_wiring_and_device_layout); C_eff = 52.11 fF fixed TOPP load / 4.231% TT gain error of se-xref-peripheral-dense = 1.232 pF, so 9.85 fF. 9.8 fF per side kept every code on its gain-corrected target in the SS-cold and FF-hot route checks.",
+      "sampler_route_resistance_limit_ohm": 800,
+      "sampler_route_basis": "SS-cold acquisition residual rose from 0.052 LSB (ideal wiring) to 0.093 LSB with 412 ohm and to 0.148 LSB with 825 ohm between the Bootstrap output and TOP; 825 ohm uses 0.096 of the 0.10 LSB reserved for top-level parasitics",
+      "record": "results/integration/stage2_all_extracted_20261122.json#budgets"
     },
     "reference_gate_route_delay_s": {
-      "limit": null,
-      "basis": "TT measurements include logic-cell delay and the routed CDAC load. The top-level wiring-only allocation remains open.",
-      "measured": {
+      "limit": 1e-10,
+      "status": "proposed from Stage 2 (issue #12), not adopted",
+      "scope": "One-way top-level CODE0-7/PRESET route from the SAR macro pins to the XREF pins, 50% to 50%, receiver load included",
+      "basis": "FF hot (CBEST_T) is the binding corner: the worst decision error rises about 0.5 mLSB per ps of CODE-bus delay (RC check sar8-allxr-ffh-verify-a at 51 ps measured; ideal-delay diagnostic at 130 ps). At 100 ps the prediction is 0.213 LSB against nominal rails (routed limit 0.25) and 0.153 LSB with the 0.061 LSB static leakage offset removed. SS cold and TT are not limited by this route.",
+      "measured_at_planned_length_ps": 16.6,
+      "measured_internal": {
         "run": "se-xref-drive-rails",
         "event": "Worst command-to-50% crossing across selected physical gate contacts, both directions with all bits switching",
         "worst_ps": 281.6,
         "report": "Layout/results/single_edge_xref.json"
-      }
+      },
+      "record": "results/integration/stage2_all_extracted_20261122.json#budgets"
     },
     "sar_handshake_route_delay_s": {
-      "limit": null,
-      "basis": "Close timing against actual per-bit conversion budget; no zero-delay substitution"
+      "limit": 2e-11,
+      "status": "proposed from Stage 2 (issue #12), not adopted",
+      "scope": "One-way top-level CMP_CLK route (SAR to comparator) and COMP_P/COMP_N routes (comparator to SAR), 50% to 50%",
+      "load_limit_F": {
+        "COMP_P": 1.14e-14,
+        "COMP_N": 1.14e-14,
+        "CMP_CLK": 1.11e-14
+      },
+      "basis": "The binding quantity is load, not delay: COMP_P/COMP_N are the StrongARM latch nodes (no output buffer), so route capacitance slows regeneration, most at small inputs. SS cold: 7.77 ns read margin with ideal wiring; 4.16 ns with the planned floorplan lengths at 0.2 fF/um and 20 ohm/um (sar8-allxr-ssc-verify-s1, 11.4 fF per comparator output, 19.7 ps measured one-way); 0.66 ns at twice those lengths. The cost is linear in load, about 3.6 ns per planned length, so the routed 1 ns floor is reached near 1.9x. The proposed limits are the verified 1x point.",
+      "record": "results/integration/stage2_all_extracted_20261122.json#budgets"
     },
     "reference_charge_per_conversion_C": {
       "limit": 3.7e-12,
