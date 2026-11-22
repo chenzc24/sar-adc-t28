@@ -1,0 +1,1490 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_full_record.py",
+  "stage": "Stage 4b of chenzc24/sar-adc-t28#12: boundary signal routes, the three supply branches with decoupling, the shield tie and the on-chip reference network (VREF pins, RREFP/RREFN, CREF)",
+  "cellview": {
+    "library": "SAR_ADC_T28_LAYOUT",
+    "cell": "sar8_adc_core",
+    "view": "layout_route_full",
+    "copied_from": "layout_route_int",
+    "build": "adc-core-full-p2h",
+    "build_ok": true,
+    "read_only_views_unchanged": true,
+    "stream_layout_oa_sha256": "c4bafe8ed3df28f492af720e15ea427c9ffa96ada135f33a04b82a47de90ae9a"
+  },
+  "generator": {
+    "geometry": "Layout/design/toplevel_full_routes.py",
+    "builder": "Layout/design/toplevel_full.py",
+    "geometry_sha256": "0235231911825958e351611450a269363910c7b5405d6b194bc7e8f42ceb4232",
+    "rects": 20457,
+    "pcells": 881,
+    "terminals": {
+      "D0": 1,
+      "D1": 1,
+      "D2": 1,
+      "D3": 1,
+      "D4": 1,
+      "D5": 1,
+      "D6": 1,
+      "D7": 1,
+      "SAMPLE": 1,
+      "VINN": 1,
+      "VINP": 1,
+      "VDD!": 3,
+      "0": 3,
+      "VREFP": 2,
+      "VREFN": 2
+    },
+    "labels": [
+      "VREFP_TRUNK",
+      "VREFN_TRUNK"
+    ]
+  },
+  "evidence": {
+    "build": "adc-core-full-p2h",
+    "checks": "adc-core-full-p2h-chk",
+    "extraction": "adc-core-full-p2h-xtr",
+    "unlabelled_extraction": "adc-core-full-p2h-xtr-raw",
+    "placement_pex": "adc-core-place-pex-20261122",
+    "placement_pair_vss_tied_pex": "adc-core-place-pairvss-pex",
+    "host": "thu-wei"
+  },
+  "drc": {
+    "route_int_markers": 47,
+    "full_markers": 95,
+    "delta_by_rule": {
+      "M4.DN.6": [
+        0,
+        20
+      ],
+      "M5.DN.6": [
+        9,
+        19
+      ],
+      "M6.DN.6": [
+        8,
+        21
+      ],
+      "M7.DN.6": [
+        8,
+        11
+      ],
+      "M8.DN.1": [
+        0,
+        1
+      ],
+      "M9.DN.3": [
+        0,
+        1
+      ],
+      "Mx.DN.7:M1_M2_M3": [
+        2,
+        1
+      ],
+      "PO.DN.3": [
+        2,
+        3
+      ]
+    },
+    "new_rules": [
+      "M4.DN.6",
+      "M8.DN.1",
+      "M9.DN.3"
+    ],
+    "non_density_changes": [],
+    "verdict": "only density windows changed (deferred to top-level fill); no new geometry rule"
+  },
+  "connectivity": {
+    "top_ports": [
+      "CMP_CLK",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "COMP_N",
+      "COMP_P",
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "PRESET",
+      "SAMPLE",
+      "SEQ_SAMPLE",
+      "TOPN",
+      "TOPP",
+      "VDD_A",
+      "VDD_D",
+      "VDD_P",
+      "VINN",
+      "VINP",
+      "VREFN",
+      "VREFN_TRUNK",
+      "VREFP",
+      "VREFP_TRUNK",
+      "VSS_A",
+      "VSS_D",
+      "VSS_P"
+    ],
+    "substrate_ports_on": {
+      "VSS_P": 4
+    },
+    "nets": {
+      "TOPN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "exact": true
+      },
+      "TOPP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_P": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_N": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "exact": true
+      },
+      "CMP_CLK": {
+        "reaches": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "exact": true
+      },
+      "SEQ_SAMPLE": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE0": {
+        "reaches": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE1": {
+        "reaches": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE2": {
+        "reaches": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE3": {
+        "reaches": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE4": {
+        "reaches": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE5": {
+        "reaches": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE6": {
+        "reaches": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE7": {
+        "reaches": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "exact": true
+      },
+      "PRESET": {
+        "reaches": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "exact": true
+      },
+      "D0": {
+        "reaches": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D0"
+          ]
+        ],
+        "exact": true
+      },
+      "D1": {
+        "reaches": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D1"
+          ]
+        ],
+        "exact": true
+      },
+      "D2": {
+        "reaches": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D2"
+          ]
+        ],
+        "exact": true
+      },
+      "D3": {
+        "reaches": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D3"
+          ]
+        ],
+        "exact": true
+      },
+      "D4": {
+        "reaches": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D4"
+          ]
+        ],
+        "exact": true
+      },
+      "D5": {
+        "reaches": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D5"
+          ]
+        ],
+        "exact": true
+      },
+      "D6": {
+        "reaches": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D6"
+          ]
+        ],
+        "exact": true
+      },
+      "D7": {
+        "reaches": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "D7"
+          ]
+        ],
+        "exact": true
+      },
+      "SAMPLE": {
+        "reaches": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "VINN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VINP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VIN"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VDD"
+          ],
+          [
+            "bootstrap_p",
+            "VDD"
+          ],
+          [
+            "comparator",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_A": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VSS"
+          ],
+          [
+            "bootstrap_p",
+            "VSS"
+          ],
+          [
+            "comparator",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VDD"
+          ],
+          [
+            "reference",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_P": {
+        "reaches": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VSS"
+          ],
+          [
+            "reference",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VDD_D": {
+        "reaches": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VDD"
+          ]
+        ],
+        "exact": true
+      },
+      "VSS_D": {
+        "reaches": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "planned": [
+          [
+            "sar",
+            "VSS"
+          ]
+        ],
+        "exact": true
+      },
+      "VREFP": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFP_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFP"
+          ]
+        ],
+        "exact": true
+      },
+      "VREFN": {
+        "reaches": [],
+        "planned": [],
+        "exact": true
+      },
+      "VREFN_TRUNK": {
+        "reaches": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "planned": [
+          [
+            "cdac",
+            "VREFN"
+          ]
+        ],
+        "exact": true
+      }
+    },
+    "decap_devices": {
+      "per_branch": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "expected": {
+        "A": 232,
+        "P": 241,
+        "D": 240
+      },
+      "stray": [],
+      "stray_count": 0
+    },
+    "reference_devices": {
+      "cref_nmoscap": {
+        "found": 164,
+        "expected": 164
+      },
+      "rref_rupolym_segments": {
+        "found": {
+          "VREFP": 52,
+          "VREFN": 52
+        },
+        "expected": {
+          "VREFP": 52,
+          "VREFN": 52
+        }
+      }
+    },
+    "text_short_messages": [],
+    "verdict": "PASS"
+  },
+  "route_budgets": [
+    {
+      "item": "TOPN added capacitance",
+      "limit": 9.8,
+      "measured": -4.623,
+      "unit": "fF",
+      "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+      "pass": true
+    },
+    {
+      "item": "TOPN sampler route resistance",
+      "limit": 800.0,
+      "measured": 87.07,
+      "unit": "ohm",
+      "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+      "pass": true
+    },
+    {
+      "item": "TOPP added capacitance",
+      "limit": 9.8,
+      "measured": -3.952,
+      "unit": "fF",
+      "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+      "pass": true
+    },
+    {
+      "item": "TOPP sampler route resistance",
+      "limit": 800.0,
+      "measured": 87.07,
+      "unit": "ohm",
+      "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+      "pass": true
+    },
+    {
+      "item": "TOP side imbalance of added capacitance",
+      "limit": 1.0,
+      "measured": 0.671,
+      "unit": "fF",
+      "scope": "|added TOPN - added TOPP|",
+      "pass": true
+    },
+    {
+      "item": "COMP_P route load",
+      "limit": 11.4,
+      "measured": 5.035,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "COMP_P one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 2.519,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "COMP_N route load",
+      "limit": 11.4,
+      "measured": 5.149,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "COMP_N one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 2.704,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CMP_CLK route load",
+      "limit": 11.1,
+      "measured": 5.034,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "CMP_CLK one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 4.004,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE0 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.537,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE1 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.607,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE2 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.008,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE3 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.092,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE4 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.574,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE5 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.493,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE6 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.307,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE7 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.621,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "PRESET one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.214,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    }
+  ],
+  "route_budgets_pass": true,
+  "route_budgets_note": "The TOP rows use the Stage 4a method (added capacitance against the pins-only placement, with the pair VSS floating there); top_capacitance is the like-for-like reading.",
+  "route_budget_nets": {
+    "CMP_CLK": {
+      "added_fF": 5.034,
+      "routed_total_fF": 7.517,
+      "elmore_delay_ps": {
+        "comparator": 4.004
+      }
+    },
+    "CODE0": {
+      "added_fF": 5.641,
+      "routed_total_fF": 12.857,
+      "elmore_delay_ps": {
+        "reference": 4.537
+      }
+    },
+    "CODE1": {
+      "added_fF": 5.526,
+      "routed_total_fF": 11.403,
+      "elmore_delay_ps": {
+        "reference": 4.607
+      }
+    },
+    "CODE2": {
+      "added_fF": 5.614,
+      "routed_total_fF": 11.128,
+      "elmore_delay_ps": {
+        "reference": 4.008
+      }
+    },
+    "CODE3": {
+      "added_fF": 5.791,
+      "routed_total_fF": 10.815,
+      "elmore_delay_ps": {
+        "reference": 4.092
+      }
+    },
+    "CODE4": {
+      "added_fF": 5.777,
+      "routed_total_fF": 9.566,
+      "elmore_delay_ps": {
+        "reference": 3.574
+      }
+    },
+    "CODE5": {
+      "added_fF": 5.931,
+      "routed_total_fF": 8.776,
+      "elmore_delay_ps": {
+        "reference": 3.493
+      }
+    },
+    "CODE6": {
+      "added_fF": 6.042,
+      "routed_total_fF": 10.803,
+      "elmore_delay_ps": {
+        "reference": 4.307
+      }
+    },
+    "CODE7": {
+      "added_fF": 6.022,
+      "routed_total_fF": 9.482,
+      "elmore_delay_ps": {
+        "reference": 3.621
+      }
+    },
+    "COMP_N": {
+      "added_fF": 5.149,
+      "routed_total_fF": 6.946,
+      "elmore_delay_ps": {
+        "sar": 2.704
+      }
+    },
+    "COMP_P": {
+      "added_fF": 5.035,
+      "routed_total_fF": 6.572,
+      "elmore_delay_ps": {
+        "sar": 2.519
+      }
+    },
+    "PRESET": {
+      "added_fF": 4.781,
+      "routed_total_fF": 8.03,
+      "elmore_delay_ps": {
+        "reference": 4.214
+      }
+    },
+    "SEQ_SAMPLE": {
+      "added_fF": 6.827,
+      "routed_total_fF": 26.945,
+      "elmore_delay_ps": {
+        "bootstrap_n": 4.886,
+        "bootstrap_p": 4.927
+      }
+    },
+    "TOPN": {
+      "added_fF": -4.623,
+      "routed_total_fF": 251.003,
+      "switch_to_cdac_plate_resistance_max_ohm": 87.07
+    },
+    "TOPP": {
+      "added_fF": -3.952,
+      "routed_total_fF": 250.496,
+      "switch_to_cdac_plate_resistance_max_ohm": 87.07
+    }
+  },
+  "top_capacitance": {
+    "TOPN": {
+      "total_fF": 251.003,
+      "stage4a_total_fF": 256.972,
+      "placement_pins_only_fF": 255.626,
+      "placement_pair_vss_tied_fF": 257.035,
+      "coupling_to_stage4b_nets_fF": {
+        "VDD!": 0.032,
+        "VINN": 0.1971
+      },
+      "coupling_to_pair_reference_rails_fF": {
+        "VREFN_TRUNK": 0.6594
+      },
+      "added_vs_tied_placement_fF": -6.032,
+      "change_from_stage4a_fF": -5.969
+    },
+    "TOPP": {
+      "total_fF": 250.496,
+      "stage4a_total_fF": 255.818,
+      "placement_pins_only_fF": 254.447,
+      "placement_pair_vss_tied_fF": 256.751,
+      "coupling_to_stage4b_nets_fF": {
+        "VDD!": 0.032,
+        "VINP": 0.1971
+      },
+      "coupling_to_pair_reference_rails_fF": {
+        "VREFP_TRUNK": 0.6594
+      },
+      "added_vs_tied_placement_fF": -6.255,
+      "change_from_stage4a_fF": -5.322
+    },
+    "imbalance_fF": 0.507,
+    "stage4a_imbalance_fF": 1.154,
+    "placement_pins_only_imbalance_fF": 1.179,
+    "placement_pair_vss_tied_imbalance_fF": 0.284,
+    "limits_fF": {
+      "added": 9.8,
+      "imbalance": 1.0
+    },
+    "pass": true,
+    "evidence": {
+      "full": "adc-core-full-p2h-xtr-raw",
+      "stage4a": "adc-core-route-int-pex",
+      "placement_pins_only": "adc-core-place-pex-20261122",
+      "placement_pair_vss_tied": "adc-core-place-pairvss-pex"
+    }
+  },
+  "vin": {
+    "VINN": {
+      "total_fF": 3.563,
+      "top_partners_fF": {
+        "0": 1.2109,
+        "X81/3": 0.7414,
+        "X81/4": 0.6894,
+        "X81/8": 0.5253,
+        "TOPN": 0.1971,
+        "VSS_A": 0.1215,
+        "VDD_A": 0.0449,
+        "X81/5": 0.0325
+      }
+    },
+    "VINP": {
+      "total_fF": 3.5629,
+      "top_partners_fF": {
+        "0": 1.2108,
+        "X82/3": 0.7414,
+        "X82/4": 0.6894,
+        "X82/8": 0.5253,
+        "TOPP": 0.1971,
+        "VSS_A": 0.1215,
+        "VDD_A": 0.0449,
+        "X82/5": 0.0325
+      }
+    },
+    "mirror_difference_fF": 0.0001
+  },
+  "feeds": {
+    "analog": {
+      "VDD": {
+        "nodes": 2803,
+        "resistors": 3684,
+        "decap_terminals": 132,
+        "block_terminals": 17,
+        "to_decap_ohm": 2.336,
+        "to_blocks_ohm": 9.446
+      },
+      "VSS": {
+        "nodes": 38789,
+        "resistors": 58539,
+        "decap_terminals": 493,
+        "block_terminals": 9,
+        "to_decap_ohm": 1.316,
+        "to_blocks_ohm": 6.097
+      },
+      "loop_to_decap_ohm": 3.652,
+      "loop_to_blocks_ohm": 15.543
+    },
+    "pair": {
+      "VDD": {
+        "nodes": 3703,
+        "resistors": 4536,
+        "decap_terminals": 173,
+        "block_terminals": 48,
+        "to_decap_ohm": 1.3,
+        "to_blocks_ohm": 16.695
+      },
+      "VSS": null,
+      "loop_to_decap_ohm": null,
+      "loop_to_blocks_ohm": null
+    },
+    "sar": {
+      "VDD": {
+        "nodes": 6900,
+        "resistors": 7949,
+        "decap_terminals": 188,
+        "block_terminals": 612,
+        "to_decap_ohm": 1.27,
+        "to_blocks_ohm": 0.805
+      },
+      "VSS": null,
+      "loop_to_decap_ohm": null,
+      "loop_to_blocks_ohm": null
+    }
+  },
+  "decoupling": {
+    "analog": {
+      "devices": 220,
+      "gate_um2": 440.0,
+      "estimated_F": 8.36e-12,
+      "stage1_required_F": 9e-12,
+      "ratio": 0.929
+    },
+    "comparator_local": {
+      "devices": 12,
+      "gate_um2": 19.2,
+      "estimated_F": 3.65e-13,
+      "stage1_required_F": 4.7e-13,
+      "ratio": 0.776
+    },
+    "pair": {
+      "devices": 241,
+      "gate_um2": 482.0,
+      "estimated_F": 9.158e-12,
+      "stage1_required_F": 1e-11,
+      "ratio": 0.916
+    },
+    "sar": {
+      "devices": 240,
+      "gate_um2": 480.0,
+      "estimated_F": 9.12e-12,
+      "stage1_required_F": 8e-12,
+      "ratio": 1.14
+    }
+  },
+  "reference": {
+    "rref": {
+      "device": "rupolym 0.5 x 0.5 um, Parallel, segSp 180 nm",
+      "segment_ohm_tt": {
+        "-40C": 620.71,
+        "25C": 625.23,
+        "125C": 635.5
+      },
+      "per_rail": {
+        "VREFP": {
+          "banks": [
+            "RREFP_A",
+            "RREFP_B"
+          ],
+          "segments": 52,
+          "model_ohm_tt": {
+            "-40C": 11.937,
+            "25C": 12.024,
+            "125C": 12.221
+          },
+          "series_ohm_tt_25C": 17.205,
+          "within_target_band": true
+        },
+        "VREFN": {
+          "banks": [
+            "RREFN_A",
+            "RREFN_B"
+          ],
+          "segments": 52,
+          "model_ohm_tt": {
+            "-40C": 11.937,
+            "25C": 12.024,
+            "125C": 12.221
+          },
+          "series_ohm_tt_25C": 17.213,
+          "within_target_band": true
+        }
+      },
+      "target_ohm": 15.0,
+      "tolerance": 0.2
+    },
+    "cref": {
+      "arrays": {
+        "DR_W": 156,
+        "DR_C": 8
+      },
+      "devices": 164,
+      "gate_um2": 328.0,
+      "estimated_F": 6.232e-12,
+      "target_F": 8e-12,
+      "tolerance": 0.25,
+      "within_target_band": true
+    },
+    "routing": {
+      "VREFP": {
+        "rref_pad_terminals": 52,
+        "pad_pin_to_rref_ohm": 1.4227,
+        "rref_trunk_terminals": 52,
+        "cref_terminals": 162,
+        "switch_terminals": 1531,
+        "rail_end_to_rref_ohm": 3.758,
+        "rail_end_to_cref_ohm": 3.9003,
+        "rail_end_to_switches_ohm": 12.1215,
+        "rref_to_cref_ohm": 4.8742
+      },
+      "VREFN": {
+        "rref_pad_terminals": 52,
+        "pad_pin_to_rref_ohm": 1.4155,
+        "rref_trunk_terminals": 52,
+        "cref_terminals": 162,
+        "switch_terminals": 1531,
+        "rail_end_to_rref_ohm": 3.7736,
+        "rail_end_to_cref_ohm": 2.0431,
+        "rail_end_to_switches_ohm": 12.8041,
+        "rref_to_cref_ohm": 2.5317
+      }
+    },
+    "cref_well_junction": {
+      "net": "VREFN_TRUNK",
+      "to": "substrate (VSS)",
+      "diodes": 1,
+      "area_um2": 599.57,
+      "perimeter_um": 171.26
+    }
+  },
+  "rail_budget": {
+    "model": "Layout/tools/analysis/rail_budget.py and ring_supply.py (Stage 1), inputs replaced by the drawn values",
+    "supply": {
+      "branches": {
+        "analog": {
+          "cap_F": 8.36e-12,
+          "in_core_loop_ohm_125c": [
+            4.565
+          ],
+          "core_alone_droop_V": 0.0408,
+          "core_alone_droop_with_stage1_feed_V": 0.043,
+          "with_pad_bulk_droop_V": 0.0171,
+          "pass": true
+        },
+        "pair": {
+          "cap_F": 9.158e-12,
+          "in_core_loop_ohm_125c": [
+            3.25
+          ],
+          "core_alone_droop_V": 0.0403,
+          "core_alone_droop_with_stage1_feed_V": 0.0428,
+          "with_pad_bulk_droop_V": 0.0159,
+          "pass": true
+        },
+        "sar": {
+          "cap_F": 9.12e-12,
+          "in_core_loop_ohm_125c": [
+            3.125,
+            4.125
+          ],
+          "core_alone_droop_V": 0.0263,
+          "core_alone_droop_with_stage1_feed_V": 0.0264,
+          "with_pad_bulk_droop_V": 0.0117,
+          "pass": true
+        },
+        "comparator_local": {
+          "cap_F": 3.65e-13,
+          "in_core_loop_ohm_125c": [
+            30.0
+          ],
+          "core_alone_droop_V": 0.0263,
+          "core_alone_droop_with_stage1_feed_V": 0.0263,
+          "pass": true
+        }
+      },
+      "coupled_shared_bus_125c_rcworst_droop_V": {
+        "analog": 0.0163,
+        "pair": 0.0159,
+        "sar": 0.0126
+      },
+      "limit_V": 0.045,
+      "pass": true
+    },
+    "reference": {
+      "cref_F": 6.232e-12,
+      "series_ohm": 17.21,
+      "tolerance_box": "series x0.8-1.2, CREF x0.75-1.25 around the drawn value, 0.5-1.5 nH per rail, the 9 x 9 route range",
+      "corners": {
+        "ffc": {
+          "nominal_decision_error_LSB": 0.0251,
+          "box_decision_error_LSB": 0.0354,
+          "nominal_span_droop_V": 0.136,
+          "box_span_droop_V": 0.1774,
+          "box_pin_peak_A": 0.00464
+        },
+        "tt": {
+          "nominal_decision_error_LSB": 0.0096,
+          "box_decision_error_LSB": 0.0168,
+          "nominal_span_droop_V": 0.136,
+          "box_span_droop_V": 0.1774,
+          "box_pin_peak_A": 0.00464
+        },
+        "ssc": {
+          "nominal_decision_error_LSB": 0.0042,
+          "box_decision_error_LSB": 0.0042,
+          "nominal_span_droop_V": 0.136,
+          "box_span_droop_V": 0.1774,
+          "box_pin_peak_A": 0.00464
+        }
+      },
+      "limits": {
+        "decision_error_LSB": 0.1,
+        "span_droop_V": 0.26,
+        "pin_peak_A": 0.0052
+      },
+      "pass": true
+    },
+    "sensitivity_cref_F": {
+      "8pF": {
+        "box_decision_error_LSB": 0.0876,
+        "box_span_droop_V": 0.1516,
+        "box_pin_peak_A": 0.00407
+      }
+    },
+    "source": "work/layout/toplevel-full/rail-p2h.json"
+  }
+}

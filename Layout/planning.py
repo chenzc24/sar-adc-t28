@@ -274,6 +274,19 @@ def routes(plan, interfaces):
         for p, q in ((a, b), (b, a)):
             if any(on_segment(v, s) for v in paths[p]['points_um'] for s in segs[q]):
                 errors.append(f'Planned path touches another net: {p}/{q}')
+    # Region tracks drawn over an x range (the output-channel VSS shields) cross planned paths as well.
+    for region in plan.get('reserved_regions', []):
+        for track in region.get('tracks', []):
+            if 'x_um' not in track:
+                continue
+            seg = ((track['x_um'][0], track['y_um']), (track['x_um'][1], track['y_um']))
+            for p in paths:
+                if net[p] == track['net']:
+                    continue
+                for s in segs[p]:
+                    point = crossing(seg, s)
+                    if point:
+                        found.add((tuple(sorted((track['net'], net[p]))), point))
     declared = {(tuple(sorted(c['nets'])), tuple(round(v, 3) for v in c['at_um'])) for c in plan.get('crossings', [])}
     errors += [f'Undeclared crossing {n[0]}/{n[1]} at {list(p)}' for n, p in sorted(found - declared)]
     errors += [f'Declared crossing is not in the paths: {n[0]}/{n[1]} at {list(p)}' for n, p in sorted(declared - found)]
