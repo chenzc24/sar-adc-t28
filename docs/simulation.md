@@ -17,12 +17,14 @@ For the current design, use the single-edge entries. `single_edge_lpe` runs foun
 .venv/Scripts/python.exe -m tools.saradc.reference_short prepare --version current --corner tt --revision OTHER_ID
 ```
 
-`Layout.tools.simulation.prepare_all_extracted` builds the same deck with every frozen block extraction at the paired interconnect corner: the coupled XREF/CDAC, the comparator with VDD/VSS RC, the SAR macro and the Bootstrap on both channels (`tt`, `ssc`, `ffh`). `gain` prepares the standalone XREF/CDAC weights that set k for each corner. `--route-scale` adds RC wiring at a multiple of the planned floorplan lengths. `split` and `routes` are analysis-only jobs on a completed run: `split` separates the static reference-pin offset from plate settling, and `routes` measures the top-level route delays. `--submit HOST` registers and queues the result. `Layout.tools.analysis.stage2_summary` writes the record from the collected runs. [Stage 2 results](../results/integration/stage2_all_extracted_20261122.md)
+`Layout.tools.simulation.prepare_all_extracted` builds the same deck with every frozen block extraction at the paired interconnect corner (`tt`, `ssc`, `ffh`): the coupled XREF/CDAC, the comparator with VDD/VSS RC and the SAR macro. The Bootstrap on both channels is its typical extraction `boot-core-20261121` by default; `--corner-bootstrap` uses its CWORST_T or CBEST_T re-extraction instead (run family `allxc`). `gain` prepares the standalone XREF/CDAC weights that set k for each corner. `--route-scale` adds RC wiring at a multiple of the planned floorplan lengths. `split`, `routes` and `gate` are analysis-only jobs on a completed run. `split` separates the static reference-pin offset from plate settling. `routes` measures the top-level route delays. `gate` measures the main-switch gate discharge of both Bootstrap channels after each sample close. `--submit HOST` registers and queues the result. `Layout.tools.analysis.stage2_summary` writes the record from the collected runs. [Stage 2 results](../results/integration/stage2_all_extracted_20261122.md) · [Bootstrap corner extractions and gate margin](../results/integration/bootstrap_corner_margin_20261122.md)
 
 ```powershell
 .venv/Scripts/python.exe -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --revision NEW_ID --submit thu-song
 .venv/Scripts/python.exe -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --revision NEW_ID --route-scale 1 --submit thu-wei
 .venv/Scripts/python.exe -m Layout.tools.simulation.prepare_all_extracted split RUN_ID --submit SAME_HOST
+.venv/Scripts/python.exe -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --corner-bootstrap --submit thu-song
+.venv/Scripts/python.exe -m Layout.tools.simulation.prepare_all_extracted gate RUN_ID --submit SAME_HOST
 ```
 
 The following commands are for frozen-B regression. General `prepare` packages the selected view. The legacy analyzer uses B's state machine. Use `reference_short` above for a native short test of the current ADC.

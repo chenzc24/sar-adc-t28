@@ -10,6 +10,7 @@ The designs removed after commit `c46d9d6` keep their results and source digests
 
 | Verification | Evidence |
 | --- | --- |
+| Bootstrap boosted-gate margin and CWORST_T/CBEST_T core extractions, 2026-11-22 | SS-cold Stage 2 stimuli pass with the CWORST_T Bootstrap; gate screen 0.096 V against 0.1 V, set by the extracted core's slower hold-phase gate discharge. [Report](integration/bootstrap_corner_margin_20261122.md) · [Record](integration/bootstrap_corner_margin_20261122.json) |
 | All-extracted ADC with ideal top-level wiring (issue #12 Stage 2), 2026-11-22 | All three corners pass; SS-cold read margin 7.77 ns; route budgets proposed. [Report](integration/stage2_all_extracted_20261122.md) · [Record](integration/stage2_all_extracted_20261122.json) |
 | Four-finger sampler main switch, 2026-11-21 | [Report](design/sampler_mmain4_adoption_20261121.md) · [Record](design/sampler_mmain4_adoption_20261121.json) · [Bootstrap layout](../Layout/results/bootstrap.json) |
 | Current single-edge SAR adoption | [Report](design/sar_single_edge_adoption_20261120.md) · [Record](design/sar_single_edge_adoption_20261120.json) · [Bit-6 aperture of the earlier 8/6 and 9/6 taps](design/sar_bit6_reference_overlay.md) |
