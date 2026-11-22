@@ -5,7 +5,9 @@ interconnect corner (TT: typical, SS: CWORST_T, FF: CBEST_T) for the coupled XRE
 filled stream se-xref-peripheral-dense, the comparator v8 extraction with VDD/VSS RC, the SAR macro
 sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The Bootstrap core
 boot-core-20261121 is its typical extraction at every corner; --corner-bootstrap uses its re-extraction at the
-paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). Wiring
+paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
+ID requalifies a revised core: its typical extraction at TT and its paired re-extractions ID-cworst-t and
+ID-cbest-t at SS cold and FF hot (run family bs<revision>, for example bsr2 for view layout_r2). Wiring
 between blocks is ideal.
 
 The deck, stimuli and analyzer are tools.saradc.single_edge_lpe. Gain-corrected code targets and signed
@@ -16,6 +18,7 @@ prepares those standalone runs from the frozen TT weight run xref-fill-tt-after-
   python -m Layout.tools.simulation.prepare_all_extracted gain tt --xref se-xref-peripheral-routed --run-id RUN_ID
   python -m Layout.tools.simulation.prepare_all_extracted adc tt verify --revision a
   python -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --corner-bootstrap
+  python -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --bootstrap boot-core-r2b-20261122
   python -m Layout.tools.simulation.prepare_all_extracted gate RUN_ID --submit SAME_HOST
 """
 import argparse
@@ -251,23 +254,37 @@ def sar_macro(identity, rc):
     return package
 
 
-def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False):
+def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False, bootstrap=None):
     """route_scale: route check at this multiple of the planned floorplan lengths (run family allxr, scored
     against the routed-design limits of issue #12, Stage 6 column).
-    corner_bootstrap: the Bootstrap core extraction at the paired interconnect corner (run family allxc)."""
+    corner_bootstrap: the Bootstrap core extraction at the paired interconnect corner (run family allxc).
+    bootstrap: physical ID of a revised core's typical extraction; the paired re-extraction replaces it at SS
+    cold and FF hot (run family bs<revision>)."""
     spec = CORNERS[corner]
     if lpe.CELL_RC[corner] != spec['rc'].lower():
         raise ValueError('Cell LPE and extraction corners differ')
-    if route_scale and corner_bootstrap:
+    if route_scale and (corner_bootstrap or bootstrap):
         raise ValueError('Route checks use the Stage 2 Bootstrap; run them separately')
-    boot = spec['boot'] if corner_bootstrap else BOOTSTRAP
-    if bootstrap_pex.interconnect(boot) != (spec['rc'] if corner_bootstrap else 'typical'):
+    if bootstrap and corner_bootstrap:
+        raise ValueError('--bootstrap already pairs the interconnect corner')
+    family = 'allxr' if route_scale else 'allxc' if corner_bootstrap else 'allx'
+    if bootstrap:
+        revision_view = bootstrap_pex.view(bootstrap)
+        if not re.fullmatch(r'layout_r\d{1,2}', revision_view):
+            raise ValueError('--bootstrap needs a revision view layout_r<N>, not ' + revision_view)
+        boot = bootstrap if corner == 'tt' else bootstrap + '-' + spec['rc'].lower().replace('_', '-')
+        if bootstrap_pex.view(boot) != revision_view:
+            raise ValueError('Corner extraction belongs to another view: ' + boot)
+        family = 'bs' + revision_view.split('_', 1)[1]
+    else:
+        boot = spec['boot'] if corner_bootstrap else BOOTSTRAP
+    if bootstrap_pex.interconnect(boot) != (spec['rc'] if corner_bootstrap or bootstrap else 'typical'):
         raise ValueError('Bootstrap extraction interconnect corner differs: ' + boot)
     routes = route_check(route_scale) if route_scale else None
     return lpe.prepare(corner, kind, revision=revision, macro=sar_macro(spec['sar'], spec['rc']), bootstrap=boot,
                        xref=xref_package(spec['xref'], spec['gain'], spec['rc'], routes),
                        comparator=comparator_package(spec['comparator'], spec['rc']),
-                       family='allxr' if routes else 'allxc' if corner_bootstrap else 'allx',
+                       family=family,
                        settling_limit=.25 if routes else SETTLING_LIMIT_LSB,
                        rss_mib=BUDGET_RSS_MIB if routes else SIMULATION_RSS_MIB)
 
@@ -403,6 +420,8 @@ if __name__ == '__main__':
                    help='Route check: RC routes at SCALE x the planned floorplan lengths, TOP_ROUTE_F per TOP net')
     a.add_argument('--corner-bootstrap', action='store_true',
                    help='Bootstrap core extraction at the paired interconnect corner (run family allxc)')
+    a.add_argument('--bootstrap', metavar='PHYSICAL_ID',
+                   help='Revised Bootstrap core (typical extraction ID); paired corner re-extraction at ssc/ffh')
     analyses = []
     for kind in ANALYSES:
         r = sub.add_parser(kind, help='Analysis-only %s job on a completed run (same host as the source)' % kind)
@@ -418,7 +437,8 @@ if __name__ == '__main__':
     elif args.action in ANALYSES:
         path = prepare_analysis(args.action, args.source_run_id, args.run_id)
     else:
-        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap)
+        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap,
+                           args.bootstrap)
     print(path.relative_to(ROOT).as_posix())
     if args.submit:
         run_id = json.loads(path.read_text())['run_id']

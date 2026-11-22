@@ -17,7 +17,7 @@ def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None
             arguments.extend(['--rc-corner',rc_corner])
     else:
         view = view or 'layout'
-        candidate_view = module == 'bootstrap' and re.fullmatch(r'layout_mmain\d{1,2}', view)
+        candidate_view = module == 'bootstrap' and re.fullmatch(r'layout_mmain\d{1,2}|layout_r\d{1,2}', view)
         if view not in ('layout','layout_paired_balanced') and not candidate_view:raise ValueError('Unknown layout view '+view)
         if staging or rc_corner:raise ValueError('--staging and --rc-corner apply to --module sar-se')
         if rebuild and module not in ('comparator', 'bootstrap'):
