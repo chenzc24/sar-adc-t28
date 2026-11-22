@@ -138,7 +138,7 @@ def main():
     p.add_argument('--version',choices=['b','current'],required=True)
     p.add_argument('--corner',choices=['tt','ssc','ssh','ffc','ffh'],required=True)
     p.add_argument('--revision',default='v1')
-    p.add_argument('--host',choices=['thu-wei','thu-sui','thu-song'],help='Host for a new submission; existing runs retain their host')
+    p.add_argument('--host',choices=engine().HOSTS,help='Host for a new submission; existing runs retain their host')
     a=p.parse_args(); run_id='%s-%s-%s-%s'%(PREFIX,a.version,a.corner,a.revision)
     if a.action in ['prepare','submit']:
         path=prepare(a.version,a.corner,a.revision);result=dict(recipe=path)
