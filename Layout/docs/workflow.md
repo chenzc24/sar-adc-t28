@@ -140,6 +140,22 @@ python -m Layout.design.toplevel_route physical PEX_ID --gds PEX_GDS --stages pe
 
 Connectivity compares Calibre's hierarchical layout netlist, with every block master kept as an HCELL, against the planned (block, port) set of each net. Added capacitance is the routed extraction minus the placement extraction with `NET__BLOCK` labels on the landing pins (`pex-input --kind pins`). Resistance and Elmore delay run between the driving and receiving device terminals, so they bound the route-only values from above.
 
+`Layout/design/toplevel_full_routes.py` holds the Stage 4b geometry on top of `layout_route_int`: boundary routes, supply branches with decoupling, the shield tie and the reference network. `Layout/design/toplevel_full.py` builds it into `layout_route_full`. The build copies `layout_route_int`, overwrites only a view that carries its own generatorOwner, and checks that `layout_place` and `layout_route_int` are unchanged. Screen the rectangles locally first. The connectivity check runs on a copy of the stream whose VDD!/0 texts are renamed per supply branch (`branch-labels`); TOP capacitance comes from an extraction of the unlabelled stream.
+
+```powershell
+python -m Layout.tools.analysis.toplevel_full_precheck BASE_GDS ROUTES_JSON
+python -m Layout.design.toplevel_full build-script BUILD_ID CONTENT_JSON
+python -m Layout.design.toplevel_full build BUILD_ID
+python -m Layout.design.toplevel_route physical CHECK_ID --view layout_route_full --through spice --hcells-from BASE_GDS
+python -m Layout.design.toplevel_full branch-labels CHECK_GDS BRANCH_GDS
+python -m Layout.design.toplevel_route physical XTR_ID --gds BRANCH_GDS --stages spice,pex --hcells-from BASE_GDS
+python -m Layout.design.toplevel_route physical RAW_ID --gds CHECK_GDS --stages pex
+python -m Layout.tools.analysis.toplevel_full_rail --content CONTENT_JSON --series-ohm R --loop analog=OHM pair=OHM sar=OHM[,OHM] --out RAIL_JSON
+python -m Layout.tools.analysis.toplevel_full_record --content CONTENT_JSON --build BUILD_ID --checks CHECK_ID --xtr XTR_ID --raw-xtr RAW_ID ...
+```
+
+[Stage 4b record](../results/toplevel_route_full.md)
+
 ## Applicability of Results
 
 `current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)

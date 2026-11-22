@@ -203,17 +203,19 @@ class Circuit:
 
 
 def chip(shared_bus=True, bus_temp_c=25., core_feed_ohm=None, width_um=SUPPLY_ROUTE_WIDTH_UM,
-         pad_coupling='asymmetric', pad_coupling_f=.5e-12, trunk_coupling_f=0., system=None, ring=None):
+         pad_coupling='asymmetric', pad_coupling_f=.5e-12, trunk_coupling_f=0., system=None, ring=None,
+         blocks=None):
     """The three AVDD/AVSS branches, their pads and bonds, the shared bus and the reference pads.
 
     core_feed_ohm: name -> loop resistance of the in-core strap from the boundary pins to the block
     decoupling. pad_coupling: how each reference pad's capacitance reaches the bus ('asymmetric' puts
-    all of it from VREFP pads to TACVDD and from VREFN pads to TACVSS, the differential worst case)."""
+    all of it from VREFP pads to TACVDD and from VREFN pads to TACVSS, the differential worst case).
+    blocks: name -> block decoupling (default: the Stage 1 region sizes)."""
     ring = ring or load_ring()
     s = system or dict(source_ohm=1., board_bypass_f=100e-9, board_esr_ohm=.01, board_esl_h=.5e-9,
                        pin_h=2e-9, pin_ohm=.2, series_ohm=15., span_cap_f=8e-12)
     br = branches(ring)
-    blocks = dict(analog=9.32e-12, pair=10.07e-12, sar=8.25e-12)
+    blocks = blocks or dict(analog=9.32e-12, pair=10.07e-12, sar=8.25e-12)
     core_feed_ohm = core_feed_ohm or dict(analog=1., pair=1., sar=1.)
     ckt = Circuit()
     for rail in ('bvdd', 'bvrp', 'bvrn'):          # board AVDD and the two reference sources
