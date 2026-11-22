@@ -213,6 +213,6 @@ Full per-device terminal voltage, final fill, and full top-level parasitics stil
 
 `design/comparator.il` defines functional geometry. `design/comparator.py` generates the independent CDL from the electrical source. `tools/simulation/prepare_comparator.py` packages pre- and post-layout tests and the ADC interface case. `tools/simulation/comparator_checks/` holds the corner re-extraction driver, and the MC, noise, CDAC-kickback and ADC-pair packagers. Use the existing native and managed entry points. `tests/test_comparator_layout.py` verifies that each schematic device uses same-named 0.5 µm fingers, optionally with `_k` suffixes, and matches its schematic total width. [Comparator workflow](../docs/workflow.md#comparator-module)
 
-The fixed wrapper `sar_strongarm_t28/layout` references the core through XCORE. Use the core for review and integration. Refresh and reverify the wrapper fill before qualifying it for the current core.
+The fixed wrapper `sar_strongarm_t28/layout` references the core through XCORE. Its fill belongs to an earlier core and is not integrated. Use the core for review and integration. The top level owns the comparator's fill and keeps the core inside `top_fill_exclusion_inputs` free of it. [Fill owners](../specs/fill-policy.md#comparator)
 
 In `comparator.json`, see `superseded_core` (sym2), `superseded_v4`, `superseded_v6`, and `independent` for earlier results. The `SCRATCH_COMP` library and `comp-scr-*` runs document candidate exploration. Use the official physical run for layout evidence.
