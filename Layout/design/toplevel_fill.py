@@ -173,6 +173,8 @@ def import_fill(lib, path, old_top, new_top, prefix):
     """Add the fill hierarchy under old_top of a stream to lib, renamed: top -> new_top, others -> prefix + hash."""
     src = gds().read_gds(str(path))
     cells = {c.name: c for c in src.cells}
+    if not cells:
+        return None   # the utility writes an empty stream when it places nothing (all excluded)
     if old_top not in cells:
         tops = [c for c in cells if c.endswith(("_DM", "_DODDPO"))]
         if len(tops) != 1:
@@ -227,7 +229,7 @@ def pair_seed(identity, core_gds, seed_gds):
     return summary
 
 
-def boot_seed(identity, core_gds):
+def boot_seed(identity, core_gds, odpo_only=False):
     g = gds()
     lib, top = read_stream(core_gds, CORE)
     b = plan()
@@ -236,6 +238,10 @@ def boot_seed(identity, core_gds):
         raise ValueError("The Bootstrap outlines are not mirror images about the axis")
     mirrored = mirror(context(top, bloat(n_box, CONTEXT_MARGIN), skip=(PAIR,)))
     rects = route_exclusions()
+    if odpo_only:
+        # The boot capacitor (200 cfmom M1-M3 units) covers almost the whole cell; metal fill over it adds about
+        # 100 fF to ground on each plate (revision 2). Like the CDAC array, it keeps metal fill out.
+        rects = rects + [(p_box, tuple(range(1, 10)))]
     excl = exclusion_rects(rects) + mirror(exclusion_rects(rects))
     cm, ce = g.Cell("ACF1_BOOT_MIRROR"), g.Cell("ACF1_BOOT_BLOCK")
     cm.add(*mirrored)
@@ -245,7 +251,7 @@ def boot_seed(identity, core_gds):
     out = WORK / identity
     digest = save(lib, out)
     summary = dict(identity=identity, core=dict(path=str(core_gds), sha256=sha(Path(core_gds).read_bytes())),
-                   seed_gds_sha256=digest, bounds_core_um=p_box, mirrored_from_um=bloat(n_box, CONTEXT_MARGIN),
+                   seed_gds_sha256=digest, bounds_core_um=p_box, odpo_only=odpo_only, mirrored_from_um=bloat(n_box, CONTEXT_MARGIN),
                    mirrored_polygons=len(mirrored), exclusion_rects=len(excl), placement=dict(XBOOTP="R0 (0, 0)",
                                                                                           XBOOTN=f"MY ({2 * AXIS:g}, 0)"))
     write_json(out / "seed.json", summary)
@@ -265,6 +271,8 @@ def place_fill(lib, top, pair_stream, boot_fill):
         for kind, pre in (("ODPO", "BO"), ("metal", "BM")):
             c = import_fill(lib, boot_fill / kind / "fill.gds", CORE if kind == "ODPO" else CORE + "_DM",
                             f"{FILL_TOP}_boot_{kind.lower()}", PREFIX + pre + "_")
+            if c is None:
+                continue
             top.add(g.Reference(c), g.Reference(c, (2 * AXIS, 0), rotation=3.141592653589793, x_reflection=True))
             names["boot_" + kind.lower()] = c.name
     return names
@@ -387,7 +395,7 @@ def verify(library_id, pair_seed_id, core_gds=None):
     out["pair_fill_in_entry_blocks_um2"] = {str(k): area(groups["pair"].get(k, []), v) for k, v in entries.items()}
     routes = route_exclusions()
     out["boot_fill_in_route_exclusions_um2"] = {
-        str(k): area(v, boxes_on(routes, k) + mirror(boxes_on(routes, k))) for k, v in groups["boot"].items()}
+        str(k): area(v, boxes_on(routes, k) + mirror(boxes_on(routes, k))) for k, v in groups.get("boot", {}).items()}
     owners = sorted(groups)
     for i, a in enumerate(owners):
         for b in owners[i + 1:]:
@@ -586,16 +594,17 @@ def main():
     a.add_argument("--seed-gds", default=str(WORK / "inputs/pair_seed.gds"))
     a = sub.add_parser("boot-seed")
     a.add_argument("identity")
+    a.add_argument("--odpo-only", action="store_true", help="no metal fill in the Bootstrap cell (from revision 3)")
     a.add_argument("--core-gds", default=str(WORK / "inputs/core_route_full.gds"))
     a = sub.add_parser("core-seed")
     a.add_argument("identity")
     a.add_argument("--core-gds", default=str(WORK / "inputs/core_route_full.gds"))
     a.add_argument("--pair-stream", required=True, help="fixture.gds of the refilled pair evidence")
-    a.add_argument("--boot-fill", required=True, help="fetched evidence folder of the Bootstrap fill pass")
+    a.add_argument("--boot-fill", help="fetched evidence folder of the Bootstrap fill pass (none from revision 4: the Bootstrap owns its fill)")
     a = sub.add_parser("library")
     a.add_argument("identity")
     a.add_argument("--pair-stream", required=True)
-    a.add_argument("--boot-fill", required=True)
+    a.add_argument("--boot-fill")
     a.add_argument("--core-fill", required=True)
     a = sub.add_parser("wrapper-gds")
     a.add_argument("identity")
@@ -631,11 +640,11 @@ def main():
     if args.action == "pair-seed":
         r = pair_seed(args.identity, args.core_gds, args.seed_gds)
     elif args.action == "boot-seed":
-        r = boot_seed(args.identity, args.core_gds)
+        r = boot_seed(args.identity, args.core_gds, args.odpo_only)
     elif args.action == "core-seed":
-        r = core_seed(args.identity, args.core_gds, args.pair_stream, Path(args.boot_fill))
+        r = core_seed(args.identity, args.core_gds, args.pair_stream, Path(args.boot_fill) if args.boot_fill else None)
     elif args.action == "library":
-        r = library(args.identity, args.pair_stream, Path(args.boot_fill), Path(args.core_fill))
+        r = library(args.identity, args.pair_stream, Path(args.boot_fill) if args.boot_fill else None, Path(args.core_fill))
     elif args.action == "wrapper-gds":
         r = wrapper_gds(args.identity, args.library, args.core_gds)
     elif args.action == "verify":

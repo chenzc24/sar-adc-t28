@@ -8,6 +8,7 @@ core with the same labels and deck (TOP totals and fixed load, the comparator ha
   python -m Layout.tools.analysis.toplevel_fill_record
 """
 import argparse
+from collections import Counter
 import json
 from pathlib import Path
 
@@ -17,13 +18,25 @@ from Layout.tools.analysis.toplevel_route_parasitics import Extraction
 
 RUNS = ROOT / "work/output/managed_execution/runs"
 PAIR_PEX = ROOT / "work/layout/reference-driver/pex"
-# Revision 2 fills the final routed view layout_route_guard (layout_route_full plus the SAR P+ guard ring).
+# Revision 4 fills layout_route_boot_r2: layout_route_guard (layout_route_full plus the SAR P+ guard ring) with both
+# Bootstraps on sar_bootstrap_flat_8b_p_filled/layout_r2, which owns its planned OD/PO fill. The top level leaves the
+# Bootstrap outlines empty on every layer.
+REVISION = 4
 EVIDENCE = dict(pair_fill="se-xref-peripheral-routed-fill", pair="se-xref-peripheral-routed",
-                frozen_pair="se-xref-peripheral-dense", boot="adc-core-fill2-boot", core="adc-core-fill2-core",
-                library="adc-core-fill2-lib", build="adc-core-fill2-build", oa_checks="adc-core-fill2-oa-chk",
-                checks="adc-core-fill2-chk", baseline_checks="adc-core-guard-g1-chk",
-                baseline_pex="adc-core-fill2-base-xtr", route_full_pex="adc-core-full-p2h-xtr-raw")
-CORE_VIEW = "layout_route_guard"
+                frozen_pair="se-xref-peripheral-dense", core="adc-core-fill4-core",
+                library="adc-core-fill4-lib", build="adc-core-fill4-build", oa_checks="adc-core-fill4-oa-chk",
+                checks="adc-core-fill4-chk", baseline_checks="adc-core-bootr2-b1-chk",
+                baseline_pex="adc-core-fill4-base-xtr", route_full_pex="adc-core-full-p2h-xtr-raw")
+CORE_VIEW = "layout_route_boot_r2"
+BOOTSTRAP = dict(core="sar_bootstrap_flat_8b_p_core/layout_r2", fill="sar_bootstrap_flat_8b_p_fill/layout_r2",
+                 wrapper="sar_bootstrap_flat_8b_p_filled/layout_r2", standalone="boot-fill-r2-20261122")
+# Revision 3: layout_route_guard with a top-level OD/PO-only Bootstrap fill cell; GDS only, superseded.
+REVISION3 = dict(boot="adc-core-fill3-boot", core="adc-core-fill3-core", library="adc-core-fill3-lib",
+                 checks="adc-core-fill3-chk", baseline_pex="adc-core-fill2-base-xtr",
+                 no_boot_fill_diagnostic="adc-core-diag-noboot-chk")
+# Revision 2: layout_route_guard with top-level M1-M9 fill in the Bootstrap cell over the boot capacitor; superseded.
+REVISION2 = dict(boot="adc-core-fill2-boot", core="adc-core-fill2-core", library="adc-core-fill2-lib",
+                 build="adc-core-fill2-build", oa_checks="adc-core-fill2-oa-chk", checks="adc-core-fill2-chk")
 # Revision 1 on layout_route_full: built in OA as sar8_adc_core_filled/layout_fill1; kept as a cross-check.
 REVISION1 = dict(boot="adc-core-fill1-boot", core="adc-core-fill1-core-b", core_with_tcd="adc-core-fill1-core",
                  library="adc-core-fill1-libb", build="adc-core-fill1-build", checks="adc-core-fill1-chk",
@@ -95,7 +108,7 @@ def core_parasitics():
         out["nets"][n] = dict(filled_total_fF=fF(tot_f), unfilled_total_fF=fF(tot_u), change_fF=fF(tot_f - tot_u),
                               to_ground_change_fF=fF(cf[n].get("0", 0.0) - cu[n].get("0", 0.0)),
                               route_full_unfilled_total_fF=fF(sum(cr[n].values())),
-                              ring_change_fF=fF(tot_u - sum(cr[n].values())))
+                              view_change_fF=fF(tot_u - sum(cr[n].values())))
     for n in ("TOPN", "TOPP"):
         fixed = {k: fF(cf[n].get(k, 0.0)) for k in FIXED_CORE}
         fixed_u = {k: fF(cu[n].get(k, 0.0)) for k in FIXED_CORE}
@@ -106,34 +119,68 @@ def core_parasitics():
                       total_difference_unfilled_fF=round(abs(t["TOPN"]["unfilled_total_fF"] - t["TOPP"]["unfilled_total_fF"]), 4),
                       fixed_difference_filled_fF=round(abs(t["TOPN"]["fixed_filled_fF"] - t["TOPP"]["fixed_filled_fF"]), 4),
                       fixed_change_fF={n: round(t[n]["fixed_filled_fF"] - t[n]["fixed_unfilled_fF"], 4) for n in ("TOPN", "TOPP")})
-    load = {n: ROUTE_LOAD_UNFILLED[n] + t[n]["ring_change_fF"] + t[n]["change_fF"] for n in HANDSHAKE}
-    out["handshake"] = {n: dict(route_load_layout_route_full_fF=ROUTE_LOAD_UNFILLED[n], ring_change_fF=t[n]["ring_change_fF"],
+    load = {n: ROUTE_LOAD_UNFILLED[n] + t[n]["view_change_fF"] + t[n]["change_fF"] for n in HANDSHAKE}
+    out["handshake"] = {n: dict(route_load_layout_route_full_fF=ROUTE_LOAD_UNFILLED[n],
+                                view_change_from_layout_route_full_fF=t[n]["view_change_fF"],
                                 fill_change_fF=t[n]["change_fF"], route_load_filled_fF=round(load[n], 3),
                                 limit_fF=HANDSHAKE[n], pass_=load[n] <= HANDSHAKE[n]) for n in HANDSHAKE}
     return out
 
 
+def boot_plates(ex):
+    """The two boot-capacitor nets of each Bootstrap (the nets on the cfmom_2t terminals inside its outline)."""
+    c = ex.capacitance()
+    nets = {}
+    for name, nodes, model, block in ex.devices:
+        if model == "cfmom_2t" and block in ("bootstrap_n", "bootstrap_p"):
+            for i, node in enumerate(nodes[:2]):
+                nets.setdefault(block, [Counter(), Counter()])[i][ex.net(node)] += 1
+    out = {}
+    for block, (a, b) in sorted(nets.items()):
+        (na, ua), (nb, ub) = a.most_common(1)[0], b.most_common(1)[0]
+        out[block] = dict(units=[ua, ub], plate_to_ground_fF=[fF(c[na].get("0", 0.0)), fF(c[nb].get("0", 0.0))],
+                          plate_to_plate_fF=fF(c[na].get(nb, 0.0)))
+    return out
+
+
+def oa_entry(build, oa_checks, checks, view):
+    """One revision's OA wrapper: build receipt, and the stream check of the built view against the checked assembly."""
+    stream = None
+    if build and build.get("ok"):
+        oc = manifest(oa_checks)
+        # Compared shape by shape (gdstk) with the assembly that was checked and extracted: every layer and text equal.
+        stream = dict(evidence=oa_checks, layout_oa_sha256=oc["source"]["layout_oa_sha256"], gds_sha256=oc["gds"]["sha256"],
+                      drc=oc["checks"]["drc"]["markers_by_rule"], matches_checked_assembly=True)
+    wrapper = json.loads((tf.WORK / checks / "wrapper.json").read_text())
+    return dict(wrapper=f"{tf.WRAPPER}/{view}", built=bool(build and build.get("ok")), build=build,
+                checked_stream=dict(source="GDS assembly of the core stream, the fill library and the wrapper texts "
+                                           "(toplevel_fill wrapper-gds)", **wrapper), oa_stream=stream)
+
+
+def read_build(identity):
+    path = tf.WORK / identity / "build.json"
+    return json.loads(path.read_text()) if path.exists() else None
+
+
 def build_record():
     W = tf.WORK
     pair_seed = json.loads((W / EVIDENCE["pair_fill"] / "seed.json").read_text())
-    boot_seed = json.loads((W / EVIDENCE["boot"] / "seed.json").read_text())
-    tf.use_revision(2)
+    tf.use_revision(REVISION)
     core_seed = json.loads((W / EVIDENCE["core"] / "seed.json").read_text())
     library = json.loads((W / EVIDENCE["library"] / "library.json").read_text())
     verify = json.loads((W / EVIDENCE["library"] / "verify.json").read_text())
     build1 = json.loads((W / REVISION1["build"] / "build.json").read_text())
-    build2_path = W / "adc-core-fill2-build" / "build.json"
-    build2 = json.loads(build2_path.read_text()) if build2_path.exists() else None
-    wrapper = json.loads((W / EVIDENCE["checks"] / "wrapper.json").read_text())
-    oa_stream = None
-    if build2 and build2.get("ok"):
-        oc = manifest(EVIDENCE["oa_checks"])
-        # Compared shape by shape (gdstk) with the assembly that was checked and extracted: every layer and text equal.
-        oa_stream = dict(layout_oa_sha256=oc["source"]["layout_oa_sha256"], gds_sha256=oc["gds"]["sha256"],
-                         drc=oc["checks"]["drc"]["markers_by_rule"], matches_checked_assembly=True)
+    chk2 = manifest(REVISION2["checks"])
+    plates = dict(guard_unfilled=boot_plates(core_pex(REVISION3["baseline_pex"], tf.CORE)),
+                  revision2=boot_plates(core_pex(REVISION2["checks"], tf.WRAPPER)),
+                  revision3=boot_plates(core_pex(REVISION3["checks"], tf.WRAPPER)),
+                  no_boot_fill_diagnostic=boot_plates(core_pex(REVISION3["no_boot_fill_diagnostic"], tf.WRAPPER)),
+                  boot_r2_core_without_top_fill=boot_plates(core_pex(EVIDENCE["baseline_pex"], tf.CORE)),
+                  current=boot_plates(core_pex(EVIDENCE["checks"], tf.WRAPPER)))
+    chk3 = manifest(REVISION3["checks"])
     conflicts = json.loads((W / "pair_fill_conflicts.json").read_text())
     pm = json.loads((PAIR_PEX / EVIDENCE["pair"] / "manifest.json").read_text())
-    fills = {k: manifest(EVIDENCE[k], "fill_manifest.json") for k in ("pair_fill", "boot", "core")}
+    fills = {k: manifest(EVIDENCE[k], "fill_manifest.json") for k in ("pair_fill", "core")}
     fills1 = {k: manifest(REVISION1[k], "fill_manifest.json") for k in ("boot", "core", "core_with_tcd")}
     chk1, base1 = manifest(REVISION1["checks"]), manifest(REVISION1["baseline_checks"])
     chk = manifest(EVIDENCE["checks"])
@@ -164,10 +211,18 @@ def build_record():
                        and gain["refilled"]["gain_error_percent"] <= 100 * LIMITS["gain_error"]
                        and max(gain["refilled"]["dnl_lsb"], gain["refilled"]["inl_lsb"]) <= LIMITS["linearity_lsb"]
                        and gain["refilled"]["stable"] and not gain["refilled"]["failures"])),
-        bootstrap=dict(bounds_core_um=boot_seed["bounds_core_um"], mirrored_from_um=boot_seed["mirrored_from_um"],
-                       placement=boot_seed["placement"], dummy_tcd_inserted=False,
-                       fill_jobs={k: dict(job_sha256=v["job_sha256"], gds_sha256=v["gds_sha256"])
-                                  for k, v in fills["boot"]["steps"].items()}),
+        bootstrap=dict(owner="Bootstrap (chosen by the user 2026-11-22)", **BOOTSTRAP,
+                       placement=dict(XBOOTP="R0 (61.055, 76.245)", XBOOTN="MY (31.175, 76.245)"),
+                       top_level_fill_inside="none, on any layer",
+                       boot_cap_plates=plates,
+                       history=dict(
+                           revision2=dict(evidence=REVISION2["boot"], reason=(
+                               "Top-level M1-M9 fill over the boot capacitor (200 cfmom M1-M3 units covering most of the "
+                               "cell) raised each plate's capacitance to ground from about 28 to 127 fF")),
+                           revision3=dict(evidence=REVISION3["boot"], reason=(
+                               "Top-level OD/PO-only fill still added 36-39 fF per plate; the no-fill diagnostic "
+                               "adc-core-diag-noboot-chk showed the surroundings add under 2 fF, so the in-cell dummy OD/PO "
+                               "was the cause. The Bootstrap now owns a planned OD/PO pattern clear of its M1 fingers")))),
         core_pass=dict(bounds_core_um=core_seed["bounds_core_um"], exclusions=core_seed["exclusions"],
                        dummy_tcd=fills["core"].get("dummy_tcd"),
                        fill_jobs={k: dict(job_sha256=v["job_sha256"], gds_sha256=v["gds_sha256"])
@@ -178,12 +233,15 @@ def build_record():
         fill_hierarchy=dict(top=library["top"], masters=library["masters"], cells=library["cells"],
                             gds_sha256=library["library_gds_sha256"], area_um2_by_layer=library["area_um2_by_layer"]),
         verification=verify,
-        oa=dict(revision2=dict(wrapper=f"{tf.WRAPPER}/layout_fill2", core=f"{tf.CORE}/{CORE_VIEW}", fill=f"{tf.FILL_TOP}/layout",
-                               built=bool(build2 and build2.get("ok")), build=build2,
-                               checked_stream=dict(source="GDS assembly of the guard stream, the fill library and the wrapper texts "
-                                                          "(toplevel_fill wrapper-gds)", **wrapper),
-                               assembly_matches_oa_stream_in_revision1=True,
-                               oa_stream=dict(evidence=EVIDENCE["oa_checks"], **oa_stream) if oa_stream else None),
+        oa=dict(current=dict(core=f"{tf.CORE}/{CORE_VIEW}", fill=f"{tf.FILL_TOP}/layout",
+                             **oa_entry(read_build(EVIDENCE["build"]), EVIDENCE["oa_checks"], EVIDENCE["checks"],
+                                        f"layout_fill{REVISION}")),
+                revision3=dict(core=f"{tf.CORE}/layout_route_guard", superseded=True, built=False,
+                               drc=chk3["checks"]["drc"]["markers_by_rule"], checked_stream=REVISION3["checks"]),
+                revision2=dict(core=f"{tf.CORE}/layout_route_guard", fill="sar8_adc_core_fill2/layout", superseded=True,
+                               drc=chk2["checks"]["drc"]["markers_by_rule"],
+                               **oa_entry(read_build(REVISION2["build"]), REVISION2["oa_checks"], REVISION2["checks"],
+                                          "layout_fill2")),
                 revision1=dict(wrapper=build1["wrapper"], core=f"{tf.CORE}/{build1['core_view']}", fill="sar8_adc_core_fill1/layout",
                                build_stdout=build1["stdout"], stream_gds_sha256=chk1["gds"]["sha256"],
                                stream_layout_oa_sha256=chk1["source"].get("layout_oa_sha256"),
@@ -191,6 +249,7 @@ def build_record():
                                baseline_drc=base1["checks"]["drc"]["markers_by_rule"],
                                core_jobs={k: v["job_sha256"] for k, v in fills1["core"]["steps"].items()},
                                boot_fill_identical_to_revision2=True)),
+        assembly_matches_oa_stream=dict(revision1=True, revision2=True),
         drc=dict(filled=dict(markers=chk["checks"]["drc"]["markers"], markers_by_rule=filled_rules),
                  routed_baseline=dict(markers=base["checks"]["drc"]["markers"], markers_by_rule=base_rules),
                  closed=sorted(set(base_rules) - set(filled_rules)),
