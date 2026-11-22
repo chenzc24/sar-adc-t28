@@ -38,7 +38,7 @@
  "generator": {
   "tool": "t28-ioring/skills/t28-ioring-generator at a6b8437 (Steps 1-10)",
   "oa_cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring (schematic, layout): the ring cell alone, cell-level DRC 0 results, LVS CORRECT against its schematic (Layout/results/io_ring_verification.json)",
-  "output_dir": "t28-ioring/output/generated/20261122_110001 (local generator run, not in this repository)",
+  "output_dir": "t28-ioring/output/generated/20261122_131553 (local generator run, not in this repository)",
   "results": "enrich_intent G1-G12 PASS, validate_intent OK, confirmed config with 112 components, schematic and layout SKILL generated",
   "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS",
   "corners": "PCORNERA_G at NW and NE, PCORNER_G at SW and SE",
@@ -46,7 +46,7 @@
  },
  "domains": {
   "ana": "Core-voltage analog domain: AVDD/AVSS on PVDD3AC/PVSS3AC, whose pads are the TACVDD/TACVSS bus and whose core ports (AVDD_CORE/AVSS_CORE) feed the ADC; VINP, VINN and two VREFP and two VREFN pads on PDB3AC; one PVSS2AC for the global VSS bus. Top, left_0..6 and right_8.",
-  "dig": "Separate-ground digital domain: DVDD (PVDD1DGZ x3), VSS (PVSS1DGZ), VDDIO (PVDD2POC + PVDD2DGZ), VSSIO (PVSS2DGZ x4, both sides of each digital corner); D0-D7 out and SAMPLE in on PDDW16SDGZ. left_7..8, bottom, right_0..7."
+  "dig": "Separate-ground digital domain: DVDD (PVDD1DGZ x3), VSS (PVSS1DGZ), VDDIO (PVDD2POC + PVDD2DGZ), VSSIO (PVSS2DGZ x4, both sides of each digital corner); D0-D7 out on PRUW08SDGZ (8 mA, slew-limited), SAMPLE in on PDDW16SDGZ (Schmitt input, pull-down). left_7..8, bottom, right_0..7."
  },
  "pads": [
   {
@@ -256,7 +256,7 @@
   {
    "position": "bottom_1",
    "name": "D7",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -278,7 +278,7 @@
   {
    "position": "bottom_2",
    "name": "D6",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -318,7 +318,7 @@
   {
    "position": "bottom_4",
    "name": "D5",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -340,7 +340,7 @@
   {
    "position": "bottom_5",
    "name": "D4",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -380,7 +380,7 @@
   {
    "position": "bottom_7",
    "name": "D3",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -438,7 +438,7 @@
   {
    "position": "right_1",
    "name": "D2",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -460,7 +460,7 @@
   {
    "position": "right_2",
    "name": "D1",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -482,7 +482,7 @@
   {
    "position": "right_3",
    "name": "D0",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -782,6 +782,18 @@
    "reason": "Bonded PVSS3AC beside the NW PCORNERA_G."
   }
  ],
+ "sso": {
+  "rule": "App note 7.3 and checklist 19-20: in each digital domain, bonded VSSPST cells (PVSS2DGZ/PVSS3DGZ) >= the sum of the driving factors (DF) of all bidirectional cells, each counted as an output, and bonded VDDPST cells (PVDD2DGZ/PVDD2POC) >= that sum / 1.1. Layout check enforces it.",
+  "source": "tphn28hpcpgv18 databook 170a, corner FFG0P99V1P98VM40C (the worst-SSN corner), Tables 5.3 (no slew control) and 5.4 (slew-rate enabled)",
+  "bond_inductance_nH": 2.1,
+  "load_pF": 5,
+  "basis": "2.1 nH is the databook column nearest the 2 nH per bond of the Stage 6 package model; 5 pF, the smallest tabulated load, gives the largest DF.",
+  "driving_factor": {
+   "PDDW16SDGZ": 0.427,
+   "PRUW08SDGZ": 0.14
+  },
+  "sensitivity": "With 5.2 nH bonds the DFs are 0.751 and 0.339: the 2 VDDIO pads then hold only for loads of about 30 pF or more (DF 0.412 and 0.135). Recheck against the real package before bonding."
+ },
  "chip_netlist": {
   "XADC (floorplan.json core)": {
    "VINP": "VINP",
@@ -1915,7 +1927,7 @@
     "AVSS_analog"
    ]
   ],
-  "check": "python -m Layout check (Layout/planning.py io_ring) validates this plan: the pad ring rules of the application note (one block per domain, corner and cut neighbours, cell counts, one POC, one global VSS label); route ends on their pad core pin, ADC pin or region edge, carrying that pad's core net; distinct routes never touch; all stay in the ring opening and off the ADC core; analog and digital regions; own-branch decoupling that every supply route passes through; guard-ring crossing layer; no route on the core VSS ring's layer crosses it; mirrored routes; one route per ADC pin and core-connected pad; no route on a bonded digital pad net; and the ADC pins, core outline and die_bbox agree with floorplan.json."
+  "check": "python -m Layout check (Layout/planning.py io_ring) validates this plan: the pad ring rules of the application note (one block per domain, corner and cut neighbours, cell counts, one POC, one global VSS label, VSSPST and VDDPST cells for simultaneous switching); route ends on their pad core pin, ADC pin or region edge, carrying that pad's core net; distinct routes never touch; all stay in the ring opening and off the ADC core; analog and digital regions; own-branch decoupling that every supply route passes through; guard-ring crossing layer; no route on the core VSS ring's layer crosses it; mirrored routes; one route per ADC pin and core-connected pad; no route on a bonded digital pad net; and the ADC pins, core outline and die_bbox agree with floorplan.json."
  },
  "reserved_regions": [
   {
@@ -2342,6 +2354,16 @@
    "decision": "The ADC keeps its single VDD!/0 supply; the analog trunk, the XREF/CDAC pair and the SAR each have their own AVDD/AVSS pad pair, route and pad decoupling. The three AVDD pads also meet on the TACVDD ring bus.",
    "basis": "No netlist change and no extra supply-domain crossings."
   },
+  "data_output_cells": {
+   "decided": "2026-11-22",
+   "decision": "D0-D7 on PRUW08SDGZ (8 mA, slew-limited, Schmitt input, pull-up) instead of PDDW16SDGZ (16 mA, no slew control); SAMPLE stays on PDDW16SDGZ.",
+   "basis": "Simultaneous switching (sso): with PDDW16SDGZ the 8 outputs plus SAMPLE sum to DF 3.84 and need 4 VDDIO pads against 2; with PRUW08SDGZ they sum to 1.55 and need 2 VSSIO and 2 VDDIO. Same pins and footprint (library readback), so no pad moves. I to PAD delay is about 1.5 ns at 15 pF (FF -40 C) against a 100 ns frame."
+  },
+  "pad_gap_fill": {
+   "decided": "2026-11-22",
+   "decision": "The 40 um gaps between pads keep PFILLER20/PFILLER20A filler cells; no unbonded dummy power cells.",
+   "basis": "Designer decision, as in the accepted 12 x 12 rings. The app note recommends dummy power cells for ESD (6.1, 9.8.1, 10.3) and checklist item 22 asks for them in digital gaps; this is a recorded deviation."
+  },
   "data_outputs": {
    "decided": "2026-11-21",
    "decision": "D0-D7 reach the pads through an output register on DVDD clocked by SAMPLE rising. The ADC's D0-D7 ports drive ADC_D0-ADC_D7; D0-D7 name only the bonded pad nets.",
@@ -2349,17 +2371,14 @@
   }
  },
  "open_items": [
-  "SSO (app note 7.3, checklist 19-20): with all 9 bidirectional cells counted as outputs, 4 VSSIO and 2 VDDIO pads hold only if each cell's databook driving factor is <= 0.244 at our bond inductance and load. PDDW16SDGZ (16 mA) is likely above; choose a weaker or slew-controlled output (PRUW08SDGZ is in the generator) or add VDDIO/VSSIO pads.",
   "Bus resistance (app note Tables 8.1 and 10.1, checklist 23y.3): VSS bus from each PDB3AC to its nearest bonded VSS supply below 1 ohm, and the cell-to-cell limits in each domain; needs the IO-cell bus widths and sheet resistance.",
-  "Reference routes are now VREFP_a 297.885 um, VREFN_a 263.885 um, VREFP_b 317.885 um, VREFN_b 371.885 um (the 7 x 7 plan had 144-252 um; the Stage 1 model brackets 0-2 ohm). Size them for the budget or rerun Layout/tools/analysis/rail_budget.py with these lengths.",
-  "Dummy power cells in the 40 um gaps (app note 6.1, 9.8.1, 10.3, checklist 22): unbonded PVDD1DGZ/PVDD2DGZ in digital gaps, PVDD3AC in analog gaps, against the stand-by leakage; the generator still fills gaps with PFILLER cells.",
   "Secondary ESD (app note 9.2 notes 4-5, checklist 23y.6): VREFP/VREFN get the 15 ohm resistors plus a diode pair to AVDD_CORE/AVSS_CORE on the trunk side in vref_decap_west; VINP/VINN need a secondary device or a check of the Bootstrap switch layout against the DRM ESD drain guideline.",
   "Core VSS ring and VSS stubs: width from the DRM maximum ESD current density table; keep the ring off M7 tracks the in-core D0-D7/SAMPLE routes use at the ADC edge.",
   "Pad geometry from the saved masters (chenzc24/sar-adc-t28#18): bond-opening centres 22.34 um from the frame edge, 32.66 um outward of bond_pad_center_um; supply, reference and VIN core pins are cell-centre estimates (AVDD centrelines fall between M2 supply fingers). Derive landings from the placed masters' terminal polygons.",
-  "Feed widths: size each branch route for the 6 ohm feed (with its in-core strap) and for EM at the pin peaks.",
+  "Feed widths: the 9 x 9 rail budget (chenzc24/sar-adc-t28#27, constraints.json) sets at least 4.8 um M8 for the pair route and 6.3 um for the SAR feed; EM at the pin peaks is still to check.",
   "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
   "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
-  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): review its ERC results, label the POC rail, and run chip-level DRC and LVS once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items)."
+  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there)."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."
 }

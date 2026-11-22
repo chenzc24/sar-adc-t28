@@ -3,6 +3,7 @@ import hashlib
 import html
 import itertools
 import json
+import math
 from pathlib import Path
 
 from Layout.project import ROOT, write_json
@@ -148,7 +149,7 @@ def io_ring(plan, ring):
             errors.append(f'Pad has {refs.count(position)} IO routes: {position} {p["name"]}')
         if (p['core_net'] is None) != (p['core_pin_um'] is None):
             errors.append('Pad core net and core pin disagree: ' + position)
-    bonded = {p['name'] for p in pads.values() if p['device'] == 'PDDW16SDGZ'}
+    bonded = {p['name'] for p in pads.values() if 'direction' in p}  # digital I/O cells
     errors += [f'IO route {k} uses the bonded pad net {r["net"]}' for k, r in paths.items() if r['net'] in bonded]
     errors += pad_ring_rules(ring)
     return list(dict.fromkeys(errors)), {'pads': len(pads), 'routes': len(paths)}
@@ -206,6 +207,17 @@ def pad_ring_rules(ring):
                                 (('PVSS1DGZ', 'PVSS3DGZ'), 1, 'PVSS1DGZ'), (('PVSS2DGZ', 'PVSS3DGZ'), 1, 'PVSS2DGZ')):
                 if count(*cs) < k:
                     errors.append(f'Digital domain {d} needs at least {k} bonded {what}, has {count(*cs)}')
+            # Simultaneous switching (7.3, checklist 19-20): every I/O cell counted as an output, databook DF in ring['sso'].
+            df = ring.get('sso', {}).get('driving_factor', {})
+            io = [cell(q) for q in order if pads[q]['domain'] == d and 'direction' in pads[q]]
+            for c in sorted(set(io) - set(df)):
+                errors.append(f'Digital I/O cell {c} has no driving factor in sso')
+            sdf = sum(df.get(c, 0) for c in io)
+            for cs, k, what in ((('PVSS2DGZ', 'PVSS3DGZ'), math.ceil(round(sdf, 6)), 'VSSPST cells'),
+                                (('PVDD2DGZ', 'PVDD2POC'), math.ceil(round(sdf / 1.1, 6)), 'VDDPST cells')):
+                if count(*cs) < k:
+                    errors.append(f'Digital domain {d} needs at least {k} bonded {what} for simultaneous switching '
+                                  f'(DF sum {sdf:.3f}), has {count(*cs)}')
     vss = {pads[q]['name'] for q in order if cell(q) in {'PVSS1DGZ', 'PVSS3DGZ', 'PVSS2AC', 'PVSS2A'}}
     if len(vss) > 1:  # the global ESD bus carries one label (2.2)
         errors.append(f'Cells supplying the global VSS bus carry different names: {sorted(vss)}')

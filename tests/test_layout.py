@@ -102,6 +102,9 @@ class LayoutPlanTests(unittest.TestCase):
                  (pad('right_6', 'device', 'PVDD2DGZ'), 'Digital domain dig needs at least 3 bonded PVDD1DGZ, has 2'),
                  (pad('top_7', 'name', 'ESD'), "Cells supplying the global VSS bus carry different names: ['ESD', 'VSS']"),
                  (pad('right_8', 'domain', 'dig'), 'Corner between right_8 and top_0 joins two domains'),
+                 (lambda d: [q.__setitem__('device', 'PDDW16SDGZ') for q in d['pads'] if q.get('direction') == 'output'],
+                  'Digital domain dig needs at least 4 bonded VDDPST cells for simultaneous switching (DF sum 3.843), has 2'),
+                 (pad('right_3', 'device', 'PDDW08SDGZ'), 'Digital I/O cell PDDW08SDGZ has no driving factor in sso'),
                  (lambda d: d['routes'].pop('AVSS_guard'), 'Pad has 0 IO routes: left_0'),
                  (lambda d: region(d, 'pair_pad_decap')['bbox'][0].__setitem__(0, 112.0), 'VREFN_b enters pair_pad_decap')]
         for change, message in cases:
