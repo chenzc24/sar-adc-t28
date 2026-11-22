@@ -8,7 +8,7 @@
   640.0,
   640.0
  ],
- "die_note": "IO-cell outline from the generator (7 x 60 um + 2 x 110 um corners). The PAD60GU bond pads may extend beyond it (open_items, pad geometry); the seal ring and scribe lane add to it per the shuttle rules.",
+ "die_note": "IO-cell outline from the generator (7 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 663.32 x 663.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that per the shuttle rules.",
  "ring_opening": [
   [
    110.0,
@@ -163,7 +163,7 @@
     200.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.VDD!@pair, south edge (xref_decap south-west feed)",
+   "connects_to": "ADC.VDD!@pair, south edge, below the pair's M6 terminals",
    "reason": "XREF/CDAC branch supply; the largest analog event (1.789 mA peak feed)."
   },
   {
@@ -183,7 +183,7 @@
     140.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.0@pair, south edge (xref_decap south-west feed)",
+   "connects_to": "ADC.0@pair, south edge, below the pair's M6 terminals",
    "reason": "XREF/CDAC branch ground, beside the cut to the digital block."
   },
   {
@@ -2039,11 +2039,12 @@
   }
  },
  "open_items": [
-  "Pad geometry from the saved masters (top-level OA placement and pin readback): bond_pad_center_um is the IO cell centre, 55 um inside the outline, but the generator puts each bond-pad AP label 11 um outside the IO cell's outer edge, so the PAD60GU extends past the 640 um outline; a 32.66 um bond-centre offset has been reported, not yet verified. die_bbox and the bond centres follow the readback. The D0-D7 I and SAMPLE C core pins come from the generator's M4 pin labels (8.275 and 4.33 um from the cell centre); the other pads' core pins are cell-centre estimates.",
+  "Pad geometry from the saved masters (chenzc24/sar-adc-t28#18): the PAD60GU opening centre sits 22.34 um from the outer frame edge, 32.66 um outward of bond_pad_center_um (the IO-cell centre, 55 um in), and pad metal reaches 11.66 um past each frame edge. Regenerate all 28 bond centres from the placed masters. The D0-D7 I and SAMPLE C core pins come from the generator's M4 pin labels; the supply and reference core pins are cell-centre estimates, and the AVDD centrelines fall between M2 supply fingers, so derive those landings from each master's terminal polygons.",
+  "VIN coupling: include the 74 um where VINP runs 12 um from sar_pad_decap in the extracted differential coupling check.",
   "Stage 6 reference model: add the on-chip reference routes (VREFP_a 177.885 um, VREFN_a 143.885 um, VREFP_b 197.885 um, VREFN_b 251.885 um) and the PDB3AC pad capacitance (ESD clamps on AIO; the budget assumed 0.5 pF per pad). The extracted IO_RING_T28_12x12_01 shows PDB3AC's AIO as one node from the bond pad to the core, with no series resistor.",
   "Feed widths: size each branch route for the budget's 6 ohm feed (with its in-core strap) and for EM at the pin peaks (reference 5.1 mA per rail over both bonds, VDD 5.5 mA summed over the pins).",
   "Pad decoupling: implement the 2 ohm ESR (series strip or gate resistance) and use the PDK decap density and leakage, as for the in-core regions.",
-  "In-core feeds from the new boundary pins (floorplan.json open_items): the two pins of each reference rail join inside vref_decap_west with one VREFP/VREFN crossing on the pad side of the resistors; the pair feed from xref_decap's south-west corner reaches the rail west ends past the reference network; the SAR feed runs from sar_decap_north to sar_supply_and_decap.",
+  "In-core feeds from the new boundary pins (floorplan.json open_items): the two pins of each reference rail join inside vref_decap_west with one VREFP/VREFN crossing on the pad side of the resistors; the pair feed runs from its south-edge pins north through xref_decap to the pair's M6 terminals on the XREF strip; the SAR feed runs from sar_decap_north to sar_supply_and_decap.",
   "ADC_D0-ADC_D7 load: the in-core M7 route over the SAR (29.6 um) plus the register input is about 8-10 fF per bit against the 5 fF in the specification. Stage 2 should use 10 fF.",
   "Register hold: at SAMPLE rising the register captures ADC_D0-ADC_D7 while the ADC starts resetting them. Check the hold margin at FF -40/125 C; add delay on the D inputs if needed.",
   "Output switching: one VDDIO/VSSIO pair serves eight outputs that can all toggle at once (0x7F to 0x80). Check the ground bounce at the chosen PDDW16SDGZ drive strength.",

@@ -546,7 +546,7 @@
           9.0
         ]
       ],
-      "use": "XREF gate-driver VDD/VSS decoupling, about 2.9239 pF, joined to the pair supply at its south-west feed. With xref_decap_east and pair_decap_southeast about 10.1 pF, the Stage 1 requirement of 10 pF."
+      "use": "XREF gate-driver VDD/VSS decoupling, about 2.9239 pF, on the pair feed from the south-edge boundary pins to the M6 terminals on the XREF strip. With xref_decap_east and pair_decap_southeast about 10.1 pF, the Stage 1 requirement of 10 pF."
     },
     {
       "id": "xref_decap_east",
@@ -576,7 +576,7 @@
           23.5
         ]
       ],
-      "use": "Pair VDD/VSS decoupling, about 3.75 pF, reached by extending the pair M5 global rails (core y 17.585/18.015) east across the digital corridor under the M3 CODE bus."
+      "use": "Pair VDD/VSS decoupling, about 3.75 pF, joined from xref_decap_east below it, east of the digital corridor. No pair metal crosses the CDAC array keep-out (power_plan.pair_supply)."
     },
     {
       "id": "sar_supply_and_decap",
@@ -1885,8 +1885,8 @@
     "ADC.VREFN@b": "Reference bond boundary pin from io_ring.json. Its in-core feed through the rail's 15 ohm resistor to the pair rail west end is in power_plan.reference, not a planned centreline.",
     "ADC.VDD!@north": "Analog trunk boundary pin from io_ring.json; the in-core feed runs through analog_decap_slot (power_plan.analog).",
     "ADC.0@north": "Analog trunk boundary pin from io_ring.json; the in-core feed runs through analog_decap_slot (power_plan.analog).",
-    "ADC.VDD!@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed starts at xref_decap's south-west corner (power_plan.pair_supply).",
-    "ADC.0@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed starts at xref_decap's south-west corner (power_plan.pair_supply).",
+    "ADC.VDD!@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed runs north through xref_decap to the pair's own M6 terminals on the XREF strip (power_plan.pair_supply).",
+    "ADC.0@pair": "XREF/CDAC supply boundary pin from io_ring.json; the in-core feed runs north through xref_decap to the pair's own M6 terminals on the XREF strip (power_plan.pair_supply).",
     "ADC.VDD!@sar": "SAR supply boundary pin from io_ring.json; the in-core feed enters sar_decap_north (power_plan.digital).",
     "ADC.0@sar": "SAR supply boundary pin from io_ring.json; the in-core feed enters sar_decap_north (power_plan.digital)."
   },
@@ -1894,9 +1894,9 @@
     "status": "Decoupling sized on 2026-11-21 by the Stage 1 reference/supply budget (chenzc24/sar-adc-t28#15) for the Stage 6 package model: two bonds per reference rail on interleaved VREFP/VREFN/VREFP/VREFN pads (1 nH + 0.1 ohm per rail), one 2 nH + 0.2 ohm bond per VDD/VSS pin, stiff off-chip sources with 100 nF at the pins. The core meets the budget on its own, without IO-ring decoupling; blocks, outline and planned signal routes are unchanged. Stage 2 and Stage 6 confirm it.",
     "decap_planning_density_fF_per_um2": 10,
     "decap_basis": "Thin-oxide MOS capacitance including contacts and straps; replace with the PDK decap characterization.",
-    "budget": "Layout/results/rail_budget.md and Layout/specs/constraints.json (electrical_budgets, stage6_supply_model) on branch budget/stage1-supply-reference. Per-branch requirement for a 45 mV VDD-VSS droop at the block pins, with the largest measured 1 ns event times 1.3: pair 10 pF, SAR 8 pF, analog 9 pF, comparator local 0.47 pF.",
+    "budget": "Layout/results/rail_budget.md and Layout/specs/constraints.json (electrical_budgets, stage6_supply_model). Per-branch requirement for a 45 mV VDD-VSS droop at the block pins, with the largest measured 1 ns event times 1.3: pair 10 pF, SAR 8 pF, analog 9 pF, comparator local 0.47 pF.",
     "reference": "VREFP/VREFN enter on the west edge, two boundary pins each, interleaved like their double-bonded pads (external_edges.south_west); the two pins of a rail join inside vref_decap_west ahead of its resistor, with one VREFP/VREFN crossing on the pad side. Each rail passes a 15 ohm series resistor (+-20%) to the west ends of the pair M5 reference rails, and 8 pF (+-25%) sits between VREFP and VREFN there, in vref_decap_west/vref_decap_south (about 8.6 pF of area). Without the series resistors the bond inductance and the decap ring at each CDAC update (2.7-7.3 LSB at the next decision with single 2 nH bonds); with them and the double bonds, 0.028 LSB at FF cold over the whole tolerance box. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert. Keep the substrate coupling of the reference capacitor to VSS small. Reference bulk at the pads makes the decision error worse.",
-    "pair_supply": "XREF/CDAC VDD/VSS global M5 rails (core y 17.585/18.015) fed from the south-west (ADC.VDD!@pair/ADC.0@pair at xref_decap's south-west corner), extended east across the digital corridor. xref_decap, xref_decap_east and pair_decap_southeast hold about 10.1 pF. The largest measured XREF event is about 0.48 pC (255 toggled units); 40 mV droop modelled with a 12 ohm feed.",
+    "pair_supply": "XREF/CDAC VDD/VSS enter at the pair's own M6 terminals on the XREF strip, VSS (45.215, 13.365) and VDD (46.915, 14.565) um, fed from the south-edge boundary pins ADC.VDD!@pair/ADC.0@pair (x 44/48) north through xref_decap; VDD and VSS swap sides on the way, so they cross once on different layers. The decoupling continues east along the south strip through xref_decap_east, below the digital corridor, to pair_decap_southeast. Nothing enters the CDAC array keep-out: extending the pair M5 global rails east would put about 35 um of metal inside it (chenzc24/sar-adc-t28#18). xref_decap, xref_decap_east and pair_decap_southeast hold about 10.1 pF. The largest measured XREF event is about 0.48 pC (255 toggled units); 40 mV droop modelled with a 12 ohm feed.",
     "analog": "Comparator and Bootstrap VDD/VSS from the north edge (ADC.VDD!@north/ADC.0@north) through analog_decap_slot, plus the mirrored comparator strips and analog_decap_west/east beside the Bootstrap cells, about 9.3 pF in total. Each comparison draws about 25 fC with 0.3-0.4 mA peaks; the Bootstrap event is bounded by 0.454 pC per 1 ns, not measured. 40 mV droop modelled with a 12 ohm feed.",
     "digital": "SAR macro M6 stripes, fed at ADC.VDD!@sar/ADC.0@sar on the east edge above SAMPLE into sar_decap_north; DCAP fillers inside the macro, sar_supply_and_decap below it and sar_decap_north above the guard ring, about 8.25 pF without the fillers; P+ guard ring around it. 28 mV droop modelled with a 5 ohm feed.",
     "spare": "spare_decap_northeast (about 12.7 pF) is held free of routes for whichever branch Stage 2 or Stage 6 shows short.",
@@ -1908,7 +1908,7 @@
   "external_edges": {
     "north": "VINN/VINP straight onto the two Bootstrap VIN pins (M5, 9.93 um each, mirrored); the analog VDD/VSS trunk enters between them at ADC.VDD!@north/ADC.0@north (x 44.115/48.115) through analog_decap_slot.",
     "east": "D0-D7 out and SAMPLE in on M7 across the SAR macro; SAR VDD/VSS at ADC.VDD!@sar/ADC.0@sar (y 74/71) above SAMPLE, into sar_decap_north.",
-    "south_west": "VREFP/VREFN on four west-edge pins interleaved like their pads (ADC.VREFP@a/b at y 67/55, ADC.VREFN@a/b at y 61/49) into the reference network; pair VDD/VSS at ADC.VDD!@pair/ADC.0@pair on the south edge (x 44/48), xref_decap's south-west feed.",
+    "south_west": "VREFP/VREFN on four west-edge pins interleaved like their pads (ADC.VREFP@a/b at y 67/55, ADC.VREFN@a/b at y 61/49) into the reference network; pair VDD/VSS at ADC.VDD!@pair/ADC.0@pair on the south edge (x 44/48), below the pair's M6 terminals on the XREF strip.",
     "die_and_io": "Layout/design/io_ring.json: 7 x 7 ring, 640 x 640 um outline, core origin at die (243.885, 329). Not applied to OA."
   },
   "reasoning": "The XREF + CDAC pair anchors the plan. The comparator sits on the CDAC TOP exits, flanked by the two Bootstrap cells so TOPN and TOPP see mirrored branches. The Bootstrap cells are lifted 2.7 um above the comparator to leave a channel for its outputs, CMP_CLK and the SEQ_SAMPLE tree. The comparator pins fix the channel order (OUTP lowest, CMP_CLK, OUTN), so nothing crosses near the comparator. The frozen SAR pin order (SEQ_SAMPLE, COMP_N, COMP_P, CMP_CLK from south to north) then forces five crossings, placed in the corridor; a balance stub gives OUTP the CMP_CLK crossing that OUTN cannot avoid. The CODE bus runs CODE0 on the eastmost corridor track and has no crossings. D0-D7 and SAMPLE cross the SAR macro to the east edge.",
@@ -1930,7 +1930,7 @@
     "The TOP crossings are not mirrored: the TOPP drop is crossed by COMP_P, CMP_CLK, COMP_N and twice by SEQ_SAMPLE, the TOPN drop once by SEQ_SAMPLE. Estimated <= 0.05 fF static imbalance against the 1 fF limit and about 0.001 LSB of comparison-time coupling per crossing, which acts as offset; confirm in top-level PEX.",
     "Decoupling follows the Stage 1 budget (power_plan, chenzc24/sar-adc-t28#15). Confirm the Bootstrap branch event and the per-branch charge with Stage 2, and the decap device, density and leakage with the PDK decap characterization.",
     "Equalize COMP_P/COMP_N and the SEQ_SAMPLE arms on extracted capacitance once routed; the plan matches centreline length, shielding and crossings.",
-    "Feed the new boundary pins inside the core (io_ring.json): join the two pins of each reference rail in vref_decap_west ahead of its 15 ohm resistor (one VREFP/VREFN crossing on the pad side); bring the pair feed from xref_decap's south-west corner to the rail west ends without running alongside the reference network; connect sar_decap_north to sar_supply_and_decap for the SAR feed."
+    "Feed the new boundary pins inside the core (io_ring.json): join the two pins of each reference rail in vref_decap_west ahead of its 15 ohm resistor (one VREFP/VREFN crossing on the pad side); bring the pair feed from ADC.VDD!@pair/ADC.0@pair north through xref_decap to the pair's M6 terminals, outside the CDAC keep-out; connect sar_decap_north to sar_supply_and_decap for the SAR feed."
   ],
   "supersedes": "Layout/design/floorplan_paired.json (2026-11-18 proposal for the previous architecture) and the 176 x 170 um planning envelope.",
   "next": "Resolve the open items, assign the route budgets from the Stage 2 all-extracted ADC run, then route against this plan and extract."
