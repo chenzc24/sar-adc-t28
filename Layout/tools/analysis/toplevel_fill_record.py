@@ -162,6 +162,25 @@ def read_build(identity):
     return json.loads(path.read_text()) if path.exists() else None
 
 
+def revision5():
+    """Revision 4 plus the TOP-tee dummy-PO segments (toplevel_fill.tee_po) that close PO.DN.3.1. Built in OA and
+    DRC-checked; by the user's decision it was not re-extracted (20 floating 0.12 x 0.5 um poly segments)."""
+    tf.use_revision(5)
+    chk, oa = manifest("adc-core-fill5-chk"), manifest("adc-core-fill5-oa-chk")
+    lib = json.loads((tf.WORK / "adc-core-fill5-lib" / "library.json").read_text())
+    ver = json.loads((tf.WORK / "adc-core-fill5-lib" / "verify.json").read_text())
+    out = dict(wrapper=f"{tf.WRAPPER}/layout_fill5", core=f"{tf.CORE}/{CORE_VIEW}", fill=f"{tf.FILL_TOP}/layout",
+               tee_po=dict(spec=tf.TEE_PO, rectangles=tf.tee_po(), master=lib["masters"]["tee_po"]),
+               library_gds_sha256=lib["library_gds_sha256"], verify_pass=ver["pass"],
+               drc=chk["checks"]["drc"]["markers_by_rule"], build=read_build("adc-core-fill5-build"),
+               oa_stream=dict(evidence="adc-core-fill5-oa-chk", layout_oa_sha256=oa["source"]["layout_oa_sha256"],
+                              gds_sha256=oa["gds"]["sha256"], drc=oa["checks"]["drc"]["markers_by_rule"],
+                              matches_checked_assembly=True),
+               extraction="not rerun (user decision); revision 4's extraction stands for everything else")
+    tf.use_revision(REVISION)
+    return out
+
+
 def build_record():
     W = tf.WORK
     pair_seed = json.loads((W / EVIDENCE["pair_fill"] / "seed.json").read_text())
@@ -249,7 +268,8 @@ def build_record():
                                baseline_drc=base1["checks"]["drc"]["markers_by_rule"],
                                core_jobs={k: v["job_sha256"] for k, v in fills1["core"]["steps"].items()},
                                boot_fill_identical_to_revision2=True)),
-        assembly_matches_oa_stream=dict(revision1=True, revision2=True),
+        assembly_matches_oa_stream=dict(revision1=True, revision2=True, revision4=True, revision5=True),
+        revision5=revision5(),
         drc=dict(filled=dict(markers=chk["checks"]["drc"]["markers"], markers_by_rule=filled_rules),
                  routed_baseline=dict(markers=base["checks"]["drc"]["markers"], markers_by_rule=base_rules),
                  closed=sorted(set(base_rules) - set(filled_rules)),

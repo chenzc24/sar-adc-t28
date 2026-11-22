@@ -1,5 +1,7 @@
 # Fill of the routed ADC core (Stage 5)
 
+**Current: revision 5**, `sar8_adc_core_filled/layout_fill5` with `sar8_adc_core_fill5` (`adc-core-fill5-build`). It is revision 4 below plus 20 dummy-PO segments (0.12 × 0.5 µm at y 68.40–68.90) in the TOP-tee strip, in line with the CDAC array's dummy-PO columns and mirrored about x 46.115, clear of the TOP drops and the comparator-input stubs. They close the last PO.DN.3.1 marker: each failing 10 µm window gains 0.36–0.54 µm² of PO against the 0.11 µm² it lacked. DRC of the assembly (`adc-core-fill5-chk`) and of the built view's stream (`adc-core-fill5-oa-chk`) shows only the two advisories; the stream equals the assembly shape for shape. By the user's decision revision 5 was not re-extracted; the revision 4 extraction below stands for everything else.
+
 The current fill is revision 4. It fills `sar8_adc_core/layout_route_boot_r2`: the final routed view `layout_route_guard` with both Bootstraps on `sar_bootstrap_flat_8b_p_filled/layout_r2`, which carries its own planned OD/PO fill. The fill hierarchy `sar8_adc_core_fill4` sits beside the core in the wrapper `sar8_adc_core_filled/layout_fill4`. The wrapper also carries copies of the core's 39 top-level texts, so an extraction names the same nets as the unfilled core. Each region has the owner given in the [fill policy](../specs/fill-policy.md#adc-core-fill-owners), and every top-level pass ran the installed foundry OD/PO and metal utilities with the same private job edits as the module fills. [Record](toplevel_fill.json) · [Builder](../design/toplevel_fill.py) · [Workflow](../docs/workflow.md)
 
 | Fill (revision 4) | Owner and region | Evidence |
@@ -108,7 +110,6 @@ The flat coupled xRC (typical, installed deck) of the revision 4 assembly is com
 
 ## Open items
 
-- **PO.DN.3.1 at the TOP tee:** waiver, narrower POBLK, or more array-edge PO in the pair.
 - **The two advisories** need written waivers (issue #12).
 - **Bootstrap r2** is not yet ADC-qualified; if it changes, the core view and this revision are redone.
 - **Chip-level fill:** the core-to-ring gap and ring, windows across the core edge, the Mn.DN.3 gradient, and the dummy TCD placement.
