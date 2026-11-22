@@ -123,6 +123,10 @@ To extract a verified core at a foundry interconnect corner without opening the 
 
 The generator draws the adopted four-finger main switch into `layout`. To try a different width, register a sampler candidate `mmain<N>` in `specs/candidates.json`, run `python -m Layout generate --module bootstrap --candidate mmain<N>`, and build it with `--view layout_mmain<N>`; the published view stays untouched. `prepare_bootstrap none RUN_ID --schematic --candidate mmain<N>` simulates its schematic.
 
+A layout revision of the selected sampler goes to its own view `layout_r<N>`, built with `python -m Layout physical ID --module bootstrap --rebuild --view layout_r2`. Its parameters live in the generator's revision table (`bsRevision` in `Layout/design/bootstrap.il`); the netlist and LVS reference are those of `layout`. The runner refuses the build if it would change any other view of the cell. `layout_r2` widens the three guard rings to 0.20 µm and lifts the PMOS row 0.40 µm, which clears the chip latch-up rules LUP.5.2.1/5.2.2 with VIN pad-connected. To check a revised block in its chip context before the chip is re-mastered, `python -m Layout.tools.physical.substitute_master CHIP.gds BLOCK.gds CELL OUT.gds` swaps the master in a chip stream at the GDS level.
+
+The Bootstrap owns its fill (`Layout/design/bootstrap_fill.py`). One dummy-poly stripe sits in every gap between two capacitor units, so no dummy poly lies under a plate finger, and dummy-OD segments under the stripes give about 22 % OD. ODBLK, POBLK and DM1–DM9EXCL cover the whole outline. `bootstrap_fill launch ID SOURCE CORNER` runs DRC, LVS and PEX of the core with the fill flattened in (`bootstrap_filled.py`; the manifest packages like a core extraction, so `prepare_bootstrap` and `prepare_all_extracted --bootstrap` take it). `bootstrap_fill build ID` writes the fill cell `sar_bootstrap_flat_8b_p_fill/layout_r2` and the wrapper `sar_bootstrap_flat_8b_p_filled/layout_r2` (XCORE + XFILL, the core's ports), which the top level places instead of the core. [Revision record](../../results/integration/bootstrap_rev2_20261122.md)
+
 ## ADC Core Routing
 
 `Layout/design/toplevel_routes.py` holds the core-internal route geometry on the floorplan centrelines. Check it on a stream of `sar8_adc_core/layout_place` before writing OA. `Layout/design/toplevel_route.py` merges the routes into that stream and runs the native checks in fresh evidence directories on the layout host; it never deploys the shared runtime. `build` creates a new view from `layout_place` under the layout lock and leaves `layout_place` unchanged. Use new IDs for every run. [Routing record](../results/toplevel_route_internal.json)
@@ -158,7 +162,37 @@ python -m Layout.tools.analysis.toplevel_full_record --content CONTENT_JSON --bu
 
 The SAR guard ring (`Layout/design/toplevel_guard_routes.py`) goes into `layout_route_guard` the same way, from `layout_route_full`: `build-script BUILD_ID CONTENT_JSON --stage guard`, then the same checks. `branch-labels` names the ring's own east pin VSS_G, and `toplevel_full_connectivity --guard` expects it. [Guard ring record](../results/toplevel_route_guard.md)
 
+`--stage boot_r2` copies `layout_route_guard` into `layout_route_boot_r2` and remasters the two Bootstrap instances (content key `remaster`: name, origin, orientation, old and new master; the old instance must match exactly). The netlist keeps the filled wrapper as a pass-through subcircuit; the connectivity check resolves a wrapper whose only instance is a block master at its origin. [Bootstrap r2 record](../results/toplevel_route_boot_r2.md)
+
 Core LVS: `python -m Layout.design.toplevel_lvs_source --content CONTENT_JSON --out SOURCE_CDL` writes the source from the block references in their evidence directories; `python -m Layout.design.toplevel_route physical LVS_ID --view layout_route_guard --stages lvs --hcells-from BASE_GDS --source SOURCE_CDL --virtual "VDD!" 0` compares it, and `python -m Layout.tools.analysis.toplevel_lvs_record` records it. [Core LVS](../results/toplevel_lvs.md)
+
+`Layout/design/toplevel_fill.py` fills the routed core by owner (fill policy, "ADC Core Fill Owners"). Each pass runs the foundry OD/PO and metal utilities (`Layout/tools/physical/toplevel_fill_physical.py`, with the same private job edits as every module fill) on a seed stream built locally. The seed carries the context the fill must respect: neighbouring geometry and DMnEXCL/ODBLK/POBLK blocks. Only the generated fill is kept. The passes run in this order:
+
+1. **Pair refill.** The accepted pair seed plus the core's geometry around the pair outline and DMnEXCL over the route entries. `pair` merges the fill into the unmodified seed, repeats DRC, LVS and xRC, and writes a manifest that `prepare_all_extracted gain` accepts.
+2. **Bootstrap cell.** Generated in the XBOOTP outline with the XBOOTN neighbourhood mirrored in, placed R0 and MY.
+3. **Core pass.** The rest of the outline, with the pair and Bootstrap fill in place and the exclusion cell, without dummy TCD (`--no-tcd`).
+
+`library` assembles the fill hierarchy and `verify` checks it against the routed stream. `build` streams it into OA (new cells only, `-writeMode noOverwrite`) and creates the wrapper with XCORE, FILL and copies of the core's texts. The core views are opened read only and their layout.oa digests are compared. A new core view gets a new revision (`--revision N`: hierarchy `sar8_adc_core_fill<N>`, wrapper view `layout_fill<N>`). Repeat from the pair seed, or reuse the pair and Bootstrap fill where the stream is unchanged around them. `wrapper-gds` assembles the same wrapper as a stream without OA; DRC and xRC can run on it before the OA build.
+
+```powershell
+python -m Layout.design.toplevel_fill pair-seed PAIR_FILL_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill fill PAIR_FILL_ID --seed SEED_GDS --top sar8_cdac_with_xref --bounds -1.715 -32.465 70.515 25.86
+python -m Layout.design.toplevel_fill pair PAIR_ID --fill PAIR_FILL_ID
+python -m Layout.tools.simulation.prepare_all_extracted gain tt --xref PAIR_ID --run-id RUN_ID --submit HOST
+python -m Layout.design.toplevel_fill boot-seed BOOT_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill fill BOOT_ID --seed SEED_GDS --top sar8_adc_core --bounds 49.235 76.2 73.755 101.19
+python -m Layout.design.toplevel_fill core-seed CORE_FILL_ID --core-gds CORE_GDS --pair-stream PAIR_GDS --boot-fill BOOT_DIR
+python -m Layout.design.toplevel_fill fill CORE_FILL_ID --seed SEED_GDS --top sar8_adc_core --bounds 0 0 122 111 --turbo 8 --no-tcd
+python -m Layout.design.toplevel_fill --revision N library LIB_ID --pair-stream PAIR_GDS --boot-fill BOOT_DIR --core-fill CORE_FILL_DIR
+python -m Layout.design.toplevel_fill --revision N verify LIB_ID --pair-seed PAIR_FILL_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill --revision N wrapper-gds CHECK_ID --library LIB_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_route physical CHECK_ID --gds WRAPPER_GDS --top sar8_adc_core_filled --through pex --stages drc,pex
+python -m Layout.design.toplevel_fill --revision N build BUILD_ID --library LIB_ID --core-view CORE_VIEW --expect-core-oa SHA256
+python -m Layout.design.toplevel_route physical OA_CHECK_ID --view layout_fillN --top sar8_adc_core_filled --through drc
+python -m Layout.tools.analysis.toplevel_fill_record
+```
+
+[Stage 5 fill record](../results/toplevel_fill.md)
 
 ## Chip Assembly
 

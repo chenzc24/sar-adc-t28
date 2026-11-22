@@ -5,7 +5,9 @@ interconnect corner (TT: typical, SS: CWORST_T, FF: CBEST_T) for the coupled XRE
 filled stream se-xref-peripheral-dense, the comparator v8 extraction with VDD/VSS RC, the SAR macro
 sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The Bootstrap core
 boot-core-20261121 is its typical extraction at every corner; --corner-bootstrap uses its re-extraction at the
-paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). Wiring
+paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
+ID requalifies a revised core: its typical extraction at TT and its paired re-extractions ID-cworst-t and
+ID-cbest-t at SS cold and FF hot (run family bs<revision>, for example bsr2 for view layout_r2). Wiring
 between blocks is ideal.
 
 The deck, stimuli and analyzer are tools.saradc.single_edge_lpe. Gain-corrected code targets and signed
@@ -13,8 +15,10 @@ plate settling use the standalone weights of the same XREF/CDAC extraction at th
 prepares those standalone runs from the frozen TT weight run xref-fill-tt-after-dense.
 
   python -m Layout.tools.simulation.prepare_all_extracted gain ssc
+  python -m Layout.tools.simulation.prepare_all_extracted gain tt --xref se-xref-peripheral-routed --run-id RUN_ID
   python -m Layout.tools.simulation.prepare_all_extracted adc tt verify --revision a
   python -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --corner-bootstrap
+  python -m Layout.tools.simulation.prepare_all_extracted adc ssc verify --bootstrap boot-core-r2b-20261122
   python -m Layout.tools.simulation.prepare_all_extracted gate RUN_ID --submit SAME_HOST
 """
 import argparse
@@ -250,37 +254,52 @@ def sar_macro(identity, rc):
     return package
 
 
-def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False):
+def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False, bootstrap=None):
     """route_scale: route check at this multiple of the planned floorplan lengths (run family allxr, scored
     against the routed-design limits of issue #12, Stage 6 column).
-    corner_bootstrap: the Bootstrap core extraction at the paired interconnect corner (run family allxc)."""
+    corner_bootstrap: the Bootstrap core extraction at the paired interconnect corner (run family allxc).
+    bootstrap: physical ID of a revised core's typical extraction; the paired re-extraction replaces it at SS
+    cold and FF hot (run family bs<revision>)."""
     spec = CORNERS[corner]
     if lpe.CELL_RC[corner] != spec['rc'].lower():
         raise ValueError('Cell LPE and extraction corners differ')
-    if route_scale and corner_bootstrap:
+    if route_scale and (corner_bootstrap or bootstrap):
         raise ValueError('Route checks use the Stage 2 Bootstrap; run them separately')
-    boot = spec['boot'] if corner_bootstrap else BOOTSTRAP
-    if bootstrap_pex.interconnect(boot) != (spec['rc'] if corner_bootstrap else 'typical'):
+    if bootstrap and corner_bootstrap:
+        raise ValueError('--bootstrap already pairs the interconnect corner')
+    family = 'allxr' if route_scale else 'allxc' if corner_bootstrap else 'allx'
+    if bootstrap:
+        revision_view = bootstrap_pex.view(bootstrap)
+        if not re.fullmatch(r'layout_r\d{1,2}', revision_view):
+            raise ValueError('--bootstrap needs a revision view layout_r<N>, not ' + revision_view)
+        boot = bootstrap if corner == 'tt' else bootstrap + '-' + spec['rc'].lower().replace('_', '-')
+        if bootstrap_pex.view(boot) != revision_view:
+            raise ValueError('Corner extraction belongs to another view: ' + boot)
+        family = 'bs' + revision_view.split('_', 1)[1]
+    else:
+        boot = spec['boot'] if corner_bootstrap else BOOTSTRAP
+    if bootstrap_pex.interconnect(boot) != (spec['rc'] if corner_bootstrap or bootstrap else 'typical'):
         raise ValueError('Bootstrap extraction interconnect corner differs: ' + boot)
     routes = route_check(route_scale) if route_scale else None
     return lpe.prepare(corner, kind, revision=revision, macro=sar_macro(spec['sar'], spec['rc']), bootstrap=boot,
                        xref=xref_package(spec['xref'], spec['gain'], spec['rc'], routes),
                        comparator=comparator_package(spec['comparator'], spec['rc']),
-                       family='allxr' if routes else 'allxc' if corner_bootstrap else 'allx',
+                       family=family,
                        settling_limit=.25 if routes else SETTLING_LIMIT_LSB,
                        rss_mib=BUDGET_RSS_MIB if routes else SIMULATION_RSS_MIB)
 
 
-def prepare_gain(corner, run_id=None):
+def prepare_gain(corner, run_id=None, xref=None):
     """Standalone eight-bit weights of the corner XREF/CDAC extraction at that MOS corner.
 
     The frozen TT weight run supplies the fixture and analyzer bytes. Only the extraction, MOS section,
     temperature, supply and the logic levels of the CODE, PRESET and track commands change; the references
-    stay at 0 and 0.9 V behind the same 50 ohm / 4 pF fixture."""
-    spec = CORNERS[corner]
-    run_id = run_id or spec['gain']
-    if corner == 'tt' or not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', run_id):
-        raise ValueError('TT weights exist; select ssc or ffh and a valid run ID')
+    stay at 0 and 0.9 V behind the same 50 ohm / 4 pF fixture. `xref` replaces the corner's frozen extraction
+    with another evidence of the pair (for example a refilled stream); at TT only the extraction changes."""
+    spec = dict(CORNERS[corner], **({'xref': xref} if xref else {}))
+    run_id = run_id or (None if xref else spec['gain'])
+    if (corner == 'tt' and not xref) or not run_id or not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', run_id):
+        raise ValueError('The frozen TT weights exist; select ssc or ffh, or a new --xref, and a valid run ID')
     dest = ROOT / 'work/decks' / run_id
     if dest.exists():
         raise ValueError('Execution identity already prepared')
@@ -288,7 +307,7 @@ def prepare_gain(corner, run_id=None):
     names = [f['name'] for f in template['files'] if f['source'].startswith('work/decks/')]
     blobs = lpe.retained_inputs(lpe.RUNS / TT_GAIN, names)
     payload, manifest = fetch_pex(spec['xref'])
-    if manifest.get('interconnect_rc') != spec['rc'] or manifest['top'] != COMBINED:
+    if manifest.get('interconnect_rc', 'typical') != spec['rc'] or manifest['top'] != COMBINED:
         raise ValueError('Unexpected corner extraction')
     old = sorted(n for n in blobs if n.startswith('extracted.scs'))
     if old != sorted(n for n in payload if n.startswith('extracted.scs')):
@@ -304,20 +323,22 @@ def prepare_gain(corner, run_id=None):
             raise ValueError('Unexpected fixture text: ' + pattern)
         return text
 
-    deck = swap(deck, r'section=ttmacro_mos_moscap\b', 'section=%smacro_mos_moscap' % condition['mos'].lower(), 1)
-    deck = swap(deck, r'\btemp=27 tnom=27\b', 'temp=%d tnom=27' % condition['temperature_c'], 1)
-    deck = swap(deck, r'(?m)^(VV_post \(post_vdd 0\) vsource dc=)0\.9$', r'\g<1>' + vdd, 1)
-    lines = []
-    for line in deck.splitlines(keepends=True):
-        if line.startswith(('V_post_code', 'V_post_track', 'V_post_preset')):
-            line = swap(line, r'(?<![\d.])0\.9(?![\d])', vdd, len(re.findall(r'(?<![\d.])0\.9(?![\d])', line)))
-        lines.append(line)
-    deck = ''.join(lines)
-    if not re.search(r'(?m)^VS_post_refp \(post_refp_src 0\) vsource dc=0\.9$', deck) or \
-            re.search(r'(?<![\d.])0\.9(?![\d])', ''.join(l for l in lines if l.startswith(('V_post_code', 'V_post_track')))):
-        raise ValueError('Reference or command levels not as intended')
-    blobs['test.scs'] = deck.encode()
-    blobs['library_include.scs'] = (ROOT / ('tb/common/platform/library_lpe_%s.scs' % lpe.CELL_RC[corner])).read_bytes()
+    if corner != 'tt':
+        # At TT the template's condition and cell library stay byte for byte; only the extraction changes.
+        deck = swap(deck, r'section=ttmacro_mos_moscap\b', 'section=%smacro_mos_moscap' % condition['mos'].lower(), 1)
+        deck = swap(deck, r'\btemp=27 tnom=27\b', 'temp=%d tnom=27' % condition['temperature_c'], 1)
+        deck = swap(deck, r'(?m)^(VV_post \(post_vdd 0\) vsource dc=)0\.9$', r'\g<1>' + vdd, 1)
+        lines = []
+        for line in deck.splitlines(keepends=True):
+            if line.startswith(('V_post_code', 'V_post_track', 'V_post_preset')):
+                line = swap(line, r'(?<![\d.])0\.9(?![\d])', vdd, len(re.findall(r'(?<![\d.])0\.9(?![\d])', line)))
+            lines.append(line)
+        deck = ''.join(lines)
+        if not re.search(r'(?m)^VS_post_refp \(post_refp_src 0\) vsource dc=0\.9$', deck) or \
+                re.search(r'(?<![\d.])0\.9(?![\d])', ''.join(l for l in lines if l.startswith(('V_post_code', 'V_post_track')))):
+            raise ValueError('Reference or command levels not as intended')
+        blobs['test.scs'] = deck.encode()
+        blobs['library_include.scs'] = (ROOT / ('tb/common/platform/library_lpe_%s.scs' % lpe.CELL_RC[corner])).read_bytes()
     context = json.loads(blobs['context.json'])
     scope = ('Standalone coupled XREF/CDAC at %s %s V %d C with the %s extraction %s. Zero, eight one-hot commands, '
              'full scale, zero. 19 ns plateaus; project CDAC measurement; fixture and analyzer of %s.'
@@ -388,8 +409,9 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='action', required=True)
     g = sub.add_parser('gain')
-    g.add_argument('corner', choices=['ssc', 'ffh'])
+    g.add_argument('corner', choices=['tt', 'ssc', 'ffh'])
     g.add_argument('--run-id')
+    g.add_argument('--xref', help='Pair evidence to weigh instead of the frozen stream (tt needs it and a --run-id)')
     a = sub.add_parser('adc')
     a.add_argument('corner', choices=CORNERS)
     a.add_argument('kind', choices=lpe.CODES)
@@ -398,6 +420,8 @@ if __name__ == '__main__':
                    help='Route check: RC routes at SCALE x the planned floorplan lengths, TOP_ROUTE_F per TOP net')
     a.add_argument('--corner-bootstrap', action='store_true',
                    help='Bootstrap core extraction at the paired interconnect corner (run family allxc)')
+    a.add_argument('--bootstrap', metavar='PHYSICAL_ID',
+                   help='Revised Bootstrap core (typical extraction ID); paired corner re-extraction at ssc/ffh')
     analyses = []
     for kind in ANALYSES:
         r = sub.add_parser(kind, help='Analysis-only %s job on a completed run (same host as the source)' % kind)
@@ -409,11 +433,12 @@ if __name__ == '__main__':
                        help='Register the recipe on this managed host and queue its simulation or analysis')
     args = ap.parse_args()
     if args.action == 'gain':
-        path = prepare_gain(args.corner, args.run_id)
+        path = prepare_gain(args.corner, args.run_id, args.xref)
     elif args.action in ANALYSES:
         path = prepare_analysis(args.action, args.source_run_id, args.run_id)
     else:
-        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap)
+        path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap,
+                           args.bootstrap)
     print(path.relative_to(ROOT).as_posix())
     if args.submit:
         run_id = json.loads(path.read_text())['run_id']

@@ -14,8 +14,9 @@ OUTPUT = ROOT / 'work/layout/bootstrap/bootstrap-reference.cdl'
 
 
 def candidate_of(view):
-    """OA view layout holds the selected sampler; layout_<name> holds candidate <name>."""
-    if view == 'layout':
+    """OA view layout holds the selected sampler and layout_r<N> a revision of its layout (same netlist);
+    layout_<name> holds candidate <name>."""
+    if view == 'layout' or re.fullmatch(r'layout_r\d{1,2}', view):
         return None
     match = re.fullmatch(r'layout_(mmain\d{1,2})', view)
     if not match:
