@@ -38,6 +38,12 @@ CLK couples 353.7 aF to COMP_P and 316.5 aF to COMP_N. Of the 37.2 aF difference
 - The 73.5 µm channel shield starts at x 48.215 instead of 47.3, so its 0.1 µm width stays out of `top_fill_exclusion_inputs`.
 - The shields are one floating net, VSS_SHIELD (15.5 fF, no device terminals). Tie it to VSS with the supply feeds.
 
+## Open items
+
+- The comparator TT decision screen with this extracted environment (`decisions.cmp_clk_north_drop.verify`).
+- The four planned channel shields cross the TOPP drop at right angles but are not listed in the floorplan `crossings`. The fill policy admits only TOP routes, declared crossings and the CMP_CLK drop in the TOP exclusions, so declare these crossings or move the shields. Their fixed load on TOPP is 0.016 fF.
+- Fill policy step 2: merge this routed core with the pair's filled stream and run density-only DRC.
+
 ## Limits of this record
 
 Typical extraction corner only. No transient and no ADC simulation. No fill and no drawn fill-exclusion layers. Density DRC stays deferred to the top-level fill.

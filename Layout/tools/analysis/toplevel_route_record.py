@@ -106,6 +106,11 @@ def build(args):
     b = budgets()
     rows = evaluate(parasitics, b)
     stream_match = compare_streams(WORK / args.checks / "fixture.gds", WORK / args.generate / "candidate.gds")
+    from Layout.design.toplevel_routes import build as routes_now
+    generated = json.loads((WORK / args.generate / "routes.json").read_bytes())
+    current = routes_now()
+    matches_floorplan = ([[s.net, s.layer, s.x0, s.y0, s.x1, s.y1, s.role] for s in current.rects] == generated["rects"]
+                         and [[t.net, t.layer, t.x, t.y] for t in current.labels] == generated["labels"])
     build_receipt = json.loads((WORK / args.build / "build.json").read_bytes())
     intent = json.loads((WORK / args.build / "intent.json").read_bytes())
     record = dict(
@@ -116,7 +121,8 @@ def build(args):
                       build_ok=build_receipt["ok"], placement_unchanged="PLACEMENT_CHANGED" not in build_receipt["stdout"]),
         generator=dict(routes="Layout/design/toplevel_routes.py", builder="Layout/design/toplevel_route.py",
                        routes_sha256=intent["routes_sha256"], floorplan_sha256=intent["floorplan_sha256"],
-                       rectangles=intent["rects"], labels=intent["labels"], nets=intent["nets"]),
+                       rectangles=intent["rects"], labels=intent["labels"], nets=intent["nets"],
+                       built_geometry_matches_current_floorplan=matches_floorplan),
         evidence=dict(placement=p_ids, routed=r_ids, host="thu-wei", root="<remote_root>/evidence/<id>"),
         stream=dict(oa_stream_vs_generated_geometry={k: v["equal"] for k, v in stream_match.items()},
                     gds=chk["gds"]),
@@ -159,6 +165,10 @@ def build(args):
             "TT decision screen with the extracted environment is still to run.",
             "Tie VSS_SHIELD to VSS when the supply feeds are routed.",
             "Equalize COMP_P/COMP_N on extracted capacitance: added load differs by 0.09 fF (5.05 vs 5.14 fF).",
+            "The four planned output_channel VSS shields cross the TOPP drop (x 59.22) at right angles but are not "
+            "listed in floorplan crossings; the fill policy admits only TOP routes, declared crossings and the CMP_CLK "
+            "drop in the TOP exclusions. Their coupling to TOPP is 0.016 fF of fixed load. Declare them or move them.",
+            "Fill policy step 2: merge this routed core with the pair's filled stream and run density-only DRC.",
         ],
         inputs_sha256=dict(constraints=hashlib.sha256(CONSTRAINTS.read_bytes()).hexdigest(),
                            floorplan=hashlib.sha256((ROOT / "Layout/design/floorplan.json").read_bytes()).hexdigest()),

@@ -39,7 +39,8 @@
       "TOPN",
       "TOPP",
       "VSS_SHIELD"
-    ]
+    ],
+    "built_geometry_matches_current_floorplan": true
   },
   "evidence": {
     "placement": {
@@ -1260,11 +1261,13 @@
   "open_items": [
     "decisions.cmp_clk_north_drop.verify: CLK-to-output mirror difference is 37.2 aF in total (2.1 aF core, 24.4 aF inside the SAR macro from its frozen pin order, about 10.5 aF from the routes) against the 7.4 aF v8 core level; CLK-to-input difference 5.3 aF from the declared unmirrored TOPP crossing. The comparator TT decision screen with the extracted environment is still to run.",
     "Tie VSS_SHIELD to VSS when the supply feeds are routed.",
-    "Equalize COMP_P/COMP_N on extracted capacitance: added load differs by 0.09 fF (5.05 vs 5.14 fF)."
+    "Equalize COMP_P/COMP_N on extracted capacitance: added load differs by 0.09 fF (5.05 vs 5.14 fF).",
+    "The four planned output_channel VSS shields cross the TOPP drop (x 59.22) at right angles but are not listed in floorplan crossings; the fill policy admits only TOP routes, declared crossings and the CMP_CLK drop in the TOP exclusions. Their coupling to TOPP is 0.016 fF of fixed load. Declare them or move them.",
+    "Fill policy step 2: merge this routed core with the pair's filled stream and run density-only DRC."
   ],
   "inputs_sha256": {
     "constraints": "1db229764abc54d0fb22bd8d8afe7d18f77ed3023b1256d2a208ba30577022be",
-    "floorplan": "da01186f84f884a4928908f4fc66c8b31807d0835a6200a9f82acc255d7135e1"
+    "floorplan": "d9c4a243e598b632d8b59055485c61d775f5a76d0de46b404bc9c394cca452e9"
   },
   "floorplan_status": "coarse_proposal_not_applied_to_OA"
 }
