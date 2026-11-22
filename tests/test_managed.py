@@ -58,6 +58,13 @@ class ExecutionChecks(unittest.TestCase):
             with self.assertRaises(ValueError):execution.request_host({'run_id':'old'},'thu-sui')
             with self.assertRaises(ValueError):execution.request_host({},'unapproved-host')
 
+    def test_host_lists_agree_and_admit_the_added_hosts(self):
+        self.assertEqual(agent.HOSTS,execution.HOSTS)
+        for host in ('thu-yuan','thu-tang','thu-shu','thu-xia','thu-ming'):
+            self.assertEqual(execution.request_host({},host),host)
+        for host in ('thu-qi','thu-liang','thu-han'):
+            with self.assertRaises(ValueError):execution.request_host({},host)
+
     def test_wrong_endpoint_rejected_before_mutation(self):
         with mock.patch.object(agent.os,'getuid',return_value=596,create=True), \
              mock.patch.object(agent.socket,'gethostname',return_value='thu-wei'), \

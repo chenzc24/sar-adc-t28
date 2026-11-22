@@ -384,6 +384,7 @@ def prepare_analysis(kind, source_run_id, run_id=None):
 
 
 if __name__ == '__main__':
+    from tools.saradc.__main__ import engine
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='action', required=True)
     g = sub.add_parser('gain')
@@ -404,7 +405,7 @@ if __name__ == '__main__':
         r.add_argument('--run-id')
         analyses.append(r)
     for p in [g, a] + analyses:
-        p.add_argument('--submit', metavar='HOST', choices=['thu-wei', 'thu-sui', 'thu-song'],
+        p.add_argument('--submit', metavar='HOST', choices=engine().HOSTS,
                        help='Register the recipe on this managed host and queue its simulation or analysis')
     args = ap.parse_args()
     if args.action == 'gain':
@@ -415,7 +416,6 @@ if __name__ == '__main__':
         path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap)
     print(path.relative_to(ROOT).as_posix())
     if args.submit:
-        from tools.saradc.__main__ import engine
         run_id = json.loads(path.read_text())['run_id']
         # An analysis-only job starts its analysis; the others queue a simulation.
         print(json.dumps(dict(registration=engine().register(path.relative_to(ROOT).as_posix(), host=args.submit),
