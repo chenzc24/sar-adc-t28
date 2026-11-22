@@ -10,6 +10,7 @@ The designs removed after commit `c46d9d6` keep their results and source digests
 
 | Verification | Evidence |
 | --- | --- |
+| Bootstrap core revision `layout_r2` (latch-up, planned fill), 2026-11-22/23, in progress | Flat chip LUP.5.2.x cleared; Stage 2-deck ADC passes at SS cold, FF hot and TT with SS-cold gate 0.077 V; routed gate verdict pending. [Report](integration/bootstrap_rev2_20261122.md) · [Record](integration/bootstrap_rev2_20261122.json) |
 | Bootstrap boosted-gate margin and CWORST_T/CBEST_T core extractions, 2026-11-22 | SS-cold Stage 2 stimuli pass with the CWORST_T Bootstrap; gate screen 0.096 V against 0.1 V, set by the extracted core's slower hold-phase gate discharge. [Report](integration/bootstrap_corner_margin_20261122.md) · [Record](integration/bootstrap_corner_margin_20261122.json) |
 | All-extracted ADC with ideal top-level wiring (issue #12 Stage 2), 2026-11-22 | All three corners pass; SS-cold read margin 7.77 ns; route budgets proposed. [Report](integration/stage2_all_extracted_20261122.md) · [Record](integration/stage2_all_extracted_20261122.json) |
 | Four-finger sampler main switch, 2026-11-21 | [Report](design/sampler_mmain4_adoption_20261121.md) · [Record](design/sampler_mmain4_adoption_20261121.json) · [Bootstrap layout](../Layout/results/bootstrap.json) |

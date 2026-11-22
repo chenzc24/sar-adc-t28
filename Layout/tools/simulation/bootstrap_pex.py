@@ -19,6 +19,11 @@ def interconnect(physical_id):
     return json.loads(pull(evidence(physical_id) + '/manifest.json')).get('interconnect_rc', 'typical')
 
 
+def view(physical_id):
+    """OA view of a Bootstrap core extraction: layout, a revision layout_r<N> or a candidate layout_mmain<N>."""
+    return json.loads(pull(evidence(physical_id) + '/manifest.json')).get('oa_view', 'layout')
+
+
 def package(physical_id):
     """Files, context and probe map of a verified prefill core, with a boot_ prefix on the xRC files."""
     remote = evidence(physical_id)
