@@ -55,12 +55,24 @@ AVSS_CORE pads top_0, top_6, top_8 and left_0 are not routed yet; LVS joins them
 | ESD.18g / ESD.19g / ESD.WARN.1 | 120 / 96 / 6 | 120 / 96 / 6 | 0 |
 | PO.R.19 | 12 | 12 | 2 |
 | Chip-wide warnings: WITH_SEALRING_OPTION, DIODMY_L, IO_CONNECT_CORE_NET, MATCH.WARN, DM1–DM9.R.1 | 1 each | 1 each | 1 each |
-| **LUP.5.2.1 / LUP.5.2.2** | **1 / 6** | 0 | 0 |
+| **LUP.5.2.1 / LUP.5.2.2** (hierarchical; flat: 2 / 12, both channels) | **1 / 6** | 0 | 0 |
 | Total | 1234 | 1027 | 72 |
 
 - **No route-geometry rule:** the routes and landings add none. The first build's M2.A.4 holes, M2.W.3 maximum-width marks and one M8.S.3 spacing were fixed.
 - **ESD.\* and PO.R.19:** these belong to the ring cell itself.
-- **LUP.5.2.1 / LUP.5.2.2:** the only new rules. They sit in the core at the Bootstrap-N switch, die (393.2–398.0, 526.0–529.0). Now that VINN reaches its pad, the switch counts as a pad-connected device, and the rules ask for a wider guard ring or more spacing between it and the nearby PMOS N-well. Fixing them means changing the Bootstrap block core, which needs approval. The VINP side is not flagged.
+- **LUP.5.2.1 / LUP.5.2.2:** the only new rules. Now that VIN reaches its pad, the deck treats the Bootstrap main switch's VIN source/drains as pad-connected ("post-driver") devices. The rules ask for a wider guard ring or more spacing between them and the nearby PMOS N-well. Fixing them means changing the Bootstrap block core, which needs approval.
+  - **Both channels are affected.** The hierarchical run above reports only XBOOTN (1 + 6 at die 393.2–398.0, 526.0–529.0). The same deck run flat on the same stream reports 1 + 6 on each channel (`chip-lup-probe-10flat`).
+  - **Why the hierarchical run misses XBOOTP:** run hierarchically, the deck's pad-connectivity layers (`NSD_IOPAD_stp` and the supply-pad nets) cover no XBOOTP diffusion at all, not even its VSS source/drains. Flat, both Bootstraps match by mirror. The two instances share one master, so the hierarchical run under-reports the second instance.
+  - **Not a routing error:**
+    - the VINN and VINP chip routes mirror exactly about die x 410 (799 shapes each);
+    - both VIN bond pads classify as signal pads (`IO_PAD`);
+    - chip LVS stays CORRECT with virtual connects limited to the eight supply names (`chip-lvs-novcn-signals`), so VINN, VINP, both pads of each VREF rail and SAMPLE are physically connected.
+  - **Use flat DRC for the latch-up checks** at chip level.
+- **Cells behind the ring's own markers** (the same in the ring-alone run):
+  - ESD.18g (120) and ESD.19g (96) sit in the eight PRUW08SDGZ output cells. They are ESD guidelines (total driver finger width per drain net), active because the installed deck sets `#DEFINE GUIDELINE_ESD`.
+  - PO.R.19 (12, floating gate) also sits in the PRUW08SDGZ cells. Their I inputs float until the output register drives them.
+  - ESD.WARN.1 (6) sits in the six PDB3AC cells: the SDI marker check on pad ESD devices.
+  - The deck has no switch that exempts TSMC IO-library cells; only the guideline switch and the PO.R.19 text options exist.
 
 **LVS** is CORRECT against `chip_lvs_source.py`. That source holds the ring schematic's own netlist inline (si/auCdl, so `POC_dig` is a chip net) and the core subcircuit connected as `chip_netlist` XADC for the drawn routes. The deck is the installed `calibre.lvs` with the ring deck's additions: `VIRTUAL CONNECT NAME "?"`, its power/ground name patterns, and ERC with cell names. The five block masters are HCELLs.
 
