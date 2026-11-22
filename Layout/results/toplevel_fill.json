@@ -8,6 +8,8 @@
     "boot": "adc-core-fill2-boot",
     "core": "adc-core-fill2-core",
     "library": "adc-core-fill2-lib",
+    "build": "adc-core-fill2-build",
+    "oa_checks": "adc-core-fill2-oa-chk",
     "checks": "adc-core-fill2-chk",
     "baseline_checks": "adc-core-guard-g1-chk",
     "baseline_pex": "adc-core-fill2-base-xtr",
@@ -2019,8 +2021,23 @@
       "wrapper": "sar8_adc_core_filled/layout_fill2",
       "core": "sar8_adc_core/layout_route_guard",
       "fill": "sar8_adc_core_fill2/layout",
-      "built": false,
-      "build": null,
+      "built": true,
+      "build": {
+        "identity": "adc-core-fill2-build",
+        "library": "adc-core-fill2-lib",
+        "wrapper": "sar8_adc_core_filled/layout_fill2",
+        "core_view": "layout_route_guard",
+        "stdout": [
+          "GUARDED_BEFORE=62ba2e397ddf41e6a317155a7d0d905fc3a926c1a75884c0e65d50f4efa855b2 1f89cf645b1cfecb53a71208529c55bb304e9bc4e5558fa829e40e773e028a31 01c9df03c525b00b5a6e232935aa1e64b5c4e4295e6f71257c36dedf3a3ea449",
+          "INFO (XSTRM-234): Translation completed. '0' error(s) and '3' warning(s) found.",
+          "GUARDED_AFTER=62ba2e397ddf41e6a317155a7d0d905fc3a926c1a75884c0e65d50f4efa855b2 1f89cf645b1cfecb53a71208529c55bb304e9bc4e5558fa829e40e773e028a31 01c9df03c525b00b5a6e232935aa1e64b5c4e4295e6f71257c36dedf3a3ea449",
+          "feec8f91c77ee880f39f4a401ded3844d5b14f3dc17a97d371d35969657d5aae  /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8_adc_core_filled/layout_fill2/layout.oa",
+          "21b1350f38c98f2850907d6c3edc67899b2c2b724ee7027402179ca91dd718c7  /home/chenzc_intern25/TSMC28/llm_IO/SAR_ADC_T28_LAYOUT/sar8_adc_core_fill2/layout/layout.oa",
+          "FILL_WRAPPER_OK instances=2 labels=39 bBox=((-0.31 0.0) (122.306 112.0))",
+          "EXIT=0"
+        ],
+        "ok": true
+      },
       "checked_stream": {
         "source": "GDS assembly of the guard stream, the fill library and the wrapper texts (toplevel_fill wrapper-gds)",
         "identity": "adc-core-fill2-chk",
@@ -2030,7 +2047,18 @@
         "labels": 39,
         "gds_sha256": "f78852a81a2aec8be7445874ce1ca11e3b68b4fe35a0f408a973de98d2464bf3"
       },
-      "assembly_matches_oa_stream_in_revision1": true
+      "assembly_matches_oa_stream_in_revision1": true,
+      "oa_stream": {
+        "evidence": "adc-core-fill2-oa-chk",
+        "layout_oa_sha256": "feec8f91c77ee880f39f4a401ded3844d5b14f3dc17a97d371d35969657d5aae",
+        "gds_sha256": "324b0f1dfa0a22fc596cec8b98116a88f47fa95cec52fd2f34d7f17dca0c25fd",
+        "drc": {
+          "DIODMY_L:WARNING": 1,
+          "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+          "PO.DN.3.1": 1
+        },
+        "matches_checked_assembly": true
+      }
     },
     "revision1": {
       "wrapper": "sar8_adc_core_filled/layout_fill1",

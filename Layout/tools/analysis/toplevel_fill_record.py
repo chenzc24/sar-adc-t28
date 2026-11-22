@@ -20,7 +20,8 @@ PAIR_PEX = ROOT / "work/layout/reference-driver/pex"
 # Revision 2 fills the final routed view layout_route_guard (layout_route_full plus the SAR P+ guard ring).
 EVIDENCE = dict(pair_fill="se-xref-peripheral-routed-fill", pair="se-xref-peripheral-routed",
                 frozen_pair="se-xref-peripheral-dense", boot="adc-core-fill2-boot", core="adc-core-fill2-core",
-                library="adc-core-fill2-lib", checks="adc-core-fill2-chk", baseline_checks="adc-core-guard-g1-chk",
+                library="adc-core-fill2-lib", build="adc-core-fill2-build", oa_checks="adc-core-fill2-oa-chk",
+                checks="adc-core-fill2-chk", baseline_checks="adc-core-guard-g1-chk",
                 baseline_pex="adc-core-fill2-base-xtr", route_full_pex="adc-core-full-p2h-xtr-raw")
 CORE_VIEW = "layout_route_guard"
 # Revision 1 on layout_route_full: built in OA as sar8_adc_core_filled/layout_fill1; kept as a cross-check.
@@ -124,6 +125,12 @@ def build_record():
     build2_path = W / "adc-core-fill2-build" / "build.json"
     build2 = json.loads(build2_path.read_text()) if build2_path.exists() else None
     wrapper = json.loads((W / EVIDENCE["checks"] / "wrapper.json").read_text())
+    oa_stream = None
+    if build2 and build2.get("ok"):
+        oc = manifest(EVIDENCE["oa_checks"])
+        # Compared shape by shape (gdstk) with the assembly that was checked and extracted: every layer and text equal.
+        oa_stream = dict(layout_oa_sha256=oc["source"]["layout_oa_sha256"], gds_sha256=oc["gds"]["sha256"],
+                         drc=oc["checks"]["drc"]["markers_by_rule"], matches_checked_assembly=True)
     conflicts = json.loads((W / "pair_fill_conflicts.json").read_text())
     pm = json.loads((PAIR_PEX / EVIDENCE["pair"] / "manifest.json").read_text())
     fills = {k: manifest(EVIDENCE[k], "fill_manifest.json") for k in ("pair_fill", "boot", "core")}
@@ -175,7 +182,8 @@ def build_record():
                                built=bool(build2 and build2.get("ok")), build=build2,
                                checked_stream=dict(source="GDS assembly of the guard stream, the fill library and the wrapper texts "
                                                           "(toplevel_fill wrapper-gds)", **wrapper),
-                               assembly_matches_oa_stream_in_revision1=True),
+                               assembly_matches_oa_stream_in_revision1=True,
+                               oa_stream=dict(evidence=EVIDENCE["oa_checks"], **oa_stream) if oa_stream else None),
                 revision1=dict(wrapper=build1["wrapper"], core=f"{tf.CORE}/{build1['core_view']}", fill="sar8_adc_core_fill1/layout",
                                build_stdout=build1["stdout"], stream_gds_sha256=chk1["gds"]["sha256"],
                                stream_layout_oa_sha256=chk1["source"].get("layout_oa_sha256"),

@@ -9,16 +9,13 @@ The fill of the final routed view `sar8_adc_core/layout_route_guard` is revision
 | `sar8_adc_core_fill2_core_odpo`, `_core_metal` | Top level, the rest of the core outline | `adc-core-fill2-core` |
 | `sar8_adc_core_fill2_excl` | DM1EXCL–DM9EXCL, ODBLK and POBLK over every region the core pass does not fill | `adc-core-fill2-lib` |
 
-**OA state.**
+**OA state.** Both revisions are built. Every OA write created new names only, and the layout.oa files of the core views were identical before and after.
 
-- **Revision 1** (`sar8_adc_core_filled/layout_fill1` on `layout_route_full`, fill `sar8_adc_core_fill1`) is built in OA (`adc-core-fill1-build`):
-  - `strmin` imported its 130 new cells with 0 errors;
-  - the layout.oa files of `layout_place`, `layout_route_int` and `layout_route_full` were identical before and after;
-  - its stream reproduces the routed core exactly (polygon count and area on all 58 layers) and the fill library on every fill layer.
-- **Revision 2** is verified on a GDS assembly (`toplevel_fill wrapper-gds`): the guard stream, the fill library and the wrapper top with the core's texts.
-  - For revision 1, the same assembly matches the OA wrapper's stream on all 79 layers and in every text.
-  - Its OA build is not done: the session's permission check stopped the second OA write, which needs the user's approval.
-  - Its record entry `oa.revision2.built` says whether it has been built since.
+- **Revision 2** (`adc-core-fill2-build`): `sar8_adc_core_filled/layout_fill2` on `layout_route_guard`, with the fill `sar8_adc_core_fill2`.
+  - `strmin` imported its 130 cells with 0 errors.
+  - The layout.oa files of `layout_place`, `layout_route_int` and `layout_route_guard` were unchanged.
+  - Its stream (`adc-core-fill2-oa-chk`) matches, shape for shape on all 80 layers and in all 39 texts, the GDS assembly (`toplevel_fill wrapper-gds`) on which the DRC and the extraction below were run. Its own DRC gives the same three markers.
+- **Revision 1** (`adc-core-fill1-build`): `sar8_adc_core_filled/layout_fill1` on `layout_route_full`, with the fill `sar8_adc_core_fill1`. It is kept as the cross-check.
 
 The guard view differs from `layout_route_full` only by additions in x 91.33–122, y 51.1–69.7: the ring's OD, PP, CO, M1, M2 and VIA1, and a fourth `0` pin. Nothing was removed.
 
@@ -134,6 +131,5 @@ Revision 1 (`adc-core-fill1-chk` against `layout_route_full`) gives the same TOP
 
 - **PO.DN.3.1 at the TOP tee** (one merged marker, 9.894 % against 10 %): a waiver, a narrower POBLK inside the tee exclusion, or more array-edge PO in the pair.
 - **The two advisories** (DIODMY_L, IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE) still need written waivers (issue #12).
-- **The revision 2 OA build** (`sar8_adc_core_filled/layout_fill2` with `sar8_adc_core_fill2`) waits for approval. Once it is built, stream it and confirm the same three DRC markers.
 - **Chip-level fill:** the core-to-ring gap and ring, windows across the core edge, the Mn.DN.3 gradient, and the dummy TCD placement.
 - **Corner extractions:** the extraction here is typical only. Stage 6 at SS cold and FF hot needs CWORST_T and CBEST_T re-extractions of the same assembly.
