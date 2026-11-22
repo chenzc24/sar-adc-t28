@@ -298,6 +298,30 @@ def core_seed(identity, core_gds, pair_stream, boot_fill):
     return summary
 
 
+# PO.DN.3.1 (10 um windows) above the CDAC array: the array's north rows carry about 12 % PO and the TOP-tee
+# exclusion above them none, so the windows at x 35-60, y 60-70 reach 9.894 % (revision 4). From revision 5 the top
+# level places short dummy-PO segments in that strip, in line with the array's dummy-PO columns (0.96 um pitch,
+# mirror images about the axis), clear of the TOP drops and the comparator-input stubs.
+TEE_PO = dict(y=(68.40, 68.90), width=0.12, pitch=0.96, first_x=34.645, x_range=(34.3, 57.9), skip=(44.0, 48.2))
+
+
+def tee_po():
+    """Dummy-PO rectangles (layer 17/1) in the TOP-tee strip, symmetric about AXIS."""
+    t = TEE_PO
+    # West columns on the array's west dummy-PO pitch; the east half is their mirror image (as in the array).
+    lefts = [round(t["first_x"] + k * t["pitch"], 4) for k in range(-3, 30)]
+    lefts = [x for x in lefts if x + t["width"] <= AXIS]
+    lefts += [round(2 * AXIS - x - t["width"], 4) for x in lefts]
+    out = set()
+    for x0 in lefts:
+        x1 = round(x0 + t["width"], 4)
+        mx0 = round(2 * AXIS - x1, 4)
+        inside = lambda a, b: t["x_range"][0] <= a and b <= t["x_range"][1] and (b <= t["skip"][0] or a >= t["skip"][1])
+        if inside(x0, x1) and inside(mx0, round(mx0 + t["width"], 4)):
+            out.add((x0, t["y"][0], x1, t["y"][1]))
+    return sorted(out)
+
+
 def library(identity, pair_stream, boot_fill, core_fill):
     """The fill hierarchy FILL_TOP in the core frame: pair, Bootstrap (R0 and MY) and core fill, and the exclusions."""
     g = gds()
@@ -310,6 +334,12 @@ def library(identity, pair_stream, boot_fill, core_fill):
                         f"{FILL_TOP}_core_{kind.lower()}", PREFIX + pre + "_")
         top.add(g.Reference(c))
         names["core_" + kind.lower()] = c.name
+    if int(REVISION[4:]) >= 5:
+        tee = g.Cell(f"{FILL_TOP}_tee_po")
+        tee.add(*[g.rectangle(r[:2], r[2:], layer=17, datatype=1) for r in tee_po()])
+        lib.add(tee)
+        top.add(g.Reference(tee))
+        names["tee_po"] = tee.name
     excl = g.Cell(f"{FILL_TOP}_excl")
     excl.add(*exclusion_rects(region_exclusions() + route_exclusions()))
     lib.add(excl)
