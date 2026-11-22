@@ -1,0 +1,1273 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-22",
+  "tool": "Layout/tools/analysis/toplevel_route_record.py",
+  "stage": "Stage 4a of chenzc24/sar-adc-t28#12: core-internal routes (21 planned paths that end only on block pins)",
+  "cellview": {
+    "library": "SAR_ADC_T28_LAYOUT",
+    "cell": "sar8_adc_core",
+    "view": "layout_route_int",
+    "built_from": [
+      "sar8_adc_core",
+      "layout_place"
+    ],
+    "build": "adc-core-route-int-build",
+    "build_ok": true,
+    "placement_unchanged": true
+  },
+  "generator": {
+    "routes": "Layout/design/toplevel_routes.py",
+    "builder": "Layout/design/toplevel_route.py",
+    "routes_sha256": "f407d6140bb793c02255359359668bae789e80213404034f861cb31ed76fafb0",
+    "floorplan_sha256": "da01186f84f884a4928908f4fc66c8b31807d0835a6200a9f82acc255d7135e1",
+    "rectangles": 302,
+    "labels": 15,
+    "nets": [
+      "CMP_CLK",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "COMP_N",
+      "COMP_P",
+      "PRESET",
+      "SEQ_SAMPLE",
+      "TOPN",
+      "TOPP",
+      "VSS_SHIELD"
+    ],
+    "built_geometry_matches_current_floorplan": true
+  },
+  "evidence": {
+    "placement": {
+      "stream": "adc-core-place-drc-20261122",
+      "netlist": "adc-core-place-hcell-20261122",
+      "pex": "adc-core-place-pex-20261122"
+    },
+    "routed": {
+      "build": "adc-core-route-int-build",
+      "checks": "adc-core-route-int-chk",
+      "pex": "adc-core-route-int-pex"
+    },
+    "host": "thu-wei",
+    "root": "<remote_root>/evidence/<id>"
+  },
+  "stream": {
+    "oa_stream_vs_generated_geometry": {
+      "shapes": true,
+      "texts": true,
+      "references": true
+    },
+    "gds": {
+      "sha256": "f8e0174eb52b616389b6c365621cd931f2d1dd6e3bca7fa2c39b3af2ed423d3c",
+      "structures": 114,
+      "top_labels": [
+        "CMP_CLK",
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "COMP_N",
+        "COMP_P",
+        "PRESET",
+        "SEQ_SAMPLE",
+        "TOPN",
+        "TOPP"
+      ],
+      "top_structural_sha256": "b3800de0da6fd7762efd04e54583cd313fec6ee230c9060ed2872f1a1eda33aa",
+      "without_gds_timestamps": "8d0fbc3bf47f1177e682b1eef47bd62a4817125c54c576208829f582e56d97dc"
+    }
+  },
+  "drc": {
+    "deck": "calibre_rule/drc/drc_rule_T28_cell (installed, unmodified switches)",
+    "placement_markers": 48,
+    "routed_markers": 47,
+    "routed_markers_by_rule": {
+      "DIODMY_L:WARNING": 1,
+      "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+      "M4.DN.1": 1,
+      "M5.DN.1": 1,
+      "M5.DN.6": 9,
+      "M6.DN.1": 1,
+      "M6.DN.6": 8,
+      "M7.DN.1": 1,
+      "M7.DN.6": 8,
+      "Mx.DN.7:M1_M2_M3": 2,
+      "Mx.DN.7:M2_M3_M4": 1,
+      "Mx.DN.7:M3_M4_M5": 1,
+      "Mx.DN.7:M4_M5_M6": 1,
+      "Mx.DN.7:M5_M6_M7": 1,
+      "OD.DN.3": 1,
+      "OD.S.14": 6,
+      "PO.DN.3": 2,
+      "PO.DN.3.1": 1
+    },
+    "delta_by_rule": {
+      "M5.DN.6": [
+        10,
+        9
+      ]
+    },
+    "new_rules": [],
+    "verdict": "no new rule; only density windows, OD.S.14 and the two block-level advisories remain, all present in the placement view"
+  },
+  "connectivity": {
+    "routed_nets": {
+      "TOPN": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPN"
+          ],
+          [
+            "comparator",
+            "VINN"
+          ]
+        ],
+        "exact": true
+      },
+      "TOPP": {
+        "reaches": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_p",
+            "VOUT"
+          ],
+          [
+            "cdac",
+            "TOPP"
+          ],
+          [
+            "comparator",
+            "VINP"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_P": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTP"
+          ],
+          [
+            "sar",
+            "COMP_P"
+          ]
+        ],
+        "exact": true
+      },
+      "COMP_N": {
+        "reaches": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "OUTN"
+          ],
+          [
+            "sar",
+            "COMP_N"
+          ]
+        ],
+        "exact": true
+      },
+      "CMP_CLK": {
+        "reaches": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "planned": [
+          [
+            "comparator",
+            "CLK"
+          ],
+          [
+            "sar",
+            "CMP_CLK"
+          ]
+        ],
+        "exact": true
+      },
+      "SEQ_SAMPLE": {
+        "reaches": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "planned": [
+          [
+            "bootstrap_n",
+            "CLKS"
+          ],
+          [
+            "bootstrap_p",
+            "CLKS"
+          ],
+          [
+            "sar",
+            "SEQ_SAMPLE"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE0": {
+        "reaches": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE0"
+          ],
+          [
+            "sar",
+            "CODE0"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE1": {
+        "reaches": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE1"
+          ],
+          [
+            "sar",
+            "CODE1"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE2": {
+        "reaches": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE2"
+          ],
+          [
+            "sar",
+            "CODE2"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE3": {
+        "reaches": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE3"
+          ],
+          [
+            "sar",
+            "CODE3"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE4": {
+        "reaches": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE4"
+          ],
+          [
+            "sar",
+            "CODE4"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE5": {
+        "reaches": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE5"
+          ],
+          [
+            "sar",
+            "CODE5"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE6": {
+        "reaches": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE6"
+          ],
+          [
+            "sar",
+            "CODE6"
+          ]
+        ],
+        "exact": true
+      },
+      "CODE7": {
+        "reaches": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "CODE7"
+          ],
+          [
+            "sar",
+            "CODE7"
+          ]
+        ],
+        "exact": true
+      },
+      "PRESET": {
+        "reaches": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "planned": [
+          [
+            "reference",
+            "PRESET"
+          ],
+          [
+            "sar",
+            "PRESET"
+          ]
+        ],
+        "exact": true
+      }
+    },
+    "top_ports": [
+      "CMP_CLK",
+      "CODE0",
+      "CODE1",
+      "CODE2",
+      "CODE3",
+      "CODE4",
+      "CODE5",
+      "CODE6",
+      "CODE7",
+      "COMP_N",
+      "COMP_P",
+      "PRESET",
+      "SEQ_SAMPLE",
+      "TOPN",
+      "TOPP"
+    ],
+    "multi_block_unrouted_nets": {
+      "routed": 18,
+      "placement": 18,
+      "same_as_placement": true,
+      "by_blocks": {
+        "bootstrap_n+bootstrap_p+cdac+comparator+reference+sar": 1,
+        "cdac+reference": 17
+      }
+    },
+    "text_short_messages": [],
+    "verdict": "PASS"
+  },
+  "floorplan_rules": {
+    "cdac_array_keepout": {
+      "shapes": 2,
+      "not_allowed": [],
+      "non_top_nets": []
+    },
+    "comparator_keepout": {
+      "shapes": 6,
+      "not_allowed": [],
+      "non_top_nets": [
+        "CMP_CLK",
+        "COMP_N",
+        "COMP_P"
+      ]
+    },
+    "top_fill_exclusion_tee": {
+      "shapes": 24,
+      "not_allowed": [],
+      "non_top_nets": []
+    },
+    "top_fill_exclusion_inputs": {
+      "shapes": 20,
+      "not_allowed": [],
+      "non_top_nets": [
+        "CMP_CLK",
+        "COMP_N",
+        "COMP_P"
+      ]
+    },
+    "top_fill_exclusion_n_drop": {
+      "shapes": 7,
+      "not_allowed": [],
+      "non_top_nets": [
+        "SEQ_SAMPLE"
+      ]
+    },
+    "top_fill_exclusion_p_drop": {
+      "shapes": 15,
+      "not_allowed": [],
+      "non_top_nets": [
+        "CMP_CLK",
+        "COMP_N",
+        "COMP_P",
+        "SEQ_SAMPLE",
+        "VSS_SHIELD"
+      ]
+    }
+  },
+  "parasitics": {
+    "deck": "calibre_rule/rcx/calibre.rcx typical, flat RC + coupling (-rcc)",
+    "method": "Parasitics of the core-internal routes from two flat xRC extractions with the same deck.\n\n`placement` extracts the placement view with every planned landing pin labelled NET__BLOCK; `routed` extracts\nthe routed view (net labels on the routes, VSS_SHIELD on the floating shield). The capacitance a route adds\nto net N is C(N) in the routed run minus C of its pieces in the placement run, where C sums grounded and\ncoupling capacitance and coupling between two pieces of N is removed because it becomes internal.\n\nResistance and delay use each routed net's extracted RC network between real device terminals: drivers\nare the drain/source terminals in the driving block, receivers the gate terminals in the receiving block\n(TOP: the Bootstrap switch terminals and the CDAC capacitor terminals). Elmore delays treat coupling\ncapacitance as grounded and add an assumed gate load per receiver terminal; for RC trees the Elmore\ndelay bounds the 50% step delay from above. Both include the blocks' own pin-side wiring, so they bound\nthe route-only values from above.",
+    "nets": {
+      "CMP_CLK": {
+        "placement_pieces_fF": {
+          "CMP_CLK__SAR": 1.236,
+          "CMP_CLK__XCOMP": 1.246
+        },
+        "routed_total_fF": 7.53,
+        "added_fF": 5.047,
+        "added_by_partner_fF": {
+          "COMP_N": 0.1513,
+          "COMP_P": 0.162,
+          "SEQ_SAMPLE": 0.0157,
+          "TOPN": 0.0023,
+          "TOPP": 0.0077,
+          "VSS_SHIELD": 3.785,
+          "block_nets": 0.0079,
+          "ground": 0.9154
+        },
+        "resistors": 120,
+        "total_wire_resistance_ohm": 9676.85,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "comparator": 2
+        },
+        "elmore_delay_ps": {
+          "comparator": 2.142
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "comparator": 615.81
+        },
+        "network_capacitance_fF": 9.53,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE0": {
+        "placement_pieces_fF": {
+          "CODE0__SAR": 3.24,
+          "CODE0__XREF": 3.975
+        },
+        "routed_total_fF": 11.456,
+        "added_fF": 4.241,
+        "added_by_partner_fF": {
+          "CODE1": 2.1756,
+          "CODE2": 0.0849,
+          "block_nets": -0.0043,
+          "ground": 1.9845
+        },
+        "resistors": 205,
+        "total_wire_resistance_ohm": 14389.19,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 4.219
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 946.54
+        },
+        "network_capacitance_fF": 13.456,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE1": {
+        "placement_pieces_fF": {
+          "CODE1__SAR": 2.129,
+          "CODE1__XREF": 3.748
+        },
+        "routed_total_fF": 11.424,
+        "added_fF": 5.548,
+        "added_by_partner_fF": {
+          "CODE0": 2.1756,
+          "CODE2": 2.1537,
+          "CODE3": 0.088,
+          "block_nets": 0.002,
+          "ground": 1.1288
+        },
+        "resistors": 142,
+        "total_wire_resistance_ohm": 8289.3,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 4.629
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 961.01
+        },
+        "network_capacitance_fF": 13.424,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE2": {
+        "placement_pieces_fF": {
+          "CODE2__SAR": 2.167,
+          "CODE2__XREF": 3.347
+        },
+        "routed_total_fF": 11.165,
+        "added_fF": 5.651,
+        "added_by_partner_fF": {
+          "CODE0": 0.0849,
+          "CODE1": 2.1537,
+          "CODE3": 2.1772,
+          "CODE4": 0.0867,
+          "block_nets": -0.0006,
+          "ground": 1.149
+        },
+        "resistors": 161,
+        "total_wire_resistance_ohm": 10182.91,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 4.021
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 909.99
+        },
+        "network_capacitance_fF": 13.165,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE3": {
+        "placement_pieces_fF": {
+          "CODE3__SAR": 2.224,
+          "CODE3__XREF": 2.8
+        },
+        "routed_total_fF": 10.757,
+        "added_fF": 5.733,
+        "added_by_partner_fF": {
+          "CODE1": 0.088,
+          "CODE2": 2.1772,
+          "CODE4": 2.201,
+          "CODE5": 0.0872,
+          "block_nets": 0.0058,
+          "ground": 1.1736
+        },
+        "resistors": 136,
+        "total_wire_resistance_ohm": 8253.74,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 4.092
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 916.54
+        },
+        "network_capacitance_fF": 12.757,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE4": {
+        "placement_pieces_fF": {
+          "CODE4__SAR": 2.224,
+          "CODE4__XREF": 1.566
+        },
+        "routed_total_fF": 9.58,
+        "added_fF": 5.79,
+        "added_by_partner_fF": {
+          "CODE2": 0.0867,
+          "CODE3": 2.201,
+          "CODE5": 2.2246,
+          "CODE6": 0.0878,
+          "block_nets": -0.003,
+          "ground": 1.1928
+        },
+        "resistors": 186,
+        "total_wire_resistance_ohm": 10150.05,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 3.585
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 877.28
+        },
+        "network_capacitance_fF": 11.58,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE5": {
+        "placement_pieces_fF": {
+          "CODE5__SAR": 2.142,
+          "CODE5__XREF": 0.703
+        },
+        "routed_total_fF": 8.716,
+        "added_fF": 5.87,
+        "added_by_partner_fF": {
+          "CODE3": 0.0872,
+          "CODE4": 2.2246,
+          "CODE6": 2.2485,
+          "CODE7": 0.0883,
+          "block_nets": 0.0032,
+          "ground": 1.2182
+        },
+        "resistors": 140,
+        "total_wire_resistance_ohm": 8217.58,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 3.492
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 869.4
+        },
+        "network_capacitance_fF": 10.716,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE6": {
+        "placement_pieces_fF": {
+          "CODE6__SAR": 2.168,
+          "CODE6__XREF": 2.593
+        },
+        "routed_total_fF": 10.698,
+        "added_fF": 5.937,
+        "added_by_partner_fF": {
+          "CODE4": 0.0878,
+          "CODE5": 2.2485,
+          "CODE7": 2.2732,
+          "PRESET": 0.0886,
+          "ground": 1.2391
+        },
+        "resistors": 147,
+        "total_wire_resistance_ohm": 8270.83,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 4.302
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 935.78
+        },
+        "network_capacitance_fF": 12.698,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "CODE7": {
+        "placement_pieces_fF": {
+          "CODE7__SAR": 1.288,
+          "CODE7__XREF": 2.172
+        },
+        "routed_total_fF": 9.444,
+        "added_fF": 5.984,
+        "added_by_partner_fF": {
+          "CODE5": 0.0883,
+          "CODE6": 2.2732,
+          "PRESET": 2.342,
+          "SEQ_SAMPLE": -0.0019,
+          "block_nets": 0.0224,
+          "ground": 1.26
+        },
+        "resistors": 107,
+        "total_wire_resistance_ohm": 6336.35,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 2
+        },
+        "elmore_delay_ps": {
+          "reference": 3.623
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 876.74
+        },
+        "network_capacitance_fF": 11.444,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "COMP_N": {
+        "placement_pieces_fF": {
+          "COMP_N__SAR": 0.623,
+          "COMP_N__XCOMP": 1.174
+        },
+        "routed_total_fF": 6.937,
+        "added_fF": 5.14,
+        "added_by_partner_fF": {
+          "CMP_CLK": 0.1513,
+          "COMP_P": 0.0664,
+          "SEQ_SAMPLE": 0.1318,
+          "TOPP": 0.0056,
+          "VSS_SHIELD": 3.8195,
+          "block_nets": 0.0029,
+          "ground": 0.9618
+        },
+        "resistors": 96,
+        "total_wire_resistance_ohm": 4256.55,
+        "driver_block": "comparator",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "sar": 2
+        },
+        "elmore_delay_ps": {
+          "sar": 2.7
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "sar": 782.47
+        },
+        "network_capacitance_fF": 8.937,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "COMP_P": {
+        "placement_pieces_fF": {
+          "COMP_P__SAR": 0.356,
+          "COMP_P__XCOMP": 1.18
+        },
+        "routed_total_fF": 6.585,
+        "added_fF": 5.048,
+        "added_by_partner_fF": {
+          "CMP_CLK": 0.162,
+          "COMP_N": 0.0664,
+          "SEQ_SAMPLE": 0.0154,
+          "TOPN": -0.0008,
+          "TOPP": 0.0048,
+          "VSS_SHIELD": 2.1201,
+          "block_nets": 0.0026,
+          "ground": 2.6778
+        },
+        "resistors": 94,
+        "total_wire_resistance_ohm": 4242.81,
+        "driver_block": "comparator",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "sar": 2
+        },
+        "elmore_delay_ps": {
+          "sar": 2.521
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "sar": 770.38
+        },
+        "network_capacitance_fF": 8.585,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "PRESET": {
+        "placement_pieces_fF": {
+          "PRESET__SAR": 0.933,
+          "PRESET__XREF": 2.316
+        },
+        "routed_total_fF": 8.0,
+        "added_fF": 4.751,
+        "added_by_partner_fF": {
+          "CODE6": 0.0886,
+          "CODE7": 2.342,
+          "SEQ_SAMPLE": 0.0143,
+          "VSS_SHIELD": 0.0442,
+          "block_nets": 0.1533,
+          "ground": 2.1085
+        },
+        "resistors": 86,
+        "total_wire_resistance_ohm": 4816.16,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "reference": 4
+        },
+        "elmore_delay_ps": {
+          "reference": 4.216
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "reference": 600.38
+        },
+        "network_capacitance_fF": 12.0,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "SEQ_SAMPLE": {
+        "placement_pieces_fF": {
+          "SEQ_SAMPLE__SAR": 16.801,
+          "SEQ_SAMPLE__XBOOTN": 1.675,
+          "SEQ_SAMPLE__XBOOTP": 1.642
+        },
+        "routed_total_fF": 25.63,
+        "added_fF": 5.512,
+        "added_by_partner_fF": {
+          "CMP_CLK": 0.0157,
+          "CODE7": -0.0019,
+          "COMP_N": 0.1318,
+          "COMP_P": 0.0154,
+          "PRESET": 0.0143,
+          "TOPN": 0.0103,
+          "TOPP": 0.0138,
+          "VSS_SHIELD": 2.374,
+          "block_nets": 0.6913,
+          "ground": 2.2476
+        },
+        "resistors": 932,
+        "total_wire_resistance_ohm": 72331.4,
+        "driver_block": "sar",
+        "driver_terminals": 2,
+        "receiver_gate_terminals": {
+          "bootstrap_n": 4,
+          "bootstrap_p": 4
+        },
+        "elmore_delay_ps": {
+          "bootstrap_n": 4.569,
+          "bootstrap_p": 4.604
+        },
+        "driver_to_receiver_resistance_ohm": {
+          "bootstrap_n": 385.3,
+          "bootstrap_p": 386.33
+        },
+        "network_capacitance_fF": 33.63,
+        "assumed_gate_load_fF_per_receiver_terminal": 1.0
+      },
+      "TOPN": {
+        "placement_pieces_fF": {
+          "TOPN__XBOOTN": 0.684,
+          "TOPN__XCDAC": 254.553,
+          "TOPN__XCOMP": 0.389
+        },
+        "routed_total_fF": 256.972,
+        "added_fF": 1.346,
+        "added_by_partner_fF": {
+          "CMP_CLK": 0.0023,
+          "COMP_P": -0.0008,
+          "SEQ_SAMPLE": 0.0103,
+          "TOPP": -0.0073,
+          "block_nets": 0.1494,
+          "ground": 1.1915
+        },
+        "resistors": 16125,
+        "total_wire_resistance_ohm": 23952.64,
+        "sampler_switch_terminals": 4,
+        "cdac_capacitor_terminals": 256,
+        "switch_to_cdac_plate_resistance_ohm": 86.87,
+        "switch_to_cdac_plate_resistance_max_ohm": 87.07
+      },
+      "TOPP": {
+        "placement_pieces_fF": {
+          "TOPP__XBOOTP": 0.684,
+          "TOPP__XCDAC": 253.375,
+          "TOPP__XCOMP": 0.389
+        },
+        "routed_total_fF": 255.818,
+        "added_fF": 1.371,
+        "added_by_partner_fF": {
+          "CMP_CLK": 0.0077,
+          "COMP_N": 0.0056,
+          "COMP_P": 0.0048,
+          "SEQ_SAMPLE": 0.0138,
+          "TOPN": -0.0073,
+          "VSS_SHIELD": 0.0162,
+          "block_nets": 0.1507,
+          "ground": 1.1793
+        },
+        "resistors": 16121,
+        "total_wire_resistance_ohm": 23952.69,
+        "sampler_switch_terminals": 4,
+        "cdac_capacitor_terminals": 256,
+        "switch_to_cdac_plate_resistance_ohm": 86.87,
+        "switch_to_cdac_plate_resistance_max_ohm": 87.07
+      }
+    },
+    "shield": {
+      "total_fF": 15.502,
+      "by_partner_fF": {
+        "0": 3.3423,
+        "4": 0.0011,
+        "CMP_CLK": 3.785,
+        "COMP_N": 3.8195,
+        "COMP_P": 2.1201,
+        "PRESET": 0.0442,
+        "SEQ_SAMPLE": 2.374,
+        "TOPP": 0.0162
+      },
+      "device_terminals": 0
+    }
+  },
+  "budgets": [
+    {
+      "item": "TOPN added capacitance",
+      "limit": 9.8,
+      "measured": 1.346,
+      "unit": "fF",
+      "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+      "pass": true
+    },
+    {
+      "item": "TOPN sampler route resistance",
+      "limit": 800.0,
+      "measured": 87.07,
+      "unit": "ohm",
+      "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+      "pass": true
+    },
+    {
+      "item": "TOPP added capacitance",
+      "limit": 9.8,
+      "measured": 1.371,
+      "unit": "fF",
+      "scope": "routed total minus the CDAC, comparator-input and Bootstrap-output pieces of the placement view; all partners counted, signal coupling included",
+      "pass": true
+    },
+    {
+      "item": "TOPP sampler route resistance",
+      "limit": 800.0,
+      "measured": 87.07,
+      "unit": "ohm",
+      "scope": "Bootstrap switch terminals to the shorted CDAC capacitor terminals; includes both blocks' own wiring",
+      "pass": true
+    },
+    {
+      "item": "TOP side imbalance of added capacitance",
+      "limit": 1.0,
+      "measured": 0.025,
+      "unit": "fF",
+      "scope": "|added TOPN - added TOPP|",
+      "pass": true
+    },
+    {
+      "item": "COMP_P route load",
+      "limit": 11.4,
+      "measured": 5.048,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "COMP_P one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 2.521,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "COMP_N route load",
+      "limit": 11.4,
+      "measured": 5.14,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "COMP_N one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 2.7,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CMP_CLK route load",
+      "limit": 11.1,
+      "measured": 5.047,
+      "unit": "fF",
+      "scope": "capacitance the route adds to the net, all partners; the Stage 2 runs kept the ~10 fF model load on top",
+      "pass": true
+    },
+    {
+      "item": "CMP_CLK one-way delay (Elmore bound)",
+      "limit": 20.0,
+      "measured": 2.142,
+      "unit": "ps",
+      "scope": "driver drain/source terminals to receiver gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE0 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.219,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE1 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.629,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE2 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.021,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE3 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.092,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE4 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.585,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE5 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.492,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE6 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.302,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "CODE7 one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 3.623,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    },
+    {
+      "item": "PRESET one-way delay (Elmore bound)",
+      "limit": 100.0,
+      "measured": 4.216,
+      "unit": "ps",
+      "scope": "SAR driver terminals to XREF gate terminals, coupling grounded, 1 fF per receiver gate",
+      "pass": true
+    }
+  ],
+  "budgets_pass": true,
+  "comparator_symmetry": {
+    "unit": "aF",
+    "comparator_core_placement": {
+      "CLK_OUTP": 165.46,
+      "CLK_OUTN": 163.39,
+      "CLK_VINP": 16.1,
+      "CLK_VINN": 16.23
+    },
+    "sar_macro_placement": {
+      "CLK_COMP_P": 26.26,
+      "CLK_COMP_N": 1.83
+    },
+    "routed_total": {
+      "CLK_COMP_P": 353.72,
+      "CLK_COMP_N": 316.53,
+      "CLK_TOPP": 23.8,
+      "CLK_TOPN": 18.53
+    },
+    "clk_output_mirror_difference": {
+      "core": 2.07,
+      "sar_macro": 24.43,
+      "routed_total": 37.19
+    },
+    "clk_input_mirror_difference": {
+      "core": -0.13,
+      "routed_total": 5.27
+    },
+    "comp_p_minus_comp_n_added_fF": -0.092,
+    "seq_sample_arm_elmore_ps": {
+      "bootstrap_n": 4.569,
+      "bootstrap_p": 4.604
+    },
+    "reference": "decisions.cmp_clk_north_drop.verify: v8 core largest mirror difference 7.4 aF"
+  },
+  "deviations_from_floorplan": [
+    "Extra M3 VSS shield on y 66.9 um between the COMP_P and CMP_CLK stubs into the SAR pins, tied to the corridor shields at x 88.4-90.8. Without it the routes added 60 aF more CLK coupling to COMP_P than to COMP_N (trial adc-core-route-c2-pex); with it 10.5 aF (adc-core-route-c3-pex).",
+    "The 73.5 um channel shield starts at x 48.215 (east edge of top_fill_exclusion_inputs) instead of 47.3: with a 0.1 um width its lower edge entered that TOP fill exclusion by 0.035 um.",
+    "The VSS shields form one floating net (VSS_SHIELD, 15.5 fF, no device terminals); the VSS tie belongs to the supply stage. Parasitics count shield coupling as load.",
+    "Wires are 0.1 um wide; layer changes use two cuts per level (0.13 um pitch). The CMP_CLK drop is 0.05 um wide over the core and lands with one VIA3 on the existing M3_M2 via (decisions.cmp_clk_north_drop)."
+  ],
+  "limitations": [
+    "Typical-corner flat xRC only; no CWORST/CBEST extraction of the routed core.",
+    "Delays are Elmore bounds between device terminals with coupling grounded (no Miller factor) and 1 fF per receiver gate; no transient was run (no ADC simulation in this stage).",
+    "Resistances and delays include the blocks' own pin-side wiring and gate resistance, so they bound the route-only values from above.",
+    "No fill, no fill-exclusion layers drawn; density DRC stays deferred to top-level fill.",
+    "Out of scope and not drawn: D0-D7, SAMPLE, VINN/VINP, ADC.* boundary pins, VREF and supply feeds, the SAR guard ring and the decoupling."
+  ],
+  "open_items": [
+    "decisions.cmp_clk_north_drop.verify: CLK-to-output mirror difference is 37.2 aF in total (2.1 aF core, 24.4 aF inside the SAR macro from its frozen pin order, about 10.5 aF from the routes) against the 7.4 aF v8 core level; CLK-to-input difference 5.3 aF from the declared unmirrored TOPP crossing. The comparator TT decision screen with the extracted environment is still to run.",
+    "Tie VSS_SHIELD to VSS when the supply feeds are routed.",
+    "Equalize COMP_P/COMP_N on extracted capacitance: added load differs by 0.09 fF (5.05 vs 5.14 fF).",
+    "The four planned output_channel VSS shields cross the TOPP drop (x 59.22) at right angles but are not listed in floorplan crossings; the fill policy admits only TOP routes, declared crossings and the CMP_CLK drop in the TOP exclusions. Their coupling to TOPP is 0.016 fF of fixed load. Declare them or move them.",
+    "Fill policy step 2: merge this routed core with the pair's filled stream and run density-only DRC."
+  ],
+  "inputs_sha256": {
+    "constraints": "1db229764abc54d0fb22bd8d8afe7d18f77ed3023b1256d2a208ba30577022be",
+    "floorplan": "d9c4a243e598b632d8b59055485c61d775f5a76d0de46b404bc9c394cca452e9"
+  },
+  "floorplan_status": "coarse_proposal_not_applied_to_OA"
+}

@@ -12,7 +12,7 @@ Use this policy for the CDAC, comparator, Bootstrap, reference switch drive, SAR
 
 Classify shapes by purpose and the native rules. Use the original definitions for required dummies and boundaries inside native standard cells and PDK PCells.
 
-Maintain one functional core. For filled evaluation, use a fixed wrapper that references that core and separate fill. Reuse the CDAC's XCORE, FILL_ODPO, and FILL_METAL structure and the comparator's existing hierarchy. For routine review, open the core or hide its fill instances so that actual devices on OD and PO remain visible.
+Maintain one functional core. For filled evaluation, use a fixed wrapper that references that core and separate fill. Reuse the CDAC's XCORE, FILL_ODPO, and FILL_METAL structure. For routine review, open the core or hide its fill instances so that actual devices on OD and PO remain visible.
 
 ## Module Delivery
 
@@ -46,6 +46,61 @@ Plan top-level fill after module adjacency, main routing, power, and isolation a
 Final delivery includes full top-level density and geometry DRC, LVS, PEX matching the final fill state, and the relevant ADC post-layout simulations. Label prefill, standalone filled, and top-level filled evidence according to its actual scope.
 
 Bind fill provenance to core or top-level input digests, boundaries, constraints, rule and tool identity, and outputs. Reassess fill, extraction, and electrical evidence after changes to the core, its neighbors, or routing. Retain dated results.
+
+### ADC Core Fill Owners
+
+Each region of the ADC core has one owner. Region names are the `blocks` and `reserved_regions` ids in the [floorplan](../design/floorplan.json); coordinates are core µm. Where regions overlap, the first row that names a region wins. Where an owner holds only some layers, the row names the layer range for each owner. The owner places all fill in its region and requalifies it after a change. Other flows leave the region alone. The top level draws DM1EXCL–DM9EXCL and ODBLK/POBLK in one exclusion cell over every region it does not fill (only the listed layers where a row splits them), then runs the foundry fill utility.
+
+| Region | Owner | Fill in the region | Status |
+| --- | --- | --- | --- |
+| `top_fill_exclusion_tee`, `top_fill_exclusion_inputs`, `top_fill_exclusion_n_drop`, `top_fill_exclusion_p_drop` | Top level, exclusion | None on any layer. Only the TOP routes, their declared crossings and the CMP_CLK drop. | Drawn with the Stage 4 routes |
+| `comparator`, `comparator_keepout` | Top level, exclusion | None. The v8 core keeps its N+/P+ guard rings and lies inside `top_fill_exclusion_inputs`. [Comparator](#comparator) | Recommended 2026-11-22; replaces the stale wrapper |
+| Top-level route entries into the XREF/CDAC pair outline | Top level, routes | No fill on the route layers along the CODE0–7/PRESET M3 tracks from the XREF ports (x 76.425) to the pair outline (x 82.23), the VDD/VSS M6 feed from y 10 to the terminals at (45.215, 13.365) and (46.915, 14.565), and the VREFP/VREFN connection to the west ends of the pair M5 rails. | Open: the frozen stream fills these strips ([refill](#density-closure-of-the-core)) |
+| `cdac`, `cdac_array_keepout` | XREF/CDAC pair `sar8_cdac_with_xref/layout_se_d2_r2` | Over the array, (12.275, 39.465)–(79.955, 68.325): the planned fill cell `sar8_cdac_fill_plan` with dummy OD/PO stripes, four M7 dummy stripes, ODBLK/POBLK and DM1EXCL–DM9EXCL. Outside the array, in the switch bank and side strips: the planned cell's 74 dummy MOS bars and, from `se-xref-peripheral-dense`, the 84 OD/PO bar pairs below the array and the utility OD/PO and M1–M9 fill. No top-level routing, grid or fill. | Qualified ([filled stream](../results/single_edge_xref_filled.json)). The OA view holds only the planned cell; the peripheral fill exists only in the GDS evidence. |
+| `reference` and the rest of the pair outline (10, 10)–(82.23, 68.325) | XREF/CDAC pair | The XREF's native row taps and fillers stay in the core. Around them: the utility OD/PO and M1–M9 fill of `se-xref-peripheral-dense`. | Same as `cdac` |
+| `bootstrap_n`, `bootstrap_p` | Top level, one mirrored fill cell | One fill cell in the Bootstrap master's frame, generated against `boot-core-20261121` and placed with each instance's transform (XBOOTP R0, XBOOTN MY). VOUT (TOP) and the boosted nodes then see the same fill on both sides; an absolute-grid utility fill differs between the R0 and MY copies. The core keeps its PCell structures and three contacted rings. | Not built. The OD/PO probe closed OD.DN.3, OD.S.14 and PO.DN.3 on boot-core-20261118 only. [Bootstrap](../results/bootstrap.json) |
+| `sar` | SAR macro `sar8_se_core/layout_r3` for OD/PO and M1–M6; top level for M7–M9 | Macro: its Innovus end caps, 26 taps, DCAP16/8/4 and FILL3/FILL2 fillers, and no density fill. Top level: D0–D7/SAMPLE on M7, the M8/M9 grid and utility fill. | Macro DRC has only the two advisories. [SAR macro](../results/sar_se_core.json) |
+| `output_channel` | Top level, restricted | No metal fill on the channel's signal layer or the layers directly above and below it. The VSS shields carry that layer's density. Floating fill would load COMP_P/COMP_N, whose route load is the binding handshake limit (11.4 fF each, adopted 2026-11-22), and the channel is not mirrored. Utility OD/PO and fill on other layers are allowed. | Layers follow the Stage 4 routes |
+| `digital_corridor` | Top level | Utility fill, except over the comparator group (x 87.6–90.8), which follows the `output_channel` rule. | |
+| `sar_guard_ring` | Top level | The P+ ring is a process-required structure, not fill. Utility fill around it. | |
+| `comparator_decap_west`, `comparator_decap_east` | Top level, mirrored | NMOS decap devices and straps. Any metal fill is drawn once for the west strip and mirrored about x 46.115. | |
+| `analog_decap_slot`, `analog_decap_west`, `analog_decap_east`, `vref_decap_west`, `vref_decap_south`, `xref_decap`, `xref_decap_east`, `pair_decap_southeast`, `sar_supply_and_decap`, `sar_decap_north`, `spare_decap_northeast` | Top level | Decap devices, the two 15 Ω reference resistors with their PCell dummies, straps and grid. Utility fill goes in the remaining space and on unused layers. | |
+| Rest of the core: margins, gaps between regions, VIN trunks and the analog trunk (about 1,911 µm², 14% of the core) | Top level | Utility fill on all layers outside the exclusions above. | |
+| IO ring, pads, the core-to-ring gap and every region of the [IO ring plan](../design/io_ring.json) | Chip level | Not assigned yet. The 9 × 9 ring plan is not in OA; assign its fill owners when it is. | Pending |
+
+### Comparator
+
+Do not rebuild `sar_strongarm_t28/layout`. The top level owns the comparator's fill, and `top_fill_exclusion_inputs` keeps the core and its margins free of fill. The wrapper and its masters `sar8_comp_fill_odpo` and `sar8_comp_fill_metal` stay in the library as dated evidence of the earlier core (`comp-filled-20261116-pex`) and leave the integration flow.
+
+- **Nothing to close in the module.** The 1.63 × 3.52 µm core is smaller than every density window: 20 µm for OD/PO, 30 µm for Mx.DN.7 and 125 µm for M1–M9. Its DRC reports only the two advisories. Its neighbors close the windows that contain it: the mirrored NMOS decap strips (OD/PO), the Bootstrap fill cell and the CDAC array plan.
+- **The wrapper's area is already excluded.** The exclusion extends 1.285 µm past the core on the west and east and 1.64 µm below it. The output channel starts at its north edge. A wrapper fill inside these margins would give the region a second owner; a wrapper that honors the exclusion is empty.
+- **Mirror sensitivity.** v8 holds mirror coupling differences to 0.0074 fF (OUT–TAIL). An unmirrored output-strap crossing of about 0.015 fF (v3) and one extra via cut near the OUTP strap (v8c) each flipped the +0.1 mV decision of the TT screen. Utility fill on an absolute grid is not symmetric about x 46.115. Electrically, a few tenths of a millivolt of systematic offset is small against the 12.05 mV σ offset that the digital code-offset correction removes (issue #12). The cost is qualification: fill near the core would invalidate the ±0.1 mV screen and the mirror limit in `decisions.cmp_clk_north_drop.verify`, and rerunning the v8 PVT, Monte Carlo, noise and kickback checks with fill would gain no density.
+- **Rebuild cost.** A rebuild takes a new `fill_cdac.py --module comparator` run, an OA write into the wrapper (edit lock and checkpoint), filled PEX and the standalone checks again. The result would remain standalone evidence, superseded by the filled top-level extraction.
+
+Verify in the Stage 5 coupled extraction: the comparator's mirror coupling differences stay at the v8 level, and the TT decision screen passes in the extracted environment. If a difference grows, extend the exclusion or mirror the fill around it; do not add fill to the core. For a standalone filled sensitivity check, cut the comparator, its exclusion and the decap strips from the filled top level instead of rebuilding the wrapper.
+
+### Density Closure of the Core
+
+The 122 × 111 µm core covers 86.7% of one 125 µm window, so the M1–M9 minimum-density and gradient rules (Mn.DN.1, M9.DN.3, Mn.DN.3) are decided for the whole core at once, together with at least 2,083 µm² of the core-to-ring gap. In the window that holds the CDAC:
+
+| Area in the window | µm² | Share | M8/M9 |
+| --- | ---: | ---: | --- |
+| CDAC array, planned fill only | 1,953 | 12.5% | None |
+| TOP exclusions, comparator inside | 88 | 0.6% | None |
+| Pair switch bank, XREF and side strips | 2,260 | 14.5% | The pair's utility fill; the M8/M9 share is not recorded |
+| Top-level regions in the core | 9,241 | 59.1% | Grid and utility fill |
+| Outside the core | ≥ 2,083 | 13.3% | Chip level, pending |
+
+The floorplan's 25% (`power_plan.density`) counts the whole CDAC keep-out as empty. The pair's peripheral fill already covers its switch bank, so the area without M8/M9 is between 13.1% and 24.5% of the window. The rest must average 1.15 to 1.32 times the rule minimum.
+
+1. Record the minimum, window and step of Mn.DN.1, M9.DN.3, Mn.DN.3 and Mx.DN.7 from the deck used for module DRC in [constraints](constraints.json) `fill`.
+2. After the Stage 4 routes, merge the routed core with the pair's filled stream at the GDS level (no OA write) and run density-only DRC. Record the per-layer density in the core window and in the 30 µm windows around the TOP tee and comparator.
+3. Refill the pair. Regenerate its peripheral fill with the route entries above blocked, using the same settings as `se-xref-peripheral-dense` under a new evidence ID. Repeat its TOP fixed load, side imbalance, k and DNL/INL. The array plan is unchanged.
+4. Use the grid for density. Place the VDD/VSS M8/M9 straps over the decap regions, the SAR macro and the Bootstrap cells (mirrored about x 46.115), densest next to the CDAC (`vref_decap_west`, `xref_decap`, `xref_decap_east`, `pair_decap_southeast`). Keep them off the array, the TOP exclusions, the comparator and the VIN trunks.
+5. Fill by owner, in order: the pair refill, the Bootstrap mirrored cell, the mirrored comparator decap strips, then the utility over the rest with the exclusion cell. If density falls short, use an unused `spare_decap_northeast` as fill area, then widen the straps. Never put metal over the array. M7–M9 utility fill there raised fixed TOP load from 52.1 to 67.5 fF, gain error from 4.23% to 5.51% and DNL from 0.35 to 0.64 LSB. [CDAC planned fill](../results/cdac.md#planned-fill-view-layout_paired_planned)
+6. Mx.DN.7 near TOP: the 30 µm windows around the comparator hold the exclusions, the restricted channel and the north edge of the array. If one fails, add M7 dummy stripes mirrored about x 46.115 in `analog_decap_slot` or the comparator decap strips, never inside an exclusion.
+7. Gradient: the array is a 67.7 × 28.9 µm hole in M8/M9. Keep the chip-level fill of the core-to-ring gap near the core's average so adjacent windows pass Mn.DN.3. This waits for the ring's fill owners.
+8. Verify the filled assembly (Stage 5): full density and geometry DRC, LVS, and coupled PEX of the final fill. The pair's TOP fixed load ≤ 57 fF per side, top-level TOP wiring within its separate 9.8 fF allowance, and imbalance ≤ 1 fF. Comparator mirror coupling at the v8 level. COMP_P/COMP_N and CMP_CLK loads within the handshake budget. [Budgets](constraints.json)
 
 ## Existing Layouts
 

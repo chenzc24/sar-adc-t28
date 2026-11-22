@@ -1,27 +1,29 @@
 {
  "units": "um",
- "status": "preliminary_proposal_not_applied_to_OA",
- "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order, ADC placement, pad-to-core routes, pad decoupling and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
+ "status": "ring_cell_in_oa_assembly_not_applied",
+ "verification": "Layout/results/io_ring_verification.json",
+ "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
+ "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
   0,
   0,
-  640.0,
-  640.0
+  760.0,
+  760.0
  ],
- "die_note": "IO-cell outline from the generator (7 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 663.32 x 663.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that per the shuttle rules.",
+ "die_note": "IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 783.32 x 783.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that.",
  "ring_opening": [
   [
    110.0,
    110.0
   ],
   [
-   530.0,
-   530.0
+   650.0,
+   650.0
   ]
  ],
  "ring": {
-  "width": 7,
-  "height": 7,
+  "width": 9,
+  "height": 9,
   "placement_order": "counterclockwise",
   "pad_pitch_um": 60.0,
   "pad_cell_um": [
@@ -31,40 +33,42 @@
   "corner_um": 110.0,
   "io_library": "tphn28hpcpgv18",
   "bond_pad": "PAD/PAD60GU, single row",
-  "index_convention": "left_0..6 north to south, bottom_0..6 west to east, right_0..6 south to north, top_0..6 east to west"
+  "index_convention": "left_0..8 north to south, bottom_0..8 west to east, right_0..8 south to north, top_0..8 east to west"
  },
  "generator": {
-  "tool": "t28-ioring/skills/t28-ioring-generator (Steps 1 and 3-6, offline; no Virtuoso)",
-  "output_dir": "t28-ioring/output/generated/20261121_232814 (local generator run, not in this repository)",
-  "results": "enrich_intent G1-G10 PASS, validate_intent OK, confirmed config with 88 components, schematic and layout SKILL generated",
-  "domain_cuts": "PRCUTA_G between right_5 SAMPLE and right_6 AVSS, and on both sides of the south-west corner (left_6 AVSS | bottom_0 VSSIO)",
-  "corners": "PCORNERA_G at NW, NE and SW; PCORNER_G at SE",
-  "global_vss": "DVSS (ring-wide VSS pin of every pad)"
+  "tool": "t28-ioring/skills/t28-ioring-generator at a6b8437 (Steps 1-10)",
+  "oa_cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring (schematic, layout): the ring cell alone, cell-level DRC 0 results, LVS CORRECT against its schematic (Layout/results/io_ring_verification.json)",
+  "output_dir": "t28-ioring/output/generated/20261122_131553 (local generator run, not in this repository)",
+  "results": "enrich_intent G1-G12 PASS, validate_intent OK, confirmed config with 112 components, schematic and layout SKILL generated",
+  "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS",
+  "corners": "PCORNERA_G at NW and NE, PCORNER_G at SW and SE",
+  "global_vss": "VSS (ring-wide VSS pin of every pad; supplied by the PVSS1DGZ and the PVSS2AC)"
  },
  "domains": {
-  "ana": "Ring supply AVDDR/AVSSR on PVDD3AC/PVSS3AC (domain providers: the TACVDD/TACVSS bus of every analog pad). ADC supply AVDD/AVSS on PVDD1AC/PVSS1AC: one pair per branch (analog trunk, XREF/CDAC pair, SAR) and one AVSS for the guard ring. VINP, VINN and two VREFP and two VREFN pads on PDB3AC. Top, left and right_6.",
-  "dig": "DVDD/DVSS core-side supply (PVDD1DGZ/PVSS1DGZ), VDDIO/VSSIO output-driver supply (PVDD2POC/PVSS2DGZ); D0-D7 out and SAMPLE in on PDDW16SDGZ. Bottom and right_0..5."
+  "ana": "Core-voltage analog domain: AVDD/AVSS on PVDD3AC/PVSS3AC, whose pads are the TACVDD/TACVSS bus and whose core ports (AVDD_CORE/AVSS_CORE) feed the ADC; VINP, VINN and two VREFP and two VREFN pads on PDB3AC; one PVSS2AC for the global VSS bus. Top, left_0..6 and right_8.",
+  "dig": "Separate-ground digital domain: DVDD (PVDD1DGZ x3), VSS (PVSS1DGZ), VDDIO (PVDD2POC + PVDD2DGZ), VSSIO (PVSS2DGZ x4, both sides of each digital corner); D0-D7 out on PRUW08SDGZ (8 mA, slew-limited), SAMPLE in on PDDW16SDGZ (Schmitt input, pull-down). left_7..8, bottom, right_0..7."
  },
  "pads": [
   {
    "position": "left_0",
    "name": "AVSS",
-   "device": "PVSS1AC",
+   "device": "PVSS3AC",
    "domain": "ana",
    "branch": "guard",
    "bond_pad_center_um": [
     55.0,
-    500.0
+    620.0
    ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
    "core_pin": "AVSS",
-   "core_net": "AVSS",
+   "core_net": "AVSS_CORE",
    "core_pin_um": [
     110.0,
-    500.0
+    620.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC guard ring (AVSS)",
-   "reason": "Own bond wire for the substrate ties; shields the reference pads from the input corner."
+   "connects_to": "ADC guard ring (AVSS_CORE)",
+   "reason": "Bonded PVSS3AC beside the NW PCORNERA_G (9.8.2); also feeds the ADC guard ring."
   },
   {
    "position": "left_1",
@@ -74,17 +78,18 @@
    "branch": "reference",
    "bond_pad_center_um": [
     55.0,
-    440.0
+    560.0
    ],
+   "pins": "AIO=VREFP, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VREFP",
    "core_pin_um": [
     110.0,
-    440.0
+    560.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFP@a, west edge",
-   "reason": "First of the interleaved VREFP, VREFN, VREFP, VREFN bonds: neighbouring wires carry opposite currents."
+   "reason": "First of the interleaved VREFP, VREFN, VREFP, VREFN bonds."
   },
   {
    "position": "left_2",
@@ -94,13 +99,14 @@
    "branch": "reference",
    "bond_pad_center_um": [
     55.0,
-    380.0
+    500.0
    ],
+   "pins": "AIO=VREFN, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VREFN",
    "core_pin_um": [
     110.0,
-    380.0
+    500.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFN@a, west edge",
@@ -114,13 +120,14 @@
    "branch": "reference",
    "bond_pad_center_um": [
     55.0,
-    320.0
+    440.0
    ],
+   "pins": "AIO=VREFP, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VREFP",
    "core_pin_um": [
     110.0,
-    320.0
+    440.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFP@b, west edge",
@@ -134,13 +141,14 @@
    "branch": "reference",
    "bond_pad_center_um": [
     55.0,
-    260.0
+    380.0
    ],
+   "pins": "AIO=VREFN, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VREFN",
    "core_pin_um": [
     110.0,
-    260.0
+    380.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFN@b, west edge",
@@ -149,42 +157,83 @@
   {
    "position": "left_5",
    "name": "AVDD",
-   "device": "PVDD1AC",
+   "device": "PVDD3AC",
    "domain": "ana",
    "branch": "pair",
    "bond_pad_center_um": [
     55.0,
-    200.0
+    320.0
    ],
+   "pins": "pad/TACVDD=AVDD, AVDD(core)=AVDD_CORE, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AVDD",
-   "core_net": "AVDD",
+   "core_net": "AVDD_CORE",
    "core_pin_um": [
     110.0,
-    200.0
+    320.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.VDD!@pair, south edge, below the pair's M6 terminals",
-   "reason": "XREF/CDAC branch supply; the largest analog event (1.789 mA peak feed)."
+   "connects_to": "ADC.VDD!@pair (AVDD_CORE), south edge",
+   "reason": "XREF/CDAC branch supply; PVDD3AC 1 of 3 (10.6)."
   },
   {
    "position": "left_6",
    "name": "AVSS",
-   "device": "PVSS1AC",
+   "device": "PVSS3AC",
    "domain": "ana",
    "branch": "pair",
    "bond_pad_center_um": [
     55.0,
-    140.0
+    260.0
    ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
    "core_pin": "AVSS",
-   "core_net": "AVSS",
+   "core_net": "AVSS_CORE",
    "core_pin_um": [
     110.0,
-    140.0
+    260.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.0@pair, south edge, below the pair's M6 terminals",
-   "reason": "XREF/CDAC branch ground, beside the cut to the digital block."
+   "connects_to": "ADC.0@pair (AVSS_CORE), south edge",
+   "reason": "XREF/CDAC branch ground; the 3AC cell beside the west PRCUTA_G (9.8.3)."
+  },
+  {
+   "position": "left_7",
+   "name": "VSS",
+   "device": "PVSS1DGZ",
+   "domain": "dig",
+   "branch": null,
+   "bond_pad_center_um": [
+    55.0,
+    200.0
+   ],
+   "pins": "pad/VSS=VSS, VSS(core)=VSS, VDD=DVDD, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
+   "core_pin": "VSS",
+   "core_net": "VSS",
+   "core_pin_um": [
+    110.0,
+    200.0
+   ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "Core VSS ring (global VSS)",
+   "reason": "Digital core ground = global VSS ESD bus, 3 pitches from the reference pads (checklist 23y.3)."
+  },
+  {
+   "position": "left_8",
+   "name": "VSSIO",
+   "device": "PVSS2DGZ",
+   "domain": "dig",
+   "branch": null,
+   "bond_pad_center_um": [
+    55.0,
+    140.0
+   ],
+   "pins": "pad/VSSPST=VSSIO, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, POC=POC_dig",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (IO ring VSSPST bus only)",
+   "reason": "Bonded PVSS2DGZ beside the SW PCORNER_G (6.2)."
   },
   {
    "position": "bottom_0",
@@ -196,17 +245,18 @@
     140.0,
     55.0
    ],
+   "pins": "pad/VSSPST=VSSIO, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, POC=POC_dig",
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
    "core_pin_source": null,
    "connects_to": "None (IO ring VSSPST bus only)",
-   "reason": "Start of the digital block. A ground, not a switching output, sits at the analog boundary."
+   "reason": "Bonded PVSS2DGZ beside the SW PCORNER_G."
   },
   {
    "position": "bottom_1",
    "name": "D7",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -214,6 +264,7 @@
     200.0,
     55.0
    ],
+   "pins": "PAD=D7, I=D7_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D7_CORE",
    "core_pin_um": [
@@ -227,7 +278,7 @@
   {
    "position": "bottom_2",
    "name": "D6",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -235,6 +286,7 @@
     260.0,
     55.0
    ],
+   "pins": "PAD=D6, I=D6_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D6_CORE",
    "core_pin_um": [
@@ -247,29 +299,26 @@
   },
   {
    "position": "bottom_3",
-   "name": "D5",
-   "device": "PDDW16SDGZ",
+   "name": "VDDIO",
+   "device": "PVDD2DGZ",
    "domain": "dig",
-   "direction": "output",
    "branch": null,
    "bond_pad_center_um": [
     320.0,
     55.0
    ],
-   "core_pin": "I",
-   "core_net": "D5_CORE",
-   "core_pin_um": [
-    311.725,
-    109.875
-   ],
-   "core_pin_source": "generator M4 pin label",
-   "connects_to": "Output register Q5",
-   "reason": "Data output."
+   "pins": "pad/VDDPST=VDDIO, VDD=DVDD, VSS=VSS, VSSPST=VSSIO, POC=POC_dig",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (IO ring VDDPST bus only)",
+   "reason": "Post-driver supply 1 of 2 (checklist 9)."
   },
   {
    "position": "bottom_4",
-   "name": "D4",
-   "device": "PDDW16SDGZ",
+   "name": "D5",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
@@ -277,10 +326,33 @@
     380.0,
     55.0
    ],
+   "pins": "PAD=D5, I=D5_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
+   "core_pin": "I",
+   "core_net": "D5_CORE",
+   "core_pin_um": [
+    371.725,
+    109.875
+   ],
+   "core_pin_source": "generator M4 pin label",
+   "connects_to": "Output register Q5",
+   "reason": "Data output."
+  },
+  {
+   "position": "bottom_5",
+   "name": "D4",
+   "device": "PRUW08SDGZ",
+   "domain": "dig",
+   "direction": "output",
+   "branch": null,
+   "bond_pad_center_um": [
+    440.0,
+    55.0
+   ],
+   "pins": "PAD=D4, I=D4_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D4_CORE",
    "core_pin_um": [
-    371.725,
+    431.725,
     109.875
    ],
    "core_pin_source": "generator M4 pin label",
@@ -288,37 +360,39 @@
    "reason": "Data output."
   },
   {
-   "position": "bottom_5",
+   "position": "bottom_6",
    "name": "VDDIO",
    "device": "PVDD2POC",
    "domain": "dig",
    "branch": null,
    "bond_pad_center_um": [
-    440.0,
+    500.0,
     55.0
    ],
+   "pins": "pad/VDDPST=VDDIO, POC=POC_dig (source), VDD=DVDD, VSS=VSS, VSSPST=VSSIO",
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
    "core_pin_source": null,
-   "connects_to": "None (IO ring VDDPST bus only)",
-   "reason": "Output-driver supply between D4 and D3, four outputs on each side."
+   "connects_to": "None (POC rail by abutment; label POC_dig)",
+   "reason": "Post-driver supply 2 of 2 and the domain's one and only PVDD2POC (3.4)."
   },
   {
-   "position": "bottom_6",
+   "position": "bottom_7",
    "name": "D3",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
    "bond_pad_center_um": [
-    500.0,
+    560.0,
     55.0
    ],
+   "pins": "PAD=D3, I=D3_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D3_CORE",
    "core_pin_um": [
-    491.725,
+    551.725,
     109.875
    ],
    "core_pin_source": "generator M4 pin label",
@@ -326,87 +400,106 @@
    "reason": "Data output."
   },
   {
+   "position": "bottom_8",
+   "name": "VSSIO",
+   "device": "PVSS2DGZ",
+   "domain": "dig",
+   "branch": null,
+   "bond_pad_center_um": [
+    620.0,
+    55.0
+   ],
+   "pins": "pad/VSSPST=VSSIO, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, POC=POC_dig",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (IO ring VSSPST bus only)",
+   "reason": "Bonded PVSS2DGZ beside the SE PCORNER_G."
+  },
+  {
    "position": "right_0",
+   "name": "VSSIO",
+   "device": "PVSS2DGZ",
+   "domain": "dig",
+   "branch": null,
+   "bond_pad_center_um": [
+    705.0,
+    140.0
+   ],
+   "pins": "pad/VSSPST=VSSIO, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, POC=POC_dig",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (IO ring VSSPST bus only)",
+   "reason": "Bonded PVSS2DGZ beside the SE PCORNER_G."
+  },
+  {
+   "position": "right_1",
    "name": "D2",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
    "bond_pad_center_um": [
-    585.0,
-    140.0
+    705.0,
+    200.0
    ],
+   "pins": "PAD=D2, I=D2_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D2_CORE",
    "core_pin_um": [
-    530.125,
-    131.725
+    650.125,
+    191.725
    ],
    "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q2",
    "reason": "Data output."
   },
   {
-   "position": "right_1",
+   "position": "right_2",
    "name": "D1",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
    "bond_pad_center_um": [
-    585.0,
-    200.0
+    705.0,
+    260.0
    ],
+   "pins": "PAD=D1, I=D1_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D1_CORE",
    "core_pin_um": [
-    530.125,
-    191.725
+    650.125,
+    251.725
    ],
    "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q1",
    "reason": "Data output."
   },
   {
-   "position": "right_2",
+   "position": "right_3",
    "name": "D0",
-   "device": "PDDW16SDGZ",
+   "device": "PRUW08SDGZ",
    "domain": "dig",
    "direction": "output",
    "branch": null,
    "bond_pad_center_um": [
-    585.0,
-    260.0
+    705.0,
+    320.0
    ],
+   "pins": "PAD=D0, I=D0_CORE, OEN=VSS, REN=DVDD, C=open, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "I",
    "core_net": "D0_CORE",
    "core_pin_um": [
-    530.125,
-    251.725
+    650.125,
+    311.725
    ],
    "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q0",
    "reason": "Data output."
-  },
-  {
-   "position": "right_3",
-   "name": "DVSS",
-   "device": "PVSS1DGZ",
-   "domain": "dig",
-   "branch": null,
-   "bond_pad_center_um": [
-    585.0,
-    320.0
-   ],
-   "core_pin": "VSS",
-   "core_net": "DVSS",
-   "core_pin_um": [
-    530.0,
-    320.0
-   ],
-   "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "Output register VSS",
-   "reason": "Digital core ground; also the ring-wide VSS label."
   },
   {
    "position": "right_4",
@@ -415,18 +508,19 @@
    "domain": "dig",
    "branch": null,
    "bond_pad_center_um": [
-    585.0,
+    705.0,
     380.0
    ],
+   "pins": "pad/VDD=DVDD, VDD(core)=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "VDD",
    "core_net": "DVDD",
    "core_pin_um": [
-    530.0,
+    650.0,
     380.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "Output register VDD",
-   "reason": "Digital core supply."
+   "reason": "Digital core supply 1 of 3 (8.6); feeds the register."
   },
   {
    "position": "right_5",
@@ -436,75 +530,115 @@
    "direction": "input",
    "branch": null,
    "bond_pad_center_um": [
-    585.0,
+    705.0,
     440.0
    ],
+   "pins": "PAD=SAMPLE, C=SAMPLE_CORE, OEN=DVDD, I=VSS, REN=VSS, VDD=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": "C",
    "core_net": "SAMPLE_CORE",
    "core_pin_um": [
-    530.125,
+    650.125,
     444.33
    ],
    "core_pin_source": "generator M4 pin label",
    "connects_to": "ADC.SAMPLE and the output register clock",
-   "reason": "Between DVDD and the SAR ground pad, above the register, so its route reaches the ADC pin without crossing the register supplies or outputs."
+   "reason": "Sampling clock input between two DVDD pads, away from the outputs."
   },
   {
    "position": "right_6",
-   "name": "AVSS",
-   "device": "PVSS1AC",
-   "domain": "ana",
-   "branch": "sar",
-   "bond_pad_center_um": [
-    585.0,
-    500.0
-   ],
-   "core_pin": "AVSS",
-   "core_net": "AVSS",
-   "core_pin_um": [
-    530.0,
-    500.0
-   ],
-   "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.0@sar, east edge above SAMPLE (sar_decap_north)",
-   "reason": "SAR branch ground. NE corner, nearest the SAR macro; its own bond wire keeps SAR current off the analog and pair returns."
-  },
-  {
-   "position": "top_0",
-   "name": "AVDD",
-   "device": "PVDD1AC",
-   "domain": "ana",
-   "branch": "sar",
-   "bond_pad_center_um": [
-    500.0,
-    585.0
-   ],
-   "core_pin": "AVDD",
-   "core_net": "AVDD",
-   "core_pin_um": [
-    500.0,
-    530.0
-   ],
-   "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.VDD!@sar, east edge above SAMPLE (sar_decap_north)",
-   "reason": "SAR branch supply, paired with right_6 across the NE corner."
-  },
-  {
-   "position": "top_1",
-   "name": "AVDDR",
-   "device": "PVDD3AC",
-   "domain": "ana",
+   "name": "DVDD",
+   "device": "PVDD1DGZ",
+   "domain": "dig",
    "branch": null,
    "bond_pad_center_um": [
-    440.0,
-    585.0
+    705.0,
+    500.0
    ],
+   "pins": "pad/VDD=DVDD, VDD(core)=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
    "core_pin_source": null,
-   "connects_to": "None (analog ring TACVDD bus only)",
-   "reason": "Analog ring supply on its own fixed 0.99 V board rail (supply_plan.analog_ring). East neighbour of VINP; no route enters the core from it."
+   "connects_to": "None (IO ring VDD bus; ESD count)",
+   "reason": "Digital core supply 2 of 3."
+  },
+  {
+   "position": "right_7",
+   "name": "DVDD",
+   "device": "PVDD1DGZ",
+   "domain": "dig",
+   "branch": null,
+   "bond_pad_center_um": [
+    705.0,
+    560.0
+   ],
+   "pins": "pad/VDD=DVDD, VDD(core)=DVDD, VSS=VSS, VDDPST=VDDIO, VSSPST=VSSIO, POC=POC_dig",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (IO ring VDD bus; ESD count)",
+   "reason": "Digital core supply 3 of 3; digital side of the east PRCUTA_G."
+  },
+  {
+   "position": "right_8",
+   "name": "AVSS",
+   "device": "PVSS3AC",
+   "domain": "ana",
+   "branch": "sar",
+   "bond_pad_center_um": [
+    705.0,
+    620.0
+   ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
+   "core_pin": "AVSS",
+   "core_net": "AVSS_CORE",
+   "core_pin_um": [
+    650.0,
+    620.0
+   ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "ADC.0@sar (AVSS_CORE), east edge",
+   "reason": "SAR branch ground; beside the NE PCORNERA_G and the east PRCUTA_G."
+  },
+  {
+   "position": "top_0",
+   "name": "AVSS",
+   "device": "PVSS3AC",
+   "domain": "ana",
+   "branch": null,
+   "bond_pad_center_um": [
+    620.0,
+    705.0
+   ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (TACVSS bus; NE corner ESD ground)",
+   "reason": "Bonded PVSS3AC beside the NE PCORNERA_G."
+  },
+  {
+   "position": "top_1",
+   "name": "AVDD",
+   "device": "PVDD3AC",
+   "domain": "ana",
+   "branch": "sar",
+   "bond_pad_center_um": [
+    560.0,
+    705.0
+   ],
+   "pins": "pad/TACVDD=AVDD, AVDD(core)=AVDD_CORE, TACVSS=AVSS, VSS=VSS",
+   "core_pin": "AVDD",
+   "core_net": "AVDD_CORE",
+   "core_pin_um": [
+    560.0,
+    650.0
+   ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "ADC.VDD!@sar (AVDD_CORE), east edge",
+   "reason": "SAR branch supply; PVDD3AC 2 of 3."
   },
   {
    "position": "top_2",
@@ -513,58 +647,61 @@
    "domain": "ana",
    "branch": "input",
    "bond_pad_center_um": [
-    380.0,
-    585.0
+    500.0,
+    705.0
    ],
+   "pins": "AIO=VINP, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VINP",
    "core_pin_um": [
-    380.0,
-    530.0
+    500.0,
+    650.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VINP (north edge, XBOOTP VIN trunk)",
-   "reason": "Mirror of VINN about the ADC axis (die x 290); neighbours AVSS and AVDDR."
+   "reason": "Mirror of VINN about the ADC axis; neighbours AVDD and AVSS."
   },
   {
    "position": "top_3",
    "name": "AVSS",
-   "device": "PVSS1AC",
+   "device": "PVSS3AC",
    "domain": "ana",
    "branch": "analog",
    "bond_pad_center_um": [
-    320.0,
-    585.0
+    440.0,
+    705.0
    ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
    "core_pin": "AVSS",
-   "core_net": "AVSS",
+   "core_net": "AVSS_CORE",
    "core_pin_um": [
-    320.0,
-    530.0
+    440.0,
+    650.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.0@north, analog trunk (analog_decap_slot)",
+   "connects_to": "ADC.0@north (AVSS_CORE), analog trunk",
    "reason": "Analog trunk ground: comparator, Bootstrap and their decoupling."
   },
   {
    "position": "top_4",
    "name": "AVDD",
-   "device": "PVDD1AC",
+   "device": "PVDD3AC",
    "domain": "ana",
    "branch": "analog",
    "bond_pad_center_um": [
-    260.0,
-    585.0
+    380.0,
+    705.0
    ],
+   "pins": "pad/TACVDD=AVDD, AVDD(core)=AVDD_CORE, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AVDD",
-   "core_net": "AVDD",
+   "core_net": "AVDD_CORE",
    "core_pin_um": [
-    260.0,
-    530.0
+    380.0,
+    650.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
-   "connects_to": "ADC.VDD!@north, analog trunk (analog_decap_slot)",
-   "reason": "Analog trunk supply, entering between the two VIN trunks as the floorplan plans."
+   "connects_to": "ADC.VDD!@north (AVDD_CORE), analog trunk",
+   "reason": "Analog trunk supply; PVDD3AC 3 of 3."
   },
   {
    "position": "top_5",
@@ -573,45 +710,98 @@
    "domain": "ana",
    "branch": "input",
    "bond_pad_center_um": [
-    200.0,
-    585.0
+    320.0,
+    705.0
    ],
+   "pins": "AIO=VINN, TACVDD=AVDD, TACVSS=AVSS, VSS=VSS",
    "core_pin": "AIO",
    "core_net": "VINN",
    "core_pin_um": [
-    200.0,
-    530.0
+    320.0,
+    650.0
    ],
    "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VINN (north edge, XBOOTN VIN trunk)",
-   "reason": "Mirror of VINP about the ADC axis; neighbours AVSSR and AVDD."
+   "reason": "Mirror of VINP about the ADC axis; neighbours AVDD and AVSS."
   },
   {
    "position": "top_6",
-   "name": "AVSSR",
+   "name": "AVSS",
    "device": "PVSS3AC",
    "domain": "ana",
-   "branch": null,
+   "branch": "shield",
    "bond_pad_center_um": [
-    140.0,
-    585.0
+    260.0,
+    705.0
    ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
    "core_pin_source": null,
-   "connects_to": "None (analog ring TACVSS bus only)",
-   "reason": "Analog ring ground. West neighbour of VINN."
+   "connects_to": "None (TACVSS bus; VINN ground neighbour)",
+   "reason": "Gives VINN a ground neighbour, as top_3 does VINP."
+  },
+  {
+   "position": "top_7",
+   "name": "VSS",
+   "device": "PVSS2AC",
+   "domain": "ana",
+   "branch": null,
+   "bond_pad_center_um": [
+    200.0,
+    705.0
+   ],
+   "pins": "pad/VSS=VSS, VSS(core)=VSS, TACVDD=AVDD, TACVSS=AVSS",
+   "core_pin": "VSS",
+   "core_net": "VSS",
+   "core_pin_um": [
+    200.0,
+    650.0
+   ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "Core VSS ring (global VSS)",
+   "reason": "Bonded PVSS2AC: global VSS ESD-bus supply in the core-voltage analog domain (9.7, 10.2)."
+  },
+  {
+   "position": "top_8",
+   "name": "AVSS",
+   "device": "PVSS3AC",
+   "domain": "ana",
+   "branch": "nw_corner",
+   "bond_pad_center_um": [
+    140.0,
+    705.0
+   ],
+   "pins": "pad/TACVSS=AVSS, AVSS(core)=AVSS_CORE, TACVDD=AVDD, VSS=VSS",
+   "core_pin": null,
+   "core_net": null,
+   "core_pin_um": null,
+   "core_pin_source": null,
+   "connects_to": "None (TACVSS bus)",
+   "reason": "Bonded PVSS3AC beside the NW PCORNERA_G."
   }
  ],
+ "sso": {
+  "rule": "App note 7.3 and checklist 19-20: in each digital domain, bonded VSSPST cells (PVSS2DGZ/PVSS3DGZ) >= the sum of the driving factors (DF) of all bidirectional cells, each counted as an output, and bonded VDDPST cells (PVDD2DGZ/PVDD2POC) >= that sum / 1.1. Layout check enforces it.",
+  "source": "tphn28hpcpgv18 databook 170a, corner FFG0P99V1P98VM40C (the worst-SSN corner), Tables 5.3 (no slew control) and 5.4 (slew-rate enabled)",
+  "bond_inductance_nH": 2.1,
+  "load_pF": 5,
+  "basis": "2.1 nH is the databook column nearest the 2 nH per bond of the Stage 6 package model; 5 pF, the smallest tabulated load, gives the largest DF.",
+  "driving_factor": {
+   "PDDW16SDGZ": 0.427,
+   "PRUW08SDGZ": 0.14
+  },
+  "sensitivity": "With 5.2 nH bonds the DFs are 0.751 and 0.339: the 2 VDDIO pads then hold only for loads of about 30 pF or more (DF 0.412 and 0.135). Recheck against the real package before bonding."
+ },
  "chip_netlist": {
   "XADC (floorplan.json core)": {
    "VINP": "VINP",
    "VINN": "VINN",
    "VREFP": "VREFP (two pins)",
    "VREFN": "VREFN (two pins)",
-   "VDD!": "AVDD (three pins: north, pair, sar)",
-   "0": "AVSS (three pins: north, pair, sar)",
+   "VDD!": "AVDD_CORE (three pins: north, pair, sar)",
+   "0": "AVSS_CORE (three pins: north, pair, sar)",
    "SAMPLE": "SAMPLE_CORE",
    "D0": "ADC_D0",
    "D1": "ADC_D1",
@@ -627,112 +817,116 @@
    "Q0-Q7": "D0_CORE-D7_CORE",
    "CK": "SAMPLE_CORE (rising edge)",
    "VDD": "DVDD",
-   "VSS": "DVSS"
+   "VSS": "VSS"
   },
-  "XRING (generated IO ring)": "Core side: AVDD, AVSS, VINP, VINN, VREFP, VREFN, SAMPLE_CORE, D0_CORE-D7_CORE, DVDD, DVSS. Bonded pad nets: D0-D7, SAMPLE and the supply and analog names. Ring buses only: AVDDR/AVSSR (analog TACVDD/TACVSS), VDDIO/VSSIO (VDDPST/VSSPST). AVDDR_CORE/AVSSR_CORE (the 3AC pads' AVDD/AVSS pins) stay unconnected.",
-  "note": "ADC_D0-ADC_D7 name the raw SAR outputs, so they never share a name with the bonded D0-D7 pad nets. The three AVDD and four AVSS pads are one net each; their branches join only inside the ADC at VDD!/0, and the guard ring joins AVSS through the substrate ties."
+  "XCLAMP_ANALOG/PAIR/SAR (PCLAMPC_H_G)": {
+   "VDDESD": "AVDD_CORE",
+   "VSSESD": "AVSS_CORE"
+  },
+  "XRING (generated IO ring)": "Core side: AVDD_CORE, AVSS_CORE, VINP, VINN, VREFP, VREFN, SAMPLE_CORE, D0_CORE-D7_CORE, DVDD, VSS. Bonded pad nets: AVDD (TACVDD), AVSS (TACVSS), VSS, DVDD, VDDIO, VSSIO, VREFP, VREFN, VINP, VINN, D0-D7, SAMPLE. POC rail label POC_dig.",
+  "note": "AVDD/AVDD_CORE and AVSS/AVSS_CORE are joined inside each 3AC cell through its dummy resistor; LVS keeps the labels apart. ADC_D0-ADC_D7 never share a name with the bonded D0-D7."
  },
  "adc_placement": {
   "origin_um": [
-   243.885,
-   329.0
+   363.885,
+   449.0
   ],
   "orientation": "R0",
   "bbox_um": [
    [
-    243.885,
-    329.0
+    363.885,
+    449.0
    ],
    [
-    365.885,
-    440.0
+    485.885,
+    560.0
    ]
   ],
-  "axis_die_x_um": 290.0,
+  "axis_die_x_um": 410.0,
   "pins_um": {
    "D0": [
-    365.885,
-    382.4
+    485.885,
+    502.4
    ],
    "D1": [
-    365.885,
-    383.6
+    485.885,
+    503.6
    ],
    "D2": [
-    365.885,
-    384.8
+    485.885,
+    504.8
    ],
    "D3": [
-    365.885,
-    386.0
+    485.885,
+    506.0
    ],
    "D4": [
-    365.885,
-    387.2
+    485.885,
+    507.2
    ],
    "D5": [
-    365.885,
-    388.4
+    485.885,
+    508.4
    ],
    "D6": [
-    365.885,
-    389.6
+    485.885,
+    509.6
    ],
    "D7": [
-    365.885,
-    390.8
+    485.885,
+    510.8
    ],
    "SAMPLE": [
-    365.885,
-    394.4
+    485.885,
+    514.4
    ],
    "VINN": [
-    277.225,
-    440.0
+    397.225,
+    560.0
    ],
    "VINP": [
-    302.775,
-    440.0
+    422.775,
+    560.0
    ],
    "VREFP@a": [
-    243.885,
-    396.0
+    363.885,
+    516.0
    ],
    "VREFN@a": [
-    243.885,
-    390.0
+    363.885,
+    510.0
    ],
    "VREFP@b": [
-    243.885,
-    384.0
+    363.885,
+    504.0
    ],
    "VREFN@b": [
-    243.885,
-    378.0
+    363.885,
+    498.0
    ],
    "VDD!@north": [
-    288.0,
-    440.0
+    408.0,
+    560.0
    ],
    "0@north": [
-    292.0,
-    440.0
+    412.0,
+    560.0
    ],
    "VDD!@pair": [
-    287.885,
-    329.0
+    407.885,
+    449.0
    ],
    "0@pair": [
-    291.885,
-    329.0
+    411.885,
+    449.0
    ],
    "VDD!@sar": [
-    365.885,
-    403.0
+    485.885,
+    523.0
    ],
    "0@sar": [
-    365.885,
-    400.0
+    485.885,
+    520.0
    ]
   },
   "boundary_pins_core_um": {
@@ -779,11 +973,11 @@
   },
   "clearance_to_pads_um": {
    "north": 90.0,
-   "west": 133.885,
+   "west": 253.885,
    "east": 164.115,
-   "south": 219.0
+   "south": 339.0
   },
-  "basis": "VIN pads mirrored about the ADC axis with the analog trunk pair between them, as floorplan.json external_edges.north plans. The 90 um north channel holds the VIN routes low and the analog pad decoupling above them, between the VIN routes."
+  "basis": "VIN pads mirrored about the ADC axis with the analog trunk pair between them; the 90 um north channel holds the VIN routes low and the analog pad decoupling above them."
  },
  "routes": {
   "VINN": {
@@ -794,20 +988,20 @@
    "to": "ADC.VINN",
    "points_um": [
     [
-     200.0,
-     530.0
+     320.0,
+     650.0
     ],
     [
-     200.0,
-     450.0
+     320.0,
+     570.0
     ],
     [
-     277.225,
-     450.0
+     397.225,
+     570.0
     ],
     [
-     277.225,
-     440.0
+     397.225,
+     560.0
     ]
    ],
    "manhattan_length_um": 167.225,
@@ -815,7 +1009,7 @@
     "M5",
     "M6"
    ],
-   "layer_intent": "Mirror of VINP; no other top-level M5/M6 over it; no decoupling beside it closer than 6 um"
+   "layer_intent": "Mirror of VINP; no other top-level M5/M6 over it; no decoupling closer than 6 um"
   },
   "VINP": {
    "net": "VINP",
@@ -825,20 +1019,20 @@
    "to": "ADC.VINP",
    "points_um": [
     [
-     380.0,
-     530.0
+     500.0,
+     650.0
     ],
     [
-     380.0,
-     450.0
+     500.0,
+     570.0
     ],
     [
-     302.775,
-     450.0
+     422.775,
+     570.0
     ],
     [
-     302.775,
-     440.0
+     422.775,
+     560.0
     ]
    ],
    "manhattan_length_um": 167.225,
@@ -849,27 +1043,27 @@
    "layer_intent": "Mirror of VINN"
   },
   "AVDD_analog": {
-   "net": "AVDD",
+   "net": "AVDD_CORE",
    "class": "analog_supply",
    "branch": "analog",
    "from": "top_4",
    "to": "ADC.VDD!@north",
    "points_um": [
     [
-     260.0,
-     530.0
+     380.0,
+     650.0
     ],
     [
-     260.0,
-     470.0
+     380.0,
+     590.0
     ],
     [
-     288.0,
-     470.0
+     408.0,
+     590.0
     ],
     [
-     288.0,
-     440.0
+     408.0,
+     560.0
     ]
    ],
    "manhattan_length_um": 118.0,
@@ -877,30 +1071,30 @@
     "M8",
     "M9"
    ],
-   "layer_intent": "Through analog_pad_decap into analog_decap_slot (west half)"
+   "layer_intent": "PVDD3AC core port through analog_pad_decap into analog_decap_slot (west half)"
   },
   "AVSS_analog": {
-   "net": "AVSS",
+   "net": "AVSS_CORE",
    "class": "analog_supply",
    "branch": "analog",
    "from": "top_3",
    "to": "ADC.0@north",
    "points_um": [
     [
-     320.0,
-     530.0
+     440.0,
+     650.0
     ],
     [
-     320.0,
-     470.0
+     440.0,
+     590.0
     ],
     [
-     292.0,
-     470.0
+     412.0,
+     590.0
     ],
     [
-     292.0,
-     440.0
+     412.0,
+     560.0
     ]
    ],
    "manhattan_length_um": 118.0,
@@ -908,10 +1102,10 @@
     "M8",
     "M9"
    ],
-   "layer_intent": "Through analog_pad_decap into analog_decap_slot (east half); mirror of the AVDD trunk"
+   "layer_intent": "PVSS3AC core port through analog_pad_decap; mirror of the AVDD trunk"
   },
   "AVSS_guard": {
-   "net": "AVSS",
+   "net": "AVSS_CORE",
    "class": "analog_supply",
    "branch": "guard",
    "from": "left_0",
@@ -919,27 +1113,27 @@
    "points_um": [
     [
      110.0,
-     500.0
+     620.0
     ],
     [
-     130.0,
-     500.0
+     116.0,
+     620.0
     ],
     [
-     130.0,
-     420.0
+     116.0,
+     563.0
     ],
     [
-     240.885,
-     420.0
+     360.885,
+     563.0
     ]
    ],
-   "manhattan_length_um": 210.885,
+   "manhattan_length_um": 307.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "Via stack down to the ring strap on its west side"
+   "layer_intent": "Lands on the guard ring's north-west corner; via stack down to its strap"
   },
   "VREFP_a": {
    "net": "VREFP",
@@ -950,27 +1144,27 @@
    "points_um": [
     [
      110.0,
-     440.0
+     560.0
     ],
     [
-     116.0,
-     440.0
+     329.885,
+     560.0
     ],
     [
-     116.0,
-     396.0
+     329.885,
+     516.0
     ],
     [
-     243.885,
-     396.0
+     363.885,
+     516.0
     ]
    ],
-   "manhattan_length_um": 177.885,
+   "manhattan_length_um": 297.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate; no decoupling under it"
   },
   "VREFN_a": {
    "net": "VREFN",
@@ -981,27 +1175,27 @@
    "points_um": [
     [
      110.0,
-     380.0
+     500.0
     ],
     [
-     122.0,
-     380.0
+     335.885,
+     500.0
     ],
     [
-     122.0,
-     390.0
+     335.885,
+     510.0
     ],
     [
-     243.885,
-     390.0
+     363.885,
+     510.0
     ]
    ],
-   "manhattan_length_um": 143.885,
+   "manhattan_length_um": 263.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate; no decoupling under it"
   },
   "VREFP_b": {
    "net": "VREFP",
@@ -1012,27 +1206,27 @@
    "points_um": [
     [
      110.0,
-     320.0
+     440.0
     ],
     [
-     128.0,
-     320.0
+     341.885,
+     440.0
     ],
     [
-     128.0,
-     384.0
+     341.885,
+     504.0
     ],
     [
-     243.885,
-     384.0
+     363.885,
+     504.0
     ]
    ],
-   "manhattan_length_um": 197.885,
+   "manhattan_length_um": 317.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate; no decoupling under it"
   },
   "VREFN_b": {
    "net": "VREFN",
@@ -1043,30 +1237,30 @@
    "points_um": [
     [
      110.0,
-     260.0
+     380.0
     ],
     [
-     134.0,
-     260.0
+     347.885,
+     380.0
     ],
     [
-     134.0,
-     378.0
+     347.885,
+     498.0
     ],
     [
-     243.885,
-     378.0
+     363.885,
+     498.0
     ]
    ],
-   "manhattan_length_um": 251.885,
+   "manhattan_length_um": 371.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate; no decoupling under it"
   },
   "AVDD_pair": {
-   "net": "AVDD",
+   "net": "AVDD_CORE",
    "class": "analog_supply",
    "branch": "pair",
    "from": "left_5",
@@ -1074,26 +1268,26 @@
    "points_um": [
     [
      110.0,
-     200.0
+     320.0
     ],
     [
-     287.885,
-     200.0
+     407.885,
+     320.0
     ],
     [
-     287.885,
-     329.0
+     407.885,
+     449.0
     ]
    ],
-   "manhattan_length_um": 306.885,
+   "manhattan_length_um": 426.885,
    "layers": [
     "M8",
     "M9"
    ],
-   "layer_intent": "Wide; enters pair_pad_decap from below"
+   "layer_intent": "Wide; enters pair_pad_decap from the west"
   },
   "AVSS_pair": {
-   "net": "AVSS",
+   "net": "AVSS_CORE",
    "class": "analog_supply",
    "branch": "pair",
    "from": "left_6",
@@ -1101,18 +1295,18 @@
    "points_um": [
     [
      110.0,
-     140.0
+     260.0
     ],
     [
-     291.885,
-     140.0
+     411.885,
+     260.0
     ],
     [
-     291.885,
-     329.0
+     411.885,
+     449.0
     ]
    ],
-   "manhattan_length_um": 370.885,
+   "manhattan_length_um": 490.885,
    "layers": [
     "M8",
     "M9"
@@ -1120,34 +1314,26 @@
    "layer_intent": "Wide; beside AVDD_pair"
   },
   "AVDD_sar": {
-   "net": "AVDD",
+   "net": "AVDD_CORE",
    "class": "analog_supply",
    "branch": "sar",
-   "from": "top_0",
+   "from": "top_1",
    "to": "ADC.VDD!@sar",
    "points_um": [
     [
-     500.0,
-     530.0
+     560.0,
+     650.0
     ],
     [
-     500.0,
-     510.0
+     560.0,
+     523.0
     ],
     [
-     400.0,
-     510.0
-    ],
-    [
-     400.0,
-     403.0
-    ],
-    [
-     365.885,
-     403.0
+     485.885,
+     523.0
     ]
    ],
-   "manhattan_length_um": 261.115,
+   "manhattan_length_um": 201.115,
    "layers": [
     "M8",
     "M9"
@@ -1155,27 +1341,27 @@
    "layer_intent": "Through sar_pad_decap"
   },
   "AVSS_sar": {
-   "net": "AVSS",
+   "net": "AVSS_CORE",
    "class": "analog_supply",
    "branch": "sar",
-   "from": "right_6",
+   "from": "right_8",
    "to": "ADC.0@sar",
    "points_um": [
     [
-     530.0,
-     500.0
+     650.0,
+     620.0
     ],
     [
-     406.0,
-     500.0
+     600.0,
+     620.0
     ],
     [
-     406.0,
-     400.0
+     600.0,
+     520.0
     ],
     [
-     365.885,
-     400.0
+     485.885,
+     520.0
     ]
    ],
    "manhattan_length_um": 264.115,
@@ -1193,28 +1379,27 @@
    "to": "ADC.SAMPLE",
    "points_um": [
     [
-     530.125,
+     650.125,
      444.33
     ],
     [
-     424.0,
+     550.0,
      444.33
     ],
     [
-     424.0,
-     394.4
+     550.0,
+     514.4
     ],
     [
-     365.885,
-     394.4
+     485.885,
+     514.4
     ]
    ],
-   "manhattan_length_um": 214.17,
+   "manhattan_length_um": 234.31,
    "layers": [
-    "M7",
     "M8"
    ],
-   "layer_intent": "From the pad's M4 C pin; crosses the register, whose clock pin taps it"
+   "layer_intent": "From the pad's M4 C pin by via stack; M8 so it crosses the M7 core VSS ring; the register clock taps it"
   },
   "DVDD": {
    "net": "DVDD",
@@ -1224,51 +1409,98 @@
    "to": "output_register",
    "points_um": [
     [
+     650.0,
+     380.0
+    ],
+    [
      530.0,
      380.0
     ],
     [
-     408.0,
-     380.0
+     530.0,
+     472.0
     ]
    ],
-   "manhattan_length_um": 122.0,
+   "manhattan_length_um": 212.0,
    "layers": [
     "M5",
     "M6"
    ],
-   "layer_intent": "Through dvdd_decap to the register's east edge"
+   "layer_intent": "Through dvdd_decap to the register's south edge"
   },
-  "DVSS": {
-   "net": "DVSS",
+  "VSS_register": {
+   "net": "VSS",
    "class": "digital_supply",
    "branch": "dvdd",
-   "from": "right_3",
-   "to": "output_register",
+   "from": "output_register",
+   "to": "core_vss_ring",
    "points_um": [
     [
-     530.0,
-     320.0
+     532.0,
+     480.0
     ],
     [
-     440.0,
-     320.0
+     540.0,
+     480.0
     ],
     [
-     440.0,
-     372.0
+     540.0,
+     420.0
     ],
     [
-     408.0,
-     372.0
+     646.0,
+     420.0
     ]
    ],
    "manhattan_length_um": 174.0,
    "layers": [
-    "M5",
-    "M6"
+    "M7"
    ],
-   "layer_intent": "Through dvdd_decap to the register's east edge"
+   "layer_intent": "Register VSS through dvdd_decap to the core VSS ring"
+  },
+  "VSS_digital": {
+   "net": "VSS",
+   "class": "digital_supply",
+   "branch": null,
+   "from": "left_7",
+   "to": "core_vss_ring",
+   "points_um": [
+    [
+     110.0,
+     200.0
+    ],
+    [
+     114.0,
+     200.0
+    ]
+   ],
+   "manhattan_length_um": 4.0,
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "PVSS1DGZ core VSS pin onto the core VSS ring"
+  },
+  "VSS_analog": {
+   "net": "VSS",
+   "class": "esd_supply",
+   "branch": null,
+   "from": "top_7",
+   "to": "core_vss_ring",
+   "points_um": [
+    [
+     200.0,
+     650.0
+    ],
+    [
+     200.0,
+     646.0
+    ]
+   ],
+   "manhattan_length_um": 4.0,
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "PVSS2AC core VSS pin onto the core VSS ring (app note 10.2)"
   },
   "ADC_D0": {
    "net": "ADC_D0",
@@ -1278,12 +1510,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     382.4
+     485.885,
+     502.4
     ],
     [
-     372.0,
-     382.4
+     492.0,
+     502.4
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1300,12 +1532,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     383.6
+     485.885,
+     503.6
     ],
     [
-     372.0,
-     383.6
+     492.0,
+     503.6
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1322,12 +1554,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     384.8
+     485.885,
+     504.8
     ],
     [
-     372.0,
-     384.8
+     492.0,
+     504.8
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1344,12 +1576,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     386.0
+     485.885,
+     506.0
     ],
     [
-     372.0,
-     386.0
+     492.0,
+     506.0
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1366,12 +1598,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     387.2
+     485.885,
+     507.2
     ],
     [
-     372.0,
-     387.2
+     492.0,
+     507.2
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1388,12 +1620,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     388.4
+     485.885,
+     508.4
     ],
     [
-     372.0,
-     388.4
+     492.0,
+     508.4
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1410,12 +1642,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     389.6
+     485.885,
+     509.6
     ],
     [
-     372.0,
-     389.6
+     492.0,
+     509.6
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1432,12 +1664,12 @@
    "to": "output_register",
    "points_um": [
     [
-     365.885,
-     390.8
+     485.885,
+     510.8
     ],
     [
-     372.0,
-     390.8
+     492.0,
+     510.8
     ]
    ],
    "manhattan_length_um": 6.115,
@@ -1451,22 +1683,22 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "right_2",
+   "to": "right_3",
    "points_um": [
     [
-     405.0,
-     360.0
+     523.0,
+     472.0
     ],
     [
-     405.0,
-     251.725
+     523.0,
+     311.725
     ],
     [
-     530.125,
-     251.725
+     650.125,
+     311.725
     ]
    ],
-   "manhattan_length_um": 233.4,
+   "manhattan_length_um": 287.4,
    "layers": [
     "M5",
     "M6"
@@ -1478,22 +1710,22 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "right_1",
+   "to": "right_2",
    "points_um": [
     [
-     401.0,
-     360.0
+     519.0,
+     472.0
     ],
     [
-     401.0,
-     191.725
+     519.0,
+     251.725
     ],
     [
-     530.125,
-     191.725
+     650.125,
+     251.725
     ]
    ],
-   "manhattan_length_um": 297.4,
+   "manhattan_length_um": 351.4,
    "layers": [
     "M5",
     "M6"
@@ -1505,22 +1737,22 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "right_0",
+   "to": "right_1",
    "points_um": [
     [
-     397.0,
-     360.0
+     515.0,
+     472.0
     ],
     [
-     397.0,
-     131.725
+     515.0,
+     191.725
     ],
     [
-     530.125,
-     131.725
+     650.125,
+     191.725
     ]
    ],
-   "manhattan_length_um": 361.4,
+   "manhattan_length_um": 415.4,
    "layers": [
     "M5",
     "M6"
@@ -1532,26 +1764,26 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "bottom_6",
+   "to": "bottom_7",
    "points_um": [
     [
-     393.0,
-     360.0
+     511.0,
+     472.0
     ],
     [
-     393.0,
-     120.0
+     511.0,
+     132.0
     ],
     [
-     491.725,
-     120.0
+     551.725,
+     132.0
     ],
     [
-     491.725,
+     551.725,
      109.875
     ]
    ],
-   "manhattan_length_um": 348.85,
+   "manhattan_length_um": 402.85,
    "layers": [
     "M5",
     "M6"
@@ -1563,26 +1795,26 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "bottom_4",
+   "to": "bottom_5",
    "points_um": [
     [
-     389.0,
-     360.0
+     507.0,
+     472.0
     ],
     [
-     389.0,
+     507.0,
      116.0
     ],
     [
-     371.725,
+     431.725,
      116.0
     ],
     [
-     371.725,
+     431.725,
      109.875
     ]
    ],
-   "manhattan_length_um": 267.4,
+   "manhattan_length_um": 437.4,
    "layers": [
     "M5",
     "M6"
@@ -1594,26 +1826,26 @@
    "class": "digital_signal",
    "branch": "digital",
    "from": "output_register",
-   "to": "bottom_3",
+   "to": "bottom_4",
    "points_um": [
     [
-     385.0,
-     360.0
+     503.0,
+     472.0
     ],
     [
-     385.0,
+     503.0,
      120.0
     ],
     [
-     311.725,
+     371.725,
      120.0
     ],
     [
-     311.725,
+     371.725,
      109.875
     ]
    ],
-   "manhattan_length_um": 323.4,
+   "manhattan_length_um": 493.4,
    "layers": [
     "M5",
     "M6"
@@ -1628,11 +1860,11 @@
    "to": "bottom_2",
    "points_um": [
     [
-     381.0,
-     360.0
+     499.0,
+     472.0
     ],
     [
-     381.0,
+     499.0,
      124.0
     ],
     [
@@ -1644,7 +1876,7 @@
      109.875
     ]
    ],
-   "manhattan_length_um": 379.4,
+   "manhattan_length_um": 609.4,
    "layers": [
     "M5",
     "M6"
@@ -1659,11 +1891,11 @@
    "to": "bottom_1",
    "points_um": [
     [
-     377.0,
-     360.0
+     495.0,
+     472.0
     ],
     [
-     377.0,
+     495.0,
      128.0
     ],
     [
@@ -1675,7 +1907,7 @@
      109.875
     ]
    ],
-   "manhattan_length_um": 435.4,
+   "manhattan_length_um": 665.4,
    "layers": [
     "M5",
     "M6"
@@ -1684,7 +1916,7 @@
   }
  },
  "route_rules": {
-  "axis_die_x_um": 290.0,
+  "axis_die_x_um": 410.0,
   "mirrored_routes": [
    [
     "VINN",
@@ -1695,7 +1927,7 @@
     "AVSS_analog"
    ]
   ],
-  "check": "python -m Layout check (Layout/planning.py io_ring) validates this plan: each route starts and ends on its from/to (a pad's core pin, an ADC pin or a region edge, the guard ring's centreline) and carries that pad's core net; distinct routes never touch, whatever their net; all stay in the ring opening and off the ADC core; a region with admits takes only analog or only digital routes; a route enters only its own branch's decoupling, and every supply route of a branch passes through it; routes cross the guard ring no lower than its cross_min_layer; mirrored_routes are mirror images about axis_die_x_um; every ADC pin and every pad with a core net has exactly one route; no route uses a bonded digital pad net; and the ADC pins, core outline and die_bbox agree with floorplan.json."
+  "check": "python -m Layout check (Layout/planning.py io_ring) validates this plan: the pad ring rules of the application note (one block per domain, corner and cut neighbours, cell counts, one POC, one global VSS label, VSSPST and VDDPST cells for simultaneous switching); route ends on their pad core pin, ADC pin or region edge, carrying that pad's core net; distinct routes never touch; all stay in the ring opening and off the ADC core; analog and digital regions; own-branch decoupling that every supply route passes through; guard-ring crossing layer; no route on the core VSS ring's layer crosses it; mirrored routes; one route per ADC pin and core-connected pad; no route on a bonded digital pad net; and the ADC pins, core outline and die_bbox agree with floorplan.json."
  },
  "reserved_regions": [
   {
@@ -1703,15 +1935,15 @@
    "kind": "block",
    "bbox": [
     [
-     243.885,
-     329.0
+     363.885,
+     449.0
     ],
     [
-     365.885,
-     440.0
+     485.885,
+     560.0
     ]
    ],
-   "use": "ADC core from floorplan.json (122 x 111 um), R0, its mirror axis on die x 290 midway between VINN and VINP.",
+   "use": "ADC core from floorplan.json (122 x 111 um), R0, its mirror axis on die x 410 midway between VINN and VINP.",
    "area_um2": 13542.0
   },
   {
@@ -1719,27 +1951,54 @@
    "kind": "guard",
    "bbox": [
     [
-     239.885,
-     325.0
+     359.885,
+     445.0
     ],
     [
-     369.885,
-     444.0
+     489.885,
+     564.0
     ]
    ],
    "centerline": [
     [
-     240.885,
-     326.0
+     360.885,
+     446.0
     ],
     [
-     368.885,
-     443.0
+     488.885,
+     563.0
     ]
    ],
    "cross_min_layer": "M3",
-   "use": "2 um P+ AVSS ring with an M1/M2 strap, centred 3 um outside the ADC outline, fed from the left_0 AVSS pad on its west side. Routes cross it on M3 and above, as over sar_guard_ring.",
+   "use": "2 um P+ ring with an M1/M2 strap on AVSS_CORE, centred 3 um outside the ADC outline, fed from the left_0 PVSS3AC at its north-west corner. Routes cross it on M3 and above.",
    "area_um2": 15470.0
+  },
+  {
+   "id": "core_vss_ring",
+   "kind": "ring",
+   "bbox": [
+    [
+     113.0,
+     113.0
+    ],
+    [
+     647.0,
+     647.0
+    ]
+   ],
+   "centerline": [
+    [
+     114.0,
+     114.0
+    ],
+    [
+     646.0,
+     646.0
+    ]
+   ],
+   "ring_layer": "M7",
+   "use": "Global VSS ring on M7 just inside the IO ring: joins the PVSS2AC (top_7) and PVSS1DGZ (left_7) core VSS pins and the register VSS into the core VSS mesh the app note asks for (8.2, 10.2). Pad routes cross it on any layer but M7; width from the ESD current-density table.",
+   "area_um2": 285156.0
   },
   {
    "id": "analog_input_channel",
@@ -1748,15 +2007,15 @@
    "bbox": [
     [
      110.0,
-     444.0
+     564.0
     ],
     [
-     388.0,
-     530.0
+     650.0,
+     650.0
     ]
    ],
-   "use": "VINN/VINP on the low track, the analog trunk pair between them on the high track, analog_pad_decap above. No digital net enters.",
-   "area_um2": 23908.0
+   "use": "VINN/VINP on the low track, the analog trunk pair on the high track, analog_pad_decap and sar_pad_decap. No digital net.",
+   "area_um2": 46440.0
   },
   {
    "id": "analog_pad_decap",
@@ -1765,17 +2024,17 @@
    "admits": "analog",
    "bbox": [
     [
-     206.0,
-     456.0
+     326.0,
+     576.0
     ],
     [
-     374.0,
-     516.0
+     494.0,
+     644.0
     ]
    ],
-   "use": "Analog-branch AVDD-AVSS bulk between the VIN routes, on the trunk next to its pads; about 2 ohm ESR to the trunk.",
-   "area_um2": 10080.0,
-   "planning_capacitance_pF": 100.8
+   "use": "Analog-branch AVDD-AVSS bulk between the VIN routes, on the trunk next to its pads; about 2 ohm ESR.",
+   "area_um2": 11424.0,
+   "planning_capacitance_pF": 114.2
   },
   {
    "id": "reference_channel",
@@ -1784,15 +2043,15 @@
    "bbox": [
     [
      110.0,
-     230.0
+     340.0
     ],
     [
-     239.885,
-     444.0
+     359.885,
+     564.0
     ]
    ],
    "use": "The four reference bonds as one interleaved bundle onto the ADC west edge, and the guard feed. No decoupling, no digital net.",
-   "area_um2": 27795.4
+   "area_um2": 55974.2
   },
   {
    "id": "pair_pad_decap",
@@ -1801,17 +2060,17 @@
    "admits": "analog",
    "bbox": [
     [
-     240.0,
-     216.0
+     370.0,
+     300.0
     ],
     [
-     340.0,
-     316.0
+     450.0,
+     442.0
     ]
    ],
    "use": "XREF/CDAC-branch AVDD-AVSS bulk just below the ADC, on the pair routes; about 2 ohm ESR.",
-   "area_um2": 10000.0,
-   "planning_capacitance_pF": 100.0
+   "area_um2": 11360.0,
+   "planning_capacitance_pF": 113.6
   },
   {
    "id": "sar_pad_decap",
@@ -1820,17 +2079,17 @@
    "admits": "analog",
    "bbox": [
     [
-     392.0,
-     452.0
+     530.0,
+     528.0
     ],
     [
-     526.0,
-     526.0
+     644.0,
+     644.0
     ]
    ],
-   "use": "SAR-branch AVDD-AVSS bulk in the NE corner between its two pads; about 2 ohm ESR. 12 um clear of the VINP route.",
-   "area_um2": 9916.0,
-   "planning_capacitance_pF": 99.2
+   "use": "SAR-branch AVDD-AVSS bulk in the NE corner between its pads; about 2 ohm ESR; 30 um clear of the VINP route.",
+   "area_um2": 13224.0,
+   "planning_capacitance_pF": 132.2
   },
   {
    "id": "sar_feed_channel",
@@ -1838,16 +2097,16 @@
    "admits": "analog",
    "bbox": [
     [
-     365.885,
-     398.0
+     485.885,
+     517.0
     ],
     [
-     412.0,
-     452.0
+     530.0,
+     528.0
     ]
    ],
-   "use": "SAR AVDD/AVSS from sar_pad_decap to the ADC east edge above SAMPLE. No digital net enters.",
-   "area_um2": 2490.2
+   "use": "SAR AVDD/AVSS from sar_pad_decap to the ADC east edge above SAMPLE. No digital net.",
+   "area_um2": 485.3
   },
   {
    "id": "output_register",
@@ -1855,16 +2114,16 @@
    "admits": "digital",
    "bbox": [
     [
-     372.0,
-     360.0
+     492.0,
+     472.0
     ],
     [
-     408.0,
-     397.0
+     532.0,
+     512.0
     ]
    ],
-   "use": "Eight flip-flops on DVDD/DVSS clocked by SAMPLE rising, with buffers for the pad I pins. D inputs 6 um from the ADC east edge.",
-   "area_um2": 1332.0
+   "use": "Eight flip-flops on DVDD/VSS clocked by SAMPLE rising, with buffers for the pad I pins. D inputs 6 um from the ADC east edge.",
+   "area_um2": 1600.0
   },
   {
    "id": "dvdd_decap",
@@ -1873,17 +2132,17 @@
    "admits": "digital",
    "bbox": [
     [
-     422.0,
-     326.0
+     580.0,
+     340.0
     ],
     [
-     472.0,
-     386.0
+     640.0,
+     426.0
     ]
    ],
-   "use": "DVDD-DVSS decoupling for the register and the pad core-side logic; both register supply routes pass through it.",
-   "area_um2": 3000.0,
-   "planning_capacitance_pF": 30.0
+   "use": "DVDD-VSS decoupling for the register and the pad core-side logic; both register supply routes pass through it.",
+   "area_um2": 5160.0,
+   "planning_capacitance_pF": 51.6
   },
   {
    "id": "digital_channel",
@@ -1891,16 +2150,16 @@
    "admits": "digital",
    "bbox": [
     [
-     370.0,
+     490.0,
      136.0
     ],
     [
-     530.0,
-     360.0
+     650.0,
+     472.0
     ]
    ],
-   "use": "Q0-Q7 from the register to the east and south pads; DVSS. No analog net enters.",
-   "area_um2": 35840.0
+   "use": "Q0-Q7 from the register to the east and south pads; DVDD and VSS to the register. No analog net.",
+   "area_um2": 53760.0
   },
   {
    "id": "bottom_channel",
@@ -1912,12 +2171,63 @@
      110.0
     ],
     [
-     530.0,
+     650.0,
      136.0
     ]
    ],
-   "use": "D3-D7 along the bottom pads. No analog net enters.",
-   "area_um2": 9984.0
+   "use": "D3-D7 along the bottom pads. No analog net.",
+   "area_um2": 13104.0
+  },
+  {
+   "id": "pclampc_analog",
+   "kind": "clamp",
+   "branch": "analog",
+   "bbox": [
+    [
+     360.0,
+     622.0
+    ],
+    [
+     460.0,
+     644.0
+    ]
+   ],
+   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1).",
+   "area_um2": 2200.0
+  },
+  {
+   "id": "pclampc_pair",
+   "kind": "clamp",
+   "branch": "pair",
+   "bbox": [
+    [
+     120.0,
+     279.0
+    ],
+    [
+     220.0,
+     301.0
+    ]
+   ],
+   "use": "PCLAMPC_H_G between the left_5/left_6 pair and the core.",
+   "area_um2": 2200.0
+  },
+  {
+   "id": "pclampc_sar",
+   "kind": "clamp",
+   "branch": "sar",
+   "bbox": [
+    [
+     536.0,
+     600.0
+    ],
+    [
+     636.0,
+     622.0
+    ]
+   ],
+   "use": "PCLAMPC_H_G between the SAR pair and the core.",
+   "area_um2": 2200.0
   }
  ],
  "supply_plan": {
@@ -1936,7 +2246,8 @@
      "ADC.0@north"
     ],
     "pad_decap": "analog_pad_decap",
-    "pad_decap_planning_pF": 100.8,
+    "pad_decap_planning_pF": 114.2,
+    "clamp": "pclampc_analog",
     "feed_length_um": {
      "AVDD_analog": 16.0,
      "AVSS_analog": 16.0
@@ -1961,21 +2272,22 @@
      "ADC.0@pair"
     ],
     "pad_decap": "pair_pad_decap",
-    "pad_decap_planning_pF": 100.0,
+    "pad_decap_planning_pF": 113.6,
+    "clamp": "pclampc_pair",
     "feed_length_um": {
-     "AVDD_pair": 13.0,
-     "AVSS_pair": 13.0
+     "AVDD_pair": 7.0,
+     "AVSS_pair": 7.0
     },
     "route_length_um": {
-     "AVDD_pair": 306.885,
-     "AVSS_pair": 370.885
+     "AVDD_pair": 426.885,
+     "AVSS_pair": 490.885
     },
     "serves": "XREF gate drivers and CDAC through xref_decap (10.1 pF in core)"
    },
    "sar": {
     "pads": {
-     "top_0": "AVDD",
-     "right_6": "AVSS"
+     "top_1": "AVDD",
+     "right_8": "AVSS"
     },
     "routes": [
      "AVDD_sar",
@@ -1986,72 +2298,87 @@
      "ADC.0@sar"
     ],
     "pad_decap": "sar_pad_decap",
-    "pad_decap_planning_pF": 99.2,
+    "pad_decap_planning_pF": 132.2,
+    "clamp": "pclampc_sar",
     "feed_length_um": {
-     "AVDD_sar": 83.1,
-     "AVSS_sar": 92.1
+     "AVDD_sar": 79.1,
+     "AVSS_sar": 122.1
     },
     "route_length_um": {
-     "AVDD_sar": 261.115,
+     "AVDD_sar": 201.115,
      "AVSS_sar": 264.115
     },
     "serves": "SAR macro through sar_decap_north and sar_supply_and_decap (8.25 pF in core)"
    }
   },
-  "pad_decoupling": "About 100 pF AVDD-AVSS bulk per branch at 10 fF/um2 with about 2 ohm ESR, as the Stage 1 budget recommends (power_plan.io_ring): branch droop 40 -> 25 mV (pair, analog) and 28 -> 13 mV (SAR), pin peaks halved. The budget's feed limit is 6 ohm between the bulk and the core.",
-  "reference": "VREFP/VREFN: two bonds each on interleaved pads (left_1..4), four separate tracks onto four boundary pins on the ADC west edge in the same order. No decoupling at the pads or under the routes: the 8 pF between the rails and the two 15 ohm resistors are in the core.",
+  "pad_decoupling": "About 100 pF AVDD-AVSS bulk per branch at 10 fF/um2 with about 2 ohm ESR, as the Stage 1 budget recommends (stage6_supply_model.pad_bulk_decoupling); 6 ohm feed limit between the bulk and the core.",
+  "reference": "VREFP/VREFN: two bonds each on interleaved pads (left_1..4), four separate tracks onto four west-edge boundary pins in the same order. No decoupling at the pads or under the routes; the 8 pF between the rails and the two 15 ohm resistors are in the core.",
   "reference_route_length_um": {
-   "VREFP_a": 177.885,
-   "VREFN_a": 143.885,
-   "VREFP_b": 197.885,
-   "VREFN_b": 251.885
+   "VREFP_a": 297.885,
+   "VREFN_a": 263.885,
+   "VREFP_b": 317.885,
+   "VREFN_b": 371.885
   },
-  "analog_ring": "AVDDR/AVSSR (top_1/top_6, PVDD3AC/PVSS3AC) power the analog pads' TACVDD/TACVSS ESD bus only. Hold AVDDR on its own fixed board rail at 0.99 V, not on AVDD: VREFP stays at 0.9 V while AVDD is verified down to 0.81 V (specs/arch.json reference.relation_to_core_supply) and VINP/VINN reach 0.9 V, so a TACVDD that followed AVDD would sit 90 mV below the reference and input pads at the low corner. 0.99 V, the top of the AVDD range, keeps TACVDD at or above every analog pad voltage at every corner. AVSSR goes to the board ground with AVSS.",
-  "digital_core": "DVDD/DVSS (right_4/right_3) feed the output register and the core side of the digital pads only.",
-  "io": "VDDIO/VSSIO (bottom_5/bottom_0) feed the output drivers; no core connection.",
-  "decap_total_planning_pF": 330.0
+  "analog_ring": "TACVDD is AVDD and TACVSS is AVSS (PVDD3AC/PVSS3AC pads). PDB3AC signals stay within TACVSS - 0.3 V and TACVDD + 0.3 V (app note 9.2 note 3): VREFP and VIN at 0.9 V are inside that with AVDD at 0.81 V.",
+  "global_vss": "VSS is the ESD bus on every pad's VSS pin; bonded on PVSS1DGZ (left_7) and PVSS2AC (top_7), whose core pins join the register VSS on core_vss_ring.",
+  "digital_core": "DVDD (PVDD1DGZ x3, right_4 feeds the register) and VSS feed the output register and the pads' pre-drivers.",
+  "io": "VDDIO (bottom_3 PVDD2DGZ, bottom_6 PVDD2POC) and VSSIO (four PVSS2DGZ) feed the output drivers; no core connection.",
+  "esd_clamps": "Three PCLAMPC_H_G, one per AVDD/AVSS branch pair (app note 10.7.1 asks for at least one per core-voltage domain).",
+  "board": "AVDD 0.9 V (3 bonds), AVSS (7), VSS (2), DVDD 0.9 V (3), VDDIO library post-driver voltage (2), VSSIO (4), VREFP 0.9 V and VREFN 0 V (2 each). AVSS, VSS and VSSIO meet only on the board.",
+  "power_sequence": "Every supply on a power cell or PCLAMPC ramps in more than 10 us; VDDIO before or with DVDD; AVDD before VREFP/VREFN/VINP/VINN are driven, and off after them (app note 3.1, 9.2).",
+  "decap_total_planning_pF": 411.6
  },
  "decisions": {
+  "io_rules": {
+   "decided": "2026-11-22",
+   "decision": "Supply cells and counts follow the TSMC N28 I/O application note: >= 3 bonded PVDD3AC, >= 1 PVSS3AC and a bonded PVSS2AC in the core-voltage analog domain; >= 3 PVDD1DGZ, >= 2 VDDPST cells with exactly one PVDD2POC, >= 1 PVSS1DGZ and >= 1 PVSS2DGZ in the digital domain; a bonded PVSS3AC beside each PCORNERA_G and a PVSS2DGZ beside each PCORNER_G; a 3AC cell beside each PRCUTA_G, cuts only along a side.",
+   "basis": "App note 3.4, 6.2, 8.6, 9.7, 9.8, 10.6, 10.9 and the chapter 18 checklist. Layout check enforces them."
+  },
   "die_frame": {
-   "decided": "2026-11-21",
-   "decision": "7 x 7 ring, 28 pads, 640 x 640 um IO-cell outline.",
-   "basis": "23 pads are required (two VIN, four reference bonds, the analog ring pair, the analog trunk pair, four digital supplies, nine digital signals). The other five give the XREF/CDAC and SAR branches their own AVDD/AVSS pairs, as the Stage 6 model assumes (one VDD/VSS pair per branch), and the guard ring its own AVSS bond. Supersedes the 6 x 6 draft, which had no room for the double reference bonds."
+   "decided": "2026-11-22",
+   "decision": "9 x 9 ring, 36 pads, 760 x 760 um IO-cell outline.",
+   "basis": "The rules above need at least 34 pads, and a 19-pad digital block fits two sides without a mixed corner only from 9 x 9. Supersedes the 7 x 7 plan."
+  },
+  "analog_supply_cells": {
+   "decided": "2026-11-22",
+   "decision": "AVDD/AVSS on PVDD3AC/PVSS3AC: the pads are the TACVDD/TACVSS bus and the core ports feed the ADC. No PVDD1AC/PVSS1AC and no separate AVDDR/AVSSR rail.",
+   "basis": "App note 9.3-9.5 and 10.6: PVDD3AC supplies both the macro and TACVDD; PVDD1AC is a dedicated feed needing three bonded cells per package pin. Supersedes the 2026-11-21 split of ring (3AC) and core (1AC) pads."
   },
   "reference_bonds": {
    "decided": "2026-11-21",
    "decision": "VREFP and VREFN on two pads each in the order VREFP, VREFN, VREFP, VREFN (left_1..4), each pad on its own track to its own ADC boundary pin; the two pins of a rail join inside the core ahead of its 15 ohm resistor.",
-   "basis": "Stage 1 budget (chenzc24/sar-adc-t28#15): double bonds bring the worst decision error over the tolerance box from 0.105 to 0.040 LSB. Separate tracks keep the interleave on chip and need no crossing in the ring opening; reference bulk at the pads raises the error, so the reference channel holds none."
+   "basis": "Stage 1 budget (chenzc24/sar-adc-t28#15); reference bulk at the pads raises the decision error."
   },
   "adc_supply": {
    "decided": "2026-11-21",
-   "decision": "The ADC keeps its single VDD!/0 supply. The analog trunk, the XREF/CDAC pair and the SAR each get their own AVDD/AVSS pad pair, route and pad decoupling, and join only inside the ADC at VDD!/0. The SAR pair enters the east edge above SAMPLE, into sar_decap_north.",
-   "basis": "No netlist change and no extra supply-domain crossings; SAR switching current has its own bond wires and never shares metal with the comparator/Bootstrap or XREF feeds."
+   "decision": "The ADC keeps its single VDD!/0 supply; the analog trunk, the XREF/CDAC pair and the SAR each have their own AVDD/AVSS pad pair, route and pad decoupling. The three AVDD pads also meet on the TACVDD ring bus.",
+   "basis": "No netlist change and no extra supply-domain crossings."
   },
-  "analog_pad_roles": {
-   "decided": "2026-11-21",
-   "decision": "PVDD3AC/PVSS3AC (AVDDR/AVSSR) supply only the analog ring bus; PVDD1AC/PVSS1AC (AVDD/AVSS) supply the ADC core, as PVDD2POC/PVSS2DGZ and PVDD1DGZ/PVSS1DGZ do on the digital side.",
-   "basis": "In the LVS-clean IO_RING_T28_12x12_01 extraction, PVDD1AC's pad is its AVDD pin with a clamp to TACVSS, while the PVDD3AC pad is the TACVDD bus and its AVDD pin extracts as a separate net (VDDIB_CORE)."
+  "data_output_cells": {
+   "decided": "2026-11-22",
+   "decision": "D0-D7 on PRUW08SDGZ (8 mA, slew-limited, Schmitt input, pull-up) instead of PDDW16SDGZ (16 mA, no slew control); SAMPLE stays on PDDW16SDGZ.",
+   "basis": "Simultaneous switching (sso): with PDDW16SDGZ the 8 outputs plus SAMPLE sum to DF 3.84 and need 4 VDDIO pads against 2; with PRUW08SDGZ they sum to 1.55 and need 2 VSSIO and 2 VDDIO. Same pins and footprint (library readback), so no pad moves. I to PAD delay is about 1.5 ns at 15 pF (FF -40 C) against a 100 ns frame."
+  },
+  "pad_gap_fill": {
+   "decided": "2026-11-22",
+   "decision": "The 40 um gaps between pads keep PFILLER20/PFILLER20A filler cells; no unbonded dummy power cells.",
+   "basis": "Designer decision, as in the accepted 12 x 12 rings. The app note recommends dummy power cells for ESD (6.1, 9.8.1, 10.3) and checklist item 22 asks for them in digital gaps; this is a recorded deviation."
   },
   "data_outputs": {
    "decided": "2026-11-21",
-   "decision": "D0-D7 reach the pads through an output register on DVDD clocked by SAMPLE rising. The ADC's D0-D7 ports drive ADC_D0-ADC_D7 into the register, its Q outputs drive D0_CORE-D7_CORE to the pad I pins, and D0-D7 name only the bonded pad nets.",
-   "basis": "D0-D7 are AN2D1 outputs inside the SAR next-word loop, qualified at 5 fF, and change bit by bit during conversion. Registered, the pads switch once per frame, 45 ns before the sampling edge, with one frame of latency."
+   "decision": "D0-D7 reach the pads through an output register on DVDD clocked by SAMPLE rising. The ADC's D0-D7 ports drive ADC_D0-ADC_D7; D0-D7 name only the bonded pad nets.",
+   "basis": "D0-D7 are SAR next-word nodes that change bit by bit during conversion."
   }
  },
  "open_items": [
-  "Pad geometry from the saved masters (chenzc24/sar-adc-t28#18): the PAD60GU opening centre sits 22.34 um from the outer frame edge, 32.66 um outward of bond_pad_center_um (the IO-cell centre, 55 um in), and pad metal reaches 11.66 um past each frame edge. Regenerate all 28 bond centres from the placed masters. The D0-D7 I and SAMPLE C core pins come from the generator's M4 pin labels; the supply and reference core pins are cell-centre estimates, and the AVDD centrelines fall between M2 supply fingers, so derive those landings from each master's terminal polygons.",
-  "VIN coupling: include the 74 um where VINP runs 12 um from sar_pad_decap in the extracted differential coupling check.",
-  "Stage 6 reference model: add the on-chip reference routes (VREFP_a 177.885 um, VREFN_a 143.885 um, VREFP_b 197.885 um, VREFN_b 251.885 um) and the PDB3AC pad capacitance (ESD clamps on AIO; the budget assumed 0.5 pF per pad). The extracted IO_RING_T28_12x12_01 shows PDB3AC's AIO as one node from the bond pad to the core, with no series resistor.",
-  "Feed widths: size each branch route for the budget's 6 ohm feed (with its in-core strap) and for EM at the pin peaks (reference 5.1 mA per rail over both bonds, VDD 5.5 mA summed over the pins).",
-  "Pad decoupling: implement the 2 ohm ESR (series strip or gate resistance) and use the PDK decap density and leakage, as for the in-core regions.",
-  "In-core feeds from the new boundary pins (floorplan.json open_items): the two pins of each reference rail join inside vref_decap_west with one VREFP/VREFN crossing on the pad side of the resistors; the pair feed runs from its south-edge pins north through xref_decap to the pair's M6 terminals on the XREF strip; the SAR feed runs from sar_decap_north to sar_supply_and_decap.",
-  "ADC_D0-ADC_D7 load: the in-core M7 route over the SAR (29.6 um) plus the register input is about 8-10 fF per bit against the 5 fF in the specification. Stage 2 should use 10 fF.",
-  "Register hold: at SAMPLE rising the register captures ADC_D0-ADC_D7 while the ADC starts resetting them. Check the hold margin at FF -40/125 C; add delay on the D inputs if needed.",
-  "Output switching: one VDDIO/VSSIO pair serves eight outputs that can all toggle at once (0x7F to 0x80). Check the ground bounce at the chosen PDDW16SDGZ drive strength.",
-  "Cross-domain interfaces: SAMPLE (pad, DVDD, into the ADC, VDD!) and ADC_D0-ADC_D7 (ADC, VDD!, into the register, DVDD) cross between the two 0.9 V supplies; review them with the ESD rules.",
-  "Analog ring pads: confirm in the tphn28hpcpgv18 databook that the PVDD3AC/PVSS3AC AVDD/AVSS pins may stay open (the earlier rings left VDDIB_CORE/VSSIB_CORE open and passed LVS), and the allowed TACVDD range and AIO and AVDD limits against it for a fixed 0.99 V AVDDR with AIO at 0-0.9 V and AVDD at 0.81-0.99 V.",
-  "Bonding and package: PAD60GU single row at 60 um pitch; Stage 6 needs the actual bond geometry, including the interleaved reference wires.",
-  "Steps 7-10 (Virtuoso, DRC, LVS) run only after the plan is accepted, into SAR_ADC_T28_LAYOUT."
+  "Bus resistance (app note Tables 8.1 and 10.1, checklist 23y.3): VSS bus from each PDB3AC to its nearest bonded VSS supply below 1 ohm, and the cell-to-cell limits in each domain; needs the IO-cell bus widths and sheet resistance.",
+  "Secondary ESD (app note 9.2 notes 4-5, checklist 23y.6): VREFP/VREFN get the 15 ohm resistors plus a diode pair to AVDD_CORE/AVSS_CORE on the trunk side in vref_decap_west; VINP/VINN need a secondary device or a check of the Bootstrap switch layout against the DRM ESD drain guideline.",
+  "Core VSS ring and VSS stubs: width from the DRM maximum ESD current density table; keep the ring off M7 tracks the in-core D0-D7/SAMPLE routes use at the ADC edge.",
+  "Pad geometry from the saved masters (chenzc24/sar-adc-t28#18): bond-opening centres 22.34 um from the frame edge, 32.66 um outward of bond_pad_center_um; supply, reference and VIN core pins are cell-centre estimates (AVDD centrelines fall between M2 supply fingers). Derive landings from the placed masters' terminal polygons.",
+  "Feed widths: the 9 x 9 rail budget (chenzc24/sar-adc-t28#27, constraints.json) sets at least 4.8 um M8 for the pair route and 6.3 um for the SAR feed; EM at the pin peaks is still to check.",
+  "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
+  "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
+  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there)."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."
 }

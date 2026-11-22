@@ -1,0 +1,313 @@
+{
+ "cell": "sar8_io_ring",
+ "library": "SAR_ADC_T28_LAYOUT",
+ "date": "2026-11-22",
+ "status": "ring_cell_drc_clean_lvs_correct_erc_waived",
+ "scope": "The IO ring cell alone, built by the t28-ioring generator from Layout/design/io_ring.json: its layout against its own schematic, with the core-side nets as ports. The ADC core, output register, PCLAMPC macros, pad decoupling, core VSS ring and pad-to-core routes of io_ring.json are not in this cell; chip-level DRC and LVS remain.",
+ "plan": "Layout/design/io_ring.json",
+ "generator": {
+  "repository": "chenzc24/t28-ioring",
+  "commit": "a6b8437",
+  "run": "t28-ioring/output/generated/20261122_131553 (local, not in this repository)",
+  "steps": "semantic intent, enrich (G1-G12 pass), validate, confirmed config, schematic and layout SKILL, run_il_with_screenshot into OA, run_drc, run_lvs",
+  "skill_scripts_sha256": {
+   "io_ring_layout_20261122_131557.il": "ba036c79eee4db465a71e99506a0e83628dadfc6a35dab1c6a422c53817c72a4",
+   "io_ring_schematic_20261122_131556.il": "8b172528b3f29369665dac4b3e9ffb3311b21e1265fb920119be9a0305bc6286"
+  }
+ },
+ "views": {
+  "schematic": {
+   "saved": "Nov 22 13:19:02 2026",
+   "instances": {
+    "PDB3AC_H_G": 4,
+    "PDB3AC_V_G": 2,
+    "PDDW16SDGZ_H_G": 1,
+    "PRUW08SDGZ_H_G": 3,
+    "PRUW08SDGZ_V_G": 5,
+    "PVDD1DGZ_H_G": 3,
+    "PVDD2DGZ_V_G": 1,
+    "PVDD2POC_V_G": 1,
+    "PVDD3AC_H_G": 1,
+    "PVDD3AC_V_G": 2,
+    "PVSS1DGZ_H_G": 1,
+    "PVSS2AC_V_G": 1,
+    "PVSS2DGZ_H_G": 2,
+    "PVSS2DGZ_V_G": 2,
+    "PVSS3AC_H_G": 3,
+    "PVSS3AC_V_G": 4,
+    "iopin": 55,
+    "noConn": 8
+   },
+   "terminals": 30,
+   "markers": 0
+  },
+  "layout": {
+   "saved": "Nov 22 13:19:29 2026",
+   "instances": {
+    "PAD60GU": 36,
+    "PCORNERA_G": 2,
+    "PCORNER_G": 2,
+    "PDB3AC_H_G": 4,
+    "PDB3AC_V_G": 2,
+    "PDDW16SDGZ_H_G": 1,
+    "PFILLER20A_G": 32,
+    "PFILLER20_G": 36,
+    "PRCUTA_G": 4,
+    "PRUW08SDGZ_H_G": 3,
+    "PRUW08SDGZ_V_G": 5,
+    "PVDD1DGZ_H_G": 3,
+    "PVDD2DGZ_V_G": 1,
+    "PVDD2POC_V_G": 1,
+    "PVDD3AC_H_G": 1,
+    "PVDD3AC_V_G": 2,
+    "PVSS1DGZ_H_G": 1,
+    "PVSS2AC_V_G": 1,
+    "PVSS2DGZ_H_G": 2,
+    "PVSS2DGZ_V_G": 2,
+    "PVSS3AC_H_G": 3,
+    "PVSS3AC_V_G": 4
+   },
+   "terminals": 0,
+   "markers": 0,
+   "pin_labels": {
+    "AP/pin": 36,
+    "M4/pin": 9,
+    "M2/pin": 10
+   }
+  }
+ },
+ "readback": {
+  "layout_matches_confirmed_config": true,
+  "layout_cells": 112,
+  "bond_pads": 36,
+  "schematic_io_cells_match_layout": true,
+  "schematic_io_cells": 36,
+  "schematic_pins": 30
+ },
+ "drc": {
+  "executed": "Sun Nov 22 13:20:01 2026",
+  "layout_primary": "sar8_io_ring",
+  "deck": "t28-ioring skills/t28-ioring-generator/calibre/T28/_drc_rule_T28_cell_ (cell-level selection of the T28 DRC deck)",
+  "deck_sha256": "ea86c2ecb46321dd4f059f17e58b1db720bf09e03c91ce1ea8d7b3493540c3ac",
+  "rulechecks_executed": 2645,
+  "results": 0,
+  "executed_checks_with_results": [],
+  "deselected_checks": 81,
+  "deselected_groups": {
+   "warnings (DIODMY_L, IO_CONNECT_CORE_NET)": 2,
+   "other": 11,
+   "density (*.DN*)": 61,
+   "pad opening (AP.*)": 3,
+   "ESD": 4
+  },
+  "deselected_other": [
+   "OD.S.14",
+   "PO.A.3",
+   "PO.A.4",
+   "PO.A.5",
+   "PO.A.6",
+   "PO.R.28",
+   "IND.R.5",
+   "SRAM.WARN.1",
+   "SRAM.WARN.2",
+   "HVD_N.S.15",
+   "HVD_P.S.15"
+  ],
+  "deselected_pad_opening_and_esd": [
+   "AP.W.5",
+   "AP.S.6",
+   "AP.S.7",
+   "ESD.18g",
+   "ESD.19g",
+   "ESD.40g",
+   "ESD.40.1g"
+  ],
+  "runtime_warnings": [
+   "ACUTE angle on layer M1i in cell PCORNERA_G",
+   "ACUTE angle on layer M2i in cell PCORNERA_G",
+   "ACUTE angle on layer ODi in cell PCORNERA_G"
+  ],
+  "report": "t28-ioring/output/sar8_io_ring_drc_report_20261122_132232.txt (local, not in this repository)"
+ },
+ "lvs": {
+  "executed": "Sun Nov 22 13:21:20 2026",
+  "result": "CORRECT",
+  "layout_vs_source_after_transformation": {
+   "ports": [
+    30,
+    30
+   ],
+   "nets": [
+    502,
+    502
+   ],
+   "instances": [
+    1005,
+    1005
+   ]
+  },
+  "comparison_warnings": [
+   "Unbalanced smashed mosfets were matched.",
+   "Ambiguity points were found and resolved arbitrarily."
+  ],
+  "source_reading_notes": "114 duplicate subckt definitions in the PDK's Calibre source.added (PDK file, independent of this cell)",
+  "source": "si CDL netlist of the schematic view; layout streamed with strmout",
+  "deck": "t28-ioring skills/t28-ioring-generator/calibre/T28/_calibre_T28.lvs_ over the shared T28 calibre.lvs",
+  "deck_sha256": "c1f9711d65ce0e5410cbebd9511c5a92615059c24f6518a08f33fa45a53d42aa",
+  "virtual_connect": "VIRTUAL CONNECT NAME \"?\"",
+  "report": "t28-ioring/output/sar8_io_ring_lvs_report_20261122_132327.txt (local, not in this repository)"
+ },
+ "erc": {
+  "source": "LVS EXECUTE ERC of the same deck; not a pass criterion of the generator flow",
+  "this_ring": {
+   "counts": {
+    "mnpg": 280,
+    "floating.nxwell_float": 38,
+    "floating.psub": 4,
+    "npvss49": 12
+   },
+   "locations": {
+    "mnpg": {
+     "description": "MOS connected to both power and ground",
+     "results": 280,
+     "inside": {
+      "PCORNER_G": 280
+     }
+    },
+    "floating.nxwell_float": {
+     "description": "nxwell_float is not connected to POWER",
+     "results": 38,
+     "inside": {
+      "PAD60GU+PVSS3AC_V_G": 8,
+      "PAD60GU+PVSS3AC_H_G": 6,
+      "PAD60GU+PDB3AC_H_G": 4,
+      "PCORNER_G": 4,
+      "PAD60GU+PVSS2AC_V_G": 3,
+      "PAD60GU+PVDD1DGZ_H_G": 3,
+      "PRCUTA_G+PRCUTA_G": 2,
+      "PAD60GU+PDB3AC_V_G": 2,
+      "PAD60GU+PVDD3AC_V_G": 2,
+      "outside instances": 2,
+      "PAD60GU+PVDD3AC_H_G": 1,
+      "PVDD2POC_V_G": 1
+     }
+    },
+    "floating.psub": {
+     "description": "psub is not connected to GROUND",
+     "results": 4,
+     "inside": {
+      "PRCUTA_G+PRCUTA_G": 4
+     }
+    },
+    "npvss49": {
+     "description": "ntap connected to GROUND",
+     "results": 12,
+     "inside": {
+      "PCORNER_G": 12
+     }
+    }
+   },
+   "total": 334
+  },
+  "baseline": {
+   "cell": "LLM_Layout_Design/IO_RING_T28_12x12_01",
+   "why": "A ring the same flow accepted on 2026-05-30 (DRC 0, LVS CORRECT); rerun with this LVS deck on 2026-11-22, again CORRECT. It has four PCORNERA_G and no PCORNER_G, and names its global ESD bus GIOL.",
+   "counts": {
+    "floating.nxwell_float": 2,
+    "floating.psub": 8
+   },
+   "locations": {
+    "floating.nxwell_float": {
+     "description": "nxwell_float is not connected to POWER",
+     "results": 2,
+     "inside": {
+      "PCORNERA_G": 2
+     }
+    },
+    "floating.psub": {
+     "description": "psub is not connected to GROUND",
+     "results": 8,
+     "inside": {
+      "PCORNERA_G": 4,
+      "PAD60GU+PFILLER20_G": 1,
+      "PAD60GU+PVDD1DGZ_V_G": 1,
+      "PFILLER20_G+PFILLER20_G": 1,
+      "outside instances": 1
+     }
+    }
+   },
+   "total": 10
+  },
+  "name_probe": {
+   "cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring_ercprobe (scratch; deleted after the run)",
+   "change": "This ring generated again with three nets renamed: VSS to GIOL, AVSS to VSSIB, AVDD to VDDIB (core ports AVSS_CORE/AVDD_CORE follow). The baseline ring uses names of this kind.",
+   "skill_identical_after_renaming_back": {
+    "sch": true,
+    "lay": true
+   },
+   "lvs": "CORRECT",
+   "counts": {
+    "floating.nxwell_float": 2,
+    "floating.psub": 4
+   },
+   "locations": {
+    "floating.nxwell_float": {
+     "description": "nxwell_float is not connected to POWER",
+     "results": 2,
+     "inside": {
+      "PRCUTA_G+PRCUTA_G": 2
+     }
+    },
+    "floating.psub": {
+     "description": "psub is not connected to GROUND",
+     "results": 4,
+     "inside": {
+      "PRCUTA_G+PRCUTA_G": 4
+     }
+    }
+   },
+   "why_names_matter": "The T28 deck flags an n-well or n-tap directly on a net whose name is in its exact GROUND_NAME list (floating.nxwell_float, npvss49), and its PATHCHK reads the LVS POWER/GROUND name lists. AVDD is in POWER_NAME and AVSS and VSS are in GROUND_NAME; GIOL, VSSIB and VDDIB are in neither.",
+   "total": 6
+  },
+  "disposition": {
+   "decided": "2026-11-22",
+   "decision": "Waived for the ring cell: every result lies inside TSMC library cells, as the designer accepts, and the probe shows that all but the PRCUTA_G results depend only on net names.",
+   "remaining_after_rename": "2 floating n-wells and 4 floating psub where the two PRCUTA_G cells of each power cut abut: unconnected well and substrate islands of the cut cells, the same kind as the baseline's results in its corner, filler and pad cells."
+  }
+ },
+ "simultaneous_switching": {
+  "rule": "App note 7.3, checklist 19-20 (io_ring.json sso)",
+  "io_cells": {
+   "PRUW08SDGZ": 8,
+   "PDDW16SDGZ": 1
+  },
+  "io_cells_in_oa_layout": {
+   "PDDW16SDGZ_H_G": 1,
+   "PRUW08SDGZ_H_G": 3,
+   "PRUW08SDGZ_V_G": 5
+  },
+  "driving_factor_sum": 1.547,
+  "vsspst": {
+   "need": 2,
+   "have": 4
+  },
+  "vddpst": {
+   "need": 2,
+   "have": 2
+  }
+ },
+ "findings": [
+  "DRC: 2645 checks, 0 results. The cell-level deck deselects 81 checks (2 warnings (DIODMY_L, IO_CONNECT_CORE_NET), 11 other, 61 density (*.DN*), 3 pad opening (AP.*), 4 ESD), so this is not full-chip DRC.",
+  "LVS: CORRECT; ports, nets and instances match after transformation (30 / 502 / 1005). The two warnings also appear on the baseline ring.",
+  "The deck's VIRTUAL CONNECT NAME \"?\" joins same-named labels, so the three AVDD_CORE and seven AVSS_CORE core ports compare as one net each; a missing core-side connection only shows in chip-level LVS.",
+  "The POC rail carries no label: the generator places none (the baseline ring has none either), and LVS matched it as an unnamed net. The TSMC N28 I/O application note (3.4.2) asks for one label per PVDD2POC on the top-level POC rail.",
+  "ERC: 334 results (280 mnpg, 38 floating.nxwell_float, 4 floating.psub, 12 npvss49) against 10 on the baseline, all inside TSMC library cells. The same ring with only VSS, AVSS and AVDD renamed (identical SKILL otherwise, LVS CORRECT) gives 6: 2 floating.nxwell_float, 4 floating.psub, all where the two PRCUTA_G cells of a power cut abut. The other results come from the deck's name lists, not from geometry or connectivity; this corrects the earlier record, which took VSSIB for a ground name. Waived for the ring cell (erc.disposition).",
+  "Simultaneous switching: the I/O cells sum to DF 1.547 (8 PRUW08SDGZ at 0.140, SAMPLE's PDDW16SDGZ at 0.427; 2.1 nH, 5 pF, FF -40 C), needing 2 VSSIO and 2 VDDIO cells against 4 and 2. The OA layout holds 1 PDDW16SDGZ_H_G, 3 PRUW08SDGZ_H_G, 5 PRUW08SDGZ_V_G.",
+  "The 40 um gaps keep PFILLER20/PFILLER20A fillers, not dummy power cells, by designer decision (io_ring.json decisions.pad_gap_fill)."
+ ],
+ "open_items": [
+  "Label the POC rail (POC_dig) for chip-level LVS (app note 3.4.2); the generator does not place it.",
+  "Chip-level ERC will repeat the name-dependent results inside the IO cells while the nets keep the names AVDD, AVSS and VSS; waive them with this record's name probe as evidence.",
+  "Chip-level DRC with the deselected density, pad-opening and ESD checks, and LVS with the ADC assembled in the ring."
+ ]
+}

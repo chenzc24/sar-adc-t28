@@ -3,6 +3,7 @@ import hashlib
 import html
 import itertools
 import json
+import math
 from pathlib import Path
 
 from Layout.project import ROOT, write_json
@@ -128,6 +129,9 @@ def io_ring(plan, ring):
             if 'cross_min_layer' in g and r['to'] != g['id'] and low < LAYER[g['cross_min_layer']] and any(
                     touches(s, e) for s in segs[k] for e in edges(g.get('centerline') or g['bbox'])):
                 errors.append(f'IO route {k} crosses {g["id"]} below {g["cross_min_layer"]}')
+            if 'ring_layer' in g and g['id'] not in (r['from'], r['to']) and g['ring_layer'] in r['layers'] and any(
+                    touches(s, e) for s in segs[k] for e in edges(g['centerline'])):
+                errors.append(f'IO route {k} crosses {g["id"]} on its layer {g["ring_layer"]}')
     for a, b in itertools.combinations(paths, 2):
         if any(touches(s, t) for s, t in itertools.product(segs[a], segs[b])):
             errors.append(f'IO routes touch: {a}/{b}')
@@ -145,9 +149,79 @@ def io_ring(plan, ring):
             errors.append(f'Pad has {refs.count(position)} IO routes: {position} {p["name"]}')
         if (p['core_net'] is None) != (p['core_pin_um'] is None):
             errors.append('Pad core net and core pin disagree: ' + position)
-    bonded = {p['name'] for p in pads.values() if p['device'] == 'PDDW16SDGZ'}
+    bonded = {p['name'] for p in pads.values() if 'direction' in p}  # digital I/O cells
     errors += [f'IO route {k} uses the bonded pad net {r["net"]}' for k, r in paths.items() if r['net'] in bonded]
+    errors += pad_ring_rules(ring)
     return list(dict.fromkeys(errors)), {'pads': len(pads), 'routes': len(paths)}
+
+
+ANALOG_CELLS = {'PDB3AC', 'PVDD3AC', 'PVSS3AC', 'PVDD1AC', 'PVSS1AC', 'PVSS2AC',
+                'PVDD3A', 'PVSS3A', 'PVDD1A', 'PVSS1A', 'PVSS2A'}
+
+
+def pad_ring_rules(ring):
+    """Supply-cell rules of the TSMC N28 I/O application note (v1.4; sections cited) on the pad sequence."""
+    errors, n = [], {'left': ring['ring']['height'], 'right': ring['ring']['height'],
+                     'top': ring['ring']['width'], 'bottom': ring['ring']['width']}
+    order = [f'{s}_{i}' for s in ('left', 'bottom', 'right', 'top') for i in range(n[s])]  # counterclockwise
+    pads = {p['position']: p for p in ring['pads']}
+    if sorted(order) != sorted(pads):
+        return ['IO ring pads do not fill the ring positions']
+    cell = lambda q: pads[q]['device']
+    dom = [pads[q]['domain'] for q in order]
+    for d in set(dom):  # one contiguous block per domain, the ring wrapping around
+        if sum(dom[i] == d and dom[i-1] != d for i in range(len(order))) > 1:
+            errors.append(f'IO ring domain {d} is split into more than one block')
+    ends = {f'left_{n["left"]-1}', f'bottom_{n["bottom"]-1}', f'right_{n["right"]-1}', f'top_{n["top"]-1}'}
+    for i, q in enumerate(order):
+        a, b = order[i-1], q
+        if a in ends:  # the corner cell sits between a and b (6.2, 9.8.2, 10.9)
+            if dom[i-1] != dom[i]:
+                errors.append(f'Corner between {a} and {b} joins two domains')
+            elif cell(a) in ANALOG_CELLS:
+                need = {'PVSS3AC', 'PVSS3A'}
+                if not {cell(a), cell(b)} <= need:
+                    errors.append(f'Analog corner between {a} and {b} needs a bonded PVSS3AC on both sides')
+            elif not {cell(a), cell(b)} <= {'PVSS2DGZ', 'PVSS3DGZ'}:
+                errors.append(f'Digital corner between {a} and {b} needs a bonded PVSS2DGZ on both sides')
+        elif dom[i-1] != dom[i]:  # power cut between domains (9.8.3)
+            for q2 in (a, b):
+                if cell(q2) in ANALOG_CELLS and cell(q2) not in {'PVDD3AC', 'PVSS3AC', 'PVDD3A', 'PVSS3A'}:
+                    errors.append(f'Analog pad beside the power cut at {a}/{b} must be PVDD3AC/PVSS3AC: {q2}')
+    for d in sorted(set(dom)):
+        cells = [cell(q) for q in order if pads[q]['domain'] == d]
+        count = lambda *c: sum(x in c for x in cells)
+        if set(cells) & {'PDB3AC', 'PVDD3AC', 'PVSS3AC', 'PVDD1AC', 'PVSS1AC'}:  # core-voltage analog (10.6, 9.7)
+            for c, k in (('PVDD3AC', 3), ('PVSS3AC', 1), ('PVSS2AC', 1)):
+                if count(c) < k:
+                    errors.append(f'Analog domain {d} needs at least {k} bonded {c}, has {count(c)}')
+            if count('PVSS2A'):
+                errors.append(f'Analog domain {d} mixes PVSS2A with core-voltage cells')
+            for name in {pads[q]['name'] for q in order if pads[q]['domain'] == d and cell(q) == 'PVDD1AC'}:
+                if sum(pads[q]['name'] == name and cell(q) == 'PVDD1AC' for q in order) < 3:
+                    errors.append(f'PVDD1AC net {name} needs at least 3 bonded cells')
+        elif not set(cells) & ANALOG_CELLS:  # digital (3.4, 8.6, checklist 7-12)
+            if count('PVDD2POC') != 1:
+                errors.append(f'Digital domain {d} needs one and only one PVDD2POC, has {count("PVDD2POC")}')
+            for cs, k, what in ((('PVDD1DGZ',), 3, 'PVDD1DGZ'), (('PVDD2DGZ', 'PVDD2POC'), 2, 'VDDPST cells'),
+                                (('PVSS1DGZ', 'PVSS3DGZ'), 1, 'PVSS1DGZ'), (('PVSS2DGZ', 'PVSS3DGZ'), 1, 'PVSS2DGZ')):
+                if count(*cs) < k:
+                    errors.append(f'Digital domain {d} needs at least {k} bonded {what}, has {count(*cs)}')
+            # Simultaneous switching (7.3, checklist 19-20): every I/O cell counted as an output, databook DF in ring['sso'].
+            df = ring.get('sso', {}).get('driving_factor', {})
+            io = [cell(q) for q in order if pads[q]['domain'] == d and 'direction' in pads[q]]
+            for c in sorted(set(io) - set(df)):
+                errors.append(f'Digital I/O cell {c} has no driving factor in sso')
+            sdf = sum(df.get(c, 0) for c in io)
+            for cs, k, what in ((('PVSS2DGZ', 'PVSS3DGZ'), math.ceil(round(sdf, 6)), 'VSSPST cells'),
+                                (('PVDD2DGZ', 'PVDD2POC'), math.ceil(round(sdf / 1.1, 6)), 'VDDPST cells')):
+                if count(*cs) < k:
+                    errors.append(f'Digital domain {d} needs at least {k} bonded {what} for simultaneous switching '
+                                  f'(DF sum {sdf:.3f}), has {count(*cs)}')
+    vss = {pads[q]['name'] for q in order if cell(q) in {'PVSS1DGZ', 'PVSS3DGZ', 'PVSS2AC', 'PVSS2A'}}
+    if len(vss) > 1:  # the global ESD bus carries one label (2.2)
+        errors.append(f'Cells supplying the global VSS bus carry different names: {sorted(vss)}')
+    return errors
 
 
 def pin_net(name, interfaces):

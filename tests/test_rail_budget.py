@@ -8,7 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools/saradc/measure'))
 import rail_charge
-from Layout.tools.analysis import rail_budget
+from Layout.tools.analysis import rail_budget, ring_supply
 
 
 def native(path, rows):
@@ -62,11 +62,53 @@ class BudgetModel(unittest.TestCase):
     def test_reference_loop_counts_both_pads_and_the_route(self):
         s = rail_budget.SYSTEM
         n = rail_budget.loop(15., 8e-12)
-        # Two pads per rail to ground, seen in series around the VREFP-VREFN loop.
-        self.assertAlmostEqual(n['cpad'], s['pads_per_rail'] * s['pad_f'] / 2)
-        self.assertAlmostEqual(n['cpad'], .5e-12)
+        # Two pads and the route capacitance per rail to ground, seen in series around the loop.
+        self.assertAlmostEqual(n['cpad'], (s['pads_per_rail'] * s['pad_f'] + s['route_f']) / 2)
+        self.assertGreater(s['route_f'], 0)
         self.assertAlmostEqual(n['ron'], 2 * (15. + s['route_ohm']), places=2)
         self.assertAlmostEqual(n['l2'], 2 * (s['pin_h'] + s['route_h']))
+
+    def test_reference_route_resistance_follows_the_ring_lengths(self):
+        ring = ring_supply.load_ring()
+        length = ring['supply_plan']['reference_route_length_um']
+        rail = ring_supply.reference_routes(ring)['rails']['VREFN']
+        a, b = length['VREFN_a'], length['VREFN_b']
+        # Two 4 um M8 routes in parallel at 0.022 ohm/sq.
+        self.assertAlmostEqual(rail['ohm']['m8_25c'], .022 * (a / 4) * (b / 4) / ((a + b) / 4), places=6)
+        lo, hi = rail_budget.TOLERANCE['route_ohm']
+        self.assertLess(lo, rail_budget.SYSTEM['route_ohm'])
+        self.assertLess(rail_budget.SYSTEM['route_ohm'], hi)
+
+    def test_sheet_resistance_temperature_and_corner(self):
+        self.assertAlmostEqual(ring_supply.rsh('M8'), .022)
+        self.assertGreater(ring_supply.rsh('M8', 125, True), 1.3 * .022)
+        self.assertLess(ring_supply.rsh('M9', -40), .005)
+
+    def test_circuit_engine_reproduces_the_loop_model(self):
+        k = rail_budget.CORNER_CHARGE
+        updates, _ = rail_budget.schedule(2.14e-9, .83e-9)
+        charges = [.48e-12 * k] + [.25e-12 * k] * 7 + [.48e-12 * k]
+        c = ring_supply.Circuit()
+        c.r('board', '0', 1.)
+        c.l('board', 'byp', .5e-9, .01)
+        c.c('byp', '0', 100e-9)
+        c.l('board', 'pv', 2e-9, .2)
+        c.l('0', 'ps', 2e-9, .2)
+        c.c('pv', 'esr', 100e-12)
+        c.r('esr', 'ps', 4.)
+        c.l('pv', 'cv', 1e-13, 3.)
+        c.l('ps', 'cs', 1e-13, 3.)
+        c.c('cv', 'cs', 10.07e-12)
+        c.load('cv', 'cs', 'pair')
+        t, v = c.run({'pair': [(u, q, .5e-9) for u, q in zip(updates, charges)]})
+        engine = -(c.voltage(v, 'cv') - c.voltage(v, 'cs')).min()
+        loop = rail_budget.supply_check(.48e-12 * k, .25e-12 * k, 10.07e-12, 6., bulk=True, bulk_f=100e-12)['droop_v']
+        self.assertAlmostEqual(engine, loop, delta=.02 * loop)
+
+    def test_bus_runs_from_right_8_over_the_top_to_left_6(self):
+        order = ['right_8', 'top_0', 'top_8', 'left_0', 'left_6']
+        self.assertEqual(order, sorted(order, key=ring_supply.bus_position))
+        self.assertEqual(ring_supply.bus_position('top_4') - ring_supply.bus_position('top_1'), 180.)
 
     def test_pad_bulk_lowers_supply_droop(self):
         bare = rail_budget.supply_check(.6e-12, .3e-12, 10e-12, 6.)

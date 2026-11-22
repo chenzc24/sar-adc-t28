@@ -2,11 +2,11 @@
   "planning_inputs_sha256": {
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "082a6f6e160c99481f2f13805d1d66e70cb08b88840722849e1a49443807c06e",
-    "Layout/design/floorplan.json": "6adfb97219186d3ee8436302615ef3a1343fbf0225c7ce2308e1595c4a673998",
-    "Layout/specs/interfaces.json": "50cc85bbc4b7713ab2b6fd208099448acd0e35f1d90e3336a49e1fb1b334d0e5",
-    "Layout/specs/constraints.json": "18f4515ed9220b0ce10f4d6e651c2b53c4ecda95d5fec0295e93674410218040",
-    "Layout/design/io_ring.json": "6e6069b32394f11b953defb9caf6dd903d49dc4b29afae847026d0c31b0fdad7",
+    "Layout/design/manifest.json": "bde958452e88b369ed544270a2136a4e55728eb7140fbf9cfd9fd10551cafbdc",
+    "Layout/design/floorplan.json": "d9c4a243e598b632d8b59055485c61d775f5a76d0de46b404bc9c394cca452e9",
+    "Layout/specs/interfaces.json": "a8be4cfd9babb2d609a87db761602eb6f8d5cdc1815c68ae257a593c2ffa76b6",
+    "Layout/specs/constraints.json": "618d52c633cae6097ec7b95c968683c29887e13d49fe76da52f41b7ecfd5f64d",
+    "Layout/design/io_ring.json": "6ab64673bec4b7cafa27f4b6a44b1c6a575ad23c4cd4dae03e4941b00f4b5a9e",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
@@ -17,11 +17,7 @@
     "view": "floorplan.svg",
     "area": "area.json",
     "status": "coarse_plan_unimplemented",
-    "unresolved_budgets": [
-      "comparator_input_route_capacitance_F",
-      "reference_gate_route_delay_s",
-      "sar_handshake_route_delay_s"
-    ]
+    "unresolved_budgets": []
   },
   "signoff": false,
   "electrical_design_id": "sar8_single_edge_bitwise_v1",
@@ -169,7 +165,7 @@
     "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
     "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
     "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
-    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets proposed in Layout/specs/constraints.json, not adopted; Stage 3 floorplan in progress",
+    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets adopted 2026-11-22 in Layout/specs/constraints.json; Stage 3 floorplan and Stage 4 placement merged (#17, #19); Stage 4a core-internal routes in sar8_adc_core/layout_route_int (2026-11-22, toplevel_route_internal.json: no new DRC rule, exact connectivity, adopted route budgets met in extraction); boundary routes, supply feeds and the shield VSS tie wait for the IO ring",
     "freeze": {
       "date": "2026-11-21",
       "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",
@@ -203,7 +199,8 @@
       }
     },
     "decisions": {
-      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB)."
+      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB).",
+      "comparator_output_load": "2026-11-22: keep the route load limits on COMP_P/COMP_N/CMP_CLK (Layout/specs/constraints.json sar_handshake_route_delay_s.load_limit_F); no comparator output buffers, so the frozen comparator core stays unchanged."
     },
     "stage2": {
       "report": "results/integration/stage2_all_extracted_20261122.md",
@@ -218,7 +215,7 @@
       "ssc_min_read_margin_ns": 7.766,
       "ffh_static_reference_offset": "VREFN +0.226 mV, VREFP -0.221 mV (0.061 LSB); decision error 0.162 LSB against nominal rails, 0.102 LSB without it",
       "bootstrap_gate_screen_ssc_v": 0.0877,
-      "proposed_budgets": {
+      "route_budgets": {
         "sar_handshake_route_delay_s": 2e-11,
         "sar_handshake_load_limit_F": {
           "COMP_P": 1.14e-14,
@@ -228,9 +225,9 @@
         "reference_gate_route_delay_s": 1e-10,
         "comparator_input_route_capacitance_F": 9.8e-15,
         "sampler_route_resistance_limit_ohm": 800,
-        "status": "proposed, not adopted"
+        "status": "adopted 2026-11-22; Layout/specs/constraints.json holds the authoritative values"
       },
-      "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um)"
+      "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um). Every Stage 2 run also kept the ~10 fF CL_COMP_P/CL_COMP_N/CL_CMP_CLK model loads, so the adopted load limits have about 10 fF of headroom."
     }
   }
 }
