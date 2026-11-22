@@ -1,0 +1,385 @@
+{
+  "record": "Stage 1 reference and supply current budget (chenzc24/sar-adc-t28#12)",
+  "measured_runs": [
+    "stage1-rail-charge-adc-post-b",
+    "stage1-rail-window-adc-post-b"
+  ],
+  "source_run": "se-xref-adc-post-b",
+  "measured_frames": [
+    {
+      "frame": 0,
+      "code": 6,
+      "die_charge_c": {
+        "vrefn": -2.7029496708796043e-12,
+        "vdd": 5.1524557692374976e-12,
+        "vrefp": 2.5975041013605394e-12
+      },
+      "peak_source_a": {
+        "vrefp_source": 0.002134028819402711,
+        "vrefn_source": -0.0021402998512388143,
+        "vdd": 0.0031088128613774
+      },
+      "span_droop_v": 0.21371643353207626,
+      "window_1ns_c": {
+        "vrefn": -1.0182638979174702e-12,
+        "vdd": 6.134514592963769e-13,
+        "vrefp": 1.0182647714982685e-12
+      }
+    },
+    {
+      "frame": 1,
+      "code": 127,
+      "die_charge_c": {
+        "vrefn": -2.7994920802942017e-12,
+        "vdd": 5.258943036457596e-12,
+        "vrefp": 2.798501867396988e-12
+      },
+      "peak_source_a": {
+        "vrefp_source": 0.002601153804605112,
+        "vrefn_source": -0.002594963644141036,
+        "vdd": 0.003619686033396758
+      },
+      "span_droop_v": 0.25980587243730746,
+      "window_1ns_c": {
+        "vrefn": -1.3105810590782812e-12,
+        "vdd": 8.119747253760321e-13,
+        "vrefp": 1.312804527583859e-12
+      }
+    },
+    {
+      "frame": 2,
+      "code": 128,
+      "die_charge_c": {
+        "vrefn": -1.4280488200094692e-12,
+        "vdd": 4.641179796686304e-12,
+        "vrefp": 1.4269138908174158e-12
+      },
+      "peak_source_a": {
+        "vrefp_source": 0.001194528062353204,
+        "vrefn_source": -0.0011928376630580828,
+        "vdd": 0.003703171291439257
+      },
+      "span_droop_v": 0.1193682862705644,
+      "window_1ns_c": {
+        "vrefn": -5.746199941498991e-13,
+        "vdd": 4.5371095605066244e-13,
+        "vrefp": 5.756314356623031e-13
+      }
+    },
+    {
+      "frame": 3,
+      "code": 249,
+      "die_charge_c": {
+        "vrefn": -1.2522456811402083e-12,
+        "vdd": 4.655740772898787e-12,
+        "vrefp": 1.251174389317399e-12
+      },
+      "peak_source_a": {
+        "vrefp_source": 0.0013538720482956191,
+        "vrefn_source": -0.0013520216128784107,
+        "vdd": 0.002999241724891063
+      },
+      "span_droop_v": 0.13529468305870151,
+      "window_1ns_c": {
+        "vrefn": -7.327509356103699e-13,
+        "vdd": 5.604928801173959e-13,
+        "vrefp": 7.34961831197496e-13
+      }
+    }
+  ],
+  "steady_frames": [
+    1,
+    2,
+    3
+  ],
+  "reference_model": {
+    "gamma_c_per_toggled_unit": 2.129261966922553e-15,
+    "fit": [
+      {
+        "ideal_c": 1.765232282089409e-12,
+        "toggled_units": 510,
+        "measured_c": 2.798501867396988e-12,
+        "model_c": 2.851155885219911e-12
+      },
+      {
+        "ideal_c": 8.426945540894091e-13,
+        "toggled_units": 254,
+        "measured_c": 1.4269138908174158e-12,
+        "model_c": 1.3835270936877375e-12
+      },
+      {
+        "ideal_c": 6.480060126373679e-13,
+        "toggled_units": 254,
+        "measured_c": 1.251174389317399e-12,
+        "model_c": 1.1888385522356963e-12
+      }
+    ],
+    "conversion_c": {
+      "max": 2.8511558852199108e-12,
+      "min": 1.1690505365471282e-12,
+      "mean_uniform": 2.044718939940874e-12,
+      "mean_sine_minus1dbfs": 2.0460248272911794e-12
+    },
+    "max_event_c": 1.4618958665652507e-12,
+    "argmax_conversion_code": 127
+  },
+  "supply_measured": {
+    "conversion_c": {
+      "max": 5.258943036457596e-12,
+      "min": 4.641179796686304e-12
+    },
+    "peak_a": 0.003703171291439257,
+    "max_event_1ns_c": 8.119747253760321e-13
+  },
+  "system": {
+    "source_ohm": 1.0,
+    "board_bypass_f": 1e-07,
+    "board_esr_ohm": 0.01,
+    "board_esl_h": 5e-10,
+    "pin_h": 1e-09,
+    "pin_ohm": 0.1,
+    "pad_f": 5e-13,
+    "pads_per_rail": 2,
+    "route_ohm": 1.0,
+    "route_h": 1e-10,
+    "supply_pin_h": 2e-09,
+    "supply_pin_ohm": 0.2,
+    "supply_pads_per_rail": 1
+  },
+  "design": {
+    "series_ohm": 15.0,
+    "span_cap_f": 8e-12
+  },
+  "tolerance": {
+    "series": [
+      0.8,
+      1.2
+    ],
+    "cap": [
+      0.75,
+      1.25
+    ],
+    "pin_h": [
+      5e-10,
+      1.5e-09
+    ],
+    "route_ohm": [
+      0.0,
+      2.0
+    ]
+  },
+  "pad_bulk": {
+    "cap_f": 1e-10,
+    "esr_ohm_per_rail": 2.0,
+    "max_feed_ohm": 6.0
+  },
+  "corners": {
+    "ffc": [
+      2.14e-09,
+      8.3e-10
+    ],
+    "tt": [
+      2.55e-09,
+      9e-10
+    ],
+    "ssc": [
+      3.63e-09,
+      1.2e-09
+    ]
+  },
+  "pulses_s": [
+    5e-10,
+    8e-10
+  ],
+  "reference_design_check": {
+    "ffc": {
+      "decision_error_lsb": 0.02961769990872499,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.11202671843871077,
+      "pin_peak_a": 0.0031942857985272715
+    },
+    "tt": {
+      "decision_error_lsb": 0.012057237502984168,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.11202605528137308,
+      "pin_peak_a": 0.0031942861743514375
+    },
+    "ssc": {
+      "decision_error_lsb": 0.004155288197782886,
+      "at": {
+        "code": 0,
+        "trial": 4,
+        "pulse_s": 5e-10
+      },
+      "span_droop_v": 0.11202420145550201,
+      "pin_peak_a": 0.0031942862251361963
+    }
+  },
+  "reference_tolerance_box": {
+    "ffc": {
+      "decision_error_lsb": 0.04782768117818802,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.09629879525840258,
+      "pin_peak_a": 0.002319863206677715,
+      "series_ohm": 18.0,
+      "span_cap_f": 1e-11,
+      "pin_h": 5e-10,
+      "route_ohm": 2.0,
+      "box_max_span_droop_v": 0.14772460533820198,
+      "box_max_pin_peak_a": 0.004310077998571504
+    },
+    "tt": {
+      "decision_error_lsb": 0.019405829306806652,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.10129057419241536,
+      "pin_peak_a": 0.002646875890038619,
+      "series_ohm": 15.0,
+      "span_cap_f": 1e-11,
+      "pin_h": 1.5e-09,
+      "route_ohm": 2.0,
+      "box_max_span_droop_v": 0.1477239844076551,
+      "box_max_pin_peak_a": 0.004310078467674359
+    },
+    "ssc": {
+      "decision_error_lsb": 0.004195051934868584,
+      "at": {
+        "code": 0,
+        "trial": 4,
+        "pulse_s": 5e-10
+      },
+      "span_droop_v": 0.13355562828679526,
+      "pin_peak_a": 0.004307362368269886,
+      "series_ohm": 12.0,
+      "span_cap_f": 6e-12,
+      "pin_h": 1.5e-09,
+      "route_ohm": 0.0,
+      "box_max_span_droop_v": 0.14772215028828134,
+      "box_max_pin_peak_a": 0.004310078609965587
+    }
+  },
+  "reference_fixture_check_tt": {
+    "decision_error_lsb": 0.001094387462411897,
+    "at": {
+      "code": 6,
+      "trial": 64,
+      "pulse_s": 8e-10
+    },
+    "span_droop_v": 0.33281480950485043,
+    "pin_peak_a": 0.0033280195862954312
+  },
+  "reference_undamped_single_bond_check_ffc": {
+    "decision_error_lsb": 3.5626066221805135,
+    "at": {
+      "code": 0,
+      "trial": 64,
+      "pulse_s": 8e-10
+    },
+    "span_droop_v": 0.11124919165448423,
+    "pin_peak_a": 0.006386938195385349
+  },
+  "reference_single_bond_design": {
+    "series_ohm": 20.0,
+    "span_cap_f": 6e-12,
+    "pin_h": 2e-09,
+    "pin_ohm": 0.2,
+    "pads": 1,
+    "route_ohm": 0.0,
+    "route_h": 0.0,
+    "check_ffc": {
+      "decision_error_lsb": 0.024846066776171703,
+      "at": {
+        "code": 0,
+        "trial": 64,
+        "pulse_s": 8e-10
+      },
+      "span_droop_v": 0.1524813415426754,
+      "pin_peak_a": 0.0032740598686744173
+    }
+  },
+  "supply_branches": {
+    "pair_xref": {
+      "event_c": 4.8e-13,
+      "repeat_c": 2.5e-13,
+      "cap_f": 1.007e-11,
+      "feed_ohm": 12.0,
+      "placeholder_f": 2.9239e-12,
+      "basis": "XREF part of the measured windowed VDD charge, 1.9 fC per toggled unit times 255 units",
+      "check": {
+        "droop_v": 0.040098815293691935,
+        "residual_before_next_event_v": 0.018958061658284082,
+        "pin_peak_a": 0.0017447581181837236
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.019869324987971813,
+        "residual_before_next_event_v": 0.00715564197265499,
+        "pin_peak_a": 0.0009278471001676891
+      }
+    },
+    "digital_sar": {
+      "event_c": 3.1e-13,
+      "repeat_c": 3.1e-13,
+      "cap_f": 8.25e-12,
+      "feed_ohm": 5.0,
+      "placeholder_f": 5.554e-12,
+      "basis": "Rest of the largest measured 1 ns VDD event after the XREF part (SAR COMMIT and DONE)",
+      "check": {
+        "droop_v": 0.028172414691282323,
+        "residual_before_next_event_v": 0.020359580447953857,
+        "pin_peak_a": 0.0015048394745098997
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.01387307241395285,
+        "residual_before_next_event_v": 0.00865930314730777,
+        "pin_peak_a": 0.0007620497188007389
+      }
+    },
+    "analog_bootstrap": {
+      "event_c": 4.54e-13,
+      "repeat_c": 2.5e-14,
+      "cap_f": 9.32e-12,
+      "feed_ohm": 12.0,
+      "placeholder_f": 1.5594e-12,
+      "basis": "Upper bound: no 1 ns window at a sampling edge exceeded the 0.454 pC conversion-event maximum of frame 2",
+      "check": {
+        "droop_v": 0.03997396667305439,
+        "residual_before_next_event_v": 0.001956676350376026,
+        "pin_peak_a": 0.0017214636531679424
+      },
+      "check_with_pad_bulk": {
+        "droop_v": 0.018543570607862978,
+        "residual_before_next_event_v": 0.000952505883647149,
+        "pin_peak_a": 0.0006700585969891706
+      }
+    },
+    "comparator_local": {
+      "event_c": 2.5e-14,
+      "repeat_c": 2.5e-14,
+      "cap_f": 4.71e-13,
+      "feed_ohm": 30.0,
+      "placeholder_f": 4.71e-13,
+      "basis": "Comparator charge per decision (Layout/results/comparator.md); 30 ohm in-core strap resistance",
+      "check": {
+        "droop_v": 0.024105700012594232,
+        "residual_before_next_event_v": 0.017314670051734645,
+        "pin_peak_a": 0.00038985486637308793
+      }
+    }
+  },
+  "corner_charge_allowance": 1.3
+}

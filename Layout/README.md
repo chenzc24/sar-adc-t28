@@ -14,6 +14,7 @@ The 2026-11-18 CDAC redesign is at `SAR_ADC_T28_LAYOUT / sar8j_r1_cdac_core / la
 | Current CDAC `layout_paired_stacked`: planned fill with weight-ordered small bits for DNL | [Report section](results/cdac.md#weight-ordered-small-bits-layout_paired_stacked), [small-bit placement and trunks](results/figures/cdac_small_bit_center.png), and [record](results/cdac_planned_fill.json) |
 | Module ports, orientations, and interconnect priorities | [Interfaces](specs/interfaces.json) |
 | Matching, fill, timing, and acceptance scope | [Constraints](specs/constraints.json) |
+| Reference and supply current limits, Stage 6 package model, and required decoupling | [Budget record](results/rail_budget.md) and [model output](results/rail_budget.json) |
 | Module dummies, independent fill, and top-level density closure | [Fill policy](specs/fill-policy.md) |
 | Current evidence and open items | [Current results](results/current.json) |
 | Single-edge SAR macro `sar8_se_core`: flow, views, DRC/LVS/PEX and post-layout ADC runs | [Report](results/sar_se_core.md), [record](results/sar_se_core.json), and [placement](results/figures/sar_se_core.png) |

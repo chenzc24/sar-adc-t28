@@ -3,9 +3,10 @@
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
     "Layout/design/manifest.json": "082a6f6e160c99481f2f13805d1d66e70cb08b88840722849e1a49443807c06e",
-    "Layout/design/floorplan.json": "2344a0ceb881dadda7a9a73a3682f5d12a555b3a88bacc78747a4bd83122949d",
+    "Layout/design/floorplan.json": "6adfb97219186d3ee8436302615ef3a1343fbf0225c7ce2308e1595c4a673998",
     "Layout/specs/interfaces.json": "50cc85bbc4b7713ab2b6fd208099448acd0e35f1d90e3336a49e1fb1b334d0e5",
-    "Layout/specs/constraints.json": "ca63e35736880bcaf4dd6a711c4b57543f2b11c7a8c818889cb1b7adba729f51",
+    "Layout/specs/constraints.json": "18f4515ed9220b0ce10f4d6e651c2b53c4ecda95d5fec0295e93674410218040",
+    "Layout/design/io_ring.json": "6e6069b32394f11b953defb9caf6dd903d49dc4b29afae847026d0c31b0fdad7",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
@@ -45,10 +46,23 @@
     "integrated_runs": [
       "int-m4-ssc-20261121",
       "int-m4-tt-20261121",
-      "int-m4-ffc-20261121"
+      "int-m4-ffc-20261121",
+      "sar8-sebit-ssc-cw-verify-bootx-a"
     ],
     "physical_signoff": false,
-    "report": "bootstrap.json"
+    "report": "bootstrap.json",
+    "worst_corner_run": {
+      "run_id": "sar8-sebit-ssc-cw-verify-bootx-a",
+      "condition": "SS 0.81 V -40 C, CWORST_T cell LPE, CWORST_T extracted CDAC, extracted Bootstrap on both channels, 8 verify frames",
+      "control": "sar8-sebit-ssc-cw-verify-b",
+      "all_pass": true,
+      "max_abs_close_error_lsb": 0.0528,
+      "min_read_margin_ns": 7.533,
+      "max_first_compare_gate_overdrive_v": 0.0904,
+      "gate_overdrive_screen_v": 0.1,
+      "watch": "Boosted gate 0.090 V above the signal at the first comparison against the 0.1 V screen; no code moves. Least-margin Bootstrap screen; recheck after top-level extraction.",
+      "record": "bootstrap.json#integrated_cworst (merged with PR #13)"
+    }
   },
   "comparator": {
     "status": "prefill_module_delivered_not_full_signoff",
@@ -149,6 +163,74 @@
       "historical_report": "cdac.md",
       "historical_amplitude_loss_percent": 15.12,
       "status": "unresolved; not remeasured as an amplitude metric in this migration"
+    }
+  },
+  "integration": {
+    "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
+    "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
+    "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
+    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets proposed in Layout/specs/constraints.json, not adopted; Stage 3 floorplan in progress",
+    "freeze": {
+      "date": "2026-11-21",
+      "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",
+      "blocks": {
+        "cdac_xref": {
+          "integration": "sar8_cdac_with_xref/layout_se_d2_r2",
+          "filled_stream": "se-xref-peripheral-dense",
+          "cdac_view": "layout_paired_stacked",
+          "cdac_evidence": "cdac-paired-plan-d-20261118-combined"
+        },
+        "bootstrap": {
+          "view": "sar_bootstrap_flat_8b_p_core/layout",
+          "evidence": "boot-core-20261121",
+          "integration_tooling": "Layout/tools/simulation/bootstrap_pex.py (PR #13)"
+        },
+        "comparator": {
+          "view": "sar_strongarm_t28_core/layout",
+          "evidence": "comp-v8-20261120-pex",
+          "extractions": [
+            "typical",
+            "cworst_T",
+            "cbest_T"
+          ],
+          "supplies": "VDD and VSS extracted as RC"
+        },
+        "sar_macro": {
+          "view": "sar8_se_core/layout_r3",
+          "evidence": "sar-se-r3-lib",
+          "cworst_extraction": "sar-se-r3-cw"
+        }
+      }
+    },
+    "decisions": {
+      "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB)."
+    },
+    "stage2": {
+      "report": "results/integration/stage2_all_extracted_20261122.md",
+      "record": "results/integration/stage2_all_extracted_20261122.json",
+      "entry": "Layout/tools/simulation/prepare_all_extracted.py",
+      "corner_extractions": {
+        "xref_cworst": "se-xref-peripheral-dense-cworst-t",
+        "xref_cbest": "se-xref-peripheral-dense-cbest-t",
+        "sar_macro_cbest": "sar-se-r3-cb"
+      },
+      "all_pass": true,
+      "ssc_min_read_margin_ns": 7.766,
+      "ffh_static_reference_offset": "VREFN +0.226 mV, VREFP -0.221 mV (0.061 LSB); decision error 0.162 LSB against nominal rails, 0.102 LSB without it",
+      "bootstrap_gate_screen_ssc_v": 0.0877,
+      "proposed_budgets": {
+        "sar_handshake_route_delay_s": 2e-11,
+        "sar_handshake_load_limit_F": {
+          "COMP_P": 1.14e-14,
+          "COMP_N": 1.14e-14,
+          "CMP_CLK": 1.11e-14
+        },
+        "reference_gate_route_delay_s": 1e-10,
+        "comparator_input_route_capacitance_F": 9.8e-15,
+        "sampler_route_resistance_limit_ohm": 800,
+        "status": "proposed, not adopted"
+      },
+      "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um)"
     }
   }
 }

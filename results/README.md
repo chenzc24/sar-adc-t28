@@ -10,6 +10,7 @@ The designs removed after commit `c46d9d6` keep their results and source digests
 
 | Verification | Evidence |
 | --- | --- |
+| All-extracted ADC with ideal top-level wiring (issue #12 Stage 2), 2026-11-22 | All three corners pass; SS-cold read margin 7.77 ns; route budgets proposed. [Report](integration/stage2_all_extracted_20261122.md) · [Record](integration/stage2_all_extracted_20261122.json) |
 | Four-finger sampler main switch, 2026-11-21 | [Report](design/sampler_mmain4_adoption_20261121.md) · [Record](design/sampler_mmain4_adoption_20261121.json) · [Bootstrap layout](../Layout/results/bootstrap.json) |
 | Current single-edge SAR adoption | [Report](design/sar_single_edge_adoption_20261120.md) · [Record](design/sar_single_edge_adoption_20261120.json) · [Bit-6 aperture of the earlier 8/6 and 9/6 taps](design/sar_bit6_reference_overlay.md) |
 | Single-edge native SAR front end | [Registered 9/6 tap waveforms, bit-6 differential and 90 ns read margin](design/sar_registered_9_6.md) · [Earlier 8/6 timing gains, five PVT points, six mismatch draws and sampling restart](design/sar_single_edge_frontend.md) |

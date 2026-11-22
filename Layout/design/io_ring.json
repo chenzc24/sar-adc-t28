@@ -8,7 +8,7 @@
   640.0,
   640.0
  ],
- "die_note": "Pad-ring outline from the generator (7 x 60 um + 2 x 110 um corners). The seal ring and scribe lane add to it per the shuttle rules.",
+ "die_note": "IO-cell outline from the generator (7 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 663.32 x 663.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that per the shuttle rules.",
  "ring_opening": [
   [
    110.0,
@@ -62,6 +62,7 @@
     110.0,
     500.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC guard ring (AVSS)",
    "reason": "Own bond wire for the substrate ties; shields the reference pads from the input corner."
   },
@@ -81,6 +82,7 @@
     110.0,
     440.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFP@a, west edge",
    "reason": "First of the interleaved VREFP, VREFN, VREFP, VREFN bonds: neighbouring wires carry opposite currents."
   },
@@ -100,6 +102,7 @@
     110.0,
     380.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFN@a, west edge",
    "reason": "Interleaved reference bond."
   },
@@ -119,6 +122,7 @@
     110.0,
     320.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFP@b, west edge",
    "reason": "Interleaved reference bond."
   },
@@ -138,6 +142,7 @@
     110.0,
     260.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VREFN@b, west edge",
    "reason": "Interleaved reference bond."
   },
@@ -157,7 +162,8 @@
     110.0,
     200.0
    ],
-   "connects_to": "ADC.VDD!@pair, south edge (xref_decap south-west feed)",
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "ADC.VDD!@pair, south edge, below the pair's M6 terminals",
    "reason": "XREF/CDAC branch supply; the largest analog event (1.789 mA peak feed)."
   },
   {
@@ -176,7 +182,8 @@
     110.0,
     140.0
    ],
-   "connects_to": "ADC.0@pair, south edge (xref_decap south-west feed)",
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
+   "connects_to": "ADC.0@pair, south edge, below the pair's M6 terminals",
    "reason": "XREF/CDAC branch ground, beside the cut to the digital block."
   },
   {
@@ -192,6 +199,7 @@
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
+   "core_pin_source": null,
    "connects_to": "None (IO ring VSSPST bus only)",
    "reason": "Start of the digital block. A ground, not a switching output, sits at the analog boundary."
   },
@@ -209,9 +217,10 @@
    "core_pin": "I",
    "core_net": "D7_CORE",
    "core_pin_um": [
-    200.0,
-    110.0
+    191.725,
+    109.875
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q7",
    "reason": "Data output."
   },
@@ -229,9 +238,10 @@
    "core_pin": "I",
    "core_net": "D6_CORE",
    "core_pin_um": [
-    260.0,
-    110.0
+    251.725,
+    109.875
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q6",
    "reason": "Data output."
   },
@@ -249,9 +259,10 @@
    "core_pin": "I",
    "core_net": "D5_CORE",
    "core_pin_um": [
-    320.0,
-    110.0
+    311.725,
+    109.875
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q5",
    "reason": "Data output."
   },
@@ -269,9 +280,10 @@
    "core_pin": "I",
    "core_net": "D4_CORE",
    "core_pin_um": [
-    380.0,
-    110.0
+    371.725,
+    109.875
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q4",
    "reason": "Data output."
   },
@@ -288,6 +300,7 @@
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
+   "core_pin_source": null,
    "connects_to": "None (IO ring VDDPST bus only)",
    "reason": "Output-driver supply between D4 and D3, four outputs on each side."
   },
@@ -305,9 +318,10 @@
    "core_pin": "I",
    "core_net": "D3_CORE",
    "core_pin_um": [
-    500.0,
-    110.0
+    491.725,
+    109.875
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q3",
    "reason": "Data output."
   },
@@ -325,9 +339,10 @@
    "core_pin": "I",
    "core_net": "D2_CORE",
    "core_pin_um": [
-    530.0,
-    140.0
+    530.125,
+    131.725
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q2",
    "reason": "Data output."
   },
@@ -345,9 +360,10 @@
    "core_pin": "I",
    "core_net": "D1_CORE",
    "core_pin_um": [
-    530.0,
-    200.0
+    530.125,
+    191.725
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q1",
    "reason": "Data output."
   },
@@ -365,9 +381,10 @@
    "core_pin": "I",
    "core_net": "D0_CORE",
    "core_pin_um": [
-    530.0,
-    260.0
+    530.125,
+    251.725
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "Output register Q0",
    "reason": "Data output."
   },
@@ -387,6 +404,7 @@
     530.0,
     320.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "Output register VSS",
    "reason": "Digital core ground; also the ring-wide VSS label."
   },
@@ -406,6 +424,7 @@
     530.0,
     380.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "Output register VDD",
    "reason": "Digital core supply."
   },
@@ -423,9 +442,10 @@
    "core_pin": "C",
    "core_net": "SAMPLE_CORE",
    "core_pin_um": [
-    530.0,
-    440.0
+    530.125,
+    444.33
    ],
+   "core_pin_source": "generator M4 pin label",
    "connects_to": "ADC.SAMPLE and the output register clock",
    "reason": "Between DVDD and the SAR ground pad, above the register, so its route reaches the ADC pin without crossing the register supplies or outputs."
   },
@@ -445,6 +465,7 @@
     530.0,
     500.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.0@sar, east edge above SAMPLE (sar_decap_north)",
    "reason": "SAR branch ground. NE corner, nearest the SAR macro; its own bond wire keeps SAR current off the analog and pair returns."
   },
@@ -464,6 +485,7 @@
     500.0,
     530.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VDD!@sar, east edge above SAMPLE (sar_decap_north)",
    "reason": "SAR branch supply, paired with right_6 across the NE corner."
   },
@@ -480,8 +502,9 @@
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
+   "core_pin_source": null,
    "connects_to": "None (analog ring TACVDD bus only)",
-   "reason": "Analog ring supply. East neighbour of VINP; no route enters the core from it."
+   "reason": "Analog ring supply on its own fixed 0.99 V board rail (supply_plan.analog_ring). East neighbour of VINP; no route enters the core from it."
   },
   {
    "position": "top_2",
@@ -499,6 +522,7 @@
     380.0,
     530.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VINP (north edge, XBOOTP VIN trunk)",
    "reason": "Mirror of VINN about the ADC axis (die x 290); neighbours AVSS and AVDDR."
   },
@@ -518,6 +542,7 @@
     320.0,
     530.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.0@north, analog trunk (analog_decap_slot)",
    "reason": "Analog trunk ground: comparator, Bootstrap and their decoupling."
   },
@@ -537,6 +562,7 @@
     260.0,
     530.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VDD!@north, analog trunk (analog_decap_slot)",
    "reason": "Analog trunk supply, entering between the two VIN trunks as the floorplan plans."
   },
@@ -556,6 +582,7 @@
     200.0,
     530.0
    ],
+   "core_pin_source": "IO cell centre on the inner edge (estimate)",
    "connects_to": "ADC.VINN (north edge, XBOOTN VIN trunk)",
    "reason": "Mirror of VINP about the ADC axis; neighbours AVSSR and AVDD."
   },
@@ -572,6 +599,7 @@
    "core_pin": null,
    "core_net": null,
    "core_pin_um": null,
+   "core_pin_source": null,
    "connects_to": "None (analog ring TACVSS bus only)",
    "reason": "Analog ring ground. West neighbour of VINN."
   }
@@ -585,24 +613,24 @@
    "VDD!": "AVDD (three pins: north, pair, sar)",
    "0": "AVSS (three pins: north, pair, sar)",
    "SAMPLE": "SAMPLE_CORE",
-   "D0": "D0",
-   "D1": "D1",
-   "D2": "D2",
-   "D3": "D3",
-   "D4": "D4",
-   "D5": "D5",
-   "D6": "D6",
-   "D7": "D7"
+   "D0": "ADC_D0",
+   "D1": "ADC_D1",
+   "D2": "ADC_D2",
+   "D3": "ADC_D3",
+   "D4": "ADC_D4",
+   "D5": "ADC_D5",
+   "D6": "ADC_D6",
+   "D7": "ADC_D7"
   },
   "XOREG (output register)": {
-   "D0-D7": "D0-D7",
+   "D0-D7": "ADC_D0-ADC_D7",
    "Q0-Q7": "D0_CORE-D7_CORE",
    "CK": "SAMPLE_CORE (rising edge)",
    "VDD": "DVDD",
    "VSS": "DVSS"
   },
-  "XRING (generated IO ring)": "Core side: AVDD, AVSS, VINP, VINN, VREFP, VREFN, SAMPLE_CORE, D0_CORE-D7_CORE, DVDD, DVSS. Ring buses only: AVDDR/AVSSR (analog TACVDD/TACVSS), VDDIO/VSSIO (VDDPST/VSSPST). AVDDR_CORE/AVSSR_CORE (the 3AC pads' AVDD/AVSS pins) stay unconnected.",
-  "note": "The three AVDD and four AVSS pads are one net each; their branches join only inside the ADC at VDD!/0, and the guard ring joins AVSS through the substrate ties."
+  "XRING (generated IO ring)": "Core side: AVDD, AVSS, VINP, VINN, VREFP, VREFN, SAMPLE_CORE, D0_CORE-D7_CORE, DVDD, DVSS. Bonded pad nets: D0-D7, SAMPLE and the supply and analog names. Ring buses only: AVDDR/AVSSR (analog TACVDD/TACVSS), VDDIO/VSSIO (VDDPST/VSSPST). AVDDR_CORE/AVSSR_CORE (the 3AC pads' AVDD/AVSS pins) stay unconnected.",
+  "note": "ADC_D0-ADC_D7 name the raw SAR outputs, so they never share a name with the bonded D0-D7 pad nets. The three AVDD and four AVSS pads are one net each; their branches join only inside the ADC at VDD!/0, and the guard ring joins AVSS through the substrate ties."
  },
  "adc_placement": {
   "origin_um": [
@@ -783,7 +811,11 @@
     ]
    ],
    "manhattan_length_um": 167.225,
-   "layer_intent": "M5/M6, mirror of VINP; no other top-level M5/M6 over it; no decoupling beside it closer than 6 um"
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "Mirror of VINP; no other top-level M5/M6 over it; no decoupling beside it closer than 6 um"
   },
   "VINP": {
    "net": "VINP",
@@ -810,7 +842,11 @@
     ]
    ],
    "manhattan_length_um": 167.225,
-   "layer_intent": "M5/M6, mirror of VINN"
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "Mirror of VINN"
   },
   "AVDD_analog": {
    "net": "AVDD",
@@ -837,7 +873,11 @@
     ]
    ],
    "manhattan_length_um": 118.0,
-   "layer_intent": "M8/M9 through analog_pad_decap into analog_decap_slot (west half)"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Through analog_pad_decap into analog_decap_slot (west half)"
   },
   "AVSS_analog": {
    "net": "AVSS",
@@ -864,14 +904,18 @@
     ]
    ],
    "manhattan_length_um": 118.0,
-   "layer_intent": "M8/M9 through analog_pad_decap into analog_decap_slot (east half); mirror of the AVDD trunk"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Through analog_pad_decap into analog_decap_slot (east half); mirror of the AVDD trunk"
   },
   "AVSS_guard": {
    "net": "AVSS",
    "class": "analog_supply",
    "branch": "guard",
    "from": "left_0",
-   "to": "guard_ring",
+   "to": "adc_guard_ring",
    "points_um": [
     [
      110.0,
@@ -891,7 +935,11 @@
     ]
    ],
    "manhattan_length_um": 210.885,
-   "layer_intent": "M8/M9 to the west side of the guard ring"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Via stack down to the ring strap on its west side"
   },
   "VREFP_a": {
    "net": "VREFP",
@@ -918,7 +966,11 @@
     ]
    ],
    "manhattan_length_um": 177.885,
-   "layer_intent": "M9/M8, about 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
   },
   "VREFN_a": {
    "net": "VREFN",
@@ -945,7 +997,11 @@
     ]
    ],
    "manhattan_length_um": 143.885,
-   "layer_intent": "M9/M8, about 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
   },
   "VREFP_b": {
    "net": "VREFP",
@@ -972,7 +1028,11 @@
     ]
    ],
    "manhattan_length_um": 197.885,
-   "layer_intent": "M9/M8, about 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
   },
   "VREFN_b": {
    "net": "VREFN",
@@ -999,7 +1059,11 @@
     ]
    ],
    "manhattan_length_um": 251.885,
-   "layer_intent": "M9/M8, about 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "About 4 um wide on 6 um pitch; VREFP and VREFN alternate so each loop stays small; no decoupling under it"
   },
   "AVDD_pair": {
    "net": "AVDD",
@@ -1022,7 +1086,11 @@
     ]
    ],
    "manhattan_length_um": 306.885,
-   "layer_intent": "M8/M9, wide; enters pair_pad_decap from below"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Wide; enters pair_pad_decap from below"
   },
   "AVSS_pair": {
    "net": "AVSS",
@@ -1045,7 +1113,11 @@
     ]
    ],
    "manhattan_length_um": 370.885,
-   "layer_intent": "M8/M9, wide; beside AVDD_pair"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Wide; beside AVDD_pair"
   },
   "AVDD_sar": {
    "net": "AVDD",
@@ -1076,7 +1148,11 @@
     ]
    ],
    "manhattan_length_um": 261.115,
-   "layer_intent": "M8/M9 through sar_pad_decap; crosses the guard ring on M8/M9"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Through sar_pad_decap"
   },
   "AVSS_sar": {
    "net": "AVSS",
@@ -1103,7 +1179,11 @@
     ]
    ],
    "manhattan_length_um": 264.115,
-   "layer_intent": "M8/M9 through sar_pad_decap, beside AVDD_sar"
+   "layers": [
+    "M8",
+    "M9"
+   ],
+   "layer_intent": "Through sar_pad_decap, beside AVDD_sar"
   },
   "SAMPLE": {
    "net": "SAMPLE_CORE",
@@ -1113,12 +1193,12 @@
    "to": "ADC.SAMPLE",
    "points_um": [
     [
-     530.0,
-     440.0
+     530.125,
+     444.33
     ],
     [
      424.0,
-     440.0
+     444.33
     ],
     [
      424.0,
@@ -1129,15 +1209,19 @@
      394.4
     ]
    ],
-   "manhattan_length_um": 209.715,
-   "layer_intent": "M7/M8 from the pad C output; crosses the register, whose clock pin taps it"
+   "manhattan_length_um": 214.17,
+   "layers": [
+    "M7",
+    "M8"
+   ],
+   "layer_intent": "From the pad's M4 C pin; crosses the register, whose clock pin taps it"
   },
   "DVDD": {
    "net": "DVDD",
    "class": "digital_supply",
    "branch": "dvdd",
    "from": "right_4",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      530.0,
@@ -1149,14 +1233,18 @@
     ]
    ],
    "manhattan_length_um": 122.0,
-   "layer_intent": "Register VDD on its east edge; taps dvdd_decap from above"
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "Through dvdd_decap to the register's east edge"
   },
   "DVSS": {
    "net": "DVSS",
    "class": "digital_supply",
    "branch": "dvdd",
    "from": "right_3",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      530.0,
@@ -1176,14 +1264,18 @@
     ]
    ],
    "manhattan_length_um": 174.0,
-   "layer_intent": "Register VSS on its east edge, through dvdd_decap"
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "Through dvdd_decap to the register's east edge"
   },
-  "D0_in": {
-   "net": "D0",
+  "ADC_D0": {
+   "net": "ADC_D0",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D0",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1195,14 +1287,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D1_in": {
-   "net": "D1",
+  "ADC_D1": {
+   "net": "ADC_D1",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D1",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1214,14 +1309,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D2_in": {
-   "net": "D2",
+  "ADC_D2": {
+   "net": "ADC_D2",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D2",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1233,14 +1331,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D3_in": {
-   "net": "D3",
+  "ADC_D3": {
+   "net": "ADC_D3",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D3",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1252,14 +1353,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D4_in": {
-   "net": "D4",
+  "ADC_D4": {
+   "net": "ADC_D4",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D4",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1271,14 +1375,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D5_in": {
-   "net": "D5",
+  "ADC_D5": {
+   "net": "ADC_D5",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D5",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1290,14 +1397,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D6_in": {
-   "net": "D6",
+  "ADC_D6": {
+   "net": "ADC_D6",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D6",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1309,14 +1419,17 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
-  "D7_in": {
-   "net": "D7",
+  "ADC_D7": {
+   "net": "ADC_D7",
    "class": "digital_signal",
    "branch": "digital",
    "from": "ADC.D7",
-   "to": "register",
+   "to": "output_register",
    "points_um": [
     [
      365.885,
@@ -1328,13 +1441,16 @@
     ]
    ],
    "manhattan_length_um": 6.115,
-   "layer_intent": "M7 continuing the in-core track over the guard ring into the register D input"
+   "layers": [
+    "M7"
+   ],
+   "layer_intent": "Continues the in-core M7 track over the guard ring into the register D input"
   },
   "D0": {
    "net": "D0_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "right_2",
    "points_um": [
     [
@@ -1343,21 +1459,25 @@
     ],
     [
      405.0,
-     260.0
+     251.725
     ],
     [
-     530.0,
-     260.0
+     530.125,
+     251.725
     ]
    ],
-   "manhattan_length_um": 225.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 233.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D1": {
    "net": "D1_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "right_1",
    "points_um": [
     [
@@ -1366,21 +1486,25 @@
     ],
     [
      401.0,
-     200.0
+     191.725
     ],
     [
-     530.0,
-     200.0
+     530.125,
+     191.725
     ]
    ],
-   "manhattan_length_um": 289.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 297.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D2": {
    "net": "D2_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "right_0",
    "points_um": [
     [
@@ -1389,21 +1513,25 @@
     ],
     [
      397.0,
-     140.0
+     131.725
     ],
     [
-     530.0,
-     140.0
+     530.125,
+     131.725
     ]
    ],
-   "manhattan_length_um": 353.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 361.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D3": {
    "net": "D3_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "bottom_6",
    "points_um": [
     [
@@ -1412,25 +1540,29 @@
     ],
     [
      393.0,
-     132.0
+     120.0
     ],
     [
-     500.0,
-     132.0
+     491.725,
+     120.0
     ],
     [
-     500.0,
-     110.0
+     491.725,
+     109.875
     ]
    ],
-   "manhattan_length_um": 357.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 348.85,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D4": {
    "net": "D4_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "bottom_4",
    "points_um": [
     [
@@ -1442,22 +1574,26 @@
      116.0
     ],
     [
-     380.0,
+     371.725,
      116.0
     ],
     [
-     380.0,
-     110.0
+     371.725,
+     109.875
     ]
    ],
-   "manhattan_length_um": 259.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 267.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D5": {
    "net": "D5_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "bottom_3",
    "points_um": [
     [
@@ -1469,22 +1605,26 @@
      120.0
     ],
     [
-     320.0,
+     311.725,
      120.0
     ],
     [
-     320.0,
-     110.0
+     311.725,
+     109.875
     ]
    ],
-   "manhattan_length_um": 315.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 323.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D6": {
    "net": "D6_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "bottom_2",
    "points_um": [
     [
@@ -1496,22 +1636,26 @@
      124.0
     ],
     [
-     260.0,
+     251.725,
      124.0
     ],
     [
-     260.0,
-     110.0
+     251.725,
+     109.875
     ]
    ],
-   "manhattan_length_um": 371.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 379.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   },
   "D7": {
    "net": "D7_CORE",
    "class": "digital_signal",
    "branch": "digital",
-   "from": "register",
+   "from": "output_register",
    "to": "bottom_1",
    "points_um": [
     [
@@ -1523,23 +1667,35 @@
      128.0
     ],
     [
-     200.0,
+     191.725,
      128.0
     ],
     [
-     200.0,
-     110.0
+     191.725,
+     109.875
     ]
    ],
-   "manhattan_length_um": 427.0,
-   "layer_intent": "M5/M6 from register Q to the pad I pin"
+   "manhattan_length_um": 435.4,
+   "layers": [
+    "M5",
+    "M6"
+   ],
+   "layer_intent": "From register Q to the pad's M4 I pin"
   }
  },
- "route_check": {
-  "routes": 32,
-  "touching_route_pairs": 0,
-  "errors": [],
-  "rules": "Distinct routes never touch, whatever their net; each starts on its pad (or ADC pin) and lands on its ADC pin, the register or the guard ring; every ADC pin and every non-ring pad has exactly one route; all stay in the ring opening and off the ADC core; no digital route enters an analog region and no analog route a digital one; a route enters only its own branch's decoupling; VINN/VINP and the analog trunk pair are mirror images about the ADC axis."
+ "route_rules": {
+  "axis_die_x_um": 290.0,
+  "mirrored_routes": [
+   [
+    "VINN",
+    "VINP"
+   ],
+   [
+    "AVDD_analog",
+    "AVSS_analog"
+   ]
+  ],
+  "check": "python -m Layout check (Layout/planning.py io_ring) validates this plan: each route starts and ends on its from/to (a pad's core pin, an ADC pin or a region edge, the guard ring's centreline) and carries that pad's core net; distinct routes never touch, whatever their net; all stay in the ring opening and off the ADC core; a region with admits takes only analog or only digital routes; a route enters only its own branch's decoupling, and every supply route of a branch passes through it; routes cross the guard ring no lower than its cross_min_layer; mirrored_routes are mirror images about axis_die_x_um; every ADC pin and every pad with a core net has exactly one route; no route uses a bonded digital pad net; and the ADC pins, core outline and die_bbox agree with floorplan.json."
  },
  "reserved_regions": [
   {
@@ -1571,12 +1727,24 @@
      444.0
     ]
    ],
-   "use": "2 um P+ AVSS ring 2 um outside the ADC outline, fed from the left_0 AVSS pad on its west side. Routes cross it on M7 and above.",
+   "centerline": [
+    [
+     240.885,
+     326.0
+    ],
+    [
+     368.885,
+     443.0
+    ]
+   ],
+   "cross_min_layer": "M3",
+   "use": "2 um P+ AVSS ring with an M1/M2 strap, centred 3 um outside the ADC outline, fed from the left_0 AVSS pad on its west side. Routes cross it on M3 and above, as over sar_guard_ring.",
    "area_um2": 15470.0
   },
   {
    "id": "analog_input_channel",
    "kind": "channel",
+   "admits": "analog",
    "bbox": [
     [
      110.0,
@@ -1594,6 +1762,7 @@
    "id": "analog_pad_decap",
    "kind": "decap",
    "branch": "analog",
+   "admits": "analog",
    "bbox": [
     [
      206.0,
@@ -1611,6 +1780,7 @@
   {
    "id": "reference_channel",
    "kind": "channel",
+   "admits": "analog",
    "bbox": [
     [
      110.0,
@@ -1628,6 +1798,7 @@
    "id": "pair_pad_decap",
    "kind": "decap",
    "branch": "pair",
+   "admits": "analog",
    "bbox": [
     [
      240.0,
@@ -1646,6 +1817,7 @@
    "id": "sar_pad_decap",
    "kind": "decap",
    "branch": "sar",
+   "admits": "analog",
    "bbox": [
     [
      392.0,
@@ -1663,6 +1835,7 @@
   {
    "id": "sar_feed_channel",
    "kind": "channel",
+   "admits": "analog",
    "bbox": [
     [
      365.885,
@@ -1679,6 +1852,7 @@
   {
    "id": "output_register",
    "kind": "digital",
+   "admits": "digital",
    "bbox": [
     [
      372.0,
@@ -1696,6 +1870,7 @@
    "id": "dvdd_decap",
    "kind": "decap",
    "branch": "dvdd",
+   "admits": "digital",
    "bbox": [
     [
      422.0,
@@ -1703,16 +1878,17 @@
     ],
     [
      472.0,
-     374.0
+     386.0
     ]
    ],
-   "use": "DVDD-DVSS decoupling for the register and the pad core-side logic.",
-   "area_um2": 2400.0,
-   "planning_capacitance_pF": 24.0
+   "use": "DVDD-DVSS decoupling for the register and the pad core-side logic; both register supply routes pass through it.",
+   "area_um2": 3000.0,
+   "planning_capacitance_pF": 30.0
   },
   {
    "id": "digital_channel",
    "kind": "channel",
+   "admits": "digital",
    "bbox": [
     [
      370.0,
@@ -1729,6 +1905,7 @@
   {
    "id": "bottom_channel",
    "kind": "channel",
+   "admits": "digital",
    "bbox": [
     [
      146.0,
@@ -1829,15 +2006,15 @@
    "VREFP_b": 197.885,
    "VREFN_b": 251.885
   },
-  "analog_ring": "AVDDR/AVSSR (top_1/top_6, PVDD3AC/PVSS3AC) power the analog pads' TACVDD/TACVSS ESD bus only. Bond them to the same 0.9 V source as AVDD/AVSS on the board (TACVDD must cover the 0.9 V VIN/VREF swing).",
+  "analog_ring": "AVDDR/AVSSR (top_1/top_6, PVDD3AC/PVSS3AC) power the analog pads' TACVDD/TACVSS ESD bus only. Hold AVDDR on its own fixed board rail at 0.99 V, not on AVDD: VREFP stays at 0.9 V while AVDD is verified down to 0.81 V (specs/arch.json reference.relation_to_core_supply) and VINP/VINN reach 0.9 V, so a TACVDD that followed AVDD would sit 90 mV below the reference and input pads at the low corner. 0.99 V, the top of the AVDD range, keeps TACVDD at or above every analog pad voltage at every corner. AVSSR goes to the board ground with AVSS.",
   "digital_core": "DVDD/DVSS (right_4/right_3) feed the output register and the core side of the digital pads only.",
   "io": "VDDIO/VSSIO (bottom_5/bottom_0) feed the output drivers; no core connection.",
-  "decap_total_planning_pF": 324.0
+  "decap_total_planning_pF": 330.0
  },
  "decisions": {
   "die_frame": {
    "decided": "2026-11-21",
-   "decision": "7 x 7 ring, 28 pads, 640 x 640 um outline.",
+   "decision": "7 x 7 ring, 28 pads, 640 x 640 um IO-cell outline.",
    "basis": "23 pads are required (two VIN, four reference bonds, the analog ring pair, the analog trunk pair, four digital supplies, nine digital signals). The other five give the XREF/CDAC and SAR branches their own AVDD/AVSS pairs, as the Stage 6 model assumes (one VDD/VSS pair per branch), and the guard ring its own AVSS bond. Supersedes the 6 x 6 draft, which had no room for the double reference bonds."
   },
   "reference_bonds": {
@@ -1857,20 +2034,22 @@
   },
   "data_outputs": {
    "decided": "2026-11-21",
-   "decision": "D0-D7 reach the pads through an output register on DVDD clocked by SAMPLE rising.",
+   "decision": "D0-D7 reach the pads through an output register on DVDD clocked by SAMPLE rising. The ADC's D0-D7 ports drive ADC_D0-ADC_D7 into the register, its Q outputs drive D0_CORE-D7_CORE to the pad I pins, and D0-D7 name only the bonded pad nets.",
    "basis": "D0-D7 are AN2D1 outputs inside the SAR next-word loop, qualified at 5 fF, and change bit by bit during conversion. Registered, the pads switch once per frame, 45 ns before the sampling edge, with one frame of latency."
   }
  },
  "open_items": [
+  "Pad geometry from the saved masters (chenzc24/sar-adc-t28#18): the PAD60GU opening centre sits 22.34 um from the outer frame edge, 32.66 um outward of bond_pad_center_um (the IO-cell centre, 55 um in), and pad metal reaches 11.66 um past each frame edge. Regenerate all 28 bond centres from the placed masters. The D0-D7 I and SAMPLE C core pins come from the generator's M4 pin labels; the supply and reference core pins are cell-centre estimates, and the AVDD centrelines fall between M2 supply fingers, so derive those landings from each master's terminal polygons.",
+  "VIN coupling: include the 74 um where VINP runs 12 um from sar_pad_decap in the extracted differential coupling check.",
   "Stage 6 reference model: add the on-chip reference routes (VREFP_a 177.885 um, VREFN_a 143.885 um, VREFP_b 197.885 um, VREFN_b 251.885 um) and the PDB3AC pad capacitance (ESD clamps on AIO; the budget assumed 0.5 pF per pad). The extracted IO_RING_T28_12x12_01 shows PDB3AC's AIO as one node from the bond pad to the core, with no series resistor.",
   "Feed widths: size each branch route for the budget's 6 ohm feed (with its in-core strap) and for EM at the pin peaks (reference 5.1 mA per rail over both bonds, VDD 5.5 mA summed over the pins).",
   "Pad decoupling: implement the 2 ohm ESR (series strip or gate resistance) and use the PDK decap density and leakage, as for the in-core regions.",
-  "In-core feeds from the new boundary pins (floorplan.json open_items): the two pins of each reference rail join inside vref_decap_west with one VREFP/VREFN crossing on the pad side of the resistors; the pair feed from xref_decap's south-west corner reaches the rail west ends past the reference network; the SAR feed runs from sar_decap_north to sar_supply_and_decap.",
-  "D0-D7 load: the in-core M7 route over the SAR (29.6 um) plus the register input is about 8-10 fF per bit against the 5 fF in the specification. Stage 2 should use 10 fF.",
-  "Register hold: at SAMPLE rising the register captures D while the ADC starts resetting it. Check the hold margin at FF -40/125 C; add delay on D if needed.",
+  "In-core feeds from the new boundary pins (floorplan.json open_items): the two pins of each reference rail join inside vref_decap_west with one VREFP/VREFN crossing on the pad side of the resistors; the pair feed runs from its south-edge pins north through xref_decap to the pair's M6 terminals on the XREF strip; the SAR feed runs from sar_decap_north to sar_supply_and_decap.",
+  "ADC_D0-ADC_D7 load: the in-core M7 route over the SAR (29.6 um) plus the register input is about 8-10 fF per bit against the 5 fF in the specification. Stage 2 should use 10 fF.",
+  "Register hold: at SAMPLE rising the register captures ADC_D0-ADC_D7 while the ADC starts resetting them. Check the hold margin at FF -40/125 C; add delay on the D inputs if needed.",
   "Output switching: one VDDIO/VSSIO pair serves eight outputs that can all toggle at once (0x7F to 0x80). Check the ground bounce at the chosen PDDW16SDGZ drive strength.",
-  "Cross-domain interfaces: SAMPLE (pad, DVDD, into the ADC, VDD!) and D0-D7 (ADC, VDD!, into the register, DVDD) cross between the two 0.9 V supplies; review them with the ESD rules.",
-  "Analog ring pads: confirm in the tphn28hpcpgv18 databook that the PVDD3AC/PVSS3AC AVDD/AVSS pins may stay open, and the allowed AVDDR level against AVDD (the earlier rings left VDDIB_CORE/VSSIB_CORE open and passed LVS).",
+  "Cross-domain interfaces: SAMPLE (pad, DVDD, into the ADC, VDD!) and ADC_D0-ADC_D7 (ADC, VDD!, into the register, DVDD) cross between the two 0.9 V supplies; review them with the ESD rules.",
+  "Analog ring pads: confirm in the tphn28hpcpgv18 databook that the PVDD3AC/PVSS3AC AVDD/AVSS pins may stay open (the earlier rings left VDDIB_CORE/VSSIB_CORE open and passed LVS), and the allowed TACVDD range and AIO and AVDD limits against it for a fixed 0.99 V AVDDR with AIO at 0-0.9 V and AVDD at 0.81-0.99 V.",
   "Bonding and package: PAD60GU single row at 60 um pitch; Stage 6 needs the actual bond geometry, including the interleaved reference wires.",
   "Steps 7-10 (Virtuoso, DRC, LVS) run only after the plan is accepted, into SAR_ADC_T28_LAYOUT."
  ],
