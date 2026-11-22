@@ -191,9 +191,11 @@ def prepare_deck(out, name, top, distributed_supplies=()):
             # The installed xRC deck recommends flattening inserted dummy
             # patterns. Expand only our fixed fill masters and their children;
             # preserve functional hierarchy and all fill geometry.
+            # ACF*/sar8_adc_core_fill*: the ADC core fill hierarchy (Layout/design/toplevel_fill.py), not its wrapper.
             fill_cells = sorted(cell for cell in gds_identity(join(out, "fixture.gds"))["labels"]
                                 if cell.startswith(("CDFO_", "CDFM_", "sar8_cdac_fill_", "SCFO_", "SCFM_", "sar8_comp_fill_",
-                                                    "STFO_", "STFM_", "sar8_timing_fill_")))
+                                                    "STFO_", "STFM_", "sar8_timing_fill_", "ACF", "sar8_adc_core_fill"))
+                                and not cell.startswith("sar8_adc_core_filled"))
             if fill_cells:
                 text = replace_once(text, r'^//FLATTEN CELL TOP_CELL_DM TOP_CELL_DODDPO[^\n]*',
                                     "FLATTEN CELL " + " ".join(fill_cells))

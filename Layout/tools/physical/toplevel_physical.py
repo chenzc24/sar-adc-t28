@@ -1,4 +1,5 @@
-"""Native checks of the ADC core top cell sar8_adc_core, run inside its own evidence directory.
+"""Native checks of the ADC core top cell sar8_adc_core, or of its fill wrapper sar8_adc_core_filled (--top), run
+inside its own evidence directory.
 
 The launcher (Layout/design/toplevel_route.py) uploads this file with run_physical.py and workspace.py,
 the cds.lib and, for a candidate, the merged GDS. The stream comes either from a saved OA view
@@ -39,7 +40,11 @@ def main():
     ap.add_argument("--hcells", help="file with one block master per line, kept as a subcircuit in the netlist")
     ap.add_argument("--source", help="uploaded LVS source netlist (CDL) for the lvs stage")
     ap.add_argument("--virtual", default="", help="comma-separated net names for VIRTUAL CONNECT NAME (lvs)")
+    ap.add_argument("--top", default=TOP, help="top cell (default %s; the fill wrapper sar8_adc_core_filled)" % TOP)
     args = ap.parse_args()
+    cell = args.top
+    if not re.match(r"\Asar8_adc_core(_filled)?\Z", cell):
+        raise ValueError("Unexpected top cell")
     out = os.getcwd()
     if os.path.basename(out) != args.identity:
         raise ValueError("Run inside the evidence directory of " + args.identity)
@@ -50,7 +55,7 @@ def main():
             raise ValueError("Unknown stage in --stages")
     if "lvs" in wanted and (set(wanted) & set(["spice", "pex"]) or not args.source):
         raise ValueError("Run lvs in its own job, with --source")
-    report = dict(identity=args.identity, top=TOP, library=native.LIB, library_path=native.LIB_PATH,
+    report = dict(identity=args.identity, top=cell, library=native.LIB, library_path=native.LIB_PATH,
                   source=dict(view=args.view) if args.view else dict(gds=args.gds), stages=list(wanted),
                   driver_sha256=dict((n, native.sha(native.raw(join(out, n))))
                                      for n in ("toplevel_physical.py", "run_physical.py", "workspace.py", "cds.lib")),
@@ -77,7 +82,7 @@ def main():
         if not cells or not all(re.match(r"\A[A-Za-z0-9_]+\Z", c) for c in cells):
             raise ValueError("Invalid hcell list")
         text = native.read(join(work, "lvs.svrf"))
-        primary = 'LAYOUT PRIMARY "%s"' % TOP
+        primary = 'LAYOUT PRIMARY "%s"' % cell
         if text.count(primary) != 1:
             raise ValueError("Unexpected LAYOUT PRIMARY statement")
         text = text.replace(primary, primary + "\n" + "\n".join("HCELL %s %s" % (c, c) for c in cells))
@@ -91,10 +96,10 @@ def main():
                 raise ValueError("Invalid OA view")
             with open(args.lock, "a") as lock:
                 fcntl.flock(lock, fcntl.LOCK_EX)
-                oa = join(native.LIB_PATH, TOP, args.view, "layout.oa")
+                oa = join(native.LIB_PATH, cell, args.view, "layout.oa")
                 report["source"]["layout_oa_sha256"] = native.sha(native.raw(oa))
                 launch("stream", native.CADENCE,
-                       ["strmout", "-library", native.LIB, "-topCell", TOP, "-view", args.view, "-strmFile", gds,
+                       ["strmout", "-library", native.LIB, "-topCell", cell, "-view", args.view, "-strmFile", gds,
                         "-cdslib", join(out, "cds.lib"), "-layerMap", join(native.PDK, "tsmcN28.layermap"),
                         "-runDir", out, "-logFile", join(out, "stream.log"), "-summaryFile", join(out, "stream.sum"),
                         "-convertPin", "geometry", "-convertPcellPin", "geometry"], out, 600)
@@ -107,18 +112,18 @@ def main():
                 shutil.copyfile(join(out, args.gds), gds)
         identity = native.gds_identity(gds)
         report["gds"] = dict(sha256=identity["sha256"], without_gds_timestamps=identity["without_gds_timestamps"],
-                             top_structural_sha256=identity["structural_sha256"].get(TOP),
+                             top_structural_sha256=identity["structural_sha256"].get(cell),
                              structures=len(identity["structural_sha256"]),
-                             top_labels=sorted(identity["labels"].get(TOP, [])))
-        if TOP not in identity["structural_sha256"]:
-            raise RuntimeError("The stream has no " + TOP + " structure")
+                             top_labels=sorted(identity["labels"].get(cell, [])))
+        if cell not in identity["structural_sha256"]:
+            raise RuntimeError("The stream has no " + cell + " structure")
         save()
         for stage in wanted:
             work = join(out, stage)
             os.mkdir(work)
             os.symlink("../fixture.gds", join(work, "fixture.gds"))
             if stage == "drc":
-                report["decks"][stage] = native.prepare_deck(work, "drc", TOP)
+                report["decks"][stage] = native.prepare_deck(work, "drc", cell)
                 launch(stage, native.CALIBRE, ["calibre", "-drc", "-hier", "-turbo", "8", "-nowait", "drc.svrf"],
                        work, 3600)
                 text = native.read(join(work, "DRC.rep"))
@@ -132,7 +137,7 @@ def main():
             elif stage == "spice":
                 # Layout netlist only: the comparison source is an empty placeholder that is never read.
                 native.put(join(out, "reference.cdl"), b"* extraction only\n")
-                report["decks"][stage] = native.prepare_deck(work, "lvs", TOP)
+                report["decks"][stage] = native.prepare_deck(work, "lvs", cell)
                 if args.hcells:
                     hcell_deck(work, stage)
                 launch(stage, native.CALIBRE, ["calibre", "-spice", "layout.sp", "-hier", "-turbo", "8", "-nowait",
@@ -144,7 +149,7 @@ def main():
             elif stage == "lvs":
                 # Comparison against the uploaded source: prepare_deck points SOURCE PATH at ../reference.cdl.
                 shutil.copyfile(join(out, args.source), join(out, "reference.cdl"))
-                report["decks"][stage] = native.prepare_deck(work, "lvs", TOP)
+                report["decks"][stage] = native.prepare_deck(work, "lvs", cell)
                 if args.hcells:
                     hcell_deck(work, stage)
                 names = [n for n in args.virtual.split(",") if n]
@@ -163,7 +168,7 @@ def main():
                        work, 3600)
                 text = native.read(join(work, "lvs.rep"))
                 verdicts = re.findall(r"(?m)^[ \t]+(CORRECT|INCORRECT|NOT COMPARED)[ \t]+(\S+)[ \t]+(\S+)[ \t]*$", text)
-                top = [v for v, a, b in verdicts if a == TOP and b == TOP]
+                top = [v for v, a, b in verdicts if a == cell and b == cell]
                 if not top:
                     raise RuntimeError("Missing LVS comparison verdict")
                 report["checks"][stage].update(verdict=top[-1], cells=[dict(verdict=v, layout=a, source=b)
@@ -172,7 +177,7 @@ def main():
                 # Flat RC + coupling extraction of the whole core with the installed typical deck; nets are
                 # named by the top-level labels (TEXT DEPTH PRIMARY).
                 native.put(join(out, "reference.cdl"), b"* extraction only\n")
-                report["decks"][stage] = native.prepare_deck(work, "pex", TOP)
+                report["decks"][stage] = native.prepare_deck(work, "pex", cell)
                 for step, command in (("phdb", ["calibre", "-xrc", "-phdb", "-turbo", "8", "-nowait", "pex.svrf"]),
                                       ("rcc", ["calibre", "-xrc", "-pdb", "-rcc", "-turbo", "8", "-nowait", "pex.svrf"]),
                                       ("format", ["calibre", "-xrc", "-fmt", "-all", "-nowait", "pex.svrf"])):
