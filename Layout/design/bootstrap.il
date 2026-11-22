@@ -5,6 +5,18 @@ unless(boundp('bsLib) bsLib="SAR_ADC_T28_LAYOUT")
 ; candidate goes to its own view layout_mmain<N>.
 unless(boundp('bsMainFingers) bsMainFingers=4)
 unless(boundp('bsView) bsView="layout")
+; Revision views of the selected sampler: (bsLift bsRingInward bsWellOut). layout_r2 (2026-11-22) widens the
+; three guard rings to 0.20 um and lifts the PMOS row 0.40 um, so the VIN diffusion is 2.40 um from the
+; nearest 1.8 V PMOS diffusion (chip LUP.5.2.1: 2.3 um when both rings are at least 0.2 um wide). The
+; substrate ring and the y sides of the well rings widen inward; the x sides of the well rings widen
+; bsWellOut outward inside the unchanged N-wells (NW.S.4 keeps them 1.02 um apart), because the PMOS dummy
+; poly lies 0.12 um inside them. The outline, pins and devices are those of layout.
+bsRevision=cadr(assoc(bsView '(("layout_r2" (0.40 0.10 0.025)))))
+bsLift=if(bsRevision car(bsRevision) 0.0)
+bsRingInward=if(bsRevision cadr(bsRevision) 0.0)
+bsWellOut=if(bsRevision caddr(bsRevision) 0.0)
+; Implant edge inside a widened well-ring x side, from its OD (NP.EX.2 and PP.S.5 need 0.02 um).
+bsWellGap=0.025
 procedure(bsRequire(ok message) unless(ok error("%s\n" message)))
 bsRequire(evenp(bsMainFingers) && bsMainFingers>=2 "bsMainFingers must be even")
 procedure(bsPoint(x y) list(0.005*round(x/0.005) 0.005*round(y/0.005)))
@@ -128,13 +140,27 @@ procedure(bsSeam(cv net x y)
  foreach(dy '(0.05 0.165 0.28 0.395 0.51 0.62 0.73 0.84 0.95)
   bsRect(cv "CO" nil x-0.02 y+dy-0.02 x+0.02 y+dy+0.02))
  bsRect(cv "M1" net x-0.025 y x+0.025 y+1.0))
-procedure(bsRing(cv net implant x0 y0 x1 y1)
- let((a b c n p)
+procedure(bsRing(cv net implant x0 y0 x1 y1 @optional (xOut 0.0))
+ let((a b c n p wi xi h e ex)
   foreach(seg list(list(x0 y0 x1 y0) list(x1 y0 x1 y1) list(x0 y1 x1 y1) list(x0 y0 x0 y1))
    foreach(l list(list("OD" 0.050) list(implant 0.115) list("M1" 0.035))
     let((half)
      half=cadr(l)
      bsRect(cv car(l) if(car(l)=="M1" net nil) car(seg)-half cadr(seg)-half caddr(seg)+half nth(3 seg)+half))))
+  ; A revision widens the OD by bsRingInward inward; on the x sides by xOut outward and the rest inward.
+  ; The implant follows the OD: 0.065 um past its inner edge, or bsWellGap on an x side that widens
+  ; outward. M1 and the contacts stay on the centre line.
+  when(bsRingInward>0
+   wi=bsRingInward xi=bsRingInward-xOut
+   foreach(l list(list("OD" 0.050 0.0) list(implant 0.115 0.065))
+    h=cadr(l) e=caddr(l) ex=if(e>0 && xOut>0 bsWellGap e)
+    bsRect(cv car(l) nil x0+h y0+h x1-h y0+0.05+wi+e)
+    bsRect(cv car(l) nil x0+h y1-0.05-wi-e x1-h y1-h)
+    bsRect(cv car(l) nil x0+h y0+h x0+0.05+xi+ex y1-h)
+    bsRect(cv car(l) nil x1-0.05-xi-ex y0+h x1-h y1-h)
+    when(xOut>0
+     bsRect(cv car(l) nil x0-h-xOut y0-h x0-h y1+h)
+     bsRect(cv car(l) nil x1+h y0-h x1+h+xOut y1+h))))
   foreach(s list(list(x0 x1 y0 t) list(x0 x1 y1 t) list(y0+0.14 y1-0.14 x0 nil) list(y0+0.14 y1-0.14 x1 nil))
    a=car(s) b=cadr(s) c=caddr(s) n=ceiling((b-a)/0.17)
    for(k 0 n
@@ -180,21 +206,21 @@ procedure(bsArray(cv)
   ; Edge spines on the two notched rows tie into the first continuous row.
   foreach(x list(car(wing) 4.39) bsV(cv "M4" "BTOP" x 2.865 9.145 0.20))
   foreach(x list(cadr(wing) 4.81) bsV(cv "M4" "BBOT" x 0.055 6.335 0.20))
-  bsRect(cv "M4" "BTOP" -1.16 4.00 -0.86 22.135)
+  bsRect(cv "M4" "BTOP" -1.16 4.00+bsLift -0.86 22.135)
   bsRect(cv "M4" "BBOT" -0.665 1.54 -0.365 24.945)
-  bsH(cv "M4" "BTOP" 4.10 car(wing) -1.01 0.20)
+  bsH(cv "M4" "BTOP" 4.10+bsLift car(wing) -1.01 0.20)
   ; At the NMOS pickup height all BTOP rails end above this M4 crossbar.
   bsH(cv "M4" "BBOT" 1.64 cadr(wing) 4.81 0.20)
   ; The right BTOP feed crosses BBOT on a short M3 section above the wells.
-  bsH(cv "M3" "BTOP" 5.31 -1.07 0.10 0.13)
+  bsH(cv "M3" "BTOP" 5.31+bsLift -1.07 0.10 0.13)
   foreach(x '(-1.01 0.04)
-   foreach(dx '(-0.070 0.070) bsVia(cv 3 x+dx 5.31 '(0.03 0.005) '(0.005 0.03))))
-  bsH(cv "M4" "BTOP" 5.31 -0.005 4.39 0.20)
+   foreach(dx '(-0.070 0.070) bsVia(cv 3 x+dx 5.31+bsLift '(0.03 0.005) '(0.005 0.03))))
+  bsH(cv "M4" "BTOP" 5.31+bsLift -0.005 4.39 0.20)
   bsRequire(count==200 "Invalid Cboot unit count")))
 
 procedure(bsSwitches(cv)
- let((ny py main vin s vinX voutX)
-  ny=0.80 py=3.80
+ let((ny py main vin s vinX voutX px)
+  ny=0.80 py=3.80+bsLift
   ; Extra main fingers extend the group, its guard ring and the rails leftwards.
   s=0.33*(bsMainFingers-2)
   vinX=nil voutX=nil
@@ -228,17 +254,18 @@ procedure(bsSwitches(cv)
   ; well proximity from the OD_18 NOT NW boundary, so per-device OD_18
   ; boxes 0.2 um from each gate raise the threshold. Here the nearest edges
   ; are 0.7 um or more from every NMOS gate; the PMOS see their N-well edges.
-  ; OD2.EX.2: the region encloses both N-wells (3.13..5.47) by 0.25 um.
-  bsRect(cv "OD_18" nil -3.10-s 0.10 3.72 5.72)
+  ; OD2.EX.2: the region encloses both N-wells (3.13..5.47, plus bsLift) by 0.25 um.
+  bsRect(cv "OD_18" nil -3.10-s 0.10 3.72 5.72+bsLift)
   ; Substrate guard; boosted and static PMOS each have a contacted well.
   bsRing(cv "VSS" "PP" -2.86-s 0.36 3.32 2.37)
-  bsRect(cv "NP" nil -2.745-s 0.475 3.205 2.255)
+  bsRect(cv "NP" nil -2.745-s+bsRingInward 0.475+bsRingInward 3.205-bsRingInward 2.255-bsRingInward)
   foreach(w '(("BTOP" -1.98 -0.04) ("VDD" 1.30 3.31))
-   bsRect(cv "NW" nil cadr(w)-0.16 3.13 caddr(w)+0.16 5.47)
-   bsRect(cv "PP" nil cadr(w)+0.115 3.405 caddr(w)-0.115 5.195)
-   bsRing(cv car(w) "NP" cadr(w) 3.29 caddr(w) 5.31))
-  bsV(cv "M1" "BTOP" -1.01 py+0.97 5.31 0.05)
-  bsV(cv "M1" "VDD" 2.295 3.29 py+0.03 0.05)
+   bsRect(cv "NW" nil cadr(w)-0.16 3.13+bsLift caddr(w)+0.16 5.47+bsLift)
+   px=if(bsWellOut>0 0.05+bsRingInward-bsWellOut+bsWellGap 0.115)
+   bsRect(cv "PP" nil cadr(w)+px 3.405+bsLift+bsRingInward caddr(w)-px 5.195+bsLift-bsRingInward)
+   bsRing(cv car(w) "NP" cadr(w) 3.29+bsLift caddr(w) 5.31+bsLift bsWellOut))
+  bsV(cv "M1" "BTOP" -1.01 py+0.97 5.31+bsLift 0.05)
+  bsV(cv "M1" "VDD" 2.295 3.29+bsLift py+0.03 0.05)
   foreach(x '(-0.185 2.295) bsV(cv "M1" "VSS" x 0.36 ny+0.03 0.05))
   ; Held output: three cuts on every drain column and a 0.20 um M2 exit at
   ; the lower edge, facing the CDAC. Further drains join on a 0.20 um M2 bar
@@ -264,7 +291,7 @@ procedure(bsSwitches(cv)
     bsVia(cv 1 x 1.64+dy '(0.0 0.03) '(0.025 0.025))))
   bsH(cv "M2" "BBOT" 1.64 -1.175 -0.515 0.09)
   bsRect(cv "M2" "BBOT" -1.225 1.515 -1.125 1.765)
-  foreach(feed '(("BBOT" -0.515 1.64) ("BTOP" -1.01 4.10))
+  foreach(feed list(list("BBOT" -0.515 1.64) list("BTOP" -1.01 4.10+bsLift))
    let((net x y)
     net=car(feed) x=cadr(feed) y=caddr(feed)
     bsRect(cv "M2" net x-0.060 y-0.145 x+0.060 y+0.145)
@@ -277,26 +304,26 @@ procedure(bsSwitches(cv)
   ; Cut pairs run along each M3 riser or M2 bar.
   bsH(cv "M2" "G" 1.915 -1.34 -0.68 0.11)
   bsPair(cv "G" 2 -0.68 1.985 2 nil)
-  bsV(cv "M3" "G" -0.68 1.18 4.08 0.08)
+  bsV(cv "M3" "G" -0.68 1.18 4.08+bsLift 0.08)
   bsH(cv "M2" "G" 1.18 -0.68 1.635 0.10)
   bsPair(cv "G" 2 -0.61 1.18 2 t) bsPair(cv "G" 1 1.635 1.25 2 nil)
   ; Upper G riser end: one M2/M3 landing, three VIA2 and two VIA1 cuts.
-  bsH(cv "M2" "G" 3.685 -1.175 -0.68 0.11)
-  foreach(layer '("M2" "M3") bsRect(cv layer "G" -0.735 3.63 -0.625 4.135))
-  bsCuts(cv 2 -0.68 3.825 3 nil '(0.025 0.025))
-  bsCuts(cv 1 -0.68 4.01 2 nil '(0.0 0.03))
+  bsH(cv "M2" "G" 3.685+bsLift -1.175 -0.68 0.11)
+  foreach(layer '("M2" "M3") bsRect(cv layer "G" -0.735 3.63+bsLift -0.625 4.135+bsLift))
+  bsCuts(cv 2 -0.68 3.825+bsLift 3 nil '(0.025 0.025))
+  bsCuts(cv 1 -0.68 4.01+bsLift 2 nil '(0.0 0.03))
   ; CTRL's lower pickup sits between G and the BBOT bar: one cut per layer.
   bsStack(cv "CTRL" -0.845 1.38 1 3)
-  bsV(cv "M3" "CTRL" -0.845 1.38 4.915 0.08)
-  bsRect(cv "M2" "CTRL" -0.935 4.86 -0.755 4.97) bsPair(cv "CTRL" 2 -0.775 4.915 2 t)
-  bsH(cv "M2" "CTRL" 4.32 -0.845 1.965 0.10)
-  bsPair(cv "CTRL" 2 -0.775 4.32 2 t) bsPair(cv "CTRL" 1 1.965 4.25 2 nil)
+  bsV(cv "M3" "CTRL" -0.845 1.38 4.915+bsLift 0.08)
+  bsRect(cv "M2" "CTRL" -0.935 4.86+bsLift -0.755 4.97+bsLift) bsPair(cv "CTRL" 2 -0.775 4.915+bsLift 2 t)
+  bsH(cv "M2" "CTRL" 4.32+bsLift -0.845 1.965 0.10)
+  bsPair(cv "CTRL" 2 -0.775 4.32+bsLift 2 t) bsPair(cv "CTRL" 1 1.965 4.25+bsLift 2 nil)
   ; Power and clock are on the outside of the switch chain.
-  bsH(cv "M2" "VDD" 4.55 -1.34 1.30 0.10)
-  bsPair(cv "VDD" 1 -1.34 4.48 2 nil) bsPair(cv "VDD" 1 1.30 4.62 2 nil '(0.025 0.025))
-  bsV(cv "M3" "VDD" 1.80 0.07 3.29 0.12)
+  bsH(cv "M2" "VDD" 4.55+bsLift -1.34 1.30 0.10)
+  bsPair(cv "VDD" 1 -1.34 4.48+bsLift 2 nil) bsPair(cv "VDD" 1 1.30 4.62+bsLift 2 nil '(0.025 0.025))
+  bsV(cv "M3" "VDD" 1.80 0.07 3.29+bsLift 0.12)
   bsRect(cv "M2" "VDD" 1.71 0.63 1.89 0.74)
-  bsPair(cv "VDD" 1 1.80 3.29 2 t '(0.025 0.025)) bsPair(cv "VDD" 2 1.80 3.29 2 t)
+  bsPair(cv "VDD" 1 1.80 3.29+bsLift 2 t '(0.025 0.025)) bsPair(cv "VDD" 2 1.80 3.29+bsLift 2 t)
   bsPair(cv "VDD" 2 1.80 0.685 2 t)
   ; Supply rails on M5 span the switch bank for the top-level grid.
   bsPinRect(cv "VSS" "M5" -2.86-s 0.24 3.32 0.48)
@@ -308,11 +335,11 @@ procedure(bsSwitches(cv)
   bsH(cv "M2" "CLKS" 0.49 -0.68 2.46 0.11)
   bsV(cv "M2" "CLKS" -0.68 0.49 0.685 0.11)
   bsV(cv "M2" "CLKS" 2.46 0.07 0.685 0.11) bsPin(cv "CLKS" "M2" 2.46 0.07)
-  bsPair(cv "CLKS" 2 2.46 0.755 2 nil) bsV(cv "M3" "CLKS" 2.46 0.685 3.685 0.08)
-  bsPair(cv "CLKS" 2 2.46 3.615 2 nil) bsH(cv "M2" "CLKS" 3.685 2.13 2.46 0.11)
+  bsPair(cv "CLKS" 2 2.46 0.755 2 nil) bsV(cv "M3" "CLKS" 2.46 0.685 3.685+bsLift 0.08)
+  bsPair(cv "CLKS" 2 2.46 3.615+bsLift 2 nil) bsH(cv "M2" "CLKS" 3.685+bsLift 2.13 2.46 0.11)
   bsH(cv "M2" "CLKSB" 1.915 -0.35 2.625 0.11)
   bsPair(cv "CLKSB" 2 2.625 1.985 2 nil) bsTower(cv "CLKSB" 2.625 1.47 1 3 2 nil)
-  bsV(cv "M3" "CLKSB" 2.625 1.54 4.08 0.08) bsTower(cv "CLKSB" 2.625 4.15 1 3 2 nil)))
+  bsV(cv "M3" "CLKSB" 2.625 1.54 4.08+bsLift 0.08) bsTower(cv "CLKSB" 2.625 4.15+bsLift 1 3 2 nil)))
 
 procedure(bsBuild()
  let((lib cv owner cell)

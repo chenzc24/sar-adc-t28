@@ -241,7 +241,8 @@ def compare_streams(a, b):
                     only_second=[list(x) for x in sorted(set(cb[k]) - set(ca[k]))][:10]) for k in ca}
 
 
-def physical(identity, view=None, gds=None, through="drc", stages=None, hcells=None, source=None, virtual=None):
+def physical(identity, view=None, gds=None, through="drc", stages=None, hcells=None, source=None, virtual=None,
+             top=None):
     if not IDENTITY.fullmatch(identity):
         raise ValueError("Invalid identity")
     if bool(view) == bool(gds):
@@ -267,6 +268,8 @@ def physical(identity, view=None, gds=None, through="drc", stages=None, hcells=N
         arguments += ["--source", "source.cdl"]
     if virtual:
         arguments += ["--virtual", ",".join(virtual)]
+    if top:
+        arguments += ["--top", top]
     script = ["set -eu", "umask 077", f"test \"$(hostname -s)\" = {q(cfg['host'])}",
               f"test ! -e {q(evidence)} && test ! -e {q(cfg['legacy_root'] + '/evidence/' + identity)}",
               f"mkdir {q(evidence)}", f"cd {q(evidence)}"]
@@ -339,6 +342,7 @@ def main():
     a.add_argument("--hcells-from", help="local stream whose block masters stay subcircuits in the netlist")
     a.add_argument("--source", help="local LVS source netlist (CDL) for --stages lvs")
     a.add_argument("--virtual", nargs="*", help="net names joined by VIRTUAL CONNECT NAME in the lvs stage")
+    a.add_argument("--top", help="top cell when not sar8_adc_core (the fill wrapper sar8_adc_core_filled)")
     a = sub.add_parser("status")
     a.add_argument("identity")
     a = sub.add_parser("fetch")
@@ -359,7 +363,7 @@ def main():
     elif args.action == "physical":
         hcells = block_masters(args.hcells_from) if args.hcells_from else None
         result = physical(args.identity, args.view, args.gds, args.through, args.stages, hcells, args.source,
-                          args.virtual)
+                          args.virtual, args.top)
     elif args.action == "status":
         result = status(args.identity)
     else:

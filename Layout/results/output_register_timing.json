@@ -1,0 +1,1026 @@
+{
+  "title": "Chip output register sar8_out_reg timing on the Stage 2 all-extracted ADC",
+  "register": {
+    "source": "design/chip/output_register.scs",
+    "source_sha256": "7e8616ecad146ed83ee2ab8decc49f06e1171670b7b46c150e2c2d40e607f76d",
+    "q_load_F": 1.5e-13
+  },
+  "corners": [
+    {
+      "corner": "ssc",
+      "mos": "SS",
+      "vdd_v": 0.81,
+      "temperature_c": -40,
+      "cell_lpe": "cworst_t",
+      "run_id": "sar8-oreg-ssc-a",
+      "timing_run_id": "sar8-oreg-ssc-a-timing",
+      "host": "thu-wei",
+      "recipe_hash": "dbbee321a38dd6d62476c570be2b4c8bb36c474799c1906445300d221cf0715a",
+      "design_id": "sar8_single_edge_bitwise_sar_macro_xrc_xref_xrc_boot_xrc_comp_xrc_oreg",
+      "source_commit": "155730ca9bc4560d6583e1c0d4369156c483cfc7",
+      "deck": {
+        "inputs": {
+          "dut.scs": "e6273fbff54b34f58088e86dba128c3827ec61a223a183bded86e4a14e43d1ab",
+          "tb.scs": "f3723ed3738e200b754c70fccc9030e1bf3a3df552fb437b740b84f0e1b1ee68",
+          "test.scs": "2f4f8472452b55eed6ce90c39e92f90f65172231a9c0d7df6b8e57f7bdde4956",
+          "library_include.scs": "ba6700fb798362158c354cee7d6d1c7dbe9e45c506337fa5da0d19b9eef9395e",
+          "context.json": "f97b001e767a9dfb0e43b1ab25a483b5f229e29ec2e3522638a1a73a680103f5",
+          "output_register.scs": "7e8616ecad146ed83ee2ab8decc49f06e1171670b7b46c150e2c2d40e607f76d",
+          "output_register_tb.scs": "ababdf1bf693205ec3800b8973802075bb6b12a00b005acdc58b297d847db88a"
+        },
+        "base_deck": {
+          "run_id": "sar8-allx-ssc-verify-oregbase-a",
+          "recipe": "work/decks/sar8-allx-ssc-verify-oregbase-a/recipe.yaml",
+          "recipe_sha256": "08aed42f37f3624bcc37184a52c0bb32cbdaf7a0e406b1181474f6f6f8333ee1"
+        },
+        "stage2_identity": {
+          "run_id": "sar8-allx-ssc-verify-a",
+          "identical": [
+            "boot_extracted.scs",
+            "boot_extracted.scs.pex",
+            "boot_extracted.scs.sar_bootstrap_flat_8b_p_core.pxi",
+            "bootstrap_pex.scs",
+            "bootstrap_physical.json",
+            "cmp_extracted.scs",
+            "cmp_extracted.scs.pex",
+            "cmp_extracted.scs.sar_strongarm_t28_core.pxi",
+            "comparator_pex.scs",
+            "comparator_physical.json",
+            "dff.json",
+            "dut.scs",
+            "library_include.scs",
+            "native_stream.py",
+            "observer.va",
+            "reference_short.py",
+            "register_constraints.py",
+            "sar_se_xrc.scs",
+            "sar_se_xrc.scs.pex",
+            "sar_se_xrc.scs.sar8_se_core.pxi",
+            "single_edge_audit.py",
+            "single_edge_lpe.py",
+            "tb.scs",
+            "test.scs",
+            "top/adc_top.scs",
+            "xref_extracted.scs",
+            "xref_extracted.scs.pex",
+            "xref_extracted.scs.sar8_cdac_with_xref.pxi",
+            "xref_physical.json",
+            "xtor/bootstrap/bootstrap.scs",
+            "xtor/cdac/cdac.scs",
+            "xtor/comparator/comparator.scs",
+            "xtor/reference/single_edge_d2.scs",
+            "xtor/sar/single_edge.scs"
+          ],
+          "differs": [
+            "context.json"
+          ],
+          "only_rebuilt": [],
+          "only_stage2": []
+        }
+      },
+      "simulation": {
+        "elapsed_s": 8201.260141134262,
+        "peak_rss_bytes": 2415984640,
+        "output_bytes": 7332165062
+      },
+      "adc_result_sha256": "c25d4a4b9d17e5f3dfb6e497917f0932c8a83bb1ba2a49892c8c8eade4d32dd0",
+      "timing_result_sha256": "acea5a142607f4b85d94722d561e2870e3bcc6c2c0fc22b6c4aa3ee53e15502e",
+      "adc": {
+        "all_pass": true,
+        "min_margin_ns": 7.764340750553458,
+        "warnings": [
+          "CMI-2751",
+          "CMI-2753",
+          "CMI-2755",
+          "CMI-2756",
+          "SFE-1131",
+          "SFE-2453",
+          "SFE-2649",
+          "SFE-3014",
+          "SFE-3016",
+          "SFE-3031",
+          "SPECTRE-16780",
+          "VACOMP-2435"
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "warmup": true,
+            "code90": 255,
+            "pass": true
+          },
+          {
+            "frame": 1,
+            "warmup": false,
+            "code90": 255,
+            "pass": true
+          },
+          {
+            "frame": 2,
+            "warmup": false,
+            "code90": 0,
+            "pass": true
+          },
+          {
+            "frame": 3,
+            "warmup": false,
+            "code90": 128,
+            "pass": true
+          },
+          {
+            "frame": 4,
+            "warmup": false,
+            "code90": 83,
+            "pass": true
+          },
+          {
+            "frame": 5,
+            "warmup": false,
+            "code90": 172,
+            "pass": true
+          },
+          {
+            "frame": 6,
+            "warmup": false,
+            "code90": 127,
+            "pass": true
+          },
+          {
+            "frame": 7,
+            "warmup": false,
+            "code90": 0,
+            "pass": true
+          }
+        ]
+      },
+      "capture": {
+        "checks": [
+          {
+            "edge_ns": 160.05,
+            "frame": 0,
+            "warmup": true,
+            "q_word": 255,
+            "d_word_at_edge": 255,
+            "code90": 255,
+            "code98": 255,
+            "decision_word": 255,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 260.04999999999995,
+            "frame": 1,
+            "warmup": false,
+            "q_word": 255,
+            "d_word_at_edge": 255,
+            "code90": 255,
+            "code98": 255,
+            "decision_word": 255,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 360.04999999999995,
+            "frame": 2,
+            "warmup": false,
+            "q_word": 0,
+            "d_word_at_edge": 0,
+            "code90": 0,
+            "code98": 0,
+            "decision_word": 0,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 460.04999999999995,
+            "frame": 3,
+            "warmup": false,
+            "q_word": 128,
+            "d_word_at_edge": 128,
+            "code90": 128,
+            "code98": 128,
+            "decision_word": 128,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 560.05,
+            "frame": 4,
+            "warmup": false,
+            "q_word": 83,
+            "d_word_at_edge": 83,
+            "code90": 83,
+            "code98": 83,
+            "decision_word": 83,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 660.05,
+            "frame": 5,
+            "warmup": false,
+            "q_word": 172,
+            "d_word_at_edge": 172,
+            "code90": 172,
+            "code98": 172,
+            "decision_word": 172,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 760.05,
+            "frame": 6,
+            "warmup": false,
+            "q_word": 127,
+            "d_word_at_edge": 127,
+            "code90": 127,
+            "code98": 127,
+            "decision_word": 127,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 860.05,
+            "frame": 7,
+            "warmup": false,
+            "q_word": 0,
+            "d_word_at_edge": 0,
+            "code90": 0,
+            "code98": 0,
+            "decision_word": 0,
+            "adc_frame_pass": true,
+            "match": true
+          }
+        ],
+        "scored": 7,
+        "all_match": true,
+        "analyzer_capture_pass": true,
+        "frame7_captured": true
+      },
+      "worst": {
+        "q_transition_10_90_ps_max": {
+          "ck_ns": 660.05,
+          "bit": 7,
+          "observations": 34,
+          "value": 165.47887076124053
+        },
+        "hold_slack_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 48,
+          "value": 1179.0008405194517
+        },
+        "setup_ps": {
+          "ck_ns": 560.05,
+          "bit": 0,
+          "observations": 56,
+          "value": 18324.267187514077
+        },
+        "hold_no_delay_ps": {
+          "ck_ns": 760.05,
+          "bit": 5,
+          "observations": 49,
+          "value": 716.160419091907
+        },
+        "q_transition_10_90_ps_min": {
+          "ck_ns": 360.04999999999995,
+          "bit": 7,
+          "observations": 34,
+          "value": 162.24933822997193
+        },
+        "hold_no_delay_slack_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 49,
+          "value": 698.0950217386154
+        },
+        "ck_to_qi_ps_max": {
+          "ck_ns": 360.04999999999995,
+          "bit": 7,
+          "observations": 34,
+          "value": 96.34081671283928
+        },
+        "setup_slack_ps": {
+          "ck_ns": 560.05,
+          "bit": 0,
+          "observations": 56,
+          "value": 18313.91906252419
+        },
+        "hold_ps": {
+          "ck_ns": 760.05,
+          "bit": 7,
+          "observations": 48,
+          "value": 1196.7433318080327
+        },
+        "ck_to_q_ps_max": {
+          "ck_ns": 360.04999999999995,
+          "bit": 7,
+          "observations": 34,
+          "value": 192.4229281716112
+        },
+        "ck_to_q_ps_min": {
+          "ck_ns": 660.05,
+          "bit": 7,
+          "observations": 34,
+          "value": 174.23007200312026
+        },
+        "ck_to_qi_ps_min": {
+          "ck_ns": 660.05,
+          "bit": 7,
+          "observations": 34,
+          "value": 76.89544937548713
+        }
+      },
+      "liberty": {
+        "cell": "DFQD1BWP12T30P140",
+        "archive_mtime": 1602230448.070284,
+        "arcs": {
+          "setup_rising": {
+            "rise_constraint": {
+              "table": [
+                [
+                  0.0154473,
+                  0.0250605,
+                  0.0648
+                ],
+                [
+                  0.00811475,
+                  0.0185457,
+                  0.0553457
+                ],
+                [
+                  -0.00237452,
+                  0.00768652,
+                  0.0401289
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ],
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "fall_constraint": {
+              "table": [
+                [
+                  0.00363867,
+                  0.0175146,
+                  0.0978531
+                ],
+                [
+                  -0.00917849,
+                  0.00514844,
+                  0.0862846
+                ],
+                [
+                  -0.0519883,
+                  -0.036436,
+                  0.0401289
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ],
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "when": null
+          },
+          "hold_rising": {
+            "rise_constraint": {
+              "table": [
+                [
+                  -0.00642969,
+                  -0.0145633,
+                  -0.0458361
+                ],
+                [
+                  -0.00028247,
+                  -0.00856641,
+                  -0.0371222
+                ],
+                [
+                  0.0105645,
+                  0.00176831,
+                  -0.0263346
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ],
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "fall_constraint": {
+              "table": [
+                [
+                  0.012538,
+                  -0.000348491,
+                  -0.0624538
+                ],
+                [
+                  0.0228173,
+                  0.0102969,
+                  -0.0522463
+                ],
+                [
+                  0.0621205,
+                  0.0493043,
+                  -0.013259
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ],
+                [
+                  0.0023,
+                  0.0312,
+                  0.2626
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "when": null
+          }
+        },
+        "axis_order": [
+          "related_pin_transition",
+          "constrained_pin_transition"
+        ],
+        "archive_bytes": 13657415950,
+        "member": "TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn28hpcplusbwp12t30p140_180a/tcbn28hpcplusbwp12t30p140ssg0p81vm40c_ccs.lib",
+        "corner": "ssc",
+        "attributes": {
+          "slew_lower_threshold_pct_rise": "30.00",
+          "input_threshold_pct_rise": "50.00",
+          "input_threshold_pct_fall": "50.00",
+          "slew_upper_threshold_pct_fall": "70.00",
+          "slew_lower_threshold_pct_fall": "30.00",
+          "time_unit": "1ns",
+          "slew_derate_from_library": "0.50",
+          "slew_upper_threshold_pct_rise": "70.00"
+        },
+        "member_bytes": 1599028765,
+        "archive": "/home/process/tsmc28n/STD_CELL/tcbn28hpcplusbwp12t30p140_190a/tcbn28hpcplusbwp12t30p140_180a_ccs.tar.gz"
+      },
+      "liberty_error": null,
+      "q_glitches": []
+    },
+    {
+      "corner": "ffh",
+      "mos": "FF",
+      "vdd_v": 0.99,
+      "temperature_c": 125,
+      "cell_lpe": "cbest_t",
+      "run_id": "sar8-oreg-ffh-d",
+      "timing_run_id": "sar8-oreg-ffh-d-timing",
+      "host": "thu-wei",
+      "recipe_hash": "62b6608752a36a88a25f05c54de221e53e4c11ea8c4a26f779bc38df77e56665",
+      "design_id": "sar8_single_edge_bitwise_sar_macro_xrc_xref_xrc_boot_xrc_comp_xrc_oreg",
+      "source_commit": "b1d6192fa9db5f53ededd0fe2a6a4c1d2bb7ab4b",
+      "deck": {
+        "inputs": {
+          "dut.scs": "e6273fbff54b34f58088e86dba128c3827ec61a223a183bded86e4a14e43d1ab",
+          "tb.scs": "f3723ed3738e200b754c70fccc9030e1bf3a3df552fb437b740b84f0e1b1ee68",
+          "test.scs": "592d6551554284c40d73d05d17365ca4abbcc5016edc140c83b52af7b15f89ee",
+          "library_include.scs": "fd756cb9dd5d1195c01a494611755d9b28deddaf0f5bf705966ddf2638d87b8b",
+          "context.json": "9cbcb2cc111b3ca33488bd409c66486adbcd5bb2a02c7578d9847f8dfaa24aa3",
+          "output_register.scs": "7e8616ecad146ed83ee2ab8decc49f06e1171670b7b46c150e2c2d40e607f76d",
+          "output_register_tb.scs": "ababdf1bf693205ec3800b8973802075bb6b12a00b005acdc58b297d847db88a"
+        },
+        "base_deck": {
+          "run_id": "sar8-allx-ffh-verify-oregbase-d",
+          "recipe": "work/decks/sar8-allx-ffh-verify-oregbase-d/recipe.yaml",
+          "recipe_sha256": "9a9ca2e36bde92a75bb2cef505ac2ff87726b6ae12bfa3948b5ba613ad1f3d3f"
+        },
+        "stage2_identity": {
+          "run_id": "sar8-allx-ffh-verify-a",
+          "identical": [
+            "boot_extracted.scs",
+            "boot_extracted.scs.pex",
+            "boot_extracted.scs.sar_bootstrap_flat_8b_p_core.pxi",
+            "bootstrap_pex.scs",
+            "bootstrap_physical.json",
+            "cmp_extracted.scs",
+            "cmp_extracted.scs.pex",
+            "cmp_extracted.scs.sar_strongarm_t28_core.pxi",
+            "comparator_pex.scs",
+            "comparator_physical.json",
+            "dff.json",
+            "dut.scs",
+            "library_include.scs",
+            "native_stream.py",
+            "observer.va",
+            "reference_short.py",
+            "register_constraints.py",
+            "sar_se_xrc.scs",
+            "sar_se_xrc.scs.pex",
+            "sar_se_xrc.scs.sar8_se_core.pxi",
+            "single_edge_audit.py",
+            "single_edge_lpe.py",
+            "tb.scs",
+            "test.scs",
+            "top/adc_top.scs",
+            "xref_extracted.scs",
+            "xref_extracted.scs.pex",
+            "xref_extracted.scs.sar8_cdac_with_xref.pxi",
+            "xref_physical.json",
+            "xtor/bootstrap/bootstrap.scs",
+            "xtor/cdac/cdac.scs",
+            "xtor/comparator/comparator.scs",
+            "xtor/reference/single_edge_d2.scs",
+            "xtor/sar/single_edge.scs"
+          ],
+          "differs": [
+            "context.json"
+          ],
+          "only_rebuilt": [],
+          "only_stage2": []
+        }
+      },
+      "simulation": {
+        "elapsed_s": 9629.843160867691,
+        "peak_rss_bytes": 4311646208,
+        "output_bytes": 7321379194
+      },
+      "adc_result_sha256": "c637f7588403d86433d4d522ac2125d9a8eab60fa76dcdc6d28f6ee0e1bc8c54",
+      "timing_result_sha256": "016703a192eed130eaa5ba145df4e9e1fd4ca5eb62cbdedb4241be0174d7cec8",
+      "adc": {
+        "all_pass": false,
+        "min_margin_ns": 30.078375250220056,
+        "warnings": [
+          "CMI-2751",
+          "CMI-2752",
+          "CMI-2753",
+          "CMI-2754",
+          "CMI-2755",
+          "CMI-2756",
+          "SFE-1131",
+          "SFE-2453",
+          "SFE-2649",
+          "SFE-3014",
+          "SFE-3016",
+          "SFE-3031",
+          "SPECTRE-16900",
+          "VACOMP-2435"
+        ],
+        "frames": [
+          {
+            "frame": 0,
+            "warmup": true,
+            "code90": 255,
+            "pass": true
+          },
+          {
+            "frame": 1,
+            "warmup": false,
+            "code90": 255,
+            "pass": true
+          },
+          {
+            "frame": 2,
+            "warmup": false,
+            "code90": 0,
+            "pass": false
+          },
+          {
+            "frame": 3,
+            "warmup": false,
+            "code90": 128,
+            "pass": true
+          },
+          {
+            "frame": 4,
+            "warmup": false,
+            "code90": 83,
+            "pass": true
+          },
+          {
+            "frame": 5,
+            "warmup": false,
+            "code90": 172,
+            "pass": true
+          },
+          {
+            "frame": 6,
+            "warmup": false,
+            "code90": 127,
+            "pass": true
+          },
+          {
+            "frame": 7,
+            "warmup": false,
+            "code90": 0,
+            "pass": false
+          }
+        ]
+      },
+      "capture": {
+        "checks": [
+          {
+            "edge_ns": 160.05,
+            "frame": 0,
+            "warmup": true,
+            "q_word": 255,
+            "d_word_at_edge": 255,
+            "code90": 255,
+            "code98": 255,
+            "decision_word": 255,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 260.04999999999995,
+            "frame": 1,
+            "warmup": false,
+            "q_word": 255,
+            "d_word_at_edge": 255,
+            "code90": 255,
+            "code98": 255,
+            "decision_word": 255,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 360.04999999999995,
+            "frame": 2,
+            "warmup": false,
+            "q_word": 0,
+            "d_word_at_edge": 0,
+            "code90": 0,
+            "code98": 0,
+            "decision_word": 0,
+            "adc_frame_pass": false,
+            "match": true
+          },
+          {
+            "edge_ns": 460.04999999999995,
+            "frame": 3,
+            "warmup": false,
+            "q_word": 128,
+            "d_word_at_edge": 128,
+            "code90": 128,
+            "code98": 128,
+            "decision_word": 128,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 560.05,
+            "frame": 4,
+            "warmup": false,
+            "q_word": 83,
+            "d_word_at_edge": 83,
+            "code90": 83,
+            "code98": 83,
+            "decision_word": 83,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 660.05,
+            "frame": 5,
+            "warmup": false,
+            "q_word": 172,
+            "d_word_at_edge": 172,
+            "code90": 172,
+            "code98": 172,
+            "decision_word": 172,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 760.05,
+            "frame": 6,
+            "warmup": false,
+            "q_word": 127,
+            "d_word_at_edge": 127,
+            "code90": 127,
+            "code98": 127,
+            "decision_word": 127,
+            "adc_frame_pass": true,
+            "match": true
+          },
+          {
+            "edge_ns": 860.05,
+            "frame": 7,
+            "warmup": false,
+            "q_word": 0,
+            "d_word_at_edge": 0,
+            "code90": 0,
+            "code98": 0,
+            "decision_word": 0,
+            "adc_frame_pass": false,
+            "match": true
+          }
+        ],
+        "scored": 7,
+        "all_match": true,
+        "analyzer_capture_pass": true,
+        "frame7_captured": true
+      },
+      "worst": {
+        "q_transition_10_90_ps_max": {
+          "ck_ns": 560.05,
+          "bit": 7,
+          "observations": 34,
+          "value": 103.4215653098183
+        },
+        "hold_slack_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 48,
+          "value": 499.0268093142923
+        },
+        "setup_ps": {
+          "ck_ns": 560.05,
+          "bit": 0,
+          "observations": 56,
+          "value": 40936.64061081699
+        },
+        "hold_no_delay_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 49,
+          "value": 313.947155207887
+        },
+        "q_transition_10_90_ps_min": {
+          "ck_ns": 460.04999999999995,
+          "bit": 7,
+          "observations": 34,
+          "value": 96.9406179314179
+        },
+        "hold_no_delay_slack_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 49,
+          "value": 303.5408555944315
+        },
+        "ck_to_qi_ps_max": {
+          "ck_ns": 660.05,
+          "bit": 0,
+          "observations": 34,
+          "value": 41.66871360096677
+        },
+        "setup_slack_ps": {
+          "ck_ns": 560.05,
+          "bit": 0,
+          "observations": 56,
+          "value": 40929.21657988362
+        },
+        "hold_ps": {
+          "ck_ns": 260.04999999999995,
+          "bit": 6,
+          "observations": 48,
+          "value": 510.4034902317287
+        },
+        "ck_to_q_ps_max": {
+          "ck_ns": 560.05,
+          "bit": 7,
+          "observations": 34,
+          "value": 97.06454367164218
+        },
+        "ck_to_q_ps_min": {
+          "ck_ns": 560.05,
+          "bit": 0,
+          "observations": 34,
+          "value": 87.01700636082188
+        },
+        "ck_to_qi_ps_min": {
+          "ck_ns": 660.05,
+          "bit": 2,
+          "observations": 34,
+          "value": 34.04762300474727
+        }
+      },
+      "liberty": {
+        "cell": "DFQD1BWP12T30P140",
+        "archive_mtime": 1602230448.070284,
+        "arcs": {
+          "setup_rising": {
+            "rise_constraint": {
+              "table": [
+                [
+                  0.0078418,
+                  0.0107098,
+                  0.0174766
+                ],
+                [
+                  0.00515124,
+                  0.00771387,
+                  0.0143309
+                ],
+                [
+                  0.0125088,
+                  0.0142307,
+                  0.0214961
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ],
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "fall_constraint": {
+              "table": [
+                [
+                  0.00147251,
+                  0.00731104,
+                  0.0314707
+                ],
+                [
+                  -0.00391223,
+                  0.002,
+                  0.0246724
+                ],
+                [
+                  -0.00960822,
+                  -0.00625239,
+                  0.0137963
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ],
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "when": null
+          },
+          "hold_rising": {
+            "rise_constraint": {
+              "table": [
+                [
+                  -0.00328369,
+                  -0.00475049,
+                  -0.00618653
+                ],
+                [
+                  -0.00175244,
+                  -0.00257129,
+                  -0.00467676
+                ],
+                [
+                  -0.00801098,
+                  -0.00950384,
+                  -0.0150505
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ],
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "fall_constraint": {
+              "table": [
+                [
+                  0.0063632,
+                  0.0025332,
+                  -0.00828907
+                ],
+                [
+                  0.0107098,
+                  0.00828516,
+                  -0.00267676
+                ],
+                [
+                  0.0174766,
+                  0.0142061,
+                  0.0104646
+                ]
+              ],
+              "variables": [
+                "related_pin_transition",
+                "constrained_pin_transition"
+              ],
+              "axes": [
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ],
+                [
+                  0.0015,
+                  0.0306,
+                  0.2629
+                ]
+              ],
+              "template": "constraint_template_3x3"
+            },
+            "when": null
+          }
+        },
+        "axis_order": [
+          "related_pin_transition",
+          "constrained_pin_transition"
+        ],
+        "archive_bytes": 13657415950,
+        "member": "TSMCHOME/digital/Front_End/timing_power_noise/CCS/tcbn28hpcplusbwp12t30p140_180a/tcbn28hpcplusbwp12t30p140ffg0p99v125c_ccs.lib",
+        "corner": "ffh",
+        "attributes": {
+          "slew_lower_threshold_pct_rise": "30.00",
+          "input_threshold_pct_rise": "50.00",
+          "input_threshold_pct_fall": "50.00",
+          "slew_upper_threshold_pct_fall": "70.00",
+          "slew_lower_threshold_pct_fall": "30.00",
+          "time_unit": "1ns",
+          "slew_derate_from_library": "0.50",
+          "slew_upper_threshold_pct_rise": "70.00"
+        },
+        "member_bytes": 1619448101,
+        "archive": "/home/process/tsmc28n/STD_CELL/tcbn28hpcplusbwp12t30p140_190a/tcbn28hpcplusbwp12t30p140_180a_ccs.tar.gz"
+      },
+      "liberty_error": null,
+      "q_glitches": []
+    }
+  ],
+  "limitations": [
+    "SAMPLE is an ideal pulse source (100 ps edges) that drives both the ADC and the eight CP pins; the chip SAMPLE_CORE pad buffer, its slew and its CK load are not modelled.",
+    "Wiring between the ADC outputs and the register, and the CK route, are ideal; the register cells are the foundry cell LPE netlists without top-level extraction.",
+    "DVDD is a separate ideal source at the ADC supply value and shares the ideal ground; no supply noise, IR drop or DVDD/VDD offset.",
+    "Each Q load is a lumped 150 fF capacitor for the M5/M6 route; the PRUW08SDGZ I-pin input load and route resistance are not modelled.",
+    "Deterministic runs at two corners (SS cold, FF hot); no mismatch or noise.",
+    "Hold at the ADC outputs (without the delay cell) is scored against the same DFQD1 hold table at the ADC D slew, as if D drove the flop directly."
+  ]
+}

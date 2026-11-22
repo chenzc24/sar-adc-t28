@@ -191,9 +191,11 @@ def prepare_deck(out, name, top, distributed_supplies=()):
             # The installed xRC deck recommends flattening inserted dummy
             # patterns. Expand only our fixed fill masters and their children;
             # preserve functional hierarchy and all fill geometry.
+            # ACF*/sar8_adc_core_fill*: the ADC core fill hierarchy (Layout/design/toplevel_fill.py), not its wrapper.
             fill_cells = sorted(cell for cell in gds_identity(join(out, "fixture.gds"))["labels"]
                                 if cell.startswith(("CDFO_", "CDFM_", "sar8_cdac_fill_", "SCFO_", "SCFM_", "sar8_comp_fill_",
-                                                    "STFO_", "STFM_", "sar8_timing_fill_")))
+                                                    "STFO_", "STFM_", "sar8_timing_fill_", "ACF", "sar8_adc_core_fill"))
+                                and not cell.startswith("sar8_adc_core_filled"))
             if fill_cells:
                 text = replace_once(text, r'^//FLATTEN CELL TOP_CELL_DM TOP_CELL_DODDPO[^\n]*',
                                     "FLATTEN CELL " + " ".join(fill_cells))
@@ -264,11 +266,13 @@ def tool(setup, args, cwd, log, seconds):
 
 def run(root, out, case, through, source_stream=None, extract_only=False, existing_oa=False, pex_timeout=300, omit_fill=None, view='layout'):
     top, extension, open_b1 = CASES[case]
-    # A Bootstrap sampler candidate lives in its own view, layout_mmain<N>.
+    # A Bootstrap sampler candidate lives in its own view, layout_mmain<N>; a revision of the selected sampler
+    # (same electrical source and LVS reference) in layout_r<N>.
     candidate = re.match(r"\Alayout_(mmain([1-9][0-9]?))\Z", view) if case == 'bootstrap' else None
+    revision = re.match(r"\Alayout_r([2-9]|[1-9][0-9])\Z", view) if case == 'bootstrap' else None
     if view != 'layout' and not (view == 'layout_paired_balanced' and case == 'full' and existing_oa and not source_stream) \
-            and not (candidate and not source_stream):
-        raise ValueError('Alternate view requires an existing CDAC layout or a Bootstrap candidate view')
+            and not ((candidate or revision) and not source_stream):
+        raise ValueError('Alternate view requires an existing CDAC layout or a Bootstrap candidate or revision view')
     log = {"case": case, "top": top, "library": LIB, "library_path": LIB_PATH, "b1_extension_um": extension,
            "open_b1": open_b1, "checks": {}, "decks": {}}
     log['execution_host']=socket.gethostname()
@@ -384,9 +388,16 @@ exit(0)
                         with tarfile.open(backup, 'w:gz') as archive:
                             archive.add(cell_path, arcname=top)
                         log['oa_checkpoint_sha256'] = sha(raw(backup))
+                        if candidate or revision:
+                            # Building another view must leave every existing view of the cell unchanged.
+                            log['other_views_layout_oa_sha256'] = dict(
+                                (v, sha(raw(join(cell_path, v, 'layout.oa')))) for v in sorted(os.listdir(cell_path))
+                                if v != view and isfile(join(cell_path, v, 'layout.oa')))
                 build = 'load("{}")\n'.format(join(out, generator))
                 if candidate:
                     build = 'bsView = "{}"\nbsMainFingers = {}\n'.format(view, int(candidate.group(2))) + build
+                elif revision:
+                    build = 'bsView = "{}"\n'.format(view) + build
             else:
                 build = 'pilotCell = "{}"\npilotB1Extension = {}\npilotOpenB1 = {}\nload("mom.il")\n'.format(
                     top, extension, "t" if open_b1 else "nil"
@@ -396,6 +407,9 @@ exit(0)
                                   join(out, "oa.ciw.log"), "-restore", entry], root, 300 if case == "full" else 100)
             if "PILOT_OA_OK " + top not in read(join(out, "oa.console")):
                 raise RuntimeError("No saved OA readback")
+            for v, digest in log.get('other_views_layout_oa_sha256', {}).items():
+                if sha(raw(join(LIB_PATH, top, v, 'layout.oa'))) != digest:
+                    raise RuntimeError('The build changed the existing view ' + v)
             launch("stream", CADENCE, ["strmout", "-library", LIB, "-strmFile", gds_path,
                                        "-topCell", top, "-view", view, "-layerMap", join(PDK, "tsmcN28.layermap"),
                                        "-logFile", join(out, "stream.log"), "-summaryFile", join(out, "stream.sum"),
@@ -517,7 +531,8 @@ def main():
     parser.add_argument("--pex-timeout",type=int,choices=(300,1800),default=300,help="RCC wall limit; filled macros may need 1800s")
     parser.add_argument("--existing-oa", action="store_true", help="Verify the current owned full CDAC without rebuilding it")
     parser.add_argument('--view', default='layout',
-                        help='layout, layout_paired_balanced (existing CDAC) or layout_mmain<N> (Bootstrap candidate)')
+                        help='layout, layout_paired_balanced (existing CDAC), layout_mmain<N> (Bootstrap candidate) '
+                             'or layout_r<N> (Bootstrap revision)')
     parser.add_argument("--rebuild-comparator", action="store_true", help="Explicitly rebuild the generator-owned comparator core")
     parser.add_argument("--rebuild-bootstrap", action="store_true", help="Explicitly rebuild the generator-owned Bootstrap core")
     parser.add_argument("--checkpoint", action="store_true", help="Save this verified working baseline as the rollback point")
