@@ -160,6 +160,34 @@ The SAR guard ring (`Layout/design/toplevel_guard_routes.py`) goes into `layout_
 
 Core LVS: `python -m Layout.design.toplevel_lvs_source --content CONTENT_JSON --out SOURCE_CDL` writes the source from the block references in their evidence directories; `python -m Layout.design.toplevel_route physical LVS_ID --view layout_route_guard --stages lvs --hcells-from BASE_GDS --source SOURCE_CDL --virtual "VDD!" 0` compares it, and `python -m Layout.tools.analysis.toplevel_lvs_record` records it. [Core LVS](../results/toplevel_lvs.md)
 
+`Layout/design/toplevel_fill.py` fills the routed core by owner (fill policy, "ADC Core Fill Owners"). Each pass runs the foundry OD/PO and metal utilities (`Layout/tools/physical/toplevel_fill_physical.py`, with the same private job edits as every module fill) on a seed stream built locally. The seed carries the context the fill must respect: neighbouring geometry and DMnEXCL/ODBLK/POBLK blocks. Only the generated fill is kept. The passes run in this order:
+
+1. **Pair refill.** The accepted pair seed plus the core's geometry around the pair outline and DMnEXCL over the route entries. `pair` merges the fill into the unmodified seed, repeats DRC, LVS and xRC, and writes a manifest that `prepare_all_extracted gain` accepts.
+2. **Bootstrap cell.** Generated in the XBOOTP outline with the XBOOTN neighbourhood mirrored in, placed R0 and MY.
+3. **Core pass.** The rest of the outline, with the pair and Bootstrap fill in place and the exclusion cell, without dummy TCD (`--no-tcd`).
+
+`library` assembles the fill hierarchy and `verify` checks it against the routed stream. `build` streams it into OA (new cells only, `-writeMode noOverwrite`) and creates the wrapper with XCORE, FILL and copies of the core's texts. The core views are opened read only and their layout.oa digests are compared. A new core view gets a new revision (`--revision N`: hierarchy `sar8_adc_core_fill<N>`, wrapper view `layout_fill<N>`). Repeat from the pair seed, or reuse the pair and Bootstrap fill where the stream is unchanged around them. `wrapper-gds` assembles the same wrapper as a stream without OA; DRC and xRC can run on it before the OA build.
+
+```powershell
+python -m Layout.design.toplevel_fill pair-seed PAIR_FILL_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill fill PAIR_FILL_ID --seed SEED_GDS --top sar8_cdac_with_xref --bounds -1.715 -32.465 70.515 25.86
+python -m Layout.design.toplevel_fill pair PAIR_ID --fill PAIR_FILL_ID
+python -m Layout.tools.simulation.prepare_all_extracted gain tt --xref PAIR_ID --run-id RUN_ID --submit HOST
+python -m Layout.design.toplevel_fill boot-seed BOOT_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill fill BOOT_ID --seed SEED_GDS --top sar8_adc_core --bounds 49.235 76.2 73.755 101.19
+python -m Layout.design.toplevel_fill core-seed CORE_FILL_ID --core-gds CORE_GDS --pair-stream PAIR_GDS --boot-fill BOOT_DIR
+python -m Layout.design.toplevel_fill fill CORE_FILL_ID --seed SEED_GDS --top sar8_adc_core --bounds 0 0 122 111 --turbo 8 --no-tcd
+python -m Layout.design.toplevel_fill --revision N library LIB_ID --pair-stream PAIR_GDS --boot-fill BOOT_DIR --core-fill CORE_FILL_DIR
+python -m Layout.design.toplevel_fill --revision N verify LIB_ID --pair-seed PAIR_FILL_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_fill --revision N wrapper-gds CHECK_ID --library LIB_ID --core-gds CORE_GDS
+python -m Layout.design.toplevel_route physical CHECK_ID --gds WRAPPER_GDS --top sar8_adc_core_filled --through pex --stages drc,pex
+python -m Layout.design.toplevel_fill --revision N build BUILD_ID --library LIB_ID --core-view CORE_VIEW --expect-core-oa SHA256
+python -m Layout.design.toplevel_route physical OA_CHECK_ID --view layout_fillN --top sar8_adc_core_filled --through drc
+python -m Layout.tools.analysis.toplevel_fill_record
+```
+
+[Stage 5 fill record](../results/toplevel_fill.md)
+
 ## Chip Assembly
 
 `Layout/design/chip_routes.py` holds the chip-level geometry in die coordinates; `Layout/design/chip_assembly.py` reads the saved ring read-only, builds `sar8_adc_chip/layout` under the layout lock (it replaces only its own build and guards the ring and core views), exports the ring schematic with si, and starts the chip checks (`Layout/tools/physical/chip_physical.py`: installed chip DRC deck, and LVS with ERC using the ring deck's additions). Status and fetch go through `toplevel_route`.

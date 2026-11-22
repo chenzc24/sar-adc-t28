@@ -21,6 +21,56 @@ def change(text,pattern,replacement):
     if n!=1:raise ValueError('Expected one documented directive: '+pattern)
     return text
 
+def native_job(kind,top,boundary,core_od_width=0.1,core_only_clearance=False,mos_dummy_length=0.3,tcd=True):
+    """Private job text of the installed utility: source.gds in the job directory, fill inside boundary.
+
+    tcd=False leaves out the optional dummy TCD patterns (FILL_TCD_PATTERN, FILL_Mn_DTCD); they are CD monitors with
+    drawn OD/PO/NW, not density fill, and belong where the chip-level owner places them."""
+    path=join(SOURCES,'dummy_script_'+kind);text=open(path).read()
+    if not tcd:
+        if kind=='metal':
+            text,n=re.subn(r'^(\s*)#DEFINE (FILL_M\d_DTCD\b)',r'\1//#DEFINE \2',text,flags=re.M)
+            if n<1:raise ValueError('Expected the metal dummy TCD switches')
+        else:
+            text=change(text,r'^#DEFINE FILL_TCD_PATTERN\b',r'//#DEFINE FILL_TCD_PATTERN')
+    text=change(text,r'^LAYOUT PATH[^\n]*','LAYOUT PATH "source.gds"')
+    text=change(text,r'^LAYOUT PRIMARY[^\n]*','LAYOUT PRIMARY "'+top+'"')
+    text=change(text,r'^\s*//#DEFINE dmOnCorner[^\n]*','#DEFINE dmOnCorner')
+    text=change(text,r'^#DEFINE WithSealring[^\n]*','//#DEFINE WithSealring')
+    for name,value in boundary.items():
+        text=change(text,r'^VARIABLE '+name+r'\s+[^\n]*','VARIABLE '+name+' '+str(value))
+    # The installed metal stack is M1..M7 thin, M8 Z, M9 U (6X1Z1U).
+    if kind=='metal':
+        assert re.search(r'^\s*#DEFINE 9K_THICK_M8\b',text,re.M)
+        assert re.search(r'^\s*#DEFINE 34K_THICK_M9\b',text,re.M)
+        text=change(text,r'^DRC RESULTS DATABASE[^\n]*','DRC RESULTS DATABASE "fill.gds" GDSII _DM')
+    else:
+        text=change(text,r'^DFM DEFAULTS RDB GDS FILE[^\n]*','DFM DEFAULTS RDB GDS FILE "fill.gds"')
+        if core_od_width!=0.1:
+            # Insertion geometry only. SR_DOD.W.1/W.2 bounds are 0.05..0.5um;
+            # final native DRC must still verify spacing and every density.
+            for parameter in ['CO_CEL_SRDOD_W','CO_ODB_W']:
+                text=change(text,r'^VARIABLE '+parameter+r'\s+[^\n]*',
+                            'VARIABLE '+parameter+' '+str(core_od_width))
+        if core_only_clearance:
+            # The native insertion defaults include IO's 0.15um clearance.
+            # This macro has no OD2 devices; core DRC S.1/S.5 permit 0.08um.
+            # Keep a 5nm explicit margin plus the utility's 5nm grid margin.
+            for parameter in ['SRDOD2OD','SRDOD2SRDOD']:
+                text=change(text,r'^VARIABLE '+parameter+r'\s+[^\n]*','VARIABLE '+parameter+' 0.085')
+            text+='\nCDAC_CORE_ONLY_PRECONDITION { COPY OD2 }\n'
+        if mos_dummy_length!=0.3:
+            # Extend the dummy OD and its dummy poly together, preserving
+            # the native 80nm poly endcaps and the original X dimensions.
+            # This changes fill geometry, never the functional transistors.
+            text=change(text,r'^VARIABLE MOS_L\s+[^\n]*','VARIABLE MOS_L 1.16')
+            pattern=r'(DFM SPEC FILL SHAPE SHAPE_MOS_6_7\b.*?)(?=DFM SPEC FILL SPEC_MOS\b)'
+            match=re.search(pattern,text,re.S);assert match
+            block=match.group(1).replace('0.380','1.080').replace('0.460','1.160')
+            text=text[:match.start(1)]+block+text[match.end(1):]
+            text+='\nCDAC_VERTICAL_ONLY_PRECONDITION { COPY MOS_Ho }\n'
+    return path,text
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('source');p.add_argument('evidence')
     p.add_argument('--module', choices=('cdac', 'comparator', 'reference-driver'), default='cdac')
@@ -76,43 +126,7 @@ def main():
             os.mkdir(work);shutil.copyfile(source_gds,join(work,'source.gds'))
         elif not a.resume:raise ValueError('Existing native stage')
         assert digest(join(work,'source.gds'))==record['source_gds_sha256']
-        path=join(SOURCES,'dummy_script_'+kind);text=open(path).read()
-        text=change(text,r'^LAYOUT PATH[^\n]*','LAYOUT PATH "source.gds"')
-        text=change(text,r'^LAYOUT PRIMARY[^\n]*','LAYOUT PRIMARY "'+top+'"')
-        text=change(text,r'^\s*//#DEFINE dmOnCorner[^\n]*','#DEFINE dmOnCorner')
-        text=change(text,r'^#DEFINE WithSealring[^\n]*','//#DEFINE WithSealring')
-        for name,value in boundary.items():
-            text=change(text,r'^VARIABLE '+name+r'\s+[^\n]*','VARIABLE '+name+' '+str(value))
-        # The installed metal stack is M1..M7 thin, M8 Z, M9 U (6X1Z1U).
-        if kind=='metal':
-            assert re.search(r'^\s*#DEFINE 9K_THICK_M8\b',text,re.M)
-            assert re.search(r'^\s*#DEFINE 34K_THICK_M9\b',text,re.M)
-            text=change(text,r'^DRC RESULTS DATABASE[^\n]*','DRC RESULTS DATABASE "fill.gds" GDSII _DM')
-        else:
-            text=change(text,r'^DFM DEFAULTS RDB GDS FILE[^\n]*','DFM DEFAULTS RDB GDS FILE "fill.gds"')
-            if a.core_od_width!=0.1:
-                # Insertion geometry only. SR_DOD.W.1/W.2 bounds are 0.05..0.5um;
-                # final native DRC must still verify spacing and every density.
-                for parameter in ['CO_CEL_SRDOD_W','CO_ODB_W']:
-                    text=change(text,r'^VARIABLE '+parameter+r'\s+[^\n]*',
-                                'VARIABLE '+parameter+' '+str(a.core_od_width))
-            if a.core_only_clearance:
-                # The native insertion defaults include IO's 0.15um clearance.
-                # This macro has no OD2 devices; core DRC S.1/S.5 permit 0.08um.
-                # Keep a 5nm explicit margin plus the utility's 5nm grid margin.
-                for parameter in ['SRDOD2OD','SRDOD2SRDOD']:
-                    text=change(text,r'^VARIABLE '+parameter+r'\s+[^\n]*','VARIABLE '+parameter+' 0.085')
-                text+='\nCDAC_CORE_ONLY_PRECONDITION { COPY OD2 }\n'
-            if a.mos_dummy_length!=0.3:
-                # Extend the dummy OD and its dummy poly together, preserving
-                # the native 80nm poly endcaps and the original X dimensions.
-                # This changes fill geometry, never the functional transistors.
-                text=change(text,r'^VARIABLE MOS_L\s+[^\n]*','VARIABLE MOS_L 1.16')
-                pattern=r'(DFM SPEC FILL SHAPE SHAPE_MOS_6_7\b.*?)(?=DFM SPEC FILL SPEC_MOS\b)'
-                match=re.search(pattern,text,re.S);assert match
-                block=match.group(1).replace('0.380','1.080').replace('0.460','1.160')
-                text=text[:match.start(1)]+block+text[match.end(1):]
-                text+='\nCDAC_VERTICAL_ONLY_PRECONDITION { COPY MOS_Ho }\n'
+        path,text=native_job(kind,top,boundary,a.core_od_width,a.core_only_clearance,a.mos_dummy_length)
         job=join(work,'fill.svrf')
         if kind in record['steps']:
             step=record['steps'][kind]
