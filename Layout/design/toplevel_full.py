@@ -1,11 +1,12 @@
 """Stage 4b of chenzc24/sar-adc-t28#12: boundary routes, supply feeds, the reference network, decoupling and grid,
-built as sar8_adc_core/layout_route_full on top of layout_route_int.
+built as sar8_adc_core/layout_route_full on top of layout_route_int; and the Stage 5 SAR guard ring, built as
+sar8_adc_core/layout_route_guard on top of layout_route_full (`--stage guard`).
 
 `build-script ID CONTENT.json` writes build.il from a content file (rects with nets, labels, terminals with their
 pin shapes, PDK PCell instances); `build ID` runs it once on the layout host under the shared layout lock. The
 script copies layout_route_int with dbCopyCellView, so its routes, nets and labels carry over unchanged, and adds
-the content. It replaces an existing layout_route_full only when that view carries this generator's owner
-property; layout_place and layout_route_int are opened read-only and their layout.oa files must not change.
+the content. It replaces an existing target view only when that view carries the stage's owner property; the
+source and earlier views are opened read-only and their layout.oa files must not change.
 """
 import argparse
 import base64
@@ -20,17 +21,28 @@ from Layout.design.toplevel_route import CADENCE, IDENTITY, STANDARD_LIBRARY, WO
 from Layout.project import config, write_json
 
 CELL = "sar8_adc_core"
-VIEW = "layout_route_full"
-SOURCE = "layout_route_int"
-READ_ONLY = ("layout_place", "layout_route_int")
 OWNER = "Layout/design/toplevel_full.py"
+# view: the view written; source: the view copied; read_only: views whose layout.oa must not change; source_check:
+# SKILL test on the opened source (src).
+STAGES = {
+    "full": dict(view="layout_route_full", source="layout_route_int", read_only=("layout_place", "layout_route_int"),
+                 owner=OWNER, source_check="length(src~>instances)==5 && !src~>terminals"),
+    "guard": dict(view="layout_route_guard", source="layout_route_full",
+                  read_only=("layout_place", "layout_route_int", "layout_route_full"), owner=OWNER + " guard",
+                  source_check=f'dbGetPropByName(src "generatorOwner")~>value=="{OWNER}" && '
+                               'dbGetPropByName(src "copiedFrom")~>value=="layout_route_int"'),
+}
+VIEW, SOURCE, READ_ONLY = (STAGES["full"][k] for k in ("view", "source", "read_only"))
 PDK_LIBRARY = "tsmcN28"
 PCELLS = {"nmoscap", "rupolym"}
 
 
-def build_script(identity, content):
+def build_script(identity, content, stage="full"):
     if not IDENTITY.fullmatch(identity):
         raise ValueError("Invalid identity")
+    st = STAGES[stage]
+    view, source, owner = st["view"], st["source"], st["owner"]
+    assert view not in st["read_only"] and source in st["read_only"]
     cfg = config()
     lib = sk(cfg["library"])
     nets = sorted({r["net"] for r in content.get("rects", []) if r.get("net")}
@@ -45,23 +57,24 @@ def build_script(identity, content):
         " let((dd src cv old count inst term net fig)",
         f"  dd=ddGetObj({lib})",
         f"  tfNeed(dd && dd~>readPath=={sk(cfg['library_path'])} \"Wrong layout library\")",
-        f"  old=ddGetObj({lib} {sk(CELL)} {sk(VIEW)})",
+        f"  old=ddGetObj({lib} {sk(CELL)} {sk(view)})",
         "  when(old",
-        f"   src=dbOpenCellViewByType({lib} {sk(CELL)} {sk(VIEW)} \"maskLayout\" \"r\")",
-        f"   tfNeed(src && dbGetPropByName(src \"generatorOwner\")~>value=={sk(OWNER)} \"Existing view is not ours\")",
+        f"   src=dbOpenCellViewByType({lib} {sk(CELL)} {sk(view)} \"maskLayout\" \"r\")",
+        f"   tfNeed(src && dbGetPropByName(src \"generatorOwner\")~>value=={sk(owner)} \"Existing view is not ours\")",
         "   dbClose(src))",
-        f"  src=dbOpenCellViewByType({lib} {sk(CELL)} {sk(SOURCE)} \"maskLayout\" \"r\")",
-        '  tfNeed(src && length(src~>instances)==5 && !src~>terminals "Unexpected layout_route_int")',
+        f"  src=dbOpenCellViewByType({lib} {sk(CELL)} {sk(source)} \"maskLayout\" \"r\")",
+        f'  tfNeed(src && {st["source_check"]} "Unexpected {source}")',
+        "  count=length(src~>instances)",
         # Overwrite in place (g_overwrite) rather than delete: a reader elsewhere keeps its OA cache of the old file,
         # and ddDeleteObj refuses a view with files in use.
-        f"  old=dbCopyCellView(src {lib} {sk(CELL)} {sk(VIEW)} nil nil t)",
-        '  tfNeed(old "Cannot copy layout_route_int")',
+        f"  old=dbCopyCellView(src {lib} {sk(CELL)} {sk(view)} nil nil t)",
+        f'  tfNeed(old "Cannot copy {source}")',
         "  when(dbIsId(old) && old!=src dbClose(old))",
         "  dbClose(src)",
-        f"  cv=dbOpenCellViewByType({lib} {sk(CELL)} {sk(VIEW)} \"maskLayout\" \"a\")",
-        '  tfNeed(cv && length(cv~>instances)==5 "Cannot open the copy")',
-        '  dbReplaceProp(cv "generatorOwner" "string" ' + sk(OWNER) + ")",
-        '  dbReplaceProp(cv "copiedFrom" "string" ' + sk(SOURCE) + ")",
+        f"  cv=dbOpenCellViewByType({lib} {sk(CELL)} {sk(view)} \"maskLayout\" \"a\")",
+        '  tfNeed(cv && length(cv~>instances)==count "Cannot open the copy")',
+        '  dbReplaceProp(cv "generatorOwner" "string" ' + sk(owner) + ")",
+        '  dbReplaceProp(cv "copiedFrom" "string" ' + sk(source) + ")",
     ]
     for a, b in content.get("merge_nets", []):
         lines.append(f"  tfNeed(dbMergeNet(tfNet(cv {sk(b)}) dbFindNetByName(cv {sk(a)})) \"Cannot merge {a}\")")
@@ -89,7 +102,8 @@ def build_script(identity, content):
         for i, pin in enumerate(t["pins"]):
             x0, y0, x1, y1 = pin["box"]
             g.append(f"  fig=dbCreateRect(cv list({sk(pin['layer'])} \"pin\") list({num(x0)}:{num(y0)} {num(x1)}:{num(y1)}))")
-            g.append(f"  tfNeed(fig && dbCreatePin(net fig {sk(t['net'] + '_' + str(i))} term) \"Cannot pin {t['net']}\")")
+            name = pin.get("name", t["net"] + "_" + str(i))
+            g.append(f"  tfNeed(fig && dbCreatePin(net fig {sk(name)} term) \"Cannot pin {t['net']}\")")
             g.append(f"  dbCreateLabel(cv list({sk(pin['layer'])} \"pin\") {num((x0 + x1) / 2)}:{num((y0 + y1) / 2)} "
                      f"{sk(t['net'])} \"centerCenter\" \"R0\" \"roman\" 0.2)")
         groups.append(g)
@@ -110,7 +124,7 @@ def build_script(identity, content):
         lines.append(f"  tfPart{i}(cv)")
     lines[:0] = defs
     lines += [
-        '  tfNeed(dbSave(cv) "Cannot save layout_route_full")',
+        f'  tfNeed(dbSave(cv) "Cannot save {view}")',
         '  foreach(i cv~>instances when(i~>libName==' + sk(PDK_LIBRARY) + ' printf("PCELL %s %s bBox=%L\\n" i~>name i~>cellName i~>bBox)'
         '   foreach(tm i~>master~>terminals foreach(p tm~>pins foreach(f list(p~>fig) printf("PIN %s %s %s %L\\n" i~>name tm~>name'
         " f~>layerName dbTransformBBox(f~>bBox i~>transform)))))))",
@@ -124,7 +138,8 @@ def build_script(identity, content):
     blob = ("\n".join(lines) + "\n").encode("ascii")
     (out / "build.il").write_bytes(blob)
     write_json(out / "content.json", content)
-    write_json(out / "intent.json", dict(identity=identity, library=cfg["library"], cell=CELL, view=VIEW, source=SOURCE,
+    write_json(out / "intent.json", dict(identity=identity, library=cfg["library"], cell=CELL, stage=stage, view=view,
+                                         source=source,
                                          build_il_sha256=hashlib.sha256(blob).hexdigest(),
                                          content_sha256=hashlib.sha256((out / "content.json").read_bytes()).hexdigest(),
                                          rects=len(content.get("rects", [])), pcells=len(content.get("pcells", [])),
@@ -142,7 +157,10 @@ def build_view(identity):
     q = shlex.quote
     evidence = f"{cfg['remote_root']}/evidence/{identity}"
     cell_dir = f"{cfg['library_path']}/{CELL}"
-    guarded = " ".join(q(f"{cell_dir}/{v}/layout.oa") for v in READ_ONLY)
+    st = STAGES[intent.get("stage", "full")]
+    if (intent.get("view", st["view"]), intent.get("source", st["source"])) != (st["view"], st["source"]):
+        raise ValueError("intent.json disagrees with its stage")
+    guarded = " ".join(q(f"{cell_dir}/{v}/layout.oa") for v in st["read_only"])
     script = ["set -eu", "umask 077", f"test \"$(hostname -s)\" = {q(cfg['host'])}",
               f"test ! -e {q(evidence)} && test ! -e {q(cfg['legacy_root'] + '/evidence/' + identity)}",
               f"exec 9>>{q(cfg['legacy_root'] + '/layout.lock')}", "flock -w 300 9 || { echo LAYOUT_LOCK_BUSY; exit 3; }",
@@ -158,7 +176,7 @@ def build_view(identity):
                " > oa.console 2>&1 < /dev/null || rc=$?",
                f"after=$(sha256sum {guarded} | cut -d' ' -f1 | tr '\\n' ' ')", "echo GUARDED_AFTER=$after",
                "test \"$before\" = \"$after\" || { echo READ_ONLY_VIEW_CHANGED; rc=5; }",
-               "sha256sum build.il intent.json cds.lib", f"sha256sum {q(cell_dir + '/' + VIEW + '/layout.oa')} || true",
+               "sha256sum build.il intent.json cds.lib", f"sha256sum {q(cell_dir + '/' + st['view'] + '/layout.oa')} || true",
                "grep -E '^FULL_BUILD_OK|\\*Error\\*' oa.console || true", "echo PCELLS=$(grep -c '^PCELL' oa.console || true)",
                "echo EXIT=$rc", "exit $rc"]
     run = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", cfg["host"], "bash -s"],
@@ -173,12 +191,14 @@ def build_view(identity):
     return receipt
 
 
-BRANCH_TEXT = {"north": "A", "south": "P", "east": "D"}
+BRANCH_TEXT = {"north": "A", "south": "P", "east": "D", "guard": "G"}
+GUARD_PIN_Y = (51.0, 52.0)   # the SAR guard ring's own VSS pin on the east edge (toplevel_guard_routes.py)
 
 
 def branch_labels(src, out):
     """Copy of a stream for connectivity checks: the VDD!/0 pin texts renamed per supply branch by the edge they
-    sit on (north A, south P, east D), so the extraction shows that the branches stay separate inside the core."""
+    sit on (north A, south P, east D; the SAR guard ring's own east pin G), so the extraction shows that the
+    branches stay separate inside the core."""
     import gdstk
     lib = gdstk.read_gds(str(src))
     top = next(c for c in lib.cells if c.name == CELL)
@@ -187,7 +207,9 @@ def branch_labels(src, out):
         if lab.text not in ("VDD!", "0"):
             continue
         x, y = lab.origin
-        edge = "north" if y > 110 else "south" if y < 1 else "east" if x > 121 else None
+        edge = ("north" if y > 110 else "south" if y < 1 else
+                "guard" if x > 121 and lab.text == "0" and GUARD_PIN_Y[0] <= y <= GUARD_PIN_Y[1] else
+                "east" if x > 121 else None)
         if edge is None:
             raise ValueError(f"Supply text {lab.text} at {lab.origin} is on no boundary")
         new = ("VDD_" if lab.text == "VDD!" else "VSS_") + BRANCH_TEXT[edge]
@@ -205,6 +227,7 @@ def main():
     a = sub.add_parser("build-script")
     a.add_argument("identity")
     a.add_argument("content")
+    a.add_argument("--stage", choices=sorted(STAGES), default="full")
     a = sub.add_parser("build")
     a.add_argument("identity")
     a = sub.add_parser("branch-labels")
@@ -214,7 +237,7 @@ def main():
     if args.action == "branch-labels":
         print(json.dumps(branch_labels(args.src, args.out), indent=1))
     elif args.action == "build-script":
-        print(build_script(args.identity, json.loads(Path(args.content).read_bytes())))
+        print(build_script(args.identity, json.loads(Path(args.content).read_bytes()), args.stage))
     else:
         r = build_view(args.identity)
         print(json.dumps(dict(ok=r["ok"], stdout=r["stdout"]), indent=1))

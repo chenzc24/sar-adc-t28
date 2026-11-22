@@ -193,9 +193,22 @@
       "series_tolerance": [0.8, 1.2],
       "span_decoupling_F": 8e-12,
       "span_decoupling_tolerance": [0.75, 1.25],
+      "drawn": {
+        "decided": "2026-11-22, Stage 4b (chenzc24/sar-adc-t28#30); the values above stay the Stage 1 budget design point",
+        "view": "SAR_ADC_T28_LAYOUT/sar8_adc_core/layout_route_full",
+        "series_ohm_per_rail": 17.2,
+        "series_basis": "Boundary pin to the pair's rail end, 17.21 ohm on VREFP and on VREFN: pad-side routing 1.42 ohm, RREF 12.02 ohm (PDK rupolym model, TT 25 C), trunk-side routing 3.76/3.77 ohm (flat xRC, typical). Inside 15 ohm +-20 %.",
+        "rref": {"device": "rupolym", "w_um": 0.5, "l_um": 0.5, "segments_parallel": 52, "rows": "two R90 rows of 26 per rail",
+                 "ohm_tt": {"-40C": 11.94, "25C": 12.02, "125C": 12.22}},
+        "span_decoupling_F": 6.23e-12,
+        "span_decoupling_basis": "164 nmoscap (wr 2.5 um, lr 0.8 um), 328 um2 of gate at 19 fF/um2 (+0.9 V, TT). The reference regions hold at most about 6.3 pF. Inside 8 pF +-25 %.",
+        "cref": {"device": "nmoscap", "wr_um": 2.5, "lr_um": 0.8, "count": 164, "PLUS": "VREFP_TRUNK", "MINUS": "VREFN_TRUNK"},
+        "rail_budget_check": "Tolerance box around the drawn values (series x0.8-1.2, decoupling x0.75-1.25, 0.5-1.5 nH per rail, the 9 x 9 route range): decision error 0.035 / 0.017 / 0.004 LSB at FF cold / TT / SS cold, span droop 177 mV, pin peak 4.64 mA per rail, inside the limits below.",
+        "record": "Layout/results/toplevel_route_full.json (reference, rail_budget)"
+      },
       "topology": "On each rail both pads join ahead of the series resistor; the resistor feeds the CDAC reference trunk, and the decoupling sits between the two trunks. No capacitor from VREFN to VSS: at 0 V an NMOS gate on VREFN does not invert.",
       "netlist": {
-        "status": "Interface for the Stage 6 top and the LVS source. The resistor and capacitor devices follow the PDK decap characterization; until then the Stage 6 pre-layout netlist uses ideal elements at these values.",
+        "status": "Interface for the Stage 6 top and the LVS source. The LVS source and the extracted netlist use the drawn devices (drawn); a pre-layout Stage 6 netlist uses ideal elements at the drawn values.",
         "wrapper": "A core wrapper subcircuit holds the reference network and instantiates the unchanged sar_adc8_join_r4 with its VREFP/VREFN ports on the trunk nets, so Stage 2 keeps testing that cell with its fixture.",
         "nets": {
           "VREFP": "Wrapper port; both VREFP pads join here, ahead of RREFP",
@@ -204,9 +217,9 @@
           "VREFN_TRUNK": "RREFN output, the VREFN port of sar_adc8_join_r4"
         },
         "devices": {
-          "RREFP": "VREFP to VREFP_TRUNK, 15 ohm",
-          "RREFN": "VREFN to VREFN_TRUNK, 15 ohm",
-          "CREF": "VREFP_TRUNK to VREFN_TRUNK, 8 pF"
+          "RREFP": "VREFP to VREFP_TRUNK, rupolym 0.5 x 0.5 um x 52 in parallel (12.0 ohm); 17.2 ohm pin to rail end with the routing",
+          "RREFN": "VREFN to VREFN_TRUNK, rupolym 0.5 x 0.5 um x 52 in parallel (12.0 ohm); 17.2 ohm pin to rail end with the routing",
+          "CREF": "VREFP_TRUNK to VREFN_TRUNK, 164 nmoscap wr 2.5 / lr 0.8 um (6.23 pF), PLUS on VREFP_TRUNK"
         }
       }
     },

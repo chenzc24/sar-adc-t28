@@ -27,6 +27,8 @@ SUPPLY = {
     "VDD_D": {("sar", "VDD")},
     "VSS_D": {("sar", "VSS")},
 }
+# The SAR guard ring (layout_route_guard) has its own VSS pin, labelled G: its metal reaches no block port.
+GUARD = {"VSS_G": set()}
 ARRAYS = {"A": ("DA_west", "DA_slot", "DA_east", "DC_W", "DC_E"), "P": ("DP_S", "DP_E", "DP_SE", "DP_C"),
           "D": ("DS_S", "DS_N")}
 # Reference network (phase 2): pad nets are top ports that reach no block; the trunks reach the pair ports that
@@ -68,7 +70,7 @@ def flat_devices(path, hcells, models=("nmoscap", "rupolym"), top="sar8_adc_core
     return out
 
 
-def check(routed, baseline, hcells, summary, console=None):
+def check(routed, baseline, hcells, summary, console=None, guard=False):
     ports, top = netlist(routed, hcells)
     nets = reach(top)
     # Numbered block ports are the blocks' bulk taps: the common P-substrate. Calibre soft-connects it to one
@@ -77,13 +79,14 @@ def check(routed, baseline, hcells, summary, console=None):
     nets = {n: {p for p in s if not p[1].isdigit()} for n, s in nets.items()}
     result = dict(top_ports=sorted(ports), substrate_ports_on=dict((n, len(v)) for n, v in substrate.items()))
     ok = len(substrate) == 1
-    for name, want in [*PLANNED.items(), *BOUNDARY.items(), *SUPPLY.items()]:
+    supply = {**SUPPLY, **(GUARD if guard else {})}
+    for name, want in [*PLANNED.items(), *BOUNDARY.items(), *supply.items()]:
         got = nets.get(name, set())
         exact = got == want
         result.setdefault("nets", {})[name] = dict(reaches=sorted(map(list, got)), planned=sorted(map(list, want)),
                                                    exact=exact)
         ok &= exact
-    for name in [*BOUNDARY, *SUPPLY, *PAD]:
+    for name in [*BOUNDARY, *supply, *PAD]:
         if name not in ports:
             result.setdefault("not_a_top_port", []).append(name)
             ok = False
@@ -129,10 +132,11 @@ def main():
     ap.add_argument("--hcells", nargs="+", required=True)
     ap.add_argument("--content", required=True, help="content.json of the build (array summary)")
     ap.add_argument("--console")
+    ap.add_argument("--guard", action="store_true", help="the view has the SAR guard ring's own VSS pin")
     ap.add_argument("--out")
     args = ap.parse_args()
     summary = json.loads(open(args.content, encoding="utf-8").read())["summary"]
-    result = check(args.routed, args.baseline, set(args.hcells), summary, args.console)
+    result = check(args.routed, args.baseline, set(args.hcells), summary, args.console, args.guard)
     text = json.dumps(result, indent=1)
     if args.out:
         (ROOT / args.out).write_text(text + "\n", encoding="utf-8")
