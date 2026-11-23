@@ -65,7 +65,11 @@ CLAMP_BARS = {
     "sar": {AVDD: (0.6, 5.0), AVSS: (17.0, 21.4)},     # bars at most 4.4 um wide (M4.W.3: 4.5)
 }
 CLAMP_BARS_R2 = dict(CLAMP_BARS, analog=CLAMP_BARS["pair"])  # the moved analog clamp is fed like the pair clamp
-CLAMP_STRIPS = {  # PCLAMPC_H_G M3 terminal strips, x in the master (readback pclamp-readback-a)
+# Clamp master. PCLAMPC_V_G has vertical gate poly at R0, as N28 needs (IO app note ch. 16: _V_G cells as they are
+# on the top and bottom sides, _H_G cells rotated for the left and right); PCLAMPC_H_G at R0 has horizontal gates.
+# Both have the same 100 x 22 um outline and the same 18 VDDESD/VSSESD M3 pin figures (query pclamp-vg-pins-2).
+CLAMP_MASTERS = {"PCLAMPC_H_G": "layout", "PCLAMPC_V_G": "layout_vg"}
+CLAMP_STRIPS = {  # PCLAMPC_H_G (= PCLAMPC_V_G) M3 terminal strips, x in the master (readback pclamp-readback-a)
     "VDDESD": [(6.5, 11.0), (18.5, 23.0), (30.5, 35.0), (42.5, 47.0), (52.695, 55.13), (59.0, 63.5), (71.0, 75.5),
                (83.0, 87.5), (95.0, 99.5)],
     "VSSESD": [(0.5, 5.0), (12.5, 17.0), (24.5, 29.0), (36.5, 41.0), (48.5, 51.63), (55.63, 58.0), (65.0, 69.5),
@@ -96,7 +100,8 @@ def clamp_bars(rev=1):
     return CLAMP_BARS_R2 if rev == 2 else CLAMP_BARS
 
 
-def clamps(rev=1):
+def clamps(rev=1, master="PCLAMPC_H_G"):
+    """master PCLAMPC_V_G (revision 1 places, view layout_vg): the vertical-gate clamp."""
     from Layout.design.chip_objects import io_library
     c = Content()
     c.instances = []
@@ -104,7 +109,7 @@ def clamps(rev=1):
     for branch in CLAMP_REGIONS:
         x0, y0 = CLAMP_ORIGIN[rev][branch]
         x1, y1 = x0 + 100.0, y0 + 22.0
-        c.instances.append(dict(lib=io_library(), cell="PCLAMPC_H_G", name=f"XCLAMP_{branch.upper()}", xy=[x0, y0],
+        c.instances.append(dict(lib=io_library(), cell=master, name=f"XCLAMP_{branch.upper()}", xy=[x0, y0],
                                 orient="R0", nets={"VDDESD": AVDD, "VSSESD": AVSS}))
         cuts = {}
         for net, (lo, hi) in clamp_bars(rev)[branch].items():
@@ -117,7 +122,9 @@ def clamps(rev=1):
             c.pin(net, "M4", [x0 + 0.5, by0, x1 - 0.5, by1])
         summary[branch] = dict(origin=[x0, y0], bars={n: [y0 + a, y0 + b] for n, (a, b) in clamp_bars(rev)[branch].items()},
                                via3_clusters=cuts)
-    return finish(c, "sar8_esd_clamps", "layout_r2" if rev == 2 else "layout"), summary
+    if master != "PCLAMPC_H_G" and rev != 1:
+        raise ValueError("The vertical-gate clamps use the revision 1 places")
+    return finish(c, "sar8_esd_clamps", "layout_r2" if rev == 2 else CLAMP_MASTERS[master]), summary
 
 
 # ------------------------------------------------------------------------------------------------ decaps
@@ -525,6 +532,7 @@ def guard_ring():
 
 
 OBJECTS = {"clamps": clamps, "vss_ring": vss_ring, "guard_ring": guard_ring, "clamps_r2": lambda: clamps(2),
+           "clamps_vg": lambda: clamps(1, "PCLAMPC_V_G"),
            **{f"decap_{b}": (lambda b=b: decap(b)) for b in DECAPS},
            **{f"decap_{b}_r2": (lambda b=b: decap(b, 2)) for b in DECAPS},
            **{f"decap_{b}_r3": (lambda b=b: decap(b, 3)) for b in DECAPS_R3}}

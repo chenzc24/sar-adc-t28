@@ -247,7 +247,7 @@ def lvs_source(content):
     lines.append(f".SUBCKT {content['cell']} " + " ".join(ports))
     for i in content.get("instances", []):
         if i["lib"] == io:
-            order = {"PCLAMPC_H_G": ["VDDESD", "VSSESD"]}[i["cell"]]
+            order = {"PCLAMPC_H_G": ["VDDESD", "VSSESD"], "PCLAMPC_V_G": ["VDDESD", "VSSESD"]}[i["cell"]]
             lines.append(f"X{i['name']} " + " ".join(i["nets"][p] for p in order) + f" {i['cell']}")
         else:
             raise ValueError("No LVS source rule for " + i["cell"])

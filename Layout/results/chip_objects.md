@@ -486,10 +486,41 @@ Fill decides these.
 
 **Unchanged:** the periphery extraction, the clamp-feed current density, the matching check and the Stage 2/6 netlists. The seal ring connects to nothing, and no pad or route moved.
 
+## Vertical-gate clamps and single power cuts: `sar8_adc_chip/layout_full_fill5_r8_seal`
+
+Requested by the user through the fill session (2026-11-23). `Layout/design/chip_ring_fix.py` builds three new views; `layout_full_fill5_r7_seal`, `sar8_io_ring/layout` and `sar8_esd_clamps/layout` stay unchanged.
+
+**Clamps on PCLAMPC_V_G** (`sar8_esd_clamps/layout_vg`, build `obj-clamps-vg-b1`).
+- **Why:** IO app note ch. 16: N28 needs vertical gate poly. `_V_G` cells go on as they are; `_H_G` cells are for rotated use. PCLAMPC_H_G at R0 has horizontal gates, which is where the chip DRC's PO.R.5/6, PO.W.2 and SR_DPO.R.4 came from.
+- **Change:** the three clamps take PCLAMPC_V_G at the same places, R0. Both masters have the same 100 x 22 um outline and the same 18 VDDESD/VSSESD M3 pin figures (query `pclamp-vg-pins-2`), so the M4 bars, drops and clamp feed are unchanged, and so is the current-density check.
+- **Cell checks** (`obj-clamps-vg-chk1`): LVS CORRECT. Cell-deck DRC 72 against 74: the four gate rules go from 10 to 0; ESD.40.1g, inside the clamp master, goes from 40 to 48. The chip-level flat ESD check is unchanged.
+- **Pad to clamp** (clamps flattened, `chip-periph-x5`): worst 0.83 ohm, within 0.04 ohm of r5 on every rail.
+
+**One power cut per domain boundary** (`sar8_io_ring/layout_r2`, build `ring-r2-b1`).
+- **Why:** the plan has one PRCUTA_G per cut (`io_ring.json` `domain_cuts`). The generator filled each 40 um gap with two, and the islands where the two cuts abut float (ERC floating.nxwell_float / floating.psub; `io_ring_verification.json` traced them there).
+- **Change:** the cut beside PVSS3AC_H_G stays (app note 9.8.3 note 1: an analog P/G cell right next to the cut). The one beside the digital pad becomes PFILLER20_G, with the same origin and orientation as the other digital fillers on that side: west `left_6_mid_2_left_21`, east `right_7_mid_1_right_23`.
+  - The VSS ESD bus stays continuous through the remaining cut, and the domain buses stay cut there (9.8.3).
+  - PRCUTA_G and PFILLER20_G hold no devices, so the ring netlist does not change.
+  - Release note 170c 6b (at least 3 um of filler between digital function IO and PVDD1DGZ) is unaffected: the swap only adds filler next to PVDD1DGZ.
+
+**Chip view** (build `chip-r8-b1`): r7_seal with XRING on `sar8_io_ring/layout_r2` and XESD_CLAMPS on `sar8_esd_clamps/layout_vg`. The LVS source is r7's with the three clamps on PCLAMPC_V_G (`chip_ring_fix.lvs_source`). By rule against `layout_full_fill5_r7_seal`:
+
+| Check | `layout_full_fill5_r8_seal` | `layout_full_fill5_r7_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-r8-b1-chk`) | 2896 | 2904 |
+| of which other than density and fill | 224: PO.R.5 4, PO.R.6 2, PO.W.2 2, SR_DPO.R.4 2 all to 0, nothing new | 234 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-r8-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` | CORRECT | CORRECT |
+| LVS, only supply nets joined by name (`chip-r8-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 296: floating.psub 6 to 0, floating.nxwell_float 7 to 4 | 305 |
+
+The 4 remaining floating n-wells sit inside the IO library's HBO850_DIO subcells, as in r7. The only density change is SR_DOD.DN.1 170 to 172.
+
 ## Open
 
 - MATCH.WARN.1 is closed by the permanent MATCHING markers in `layout_full_fill5_r6_seal`. The comparator's deviation from high matching is recorded above as an accepted risk; the waiver cites `chip-match-h1`.
-- `layout_full_fill5_r7_seal` (892 um die) is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r6_seal` (MATCHING markers, 1 mm), `layout_full_fill5_r5_seal` (AVSS landings), `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
+- `layout_full_fill5_r8_seal` (vertical-gate clamps, single power cuts) is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r7_seal` (892 um die), `layout_full_fill5_r6_seal` (MATCHING markers, 1 mm), `layout_full_fill5_r5_seal` (AVSS landings), `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
 - Die size: confirm 892 x 892 um with the shuttle provider before tapeout.
   - **What to ask:** its die-size grid, billing blocks and scribe width, and whether it adds the seal ring itself (DRM 4.5.66.2 option 1). In that case the GDS must not carry ours.
   - **What 892 um is:** the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin, not a confirmed die size.
