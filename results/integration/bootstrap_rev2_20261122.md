@@ -151,4 +151,4 @@ If any condition fails, the result goes to the user. `Layout/tools/analysis/gate
 - **Open:** the cause of the fill's residual increase. It is within every limit and is not a pass condition.
 - **Freeze entry.** `Layout/results/current.json` `integration.freeze.blocks.bootstrap` points at r2 since 2026-11-23: the wrapper `sar_bootstrap_flat_8b_p_filled/layout_r2` with the core `sar_bootstrap_flat_8b_p_core/layout_r2`, evidence `boot-fill-r2-20261122` (and `-cworst-t`, `-cbest-t`). The freeze rule's reruns are the standalone and pairwise runs above. `sar_bootstrap_flat_8b_p_core/layout` and `boot-core-20261121` stay as dated evidence. The `stage6_bootstrap_gate_screen` decision records the outcome: passed outright.
 - **Deterministic runs only.** No mismatch, noise or terminal-voltage verdict.
-- **Waveform retention** follows at closeout.
+- **Waveforms.** Twelve runs' raw waveforms were archived and released on 2026-11-23. `sar8-bsr2-ssc-verify-a` and `sar8-bsr2-ssc-verify-f2` are held for the open fill-residual cause. [Release receipt](../storage/20261123-bootstrap-rev2-release.md)
