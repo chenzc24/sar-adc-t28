@@ -463,7 +463,7 @@ def render(root=ROOT):
     current_path = root/'Layout/results/current.json'
     current = json.loads(current_path.read_text()) if current_path.exists() else {}
     current.update(planning_inputs_sha256=report['planning_inputs_sha256'],
-                   planning={'view': 'floorplan.svg', 'area': 'area.json', 'status': 'coarse_plan_unimplemented',
+                   planning={'view': 'floorplan.svg', 'area': 'area.json', 'status': 'floorplan_projection',
                              'unresolved_budgets': report['unresolved_budgets']}, signoff=False)
     write_json(current_path, current)
     return {'view': str(target), 'area': str(root/'Layout/results/area.json'), 'signoff': False}
