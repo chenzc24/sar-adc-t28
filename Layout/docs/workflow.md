@@ -233,6 +233,25 @@ python -m Layout.tools.analysis.chip_objects_record --chip-build BUILD_ID --chip
 
 [Chip objects record](../results/chip_objects.md)
 
+### Chip Fill
+
+`Layout/design/chip_fill.py` fills the frozen chip view by owner (fill policy, "Chip Fill Owners"). `seed` writes the chip stream plus one exclusion cell. `fill` runs the foundry OD/PO and metal utilities on it with dummy TCD off (`Layout/tools/physical/toplevel_fill_physical.py`); its evidence is fetched by hash. `library` assembles `sar8_chip_fill<N>`: the pass's fill, the planned M9 stripes and the exclusion cell. `verify` checks it tile by tile against the chip stream. `wrapper-gds` assembles `sar8_adc_chip_filled` as a stream, and `chip_assembly physical --gds` runs chip DRC, LVS and ERC on it. The LVS source is the chip's source with the top subcircuit renamed `sar8_adc_chip_filled`. `route-crop` cuts the VIN/VREF chip routes out with a 5 µm corridor for extraction. `clip` moves a fill library to a smaller die without a new pass (it only drops elements). `build` streams the library into OA (new names only) and creates the wrapper view `layout_fill<N>`, with the chip view read only.
+
+```powershell
+python -m Layout.design.chip_fill --revision N seed SEED_ID --chip-gds CHIP_GDS
+python -m Layout.design.chip_fill --revision N fill SEED_ID --seed SEED_GDS
+python -m Layout.design.chip_fill --revision N library LIB_ID --chip-gds CHIP_GDS --fill-dir work/layout/chip-fill/evidence/SEED_ID
+python -m Layout.design.chip_fill --revision N verify LIB_ID --chip-gds CHIP_GDS
+python -m Layout.design.chip_fill --revision N wrapper-gds CHECK_ID --library LIB_ID --chip-gds CHIP_GDS
+python -m Layout.design.chip_assembly physical CHECK_ID --gds WRAPPER_GDS --top sar8_adc_chip_filled --hcells-from BASE_GDS --source FILLED_CHIP_CDL
+python -m Layout.design.chip_fill --revision N route-crop CROP_ID --gds WRAPPER_GDS --top sar8_adc_chip_filled
+python -m Layout.design.toplevel_route physical XTR_ID --gds CROP_GDS --top sar8_chip_routes --stages pex
+python -m Layout.design.chip_fill --revision N clip LIB_ID --library OLD_LIB_ID --chip-gds CHIP_GDS --die X0 Y0 X1 Y1 --bounds X0 Y0 X1 Y1
+python -m Layout.design.chip_fill --revision N build BUILD_ID --library LIB_ID --chip-view CHIP_VIEW --expect-chip-oa SHA256
+```
+
+Count LUP and ESD on the filled chip with the chip-level flat deck (72 LUP/ESD checks), pointed at the wrapper stream. [Chip fill record](../results/chip_fill.md) · [Waivers](../results/chip_drc_waivers.md)
+
 ## Applicability of Results
 
 `current.json` ties the floorplan, physical evidence, and TT runs to their limitations. `check` compares electrical source and planning dependency digests and reports stale evidence when the source changes. `render` refreshes the planning projection. Prior qualification continues to refer to its original dependencies. Stream out and repeat native verification after editing OA. Local file digests cover local inputs only. [Current evidence](../results/current.json)

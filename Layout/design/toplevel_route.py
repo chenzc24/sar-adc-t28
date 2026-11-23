@@ -250,13 +250,19 @@ def physical(identity, view=None, gds=None, through="drc", stages=None, hcells=N
     cfg = config()
     q = shlex.quote
     evidence = f"{cfg['remote_root']}/evidence/{identity}"
+    staged = None
     files = {name: (PHYSICAL / name).read_bytes() for name in ("toplevel_physical.py", "run_physical.py", "workspace.py")}
     arguments = ["python", "-u", "toplevel_physical.py", identity, "--lock", cfg["legacy_root"] + "/layout.lock",
                  "--through", through]
     if view:
         arguments += ["--view", view]
     else:
-        files["candidate.gds"] = Path(gds).read_bytes()
+        # Sent ahead with compressed scp into the owned state folder (inline base64 times out for large streams),
+        # then moved into the evidence directory and hash-checked.
+        blob = Path(gds).read_bytes()
+        staged = (f"{cfg['remote_root']}/state/{identity}.candidate.gds", hashlib.sha256(blob).hexdigest())
+        subprocess.run(["scp", "-C", "-q", "-o", "BatchMode=yes", str(gds), f"{cfg['host']}:{staged[0]}"],
+                       check=True, timeout=3600)
         arguments += ["--gds", "candidate.gds"]
     if stages:
         arguments += ["--stages", stages]
@@ -273,16 +279,20 @@ def physical(identity, view=None, gds=None, through="drc", stages=None, hcells=N
     script = ["set -eu", "umask 077", f"test \"$(hostname -s)\" = {q(cfg['host'])}",
               f"test ! -e {q(evidence)} && test ! -e {q(cfg['legacy_root'] + '/evidence/' + identity)}",
               f"mkdir {q(evidence)}", f"cd {q(evidence)}"]
+    if staged:
+        script += [f"mv {q(staged[0])} candidate.gds",
+                   f"test \"$(sha256sum candidate.gds | cut -d' ' -f1)\" = {staged[1]} || {{ echo CANDIDATE_HASH_DIFFERS; exit 9; }}"]
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script += [f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib",
                f"grep -q -E '^DEFINE[[:space:]]+{STANDARD_LIBRARY}[[:space:]]' cds.lib || "
                f"grep -m1 -E '^DEFINE[[:space:]]+{STANDARD_LIBRARY}[[:space:]]' /home/dmanager/shared_lib/TSMC28/cds.lib >> cds.lib",
-               "sha256sum " + " ".join(files) + " cds.lib",
+               "sha256sum " + " ".join(list(files) + (["candidate.gds"] if staged else [])) + " cds.lib",
                "nohup " + " ".join(q(a) for a in arguments) + " > driver.log 2>&1 < /dev/null &", "echo PID=$!"]
     text = ssh("\n".join(script), timeout=120).decode("utf-8", "replace")
     receipt = dict(identity=identity, host=cfg["host"], evidence=evidence, arguments=arguments,
-                   uploaded_sha256={n: hashlib.sha256(b).hexdigest() for n, b in files.items()}, stdout=text.splitlines())
+                   uploaded_sha256=dict({n: hashlib.sha256(b).hexdigest() for n, b in files.items()},
+                                        **({"candidate.gds": staged[1]} if staged else {})), stdout=text.splitlines())
     write_json(WORK / identity / "launch.json", receipt)
     return receipt
 
