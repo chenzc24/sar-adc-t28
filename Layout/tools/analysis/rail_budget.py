@@ -304,6 +304,9 @@ def main():
         reference_fixture_check_tt=fixture, reference_undamped_single_bond_check_ffc=undamped,
         reference_single_bond_design=dict(SINGLE_BOND, check_ffc=single_bond),
         supply_branches=branches, corner_charge_allowance=k, pad_ring=ring_result)
+    # The drawn chip (feeds, analog pad bulk, coupled ring, reference); imported here because it uses this module.
+    from Layout.tools.analysis import drawn_chip_rail
+    result['drawn_chip'] = drawn_chip_rail.check(box=a.box, gamma=gamma)
     (ROOT / 'Layout/results/rail_budget.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(gamma=gamma, design=design, box=box, fixture=fixture, undamped=undamped['decision_error_lsb'],
                           branches={n: (b['check'], b.get('check_with_pad_bulk')) for n, b in branches.items()}),
