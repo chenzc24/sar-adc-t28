@@ -22,6 +22,7 @@ RING = ("sar8_io_ring", "layout")
 CORE = ("sar8_adc_core", "layout_route_guard")
 IO_LIBRARY = "tphn28hpcpgv18"
 PAD_LIBRARY = "PAD"                      # PAD60GU bond pads of the ring
+SEAL_LIBRARY = "sealring"                # the lab's shared seal-ring kit (io_ring.json seal_ring)
 SHARED_CDS = "/home/dmanager/shared_lib/TSMC28/cds.lib"
 
 
@@ -41,7 +42,7 @@ def run_skill(identity, il, guarded=(), timeout=900):
               f"mkdir {q(evidence)}", f"cd {q(evidence)}",
               "base64 -d > job.il <<'B64'", base64.b64encode(blob).decode("ascii"), "B64",
               f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib"]
-    for lib in (STANDARD_LIBRARY, IO_LIBRARY, PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, IO_LIBRARY, PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     if guarded:
@@ -264,7 +265,7 @@ def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None,
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script += [f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib"]
-    for lib in (STANDARD_LIBRARY, IO_LIBRARY, PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, IO_LIBRARY, PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     script += ["sha256sum " + " ".join(files) + " cds.lib",

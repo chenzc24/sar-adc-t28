@@ -7,7 +7,8 @@
     "in_core": "Stage 4b drawn decoupling and in-core loops (toplevel_route_full.json rail_budget)",
     "pad_bulk": "chip_objects.json geometry_r3 (analog), geometry_r2 (pair, SAR); ESR = drawn model",
     "ring_feed": "chip_objects.json ring_feed_r2 (drawn, 125 C rcworst)",
-    "charge": "Stage 1 calibration and the 1.3 corner charge allowance"
+    "charge": "Stage 1 calibration and the 1.3 corner charge allowance",
+    "extracted_feed": "chip_periphery.json supply_feeds (extraction chip-periph-x1, 25 C typical, scaled to 125 C rcworst_T by the trunk layer)"
   },
   "drawn_esr": {
     "branches": {
@@ -196,6 +197,101 @@
       }
     ],
     "worst_droop_V": 0.0152,
+    "limit_V": 0.045,
+    "pass_": true
+  },
+  "extracted_feed": {
+    "branches": {
+      "analog": {
+        "drawn": {
+          "bulk_f": 9.29e-11,
+          "esr_ohm_per_rail": 3.348,
+          "pad_to_bulk_ohm": 1.985,
+          "bulk_to_pin_ohm": 0.37
+        },
+        "block_cap_F": 8.36e-12,
+        "with_drawn_bulk": [
+          {
+            "feed_ohm": 4.935,
+            "droop_V": 0.0203,
+            "pin_peak_A": 0.00081
+          }
+        ],
+        "stage4b_with_planned_bulk_droop_V": 0.0171,
+        "core_alone_droop_V": 0.0408,
+        "worst_droop_V": 0.0203
+      },
+      "pair": {
+        "drawn": {
+          "bulk_f": 1.159e-10,
+          "esr_ohm_per_rail": 2.953,
+          "pad_to_bulk_ohm": 3.729,
+          "bulk_to_pin_ohm": 0.118
+        },
+        "block_cap_F": 9.158e-12,
+        "with_drawn_bulk": [
+          {
+            "feed_ohm": 3.368,
+            "droop_V": 0.0178,
+            "pin_peak_A": 0.001
+          }
+        ],
+        "stage4b_with_planned_bulk_droop_V": 0.0159,
+        "core_alone_droop_V": 0.0403,
+        "worst_droop_V": 0.0178
+      },
+      "sar": {
+        "drawn": {
+          "bulk_f": 1.346e-10,
+          "esr_ohm_per_rail": 2.259,
+          "pad_to_bulk_ohm": 2.256,
+          "bulk_to_pin_ohm": 0.695
+        },
+        "block_cap_F": 9.12e-12,
+        "with_drawn_bulk": [
+          {
+            "feed_ohm": 3.82,
+            "droop_V": 0.0108,
+            "pin_peak_A": 0.0007
+          },
+          {
+            "feed_ohm": 4.82,
+            "droop_V": 0.0118,
+            "pin_peak_A": 0.0007
+          }
+        ],
+        "stage4b_with_planned_bulk_droop_V": 0.0117,
+        "core_alone_droop_V": 0.0263,
+        "worst_droop_V": 0.0118
+      }
+    },
+    "coupled_shared_bus_125c_rcworst": [
+      {
+        "core_feed_ohm": {
+          "analog": 4.565,
+          "pair": 3.25,
+          "sar": 3.125
+        },
+        "droop_all_firing_V": {
+          "analog": 0.0186,
+          "pair": 0.0176,
+          "sar": 0.0123
+        }
+      },
+      {
+        "core_feed_ohm": {
+          "analog": 4.565,
+          "pair": 3.25,
+          "sar": 4.125
+        },
+        "droop_all_firing_V": {
+          "analog": 0.0186,
+          "pair": 0.0176,
+          "sar": 0.0133
+        }
+      }
+    ],
+    "worst_droop_V": 0.0203,
     "limit_V": 0.045,
     "pass_": true
   }

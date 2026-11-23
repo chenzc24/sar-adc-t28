@@ -1,0 +1,731 @@
+{
+  "schema_version": 1,
+  "tool": "Layout/tools/analysis/chip_periphery.py",
+  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r3_seal",
+  "extraction": {
+    "identity": "chip-periph-x1",
+    "host": "thu-wei",
+    "source_evidence": "chip-seal-b1-chk",
+    "stream_sha256": "4a3248b64af267d4cff197f942623f70587c22efa5c0129d45a63bc868f3fcc9",
+    "netlist_sha256": "196974666a74c559f7e2c7eb54703efb94ccda7f7469c3f422c3e49665b2c1ec",
+    "rules": "installed Calibre xRC deck (rcx/calibre.rcx), typical, 25 C; -rcc with the coupling capacitance grounded in the netlist",
+    "xcells": [
+      "PCORNERA_G",
+      "PCORNER_G",
+      "PDB3AC_H_G",
+      "PDB3AC_V_G",
+      "PDDW16SDGZ_H_G",
+      "PFILLER20A_G",
+      "PFILLER20_G",
+      "PRCUTA_G",
+      "PRUW08SDGZ_H_G",
+      "PRUW08SDGZ_V_G",
+      "PVDD1DGZ_H_G",
+      "PVDD2DGZ_V_G",
+      "PVDD2POC_V_G",
+      "PVDD3AC_H_G",
+      "PVDD3AC_V_G",
+      "PVSS1DGZ_H_G",
+      "PVSS2AC_V_G",
+      "PVSS2DGZ_H_G",
+      "PVSS2DGZ_V_G",
+      "PVSS3AC_H_G",
+      "PVSS3AC_V_G",
+      "sar8_adc_core_filled",
+      "sar8_out_reg",
+      "sar8_decap_analog",
+      "sar8_decap_pair",
+      "sar8_decap_sar",
+      "sar8_decap_dvdd",
+      "PCLAMPC_H_G",
+      "N28_TSMC_SRDMB_Mu"
+    ],
+    "extracted_supplies": [
+      "VDD",
+      "AVDD"
+    ],
+    "not_extracted": "inductance (xRC gives R and C); the xcells' insides (pad cells, core, register, decaps, clamps: ideal nets); fill (the chip margin and pad decap areas have none yet, so wiring C will rise)"
+  },
+  "reference": {
+    "VREFP": {
+      "routes": {
+        "VREFP_a": {
+          "pad": "left_1",
+          "cell": "PDB3AC_H_G",
+          "length_um": 297.9,
+          "route_ohm": 2.116,
+          "route_f": 2.951e-14,
+          "bond_pad_metal_f": 7.466e-14,
+          "pad_cell_junction_f": 1.019e-12,
+          "route_h_estimate": 3.166e-10
+        },
+        "VREFP_b": {
+          "pad": "left_3",
+          "cell": "PDB3AC_H_G",
+          "length_um": 317.9,
+          "route_ohm": 2.225,
+          "route_f": 3.651e-14,
+          "bond_pad_metal_f": 7.466e-14,
+          "pad_cell_junction_f": 1.019e-12,
+          "route_h_estimate": 3.42e-10
+        }
+      },
+      "parallel_route_ohm": 1.084,
+      "parallel_route_h_estimate": 1.644e-10,
+      "bond_pad_metal_f": 1.493e-13,
+      "route_f": 6.602e-14,
+      "on_attachment_nodes_f": 4.56e-15,
+      "other_f": 0,
+      "pad_cell_junction_f": 2.037e-12,
+      "total_wiring_f": 2.199e-13,
+      "node_v": 0.9
+    },
+    "VREFN": {
+      "routes": {
+        "VREFN_a": {
+          "pad": "left_2",
+          "cell": "PDB3AC_H_G",
+          "length_um": 263.9,
+          "route_ohm": 1.931,
+          "route_f": 3.05e-14,
+          "bond_pad_metal_f": 7.466e-14,
+          "pad_cell_junction_f": 1.094e-12,
+          "route_h_estimate": 2.741e-10
+        },
+        "VREFN_b": {
+          "pad": "left_4",
+          "cell": "PDB3AC_H_G",
+          "length_um": 371.9,
+          "route_ohm": 2.519,
+          "route_f": 4.434e-14,
+          "bond_pad_metal_f": 7.466e-14,
+          "pad_cell_junction_f": 1.094e-12,
+          "route_h_estimate": 4.117e-10
+        }
+      },
+      "parallel_route_ohm": 1.093,
+      "parallel_route_h_estimate": 1.646e-10,
+      "bond_pad_metal_f": 1.493e-13,
+      "route_f": 7.483e-14,
+      "on_attachment_nodes_f": 3.132e-15,
+      "other_f": 0,
+      "pad_cell_junction_f": 2.188e-12,
+      "total_wiring_f": 2.273e-13,
+      "node_v": 0.0
+    }
+  },
+  "reference_model": {
+    "route": {
+      "ohm": 0.85,
+      "ohm_range": [
+        0.14,
+        1.2
+      ],
+      "H": 1.7e-10,
+      "F": 2.7e-13,
+      "width_um": 4.0,
+      "layer": "M8",
+      "basis": "The two routes of one rail in parallel, ahead of the on-chip resistor, on the 9 x 9 ring (chenzc24/sar-adc-t28#23): VREFP 297.9/317.9 um and VREFN 263.9/371.9 um, about 38.5 squares at 4 um. M8 0.022 ohm/sq at 25 C (PDK tech LEF) gives 0.85 ohm; the range runs from M9 at -40 C (0.0035 ohm/sq) to M8 at 125 C with rcworst_T thickness (0.031 ohm/sq). F is M8 area and edge capacitance to substrate; H scales the earlier 0.1 nH assumption with length (a coplanar-strip estimate of the interleaved bundle gives about a third of it)."
+    },
+    "pad_F": 5e-13,
+    "hand": {
+      "width_um": 4.0,
+      "layer": "M8 (M9 gives the low end)",
+      "rails": {
+        "VREFP": {
+          "lengths_um": [
+            297.9,
+            317.9
+          ],
+          "parallel_equivalent_um": 153.8,
+          "ohm": {
+            "m8_25c": 0.8458,
+            "m8_125c_rcworst": 1.195,
+            "m8_m40c": 0.6421,
+            "m9_m40c": 0.1354
+          },
+          "cap_f": 2.629e-13,
+          "h": 1.661e-10
+        },
+        "VREFN": {
+          "lengths_um": [
+            263.9,
+            371.9
+          ],
+          "parallel_equivalent_um": 154.4,
+          "ohm": {
+            "m8_25c": 0.849,
+            "m8_125c_rcworst": 1.199,
+            "m8_m40c": 0.6445,
+            "m9_m40c": 0.1359
+          },
+          "cap_f": 2.715e-13,
+          "h": 1.667e-10
+        }
+      },
+      "route_ohm": 0.849,
+      "route_ohm_range": [
+        0.1354,
+        1.199
+      ],
+      "route_h": 1.667e-10,
+      "route_f": 2.715e-13
+    }
+  },
+  "vin": {
+    "VINP": {
+      "route_ohm": 56.59,
+      "bond_ohm": 0.01712,
+      "bond_pad_metal_f": 7.466e-14,
+      "route_f": 1.609e-14,
+      "on_pad_node_f": 0.0,
+      "total_wiring_f": 9.076e-14,
+      "pad": "top_2",
+      "cell": "PDB3AC_V_G",
+      "length_um": 167.2,
+      "pad_cell_junction_f": {
+        "0.0 V": 1.094e-12,
+        "0.45 V": 1.034e-12,
+        "0.9 V": 1.019e-12
+      },
+      "route_h_estimate": 2.083e-10
+    },
+    "VINN": {
+      "route_ohm": 56.59,
+      "bond_ohm": 0.01712,
+      "bond_pad_metal_f": 7.466e-14,
+      "route_f": 1.61e-14,
+      "on_pad_node_f": 0.0,
+      "total_wiring_f": 9.076e-14,
+      "pad": "top_5",
+      "cell": "PDB3AC_V_G",
+      "length_um": 167.2,
+      "pad_cell_junction_f": {
+        "0.0 V": 1.094e-12,
+        "0.45 V": 1.034e-12,
+        "0.9 V": 1.019e-12
+      },
+      "route_h_estimate": 2.083e-10
+    }
+  },
+  "supply_feeds": {
+    "analog": {
+      "rails": {
+        "AVDD": {
+          "net": "AVDD_CORE__1",
+          "pad": "top_4",
+          "pad_to_pin_ohm": 0.622,
+          "bulk_to_pin_ohm": 0.8662,
+          "pad_to_bulk_ohm": 1.444,
+          "star_ohm": {
+            "pad": 0.5998,
+            "decap": 0.844,
+            "pin": 0.02216
+          },
+          "pad_to_clamp_ohm": 1.1
+        },
+        "AVSS": {
+          "net": "AVSS_CORE",
+          "pad": "top_3",
+          "pad_to_pin_ohm": 1.01,
+          "bulk_to_pin_ohm": 0.9078,
+          "pad_to_bulk_ohm": 1.44,
+          "star_ohm": {
+            "pad": 0.771,
+            "decap": 0.669,
+            "pin": 0.2388
+          },
+          "pad_to_clamp_ohm": 1.082
+        }
+      },
+      "loop_pad_to_pin_ohm": 1.632,
+      "loop_bulk_to_pin_ohm": 1.774,
+      "loop_pad_to_pin_ohm_125c_rcworst_scaled": 2.355,
+      "loop_bulk_to_pin_ohm_125c_rcworst_scaled": 2.576,
+      "hand_25c": {
+        "pad_to_pin_ohm": 0.3692,
+        "bulk_to_pin_ohm": 0.09825
+      },
+      "hand_125c_rcworst": {
+        "pad_to_pin_ohm": 0.528,
+        "bulk_to_pin_ohm": 0.142
+      }
+    },
+    "pair": {
+      "rails": {
+        "AVDD": {
+          "net": "AVDD_CORE",
+          "pad": "left_5",
+          "pad_to_pin_ohm": 0.8093,
+          "bulk_to_pin_ohm": 0.8618,
+          "pad_to_bulk_ohm": 1.635,
+          "star_ohm": {
+            "pad": 0.7915,
+            "decap": 0.844,
+            "pin": 0.01781
+          },
+          "pad_to_clamp_ohm": 1.108
+        },
+        "AVSS": {
+          "net": "AVSS_CORE",
+          "pad": "left_6",
+          "pad_to_pin_ohm": 1.868,
+          "bulk_to_pin_ohm": 0.7339,
+          "pad_to_bulk_ohm": 2.472,
+          "star_ohm": {
+            "pad": 1.803,
+            "decap": 0.669,
+            "pin": 0.06489
+          },
+          "pad_to_clamp_ohm": 1.108
+        }
+      },
+      "loop_pad_to_pin_ohm": 2.678,
+      "loop_bulk_to_pin_ohm": 1.596,
+      "loop_pad_to_pin_ohm_125c_rcworst_scaled": 3.847,
+      "loop_bulk_to_pin_ohm_125c_rcworst_scaled": 2.324,
+      "hand_25c": {
+        "pad_to_pin_ohm": 1.639,
+        "bulk_to_pin_ohm": 0.083
+      },
+      "hand_125c_rcworst": {
+        "pad_to_pin_ohm": 2.335,
+        "bulk_to_pin_ohm": 0.119
+      }
+    },
+    "sar": {
+      "rails": {
+        "AVDD": {
+          "net": "AVDD_CORE__2",
+          "pad": "top_1",
+          "pad_to_pin_ohm": 0.6751,
+          "bulk_to_pin_ohm": 0.4631,
+          "pad_to_bulk_ohm": 1.032,
+          "star_ohm": {
+            "pad": 0.6218,
+            "decap": 0.4098,
+            "pin": 0.05326
+          },
+          "pad_to_clamp_ohm": 1.111
+        },
+        "AVSS": {
+          "net": "AVSS_CORE",
+          "pad": "right_8",
+          "pad_to_pin_ohm": 1.376,
+          "bulk_to_pin_ohm": 0.6951,
+          "pad_to_bulk_ohm": 1.199,
+          "star_ohm": {
+            "pad": 0.9399,
+            "decap": 0.2591,
+            "pin": 0.436
+          },
+          "pad_to_clamp_ohm": 1.096
+        }
+      },
+      "loop_pad_to_pin_ohm": 2.051,
+      "loop_bulk_to_pin_ohm": 1.158,
+      "loop_pad_to_pin_ohm_125c_rcworst_scaled": 2.952,
+      "loop_bulk_to_pin_ohm_125c_rcworst_scaled": 1.673,
+      "hand_25c": {
+        "pad_to_pin_ohm": 1.13,
+        "bulk_to_pin_ohm": 0.3424
+      },
+      "hand_125c_rcworst": {
+        "pad_to_pin_ohm": 1.607,
+        "bulk_to_pin_ohm": 0.487
+      }
+    }
+  },
+  "output": {
+    "D0": {
+      "pad": "right_3",
+      "cell": "PRUW08SDGZ_H_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01868,
+        "bond_pad_metal_f": 7.482e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.482e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 249.1,
+        "total_wiring_f": 1.477e-14
+      }
+    },
+    "D1": {
+      "pad": "right_2",
+      "cell": "PRUW08SDGZ_H_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01868,
+        "bond_pad_metal_f": 7.482e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.482e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 300.2,
+        "total_wiring_f": 1.968e-14
+      }
+    },
+    "D2": {
+      "pad": "right_1",
+      "cell": "PRUW08SDGZ_H_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01868,
+        "bond_pad_metal_f": 7.482e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.482e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 351.3,
+        "total_wiring_f": 2.331e-14
+      }
+    },
+    "D3": {
+      "pad": "bottom_7",
+      "cell": "PRUW08SDGZ_V_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01725,
+        "bond_pad_metal_f": 7.622e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.622e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 348.9,
+        "total_wiring_f": 2.187e-14
+      }
+    },
+    "D4": {
+      "pad": "bottom_5",
+      "cell": "PRUW08SDGZ_V_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01725,
+        "bond_pad_metal_f": 7.622e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.622e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 376.5,
+        "total_wiring_f": 2.173e-14
+      }
+    },
+    "D5": {
+      "pad": "bottom_4",
+      "cell": "PRUW08SDGZ_V_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01725,
+        "bond_pad_metal_f": 7.622e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.622e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 421.2,
+        "total_wiring_f": 2.308e-14
+      }
+    },
+    "D6": {
+      "pad": "bottom_2",
+      "cell": "PRUW08SDGZ_V_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01725,
+        "bond_pad_metal_f": 7.622e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.622e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 513.9,
+        "total_wiring_f": 2.588e-14
+      }
+    },
+    "D7": {
+      "pad": "bottom_1",
+      "cell": "PRUW08SDGZ_V_G",
+      "pad_net": {
+        "route_ohm": null,
+        "bond_ohm": 0.01725,
+        "bond_pad_metal_f": 7.622e-14,
+        "route_f": 0,
+        "on_pad_node_f": 0.0,
+        "total_wiring_f": 7.622e-14
+      },
+      "register_to_pad": {
+        "route_ohm": 558.7,
+        "total_wiring_f": 2.723e-14
+      }
+    }
+  },
+  "adc_d": {
+    "ADC_D0": {
+      "net": "27",
+      "route_ohm": 26.37,
+      "total_wiring_f": 2.355e-16
+    },
+    "ADC_D1": {
+      "net": "28",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.768e-16
+    },
+    "ADC_D2": {
+      "net": "29",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.81e-16
+    },
+    "ADC_D3": {
+      "net": "30",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.8e-16
+    },
+    "ADC_D4": {
+      "net": "31",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.807e-16
+    },
+    "ADC_D5": {
+      "net": "32",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.755e-16
+    },
+    "ADC_D6": {
+      "net": "33",
+      "route_ohm": 26.37,
+      "total_wiring_f": 1.795e-16
+    },
+    "ADC_D7": {
+      "net": "34",
+      "route_ohm": 26.37,
+      "total_wiring_f": 2.126e-16
+    }
+  },
+  "sample": {
+    "pad": "right_5",
+    "cell": "PDDW16SDGZ_H_G",
+    "pad_net": {
+      "route_ohm": null,
+      "bond_ohm": 0.01872,
+      "bond_pad_metal_f": 7.481e-14,
+      "route_f": 0,
+      "on_pad_node_f": 0.0,
+      "total_wiring_f": 7.481e-14
+    },
+    "pad_to_core_ohm": 19.12,
+    "pad_to_register_ohm": 36.99,
+    "total_wiring_f": 1.634e-14
+  },
+  "register_supply": {
+    "DVDD": {
+      "ring_nodes": [
+        "X1/X1/X3/X14/X0/D0:neg"
+      ],
+      "ring_to_register_ohm": 21.71,
+      "decap_to_register_ohm": 16.1,
+      "ring_to_decap_ohm": 5.617,
+      "star_ohm": {
+        "ring": 5.617,
+        "decap": 5.3e-07,
+        "register": 16.1
+      },
+      "total_wiring_f": 8.127e-13
+    },
+    "VSS": {
+      "note": "Not resolved: the extraction joins the VSS of every xcell (pads, register, core) at one substrate node, so the VSS_register route ends on the same node as the VSS pads.",
+      "attachments": [
+        "bottom_1",
+        "bottom_2",
+        "bottom_4",
+        "bottom_5",
+        "bottom_7",
+        "label",
+        "left_8",
+        "right_1",
+        "right_2",
+        "right_3",
+        "right_5"
+      ]
+    }
+  },
+  "pad_cells": {
+    "left_0": "PVSS3AC_H_G",
+    "left_1": "PDB3AC_H_G",
+    "left_2": "PDB3AC_H_G",
+    "left_3": "PDB3AC_H_G",
+    "left_4": "PDB3AC_H_G",
+    "left_5": "PVDD3AC_H_G",
+    "left_6": "PVSS3AC_H_G",
+    "left_7": "PVSS1DGZ_H_G",
+    "left_8": "PVSS2DGZ_H_G",
+    "bottom_0": "PVSS2DGZ_V_G",
+    "bottom_1": "PRUW08SDGZ_V_G",
+    "bottom_2": "PRUW08SDGZ_V_G",
+    "bottom_3": "PVDD2DGZ_V_G",
+    "bottom_4": "PRUW08SDGZ_V_G",
+    "bottom_5": "PRUW08SDGZ_V_G",
+    "bottom_6": "PVDD2POC_V_G",
+    "bottom_7": "PRUW08SDGZ_V_G",
+    "bottom_8": "PVSS2DGZ_V_G",
+    "right_0": "PVSS2DGZ_H_G",
+    "right_1": "PRUW08SDGZ_H_G",
+    "right_2": "PRUW08SDGZ_H_G",
+    "right_3": "PRUW08SDGZ_H_G",
+    "right_4": "PVDD1DGZ_H_G",
+    "right_5": "PDDW16SDGZ_H_G",
+    "right_6": "PVDD1DGZ_H_G",
+    "right_7": "PVDD1DGZ_H_G",
+    "right_8": "PVSS3AC_H_G",
+    "top_0": "PVSS3AC_V_G",
+    "top_1": "PVDD3AC_V_G",
+    "top_2": "PDB3AC_V_G",
+    "top_3": "PVSS3AC_V_G",
+    "top_4": "PVDD3AC_V_G",
+    "top_5": "PDB3AC_V_G",
+    "top_6": "PVSS3AC_V_G",
+    "top_7": "PVSS2AC_V_G",
+    "top_8": "PVSS3AC_V_G"
+  },
+  "pad_cell_capacitance_basis": "Junction capacitance of the pad cell's diodes in its LVS netlist (IO library SPICE: area, pj) with the PDK ndio_18/pdio_18 model cards at TT (chip_periphery.DIODE) at the node voltage, AVDD 0.9 V; no internal wiring of the cell",
+  "stage2_netlists": {
+    "path": "work/layout/chip-periphery/chip-periph-x1/stage2",
+    "sha256": {
+      "sar8_vin_path.scs": "c8bb3d80c14699b19f913e614247ae23f6f8eb4d48304116ee90c09791d64f88",
+      "sar8_output_path.scs": "e4aef40ef5777153aeeaaafdd5de919938280dc19e168fce8983e93fae7f3c72"
+    }
+  },
+  "clamp_bus": {
+    "limit_ohm": 1.0,
+    "rule": "TSMC N28 IO app note Table 10.1: bus resistance from the 3AC pad cells to the clamp's supply pair",
+    "basis": "Calibre xRC typical, 25 C, with PCLAMPC_H_G flattened (chip_periphery.clamp_bus); pin = to the clamp's transistor terminals shorted, distributed = the clamp current drawn by its transistors in proportion to their width",
+    "views": {
+      "layout_full_fill5_r3_seal": {
+        "extraction": "chip-periph-x2",
+        "rails": {
+          "analog": {
+            "AVDD": {
+              "net": "AVDD_CORE__1",
+              "pad": "top_4",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 1.256,
+              "distributed_ohm": 1.321
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "top_3",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 1.733,
+              "distributed_ohm": 1.794
+            }
+          },
+          "pair": {
+            "AVDD": {
+              "net": "AVDD_CORE",
+              "pad": "left_5",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 1.19,
+              "distributed_ohm": 1.256
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "left_6",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 1.198,
+              "distributed_ohm": 1.22
+            }
+          },
+          "sar": {
+            "AVDD": {
+              "net": "AVDD_CORE__2",
+              "pad": "top_1",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 1.202,
+              "distributed_ohm": 1.249
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "right_8",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 1.407,
+              "distributed_ohm": 1.462
+            }
+          }
+        },
+        "worst_distributed_ohm": 1.794
+      },
+      "layout_full_fill5_r4_seal": {
+        "extraction": "chip-periph-x3",
+        "rails": {
+          "analog": {
+            "AVDD": {
+              "net": "AVDD_CORE__1",
+              "pad": "top_4",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 0.7599,
+              "distributed_ohm": 0.7985
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "top_3",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 0.9173,
+              "distributed_ohm": 0.9354
+            }
+          },
+          "pair": {
+            "AVDD": {
+              "net": "AVDD_CORE",
+              "pad": "left_5",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 0.7691,
+              "distributed_ohm": 0.8108
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "left_6",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 0.7822,
+              "distributed_ohm": 0.7968
+            }
+          },
+          "sar": {
+            "AVDD": {
+              "net": "AVDD_CORE__2",
+              "pad": "top_1",
+              "clamp_terminals": 98,
+              "weighted_transistors": 98,
+              "pin_ohm": 0.7546,
+              "distributed_ohm": 0.7901
+            },
+            "AVSS": {
+              "net": "AVSS_CORE",
+              "pad": "right_8",
+              "clamp_terminals": 197,
+              "weighted_transistors": 197,
+              "pin_ohm": 0.8202,
+              "distributed_ohm": 0.835
+            }
+          }
+        },
+        "worst_distributed_ohm": 0.9354
+      }
+    }
+  }
+}

@@ -30,6 +30,7 @@ PDK_LIBRARY = "tsmcN28"
 PCELLS = {"nmoscap", "rupolym", "cfmom_2t"}
 SHARED_CDS = "/home/dmanager/shared_lib/TSMC28/cds.lib"
 PAD_LIBRARY = "PAD"                      # PAD60GU bond pads of the ring (as Layout/design/chip_assembly.py)
+SEAL_LIBRARY = "sealring"                # the lab's shared seal-ring kit (shared cds.lib)
 NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{1,63}")
 
 
@@ -191,7 +192,7 @@ def build_view(identity, timeout=1200):
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script.append(f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib")
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     if guarded:
@@ -267,7 +268,7 @@ def query(identity, il, timeout=600):
               f"mkdir {q(evidence)}", f"cd {q(evidence)}",
               "base64 -d > job.il <<'B64'", base64.b64encode(blob).decode("ascii"), "B64",
               f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib"]
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     script += ["rc=0", f"timeout -k 10 {timeout} tcsh -fc {q('source ' + CADENCE + '; exec virtuoso -nograph -nocdsinit -log job.log -restore job.il')}"
@@ -324,7 +325,7 @@ def physical(identity, top, view=None, gds=None, stages="drc", deck="cell", sour
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script.append(f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib")
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     script += ["sha256sum " + " ".join(files) + " cds.lib",

@@ -5,12 +5,31 @@
  "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
  "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
-  0,
-  0,
-  760.0,
-  760.0
+  -120.0,
+  -120.0,
+  880.0,
+  880.0
  ],
- "die_note": "IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 783.32 x 783.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that.",
+ "die_note": "1000 x 1000 um die: the outer edge of the lab seal ring (seal_ring). The IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners) stays at 0..760, centred 120 um from each die edge; PAD60GU pad metal extends 11.66 um beyond it, a 783.32 x 783.32 um envelope 108.34 um from the die edge (chenzc24/sar-adc-t28#18). The scribe lane is outside the die.",
+ "seal_ring": {
+  "master": "sealring/N28_TSMC_SRDMB_Mu/layout",
+  "source": "the lab's shared seal-ring library (/home/dmanager/shared_lib/TSMC28/sealring, in the shared cds.lib), not drawn here",
+  "origin_um": [
+   -120.0,
+   -120.0
+  ],
+  "orient": "R0",
+  "size_um": 1000.0,
+  "band_um": 24.0,
+  "cell_bbox_um": [
+   -121.381,
+   -121.381,
+   881.381,
+   881.381
+  ],
+  "clearance": "Straight edges: the ring is 24 um wide (die edge to 24 um in), 84.34 um clear of the PAD60GU metal. Corners: the stress-relief chamfers stay within x + y <= 121.72 um of each die corner (seal-ring frame), the IO corner cells start at x + y = 240 um.",
+  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r3_seal (Layout/design/chip_seal_ring.py)"
+ },
  "ring_opening": [
   [
    110.0,
@@ -2523,6 +2542,7 @@
   "digital_core": "DVDD (PVDD1DGZ x3, right_4 feeds the register) and VSS feed the output register and the pads' pre-drivers.",
   "io": "VDDIO (bottom_3 PVDD2DGZ, bottom_6 PVDD2POC) and VSSIO (four PVSS2DGZ) feed the output drivers; no core connection.",
   "esd_clamps": "Three PCLAMPC_H_G, one per AVDD/AVSS branch pair, each between its pads and the core (app note 10.7.1 asks for at least one per core-voltage domain).",
+  "esd_bus_extracted": "Pad core pin to clamp at most 0.94 ohm per rail (analog AVSS; Table 10.1: 1 ohm) in sar8_adc_chip/layout_full_fill5_r4_seal, where every clamp bar is fed along its length (Layout/design/chip_clamp_feed.py); 1.19-1.79 ohm before. Calibre xRC typical, 25 C, clamps flattened (Layout/results/chip_periphery.json clamp_bus).",
   "board": "AVDD 0.9 V (3 bonds), AVSS (7), VSS (2), DVDD 0.9 V (3), VDDIO library post-driver voltage (2), VSSIO (4), VREFP 0.9 V and VREFN 0 V (2 each). AVSS, VSS and VSSIO meet only on the board.",
   "power_sequence": "Every supply on a power cell or PCLAMPC ramps in more than 10 us; VDDIO before or with DVDD; AVDD before VREFP/VREFN/VINP/VINN are driven, and off after them (app note 3.1, 9.2).",
   "decap_total_planning_pF": 411.6,
@@ -2541,7 +2561,22 @@
     "bulk_to_pin": 0.487
    }
   },
-  "ring_feed_drawn_basis": "Loop (AVDD + AVSS) at 125 C rcworst_T, squares along the drawn trunks of sar8_adc_chip, bulk_to_pin from the decap port nearest the pin (Layout/tools/analysis/chip_objects_record.py)"
+  "ring_feed_drawn_basis": "Loop (AVDD + AVSS) at 125 C rcworst_T, squares along the drawn trunks of sar8_adc_chip, bulk_to_pin from the decap port nearest the pin (Layout/tools/analysis/chip_objects_record.py)",
+  "ring_feed_extracted_ohm": {
+   "analog": {
+    "pad_to_pin": 1.632,
+    "bulk_to_pin": 1.774
+   },
+   "pair": {
+    "pad_to_pin": 2.678,
+    "bulk_to_pin": 1.596
+   },
+   "sar": {
+    "pad_to_pin": 2.051,
+    "bulk_to_pin": 1.158
+   }
+  },
+  "ring_feed_extracted_basis": "Loop (AVDD + AVSS) at 25 C typical from the periphery extraction chip-periph-x1 of sar8_adc_chip/layout_full_fill5_r3_seal (Layout/results/chip_periphery.json supply_feeds): includes the pad landings and the via stacks, which the squares above leave out. Scaled to 125 C rcworst_T by the trunk metal: 2.36 / 3.85 / 2.95 (pad to pin) and 2.58 / 2.32 / 1.67 ohm (bulk to pin). Supersedes ring_feed_drawn_ohm."
  },
  "decisions": {
   "io_rules": {

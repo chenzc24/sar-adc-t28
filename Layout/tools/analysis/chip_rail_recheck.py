@@ -37,8 +37,23 @@ def drawn_bulk(objects, esr_override=None):
     return out
 
 
-def run(objects, stage4b, esr_override=None):
-    drawn = drawn_bulk(objects, esr_override)
+def extracted_bulk(objects, periphery):
+    """drawn_bulk with the ring feeds from the periphery extraction (Layout/results/chip_periphery.json supply_feeds):
+    per rail the star of pad, decap port and ADC pin, scaled from 25 C typical to 125 C rcworst_T by the trunk layer
+    (AVDD M9, AVSS M8; the via stacks are scaled with it). The decap's star arm adds to its ESR per rail."""
+    scale = dict(AVDD=rs.rsh("M9", 125, True) / rs.rsh("M9"), AVSS=rs.rsh("M8", 125, True) / rs.rsh("M8"))
+    out = drawn_bulk(objects)
+    for name in BRANCH:
+        rails = periphery["supply_feeds"][name]["rails"]
+        star = {k: {arm: v * scale[k] for arm, v in r["star_ohm"].items()} for k, r in rails.items()}
+        out[name].update(pad_to_bulk_ohm=sum(s["pad"] for s in star.values()),
+                         bulk_to_pin_ohm=sum(s["pin"] for s in star.values()),
+                         esr_ohm_per_rail=out[name]["esr_ohm_per_rail"] + sum(max(s["decap"], 0.) for s in star.values()) / 2)
+    return out
+
+
+def run(objects, stage4b, esr_override=None, drawn=None):
+    drawn = drawn or drawn_bulk(objects, esr_override)
     k = rb.CORNER_CHARGE
     rows = {}
     for name in BRANCH:
@@ -91,8 +106,16 @@ def main():
                    charge="Stage 1 calibration and the 1.3 corner charge allowance"),
         drawn_esr=run(objects, stage4b),
         esr_1_ohm_per_rail=run(objects, stage4b, esr_override=1.0))
+    periphery = ROOT / "Layout/results/chip_periphery.json"
+    cases = ["drawn_esr", "esr_1_ohm_per_rail"]
+    if periphery.exists():
+        p = json.loads(periphery.read_bytes())
+        record["basis"]["extracted_feed"] = ("chip_periphery.json supply_feeds (extraction " + p["extraction"]["identity"]
+                                             + ", 25 C typical, scaled to 125 C rcworst_T by the trunk layer)")
+        record["extracted_feed"] = run(objects, stage4b, drawn=extracted_bulk(objects, p))
+        cases.append("extracted_feed")
     write_json(ROOT / a.out, record)
-    for case in ("drawn_esr", "esr_1_ohm_per_rail"):
+    for case in cases:
         r = record[case]
         print(case, "worst", r["worst_droop_V"], "pass", r["pass_"],
               {n: (b["drawn"]["bulk_f"], b["drawn"]["esr_ohm_per_rail"], b["worst_droop_V"],

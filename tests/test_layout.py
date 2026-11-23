@@ -35,7 +35,7 @@ class LayoutPlanTests(unittest.TestCase):
         result = planning.check(self.root)
         self.assertTrue(result['valid'], result['errors'])
         self.assertEqual(result['area']['core_allocation'], 13542)
-        self.assertEqual(result['area']['die_area'], 760*760)
+        self.assertEqual(result['area']['die_area'], 1000*1000)   # the lab seal ring's 1 x 1 mm die (io_ring.json seal_ring)
         self.assertEqual(result['io_ring'], {'pads': 36, 'routes': 34})
         planning.render(self.root)
         self.assertFalse(planning.check(self.root)['planning_projection_stale'])
