@@ -3,8 +3,10 @@
 A copy of the seal-ring chip view sar8_adc_chip/layout_full_fill5_r3_seal (left unchanged) plus the top-level shapes of
 Layout/design/chip_integration.py clamp_feed: over each PCLAMPC_H_G M4 bar a strap on the trunk metal (AVDD M9, AVSS
 M8) and a drop stack every 6 um along it, so the clamp's nine M3 terminal strips per net are fed along the whole bar
-instead of from the three stacks at one place (the periphery extraction gave about 1.1 ohm from pad to clamp, against
-1 ohm in the app note's Table 10.1). No cell changes; the nets are those of the source view.
+instead of from the three stacks at one place. Fed at one place, the 3-4.4 um M4 bars carried up to 1.0 A sideways
+against the 0.24-0.36 A the DRM's ESD current density allows them (9.3.4, ESD.CD.1gU 1.3 A on the pad-to-clamp path,
+which the IO app note 8.7.3 / 10.7.3 asks for; chip_objects_record.clamp_feed_current_density). No cell changes; the
+nets are those of the source view.
 """
 import argparse
 

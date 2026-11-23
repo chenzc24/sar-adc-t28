@@ -602,8 +602,9 @@
     }
   },
   "clamp_bus": {
-    "limit_ohm": 1.0,
-    "rule": "TSMC N28 IO app note Table 10.1: bus resistance from the 3AC pad cells to the clamp's supply pair",
+    "limit_ohm": null,
+    "rule": "TSMC N28 IO app note 8.7.3 / 10.7.3 (wire bond): the clamp sits between its analog pad pair and the core, AVDD pin to VDDESD, AVSS pin to VSSESD, then on to the core rails, and every such connection meets the DRM's Maximum ESD Current Density for Via and Metal (9.3.4, ESD.CD.1gU 1.3 A). The note sets no pad-to-clamp resistance limit for wire bond: Table 10.1 (10.4) limits the bus resistance between IO power/ground cells of one analog domain, and the 0.1 ohm bump-to-clamp limit (12.3.1) is for RDL flip chip.",
+    "current_density": "Layout/results/chip_objects.json esd_current_density",
     "basis": "Calibre xRC typical, 25 C, with PCLAMPC_H_G flattened (chip_periphery.clamp_bus); pin = to the clamp's transistor terminals shorted, distributed = the clamp current drawn by its transistors in proportion to their width",
     "views": {
       "layout_full_fill5_r3_seal": {
