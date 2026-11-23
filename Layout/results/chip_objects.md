@@ -157,6 +157,6 @@ Only density counts change: M7.DN.6 417 to 303 and M6.DN.6 253 to 233, because t
 ## Open
 
 - `layout_full_fill5_r3` is the current chip view; `layout_full_dc_fill5` is superseded (ESD).
-- Analog pad decap 92.9 pF against the planned 114.2 (Stage 1 recommends about 100 pF per branch): rerun the rail budget with the drawn values (analog 92.9, pair 115.9, SAR 134.6, DVDD 52.4 pF). Stage 2's runs at 85 pF bound it from below.
+- Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
 - Fill of the pad decap and VSS-ring areas (M6/M7.DN.6), and the seal ring (the chip deck runs with WITH_SEALRING).
