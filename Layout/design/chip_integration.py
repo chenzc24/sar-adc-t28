@@ -78,6 +78,24 @@ def mstack(c, net, x, y, lo, hi, axis="y"):
         c.mx(net, x, y, m, axis, pads=(True, True))
 
 
+def clamp_drop(c, net, x, yb, h):
+    """One drop stack onto a clamp bar at (x, yb): M4-M7 via fields on 1.6 x 2h plates, then the VIA7 (and for AVDD the
+    VIA8) pair up to the trunk metal."""
+    via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
+    stack_hi(c, net, x, yb, 7, 9 if net == AVDD else 8)
+
+
+def drop_xs(branch, net, rev=1):
+    """x of the trunk drop stacks onto a clamp bar: between the pair trunks at 30/50/70 um into the clamp, else under
+    the trunk."""
+    x0, _ = geo.CLAMP_ORIGIN[rev][branch]
+    if branch == "pair" or (branch == "analog" and rev == 2):
+        return tuple(x0 + d for d in (30.0, 50.0, 70.0))
+    if branch == "analog":
+        return (377.0, 380.0, 383.0) if net == AVDD else (437.0, 440.0, 443.0)
+    return (557.0, 560.0, 563.0) if net == AVDD else (597.0, 600.0, 603.0)
+
+
 def object_views(rev=1):
     """OA view of each object cell. Revision 2: the grown pad decaps and the moved analog clamp (layout_r2).
     Revision 3: the clamps back in place (layout), the analog decap with MOM (layout_r3), the other decaps layout_r2."""
@@ -230,17 +248,114 @@ def content(readback, rev=1):
                 else:                             # M8 straps down to AVSS_pair (y 255-265)
                     for x in xs:
                         c.rect(net, "M8", x - 1.5, 260.0, x + 1.5, yb + 1.0)
-            elif branch == "analog":
-                xs = (377.0, 380.0, 383.0) if net == AVDD else (437.0, 440.0, 443.0)
             else:
-                xs = (557.0, 560.0, 563.0) if net == AVDD else (597.0, 600.0, 603.0)
+                xs = drop_xs(branch, net, rev)
             h = min(1.0, (hi - lo) / 2 - 0.1)       # plates 0.6 um or more from the M7 ring (Mx.S.6)
             for x in xs:
-                top = 9 if net == AVDD else 8
-                via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
-                stack_hi(c, net, x, yb, 7, top)
+                clamp_drop(c, net, x, yb, h)
                 drops.append([net, x, yb])
         info[f"clamp_{branch}"] = drops
+    return c, info
+
+
+# Revision 4 clamp feed (Layout/design/chip_clamp_feed.py). The drops above feed each clamp's 99 um M4 bars at one
+# place, so the far M3 terminal strips hang on the thin bar. This adds a top-metal strap over each bar (AVDD on M9,
+# AVSS on M8, the trunk metals) and a drop stack every FEED_PITCH um along it: the M4-M7 via fields and the VIA7/VIA8
+# pairs of the drops above. Stacks keep 0.6 um from the core VSS ring's M7 band and M6 ties, and their M8 pads clear
+# the other net's M8 trunk; the pair clamp also gets straps every 10 um up to AVDD_pair (M9) and down to AVSS_pair (M8).
+FEED_PITCH = 6.0
+FEED_KEEP_X = {  # x ranges (die um) a stack centre stays out of, per clamp and net
+    "analog": {AVDD: [(433.6, 446.4)], AVSS: []},             # AVSS trunk M8 x 435-445
+    "pair": {AVDD: [(0.0, 131.9)], AVSS: [(0.0, 131.9)]},     # west M7 band x 113-130.5
+    "sar": {AVDD: [(593.6, 606.4), (628.1, 999.0)], AVSS: [(628.1, 999.0)]},   # AVSS trunk x 595-605, east M7 band
+}
+
+
+def clamp_feed(rev=1):
+    """Content of the revision 4 clamp feed: straps and drop stacks along every clamp bar (origins of revision rev)."""
+    c = Content()
+    info = {}
+    for branch, bars in geo.clamp_bars(rev).items():
+        x0, y0 = geo.CLAMP_ORIGIN[rev][branch]
+        info[branch] = {}
+        for net, (lo, hi) in bars.items():
+            yb = (y0 + lo + y0 + hi) / 2
+            strap = "M9" if net == AVDD else "M8"
+            c.rect(net, strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi)
+            if branch == "pair":                   # straps every 10 um to the pair trunks
+                for x in [x0 + 5.0 + 10.0 * k for k in range(10)]:
+                    if net == AVDD:
+                        c.rect(net, "M9", x - 1.5, y0 + lo, x + 1.5, 320.0)
+                    else:
+                        c.rect(net, "M8", x - 1.5, 260.0, x + 1.5, y0 + hi)
+            h = min(1.0, (hi - lo) / 2 - 0.1)
+            xs = []
+            x = x0 + 2.0
+            while x <= x0 + 98.0:
+                if not any(a <= x <= b for a, b in FEED_KEEP_X[branch][net]) and \
+                        all(abs(x - d) >= 3.0 for d in drop_xs(branch, net, rev)):
+                    xs.append(round(x, 3))
+                x += FEED_PITCH
+            for x in xs:
+                clamp_drop(c, net, x, yb, h)
+            info[branch][net] = dict(strap=[strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi], stacks=xs)
+    return c, info
+
+
+# Revision 5 AVSS landings (Layout/design/chip_landing_m1.py). A PVSS3AC core pin is seven M1 and seven M2 fingers on
+# top of each other, 1.5 um wide; the landings (chip_routes.landing) extend only the M2 fingers, 10.5 um of Mx, where
+# the DRM's ESD current density asks 16 um for the 1.3 A of ESD.CD.1gU. This extends the M1 fingers the same way, with
+# an M1 bar under the landing's M2 bar and a VIA1 grid under its VIA2 grid: 21 um. (A PVDD3AC pin is ten M2 fingers,
+# 14.1 um, with nothing on M1: the IO cell's own pin.)
+AVSS_LANDINGS = ("AVSS_analog", "AVSS_pair", "AVSS_sar", "AVSS_guard")
+
+
+def pad_fingers(readback, pos, layers=("M1", "M2")):
+    """Core-pin fingers of the IO cell at ring position pos, per layer, on the cell's core-side edge."""
+    from Layout.design.chip_routes import ring_plan
+    pad = next(p for p in ring_plan()["pads"] if p["position"] == pos)
+    x, y = pad["core_pin_um"]
+    inst = next(n for n, i in readback["instances"].items()
+                if not i["cell"].startswith(("PFILLER", "PCORNER", "PRCUT", "PAD60"))
+                and i["bbox"][0] - 1 <= x <= i["bbox"][2] + 1 and i["bbox"][1] - 1 <= y <= i["bbox"][3] + 1)
+    side = pos.split("_")[0]
+    keep = {"top": lambda b: b[1] < 650.5, "left": lambda b: b[2] > 109.5, "right": lambda b: b[0] < 650.5}[side]
+    figs = {m: sorted({tuple(p["bbox"]) for p in readback["pins"] if p["inst"] == inst and p["term"] == pad["core_pin"]
+                       and p["layer"] == m and keep(p["bbox"])}) for m in layers}
+    return inst, side, figs
+
+
+def avss_landing_m1(readback):
+    """Content of the revision 5 AVSS landings: M1 finger extensions, M1 bar and VIA1 grid at every AVSS pad landing."""
+    from Layout.design.chip_routes import LOW_PITCH, M2_BAR, via_grid
+    c = Content()
+    info = {}
+    for route in AVSS_LANDINGS:
+        pos = plan()["routes"][route]["from"]
+        inst, side, figs = pad_fingers(readback, pos)
+        if figs["M1"] != figs["M2"] or not figs["M1"]:
+            raise ValueError(f"{pos}: the M1 and M2 fingers differ")
+        fingers = figs["M1"]
+        if side == "top":
+            xs0, xs1 = min(f[0] for f in fingers), max(f[2] for f in fingers)
+            bar = (xs0, 650.0 - M2_BAR, xs1, 650.0)
+            ext = [(f[0], bar[1], f[2], 650.2) for f in fingers]
+        elif side == "left":
+            ys0, ys1 = min(f[1] for f in fingers), max(f[3] for f in fingers)
+            bar = (110.0, ys0, 110.0 + M2_BAR, ys1)
+            ext = [(109.8, f[1], bar[2], f[3]) for f in fingers]
+        else:
+            ys0, ys1 = min(f[1] for f in fingers), max(f[3] for f in fingers)
+            bar = (650.0 - M2_BAR, ys0, 650.0, ys1)
+            ext = [(bar[0], f[1], 650.2, f[3]) for f in fingers]
+        for box in ext:
+            c.rect(AVSS, "M1", *box)
+        c.rect(AVSS, "M1", *bar)
+        n0 = len(c.rects)
+        via_grid(c, AVSS, "VIA1", bar, LOW_PITCH, 0.05, 0.1)
+        width = sum((f[2] - f[0]) if side == "top" else (f[3] - f[1]) for f in fingers)
+        info[pos] = dict(route=route, inst=inst, fingers=len(fingers), m1_um=round(width, 3), m2_um=round(width, 3),
+                         bar=list(bar), via1=len(c.rects) - n0)
     return c, info
 
 

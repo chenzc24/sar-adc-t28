@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "tool": "Layout/tools/physical/matching_overlay.py",
+  "run": "chip-match-h1",
+  "host": "thu-wei",
+  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r5_seal (scratch overlay; no OA change)",
+  "source_stream": "work/layout/toplevel-route/chip-landm1-b1-chk/fixture.gds",
+  "source_stream_sha256": "7b2973dab704e0db6bb2b71cc2ee542692b0ce5d202ffc00ed855f5fad6d2239",
+  "overlay_stream_sha256": "9562cc96853f56448f095b8d6bcde691a0b4817f9e8da3241e18ea6308e106e1",
+  "deck": "drc_rule_T28_chip (FULL_CHIP, WITH_SEALRING), hierarchical, SELECT CHECK PO.DN.16, PO.R.28, AN.R.79.2m, AN.R.80.2m, MATCH.WARN.1",
+  "selected": [
+    "AN.R.79.2m",
+    "AN.R.80.2m",
+    "MATCH.WARN.1",
+    "PO.DN.16",
+    "PO.R.28"
+  ],
+  "marker": "ANARRAY_H",
+  "marker_layer": [
+    255,
+    20
+  ],
+  "master": "sar_strongarm_t28_core",
+  "arrays": {
+    "N": {
+      "box": [
+        -0.26,
+        -2.53,
+        0.26,
+        -0.67
+      ],
+      "devices": [
+        "MNINP_1",
+        "MNINP_2",
+        "MNINN_1",
+        "MNINN_2",
+        "MNLATN",
+        "MNLATP",
+        "MNTAIL_1",
+        "MNTAIL_2"
+      ],
+      "groups": {
+        "input pair": [
+          "MNINP",
+          "MNINN"
+        ],
+        "NMOS latch": [
+          "MNLATN",
+          "MNLATP"
+        ],
+        "tail (in the array)": [
+          "MNTAIL"
+        ]
+      }
+    },
+    "P": {
+      "box": [
+        -0.39,
+        -0.44,
+        0.39,
+        0.76
+      ],
+      "devices": [
+        "MPRSTY",
+        "MPLATN",
+        "MPRSTN",
+        "MPRSTP",
+        "MPLATP",
+        "MPRSTX"
+      ],
+      "groups": {
+        "PMOS latch": [
+          "MPLATN",
+          "MPLATP"
+        ],
+        "output reset": [
+          "MPRSTN",
+          "MPRSTP"
+        ],
+        "internal-node reset": [
+          "MPRSTX",
+          "MPRSTY"
+        ]
+      }
+    }
+  },
+  "result_counts": {
+    "PO.DN.16": 0,
+    "PO.R.28": 0,
+    "AN.R.79.2m": 2,
+    "AN.R.80.2m": 0,
+    "MATCH.WARN.1": 0
+  },
+  "results": [
+    {
+      "rule": "AN.R.79.2m",
+      "kind": "ANARRAY_H_OD_err",
+      "bbox_die_um": [
+        409.61,
+        521.17,
+        410.39,
+        522.37
+      ],
+      "OD_DN_outer": 0.243315,
+      "OD_DN_inner": 0.5,
+      "OD_DN_diff": 0.256685,
+      "array": "P"
+    },
+    {
+      "rule": "AN.R.79.2m",
+      "kind": "ANARRAY_H_OD_err",
+      "bbox_die_um": [
+        409.74,
+        519.08,
+        410.26,
+        520.94
+      ],
+      "OD_DN_outer": 0.243315,
+      "OD_DN_inner": 0.591398,
+      "OD_DN_diff": 0.348083,
+      "array": "N"
+    }
+  ],
+  "decision": {
+    "date": "2026-11-23",
+    "answer": "Add markers, write waiver",
+    "option": "A",
+    "marker": "MATCHING (205;8), normal matching, permanent in the sign-off stream (chip top cell)",
+    "basis": "DRM T-N28-CL-DR-002 v2.3 8.3.2.3.1.1: normal matching (MATCHING) for two simple identical transistors; high (ANARRAY_H) is 'mismatch within SPICE', medium (ANARRAY_M) 2x SPICE. In the chip deck MATCHING switches on PO.DN.16, PO.R.28 and AN.R.78.1m and clears MATCH.WARN.1; AN.R.79.x / 80.x read only ANARRAY_H / ANARRAY_M.",
+    "rejected": "Option B (identical-dummy ring, N/P array split, comparator re-layout for ANARRAY_H)",
+    "high_matching_evidence": {
+      "run": "chip-match-h1",
+      "result": "AN.R.79.2m on OD density: N array 0.348, P array 0.257 against 0.10",
+      "expected_also": "AN.R.79.5m (one MOS type per array and its 6 um halo; the P row is 0.23 um from the N array), not run"
+    },
+    "accepted_risk": {
+      "statement": "MATCH.WARN.1: MOSFET matching may degrade at least 3x when the high/medium array rules are not met. Accepted: up to 3x the SPICE mismatch.",
+      "offset_mc": "Layout/results/comparator.md v8 extracted, 200 seeds: sigma 12.05 mV, range -34.7 to +34.1 mV",
+      "at_3x": "extreme die about +/-104 mV, 11.6 % of the +/-0.9 V full scale",
+      "consequence": "The offset is static and corrected off-chip; the cost is input range, not accuracy."
+    }
+  },
+  "sign_off": {
+    "view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r6_seal",
+    "built_by": "Layout/design/chip_matching_marker.py",
+    "markers": "two MATCHING rectangles in the chip top cell over the comparator's N and P arrays (OA PMET_CUT/drawing1 = GDS 205;8); the comparator, the cores and their streams are unchanged",
+    "lvs_xrc": "calibre.lvs and calibre.rcx map no 205;8 (only 205;6 PMET), so device recognition and extraction do not change",
+    "checks": {
+      "drc": "chip-match-b1-chk",
+      "flat_lup_esd": "chip-match-b1-flat-lupesd",
+      "supply_only_lvs": "chip-match-b1-lvs-vcs",
+      "reference": {
+        "drc": "chip-landm1-b1-chk",
+        "flat_lup_esd": "chip-landm1-b1-flat-lupesd"
+      }
+    },
+    "matching_checks": {
+      "PO.DN.16": 0,
+      "PO.R.28": 0,
+      "AN.R.78.1m": 0,
+      "MATCH.WARN.1": 0,
+      "G.1:MATCHING": 0,
+      "G.2:MATCHING": 0,
+      "G.3:MATCHING": 0
+    },
+    "all_matching_checks_ran": true,
+    "drc_markers": 1911,
+    "reference_drc_markers": 1912,
+    "drc_changed_rules": {
+      "MATCH.WARN.1": [
+        1,
+        0
+      ]
+    },
+    "lvs": "CORRECT",
+    "supply_only_lvs": "CORRECT",
+    "erc_equal": true,
+    "erc": {
+      "floating.nxwell_float": 7,
+      "floating.psub": 6,
+      "mnpg": 280,
+      "npvss49": 12
+    },
+    "flat_lup_esd": {
+      "ESD.18g": 540,
+      "ESD.19g": 432,
+      "ESD.WARN.1": 6
+    },
+    "flat_equal": true
+  }
+}

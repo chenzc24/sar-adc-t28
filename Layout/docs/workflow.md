@@ -229,7 +229,32 @@ python -m Layout.design.chip_integration BUILD_ID --readback READBACK_ID --view 
 python -m Layout.design.chip_full_source --base PARTIAL_CHIP_CDL --register REGISTER_CDL --contents CONTENT_DIR [--objects-rev 2] --out CHIP_CDL
 python -m Layout.design.chip_assembly physical CHECK_ID --view layout_full --hcells-from BASE_GDS --source CHIP_CDL
 python -m Layout.tools.analysis.chip_objects_record --chip-build BUILD_ID --chip-checks CHECK_ID
+python -m Layout.tools.analysis.chip_rail_recheck
+python -m Layout.design.chip_seal_ring BUILD_ID
+python -m Layout.tools.analysis.chip_periphery launch EXTRACTION_ID CHIP_GDS --source-evidence CHECK_ID [--flatten PCLAMPC_H_G]
+python -m Layout.tools.analysis.chip_periphery fetch EXTRACTION_ID
+python -m Layout.tools.analysis.chip_periphery report EXTRACTION_ID
+python -m Layout.tools.analysis.chip_periphery clamp-bus EXTRACTION_ID --record VIEW
+python -m Layout.design.chip_clamp_feed BUILD_ID
+python -m Layout.design.chip_landing_m1 BUILD_ID
+python -m Layout.tools.physical.matching_overlay overlay CHIP_GDS OVERLAY_GDS [--marker ANARRAY_H]
+python -m Layout.tools.physical.matching_overlay record CHECK_ID CHIP_GDS OVERLAY_GDS
+python -m Layout.design.chip_matching_marker BUILD_ID
+python -m Layout.design.seal_ring_sized check SEAL_GDS [--top CELL --tiles N]
+python -m Layout.design.seal_ring_sized build-script BUILD_ID --tiles N
+python -m Layout.design.seal_ring_sized scratch-chip CHIP_GDS RING_GDS OUT_GDS --tiles N
+python -m Layout.design.seal_ring_sized csr-probe SCRATCH_GDS OUT_GDS --tiles N
+python -m Layout.design.seal_ring_sized chip-build-script BUILD_ID --tiles N
+python -m Layout.design.chip_ring_fix ring-build-script BUILD_ID
+python -m Layout.design.chip_ring_fix chip-build-script BUILD_ID
+python -m Layout.design.chip_ring_fix lvs-source SRC_CDL OUT_CDL
 ```
+
+Die size. `seal_ring_sized.py` re-tiles the TSMC standard seal ring with N repeat cells per edge, which gives a die of 373.6 + 5.4 N um; N = 116 is the 1 mm sample, and `check` verifies the generator against a seal-ring stream. `scratch-chip` swaps the ring in a chip stream so chip DRC can run without a chip view. The chip deck checks the CSR.R.1 corner triangles only without a seal ring, so `csr-probe` writes a stream without the ring, with LMARK markers that set the chip extent to the prime chip; run it with `--deck chip-noseal --select-prefix CSR.R.1`.
+
+MOS matching (MATCH.WARN.1). `matching_overlay.py` copies a chip stream and adds MATCHING, ANARRAY_H or ANARRAY_M markers over the comparator's N and P arrays (comparator frame only). Running the chip deck on that copy with only the matching rules selected checks a marker class without touching OA (`chip_objects.py physical --gds ... --deck chip --select-prefix`). `chip_matching_marker.py` draws the chosen MATCHING markers in the chip top cell, on OA PMET_CUT/drawing1 (GDS 205;8). The comparator and cores stay unchanged, and the LVS and xRC decks do not read 205;8.
+
+The die is the lab's 1 x 1 mm seal ring (`io_ring.json` `seal_ring`, from the shared `sealring` library), added by `Layout/design/chip_seal_ring.py` to a copy of the current chip view. The chip deck then runs with its seal-ring checks satisfied. `chip_periphery.py` extracts the chip-level wiring with every block, pad cell and object kept as an xcell (`Layout/tools/physical/toplevel_wiring_xcell.py` with `supplies.txt`, so AVDD/VDD are extracted too). Fetch the run's manifest and `pex/` files into `work/layout/chip-periphery/EXTRACTION_ID/`, with the stream as `candidate.gds`. `report` then gives two-point resistances and capacitance per route against `constraints.json` `stage6_supply_model`, and writes the Stage 2 VIN and output-path netlists. For wire bond, the clamp connections are checked against the DRM's ESD current density (ESD.CD.1gU, 1.3 A, as app note 8.7.3 / 10.7.3 asks): `chip_objects_record.clamp_feed_current_density` counts the drop vias and the M4 bar current. `landing_current_density` sums the pad-pin fingers each supply landing uses. `chip_landing_m1.py` adds the M1 fingers at the AVSS landings to a copy of the chip view. The note sets no pad-to-clamp resistance limit for wire bond; Table 10.1 is between IO power/ground cells. The pad-to-clamp resistance is still worth extracting for information. It needs the clamps' own metal and transistors: launch with `--flatten PCLAMPC_H_G` and run `clamp-bus`, because an xcell would tie the clamp's terminal strips into one ideal node. `chip_clamp_feed.py` adds the straps and drop stacks along the clamp bars to a copy of the chip view.
 
 [Chip objects record](../results/chip_objects.md)
 

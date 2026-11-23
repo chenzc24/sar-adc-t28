@@ -204,13 +204,15 @@ class Circuit:
 
 def chip(shared_bus=True, bus_temp_c=25., core_feed_ohm=None, width_um=SUPPLY_ROUTE_WIDTH_UM,
          pad_coupling='asymmetric', pad_coupling_f=.5e-12, trunk_coupling_f=0., system=None, ring=None,
-         blocks=None):
+         blocks=None, drawn=None):
     """The three AVDD/AVSS branches, their pads and bonds, the shared bus and the reference pads.
 
     core_feed_ohm: name -> loop resistance of the in-core strap from the boundary pins to the block
     decoupling. pad_coupling: how each reference pad's capacitance reaches the bus ('asymmetric' puts
     all of it from VREFP pads to TACVDD and from VREFN pads to TACVSS, the differential worst case).
-    blocks: name -> block decoupling (default: the Stage 1 region sizes)."""
+    blocks: name -> block decoupling (default: the Stage 1 region sizes).
+    drawn: name -> dict(bulk_f, esr_ohm_per_rail, pad_to_bulk_ohm, bulk_to_pin_ohm) to replace the planned bulk, its
+    ESR and the 10 um M8 route model with drawn values (loop resistances, split equally between the rails)."""
     ring = ring or load_ring()
     s = system or dict(source_ohm=1., board_bypass_f=100e-9, board_esr_ohm=.01, board_esl_h=.5e-9,
                        pin_h=2e-9, pin_ohm=.2, series_ohm=15., span_cap_f=8e-12)
@@ -244,15 +246,18 @@ def chip(shared_bus=True, bus_temp_c=25., core_feed_ohm=None, width_um=SUPPLY_RO
                 ckt.l(rail + '_' + a, rail + '_' + b, BUS_H_PER_UM * d, r_um[rail] * d)
     route_r = rsh('M8', bus_temp_c, bus_temp_c > 100)
     for name, b in br.items():
+        d = (drawn or {}).get(name)
         for i, (rail, pad) in enumerate((('vdd', b['vdd_pad']), ('vss', b['vss_pad']))):
             ln = b['route_um'][i]
-            ckt.l(rail + '_' + pad, 'bulk%s_%s' % (rail, name), SUPPLY_ROUTE_H_PER_UM * ln, route_r * ln / width_um)
+            r_route = d['pad_to_bulk_ohm'] / 2 if d else route_r * ln / width_um
+            ckt.l(rail + '_' + pad, 'bulk%s_%s' % (rail, name), SUPPLY_ROUTE_H_PER_UM * ln, r_route)
             ckt.c('bulk%s_%s' % (rail, name), '0', .2e-12)
             fd = b['feed_um'][i]
+            r_feed = d['bulk_to_pin_ohm'] / 2 if d else route_r * fd / width_um
             ckt.l('bulk%s_%s' % (rail, name), 'c%s_%s' % (rail, name), SUPPLY_ROUTE_H_PER_UM * fd + 1e-13,
-                  route_r * fd / width_um + core_feed_ohm[name] / 2)
-        ckt.c('bulkvdd_' + name, 'besr_' + name, b['bulk_f'])
-        ckt.r('besr_' + name, 'bulkvss_' + name, 2 * BULK_ESR_OHM_PER_RAIL)
+                  r_feed + core_feed_ohm[name] / 2)
+        ckt.c('bulkvdd_' + name, 'besr_' + name, d['bulk_f'] if d else b['bulk_f'])
+        ckt.r('besr_' + name, 'bulkvss_' + name, 2 * (d['esr_ohm_per_rail'] if d else BULK_ESR_OHM_PER_RAIL))
         ckt.c('cvdd_' + name, 'cvss_' + name, blocks[name])
         ckt.load('cvdd_' + name, 'cvss_' + name, name)
     # Reference pads: bond to the stiff source, pad capacitance to the bus, route, resistor, trunk.

@@ -5,12 +5,33 @@
  "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
  "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
-  0,
-  0,
-  760.0,
-  760.0
+  -66.0,
+  -66.0,
+  826.0,
+  826.0
  ],
- "die_note": "IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners). PAD60GU pad metal extends 11.66 um beyond each edge, a 783.32 x 783.32 um envelope (chenzc24/sar-adc-t28#18); the seal ring and scribe lane add to that.",
+ "die_note": "892 x 892 um die: the outer edge of the re-tiled TSMC standard seal ring (seal_ring). The IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners) stays at 0..760, centred 66 um from each die edge; PAD60GU pad metal extends 11.66 um beyond it, a 783.32 x 783.32 um envelope 54.34 um from the die edge (chenzc24/sar-adc-t28#18). The scribe lane is outside the die. Not a confirmed die size: 892 um is the DRM minimum for this IO ring (CSR.R.1) plus a 10 um margin; the shuttle provider's die-size grid, billing blocks and scribe requirement are open (open_items).",
+ "seal_ring": {
+  "master": "SAR_ADC_T28_LAYOUT/sar8_seal_ring_892/layout",
+  "source": "TSMC standard seal ring (DRM T-N28-CL-DR-002 v2.3 4.5.66.2, added by the customer): the cells of the lab's sealring library, which equal TSMC's N28_TSMC_SRDMB_Mu_1P10M_002_20160711_SR_BKM.gds with the 1P9M 6X1Z1U metals selected, re-tiled with 96 repeat cells per edge at the sample's relative positions (Layout/design/seal_ring_sized.py); not drawn here",
+  "origin_um": [
+   -66.0,
+   -66.0
+  ],
+  "orient": "R0",
+  "size_um": 892.0,
+  "repeat_tiles_per_edge": 96,
+  "band_um": 24.0,
+  "cell_bbox_um": [
+   -67.381,
+   -67.381,
+   827.381,
+   827.381
+  ],
+  "clearance": "Straight edges: SEALRING_ALL is the outer 24 um (SLDB 0-8 um, walls 8-18 um, the 6 um layout-free enhanced zone 18-24 um); the PAD60GU metal is 30.34 um inside it, 54.34 um from the die edge. No DRM rule limits pad or IO metal to the seal ring beyond the enhanced zone; PM.EN.2 (polyimide enclosure by the prime chip, 15 um) does not apply, the pads carry no PM. Corners: CSR.R.1 keeps layout out of triangles with 74 um legs from each prime-chip corner (x + y < 122 um in the seal-ring frame); the IO corner cells start at x + y = 132 um, tool-checked in run chip-seal892-csr2.",
+  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r7_seal (Layout/design/seal_ring_sized.py)",
+  "superseded": "sealring/N28_TSMC_SRDMB_Mu at (-120, -120), 1000 um die, in layout_full_fill5_r3_seal .. layout_full_fill5_r6_seal"
+ },
  "ring_opening": [
   [
    110.0,
@@ -40,7 +61,7 @@
   "oa_cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring (schematic, layout): the ring cell alone, cell-level DRC 0 results, LVS CORRECT against its schematic (Layout/results/io_ring_verification.json)",
   "output_dir": "t28-ioring/output/generated/20261122_131553 (local generator run, not in this repository)",
   "results": "enrich_intent G1-G12 PASS, validate_intent OK, confirmed config with 112 components, schematic and layout SKILL generated",
-  "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS",
+  "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS. The generated ring (sar8_io_ring/layout) has two abutting cuts in each 40 um gap; sar8_io_ring/layout_r2 keeps the one beside the PVSS3AC (app note 9.8.3) and has a PFILLER20_G beside the digital pad (Layout/design/chip_ring_fix.py).",
   "corners": "PCORNERA_G at NW and NE, PCORNER_G at SW and SE",
   "global_vss": "VSS (ring-wide VSS pin of every pad; supplied by the PVSS1DGZ and the PVSS2AC)"
  },
@@ -2388,7 +2409,7 @@
      644.0
     ]
    ],
-   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1, 8.7.3); pad-to-clamp 0.02 / 0.06 ohm (AVDD / AVSS, 125 C rcworst). A place beside pclampc_pair would reach the analog pads only over the TACVDD/TACVSS bus (about 0.95 ohm for AVSS against 1 ohm).",
+   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1, 8.7.3); trunk from the pads 0.02 / 0.06 ohm (AVDD / AVSS, 125 C rcworst). A place beside pclampc_pair would put the clamp away from its own pads (against 8.7.3 step 2), reaching them only over the TACVDD/TACVSS bus. Connection checked against the DRM ESD current density (supply_plan esd_clamp_connection).",
    "area_um2": 2200.0
   },
   {
@@ -2523,6 +2544,7 @@
   "digital_core": "DVDD (PVDD1DGZ x3, right_4 feeds the register) and VSS feed the output register and the pads' pre-drivers.",
   "io": "VDDIO (bottom_3 PVDD2DGZ, bottom_6 PVDD2POC) and VSSIO (four PVSS2DGZ) feed the output drivers; no core connection.",
   "esd_clamps": "Three PCLAMPC_H_G, one per AVDD/AVSS branch pair, each between its pads and the core (app note 10.7.1 asks for at least one per core-voltage domain).",
+  "esd_clamp_connection": "App note 8.7.3 / 10.7.3 (wire bond): each clamp between its pad pair and the core, AVDD to VDDESD and AVSS to VSSESD, every connection within the DRM's ESD current density (9.3.4, ESD.CD.1gU: 1.3 A). No pad-to-clamp resistance limit applies for wire bond (Table 10.1 is between IO power/ground cells; 12.3.1's 0.1 ohm is for flip chip). In sar8_adc_chip/layout_full_fill5_r4_seal every clamp bar is fed along its length (Layout/design/chip_clamp_feed.py): bar current at most 0.18 A against 0.24-0.36 A, 30-38 VIA7 per rail. In layout_full_fill5_r5_seal the AVSS pad landings also take the PVSS3AC's M1 fingers: 21 um of Mx (1.71 A) per pad (Layout/design/chip_landing_m1.py); the PVDD3AC core pin is 14.1 um of M2 (1.15 A), the IO cell's own pin (Layout/results/chip_objects.json esd_current_density). Extracted pad to clamp, for information: at most 0.94 ohm (1.79 ohm with the three drops; chip_periphery.json clamp_bus).",
   "board": "AVDD 0.9 V (3 bonds), AVSS (7), VSS (2), DVDD 0.9 V (3), VDDIO library post-driver voltage (2), VSSIO (4), VREFP 0.9 V and VREFN 0 V (2 each). AVSS, VSS and VSSIO meet only on the board.",
   "power_sequence": "Every supply on a power cell or PCLAMPC ramps in more than 10 us; VDDIO before or with DVDD; AVDD before VREFP/VREFN/VINP/VINN are driven, and off after them (app note 3.1, 9.2).",
   "decap_total_planning_pF": 411.6,
@@ -2541,7 +2563,22 @@
     "bulk_to_pin": 0.487
    }
   },
-  "ring_feed_drawn_basis": "Loop (AVDD + AVSS) at 125 C rcworst_T, squares along the drawn trunks of sar8_adc_chip, bulk_to_pin from the decap port nearest the pin (Layout/tools/analysis/chip_objects_record.py)"
+  "ring_feed_drawn_basis": "Loop (AVDD + AVSS) at 125 C rcworst_T, squares along the drawn trunks of sar8_adc_chip, bulk_to_pin from the decap port nearest the pin (Layout/tools/analysis/chip_objects_record.py)",
+  "ring_feed_extracted_ohm": {
+   "analog": {
+    "pad_to_pin": 1.632,
+    "bulk_to_pin": 1.774
+   },
+   "pair": {
+    "pad_to_pin": 2.678,
+    "bulk_to_pin": 1.596
+   },
+   "sar": {
+    "pad_to_pin": 2.051,
+    "bulk_to_pin": 1.158
+   }
+  },
+  "ring_feed_extracted_basis": "Loop (AVDD + AVSS) at 25 C typical from the periphery extraction chip-periph-x1 of sar8_adc_chip/layout_full_fill5_r3_seal (Layout/results/chip_periphery.json supply_feeds): includes the pad landings and the via stacks, which the squares above leave out. Scaled to 125 C rcworst_T by the trunk metal: 2.36 / 3.85 / 2.95 (pad to pin) and 2.58 / 2.32 / 1.67 ohm (bulk to pin). Supersedes ring_feed_drawn_ohm."
  },
  "decisions": {
   "io_rules": {
@@ -2593,7 +2630,8 @@
   "Feed widths: the 9 x 9 rail budget (chenzc24/sar-adc-t28#27, constraints.json) sets at least 4.8 um M8 for the pair route and 6.3 um for the SAR feed; EM at the pin peaks is still to check.",
   "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
   "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
-  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there)."
+  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there).",
+  "Die size: confirm 892 x 892 um with the shuttle provider before tapeout (die-size grid, billing blocks, scribe width, and whether the provider adds the seal ring itself, DRM 4.5.66.2 option 1). 892 um is the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."
 }

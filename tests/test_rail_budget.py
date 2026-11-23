@@ -116,6 +116,16 @@ class BudgetModel(unittest.TestCase):
         self.assertLess(bulk['droop_v'], bare['droop_v'])
         self.assertLess(bulk['pin_peak_a'], bare['pin_peak_a'])
 
+    def test_drawn_chip_feeds_add_the_in_core_loop(self):
+        from Layout.tools.analysis import drawn_chip_rail
+        inp = drawn_chip_rail.inputs()
+        self.assertAlmostEqual(inp['drawn']['analog']['bulk_f'], 92.9e-12)
+        feeds = drawn_chip_rail.feeds(inp)
+        loop = inp['stage4b']['supply']['branches']['analog']['in_core_loop_ohm_125c'][0]
+        row = feeds['analog']['rows'][0]
+        self.assertAlmostEqual(row['from_pad_decap_ohm'], inp['drawn']['analog']['bulk_to_pin_ohm'] + loop)
+        self.assertGreater(row['from_pad_ohm'], row['from_pad_decap_ohm'])
+
     def test_ideal_charge_is_positive_and_bounded(self):
         total = [sum(e['charge_c'] for e in rail_budget.ideal_events(c)) for c in range(256)]
         self.assertTrue(all(q > 0 for q in total))

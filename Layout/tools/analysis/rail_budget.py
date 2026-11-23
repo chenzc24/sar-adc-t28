@@ -184,15 +184,17 @@ def reference_check(net, gamma, compare_s, write_s, codes=range(256)):
     return worst
 
 
-def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9, bulk=False, bulk_f=None):
+def supply_check(q_event, q_repeat, cap_f, feed_ohm, compare_s=2.14e-9, write_s=.83e-9, pulse=.5e-9, bulk=False, bulk_f=None,
+                 bulk_esr_ohm_per_rail=None):
     """VDD-VSS droop of one branch behind a VDD/VSS pin pair, for one event train per frame.
 
     feed_ohm is the loop resistance from the pad to the block decoupling; with bulk, the
-    recommended pad-side bulk capacitor sits at the pad."""
+    recommended pad-side bulk capacitor sits at the pad (ESR per rail: PAD_BULK unless given)."""
     net = loop(feed_ohm / 2., cap_f, pin_h=SYSTEM['supply_pin_h'], pin_ohm=SYSTEM['supply_pin_ohm'],
                pads=SYSTEM['supply_pads_per_rail'], route_ohm=0., route_h=0., route_f=0.)
     if bulk:
-        net.update(cbulk=bulk_f or PAD_BULK['cap_f'], rbulk=2 * PAD_BULK['esr_ohm_per_rail'])
+        esr = PAD_BULK['esr_ohm_per_rail'] if bulk_esr_ohm_per_rail is None else bulk_esr_ohm_per_rail
+        net.update(cbulk=bulk_f or PAD_BULK['cap_f'], rbulk=2 * esr)
     t, h, hi = response(net, pulse, tend=100e-9)
     updates, _ = schedule(compare_s, write_s)
     qs = [q_event] + [q_repeat] * 7 + [q_event]
@@ -302,6 +304,9 @@ def main():
         reference_fixture_check_tt=fixture, reference_undamped_single_bond_check_ffc=undamped,
         reference_single_bond_design=dict(SINGLE_BOND, check_ffc=single_bond),
         supply_branches=branches, corner_charge_allowance=k, pad_ring=ring_result)
+    # The drawn chip (feeds, analog pad bulk, coupled ring, reference); imported here because it uses this module.
+    from Layout.tools.analysis import drawn_chip_rail
+    result['drawn_chip'] = drawn_chip_rail.check(box=a.box, gamma=gamma)
     (ROOT / 'Layout/results/rail_budget.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(dict(gamma=gamma, design=design, box=box, fixture=fixture, undamped=undamped['decision_error_lsb'],
                           branches={n: (b['check'], b.get('check_with_pad_bulk')) for n, b in branches.items()}),

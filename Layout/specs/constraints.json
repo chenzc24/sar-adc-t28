@@ -237,6 +237,19 @@
         "in_core_strap": "The remaining 5.4-6.0 ohm belongs to the in-core strap. On M2-M7 (0.54 ohm/sq at 125 C rcworst) 2.7 ohm per rail is about five squares, so the in-core feeds stay on M8/M9 down to via stacks at each decap region."
       },
       "shared_bus_check": "With the shared TACVDD/TACVSS bus and every branch firing on the same FF-cold updates, droop at the 6 ohm feed is 17.8 (analog), 19.5 (pair) and 13.9 mV (SAR), within 1.3 mV of the per-branch model. Cross-branch coupling through the bus is at most 2.9 mV peak and 0.46 mV at the comparator edges; through the reference pads' capacitance it adds 0.0002 LSB to the reference decision error.",
+      "drawn": {
+        "view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r3 (chenzc24/sar-adc-t28#38, #41)",
+        "pad_decap_F": {"analog": 9.29e-11, "pair": 1.159e-10, "sar": 1.346e-10, "dvdd": 5.24e-11},
+        "pad_decap_basis": "Layout/results/chip_objects.json geometry_r3. Analog 87.0 pF nmoscap plus 5.9 pF M5-M7 MOM, below its 114.2 pF plan because the analog clamp went back on its trunk for ESD (#41).",
+        "esr_ohm_per_rail_upper_bound": {"analog": [2.28, 2.21], "pair": [1.87, 1.83], "sar": [1.66, 1.88], "dvdd": [1.87, 2.21]},
+        "ring_feed_125C_rcworst_ohm": {"pad_to_pin": {"analog": 0.53, "pair": 2.34, "sar": 1.61},
+                                       "bulk_to_pin": {"analog": 0.14, "pair": 0.12, "sar": 0.49},
+                                       "basis": "Layout/results/chip_objects.json ring_feed_r2 (ports unchanged in revision 3)"},
+        "feed_loop_bulk_to_block_decap_ohm": {"analog": 4.71, "pair": 3.37, "sar": [3.61, 4.61],
+                                              "basis": "Drawn bulk-to-pin plus the in-core loop to the block decaps of layout_route_full at 125 C (Layout/results/toplevel_route_full.json; pair and SAR VSS estimated)"},
+        "rail_budget_check": "With the drawn pad decap: 17.9 / 15.7 / 11.4 mV per branch and at most 16.6 mV on the shared bus (analog / pair / SAR; Layout/results/chip_rail_recheck.json, #43), against 45 mV; core alone 40.8 / 40.3 / 26.3 mV; every feed within 6 ohm. The analog branch passes at 92.9 pF: 17.6-18.1 mV for 85-114 pF of pad decap, 40.8 mV with none. The reference loop is unchanged (no pad decap on VREFP/VREFN).",
+        "record": "Layout/results/chip_rail_recheck.md (#43); Layout/results/rail_budget.md (Drawn Chip Check), rail_budget.json drawn_chip"
+      },
       "reference": "None: bulk ahead of the reference series resistors raises the decision error (0.15-0.96 LSB for 30-335 pF with single bonds)."
     },
     "on_chip_supply_decoupling_F": {

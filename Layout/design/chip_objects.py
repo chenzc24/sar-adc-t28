@@ -30,6 +30,7 @@ PDK_LIBRARY = "tsmcN28"
 PCELLS = {"nmoscap", "rupolym", "cfmom_2t"}
 SHARED_CDS = "/home/dmanager/shared_lib/TSMC28/cds.lib"
 PAD_LIBRARY = "PAD"                      # PAD60GU bond pads of the ring (as Layout/design/chip_assembly.py)
+SEAL_LIBRARY = "sealring"                # the lab's shared seal-ring kit (shared cds.lib)
 NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{1,63}")
 
 
@@ -92,8 +93,20 @@ def build_script(identity, content, guarded=()):
                          " dbDeleteObject(inst) inst=dbCreateInstByMasterName(cv lib cell view name xy orient)"
                          ' coNeed(inst sprintf(nil "Cannot place %s/%s/%s" lib cell view))'
                          ' printf("SWAPPED %s %s/%s/%s %L %s\\n" name lib cell view xy orient)))']
+        if any("xy" in s for s in swaps):
+            # A swap that also moves the instance (a re-tiled seal ring keeps its orientation, not its origin).
+            lines[:0] = ["procedure(coSwapAt(cv name lib cell view xy) let((inst orient)"
+                         " inst=car(setof(i cv~>instances i~>name==name))"
+                         ' coNeed(inst sprintf(nil "No instance %s" name)) orient=inst~>orient'
+                         " dbDeleteObject(inst) inst=dbCreateInstByMasterName(cv lib cell view name xy orient)"
+                         ' coNeed(inst sprintf(nil "Cannot place %s/%s/%s" lib cell view))'
+                         ' printf("SWAPPED %s %s/%s/%s %L %s\\n" name lib cell view xy orient)))']
         for s in swaps:
-            lines.append(f"  coSwap(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])})")
+            if "xy" in s:
+                lines.append(f"  coSwapAt(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])} "
+                             f"list({num(s['xy'][0])} {num(s['xy'][1])}))")
+            else:
+                lines.append(f"  coSwap(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])})")
     else:
         lines += [
             f"  cv=dbOpenCellViewByType({lib} {sk(cell)} {sk(view)} \"maskLayout\" \"w\")",
@@ -191,7 +204,7 @@ def build_view(identity, timeout=1200):
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script.append(f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib")
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     if guarded:
@@ -234,7 +247,7 @@ def lvs_source(content):
     lines.append(f".SUBCKT {content['cell']} " + " ".join(ports))
     for i in content.get("instances", []):
         if i["lib"] == io:
-            order = {"PCLAMPC_H_G": ["VDDESD", "VSSESD"]}[i["cell"]]
+            order = {"PCLAMPC_H_G": ["VDDESD", "VSSESD"], "PCLAMPC_V_G": ["VDDESD", "VSSESD"]}[i["cell"]]
             lines.append(f"X{i['name']} " + " ".join(i["nets"][p] for p in order) + f" {i['cell']}")
         else:
             raise ValueError("No LVS source rule for " + i["cell"])
@@ -267,7 +280,7 @@ def query(identity, il, timeout=600):
               f"mkdir {q(evidence)}", f"cd {q(evidence)}",
               "base64 -d > job.il <<'B64'", base64.b64encode(blob).decode("ascii"), "B64",
               f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib"]
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     script += ["rc=0", f"timeout -k 10 {timeout} tcsh -fc {q('source ' + CADENCE + '; exec virtuoso -nograph -nocdsinit -log job.log -restore job.il')}"
@@ -324,7 +337,7 @@ def physical(identity, top, view=None, gds=None, stages="drc", deck="cell", sour
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script.append(f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib")
-    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY):
+    for lib in (STANDARD_LIBRARY, io_library(), PAD_LIBRARY, SEAL_LIBRARY):
         script.append(f"grep -q -E '^DEFINE[[:space:]]+{lib}[[:space:]]' cds.lib || "
                       f"grep -m1 -E '^DEFINE[[:space:]]+{lib}[[:space:]]' {SHARED_CDS} >> cds.lib")
     script += ["sha256sum " + " ".join(files) + " cds.lib",

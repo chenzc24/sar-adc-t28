@@ -22,6 +22,10 @@ TOP = open(HERE + '/top.txt').read().strip() if os.path.exists(HERE + '/top.txt'
 # Optional foundry interconnect corner (corner.txt: cworst_T | cbest_T): only the xRC rules include changes
 # (sar_rc_corner.select, as in bootstrap_rc_corner.py); absent means the installed typical rules.
 CORNER = open(HERE + '/corner.txt').read().strip() if os.path.exists(HERE + '/corner.txt') else None
+# Optional supply names the deck's PEX EXTRACT EXCLUDE leaves ideal and this run extracts as RC (supplies.txt, one per
+# line; the chip periphery extraction, Layout/tools/analysis/chip_periphery.py); absent keeps the installed list.
+SUPPLIES = tuple(s.strip() for s in open(HERE + '/supplies.txt').read().splitlines() if s.strip()) \
+    if os.path.exists(HERE + '/supplies.txt') else ()
 
 
 def main(report):
@@ -41,7 +45,9 @@ def main(report):
     work = HERE + '/pex'
     os.mkdir(work)
     os.symlink('../fixture.gds', work + '/fixture.gds')
-    report['deck'] = rp.prepare_deck(work, 'pex', TOP)
+    if not all(re.match(r'\A[A-Za-z0-9_]+\Z', s) for s in SUPPLIES):
+        raise ValueError('Invalid supply list')
+    report['deck'] = rp.prepare_deck(work, 'pex', TOP, SUPPLIES)
     if CORNER:
         assert CORNER in ('cworst_T', 'cbest_T')
         sys.path.insert(0, HERE)

@@ -98,7 +98,7 @@ Revision 2 of the decap and clamp cells (`layout_r2` views; the `layout` views a
 | SAR | (510, 528)-(646.5, 646.5), minus the SAR clamp | 3543 | 134.6 pF | 132.2 | 1.66 / 1.88 ohm, two ports per net |
 | DVDD | (578, 340)-(640, 426) | 1380 | 52.4 pF | 51.6 | 1.87 / 2.21 ohm |
 
-- **Analog clamp moved (superseded by revision 3 below: this place fails the ESD bus check).** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model. The app note's pad-to-clamp bus limit is still unchecked (an existing open item).
+- **Analog clamp moved (superseded by revision 3 below: this place puts the clamp away from its own pads, against app note 8.7.3 step 2).** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model.
 - **SAR** grows west to x 510, 9.5 um from the VINP route edge. The plan's minimum is 6 um; its earlier text said 30.
 - **Ports** sit next to the ADC pins, with the ground (M8) port nearest. On the SAR side, short stubs north from the SAR trunks reach the near-pin ports, and the revision 1 ports stay in parallel. The ESR model is the one above, an upper bound. Ring feed, as a loop at 125 C rcworst_T, drawn vs the plan's 10 um M8 values:
   - pad to pin: analog 0.53 (0.73), pair 2.34 (2.85), SAR 1.61 (1.45) ohm;
@@ -125,7 +125,9 @@ The first LVS of this view (in `chip-dcf5-b1-chk`) was INCORRECT. Its source wir
 
 ## Analog clamp back in place: `sar8_adc_chip/layout_full_fill5_r3`
 
-Revision 3 fixes the ESD fault of revision 2. The analog PCLAMPC_H_G returns to (360, 622) on the analog trunks, between top_3/top_4 and the core (app note 8.7.3 step 2; the `sar8_esd_clamps/layout` view). Pad-to-clamp bus resistance at 125 C rcworst_T: AVDD (top_4) 0.02 ohm and AVSS (top_3) 0.06 ohm along the trunks, against 1 ohm (Table 10.1). In revision 2 they were 0.57 and 0.95 ohm over the TACVDD/TACVSS bus, before the pad cells' own resistance.
+Revision 3 fixes the ESD fault of revision 2. Revision 2 had put the analog clamp beside the pair clamp, away from its own pads, against app note 8.7.3 step 2: the clamp sits between its pad pair and the core. The analog PCLAMPC_H_G now returns to (360, 622) on the analog trunks, between top_3/top_4 and the core (the `sar8_esd_clamps/layout` view).
+- **Trunk resistance from the pads to the clamp,** 125 C rcworst_T: AVDD (top_4) 0.02 ohm and AVSS (top_3) 0.06 ohm. In revision 2 it was 0.57 and 0.95 ohm over the TACVDD/TACVSS bus.
+- **Correction:** this record first compared these values with 1 ohm from Table 10.1. That table limits the bus resistance between IO power/ground cells, not pad to clamp; see "Clamp feed along the bars".
 
 With the clamp back in its region, the analog decap cannot reach its plan. The new `sar8_decap_analog/layout_r3` recovers what it can:
 
@@ -154,9 +156,381 @@ The chip view is built like `layout_full_dc_fill5` (build `chip-f5r3-b1`, `chip_
 
 Only density counts change: M7.DN.6 417 to 303 and M6.DN.6 253 to 233, because the MOM fills M5-M7 over the analog decap.
 
+## Seal ring: `sar8_adc_chip/layout_full_fill5_r3_seal`
+
+The die is the lab's 1 x 1 mm seal ring, `sealring/N28_TSMC_SRDMB_Mu/layout` from the shared seal-ring library (not drawn here), placed at die (-120, -120), R0, by `Layout/design/chip_seal_ring.py` (build `chip-seal-b1`). The view is a copy of `layout_full_fill5_r3` with only that instance added. All 16 guarded views (every chip view, the ring, the cores and the object views) stayed byte-identical. `io_ring.json` `seal_ring` and `die_bbox` (-120, -120)-(880, 880) and `floorplan.json` `die_bbox` record it.
+
+| Clearance (die um) | |
+| --- | --- |
+| Seal-ring band (SEALRING_ALL 162;2) | 24 um from the die edge: -120 to -96 and 856 to 880 |
+| Corner chamfers | within x + y <= 121.72 um of each die corner (seal-ring frame); the IO corner cells start at x + y = 240 |
+| IO-cell outline | 0 to 760, 120 um from each die edge |
+| PAD60GU metal (783.32 um envelope) | 108.34 um from the die edge, 84.34 um clear of the band |
+
+By rule against `layout_full_fill5_r3`:
+
+| Check | `layout_full_fill5_r3_seal` | `layout_full_fill5_r3` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-seal-b1-chk`) | 1944 | 1484 |
+| of which other than density and fill | 235 | 236 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-seal-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-seal-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305 | 302 |
+
+- **Non-density:** the only change is that `WITH_SEALRING_OPTION:WARNING` (the chip deck's missing-seal-ring warning) is gone.
+- **Density and fill:** +461, in the empty margin between the IO ring and the seal ring, which has no fill yet:
+  - M1-M7.DN.1: 1 to 5 each.
+  - M1-M6.DN.6: +33 to +153 each.
+  - OD.S.14 (at most 10 um between OD): 16 to 27.
+  - The seal ring's own dummy OD and poly lower OD.DN.3 (19 to 3) and PO.DN.3 (10 to 2).
+- **ERC:** no new location. Both runs flag the same floating P-substrate and N-well pieces at the two PRCUTA_G domain cuts (die y 225-235 on the west edge, y 585-595 on the east edge). The seal-ring run also lists three of them under the ring cell's context. The seal ring adds no ERC result.
+
+Fill keep-out, agreed with the fill session:
+- No dummy fill outside die (-93, -93)-(853, 853), which is the band plus 3 um (CSR_DMu_S_1).
+- No fill within x + y <= 125 um of the die corners.
+- Everything else outside the IO ring is open to fill.
+- The fill goes into the fill session's own wrapper `sar8_adc_chip_filled`, which places the current chip view `layout_full_fill5_r4_seal` unchanged and uses the `chip-cfeed-b1-chk` stream. Its other exclusions are the IO cells, the filled core, the clamps (the pair clamp to (120, 255)-(220, 325), with its new straps) and the VIN routes ±1 um.
+
+## Periphery extraction ([record](chip_periphery.json))
+
+**Extraction setup.** `Layout/tools/analysis/chip_periphery.py` runs Calibre xRC on the `layout_full_fill5_r3_seal` stream (extraction `chip-periph-x1`: typical, 25 C, coupling capacitance grounded).
+- **Kept as xcells:** every IO-library cell, the core, the register, the decaps, the PCLAMPC_H_G clamps and the seal ring.
+- **Extracted as RC:** the chip-level wiring, ending on the xcell pins, including the bond-pad metal and the AVDD/VDD nets the deck normally keeps ideal.
+- **Analysis:** each node set's two-point resistance on the extracted network, with the other attachments floating.
+- **Not covered:**
+  - Inductance (xRC gives none; the L below is a straight-bar estimate).
+  - The insides of the xcells.
+  - Fill, of which the chip margin and pad decap areas have none yet, so wiring C will rise.
+
+**Pad cell capacitance.** It is taken from the pad's LVS netlist (IO library SPICE: PDB3AC has 15 ndio_18 and 5 pdio_18). The PDK junction models are applied at TT and at the node voltage, with AVDD at 0.9 V.
+
+Reference rails against `constraints.json` `stage6_supply_model` (per rail, both pads):
+
+| Term | Model | VREFP | VREFN |
+| --- | --- | --- | --- |
+| Route R, both routes in parallel | 0.85 ohm (0.14-1.2) | 1.08 ohm (routes a/b 2.12 / 2.23) | 1.09 ohm (1.93 / 2.52) |
+| Route R at 125 C rcworst (M8 scaling) | 1.2 ohm | about 1.53 ohm | about 1.54 ohm |
+| Route L | 0.17 nH | 0.16 nH (estimate) | 0.16 nH (estimate) |
+| Route C | 0.27 pF | 0.066 pF | 0.075 pF |
+| Pad C, two pads | 2 x 0.5 pF | 2 x (1.02 junction + 0.075 bond metal) = 2.19 pF | 2 x (1.09 + 0.075) = 2.34 pF |
+
+- **Route resistance:** within the model's range at 25 C and inside the 0-2 ohm bracket at 125 C.
+- **Route capacitance:** a quarter of the model's (M8 over an unfilled field).
+- **Pad capacitance:** more than twice the model's 0.5 pF per pad, dominated by the ESD diodes.
+
+Supply ring feeds, loop AVDD + AVSS (pad = the pad cell's core pin, bulk = the decap port, pin = the ADC pin):
+
+| Branch | Pad to pin, extracted 25 C (125 C scaled) | Hand count 25 C / 125 C | Bulk to pin, extracted (scaled) | Hand count 125 C | Pad to clamp, AVDD / AVSS (25 C) |
+| --- | --- | --- | --- | --- | --- |
+| Analog | 1.63 (2.36) ohm | 0.37 / 0.53 | 1.77 (2.58) ohm | 0.14 | 1.10 / 1.08 ohm |
+| Pair | 2.68 (3.85) ohm | 1.64 / 2.34 | 1.60 (2.32) ohm | 0.12 | 1.11 / 1.11 ohm |
+| SAR | 2.05 (2.95) ohm | 1.13 / 1.61 | 1.16 (1.67) ohm | 0.49 | 1.11 / 1.10 ohm |
+
+- **Hand counts are low.** The `ring_feed()` values were trunk squares only. The extraction includes the pad landings and the via stacks (two VIA7 and two VIA8 per stack at the decap ports and the clamp drops), which carry most of the resistance.
+- **Rail budget still passes** with the extracted feeds: worst 20.3 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
+- **Pad to clamp is 1.08-1.11 ohm per rail at 25 C** in this run, and 1.19-1.79 ohm with the clamps flattened; the trunk-only estimate gave 0.02-0.06 ohm. The app note sets no resistance limit on this connection for wire bond. Its ESD current-density check, and the fix for the clamp bars, are in "Clamp feed along the bars" below.
+
+VIN and output path (25 C typical):
+
+| Path | R | Wiring C | Pad cell |
+| --- | --- | --- | --- |
+| VINP / VINN, pad AIO to core VIN pin | 56.6 ohm each (1 um M5 + M6, 0.3 um neck) | 16 fF route + 75 fF bond-pad metal | PDB3AC_V_G, 1.09 / 1.03 / 1.02 pF at 0 / 0.45 / 0.9 V |
+| ADC_D0-7, core to register D | 26.4 ohm | 0.2 fF | |
+| D0_CORE-D7_CORE, register Q to pad I | 249-559 ohm (0.4 um M5/M6) | 15-27 fF | PRUW08SDGZ_H/V_G |
+| D0-D7, pad to bond pad | 0.02 ohm | 75 fF | |
+| SAMPLE_CORE, pad C to core / register CK | 19.1 / 37.0 ohm | 16 fF | PDDW16SDGZ |
+| Register DVDD from the DVDD pads | 21.7 ohm (DVDD decap tap 5.6 ohm from the pads) | | |
+
+The register's VSS return is not resolved, because the extraction joins every xcell's VSS at one substrate node.
+
+Stage 2 has two netlists in `work/layout/chip-periphery/chip-periph-x1/stage2/` (sha256 in the record):
+- `sar8_vin_path.scs`: the PDB3AC pad cells plus the extracted VIN routes and bond-pad metal.
+- `sar8_output_path.scs`: the register, the eight PRUW08SDGZ and the SAMPLE PDDW16SDGZ, their extracted routes, and the DVDD star with the DVDD decap. It also has `sar8_output_board`: 0.2 ohm + 2 nH package and a stated 15 pF board load per data pad.
+
+## Clamp feed along the bars: `sar8_adc_chip/layout_full_fill5_r4_seal`
+
+**The rule.** For wire bond, the IO app note (8.7.3 and 10.7.3) asks for three things:
+- The clamp sits between its analog pad pair and the core.
+- AVDD connects to VDDESD and AVSS to VSSESD, then on to the core rails.
+- Every such connection meets the DRM's "Maximum ESD Current Density for Via, and Metal". That is DRM 9.3.4, and ESD.CD.1gU suggests 1.3 A on the primary path from the bond pad to the clamp: 81.25 mA/um of Mx, 26.2 mA per VIA4-VIA6 cut, 246.7 mA per VIA7/VIA8.
+
+The note sets no pad-to-clamp resistance limit for wire bond.
+- An earlier version of this record compared pad-to-clamp resistance with 1 ohm from Table 10.1. That table (section 10.4) limits the bus resistance between IO power/ground cells of one analog domain, cell to cell along the ring.
+- The only pad-to-clamp limit, 0.1 ohm (12.3.1), is for RDL flip chip.
+
+**The fault: three drops per rail.** Each clamp's M4 bar was fed by three stacks at one place, so about seven of the clamp's nine terminal strips per net hung on one side of the drop. With the clamp current split equally over the strips, the bar carried up to 1.0 A sideways:
+
+| Clamp, AVDD / AVSS | M4 bar | Worst bar current, three drops | ESD.CD.1gU for the bar | With the clamp feed |
+| --- | --- | --- | --- | --- |
+| Analog | 3.0 um | 1.01 / 1.01 A | 0.24 A | 0.15 / 0.14 A |
+| Pair | 4.4 um | 0.43 / 0.43 A | 0.36 A | 0.14 / 0.14 A |
+| SAR | 4.4 um | 1.01 / 0.87 A | 0.36 A | 0.18 / 0.14 A |
+
+- **Vias:** the three drops met the via counts with no margin: 6 VIA7 (and 6 VIA8 on AVDD) per rail against 6 needed, and 72 cuts per VIA4-VIA6 level against 50.
+- **Model:** `chip_objects_record.clamp_feed_current_density`, recorded in `chip_objects.json` `esd_current_density`.
+
+**The fix.** `Layout/design/chip_clamp_feed.py` (build `chip-clampfeed-b1`; geometry in `chip_integration.clamp_feed`) copies `layout_full_fill5_r3_seal` and adds:
+- a strap on the trunk metal over every bar (AVDD on M9, AVSS on M8);
+- a drop stack every 6 um along it (M4-M7 via fields, VIA7/VIA8 pairs);
+- for the pair clamp, straps every 10 um to its trunks.
+
+The stacks keep clear of the core VSS ring's M7 band and M6 ties, the other net's trunk, and the existing drops. That gives 15-19 stacks per rail instead of 3. The clamp cells and all other views are unchanged.
+- **Bar current:** 0.14-0.18 A in the worst segment, within the bar's ESD.CD.1gU current.
+- **Vias:** 30-38 VIA7 per rail and 360-456 cuts per VIA4-VIA6 level, five to nine times the counts.
+
+**Resistance, for information.** No limit applies to it. The extraction with the clamps flattened (`chip-periph-x2`, `chip-periph-x3`) includes the clamp's metal and transistors (Calibre xRC typical, 25 C):
+- **pin:** resistance to the clamp's transistor terminals, all shorted.
+- **distributed:** the clamp current drawn by its transistors in proportion to their width; includes the clamp's own metal down to each finger.
+
+| Clamp, rail | `layout_full_fill5_r3_seal`, pin / distributed | `layout_full_fill5_r4_seal`, pin / distributed |
+| --- | --- | --- |
+| Analog, AVDD (top_4) | 1.26 / 1.32 ohm | 0.76 / 0.80 ohm |
+| Analog, AVSS (top_3) | 1.73 / 1.79 ohm | 0.92 / **0.94** ohm |
+| Pair, AVDD (left_5) | 1.19 / 1.26 ohm | 0.77 / 0.81 ohm |
+| Pair, AVSS (left_6) | 1.20 / 1.22 ohm | 0.78 / 0.80 ohm |
+| SAR, AVDD (top_1) | 1.20 / 1.25 ohm | 0.75 / 0.79 ohm |
+| SAR, AVSS (right_8) | 1.41 / 1.46 ohm | 0.82 / 0.84 ohm |
+
+- **The feed cuts the resistance by about 40 %:** worst 1.79 to 0.94 ohm.
+- **Bar spreading is small:** pin and distributed differ by only about 0.05 ohm.
+- **What remains** is mostly the pad landing and the trunk.
+
+**Pad landings** against ESD.CD.1gU: the AVSS landings used only the pads' M2 fingers (0.85 A). Revision 5 below adds their M1 fingers.
+
+By rule against `layout_full_fill5_r3_seal`:
+
+| Check | `layout_full_fill5_r4_seal` | `layout_full_fill5_r3_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-cfeed-b1-chk`) | 1912 | 1944 |
+| of which other than density and fill | 235 | 235 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-cfeed-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-cfeed-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+Only density counts change: M6.DN.6 386 to 362 and M7.DN.6 287 to 279, from the new M6/M7 plates. The record is in [chip periphery](chip_periphery.json) `clamp_bus` (extractions `chip-periph-x2`, `chip-periph-x3`).
+
+## AVSS pad landings on M1: `sar8_adc_chip/layout_full_fill5_r5_seal`
+
+ESD current leaves each supply pad through its core-pin fingers, and the landing that joins them is the first metal of the pad-to-clamp path. ESD.CD.1gU asks 16 um of Mx for its 1.3 A (`chip_objects_record.landing_current_density`, in `chip_objects.json` `esd_current_density`):
+
+| Pad | Core pin | Landing before | Landing in r5 |
+| --- | --- | --- | --- |
+| AVSS (PVSS3AC: top_3, left_6, right_8, left_0) | seven M1 + seven M2 fingers, 10.5 um each | M2 only: 10.5 um, 0.85 A | M1 + M2: 21 um, **1.71 A** |
+| AVDD (PVDD3AC: top_4, left_5, top_1) | ten M2 fingers, 14.1 um, nothing on M1 | 14.1 um, 1.15 A | unchanged |
+
+- **AVDD** stays at 1.15 A. The 14.1 um of M2 is the IO cell's own core pin, rated by the library, and lies outside our wiring; the landing already uses all of it.
+- **Build:** `Layout/design/chip_landing_m1.py` (build `chip-landm1-b1`; geometry in `chip_integration.avss_landing_m1`) copies `layout_full_fill5_r4_seal`, which stays unchanged.
+- **Added at each AVSS landing:** the seven M1 finger extensions over the M2 ones, an M1 bar under the landing's 1 um M2 bar, and a VIA1 grid under its VIA2 grid (78 cuts per pad, 2.0 A). That is 344 shapes, M1 and VIA1 only, in four boxes in the landing band (die um):
+  - top_3: (432.14, 649.0)-(447.86, 650.2)
+  - left_6: (109.8, 252.14)-(111.0, 267.86)
+  - right_8: (649.0, 612.14)-(650.2, 627.86)
+  - left_0: (109.8, 612.14)-(111.0, 627.86)
+
+By rule against `layout_full_fill5_r4_seal`:
+
+| Check | `layout_full_fill5_r5_seal` | `layout_full_fill5_r4_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-landm1-b1-chk`) | 1912, every rule equal | 1912 |
+| of which other than density and fill | 235 | 235 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-landm1-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-landm1-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+Pad to clamp, for information (clamps flattened, `chip-periph-x4`; distributed): the AVSS rails fall by about 0.1 ohm, and AVDD is unchanged.
+
+| Rail | r4_seal | r5_seal |
+| --- | --- | --- |
+| Analog AVSS | 0.94 ohm | 0.83 ohm |
+| Pair AVSS | 0.80 ohm | 0.70 ohm |
+| SAR AVSS | 0.84 ohm | 0.74 ohm |
+| AVDD (all three) | 0.79-0.81 ohm | 0.79-0.81 ohm |
+
+This is the frozen chip view for fill. Its stream is `chip-landm1-b1-chk/fixture.gds`, sha256 7b2973da…
+
+## MOS matching check on the comparator (MATCH.WARN.1) ([record](chip_matching.json))
+
+**Why.** The chip DRC of `layout_full_fill5_r5_seal` flags MATCH.WARN.1: the stream has no MATCHING (205;8), ANARRAY_H (255;20) or ANARRAY_M (255;21) marker. Without one, PO.DN.16, PO.R.28, AN.R.79.2m and AN.R.80.2m never run. The DRM allows that bypass only when no circuit depends on MOS matching, but the StrongARM comparator's offset does.
+
+**Marker.** ANARRAY_H (high matching).
+- **Basis:** DRM 8.3.2.3.1.1. High matching is for "MOS array with mismatch within SPICE"; medium allows 2x SPICE; normal (MATCHING) is for "two simple identical transistors". The comparator's offset is reported from native PDK Monte Carlo, i.e. at SPICE mismatch.
+- **Placement:** each marker covers one MOS array. Its edge sits at the centreline between the outermost active gate and its SR_DPO dummy, or at the well-strap centreline. The matched pairs share diffusion and interleave, so the arrays are the unit (comparator frame, `Layout/design/comparator.il`):
+
+| Array | Marker (um) | Matched groups inside |
+| --- | --- | --- |
+| N (rows N1/N2, P+ ring) | (-0.26, -2.53)-(0.26, -0.67) | input pair MNINP/MNINN (two cross-placed fingers each); NMOS latch MNLATN/MNLATP; the tail MNTAIL sits between the input fingers |
+| P (row P, N+ ring) | (-0.39, -0.44)-(0.39, 0.76) | PMOS latch MPLATN/MPLATP; output reset MPRSTN/MPRSTP; internal-node reset MPRSTX/MPRSTY |
+
+**Run.** `chip-match-h1` (`Layout/tools/physical/matching_overlay.py`).
+- **Stream:** a scratch copy of the r5 stream (`chip-landm1-b1-chk`, sha256 7b2973da…) with the two markers in `sar_strongarm_t28_core` only. No OA view or frozen stream changed.
+- **Checks:** the installed chip deck, hierarchical, with only the five checks selected.
+- **Host:** thu-wei. The managed runner has no DRC job kind, so its admission rule was applied by hand: 28 GiB available against 2 GiB for this job, 8 GiB reserve and up to 16 GiB for the two running Stage 6 runs; 40 of 96 threads; load 79 against 120.
+
+| Check | Results |
+| --- | --- |
+| MATCH.WARN.1 | 0 (markers present) |
+| PO.DN.16 (PMET-poly density at most 50 % within 10 um) | 0 |
+| PO.R.28 (high-poly-density regions at most 60 um within 10 um) | 0 |
+| AN.R.79.2m (ANARRAY_H: OD and PO density within 10 % between the array and its 6 um halo) | **2** |
+| AN.R.80.2m (ANARRAY_M) | 0 (no ANARRAY_M drawn) |
+
+Both AN.R.79.2m results are OD density; PO density is within 10 % for both arrays.
+
+| Array (die um) | OD density inside | OD density in the 6 um halo | Difference |
+| --- | --- | --- | --- |
+| N: (409.74, 519.08)-(410.26, 520.94), input pair, NMOS latch, tail | 0.591 | 0.243 | 0.348 |
+| P: (409.61, 521.17)-(410.39, 522.37), PMOS latch, resets | 0.500 | 0.243 | 0.257 |
+
+- **Medium class:** AN.R.80.2m uses the same formula and limits (10 %, 6 um), so ANARRAY_M markers would fail the same way.
+- **Normal class:** MATCHING markers switch on only PO.DN.16 and PO.R.28, which pass.
+- **Not run:** AN.R.79.5m (one MOS type in each high-matching array and its halo) was outside this run. By its wording, the P row 0.23 um above the N array puts both MOS types in either array's halo.
+
+**Fix geometry, not drawn.** The two arrays share one halo, so its OD density must sit within 10 % of both: 0.49-0.60, against 0.24 now. That means a ring of identical dummy MOS rows around the comparator, 6 um wide per the DRM high-matching guidance, at the arrays' 0.13 um gate pitch and 0.5 um OD rows. The ring covers die x 403.6-416.4, y 513.1-528.4: inside the frozen core.
+
+### Decision: MATCHING markers and a recorded deviation (2026-11-23)
+
+The user chose option A: "Add markers, write waiver". The sign-off stream carries permanent MATCHING (205;8) markers. Option B (identical-dummy ring, N/P array split, comparator re-layout for ANARRAY_H) is rejected, and the comparator geometry stays as it is.
+
+- **Class: normal matching.** MATCHING is for "two simple identical transistors" (DRM 8.3.2.3.1.1).
+  - **What it switches on:** in the chip deck, PO.DN.16, PO.R.28 and AN.R.78.1m (strap width at most 0.5 um inside the marker), the marker's own geometry checks G.1-G.3, and MATCH.WARN.1.
+  - **What it doesn't:** AN.R.79.x and AN.R.80.x read only ANARRAY_H / ANARRAY_M. CSR.R.1:MATCHING only runs without WITH_SEALRING.
+- **Deviation from high matching:** the ANARRAY_H evidence is `chip-match-h1`.
+  - AN.R.79.2m fails on OD density: 0.348 (N array) and 0.257 (P array), against 0.10.
+  - AN.R.79.5m (one MOS type per array and halo) would fail as well, because the P row is 0.23 um from the N array.
+- **Accepted risk:** MATCH.WARN.1 says matching may degrade "at least by 3X" when those rules are not met. The accepted figure is up to 3x the SPICE mismatch, applied to the extracted Monte Carlo ([comparator](comparator.md): sigma 12.05 mV, 200-seed range -34.7 to +34.1 mV).
+  - The offset is static and corrected off-chip, so the cost is input range, not accuracy.
+  - At 3x, an extreme die sits at about +/-104 mV, 11.6 % of the +/-0.9 V full scale.
+- **Stage 6 is unaffected:** `calibre.lvs` and `calibre.rcx` map no 205;8 (only 205;6, PMET), so neither device recognition nor extraction reads the marker. The comparator, the cores and their streams are unchanged.
+
+**Sign-off view: `sar8_adc_chip/layout_full_fill5_r6_seal`.**
+- **Build:** `Layout/design/chip_matching_marker.py` (build `chip-match-b1`) copies `layout_full_fill5_r5_seal`, which stays unchanged.
+- **Markers:** two MATCHING rectangles in the chip top cell, at the `chip-match-h1` footprints:
+  - N array: (409.74, 519.08)-(410.26, 520.94)
+  - P array: (409.61, 521.17)-(410.39, 522.37)
+- **Layer:** they are drawn on OA PMET_CUT / drawing1, which is the PDK layer map's name for GDS 205;8. The DRC deck reads that GDS layer as MATCHING, and no deck maps it as a mask.
+- **Visibility:** the hierarchical chip deck sees the top-level marker over the comparator's devices. MATCH.WARN.1 is CHIP NOT INTERACT MATCHING_ARRAY, and it now reports 0. PO.DN.16 and PO.R.28 run over the same marker grown by 10 um.
+
+By rule against `layout_full_fill5_r5_seal`:
+
+| Check | `layout_full_fill5_r6_seal` | `layout_full_fill5_r5_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-match-b1-chk`) | 1911: only MATCH.WARN.1 changes, 1 to 0 | 1912 |
+| PO.DN.16 / PO.R.28 / AN.R.78.1m / MATCH.WARN.1 | 0 / 0 / 0 / 0 | not checked / not checked / not checked / 1 |
+| G.1-G.3:MATCHING | 0 | (no marker) |
+| LUP.5.2.1 / 5.2.2, flat (`chip-match-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` | CORRECT | CORRECT |
+| LVS, only supply nets joined by name (`chip-match-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+## 892 um die: `sar8_adc_chip/layout_full_fill5_r7_seal`
+
+The user adopted the 892 um die on 2026-11-23 ("Yes, plan to adopt"). The size is not yet confirmed with the shuttle provider; see Open.
+
+**Why the seal ring can be smaller.** The seal ring of r3_seal through r6_seal is the TSMC standard sample `N28_TSMC_SRDMB_Mu` (DRM 4.5.66.2, added by the customer).
+- The lab's `sealring` cell equals TSMC's `N28_TSMC_SRDMB_Mu_1P10M_002_20160711_SR_BKM.gds` layer by layer, after selecting the metals of the 1P9M 6X1Z1U stack. This holds for polygon counts and area on every kept layer.
+- The sample is 1000 um square only because of its tile count. Two 185.6 um corner cells sit at each pair of opposite corners, each edge has one UCSRN_NOVIA_DPO_DOD at 182.6 um, and UCSRN_DPO_DOD tiles of 5.4 um repeat from 188 um. So the die is 373.6 + 5.4 n um, with n = 116 in the sample.
+- `Layout/design/seal_ring_sized.py` keeps every relative position of the sample and changes only n. At n = 116 it reproduces all 472 placements of both the TSMC sample and the lab cell.
+
+**Size.** CSR.R.1 keeps layout out of triangles at the prime-chip corners. The IO corner cells draw up to their outline corner, at x + y = die - 760 in the seal-ring frame, so the die must be at least 882 um.
+- n = 95 (886.6 um) clears the triangles by 4.6 um.
+- n = 96 (**892 um**) clears them by 10 um. This is the one adopted.
+- Die area is 0.796 against 1.000 mm2, about 20 % less.
+
+**CSR.R.1, tool-checked** (`chip-seal892-csr2`).
+- **Why a separate run:** the chip deck derives the corner triangles only for a chip without a seal ring (`EMPTY_AREA_P4 = INT CHIP_NOSR_P4 < CSR_R_1 ABUT == 90`, CSR_R_1 = 74, under `#IFNDEF WITH_SEALRING`). With our own seal ring in the stream, the group would run on an empty triangle.
+- **Probe stream:** the 892 scratch stream without its seal ring, plus four 0.1 um LMARK squares at the prime-chip corners (the inner edge of SEALRING_ALL, 24 um inside the die). They set the chip extent to the prime chip, as for a TSMC-added seal ring. LMARK probes sit on the lower-left diagonal at x + y = 70, 73, 75, 78, 100 and 110 um from the prime-chip corner.
+- **Run:** the chip deck with WITH_SEALRING off and only the 264 CSR.R.1 checks selected.
+- **Result:** CSR.R.1:LMARK flags the four corner squares and the probes at 70 and 73 um, and nothing else; every other CSR.R.1 check is 0.
+- **Reading the check implements:** a right triangle with 74 um legs from the prime-chip corner (x + y < 74 there, 122 um in the seal-ring frame), not a 74 um radius. No layout of the chip enters it; the IO corner cells start 10 um outside.
+
+**The narrower margin.** The PAD60GU metal is now 54.34 um from the die edge and 30.34 um from the inner edge of SEALRING_ALL (84.34 um at 1 mm).
+- **Seal-ring enhanced zone:** the 6 um inside SEALRING_ALL (18-24 um from the die edge) is layout-free. Nothing of the chip is there.
+- **PM.EN.2:** polyimide enclosure by the prime chip, 15 um. It does not apply, because the pads carry no PM (only the seal ring does), and 30.34 um would meet it anyway.
+- **No other limit:** no other DRM rule limits pad or IO metal to the seal ring or die edge. The IO application note has none either.
+- **AN.R.13mU** (guideline): keep matching pairs at least 3 % of the edge length from the die edge and 5 % of the diagonal from a corner, for a single-die wire-bond package. That is 27 um and 63 um at 892 um; the comparator is about 476 um from the nearest die edge.
+
+**View.** `Layout/design/seal_ring_sized.py` builds the view in two steps:
+- `SAR_ADC_T28_LAYOUT/sar8_seal_ring_892/layout` (build `sealring-892-b1`): 392 instances of the lab's `sealring` cells. Its stream (`sealring-892-drc1`) matches the generator at n = 96.
+- `layout_full_fill5_r7_seal` (build `chip-seal892-b1`): a copy of `layout_full_fill5_r6_seal` whose XSEAL_RING instance becomes `sar8_seal_ring_892` at (-66, -66), R0. The die is (-66, -66)-(826, 826), with the IO ring still centred, and every chip view and object view stayed unchanged.
+- **Stream** (`chip-seal892-b1-chk`, sha256 9b8a932d...): it spans exactly the die. The OA outline reaches x 831.5 only through label-text extents, and -67.381 through the seal-ring cells' 1.381 um overhang, as in the TSMC sample.
+
+By rule against `layout_full_fill5_r6_seal`:
+
+| Check | `layout_full_fill5_r7_seal` (892 um) | `layout_full_fill5_r6_seal` (1 mm) |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-seal892-b1-chk`) | 2904, identical by rule to the scratch run `chip-seal892-drc1` | 1911 |
+| of which other than density and fill | 234, every rule equal | 234 |
+| Seal-ring rules (SR, SLR, CSR, BiB) | equal | |
+| CSR.R.1 corner triangles (`chip-seal892-csr2`) | 0 on chip layout | not tool-checked |
+| LUP.5.2.1 / 5.2.2, flat (`chip-seal892-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-seal892-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+**Density** changes only in the unfilled margin, which is narrower and sits against the corners:
+- Mx.DN.6: up by 124-247 per layer.
+- Mx.DN.1: down from 5 to 1.
+- OD.S.14: down from 27 to 20.
+Fill decides these.
+
+**Fill keep-out at the seal ring.**
+- No fill outside die (-39, -39)-(799, 799): the band plus 3 um.
+- No fill within x + y <= 125 um of each die corner (seal-ring frame), i.e. within the CSR triangle plus 3 um.
+
+**Unchanged:** the periphery extraction, the clamp-feed current density, the matching check and the Stage 2/6 netlists. The seal ring connects to nothing, and no pad or route moved.
+
+## Vertical-gate clamps and single power cuts: `sar8_adc_chip/layout_full_fill5_r8_seal`
+
+Requested by the user through the fill session (2026-11-23). `Layout/design/chip_ring_fix.py` builds three new views; `layout_full_fill5_r7_seal`, `sar8_io_ring/layout` and `sar8_esd_clamps/layout` stay unchanged.
+
+**Clamps on PCLAMPC_V_G** (`sar8_esd_clamps/layout_vg`, build `obj-clamps-vg-b1`).
+- **Why:** IO app note ch. 16: N28 needs vertical gate poly. `_V_G` cells go on as they are; `_H_G` cells are for rotated use. PCLAMPC_H_G at R0 has horizontal gates, which is where the chip DRC's PO.R.5/6, PO.W.2 and SR_DPO.R.4 came from.
+- **Change:** the three clamps take PCLAMPC_V_G at the same places, R0. Both masters have the same 100 x 22 um outline and the same 18 VDDESD/VSSESD M3 pin figures (query `pclamp-vg-pins-2`), so the M4 bars, drops and clamp feed are unchanged, and so is the current-density check.
+- **Cell checks** (`obj-clamps-vg-chk1`): LVS CORRECT. Cell-deck DRC 72 against 74: the four gate rules go from 10 to 0; ESD.40.1g, inside the clamp master, goes from 40 to 48. The chip-level flat ESD check is unchanged.
+- **Pad to clamp** (clamps flattened, `chip-periph-x5`): worst 0.83 ohm, within 0.04 ohm of r5 on every rail.
+
+**One power cut per domain boundary** (`sar8_io_ring/layout_r2`, build `ring-r2-b1`).
+- **Why:** the plan has one PRCUTA_G per cut (`io_ring.json` `domain_cuts`). The generator filled each 40 um gap with two, and the islands where the two cuts abut float (ERC floating.nxwell_float / floating.psub; `io_ring_verification.json` traced them there).
+- **Change:** the cut beside PVSS3AC_H_G stays (app note 9.8.3 note 1: an analog P/G cell right next to the cut). The one beside the digital pad becomes PFILLER20_G, with the same origin and orientation as the other digital fillers on that side: west `left_6_mid_2_left_21`, east `right_7_mid_1_right_23`.
+  - The VSS ESD bus stays continuous through the remaining cut, and the domain buses stay cut there (9.8.3).
+  - PRCUTA_G and PFILLER20_G hold no devices, so the ring netlist does not change.
+  - Release note 170c 6b (at least 3 um of filler between digital function IO and PVDD1DGZ) is unaffected: the swap only adds filler next to PVDD1DGZ.
+
+**Chip view** (build `chip-r8-b1`): r7_seal with XRING on `sar8_io_ring/layout_r2` and XESD_CLAMPS on `sar8_esd_clamps/layout_vg`. The LVS source is r7's with the three clamps on PCLAMPC_V_G (`chip_ring_fix.lvs_source`). By rule against `layout_full_fill5_r7_seal`:
+
+| Check | `layout_full_fill5_r8_seal` | `layout_full_fill5_r7_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-r8-b1-chk`) | 2896 | 2904 |
+| of which other than density and fill | 224: PO.R.5 4, PO.R.6 2, PO.W.2 2, SR_DPO.R.4 2 all to 0, nothing new | 234 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-r8-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` | CORRECT | CORRECT |
+| LVS, only supply nets joined by name (`chip-r8-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 296: floating.psub 6 to 0, floating.nxwell_float 7 to 4 | 305 |
+
+The 4 remaining floating n-wells sit inside the IO library's HBO850_DIO subcells, as in r7. The only density change is SR_DOD.DN.1 170 to 172.
+
 ## Open
 
-- `layout_full_fill5_r3` is the current chip view; `layout_full_dc_fill5` is superseded (ESD).
-- Analog pad decap 92.9 pF against the planned 114.2 (Stage 1 recommends about 100 pF per branch): rerun the rail budget with the drawn values (analog 92.9, pair 115.9, SAR 134.6, DVDD 52.4 pF). Stage 2's runs at 85 pF bound it from below.
+- MATCH.WARN.1 is closed by the permanent MATCHING markers in `layout_full_fill5_r6_seal`. The comparator's deviation from high matching is recorded above as an accepted risk; the waiver cites `chip-match-h1`.
+- `layout_full_fill5_r8_seal` (vertical-gate clamps, single power cuts) is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r7_seal` (892 um die), `layout_full_fill5_r6_seal` (MATCHING markers, 1 mm), `layout_full_fill5_r5_seal` (AVSS landings), `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
+- Die size: confirm 892 x 892 um with the shuttle provider before tapeout.
+  - **What to ask:** its die-size grid, billing blocks and scribe width, and whether it adds the seal ring itself (DRM 4.5.66.2 option 1). In that case the GDS must not carry ours.
+  - **What 892 um is:** the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin, not a confirmed die size.
+- Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
-- Fill of the pad decap and VSS-ring areas (M6/M7.DN.6), and the seal ring (the chip deck runs with WITH_SEALRING).
+- ESD connection to the clamps meets ESD.CD.1gU in `layout_full_fill5_r5_seal`: clamp bars, drop vias and AVSS landings. The exception is the AVDD pads' own core pin, 14.1 um of M2 (1.15 A), which belongs to the IO cell.
+- The decap-port stacks use the same two VIA7/VIA8 recipe (decap port to ADC pin 1.2-1.8 ohm loop). The rail budget passes with them (20.3 mV); more stacks there would lower the droop further.
+- Closed (Stage 6, 2026-11-23): the 56.6 ohm VIN routes with the PDB3AC pads (`sar8_vin_path.scs`) pass tracking, so no widening is needed. Against ideal VIN, codes are identical in all frames:
+  - SS cold (`sar8-s6pv-ssc-verify-a` vs `sar8-s6f-ssc-verify-a`): residual at sample close 0.1085 vs 0.1015 LSB (limit 0.25), settling 0.0079 vs 0.0080 LSB, read margin 8.73 ns in both.
+  - TT (`sar8-s6pv-tt-verify-a` vs `sar8-s6f-tt-verify-b`): residual 0.0066 vs 0.0061 LSB, settling 0.0125 vs 0.0126 LSB, margin 24.90 ns in both.
+  - Output path, FF hot (`sar8-s6po-ffh-verify-a` vs `sar8-s6f-ffh-verify-a`, `sar8_output_path.scs`): residual 0.0055 LSB in both, settling 0.0747 vs 0.0749 LSB, read margin 29.96 vs 30.27 ns. Driver switching time against sample close is a separate Stage 6 analysis.
+- Periphery extraction after fill, and at 125 C rcworst (scaled here).
+- Fill (the fill session's): the pad decap and VSS-ring areas (M6/M7.DN.6) and the margin between the IO ring and the seal ring (Mx.DN.1/DN.6, OD.S.14), within the keep-out above.
