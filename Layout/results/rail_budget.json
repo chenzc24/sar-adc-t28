@@ -769,5 +769,187 @@
         "reference_error_lsb_per_0p1pf_trunk_diode": 2.5217462925690476e-05
       }
     }
+  },
+  "drawn_chip": {
+    "record": "Stage 1 rail budget on the drawn chip sar8_adc_chip/layout_full_fill5_r3; the droop with the drawn pad bulk is Layout/results/chip_rail_recheck.json (#43)",
+    "inputs": {
+      "drawn": {
+        "analog": {
+          "bulk_f": 9.290000000000001e-11,
+          "esr_ohm_per_rail": 2.245,
+          "pad_to_bulk_ohm": 0.386,
+          "bulk_to_pin_ohm": 0.142
+        },
+        "pair": {
+          "bulk_f": 1.1590000000000001e-10,
+          "esr_ohm_per_rail": 1.85,
+          "pad_to_bulk_ohm": 2.216,
+          "bulk_to_pin_ohm": 0.119
+        },
+        "sar": {
+          "bulk_f": 1.3459999999999998e-10,
+          "esr_ohm_per_rail": 1.77,
+          "pad_to_bulk_ohm": 1.12,
+          "bulk_to_pin_ohm": 0.487
+        }
+      },
+      "in_core": "Layout/results/toplevel_route_full.json rail_budget (Stage 4b)",
+      "pad": "Layout/results/chip_objects.json via chip_rail_recheck.drawn_bulk"
+    },
+    "corner_charge_allowance": 1.3,
+    "timing": "FF-cold update schedule",
+    "supply_limit_v": 0.045,
+    "feed_limit_ohm": 6.0,
+    "feeds": {
+      "analog": {
+        "rows": [
+          {
+            "in_core_loop_ohm": 4.565,
+            "from_pad_decap_ohm": 4.707000000000001,
+            "from_pad_ohm": 5.093
+          }
+        ],
+        "core_alone_droop_v": 0.0408,
+        "pass_": true
+      },
+      "pair": {
+        "rows": [
+          {
+            "in_core_loop_ohm": 3.25,
+            "from_pad_decap_ohm": 3.3689999999999998,
+            "from_pad_ohm": 5.585
+          }
+        ],
+        "core_alone_droop_v": 0.0403,
+        "pass_": true
+      },
+      "sar": {
+        "rows": [
+          {
+            "in_core_loop_ohm": 3.125,
+            "from_pad_decap_ohm": 3.612,
+            "from_pad_ohm": 4.732
+          },
+          {
+            "in_core_loop_ohm": 4.125,
+            "from_pad_decap_ohm": 4.612,
+            "from_pad_ohm": 5.732
+          }
+        ],
+        "core_alone_droop_v": 0.0263,
+        "pass_": true
+      }
+    },
+    "analog_pad_bulk_sweep": {
+      "no_pad_bulk": {
+        "bulk_f": 0.0,
+        "drawn_feed_v": 0.0408
+      },
+      "stage6_deck": {
+        "bulk_f": 8.51e-11,
+        "drawn_feed_v": 0.01805796920568413,
+        "feed_limit_v": 0.01979896295752913
+      },
+      "drawn": {
+        "bulk_f": 9.290000000000001e-11,
+        "drawn_feed_v": 0.017921429384596954,
+        "feed_limit_v": 0.019669198036912645
+      },
+      "stage1_recommendation": {
+        "bulk_f": 1e-10,
+        "drawn_feed_v": 0.017817081196858403,
+        "feed_limit_v": 0.019568796374397762
+      },
+      "plan": {
+        "bulk_f": 1.142e-10,
+        "drawn_feed_v": 0.017646138900633282,
+        "feed_limit_v": 0.019409034844052268
+      }
+    },
+    "coupled_ring": {
+      "per_branch_125c_rcworst": {
+        "core_feed_ohm": {
+          "analog": 4.565,
+          "pair": 3.25,
+          "sar": 4.125
+        },
+        "droop_all_firing_v": {
+          "analog": 0.018122017462128603,
+          "pair": 0.01608854681545087,
+          "sar": 0.011917120679557958
+        }
+      },
+      "shared_bus_125c_rcworst": {
+        "core_feed_ohm": {
+          "analog": 4.565,
+          "pair": 3.25,
+          "sar": 4.125
+        },
+        "droop_all_firing_v": {
+          "analog": 0.01653973383475945,
+          "pair": 0.015686209238638962,
+          "sar": 0.01250035660377325
+        },
+        "reference_error_lsb_asymmetric_pads": 0.0001667719339619711,
+        "from_analog": {
+          "pair": 0.001217792506336453,
+          "sar": 0.002284033192940428
+        },
+        "from_pair": {
+          "analog": 0.0013074248199570883,
+          "sar": 0.0008725848033793887
+        },
+        "from_sar": {
+          "analog": 0.0015573251065663719,
+          "pair": 0.0006002963778283216
+        }
+      }
+    },
+    "reference": {
+      "cref_f": 6.232e-12,
+      "series_ohm": 17.21,
+      "stage4b": {
+        "ffc": {
+          "nominal": 0.0251,
+          "box": 0.0354
+        },
+        "tt": {
+          "nominal": 0.0096,
+          "box": 0.0168
+        },
+        "ssc": {
+          "nominal": 0.0042,
+          "box": 0.0042
+        }
+      },
+      "nominal": {
+        "ffc": 0.025144473099757637,
+        "tt": 0.009564721647498994,
+        "ssc": 0.004166479465351601
+      },
+      "box": {
+        "ffc": {
+          "decision_error_lsb": 0.03543342363845841,
+          "span_droop_v": 0.17741014433020907,
+          "pin_peak_a": 0.004636810898564137
+        },
+        "tt": {
+          "decision_error_lsb": 0.01683757514143696,
+          "span_droop_v": 0.17740951351934575,
+          "pin_peak_a": 0.004636811248012205
+        },
+        "ssc": {
+          "decision_error_lsb": 0.004189683158448763,
+          "span_droop_v": 0.17740767605267344,
+          "pin_peak_a": 0.004636811332703303
+        }
+      }
+    },
+    "verdict": {
+      "supply_droop_pass": true,
+      "worst_droop_v": 0.0408,
+      "feeds_pass": true
+    },
+    "not_modelled": "DVDD (output register) has no Stage 1 budget; its 52.4 pF pad decap is recorded only."
   }
 }

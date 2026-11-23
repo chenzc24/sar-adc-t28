@@ -119,6 +119,49 @@ The reference pads see the bus through their pad capacitance. A bound puts each 
 
 The per-branch model still holds for each block's own droop: the bus moves it by at most 1.3 mV, mostly down. The bus term the model needs is the cross-branch coupling above. With the SAR on the analog pad domain, that coupling stays under the level the comparator already tolerated.
 
+## Drawn Chip Check
+
+The current chip view `sar8_adc_chip/layout_full_fill5_r3` (#38, #41). The droop with the drawn pad decoupling is in the [chip rail recheck](chip_rail_recheck.md) (#43): 17.9 / 15.7 / 11.4 mV (analog / pair / SAR) per branch, and at most 16.6 mV on the shared bus, against 45 mV. This section adds the checks the recheck leaves out, with the same inputs and the same models and corners. [Results](rail_budget.json) (`drawn_chip`) · [Tool](../tools/analysis/drawn_chip_rail.py)
+
+The inputs, all recorded values with nothing re-extracted:
+- **Pad decaps:** analog 92.9 pF (87.0 pF nmoscap plus 5.9 pF MOM), pair 115.9 pF, SAR 134.6 pF, with the record's upper-bound ESR model (`chip_objects.json`).
+- **Ring feeds:** as drawn at 125 °C rcworst (`ring_feed_r2`).
+- **In-core:** the Stage 4b decap and feed loops (`toplevel_route_full.json`). The pair and SAR VSS halves of the loops are estimates.
+
+**Feeds against the 6 Ω limit** (loop at 125 °C rcworst; the limit runs from the pad decap to the block decap):
+
+| Branch | Pad decap → ADC pin | In-core loop to the block decap | Pad decap → block decap | Pad → block decap | Core alone, droop |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Analog | 0.14 Ω | 4.57 Ω (extracted) | 4.71 Ω | 5.09 Ω | 40.8 mV |
+| Pair | 0.12 Ω | 3.25 Ω | 3.37 Ω | 5.58 Ω | 40.3 mV |
+| SAR | 0.49 Ω | 3.1–4.1 Ω | 3.61–4.61 Ω | 4.73–5.73 Ω | 26.3 mV |
+
+Every feed is within 6 Ω. The core-alone droop (no pad decap, Stage 4b) is under 45 mV on every branch.
+
+**Analog branch at 92.9 pF: passes, with nothing to add.** Once the pad decap is many times the 8.4 pF in-core decap, the analog droop is set by that decap and its 4.6 Ω in-core feed, not by the pad decap. With the drawn ESR:
+
+| Analog pad decap | Droop, drawn feed | Droop, full 6 Ω feed |
+| --- | ---: | ---: |
+| None (core alone) | 40.8 mV | — |
+| 85.1 pF (Stage 6 decks) | 18.1 mV | 19.8 mV |
+| 92.9 pF (drawn) | 17.9 mV | 19.7 mV |
+| 100 pF (Stage 1 recommendation) | 17.8 mV | 19.6 mV |
+| 114.2 pF (plan) | 17.6 mV | 19.4 mV |
+
+The Stage 1 figure of about 100 pF came from halving the core-alone droop and the pin peaks; the drawn 92.9 pF does that.
+
+**Shared bus.** Without the bus, the per-branch droop is 18.1 / 16.1 / 11.9 mV; with it, 16.5 / 15.7 / 12.5 mV. Coupling between branches through the bus is at most 2.3 mV peak (analog → SAR), as on the planned ring.
+
+**Spectre cross-check.** Stage 6 early ([record](../../results/integration/stage6_early_20261123.md)) simulated the planned pad decap (114.2 / 113.6 / 132.2 pF) without the shared bus. It measured 12.9 / 28.2 / 18.3 mV (analog / pair / SAR) at FF hot and 5.9 / 12.2 / 6.9 mV at SS cold. The model is conservative for the analog branch (17.6 mV at 114.2 pF), but it reads low for the pair (15.7 mV) and SAR (11.4 mV) against FF hot. All are inside 45 mV. The final Stage 6 runs with 85.1 / 112.1 / 104.5 pF of pad decap, below every drawn value, so it measures a bound on the drawn chip directly.
+
+**Reference: unchanged.** The reference loop has no pad-decap term, because the two VREFP and two VREFN pads carry no bulk. CREF (6.23 pF), the 17.2 Ω pin-to-rail-end series resistance, the routes and the bonds are those of Stage 4b. Rerunning the drawn network gives the same decision error at FF cold / TT / SS cold (limit 0.10):
+- nominal: 0.025 / 0.010 / 0.004 LSB;
+- tolerance box: 0.035 / 0.017 / 0.004 LSB.
+
+The pad decaps reach the reference only through bus coupling via the reference pad capacitance, which adds 0.0002 LSB.
+
+The DVDD pad decap (52.4 pF) feeds the output register, which has no Stage 1 budget; it is recorded only.
+
 ## Merit of More Decoupling
 
 Stage 6 extracts the ADC core without the IO ring, so the core meets the budget on its own. Results are at FF cold:
@@ -139,3 +182,4 @@ Stage 6 extracts the ADC core without the IO ring, so the core meets the budget 
 - The double-bond model halves the inductance and credits no mutual inductance. Wires sharing one pad couple strongly and give less reduction, which is why the reference uses two separate, interleaved pads per rail. Stage 6 needs the actual bond geometry.
 - The pad capacitance is the planning value of 0.5 pF per pad, not the PDB3AC model. The route resistance uses the tech-LEF sheet resistance at 25 °C with the iRCX temperature coefficients and rcworst thickness; vias, pin landings and the pad cell's own metal are not included. The model lumps each rail's two routes in parallel; their unequal lengths only change the current split between the two bonds.
 - The pad-ring model takes the bus widths from the M3, M5 and M7 strips of the IO LEF and assumes M4 and M6 match. It places the bus centreline about 55 µm inside the die edge, assumes 10 µm M8 routes and feeds, and neglects the resistance inside each PVDD3AC/PVSS3AC cell between its pad and core port. Every branch fires on the same instants, which overstates the coupling at any single block.
+- The drawn chip check takes the pad-decap ESR from the record's upper-bound model, not from extraction, and the MOM capacitance from the PDK callback. The pair and SAR VSS halves of the in-core feed are estimates, because the substrate joins those nets in extraction. The in-core decap and feeds are those of `layout_route_full`; the later core views keep its supply routing (#43).
