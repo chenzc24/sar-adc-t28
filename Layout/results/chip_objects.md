@@ -436,6 +436,9 @@ By rule against `layout_full_fill5_r5_seal`:
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
 - ESD connection to the clamps meets ESD.CD.1gU in `layout_full_fill5_r5_seal`: clamp bars, drop vias and AVSS landings. The exception is the AVDD pads' own core pin, 14.1 um of M2 (1.15 A), which belongs to the IO cell.
 - The decap-port stacks use the same two VIA7/VIA8 recipe (decap port to ADC pin 1.2-1.8 ohm loop). The rail budget passes with them (20.3 mV); more stacks there would lower the droop further.
-- VIN routes are 56.6 ohm (1 um Mx) in series with the sampling switch; Stage 2 checks the tracking with the VIN netlist.
+- Closed (Stage 6, 2026-11-23): the 56.6 ohm VIN routes with the PDB3AC pads (`sar8_vin_path.scs`) pass tracking, so no widening is needed. Against ideal VIN, codes are identical in all frames:
+  - SS cold (`sar8-s6pv-ssc-verify-a` vs `sar8-s6f-ssc-verify-a`): residual at sample close 0.1085 vs 0.1015 LSB (limit 0.25), settling 0.0079 vs 0.0080 LSB, read margin 8.73 ns in both.
+  - TT (`sar8-s6pv-tt-verify-a` vs `sar8-s6f-tt-verify-b`): residual 0.0066 vs 0.0061 LSB, settling 0.0125 vs 0.0126 LSB, margin 24.90 ns in both.
+  - Output path, FF hot (`sar8-s6po-ffh-verify-a` vs `sar8-s6f-ffh-verify-a`, `sar8_output_path.scs`): residual 0.0055 LSB in both, settling 0.0747 vs 0.0749 LSB, read margin 29.96 vs 30.27 ns. Driver switching time against sample close is a separate Stage 6 analysis.
 - Periphery extraction after fill, and at 125 C rcworst (scaled here).
 - Fill (the fill session's): the pad decap and VSS-ring areas (M6/M7.DN.6) and the margin between the IO ring and the seal ring (Mx.DN.1/DN.6, OD.S.14), within the keep-out above.
