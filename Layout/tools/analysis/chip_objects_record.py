@@ -227,27 +227,95 @@ def ring_feed():
     return out
 
 
+ESD_CONNECTION_RULE = ("TSMC N28 IO app note 8.7.3 / 10.7.3 (wire bond): the clamp sits between its analog pad pair and "
+                       "the core, AVDD pin to VDDESD, AVSS pin to VSSESD, then on to the core rails, and every such "
+                       "connection meets the DRM's Maximum ESD Current Density for Via and Metal (9.3.4, ESD.CD.1gU "
+                       "1.3 A). The note sets no pad-to-clamp resistance limit for wire bond: Table 10.1 (10.4) limits "
+                       "the bus resistance between IO power/ground cells of one analog domain, and the 0.1 ohm "
+                       "bump-to-clamp limit (12.3.1) is for RDL flip chip.")
+
+
 def esd_bus(rev):
-    """Resistance from each top-side analog pad's core pin to its nearest PCLAMPC_H_G terminal (app note 8.7.3,
-    Table 10.1: at most 1 ohm between 3AC cells and the clamp's supply pair), at 125 C rcworst_T. Revision 1 and 3:
-    the analog clamp on the analog trunks, the path is the trunk from the pad landing down to the clamp-bar drops (10 um
-    wide; AVDD M9, AVSS M8). Revision 2: the clamp beside the pair clamp; the nearest clamp is the SAR one, over the
-    TACVDD/TACVSS bus (constraints.json shared_bus) from top_4 to top_1 (3 pitches) and from top_3 to right_8 (about
-    5 pitches around the north-east corner)."""
+    """Resistance from each top-side analog pad's core pin to its nearest PCLAMPC_H_G terminal at 125 C rcworst_T, a
+    hand estimate kept for comparison (no limit applies; ESD_CONNECTION_RULE). Revision 1 and 3: the analog clamp on
+    the analog trunks between its pads and the core (8.7.3 step 2); the path is the trunk from the pad landing down to
+    the clamp-bar drops (10 um wide; AVDD M9, AVSS M8). Revision 2: the clamp beside the pair clamp, away from its own
+    pads, against step 2; the nearest clamp is the SAR one, over the TACVDD/TACVSS bus (constraints.json shared_bus)
+    from top_4 to top_1 (3 pitches) and from top_3 to right_8 (about 5 pitches around the north-east corner)."""
     from Layout.tools.analysis.ring_supply import rsh
     if rev == 2:
         per = json.loads((ROOT / "Layout/specs/constraints.json").read_bytes())["stage6_supply_model"][
             "package_per_pin"]["shared_bus"]["ohm_per_60um_pitch_per_rail"]["125C_rcworst"]
         return dict(path="TACVDD/TACVSS bus to the SAR clamp", AVDD_top_4_ohm=round(3 * per, 2),
-                    AVSS_top_3_ohm=round(5 * per, 2), limit_ohm=1.0, note="before the pad cells' own core-port resistance")
+                    AVSS_top_3_ohm=round(5 * per, 2), rule=ESD_CONNECTION_RULE,
+                    note="before the pad cells' own core-port resistance")
     (x0, y0) = geo.CLAMP_ORIGIN[rev]["analog"]
     bars = geo.clamp_bars(rev)["analog"]
     ybar = {n: y0 + (a + b) / 2 for n, (a, b) in bars.items()}
     land = 650.0 - 2.4                                   # the trunk leaves the pad landing bar (chip_routes BAND)
-    out = dict(path="analog trunk from the pad landing to the clamp-bar via stacks", limit_ohm=1.0)
+    out = dict(path="analog trunk from the pad landing to the clamp-bar via stacks", rule=ESD_CONNECTION_RULE)
     for net, layer, key in ((geo.AVDD, "M9", "AVDD_top_4_ohm"), (geo.AVSS, "M8", "AVSS_top_3_ohm")):
         out[key] = round(rsh(layer, 125, True) * (land - ybar[net]) / 10.0, 3)
-    out["note"] = "trunk metal only; the via stacks (2 x 2 VIA7/VIA8 and Mx via fields) add a few milliohm"
+    out["note"] = ("trunk metal only; the extraction with the landings and via stacks is Layout/results/"
+                   "chip_periphery.json clamp_bus")
+    return out
+
+
+# DRM T-N28-CL-DR-002 v2.3, 9.3.4 "Maximum ESD Current Density for Via, and Metal" (TLP Tr 10 ns, Td 100 ns, 25 C) and
+# 9.3.5 ESD.CD.1gU: the primary ESD path from the bond pad to a power clamp should carry 1.3 A.
+ESD_CD = dict(current_A=1.3, Mx_A_per_um=0.08125, Mz_A_per_um=0.4494, Mu_A_per_um=1.05,
+              via_A={"VIA4": 0.0262, "VIA5": 0.0262, "VIA6": 0.0262, "VIA7": 0.2467, "VIA8": 0.2467})
+
+
+def clamp_feed_current_density(feed=False):
+    """ESD.CD.1gU for the connection from each branch trunk to its PCLAMPC_H_G (TSMC N28 IO app note 8.7.3 / 10.7.3:
+    these connections must meet the DRM's Maximum ESD Current Density for Via and Metal). Per clamp rail: the via cuts
+    per level of all drop stacks against 1.3 A, and the worst current along the M4 bar against its width at the Mx
+    density. The clamp current is taken as split equally over the clamp's nine M3 terminal strips of the net, and the
+    bar as a uniform line fed at equal potential at every drop stack: feed=False is revision 1/3 (three drops,
+    chip_integration.content), True adds the revision 4 stacks along the bar (chip_integration.clamp_feed)."""
+    import math
+    import numpy as np
+    from Layout.design.chip_integration import clamp_drop, clamp_feed, drop_xs
+    from Layout.design.toplevel_full_routes import Content
+    stacks = clamp_feed(1)[1] if feed else {}
+    out = {}
+    for branch, bars in geo.clamp_bars(1).items():
+        x0, y0 = geo.CLAMP_ORIGIN[1][branch]
+        out[branch] = {}
+        for net, (lo, hi) in bars.items():
+            xs = sorted(set(drop_xs(branch, net)) | set(stacks.get(branch, {}).get(net, {}).get("stacks", [])))
+            c = Content()
+            for x in xs:
+                clamp_drop(c, net, x, (y0 + lo + y0 + hi) / 2, min(1.0, (hi - lo) / 2 - 0.1))
+            cuts = {}
+            for r in c.rects:
+                if r["layer"].startswith("VIA"):
+                    cuts[r["layer"]] = cuts.get(r["layer"], 0) + 1
+            need = {v: math.ceil(ESD_CD["current_A"] / a) for v, a in ESD_CD["via_A"].items() if v in cuts}
+            # M4 bar: nodes at the strip centres (sinks) and the drop stacks (0 V), unit sheet resistance per um.
+            strips = [x0 + (a + b) / 2 for a, b in geo.CLAMP_STRIPS["VDDESD" if net == geo.AVDD else "VSSESD"]]
+            pos = sorted(set(strips) | set(xs))
+            k = {p: i for i, p in enumerate(pos)}
+            n = len(pos)
+            lap = np.zeros((n, n))
+            for a, b in zip(pos, pos[1:]):
+                g = 1.0 / (b - a)
+                for u, v in ((k[a], k[b]), (k[b], k[a])):
+                    lap[u, u] += g
+                    lap[u, v] -= g
+            inj = np.zeros(n)
+            for s in strips:
+                inj[k[s]] -= ESD_CD["current_A"] / len(strips)
+            free = [i for i, p in enumerate(pos) if p not in xs]
+            v = np.zeros(n)
+            v[free] = np.linalg.solve(lap[np.ix_(free, free)], inj[free])
+            lateral = float(max(abs(v[k[b]] - v[k[a]]) / (b - a) for a, b in zip(pos, pos[1:])))
+            capacity = (hi - lo) * ESD_CD["Mx_A_per_um"]
+            out[branch][net] = dict(drop_stacks=len(xs), via_cuts=cuts, via_cuts_needed=need,
+                                    vias_ok=all(cuts[v_] >= need[v_] for v_ in need),
+                                    m4_bar_width_um=round(hi - lo, 3), m4_bar_worst_current_A=round(lateral, 3),
+                                    m4_bar_capacity_A=round(capacity, 3), m4_bar_ok=lateral <= capacity)
     return out
 
 
@@ -434,6 +502,12 @@ def main():
     if a.objects_rev3:
         record["objects_r3"] = objects(OBJECT_CELLS_R3)
         record["geometry_r3"] = object_geometry(3)
+    record["esd_current_density"] = dict(
+        rule=ESD_CONNECTION_RULE, limits=ESD_CD,
+        basis="clamp_feed_current_density: via cuts of the drop stacks per rail, and the worst M4 bar current with the "
+              "clamp current split equally over its nine M3 terminal strips per net",
+        three_drops_rev1_3=clamp_feed_current_density(False),
+        clamp_feed_rev4=clamp_feed_current_density(True))
     write_json(ROOT / a.out, record)
     print(json.dumps(dict(drc=record["drc"]["markers"], new=list(new), gone=list(gone), lvs=record["lvs"]["verdict"],
                           erc=record["erc"]["chip_full_total"]), indent=1))

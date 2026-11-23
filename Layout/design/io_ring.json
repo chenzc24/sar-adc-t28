@@ -2407,7 +2407,7 @@
      644.0
     ]
    ],
-   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1, 8.7.3); pad-to-clamp 0.02 / 0.06 ohm (AVDD / AVSS, 125 C rcworst). A place beside pclampc_pair would reach the analog pads only over the TACVDD/TACVSS bus (about 0.95 ohm for AVSS against 1 ohm).",
+   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1, 8.7.3); trunk from the pads 0.02 / 0.06 ohm (AVDD / AVSS, 125 C rcworst). A place beside pclampc_pair would put the clamp away from its own pads (against 8.7.3 step 2), reaching them only over the TACVDD/TACVSS bus. Connection checked against the DRM ESD current density (supply_plan esd_clamp_connection).",
    "area_um2": 2200.0
   },
   {
@@ -2542,7 +2542,7 @@
   "digital_core": "DVDD (PVDD1DGZ x3, right_4 feeds the register) and VSS feed the output register and the pads' pre-drivers.",
   "io": "VDDIO (bottom_3 PVDD2DGZ, bottom_6 PVDD2POC) and VSSIO (four PVSS2DGZ) feed the output drivers; no core connection.",
   "esd_clamps": "Three PCLAMPC_H_G, one per AVDD/AVSS branch pair, each between its pads and the core (app note 10.7.1 asks for at least one per core-voltage domain).",
-  "esd_bus_extracted": "Pad core pin to clamp at most 0.94 ohm per rail (analog AVSS; Table 10.1: 1 ohm) in sar8_adc_chip/layout_full_fill5_r4_seal, where every clamp bar is fed along its length (Layout/design/chip_clamp_feed.py); 1.19-1.79 ohm before. Calibre xRC typical, 25 C, clamps flattened (Layout/results/chip_periphery.json clamp_bus).",
+  "esd_clamp_connection": "App note 8.7.3 / 10.7.3 (wire bond): each clamp between its pad pair and the core, AVDD to VDDESD and AVSS to VSSESD, every connection within the DRM's ESD current density (9.3.4, ESD.CD.1gU: 1.3 A). No pad-to-clamp resistance limit applies for wire bond (Table 10.1 is between IO power/ground cells; 12.3.1's 0.1 ohm is for flip chip). In sar8_adc_chip/layout_full_fill5_r4_seal every clamp bar is fed along its length (Layout/design/chip_clamp_feed.py): bar current at most 0.18 A against 0.24-0.36 A, 30-38 VIA7 per rail (Layout/results/chip_objects.json esd_current_density). Extracted pad to clamp, for information: at most 0.94 ohm (1.79 ohm with the three drops; chip_periphery.json clamp_bus).",
   "board": "AVDD 0.9 V (3 bonds), AVSS (7), VSS (2), DVDD 0.9 V (3), VDDIO library post-driver voltage (2), VSSIO (4), VREFP 0.9 V and VREFN 0 V (2 each). AVSS, VSS and VSSIO meet only on the board.",
   "power_sequence": "Every supply on a power cell or PCLAMPC ramps in more than 10 us; VDDIO before or with DVDD; AVDD before VREFP/VREFN/VINP/VINN are driven, and off after them (app note 3.1, 9.2).",
   "decap_total_planning_pF": 411.6,

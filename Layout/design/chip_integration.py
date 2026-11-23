@@ -78,6 +78,13 @@ def mstack(c, net, x, y, lo, hi, axis="y"):
         c.mx(net, x, y, m, axis, pads=(True, True))
 
 
+def clamp_drop(c, net, x, yb, h):
+    """One drop stack onto a clamp bar at (x, yb): M4-M7 via fields on 1.6 x 2h plates, then the VIA7 (and for AVDD the
+    VIA8) pair up to the trunk metal."""
+    via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
+    stack_hi(c, net, x, yb, 7, 9 if net == AVDD else 8)
+
+
 def drop_xs(branch, net, rev=1):
     """x of the trunk drop stacks onto a clamp bar: between the pair trunks at 30/50/70 um into the clamp, else under
     the trunk."""
@@ -245,9 +252,7 @@ def content(readback, rev=1):
                 xs = drop_xs(branch, net, rev)
             h = min(1.0, (hi - lo) / 2 - 0.1)       # plates 0.6 um or more from the M7 ring (Mx.S.6)
             for x in xs:
-                top = 9 if net == AVDD else 8
-                via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
-                stack_hi(c, net, x, yb, 7, top)
+                clamp_drop(c, net, x, yb, h)
                 drops.append([net, x, yb])
         info[f"clamp_{branch}"] = drops
     return c, info
@@ -275,7 +280,6 @@ def clamp_feed(rev=1):
         info[branch] = {}
         for net, (lo, hi) in bars.items():
             yb = (y0 + lo + y0 + hi) / 2
-            top = 9 if net == AVDD else 8
             strap = "M9" if net == AVDD else "M8"
             c.rect(net, strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi)
             if branch == "pair":                   # straps every 10 um to the pair trunks
@@ -293,8 +297,7 @@ def clamp_feed(rev=1):
                     xs.append(round(x, 3))
                 x += FEED_PITCH
             for x in xs:
-                via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
-                stack_hi(c, net, x, yb, 7, top)
+                clamp_drop(c, net, x, yb, h)
             info[branch][net] = dict(strap=[strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi], stacks=xs)
     return c, info
 

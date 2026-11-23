@@ -98,7 +98,7 @@ Revision 2 of the decap and clamp cells (`layout_r2` views; the `layout` views a
 | SAR | (510, 528)-(646.5, 646.5), minus the SAR clamp | 3543 | 134.6 pF | 132.2 | 1.66 / 1.88 ohm, two ports per net |
 | DVDD | (578, 340)-(640, 426) | 1380 | 52.4 pF | 51.6 | 1.87 / 2.21 ohm |
 
-- **Analog clamp moved (superseded by revision 3 below: this place fails the ESD bus check).** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model. The app note's pad-to-clamp bus limit is still unchecked (an existing open item).
+- **Analog clamp moved (superseded by revision 3 below: this place puts the clamp away from its own pads, against app note 8.7.3 step 2).** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model.
 - **SAR** grows west to x 510, 9.5 um from the VINP route edge. The plan's minimum is 6 um; its earlier text said 30.
 - **Ports** sit next to the ADC pins, with the ground (M8) port nearest. On the SAR side, short stubs north from the SAR trunks reach the near-pin ports, and the revision 1 ports stay in parallel. The ESR model is the one above, an upper bound. Ring feed, as a loop at 125 C rcworst_T, drawn vs the plan's 10 um M8 values:
   - pad to pin: analog 0.53 (0.73), pair 2.34 (2.85), SAR 1.61 (1.45) ohm;
@@ -125,7 +125,9 @@ The first LVS of this view (in `chip-dcf5-b1-chk`) was INCORRECT. Its source wir
 
 ## Analog clamp back in place: `sar8_adc_chip/layout_full_fill5_r3`
 
-Revision 3 fixes the ESD fault of revision 2. The analog PCLAMPC_H_G returns to (360, 622) on the analog trunks, between top_3/top_4 and the core (app note 8.7.3 step 2; the `sar8_esd_clamps/layout` view). Pad-to-clamp bus resistance at 125 C rcworst_T: AVDD (top_4) 0.02 ohm and AVSS (top_3) 0.06 ohm along the trunks, against 1 ohm (Table 10.1). In revision 2 they were 0.57 and 0.95 ohm over the TACVDD/TACVSS bus, before the pad cells' own resistance.
+Revision 3 fixes the ESD fault of revision 2. Revision 2 had put the analog clamp beside the pair clamp, away from its own pads, against app note 8.7.3 step 2: the clamp sits between its pad pair and the core. The analog PCLAMPC_H_G now returns to (360, 622) on the analog trunks, between top_3/top_4 and the core (the `sar8_esd_clamps/layout` view).
+- **Trunk resistance from the pads to the clamp,** 125 C rcworst_T: AVDD (top_4) 0.02 ohm and AVSS (top_3) 0.06 ohm. In revision 2 it was 0.57 and 0.95 ohm over the TACVDD/TACVSS bus.
+- **Correction:** this record first compared these values with 1 ohm from Table 10.1. That table limits the bus resistance between IO power/ground cells, not pad to clamp; see "Clamp feed along the bars".
 
 With the clamp back in its region, the analog decap cannot reach its plan. The new `sar8_decap_analog/layout_r3` recovers what it can:
 
@@ -228,9 +230,7 @@ Supply ring feeds, loop AVDD + AVSS (pad = the pad cell's core pin, bulk = the d
 
 - **Hand counts are low.** The `ring_feed()` values were trunk squares only. The extraction includes the pad landings and the via stacks (two VIA7 and two VIA8 per stack at the decap ports and the clamp drops), which carry most of the resistance.
 - **Rail budget still passes** with the extracted feeds: worst 20.3 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
-- **Pad to clamp is 1.08-1.11 ohm on every clamp rail at 25 C.** That is above the app note's 1 ohm (Table 10.1), where the trunk-only estimate gave 0.02-0.06 ohm.
-  - The extraction with the clamps flattened gave 1.19-1.79 ohm.
-  - The clamp feed along the bars fixes it (section "Clamp feed along the bars" below).
+- **Pad to clamp is 1.08-1.11 ohm per rail at 25 C** in this run, and 1.19-1.79 ohm with the clamps flattened; the trunk-only estimate gave 0.02-0.06 ohm. The app note sets no resistance limit on this connection for wire bond. Its ESD current-density check, and the fix for the clamp bars, are in "Clamp feed along the bars" below.
 
 VIN and output path (25 C typical):
 
@@ -251,18 +251,36 @@ Stage 2 has two netlists in `work/layout/chip-periphery/chip-periph-x1/stage2/` 
 
 ## Clamp feed along the bars: `sar8_adc_chip/layout_full_fill5_r4_seal`
 
-**The fault.** The extraction with the clamps flattened (`chip-periph-x2`: PCLAMPC_H_G extracted with its metal and transistors, not as an xcell) confirms the ESD bus fault and shows it is worse than the xcell estimate. From each pad's core pin to its clamp the bus measured 1.19-1.73 ohm, against 1 ohm (app note Table 10.1).
-- The resistance is not in spreading along the clamp's M4 bars: that adds only about 0.05 ohm.
-- It is in the three drop stacks that fed each bar at one place, with two VIA7 and two VIA8 each, plus the pad landing.
+**The rule.** For wire bond, the IO app note (8.7.3 and 10.7.3) asks for three things:
+- The clamp sits between its analog pad pair and the core.
+- AVDD connects to VDDESD and AVSS to VSSESD, then on to the core rails.
+- Every such connection meets the DRM's "Maximum ESD Current Density for Via, and Metal". That is DRM 9.3.4, and ESD.CD.1gU suggests 1.3 A on the primary path from the bond pad to the clamp: 81.25 mA/um of Mx, 26.2 mA per VIA4-VIA6 cut, 246.7 mA per VIA7/VIA8.
+
+The note sets no pad-to-clamp resistance limit for wire bond.
+- An earlier version of this record compared pad-to-clamp resistance with 1 ohm from Table 10.1. That table (section 10.4) limits the bus resistance between IO power/ground cells of one analog domain, cell to cell along the ring.
+- The only pad-to-clamp limit, 0.1 ohm (12.3.1), is for RDL flip chip.
+
+**The fault: three drops per rail.** Each clamp's M4 bar was fed by three stacks at one place, so about seven of the clamp's nine terminal strips per net hung on one side of the drop. With the clamp current split equally over the strips, the bar carried up to 1.0 A sideways:
+
+| Clamp, AVDD / AVSS | M4 bar | Worst bar current, three drops | ESD.CD.1gU for the bar | With the clamp feed |
+| --- | --- | --- | --- | --- |
+| Analog | 3.0 um | 1.01 / 1.01 A | 0.24 A | 0.15 / 0.14 A |
+| Pair | 4.4 um | 0.43 / 0.43 A | 0.36 A | 0.14 / 0.14 A |
+| SAR | 4.4 um | 1.01 / 0.87 A | 0.36 A | 0.18 / 0.14 A |
+
+- **Vias:** the three drops met the via counts with no margin: 6 VIA7 (and 6 VIA8 on AVDD) per rail against 6 needed, and 72 cuts per VIA4-VIA6 level against 50.
+- **Model:** `chip_objects_record.clamp_feed_current_density`, recorded in `chip_objects.json` `esd_current_density`.
 
 **The fix.** `Layout/design/chip_clamp_feed.py` (build `chip-clampfeed-b1`; geometry in `chip_integration.clamp_feed`) copies `layout_full_fill5_r3_seal` and adds:
 - a strap on the trunk metal over every bar (AVDD on M9, AVSS on M8);
 - a drop stack every 6 um along it (M4-M7 via fields, VIA7/VIA8 pairs);
 - for the pair clamp, straps every 10 um to its trunks.
 
-The stacks keep clear of the core VSS ring's M7 band and M6 ties, the other net's trunk, and the existing drops. That gives 15-16 stacks per rail instead of 3. The clamp cells and all other views are unchanged.
+The stacks keep clear of the core VSS ring's M7 band and M6 ties, the other net's trunk, and the existing drops. That gives 15-19 stacks per rail instead of 3. The clamp cells and all other views are unchanged.
+- **Bar current:** 0.14-0.18 A in the worst segment, within the bar's ESD.CD.1gU current.
+- **Vias:** 30-38 VIA7 per rail and 360-456 cuts per VIA4-VIA6 level, five to nine times the counts.
 
-Pad to clamp (Calibre xRC typical, 25 C):
+**Resistance, for information.** No limit applies to it. The extraction with the clamps flattened (`chip-periph-x2`, `chip-periph-x3`) includes the clamp's metal and transistors (Calibre xRC typical, 25 C):
 - **pin:** resistance to the clamp's transistor terminals, all shorted.
 - **distributed:** the clamp current drawn by its transistors in proportion to their width; includes the clamp's own metal down to each finger.
 
@@ -275,9 +293,13 @@ Pad to clamp (Calibre xRC typical, 25 C):
 | SAR, AVDD (top_1) | 1.20 / 1.25 ohm | 0.75 / 0.79 ohm |
 | SAR, AVSS (right_8) | 1.41 / 1.46 ohm | 0.82 / 0.84 ohm |
 
-- **All six rails now meet 1 ohm**, the worst being the analog AVSS rail at 0.94 ohm (6 % margin).
-- **What remains** is mostly the pad landing, where the current enters through the pad cell's M2 fingers, and the trunk.
-- **125 C:** scaled to 125 C rcworst by the trunk metal, the values would rise by about 1.4x.
+- **The feed cuts the resistance by about 40 %:** worst 1.79 to 0.94 ohm.
+- **Bar spreading is small:** pin and distributed differ by only about 0.05 ohm.
+- **What remains** is mostly the pad landing and the trunk.
+
+**Pad landings against ESD.CD.1gU (not changed here).** Current leaves each supply pad through its core-pin fingers:
+- **AVDD (PVDD3AC):** ten M2 fingers, 14.1 um in total, about 1.15 A at the Mx density. The landing uses all of them; that is the cell's pin.
+- **AVSS (PVSS3AC):** seven M1 and seven M2 fingers of 10.5 um each. The landings extend only the M2 fingers (0.85 A). Extending the M1 fingers too, as the VSS_digital/VSS_analog stubs do, would give 21 um (1.7 A).
 
 By rule against `layout_full_fill5_r3_seal`:
 
@@ -298,7 +320,7 @@ Only density counts change: M6.DN.6 386 to 362 and M7.DN.6 287 to 279, from the 
 - `layout_full_fill5_r4_seal` (clamp feed along the bars) is the current chip view. `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3` are its sources and stay unchanged; `layout_full_dc_fill5` is superseded (ESD).
 - Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
-- ESD bus: fixed in `layout_full_fill5_r4_seal`, at most 0.94 ohm per rail (analog AVSS). For more margin, the next lever is the pad landings: M1 alongside the M2 fingers, or a deeper bar.
+- ESD connection to the clamps: the bars and drop vias of `layout_full_fill5_r4_seal` meet ESD.CD.1gU. The AVSS pad landings use only the pads' M2 fingers (10.5 um, 0.85 A against the 1.3 A guideline); extending their M1 fingers too would give 21 um. The AVDD pads' own core pins are 14.1 um of M2 (1.15 A).
 - The decap-port stacks use the same two VIA7/VIA8 recipe (decap port to ADC pin 1.2-1.8 ohm loop). The rail budget passes with them (20.3 mV); more stacks there would lower the droop further.
 - VIN routes are 56.6 ohm (1 um Mx) in series with the sampling switch; Stage 2 checks the tracking with the VIN netlist.
 - Periphery extraction after fill, and at 125 C rcworst (scaled here).

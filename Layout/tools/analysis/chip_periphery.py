@@ -601,9 +601,10 @@ def analyze(identity):
 
 
 def clamp_bus(identity):
-    """ESD bus from each analog pad to its PCLAMPC_H_G (app note Table 10.1: at most 1 ohm), on an extraction with the
-    clamps flattened (launch --flatten PCLAMPC_H_G), so the bars, the clamp's M3 terminal strips and its devices are
-    in the network. Per rail: to the clamp's device terminals shorted (pin), and with the clamp current drawn by its
+    """Resistance of the ESD connection from each analog pad to its PCLAMPC_H_G, on an extraction with the clamps
+    flattened (launch --flatten PCLAMPC_H_G), so the bars, the clamp's M3 terminal strips and its devices are in the
+    network. The app note sets no resistance limit on this connection for wire bond; it asks for the DRM's ESD current
+    density (Layout/tools/analysis/chip_objects_record.py ESD_CONNECTION_RULE, clamp_feed_current_density). Per rail: to the clamp's device terminals shorted (pin), and with the clamp current drawn by its
     transistors in proportion to their width (distributed; includes the clamp's own metal down to each finger)."""
     x = Extraction(identity)
     routes = x.ring["routes"]
@@ -802,9 +803,10 @@ def main():
         if a.record:
             path = ROOT / "Layout/results/chip_periphery.json"
             rec = json.loads(path.read_bytes())
+            from Layout.tools.analysis.chip_objects_record import ESD_CONNECTION_RULE
             bus = rec.setdefault("clamp_bus", dict(
-                limit_ohm=1.0, rule="TSMC N28 IO app note Table 10.1: bus resistance from the 3AC pad cells to the "
-                                    "clamp's supply pair",
+                limit_ohm=None, rule=ESD_CONNECTION_RULE,
+                current_density="Layout/results/chip_objects.json esd_current_density",
                 basis="Calibre xRC typical, 25 C, with PCLAMPC_H_G flattened (chip_periphery.clamp_bus); pin = to the "
                       "clamp's transistor terminals shorted, distributed = the clamp current drawn by its transistors "
                       "in proportion to their width",
