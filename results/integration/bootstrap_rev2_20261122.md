@@ -1,6 +1,6 @@
 # Bootstrap core revision `layout_r2`: latch-up and planned fill
 
-Part of the [top-level integration plan](https://github.com/chenzc24/sar-adc-t28/issues/12), 2026-11-22 to 2026-11-23. The user approved one combined revision of the frozen Bootstrap core `sar_bootstrap_flat_8b_p_core`. It fixes the chip latch-up markers LUP.5.2.1/5.2.2 on both channels, and it replaces the utility fill over the boot capacitor with the Bootstrap's own planned fill. **Status: in progress.** The physical checks, standalone sampler checks and Stage 2-deck ADC runs are done and pass. The routed-CMP_CLK gate verdict and the cause of a fill-induced residual increase are pending. [Measurements, run identities and digests](bootstrap_rev2_20261122.json) · [Record builder](../../Layout/tools/analysis/bootstrap_rev2_summary.py)
+Part of the [top-level integration plan](https://github.com/chenzc24/sar-adc-t28/issues/12), 2026-11-22 to 2026-11-23. The user approved one combined revision of the frozen Bootstrap core `sar_bootstrap_flat_8b_p_core`. It fixes the chip latch-up markers LUP.5.2.1/5.2.2 on both channels, and it replaces the utility fill over the boot capacitor with the Bootstrap's own planned fill. **Status: qualified** (2026-11-23). The physical checks, standalone sampler checks, Stage 2-deck ADC runs and the routed-CMP_CLK gate screen pass. One item stays open: the cause of a fill-induced residual increase, which is within every limit. [Measurements, run identities and digests](bootstrap_rev2_20261122.json) · [Record builder](../../Layout/tools/analysis/bootstrap_rev2_summary.py)
 
 ## Summary
 
@@ -8,7 +8,8 @@ Part of the [top-level integration plan](https://github.com/chenzc24/sar-adc-t28
 - **Fill.** The Bootstrap now owns a planned OD/PO fill cell. With it, each plate sees 38–40 fF to ground, against 30–33 fF unfilled and about 68 fF with the earlier utility fill. The cell closes OD.DN.3, OD.S.14, PO.DN.3 and PO.DN.3.1 itself.
 - **Stage 2-deck ADC** (paired RC corner, CL_CMP_CLK model load): every Stage 2 limit passes at SS cold, FF hot and TT, and the restarts pass. The SS-cold gate screen drops from 0.096 V to 0.077 V.
 - **Cost of the fill.** At SS cold the sample-close residual rises to 0.093–0.097 LSB, against 0.039 LSB for r2 without fill and 0.054 LSB for the old core (limit 0.15). The cause is not yet proven (see [Fill and the SS-cold residual](#fill-and-the-ss-cold-residual)).
-- **Pending:** the direct Stage 6 runs with the routed CMP_CLK on r2 and their gate verdict.
+- **Routed CMP_CLK (Stage 6 deck):** the SS-cold gate screen is 0.096–0.097 V and passes outright (old core 0.118 V); every other Stage 6 result is unchanged except the residual, 0.10 LSB (limit 0.25).
+- **Open:** the cause of the fill's residual increase (likely, unproven).
 
 ## Geometry and OA
 
@@ -101,7 +102,18 @@ All pass. FF hot remains the tightest corner; its margin was 0.13 mV with the fr
 
 r2 brings the main-switch gate below 0.1 V about 19 ps sooner than the old core (1.273 against 1.292 ns after the sample close), consistent with the weaker well proximity on Maux and MRSTG.
 
-**Routed CMP_CLK (Stage 6 deck), pending.** With the old core, the Stage 2 session's early Stage 6 runs read 0.1182 V (`sar8-s6e-ssc-verify-c`) and 0.1185 V (`sar8-s6e-ssc-extreme-a`). In that deck the first compare comes at the same 1.297 ns, but the gate starts falling about 25 ps later (onset 0.65 ns against 0.63 ns). Two causes are possible and not separated: the package and VSS network, and the extracted SEQ_SAMPLE wiring. The same runs with the filled r2 (`sar8-s6e-ssc-extreme-r2`, `sar8-s6e-ssc-verify-r2`) are simulating. From the traces, the estimate for r2 is about 0.10 V.
+**Routed CMP_CLK (Stage 6 deck): passes outright.** The Stage 2 session's early Stage 6 deck replaces the CL_CMP_CLK model load with the extracted top-level wiring and adds the package and reference network. With the old core it read 0.1182 V (`sar8-s6e-ssc-verify-c`) and 0.1185 V (`sar8-s6e-ssc-extreme-a`): the first compare comes at the same 1.297 ns, but the gate starts falling about 25 ps later than in the Stage 2 deck. Two causes are possible and not separated: the package and VSS network, and the extracted SEQ_SAMPLE wiring. The same decks with the filled r2 (CWORST_T), identical except for the Bootstrap:
+
+| Run | Worst frame / channel | Gate screen (V) | Old core (V) | G done falling (ns) | Residual (LSB) | Settling (LSB) | Read margin (ns) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `sar8-s6e-ssc-extreme-r2` | 6 / N | 0.0960 | 0.1185 | 1.541 (1.576) | 0.106 (0.062) | 0.007 (0.007) | 9.26 (9.26) |
+| `sar8-s6e-ssc-verify-r2` | 0 / N | **0.0972** | 0.1182 | 1.541 (1.586) | 0.102 (0.060) | 0.008 (0.008) | 9.11 (9.11) |
+
+- The worst case is 2.8 mV under the screen. Codes equal the old-core runs (7/8 exact on extreme, the usual 127/128 frame; 7/7 on verify), 8/8 events, setup / hold 444 / 101 ps.
+- The residual rise is the same fill effect as in the Stage 2 deck and stays within the Stage 6 limit (0.25 LSB).
+- Read under the disposition rule as well, every condition holds: gate-attributable TOP movement 0.022 LSB, settling change 0.001 LSB.
+- Logs: SPECTRE-555 (host swap) on extreme-r2; SPECTRE-16780 and a DC residue warning (SPECTRE-16900, 3.6e-14) on verify-r2, the latter also in the old-core extreme-a.
+- The main analyses and gate jobs of these two runs were started from this session at the user's request (the Stage 2 session's runs had finished simulating without them).
 
 **Disposition rule** (user decisions 2026-11-22; condition 4 revised 2026-11-23). The 0.1 V screen in the specification stays unchanged. The routed r2 runs pass outright if the worst gate screen is ≤ 0.1 V. Otherwise they pass with a written disposition only if all of the following hold:
 
@@ -114,7 +126,7 @@ If any condition fails, the result goes to the user. `Layout/tools/analysis/gate
 
 - **TOP movement.** Most TOP movement after the first comparator clock is comparator kickback: TOPP − TOPN moves 0.07–0.08 LSB in every run, including runs that pass the screen. The score is the part that follows the gate. It is the same-deck sensitivity (change in TOP movement over change in overdrive) times the run's overdrive.
 - **Controls.** `sar8-s6e-ssc-verify-c-gate` and `sar8-s6e-ssc-extreme-a-gate` are the old-core controls in the same deck.
-- **Verdict:** pending.
+- **Verdict:** pass outright, 0.0972 V. No disposition was needed.
 
 ## Fill and the SS-cold residual
 
@@ -136,10 +148,7 @@ If any condition fails, the result goes to the user. `Layout/tools/analysis/gate
 
 ## Scope and open items
 
-- **Pending:**
-  - the routed gate verdict (`sar8-s6e-ssc-{extreme,verify}-r2`, Stage 2 session);
-  - the cause of the fill's residual increase.
-- **Freeze entry.** `Layout/results/current.json` `integration.freeze` still names `boot-core-20261121`. It changes to r2 once the pending items close.
+- **Open:** the cause of the fill's residual increase. It is within every limit and is not a pass condition.
+- **Freeze entry.** `Layout/results/current.json` `integration.freeze.blocks.bootstrap` points at r2 since 2026-11-23: the wrapper `sar_bootstrap_flat_8b_p_filled/layout_r2` with the core `sar_bootstrap_flat_8b_p_core/layout_r2`, evidence `boot-fill-r2-20261122` (and `-cworst-t`, `-cbest-t`). The freeze rule's reruns are the standalone and pairwise runs above. `sar_bootstrap_flat_8b_p_core/layout` and `boot-core-20261121` stay as dated evidence. The `stage6_bootstrap_gate_screen` decision records the outcome: passed outright.
 - **Deterministic runs only.** No mismatch, noise or terminal-voltage verdict.
-- **Gate options if the routed screen fails the disposition:** widen Maux/MRSTG (a core change; the FF-hot standalone margin is 0.165 mV), or delay the first comparator clock (a SAR timing change).
 - **Waveform retention** follows at closeout.

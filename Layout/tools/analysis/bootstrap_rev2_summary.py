@@ -42,11 +42,10 @@ GATE = [('sar8-bsr2-ssc-verify-a-gate', 'sar8-allxc-ssc-verify-a-gate'),
         ('sar8-bsr2-ssc-verify-f2-gate', 'sar8-allxc-ssc-verify-a-gate'),
         ('sar8-bsr2-ssc-extreme-f2-gate', 'sar8-allxc-ssc-extreme-a-gate')]
 FLAT_LUP = {'r2': 'boot-r2-chip-flat-lup', 'frozen control': 'boot-frozen-chip-flat-lup'}
+# Routed CMP_CLK (Stage 6 deck, Stage 2 session's runs): (r2 gate job, old-core run, old-core gate job).
+ROUTED = [('sar8-s6e-ssc-extreme-r2-gate', 'sar8-s6e-ssc-extreme-a', 'sar8-s6e-ssc-extreme-a-gate'),
+          ('sar8-s6e-ssc-verify-r2-gate', 'sar8-s6e-ssc-verify-c', 'sar8-s6e-ssc-verify-c-gate')]
 PENDING = [
-    dict(item='Direct Stage 6 runs with the routed CMP_CLK on r2 and their gate verdict',
-         runs=['sar8-s6e-ssc-extreme-r2', 'sar8-s6e-ssc-verify-r2'], owner='Stage 2 session (runs and gate jobs); '
-         'verdict with Layout/tools/analysis/gate_disposition.py --pair against sar8-s6e-ssc-extreme-a-gate and '
-         'sar8-s6e-ssc-verify-c-gate'),
     dict(item='Cause of the SS-cold residual increase with fill', runs=[],
          status='likely, unproven: the plate parasitic lowers the boost on the channel at VIN ~ 0.9 V'),
 ]
@@ -159,13 +158,20 @@ def record():
         run = gate_disposition.disturbance(run_gate)
         same = gate_disposition.disturbance(control, run['frame'], run['channel'])
         gate.append(dict(run=run, control_same_frame=same, attributable=gate_disposition.attributable(run, same)))
+    routed = gate_disposition.verdict(ROUTED)
+    routed['routed_runs'] = [dict(r2=stage2_summary.summarize(g.rsplit('-gate', 1)[0]), old_core=stage2_summary.summarize(o))
+                             for g, o, _ in ROUTED]
+    for row in routed['routed_runs']:
+        for side in row.values():
+            side.pop('frames', None)
+            side.pop('per_bit', None)
     from Layout.design import bootstrap_fill
     return dict(issue='https://github.com/chenzc24/sar-adc-t28/issues/12', date='2026-11-23',
                 subject='Bootstrap core revision layout_r2: chip latch-up LUP.5.2.1/5.2.2 and planned boot-capacitor fill',
-                status='in progress: physical, standalone and Stage 2-deck ADC checks done; routed gate verdict pending',
+                status='qualified: routed SS-cold gate screen passes outright; open item: cause of the fill residual increase',
                 oa=oa, fill_plan=bootstrap_fill.summary(), extractions=extractions, flat_chip_latch_up=flat,
                 standalone=sampler, standalone_unfilled=unfilled, adc=adc, gate=gate,
-                disposition_rule=DISPOSITION_RULE,
+                disposition_rule=DISPOSITION_RULE, routed_gate=routed,
                 pending=PENDING, pending_runs=pending_runs,
                 entry='Layout/tools/simulation/prepare_all_extracted.py adc CORNER KIND --bootstrap ID')
 

@@ -3,9 +3,10 @@
 The frozen views are Layout/results/current.json integration.freeze. Each MOS corner uses the paired
 interconnect corner (TT: typical, SS: CWORST_T, FF: CBEST_T) for the coupled XREF/CDAC extraction of the
 filled stream se-xref-peripheral-dense, the comparator v8 extraction with VDD/VSS RC, the SAR macro
-sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The Bootstrap core
-boot-core-20261121 is its typical extraction at every corner; --corner-bootstrap uses its re-extraction at the
-paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
+sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The default Bootstrap is the Stage 2
+evidence boot-core-20261121, its typical extraction at every corner (the frozen Bootstrap is r2 since
+2026-11-23: --bootstrap boot-fill-r2-20261122); --corner-bootstrap uses boot-core-20261121's re-extraction at
+the paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
 ID requalifies a revised core: its typical extraction at TT and its paired re-extractions ID-cworst-t and
 ID-cbest-t at SS cold and FF hot (run family bs<revision>, for example bsr2 for view layout_r2). Wiring
 between blocks is ideal.
