@@ -177,9 +177,25 @@
           "cdac_evidence": "cdac-paired-plan-d-20261118-combined"
         },
         "bootstrap": {
-          "view": "sar_bootstrap_flat_8b_p_core/layout",
-          "evidence": "boot-core-20261121",
-          "integration_tooling": "Layout/tools/simulation/bootstrap_pex.py (PR #13)"
+          "view": "sar_bootstrap_flat_8b_p_filled/layout_r2",
+          "core_view": "sar_bootstrap_flat_8b_p_core/layout_r2",
+          "fill_cell": "sar_bootstrap_flat_8b_p_fill/layout_r2",
+          "evidence": "boot-fill-r2-20261122",
+          "extractions": {
+            "typical": "boot-fill-r2-20261122",
+            "cworst_T": "boot-fill-r2-20261122-cworst-t",
+            "cbest_T": "boot-fill-r2-20261122-cbest-t"
+          },
+          "core_evidence": "boot-core-r2b-20261122",
+          "requalified": "2026-11-23",
+          "requalification": "results/integration/bootstrap_rev2_20261122.md",
+          "freeze_rule_reruns": "standalone sampler checks at TT, SS cold/hot and FF cold/hot (boot-r2f2-*-20261122) and the pairwise ADC runs with the extracted CDAC at SS cold, FF hot and TT (sar8-bsr2-*), all passing; routed SS-cold gate screen sar8-s6e-ssc-{extreme,verify}-r2 passes outright",
+          "kept_as_dated_evidence": {
+            "view": "sar_bootstrap_flat_8b_p_core/layout",
+            "evidence": "boot-core-20261121",
+            "frozen": "2026-11-21"
+          },
+          "integration_tooling": "Layout/tools/simulation/bootstrap_pex.py (PR #13); prepare_all_extracted --bootstrap (PR #37)"
         },
         "comparator": {
           "view": "sar_strongarm_t28_core/layout",
@@ -200,7 +216,9 @@
     },
     "decisions": {
       "comparator_offset": "Digital code-offset subtraction only, measured in test with zero differential input; no trim circuit or layout change. Post-layout offset sigma 12.05 mV (about 1.7 LSB).",
-      "comparator_output_load": "2026-11-22: keep the route load limits on COMP_P/COMP_N/CMP_CLK (Layout/specs/constraints.json sar_handshake_route_delay_s.load_limit_F); no comparator output buffers, so the frozen comparator core stays unchanged."
+      "comparator_output_load": "2026-11-22: keep the route load limits on COMP_P/COMP_N/CMP_CLK (Layout/specs/constraints.json sar_handshake_route_delay_s.load_limit_F); no comparator output buffers, so the frozen comparator core stays unchanged.",
+      "stage6_ff_hot_charge_budgets": "2026-11-22, user decision (Stage 6 early pass, sar8-s6e-ffh-verify-a / -extreme-a, rail analyses -rails3, quiet window 88-98 ns): the FF 0.99 V 125 C charge budgets are marked passed with this disposition; no limit in Layout/specs/constraints.json changes. Static leakage is reported separately, measured in a quiet window of every frame: VDD 227 uA (195 uA in the SAR macro branch, 22 uA pair, 10 uA comparator and Bootstraps), VREFP and VREFN 7.9 uA each; 225 uW and 7 uW. Scored on switching charge, the reference budgets pass (3.35-3.52 pC per conversion vs 3.7 pC; 1.52 pC per 1 ns vs 1.9 pC). Supply switching charge is 1.01-1.09 x its budgets (7.55 pC per conversion vs 6.9 pC; 1.11 pC per 1 ns vs 1.1 pC) and is accepted: these charge budgets are decap-sizing proxies, and the electrical checks they protect pass (supply droop 28 mV vs 45 mV, supply pin peak 1.70 mA vs 5.5 mA, reference pin peak 4.22 mA vs 5.2 mA, reference span droop 0.129 V vs 0.26 V). Other corners are marked passed only if their switching charge is not clearly further over and droop and peak currents pass.",
+      "stage6_bootstrap_gate_screen": "User decision, pre-approved 2026-11-22, revised 2026-11-23 (coordinator session): the Bootstrap gate screen at SS 0.81 V -40 C with the routed CMP_CLK (Stage 6 deck) for the revised Bootstrap boot-fill-r2-20261122. It passes outright if the routed gate screen is <= 0.1 V. Otherwise it passes only if all hold: screen <= 0.111 V; gate-attributable TOP disturbance (first comparator clock to the end of the gate fall) <= 0.05 LSB; codes and plate settling unchanged from the old-core routed runs (sar8-s6e-ssc-verify-c, -extreme-a: 0.118 / 0.1185 V); sample-close residual <= 0.25 LSB, the Stage 6 limit (revised 2026-11-23 from residual unchanged). The Bootstrap fill residual cost is recorded separately (Stage 2 deck, SS cold: 0.093 LSB filled r2, 0.039 unfilled r2, 0.054 old core). Applied by the Bootstrap session to sar8-s6e-ssc-{extreme,verify}-r2. Outcome 2026-11-23: passed outright, the disposition was not used; routed SS-cold gate screen 0.0972 V (sar8-s6e-ssc-verify-r2) and 0.0960 V (sar8-s6e-ssc-extreme-r2) against 0.1 V (results/integration/bootstrap_rev2_20261122.md). No limit in Layout/specs/constraints.json changes."
     },
     "stage2": {
       "report": "results/integration/stage2_all_extracted_20261122.md",

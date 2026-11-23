@@ -65,7 +65,8 @@ def analyze(run_dir, output_dir):
     bad = [int(row[0]) for row in records if not protocol_valid(row)]
     measured = codes[c['warmup']:]
     assert len(measured) == c['samples']
-    fft = spectrum(measured, c['bin']) if not c['pilot'] else None
+    # A segment of a split record has no coherent spectrum of its own; fft_stitch.py combines the segments.
+    fft = spectrum(measured, c['bin']) if not c['pilot'] and not c.get('segment') else None
     watts = dict((k, v/(end-begin)) for k, v in area.items())
     result = dict(analysis_complete=True, context=c, native_decode_crosscheck=True,
                   frames=records, codes=measured, invalid_all_frames=bad,

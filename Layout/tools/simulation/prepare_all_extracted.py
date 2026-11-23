@@ -3,9 +3,10 @@
 The frozen views are Layout/results/current.json integration.freeze. Each MOS corner uses the paired
 interconnect corner (TT: typical, SS: CWORST_T, FF: CBEST_T) for the coupled XREF/CDAC extraction of the
 filled stream se-xref-peripheral-dense, the comparator v8 extraction with VDD/VSS RC, the SAR macro
-sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The Bootstrap core
-boot-core-20261121 is its typical extraction at every corner; --corner-bootstrap uses its re-extraction at the
-paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
+sar8_se_core/layout_r3 and the foundry cell LPE of the remaining cells. The default Bootstrap is the Stage 2
+evidence boot-core-20261121, its typical extraction at every corner (the frozen Bootstrap is r2 since
+2026-11-23: --bootstrap boot-fill-r2-20261122); --corner-bootstrap uses boot-core-20261121's re-extraction at
+the paired interconnect corner instead (Layout/tools/physical/bootstrap_rc_corner.py, run family allxc). --bootstrap
 ID requalifies a revised core: its typical extraction at TT and its paired re-extractions ID-cworst-t and
 ID-cbest-t at SS cold and FF hot (run family bs<revision>, for example bsr2 for view layout_r2). Wiring
 between blocks is ideal.
@@ -129,15 +130,17 @@ def prefixed(files, prefix):
     return out
 
 
-def xref_package(identity, gain_run, rc, routes=None):
+def xref_package(identity, gain_run, rc, routes=None, stream=FROZEN_XREF):
     """The coupled XREF/CDAC extraction bound in place of XCDAC and XREF, with its standalone weights.
-    routes: optional route check (route_check) applied to the bound top."""
+    routes: optional route check (route_check) applied to the bound top.
+    stream: the typical extraction whose stream this one must share (the refilled se-xref-peripheral-routed for the
+    filled core)."""
     payload, manifest = fetch_pex(identity)
-    frozen = manifest if identity == FROZEN_XREF else fetch_pex(FROZEN_XREF)[1]
+    frozen = manifest if identity == stream else fetch_pex(stream)[1]
     if manifest['top'] != COMBINED or manifest['target_bits'] != list(range(8)):
         raise ValueError('Expected the eight-bit coupled XREF/CDAC extraction')
     if manifest['gds']['sha256'] != frozen['gds']['sha256']:
-        raise ValueError('Extraction is not of the frozen filled stream ' + FROZEN_XREF)
+        raise ValueError('Extraction is not of the filled stream ' + stream)
     if manifest.get('interconnect_rc', 'typical') != rc:
         raise ValueError('Extraction interconnect corner differs: %s' % manifest.get('interconnect_rc'))
     if set(manifest['checks']['drc']['markers_by_rule']) - XREF_DRC:
@@ -155,7 +158,7 @@ def xref_package(identity, gain_run, rc, routes=None):
     saves = [('save ' + ' '.join('XDUT.XCDAC.' + n for n in nodes)).encode() for side in 'np' for nodes in plates[side]]
     # The schematic gate nets are internal to the coupled extraction; read each at one switch-gate contact.
     probes = {'xdut.' + key: 'XDUT.XCDAC.' + nodes[0] for key, nodes in analog['gates'].items()}
-    gain_inputs = lpe.retained_inputs(lpe.RUNS / gain_run, ['physical.json', 'extracted.scs'])
+    gain_inputs = lpe.retained_inputs(lpe.RUNS / lpe.simulation_of(gain_run), ['physical.json', 'extracted.scs'])
     if json.loads(gain_inputs['physical.json']).get('id') != identity or \
             sha(gain_inputs['extracted.scs']) != manifest['checks']['pex']['sha256']:
         raise ValueError('Standalone weights %s use a different extraction' % gain_run)
@@ -289,24 +292,28 @@ def prepare_adc(corner, kind, revision, route_scale=None, corner_bootstrap=False
                        rss_mib=BUDGET_RSS_MIB if routes else SIMULATION_RSS_MIB)
 
 
-def prepare_gain(corner, run_id=None, xref=None):
+def prepare_gain(corner, run_id=None, xref=None, template=TT_GAIN):
     """Standalone eight-bit weights of the corner XREF/CDAC extraction at that MOS corner.
 
     The frozen TT weight run supplies the fixture and analyzer bytes. Only the extraction, MOS section,
     temperature, supply and the logic levels of the CODE, PRESET and track commands change; the references
     stay at 0 and 0.9 V behind the same 50 ohm / 4 pF fixture. `xref` replaces the corner's frozen extraction
-    with another evidence of the pair (for example a refilled stream); at TT only the extraction changes."""
+    with another evidence of the pair (for example a refilled stream); at TT only the extraction changes.
+    template: the TT weight run whose fixture and analyzer bytes are reused (that of the refilled pair's typical
+    extraction for se-xref-peripheral-routed)."""
     spec = dict(CORNERS[corner], **({'xref': xref} if xref else {}))
-    run_id = run_id or (None if xref else spec['gain'])
-    if (corner == 'tt' and not xref) or not run_id or not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', run_id):
+    xref = spec['xref']
+    run_id = run_id or (None if xref != CORNERS[corner]['xref'] else spec['gain'])
+    if (corner == 'tt' and xref == CORNERS[corner]['xref']) or not run_id or not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', run_id):
         raise ValueError('The frozen TT weights exist; select ssc or ffh, or a new --xref, and a valid run ID')
     dest = ROOT / 'work/decks' / run_id
     if dest.exists():
         raise ValueError('Execution identity already prepared')
-    template = json.loads((lpe.RUNS / TT_GAIN / 'recipe.json').read_bytes())
+    template_run = template
+    template = json.loads((lpe.RUNS / template_run / 'recipe.json').read_bytes())
     names = [f['name'] for f in template['files'] if f['source'].startswith('work/decks/')]
-    blobs = lpe.retained_inputs(lpe.RUNS / TT_GAIN, names)
-    payload, manifest = fetch_pex(spec['xref'])
+    blobs = lpe.retained_inputs(lpe.RUNS / template_run, names)
+    payload, manifest = fetch_pex(xref)
     if manifest.get('interconnect_rc', 'typical') != spec['rc'] or manifest['top'] != COMBINED:
         raise ValueError('Unexpected corner extraction')
     old = sorted(n for n in blobs if n.startswith('extracted.scs'))
@@ -342,10 +349,10 @@ def prepare_gain(corner, run_id=None, xref=None):
     context = json.loads(blobs['context.json'])
     scope = ('Standalone coupled XREF/CDAC at %s %s V %d C with the %s extraction %s. Zero, eight one-hot commands, '
              'full scale, zero. 19 ns plateaus; project CDAC measurement; fixture and analyzer of %s.'
-             % (condition['mos'], vdd, condition['temperature_c'], spec['rc'], spec['xref'], TT_GAIN))
-    context.update(run_id=run_id, corner=corner, condition=condition, physical_evidence=spec['xref'],
+             % (condition['mos'], vdd, condition['temperature_c'], spec['rc'], xref, template_run))
+    context.update(run_id=run_id, corner=corner, condition=condition, physical_evidence=xref,
                    gds_sha256=manifest['gds']['sha256'], interconnect_rc=spec['rc'], scope=scope,
-                   template_run=TT_GAIN, reference_v=[0, .9])
+                   template_run=template_run, reference_v=[0, .9])
     blobs['context.json'] = (json.dumps(context, indent=2) + '\n').encode()
     dest.mkdir(parents=True)
     for name, blob in blobs.items():
@@ -404,6 +411,38 @@ def prepare_analysis(kind, source_run_id, run_id=None):
     return path
 
 
+def prepare_reanalysis(source_run_id, run_id=None):
+    """Analysis-only rerun of a completed simulation's own analyzer (reanalyze_source.py), for a source whose analysis
+    phase was rejected; the analyzer and its helpers are the source deck's Python files, byte for byte."""
+    run_id = run_id or source_run_id + '-ana'
+    dest = ROOT / 'work/decks' / run_id
+    if dest.exists() or not re.fullmatch(r'[a-z][a-z0-9-]{1,55}', run_id):
+        raise ValueError('Execution identity already prepared or invalid')
+    source = json.loads((lpe.RUNS / source_run_id / 'recipe.json').read_bytes())
+    # native_summary.py is added to every package by the runner itself.
+    helpers = {f['name']: (ROOT / f['source']).read_bytes() for f in source['files']
+               if f['name'].endswith('.py') and f['name'] != 'native_summary.py'}
+    if source['analyzer'] not in helpers:
+        raise ValueError('Source analyzer is not a packaged Python file')
+    blobs = dict(helpers, **{'reanalyze_source.py': (ROOT / 'Layout/tools/analysis/reanalyze_source.py').read_bytes(),
+                             'reanalyze.json': (json.dumps(dict(source_analyzer=source['analyzer'])) + '\n').encode()})
+    dest.mkdir(parents=True)
+    for name, blob in blobs.items():
+        (dest / name).write_bytes(blob)
+    scope = 'Analysis-only rerun of the analyzer of %s on its waveform (its own analysis phase was rejected)' % source_run_id
+    # The source's one-hour queue limit expired behind the Stage 6 simulations; wait up to a day instead.
+    spec = dict(schema_version=2, kind='analysis_only', source_run_id=source_run_id, run_id=run_id,
+                design_id=source['design_id'], analyzer='reanalyze_source.py',
+                inputs=[dict(name=n, source=(dest / n).relative_to(ROOT).as_posix(), sha256=sha(b)) for n, b in blobs.items()],
+                resources=dict(source['resources'], queue_timeout_seconds=86400),
+                spectre_args=source['spectre_args'], summary_signals=source['summary_signals'],
+                expected_stop_s=source['expected_stop_s'], qualification_scope=scope,
+                test_conditions=dict(source.get('test_conditions', {}), reanalysis_source_run_id=source_run_id))
+    path = dest / 'recipe.json'
+    path.write_text(json.dumps(spec, indent=2) + '\n')
+    return path
+
+
 if __name__ == '__main__':
     from tools.saradc.__main__ import engine
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -412,6 +451,7 @@ if __name__ == '__main__':
     g.add_argument('corner', choices=['tt', 'ssc', 'ffh'])
     g.add_argument('--run-id')
     g.add_argument('--xref', help='Pair evidence to weigh instead of the frozen stream (tt needs it and a --run-id)')
+    g.add_argument('--template', default=TT_GAIN, help='TT weight run whose fixture and analyzer bytes are reused')
     a = sub.add_parser('adc')
     a.add_argument('corner', choices=CORNERS)
     a.add_argument('kind', choices=lpe.CODES)
@@ -428,14 +468,20 @@ if __name__ == '__main__':
         r.add_argument('source_run_id')
         r.add_argument('--run-id')
         analyses.append(r)
+    ra = sub.add_parser('reanalyze', help="Analysis-only rerun of a completed simulation's own analyzer")
+    ra.add_argument('source_run_id')
+    ra.add_argument('--run-id')
+    analyses.append(ra)
     for p in [g, a] + analyses:
         p.add_argument('--submit', metavar='HOST', choices=engine().HOSTS,
                        help='Register the recipe on this managed host and queue its simulation or analysis')
     args = ap.parse_args()
     if args.action == 'gain':
-        path = prepare_gain(args.corner, args.run_id, args.xref)
+        path = prepare_gain(args.corner, args.run_id, args.xref, args.template)
     elif args.action in ANALYSES:
         path = prepare_analysis(args.action, args.source_run_id, args.run_id)
+    elif args.action == 'reanalyze':
+        path = prepare_reanalysis(args.source_run_id, args.run_id)
     else:
         path = prepare_adc(args.corner, args.kind, args.revision, args.route_scale, args.corner_bootstrap,
                            args.bootstrap)
@@ -444,5 +490,5 @@ if __name__ == '__main__':
         run_id = json.loads(path.read_text())['run_id']
         # An analysis-only job starts its analysis; the others queue a simulation.
         print(json.dumps(dict(registration=engine().register(path.relative_to(ROOT).as_posix(), host=args.submit),
-                              submission=engine().phase('analyze' if args.action in ANALYSES else 'submit', run_id,
+                              submission=engine().phase('analyze' if args.action in ANALYSES or args.action == 'reanalyze' else 'submit', run_id,
                                                         queue=True)), indent=2))

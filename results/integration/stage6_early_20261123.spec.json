@@ -1,0 +1,43 @@
+{
+ "title": "Stage 6 early pass: extracted top-level wiring of the routed prefill core, Stage 1 system model",
+ "runs": {
+  "ssc": [
+   "sar8-s6e-ssc-verify-c",
+   "sar8-s6e-ssc-extreme-a",
+   "sar8-s6e-ssc-carry-a",
+   "sar8-s6e-ssc-restart-b"
+  ],
+  "ffh": [
+   "sar8-s6e-ffh-verify-a",
+   "sar8-s6e-ffh-extreme-a",
+   "sar8-s6e-ffh-carry-a",
+   "sar8-s6e-ffh-restart-b"
+  ]
+ },
+ "dispositions": {
+  "ffh": "Charge budgets marked passed: Layout/results/current.json integration.decisions.stage6_ff_hot_charge_budgets"
+ },
+ "notes": {
+  "wiring": "adc-core-guard-wire-xtr2: xcell extraction of the branch-labelled guard stream adc-core-guard-g1-chk (layout_route_guard), typical RC at both corners (labelled); blocks at the paired corner extraction",
+  "comparator_offset_mv": {
+   "tt": {
+    "extracted": 0.415,
+    "symmetric": -0.32,
+    "none": -0.132,
+    "runs": "comp-s6-offset-tt-{extracted-d,symmetric-c,none-c}"
+   },
+   "ssc": {
+    "extracted": 0.399,
+    "symmetric": -0.166,
+    "none": -0.09,
+    "runs": "comp-s6-offset-ssc-{extracted,symmetric,none}-c"
+   }
+  },
+  "fft_pilot": "sar8-s6e-tt-verify-b-fftp: 8/8 frames valid, 8/8/8 events, monitor and native decode agree; 21 min per frame at 8 threads",
+  "pending": [
+   "Bootstrap r2 gate verdict (sar8-s6e-ssc-{extreme,verify}-r2, simulating)",
+   "Final Stage 6 on layout_fill5 at TT/SS/FF",
+   "Split 1024-point TT FFT"
+  ]
+ }
+}
