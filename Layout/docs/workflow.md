@@ -245,6 +245,9 @@ python -m Layout.design.seal_ring_sized build-script BUILD_ID --tiles N
 python -m Layout.design.seal_ring_sized scratch-chip CHIP_GDS RING_GDS OUT_GDS --tiles N
 python -m Layout.design.seal_ring_sized csr-probe SCRATCH_GDS OUT_GDS --tiles N
 python -m Layout.design.seal_ring_sized chip-build-script BUILD_ID --tiles N
+python -m Layout.design.chip_ring_fix ring-build-script BUILD_ID
+python -m Layout.design.chip_ring_fix chip-build-script BUILD_ID
+python -m Layout.design.chip_ring_fix lvs-source SRC_CDL OUT_CDL
 ```
 
 Die size. `seal_ring_sized.py` re-tiles the TSMC standard seal ring with N repeat cells per edge, which gives a die of 373.6 + 5.4 N um; N = 116 is the 1 mm sample, and `check` verifies the generator against a seal-ring stream. `scratch-chip` swaps the ring in a chip stream so chip DRC can run without a chip view. The chip deck checks the CSR.R.1 corner triangles only without a seal ring, so `csr-probe` writes a stream without the ring, with LMARK markers that set the chip extent to the prime chip; run it with `--deck chip-noseal --select-prefix CSR.R.1`.

@@ -61,7 +61,7 @@
   "oa_cell": "SAR_ADC_T28_LAYOUT/sar8_io_ring (schematic, layout): the ring cell alone, cell-level DRC 0 results, LVS CORRECT against its schematic (Layout/results/io_ring_verification.json)",
   "output_dir": "t28-ioring/output/generated/20261122_131553 (local generator run, not in this repository)",
   "results": "enrich_intent G1-G12 PASS, validate_intent OK, confirmed config with 112 components, schematic and layout SKILL generated",
-  "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS",
+  "domain_cuts": "PRCUTA_G between left_6 AVSS and left_7 VSS, and between right_7 DVDD and right_8 AVSS. The generated ring (sar8_io_ring/layout) has two abutting cuts in each 40 um gap; sar8_io_ring/layout_r2 keeps the one beside the PVSS3AC (app note 9.8.3) and has a PFILLER20_G beside the digital pad (Layout/design/chip_ring_fix.py).",
   "corners": "PCORNERA_G at NW and NE, PCORNER_G at SW and SE",
   "global_vss": "VSS (ring-wide VSS pin of every pad; supplied by the PVSS1DGZ and the PVSS2AC)"
  },

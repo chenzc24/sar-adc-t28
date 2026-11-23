@@ -26,6 +26,9 @@ SUPPLIES = ("VDD", "AVDD")
 # Masters kept as xcells besides the IO-library cells of the ring.
 XCELLS = ["sar8_adc_core_filled", "sar8_out_reg", "sar8_decap_analog", "sar8_decap_pair", "sar8_decap_sar",
           "sar8_decap_dvdd", "PCLAMPC_H_G", "N28_TSMC_SRDMB_Mu"]
+# Alternatives of a chip view: the vertical-gate clamps (r8) and the re-tiled 892 um seal ring (r7); each stream
+# must hold one master of each pair.
+ALTERNATIVES = [("PCLAMPC_H_G", "PCLAMPC_V_G"), ("N28_TSMC_SRDMB_Mu", "sar8_seal_ring_892")]
 WIRING = ("PAD60GU", "M3_M2_CDNS_")      # ring children that are metal only: extracted
 
 
@@ -43,7 +46,13 @@ def all_xcells(gds):
     io = [c for c in ring if not c.startswith(WIRING)]
     if not all(re.fullmatch(r"P[A-Z0-9_]+_G", c) for c in io):
         raise ValueError("Unexpected ring children: %s" % io)
-    out = io + XCELLS
+    alt = {c for pair in ALTERNATIVES for c in pair}
+    out = io + [c for c in XCELLS if c not in alt]
+    for pair in ALTERNATIVES:
+        have = [c for c in pair if c in cells]
+        if len(have) != 1:
+            raise ValueError("Expected one of %s in the stream, found %s" % (pair, have))
+        out += have
     missing = [c for c in out if c not in cells]
     if missing:
         raise ValueError("Stream lacks %s" % missing)
@@ -53,7 +62,7 @@ def all_xcells(gds):
 def launch(identity, gds, source_evidence, flatten=()):
     if not re.fullmatch(r"[a-z][a-z0-9-]{1,55}", identity):
         raise ValueError("Invalid identity")
-    if not set(flatten) <= set(XCELLS):
+    if not set(flatten) <= set(XCELLS) | {c for pair in ALTERNATIVES for c in pair}:
         raise ValueError("Only the listed object masters can be flattened")
     dest = WORK / identity
     dest.mkdir(parents=True, exist_ok=False)
