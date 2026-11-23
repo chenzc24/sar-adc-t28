@@ -5,30 +5,32 @@
  "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
  "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
-  -120.0,
-  -120.0,
-  880.0,
-  880.0
+  -66.0,
+  -66.0,
+  826.0,
+  826.0
  ],
- "die_note": "1000 x 1000 um die: the outer edge of the lab seal ring (seal_ring). The IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners) stays at 0..760, centred 120 um from each die edge; PAD60GU pad metal extends 11.66 um beyond it, a 783.32 x 783.32 um envelope 108.34 um from the die edge (chenzc24/sar-adc-t28#18). The scribe lane is outside the die.",
+ "die_note": "892 x 892 um die: the outer edge of the re-tiled TSMC standard seal ring (seal_ring). The IO-cell outline from the generator (9 x 60 um + 2 x 110 um corners) stays at 0..760, centred 66 um from each die edge; PAD60GU pad metal extends 11.66 um beyond it, a 783.32 x 783.32 um envelope 54.34 um from the die edge (chenzc24/sar-adc-t28#18). The scribe lane is outside the die. Not a confirmed die size: 892 um is the DRM minimum for this IO ring (CSR.R.1) plus a 10 um margin; the shuttle provider's die-size grid, billing blocks and scribe requirement are open (open_items).",
  "seal_ring": {
-  "master": "sealring/N28_TSMC_SRDMB_Mu/layout",
-  "source": "the lab's shared seal-ring library (/home/dmanager/shared_lib/TSMC28/sealring, in the shared cds.lib), not drawn here",
+  "master": "SAR_ADC_T28_LAYOUT/sar8_seal_ring_892/layout",
+  "source": "TSMC standard seal ring (DRM T-N28-CL-DR-002 v2.3 4.5.66.2, added by the customer): the cells of the lab's sealring library, which equal TSMC's N28_TSMC_SRDMB_Mu_1P10M_002_20160711_SR_BKM.gds with the 1P9M 6X1Z1U metals selected, re-tiled with 96 repeat cells per edge at the sample's relative positions (Layout/design/seal_ring_sized.py); not drawn here",
   "origin_um": [
-   -120.0,
-   -120.0
+   -66.0,
+   -66.0
   ],
   "orient": "R0",
-  "size_um": 1000.0,
+  "size_um": 892.0,
+  "repeat_tiles_per_edge": 96,
   "band_um": 24.0,
   "cell_bbox_um": [
-   -121.381,
-   -121.381,
-   881.381,
-   881.381
+   -67.381,
+   -67.381,
+   827.381,
+   827.381
   ],
-  "clearance": "Straight edges: the ring is 24 um wide (die edge to 24 um in), 84.34 um clear of the PAD60GU metal. Corners: the stress-relief chamfers stay within x + y <= 121.72 um of each die corner (seal-ring frame), the IO corner cells start at x + y = 240 um.",
-  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r3_seal (Layout/design/chip_seal_ring.py)"
+  "clearance": "Straight edges: SEALRING_ALL is the outer 24 um (SLDB 0-8 um, walls 8-18 um, the 6 um layout-free enhanced zone 18-24 um); the PAD60GU metal is 30.34 um inside it, 54.34 um from the die edge. No DRM rule limits pad or IO metal to the seal ring beyond the enhanced zone; PM.EN.2 (polyimide enclosure by the prime chip, 15 um) does not apply, the pads carry no PM. Corners: CSR.R.1 keeps layout out of triangles with 74 um legs from each prime-chip corner (x + y < 122 um in the seal-ring frame); the IO corner cells start at x + y = 132 um, tool-checked in run chip-seal892-csr2.",
+  "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r7_seal (Layout/design/seal_ring_sized.py)",
+  "superseded": "sealring/N28_TSMC_SRDMB_Mu at (-120, -120), 1000 um die, in layout_full_fill5_r3_seal .. layout_full_fill5_r6_seal"
  },
  "ring_opening": [
   [
@@ -2628,7 +2630,8 @@
   "Feed widths: the 9 x 9 rail budget (chenzc24/sar-adc-t28#27, constraints.json) sets at least 4.8 um M8 for the pair route and 6.3 um for the SAR feed; EM at the pin peaks is still to check.",
   "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
   "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
-  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there)."
+  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there).",
+  "Die size: confirm 892 x 892 um with the shuttle provider before tapeout (die-size grid, billing blocks, scribe width, and whether the provider adds the seal ring itself, DRM 4.5.66.2 option 1). 892 um is the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."
 }

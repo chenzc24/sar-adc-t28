@@ -240,7 +240,14 @@ python -m Layout.design.chip_landing_m1 BUILD_ID
 python -m Layout.tools.physical.matching_overlay overlay CHIP_GDS OVERLAY_GDS [--marker ANARRAY_H]
 python -m Layout.tools.physical.matching_overlay record CHECK_ID CHIP_GDS OVERLAY_GDS
 python -m Layout.design.chip_matching_marker BUILD_ID
+python -m Layout.design.seal_ring_sized check SEAL_GDS [--top CELL --tiles N]
+python -m Layout.design.seal_ring_sized build-script BUILD_ID --tiles N
+python -m Layout.design.seal_ring_sized scratch-chip CHIP_GDS RING_GDS OUT_GDS --tiles N
+python -m Layout.design.seal_ring_sized csr-probe SCRATCH_GDS OUT_GDS --tiles N
+python -m Layout.design.seal_ring_sized chip-build-script BUILD_ID --tiles N
 ```
+
+Die size. `seal_ring_sized.py` re-tiles the TSMC standard seal ring with N repeat cells per edge, which gives a die of 373.6 + 5.4 N um; N = 116 is the 1 mm sample, and `check` verifies the generator against a seal-ring stream. `scratch-chip` swaps the ring in a chip stream so chip DRC can run without a chip view. The chip deck checks the CSR.R.1 corner triangles only without a seal ring, so `csr-probe` writes a stream without the ring, with LMARK markers that set the chip extent to the prime chip; run it with `--deck chip-noseal --select-prefix CSR.R.1`.
 
 MOS matching (MATCH.WARN.1). `matching_overlay.py` copies a chip stream and adds MATCHING, ANARRAY_H or ANARRAY_M markers over the comparator's N and P arrays (comparator frame only). Running the chip deck on that copy with only the matching rules selected checks a marker class without touching OA (`chip_objects.py physical --gds ... --deck chip --select-prefix`). `chip_matching_marker.py` draws the chosen MATCHING markers in the chip top cell, on OA PMET_CUT/drawing1 (GDS 205;8). The comparator and cores stay unchanged, and the LVS and xRC decks do not read 205;8.
 

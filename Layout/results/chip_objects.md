@@ -428,10 +428,71 @@ By rule against `layout_full_fill5_r5_seal`:
 | LVS, only supply nets joined by name (`chip-match-b1-lvs-vcs`) | CORRECT | CORRECT |
 | ERC | 305, identical by check | 305 |
 
+## 892 um die: `sar8_adc_chip/layout_full_fill5_r7_seal`
+
+The user adopted the 892 um die on 2026-11-23 ("Yes, plan to adopt"). The size is not yet confirmed with the shuttle provider; see Open.
+
+**Why the seal ring can be smaller.** The seal ring of r3_seal through r6_seal is the TSMC standard sample `N28_TSMC_SRDMB_Mu` (DRM 4.5.66.2, added by the customer).
+- The lab's `sealring` cell equals TSMC's `N28_TSMC_SRDMB_Mu_1P10M_002_20160711_SR_BKM.gds` layer by layer, after selecting the metals of the 1P9M 6X1Z1U stack. This holds for polygon counts and area on every kept layer.
+- The sample is 1000 um square only because of its tile count. Two 185.6 um corner cells sit at each pair of opposite corners, each edge has one UCSRN_NOVIA_DPO_DOD at 182.6 um, and UCSRN_DPO_DOD tiles of 5.4 um repeat from 188 um. So the die is 373.6 + 5.4 n um, with n = 116 in the sample.
+- `Layout/design/seal_ring_sized.py` keeps every relative position of the sample and changes only n. At n = 116 it reproduces all 472 placements of both the TSMC sample and the lab cell.
+
+**Size.** CSR.R.1 keeps layout out of triangles at the prime-chip corners. The IO corner cells draw up to their outline corner, at x + y = die - 760 in the seal-ring frame, so the die must be at least 882 um.
+- n = 95 (886.6 um) clears the triangles by 4.6 um.
+- n = 96 (**892 um**) clears them by 10 um. This is the one adopted.
+- Die area is 0.796 against 1.000 mm2, about 20 % less.
+
+**CSR.R.1, tool-checked** (`chip-seal892-csr2`).
+- **Why a separate run:** the chip deck derives the corner triangles only for a chip without a seal ring (`EMPTY_AREA_P4 = INT CHIP_NOSR_P4 < CSR_R_1 ABUT == 90`, CSR_R_1 = 74, under `#IFNDEF WITH_SEALRING`). With our own seal ring in the stream, the group would run on an empty triangle.
+- **Probe stream:** the 892 scratch stream without its seal ring, plus four 0.1 um LMARK squares at the prime-chip corners (the inner edge of SEALRING_ALL, 24 um inside the die). They set the chip extent to the prime chip, as for a TSMC-added seal ring. LMARK probes sit on the lower-left diagonal at x + y = 70, 73, 75, 78, 100 and 110 um from the prime-chip corner.
+- **Run:** the chip deck with WITH_SEALRING off and only the 264 CSR.R.1 checks selected.
+- **Result:** CSR.R.1:LMARK flags the four corner squares and the probes at 70 and 73 um, and nothing else; every other CSR.R.1 check is 0.
+- **Reading the check implements:** a right triangle with 74 um legs from the prime-chip corner (x + y < 74 there, 122 um in the seal-ring frame), not a 74 um radius. No layout of the chip enters it; the IO corner cells start 10 um outside.
+
+**The narrower margin.** The PAD60GU metal is now 54.34 um from the die edge and 30.34 um from the inner edge of SEALRING_ALL (84.34 um at 1 mm).
+- **Seal-ring enhanced zone:** the 6 um inside SEALRING_ALL (18-24 um from the die edge) is layout-free. Nothing of the chip is there.
+- **PM.EN.2:** polyimide enclosure by the prime chip, 15 um. It does not apply, because the pads carry no PM (only the seal ring does), and 30.34 um would meet it anyway.
+- **No other limit:** no other DRM rule limits pad or IO metal to the seal ring or die edge. The IO application note has none either.
+- **AN.R.13mU** (guideline): keep matching pairs at least 3 % of the edge length from the die edge and 5 % of the diagonal from a corner, for a single-die wire-bond package. That is 27 um and 63 um at 892 um; the comparator is about 476 um from the nearest die edge.
+
+**View.** `Layout/design/seal_ring_sized.py` builds the view in two steps:
+- `SAR_ADC_T28_LAYOUT/sar8_seal_ring_892/layout` (build `sealring-892-b1`): 392 instances of the lab's `sealring` cells. Its stream (`sealring-892-drc1`) matches the generator at n = 96.
+- `layout_full_fill5_r7_seal` (build `chip-seal892-b1`): a copy of `layout_full_fill5_r6_seal` whose XSEAL_RING instance becomes `sar8_seal_ring_892` at (-66, -66), R0. The die is (-66, -66)-(826, 826), with the IO ring still centred, and every chip view and object view stayed unchanged.
+- **Stream** (`chip-seal892-b1-chk`, sha256 9b8a932d...): it spans exactly the die. The OA outline reaches x 831.5 only through label-text extents, and -67.381 through the seal-ring cells' 1.381 um overhang, as in the TSMC sample.
+
+By rule against `layout_full_fill5_r6_seal`:
+
+| Check | `layout_full_fill5_r7_seal` (892 um) | `layout_full_fill5_r6_seal` (1 mm) |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-seal892-b1-chk`) | 2904, identical by rule to the scratch run `chip-seal892-drc1` | 1911 |
+| of which other than density and fill | 234, every rule equal | 234 |
+| Seal-ring rules (SR, SLR, CSR, BiB) | equal | |
+| CSR.R.1 corner triangles (`chip-seal892-csr2`) | 0 on chip layout | not tool-checked |
+| LUP.5.2.1 / 5.2.2, flat (`chip-seal892-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-seal892-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+**Density** changes only in the unfilled margin, which is narrower and sits against the corners:
+- Mx.DN.6: up by 124-247 per layer.
+- Mx.DN.1: down from 5 to 1.
+- OD.S.14: down from 27 to 20.
+Fill decides these.
+
+**Fill keep-out at the seal ring.**
+- No fill outside die (-39, -39)-(799, 799): the band plus 3 um.
+- No fill within x + y <= 125 um of each die corner (seal-ring frame), i.e. within the CSR triangle plus 3 um.
+
+**Unchanged:** the periphery extraction, the clamp-feed current density, the matching check and the Stage 2/6 netlists. The seal ring connects to nothing, and no pad or route moved.
+
 ## Open
 
 - MATCH.WARN.1 is closed by the permanent MATCHING markers in `layout_full_fill5_r6_seal`. The comparator's deviation from high matching is recorded above as an accepted risk; the waiver cites `chip-match-h1`.
-- `layout_full_fill5_r6_seal` is the current and frozen chip view. `layout_full_fill5_r5_seal` is its source and stays unchanged. Its sources stay unchanged: `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
+- `layout_full_fill5_r7_seal` (892 um die) is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r6_seal` (MATCHING markers, 1 mm), `layout_full_fill5_r5_seal` (AVSS landings), `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
+- Die size: confirm 892 x 892 um with the shuttle provider before tapeout.
+  - **What to ask:** its die-size grid, billing blocks and scribe width, and whether it adds the seal ring itself (DRM 4.5.66.2 option 1). In that case the GDS must not carry ours.
+  - **What 892 um is:** the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin, not a confirmed die size.
 - Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
 - ESD connection to the clamps meets ESD.CD.1gU in `layout_full_fill5_r5_seal`: clamp bars, drop vias and AVSS landings. The exception is the AVDD pads' own core pin, 14.1 um of M2 (1.15 A), which belongs to the IO cell.
