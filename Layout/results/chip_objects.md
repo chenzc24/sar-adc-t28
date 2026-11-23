@@ -353,9 +353,85 @@ Pad to clamp, for information (clamps flattened, `chip-periph-x4`; distributed):
 
 This is the frozen chip view for fill. Its stream is `chip-landm1-b1-chk/fixture.gds`, sha256 7b2973da…
 
+## MOS matching check on the comparator (MATCH.WARN.1) ([record](chip_matching.json))
+
+**Why.** The chip DRC of `layout_full_fill5_r5_seal` flags MATCH.WARN.1: the stream has no MATCHING (205;8), ANARRAY_H (255;20) or ANARRAY_M (255;21) marker. Without one, PO.DN.16, PO.R.28, AN.R.79.2m and AN.R.80.2m never run. The DRM allows that bypass only when no circuit depends on MOS matching, but the StrongARM comparator's offset does.
+
+**Marker.** ANARRAY_H (high matching).
+- **Basis:** DRM 8.3.2.3.1.1. High matching is for "MOS array with mismatch within SPICE"; medium allows 2x SPICE; normal (MATCHING) is for "two simple identical transistors". The comparator's offset is reported from native PDK Monte Carlo, i.e. at SPICE mismatch.
+- **Placement:** each marker covers one MOS array. Its edge sits at the centreline between the outermost active gate and its SR_DPO dummy, or at the well-strap centreline. The matched pairs share diffusion and interleave, so the arrays are the unit (comparator frame, `Layout/design/comparator.il`):
+
+| Array | Marker (um) | Matched groups inside |
+| --- | --- | --- |
+| N (rows N1/N2, P+ ring) | (-0.26, -2.53)-(0.26, -0.67) | input pair MNINP/MNINN (two cross-placed fingers each); NMOS latch MNLATN/MNLATP; the tail MNTAIL sits between the input fingers |
+| P (row P, N+ ring) | (-0.39, -0.44)-(0.39, 0.76) | PMOS latch MPLATN/MPLATP; output reset MPRSTN/MPRSTP; internal-node reset MPRSTX/MPRSTY |
+
+**Run.** `chip-match-h1` (`Layout/tools/physical/matching_overlay.py`).
+- **Stream:** a scratch copy of the r5 stream (`chip-landm1-b1-chk`, sha256 7b2973da…) with the two markers in `sar_strongarm_t28_core` only. No OA view or frozen stream changed.
+- **Checks:** the installed chip deck, hierarchical, with only the five checks selected.
+- **Host:** thu-wei. The managed runner has no DRC job kind, so its admission rule was applied by hand: 28 GiB available against 2 GiB for this job, 8 GiB reserve and up to 16 GiB for the two running Stage 6 runs; 40 of 96 threads; load 79 against 120.
+
+| Check | Results |
+| --- | --- |
+| MATCH.WARN.1 | 0 (markers present) |
+| PO.DN.16 (PMET-poly density at most 50 % within 10 um) | 0 |
+| PO.R.28 (high-poly-density regions at most 60 um within 10 um) | 0 |
+| AN.R.79.2m (ANARRAY_H: OD and PO density within 10 % between the array and its 6 um halo) | **2** |
+| AN.R.80.2m (ANARRAY_M) | 0 (no ANARRAY_M drawn) |
+
+Both AN.R.79.2m results are OD density; PO density is within 10 % for both arrays.
+
+| Array (die um) | OD density inside | OD density in the 6 um halo | Difference |
+| --- | --- | --- | --- |
+| N: (409.74, 519.08)-(410.26, 520.94), input pair, NMOS latch, tail | 0.591 | 0.243 | 0.348 |
+| P: (409.61, 521.17)-(410.39, 522.37), PMOS latch, resets | 0.500 | 0.243 | 0.257 |
+
+- **Medium class:** AN.R.80.2m uses the same formula and limits (10 %, 6 um), so ANARRAY_M markers would fail the same way.
+- **Normal class:** MATCHING markers switch on only PO.DN.16 and PO.R.28, which pass.
+- **Not run:** AN.R.79.5m (one MOS type in each high-matching array and its halo) was outside this run. By its wording, the P row 0.23 um above the N array puts both MOS types in either array's halo.
+
+**Fix geometry, not drawn.** The two arrays share one halo, so its OD density must sit within 10 % of both: 0.49-0.60, against 0.24 now. That means a ring of identical dummy MOS rows around the comparator, 6 um wide per the DRM high-matching guidance, at the arrays' 0.13 um gate pitch and 0.5 um OD rows. The ring covers die x 403.6-416.4, y 513.1-528.4: inside the frozen core.
+
+### Decision: MATCHING markers and a recorded deviation (2026-11-23)
+
+The user chose option A: "Add markers, write waiver". The sign-off stream carries permanent MATCHING (205;8) markers. Option B (identical-dummy ring, N/P array split, comparator re-layout for ANARRAY_H) is rejected, and the comparator geometry stays as it is.
+
+- **Class: normal matching.** MATCHING is for "two simple identical transistors" (DRM 8.3.2.3.1.1).
+  - **What it switches on:** in the chip deck, PO.DN.16, PO.R.28 and AN.R.78.1m (strap width at most 0.5 um inside the marker), the marker's own geometry checks G.1-G.3, and MATCH.WARN.1.
+  - **What it doesn't:** AN.R.79.x and AN.R.80.x read only ANARRAY_H / ANARRAY_M. CSR.R.1:MATCHING only runs without WITH_SEALRING.
+- **Deviation from high matching:** the ANARRAY_H evidence is `chip-match-h1`.
+  - AN.R.79.2m fails on OD density: 0.348 (N array) and 0.257 (P array), against 0.10.
+  - AN.R.79.5m (one MOS type per array and halo) would fail as well, because the P row is 0.23 um from the N array.
+- **Accepted risk:** MATCH.WARN.1 says matching may degrade "at least by 3X" when those rules are not met. The accepted figure is up to 3x the SPICE mismatch, applied to the extracted Monte Carlo ([comparator](comparator.md): sigma 12.05 mV, 200-seed range -34.7 to +34.1 mV).
+  - The offset is static and corrected off-chip, so the cost is input range, not accuracy.
+  - At 3x, an extreme die sits at about +/-104 mV, 11.6 % of the +/-0.9 V full scale.
+- **Stage 6 is unaffected:** `calibre.lvs` and `calibre.rcx` map no 205;8 (only 205;6, PMET), so neither device recognition nor extraction reads the marker. The comparator, the cores and their streams are unchanged.
+
+**Sign-off view: `sar8_adc_chip/layout_full_fill5_r6_seal`.**
+- **Build:** `Layout/design/chip_matching_marker.py` (build `chip-match-b1`) copies `layout_full_fill5_r5_seal`, which stays unchanged.
+- **Markers:** two MATCHING rectangles in the chip top cell, at the `chip-match-h1` footprints:
+  - N array: (409.74, 519.08)-(410.26, 520.94)
+  - P array: (409.61, 521.17)-(410.39, 522.37)
+- **Layer:** they are drawn on OA PMET_CUT / drawing1, which is the PDK layer map's name for GDS 205;8. The DRC deck reads that GDS layer as MATCHING, and no deck maps it as a mask.
+- **Visibility:** the hierarchical chip deck sees the top-level marker over the comparator's devices. MATCH.WARN.1 is CHIP NOT INTERACT MATCHING_ARRAY, and it now reports 0. PO.DN.16 and PO.R.28 run over the same marker grown by 10 um.
+
+By rule against `layout_full_fill5_r5_seal`:
+
+| Check | `layout_full_fill5_r6_seal` | `layout_full_fill5_r5_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-match-b1-chk`) | 1911: only MATCH.WARN.1 changes, 1 to 0 | 1912 |
+| PO.DN.16 / PO.R.28 / AN.R.78.1m / MATCH.WARN.1 | 0 / 0 / 0 / 0 | not checked / not checked / not checked / 1 |
+| G.1-G.3:MATCHING | 0 | (no marker) |
+| LUP.5.2.1 / 5.2.2, flat (`chip-match-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` | CORRECT | CORRECT |
+| LVS, only supply nets joined by name (`chip-match-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
 ## Open
 
-- `layout_full_fill5_r5_seal` is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
+- MATCH.WARN.1 is closed by the permanent MATCHING markers in `layout_full_fill5_r6_seal`. The comparator's deviation from high matching is recorded above as an accepted risk; the waiver cites `chip-match-h1`.
+- `layout_full_fill5_r6_seal` is the current and frozen chip view. `layout_full_fill5_r5_seal` is its source and stays unchanged. Its sources stay unchanged: `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
 - Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
 - ESD connection to the clamps meets ESD.CD.1gU in `layout_full_fill5_r5_seal`: clamp bars, drop vias and AVSS landings. The exception is the AVDD pads' own core pin, 14.1 um of M2 (1.15 A), which belongs to the IO cell.
