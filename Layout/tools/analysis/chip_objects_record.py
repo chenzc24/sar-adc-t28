@@ -36,6 +36,9 @@ OBJECT_CELLS_R2 = {    # views layout_r2: the pad decaps grown to their planned 
     "decap_sar": ("sar8_decap_sar", "obj-decap-sar-r2-b3", "obj-decap-sar-r2-drc3", "obj-decap-sar-r2-lvs3"),
     "decap_dvdd": ("sar8_decap_dvdd", "obj-decap-dvdd-r2-b1", "obj-decap-dvdd-r2-drc1", "obj-decap-dvdd-r2-lvs1"),
 }
+OBJECT_CELLS_R3 = {    # revision 3: the clamps back in place (layout), the analog decap with MOM (layout_r3)
+    "decap_analog": ("sar8_decap_analog", "obj-decap-analog-r3-b4", "obj-decap-analog-r3-drc4", "obj-decap-analog-r3-lvs4"),
+}
 NMOSCAP_F = 6.23e-12 / 164           # drawn CREF of layout_route_full: 164 nmoscap (2.5 / 0.8 um) = 6.23 pF
 
 
@@ -224,15 +227,43 @@ def ring_feed():
     return out
 
 
+def esd_bus(rev):
+    """Resistance from each top-side analog pad's core pin to its nearest PCLAMPC_H_G terminal (app note 8.7.3,
+    Table 10.1: at most 1 ohm between 3AC cells and the clamp's supply pair), at 125 C rcworst_T. Revision 1 and 3:
+    the analog clamp on the analog trunks, the path is the trunk from the pad landing down to the clamp-bar drops (10 um
+    wide; AVDD M9, AVSS M8). Revision 2: the clamp beside the pair clamp; the nearest clamp is the SAR one, over the
+    TACVDD/TACVSS bus (constraints.json shared_bus) from top_4 to top_1 (3 pitches) and from top_3 to right_8 (about
+    5 pitches around the north-east corner)."""
+    from Layout.tools.analysis.ring_supply import rsh
+    if rev == 2:
+        per = json.loads((ROOT / "Layout/specs/constraints.json").read_bytes())["stage6_supply_model"][
+            "package_per_pin"]["shared_bus"]["ohm_per_60um_pitch_per_rail"]["125C_rcworst"]
+        return dict(path="TACVDD/TACVSS bus to the SAR clamp", AVDD_top_4_ohm=round(3 * per, 2),
+                    AVSS_top_3_ohm=round(5 * per, 2), limit_ohm=1.0, note="before the pad cells' own core-port resistance")
+    (x0, y0) = geo.CLAMP_ORIGIN[rev]["analog"]
+    bars = geo.clamp_bars(rev)["analog"]
+    ybar = {n: y0 + (a + b) / 2 for n, (a, b) in bars.items()}
+    land = 650.0 - 2.4                                   # the trunk leaves the pad landing bar (chip_routes BAND)
+    out = dict(path="analog trunk from the pad landing to the clamp-bar via stacks", limit_ohm=1.0)
+    for net, layer, key in ((geo.AVDD, "M9", "AVDD_top_4_ohm"), (geo.AVSS, "M8", "AVSS_top_3_ohm")):
+        out[key] = round(rsh(layer, 125, True) * (land - ybar[net]) / 10.0, 3)
+    out["note"] = "trunk metal only; the via stacks (2 x 2 VIA7/VIA8 and Mx via fields) add a few milliohm"
+    return out
+
+
 def object_geometry(rev=1):
     out = {}
+    cmax = {0.8: 37.9651e-15, 0.85: 40.2842e-15, 0.9: 42.6034e-15, 1.0: 47.2416e-15}   # PDK nmoscap cmax, wr 2.5 um
     for b in geo.DECAPS:
         content, s = geo.decap(b, rev)
-        s["capacitance_pF"] = round(s["devices"] * NMOSCAP_F * 1e12, 1)
+        nm = s["devices"] * cmax[s.get("unit", {}).get("lr", 0.8)] / 37.9651e-15 * NMOSCAP_F
+        s["nmoscap_pF"] = round(nm * 1e12, 1)
+        s["capacitance_pF"] = round(nm * 1e12 + ((s.get("mom") or {}).get("capacitance_pF") or 0), 1)
         s["esr_upper_bound_per_rail"] = esr_estimate(content, s)
         out[f"decap_{b}"] = s
     out["clamps"] = geo.clamps(rev)[1]
-    if rev == 2:
+    out["esd_bus_analog"] = esd_bus(rev)
+    if rev >= 2:
         return out
     out["core_vss_ring"] = geo.vss_ring()[1]
     out["adc_guard_ring"] = geo.guard_ring()[1]
@@ -314,6 +345,7 @@ def main():
                     help="another chip view built the same way, compared by rule against REFERENCE (layout_full or an "
                          "earlier --variant view)")
     ap.add_argument("--objects-rev2", action="store_true", help="record the layout_r2 object cells (grown pad decaps)")
+    ap.add_argument("--objects-rev3", action="store_true", help="record revision 3 (clamps back, MOM in the analog decap)")
     a = ap.parse_args()
     chip = ev_manifest(a.chip_checks)
     part = ev_manifest(a.partial)
@@ -399,6 +431,9 @@ def main():
         record["objects_r2"] = objects(OBJECT_CELLS_R2)
         record["geometry_r2"] = object_geometry(2)
         record["ring_feed_r2"] = ring_feed()
+    if a.objects_rev3:
+        record["objects_r3"] = objects(OBJECT_CELLS_R3)
+        record["geometry_r3"] = object_geometry(3)
     write_json(ROOT / a.out, record)
     print(json.dumps(dict(drc=record["drc"]["markers"], new=list(new), gone=list(gone), lvs=record["lvs"]["verdict"],
                           erc=record["erc"]["chip_full_total"]), indent=1))

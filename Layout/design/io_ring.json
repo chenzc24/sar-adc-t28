@@ -2220,11 +2220,11 @@
      646.5
     ]
    ],
-   "use": "Analog-branch AVDD-AVSS bulk between the VIN routes, 6 um clear of them, on the trunk next to its pads; about 2 ohm ESR. It fills the region: its clamp sits beside the pair clamp (pclampc_analog).",
+   "use": "Analog-branch AVDD-AVSS bulk between the VIN routes, 6 um clear of them, on the trunk next to its pads, around pclampc_analog; about 2 ohm ESR. Below the planned capacitance: the clamp must stay here (app note 8.7.3).",
    "area_um2": 11844.0,
    "planning_capacitance_pF": 114.2,
-   "drawn_capacitance_pF": 115.8,
-   "drawn": "SAR_ADC_T28_LAYOUT/sar8_decap_analog/layout_r2, 3048 nmoscap (Layout/results/chip_objects.md)"
+   "drawn_capacitance_pF": 92.9,
+   "drawn": "SAR_ADC_T28_LAYOUT/sar8_decap_analog/layout_r3: 2289 nmoscap (87.0 pF) and 37 M5-M7 cfmom_2t (5.92 pF) around pclampc_analog (Layout/results/chip_objects.md)"
   },
   {
    "id": "reference_channel",
@@ -2380,15 +2380,15 @@
    "branch": "analog",
    "bbox": [
     [
-     230.0,
-     279.0
+     360.0,
+     622.0
     ],
     [
-     330.0,
-     301.0
+     460.0,
+     644.0
     ]
    ],
-   "use": "PCLAMPC_H_G for the analog branch, VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1), beside pclampc_pair between AVDD_pair and AVSS_pair and fed from them: the analog region between the VIN routes holds no other 100 x 22 um space once its decap reaches the planned capacitance. The analog pads reach it, and the SAR clamp, over the TACVDD/TACVSS bus.",
+   "use": "PCLAMPC_H_G (100 x 22 um) between the analog trunk pads and the core: VDDESD = AVDD_CORE, VSSESD = AVSS_CORE (app note 10.7.1, 8.7.3); pad-to-clamp 0.02 / 0.06 ohm (AVDD / AVSS, 125 C rcworst). A place beside pclampc_pair would reach the analog pads only over the TACVDD/TACVSS bus (about 0.95 ohm for AVSS against 1 ohm).",
    "area_um2": 2200.0
   },
   {
@@ -2453,7 +2453,7 @@
      "AVSS_analog": 118.0
     },
     "serves": "Comparator and Bootstrap cells through analog_decap_slot (9.3 pF in core)",
-    "pad_decap_drawn_pF": 115.8
+    "pad_decap_drawn_pF": 92.9
    },
    "pair": {
     "pads": {
@@ -2522,11 +2522,11 @@
   "global_vss": "VSS is the ESD bus on every pad's VSS pin; bonded on PVSS1DGZ (left_7) and PVSS2AC (top_7), whose core pins join the register VSS on core_vss_ring.",
   "digital_core": "DVDD (PVDD1DGZ x3, right_4 feeds the register) and VSS feed the output register and the pads' pre-drivers.",
   "io": "VDDIO (bottom_3 PVDD2DGZ, bottom_6 PVDD2POC) and VSSIO (four PVSS2DGZ) feed the output drivers; no core connection.",
-  "esd_clamps": "Three PCLAMPC_H_G on AVDD_CORE/AVSS_CORE (app note 10.7.1 asks for at least one per core-voltage domain): the pair and analog clamps side by side on the pair trunks, the SAR clamp between the SAR pads.",
+  "esd_clamps": "Three PCLAMPC_H_G, one per AVDD/AVSS branch pair, each between its pads and the core (app note 10.7.1 asks for at least one per core-voltage domain).",
   "board": "AVDD 0.9 V (3 bonds), AVSS (7), VSS (2), DVDD 0.9 V (3), VDDIO library post-driver voltage (2), VSSIO (4), VREFP 0.9 V and VREFN 0 V (2 each). AVSS, VSS and VSSIO meet only on the board.",
   "power_sequence": "Every supply on a power cell or PCLAMPC ramps in more than 10 us; VDDIO before or with DVDD; AVDD before VREFP/VREFN/VINP/VINN are driven, and off after them (app note 3.1, 9.2).",
   "decap_total_planning_pF": 411.6,
-  "decap_total_drawn_pF": 418.7,
+  "decap_total_drawn_pF": 395.8,
   "ring_feed_drawn_ohm": {
    "analog": {
     "pad_to_pin": 0.528,
