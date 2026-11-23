@@ -93,7 +93,7 @@ def via_field(c, net, layer_lo, box, pitch=0.6):
 
 
 def clamp_bars(rev=1):
-    return CLAMP_BARS if rev == 1 else CLAMP_BARS_R2
+    return CLAMP_BARS_R2 if rev == 2 else CLAMP_BARS
 
 
 def clamps(rev=1):
@@ -117,7 +117,7 @@ def clamps(rev=1):
             c.pin(net, "M4", [x0 + 0.5, by0, x1 - 0.5, by1])
         summary[branch] = dict(origin=[x0, y0], bars={n: [y0 + a, y0 + b] for n, (a, b) in clamp_bars(rev)[branch].items()},
                                via3_clusters=cuts)
-    return finish(c, "sar8_esd_clamps", "layout" if rev == 1 else "layout_r2"), summary
+    return finish(c, "sar8_esd_clamps", "layout_r2" if rev == 2 else "layout"), summary
 
 
 # ------------------------------------------------------------------------------------------------ decaps
@@ -164,8 +164,37 @@ DECAPS_R2 = {
 }
 
 
+# Revision 3 (analog view layout_r3; the clamps go back to revision 1): the analog PCLAMPC_H_G returns to (360, 622)
+# on the analog trunk, between top_3/top_4 and the core (app note 8.7.3; its r2 place failed the pad-to-clamp bus
+# check). The analog decap keeps the revision 2 region and near-pin ports and wins back part of the clamp's area
+# (a larger nmoscap unit does not fit: lr 0.85 and 0.9 um break the 65 % local poly limit PO.DN.4.1, lr 0.8 is close):
+# M5 bars twice as far apart, and M5-M7 MOM (cfmom_2t, the PDK's minimum three-layer stack) in the gaps between the bars, above the
+# M6 collectors and below the core VSS ring's M7 band. Each MOM spans three nmoscap rows; its M5 bus bars sit on the
+# M4 straps of the rails at its ends (opposite nets) with VIA4, so it joins the strap mesh like the nmoscaps.
+CLAMP_ORIGIN[3] = CLAMP_ORIGIN[1]
+DECAPS_R3 = {
+    "analog": dict(DECAPS_R2["analog"], keepout=list(DECAPS["analog"]["keepout"]),
+                   bar_pitch=13.0, collector=4.0,
+                   mom=dict(y=(595.0, 629.0), avoid=[(357.5, 619.5, 462.5, 646.5)])),
+}
+
+
 def decap_spec(branch, rev=1):
-    return dict(DECAPS[branch], **(DECAPS_R2[branch] if rev == 2 else {}))
+    spec = dict(DECAPS[branch])
+    if rev >= 2:
+        spec.update(DECAPS_R2[branch])
+    if rev >= 3:
+        spec.update(DECAPS_R3.get(branch, {}))
+    return spec
+
+
+def decap_view(branch, rev):
+    """OA view of a decap at a revision: revision 3 changes only the analog decap."""
+    if rev == 1:
+        return "layout"
+    if rev == 3 and branch in DECAPS_R3:
+        return "layout_r3"
+    return "layout_r2"
 
 
 def subtract(box, cuts):
@@ -192,14 +221,14 @@ def subtract(box, cuts):
     return [b for b in out if b[2] - b[0] >= 14 and b[3] - b[1] > 4]
 
 
-def mesh(c, arr):
+def mesh(c, arr, px=PX):
     """M3 straps on every fourth column (plus at phase 0, minus at phase 2) with VIA2 onto same-net rails, and an M4
     strap on every M2 rail with VIA3 where it crosses a same-net M3 strap."""
     lo = min(a for n, a, b in arr["rails"])
     hi = max(b for n, a, b in arr["rails"])
     straps = {arr["plus"]: [], arr["minus"]: []}
     for j, xc in enumerate(arr["cols"]):
-        k = round((arr["xs"][j] - arr["phase"]) / PX) % 4
+        k = round((arr["xs"][j] - arr["phase"]) / px) % 4
         net = arr["plus"] if k == 0 else arr["minus"] if k == 2 else None
         if net is None:
             continue
@@ -240,17 +269,25 @@ def decap(branch, rev=1):
         boxes[j][1] = max(boxes[j][1], boxes[i][3] + 1.2)
     boxes = [tuple(b) for b in boxes]
     arrays = []
-    for k, (x0, y0, x1, y1) in enumerate(boxes):
-        arr = nm_array(c, f"DP{branch[0].upper()}{k}", [[x0, y0], [x1, y1]], plus, minus, phase_x=rx0 + 0.5)
-        if arr:
-            arrays.append(mesh(c, arr) | dict(box=(x0, y0, x1, y1)))
+    unit, px = spec.get("unit", UNIT), spec.get("px", PX)
+    import Layout.design.toplevel_full_routes as tfr
+    saved = tfr.PX
+    tfr.PX = px                      # nm_array steps its columns on the module pitch
+    try:
+        for k, (x0, y0, x1, y1) in enumerate(boxes):
+            arr = nm_array(c, f"DP{branch[0].upper()}{k}", [[x0, y0], [x1, y1]], plus, minus, unit=unit,
+                           phase_x=rx0 + 0.5)
+            if arr:
+                arrays.append(mesh(c, arr, px) | dict(box=(x0, y0, x1, y1)))
+    finally:
+        tfr.PX = saved
     # Vertical M5 bars about 6.5 um apart, alternating nets, an even number spread from edge to edge: the first (plus)
     # and the last (minus) bar run beside any keep-out, so both nets reach every slab. A bar spans every array that
     # covers its x and crosses the gaps between them unless a keep-out lies in the gap; VIA4 onto same-net M4 straps.
     bars = {plus: [], minus: []}
     xmin = min(a["x"][0] for a in arrays) + 1.6
     xmax = max(a["x"][1] for a in arrays) - 1.6
-    n = max(2, 2 * int(((xmax - xmin) / 6.5 + 1) // 2))
+    n = max(2, 2 * int(((xmax - xmin) / spec.get("bar_pitch", 6.5) + 1) // 2))
     pitch = (xmax - xmin) / (n - 1)
     for k in range(n):
         x = snap(round(round((xmin + k * pitch) / 0.005) * 0.005, 3))
@@ -274,6 +311,7 @@ def decap(branch, rev=1):
                     if n_ == net:
                         for dx in (-0.5, 0.0, 0.5):
                             c.mx(net, snap(x + dx), y, 4, pads=(False, False), quad=True)
+    moms = mom_tiles(c, spec, arrays, bars, plus, minus) if spec.get("mom") else []
     # Ports: per net an M6 collector across the bars (VIA5 onto every same-net bar), an M6 neck of NECK_L x NECK_W and
     # an M6 landing pad under the trunk, where the integration drops the trunk's via stack.
     ports = {}
@@ -309,13 +347,89 @@ def decap(branch, rev=1):
         c.pin(net, "M6", pad)
         ports[key] = dict(net=net, pad=pad, neck=neck, collector=collector, neck_ohm=round(SHEET_OHM * NECK_L / NECK_W, 3),
                           collector_bars=len(on))
-    devices = sum(v["devices"] for v in c.summary.values())
-    gate = sum(v["gate_um2"] for v in c.summary.values())
+    for box in [p[k] for p in ports.values() for k in ("pad", "neck", "collector")]:
+        for m in moms:
+            if box[0] < m["box"][2] + 0.5 and m["box"][0] < box[2] + 0.5 and box[1] < m["box"][3] + 0.5 \
+                    and m["box"][1] < box[3] + 0.5:
+                raise ValueError(f"{branch}: MOM {m['name']} too close to port metal")
+    devices = sum(v["devices"] for k, v in c.summary.items() if "devices" in v)
+    gate = sum(v["gate_um2"] for k, v in c.summary.items() if "gate_um2" in v)
     summary = dict(region=spec["region"], bbox=[list(v) for v in spec["bbox"]], revision=rev,
                    planning_pF=reg.get("planning_capacitance_pF"),
                    devices=devices, gate_um2=round(gate, 1), arrays=len(arrays),
-                   bars={n: len(v) for n, v in bars.items()}, ports=ports)
-    return finish(c, f"sar8_decap_{branch}", "layout" if rev == 1 else "layout_r2"), summary
+                   bars={n: len(v) for n, v in bars.items()}, ports=ports, unit=dict(unit), column_pitch_um=px,
+                   mom=dict(tiles=len(moms), capacitance_pF=round(sum(m["c_F"] for m in moms) * 1e12, 2),
+                            area_um2=round(sum((m["box"][2] - m["box"][0]) * (m["box"][3] - m["box"][1])
+                                               for m in moms), 1)) if moms else None)
+    return finish(c, f"sar8_decap_{branch}", decap_view(branch, rev)), summary
+
+
+MOM_F_PER_UM2_LAYER = 151.6e-15 / (11.96 * 5.42) / 3   # PDK cfmom_2t callback: M5-M7, nr 120, lr 5 um = 151.6 fF
+MOM_W, MOM_S = 0.05, 0.05
+
+
+def mom_tiles(c, spec, arrays, bars, plus, minus):
+    """M5-M7 cfmom_2t tiles in the gaps between the M5 bars, inside spec["mom"]["y"] and clear of spec["mom"]["avoid"].
+    A tile spans three nmoscap rows: its lower M5 bus bar sits 0.1 um above the M4 strap of one rail and its upper bus
+    bar 0.1 um below the strap three rails up (the other net); the next tile above starts on that strap, mirrored, so
+    tiles of one column share straps. VIA4 joins each bus bar to its strap. R0: PLUS on the upper bar."""
+    lo_y, hi_y = spec["mom"]["y"]
+    straps = sorted({(y, n) for a in arrays for n, y in a["m4"]})
+    ys = [y for y, _ in straps]
+    net_at = dict(straps)
+    pitch = spec.get("unit", UNIT)["wr"] + 0.29          # nmoscap row pitch: rails alternate nets at this pitch
+    # rails per tile, odd so the two bus bars sit on opposite nets; a three-rail tile first, a one-rail tile where
+    # only that fits. Bus bar centres sit 0.1 um inside the two straps.
+    lrs = {span: round(span * pitch - 0.51, 3) for span in (3, 1)}
+    xs = sorted(b[0] for net in bars for b in bars[net])
+    tiles = []
+    for xa, xb in zip(xs, xs[1:]):
+        x0, x1 = xa + 1.0 + 0.6, xb - 1.0 - 0.6
+        nr = int((x1 - x0 + 0.04) / 0.1 + 1e-9)
+        nr -= nr % 2
+        if nr < 20:
+            continue
+        width = round(nr * 0.1 - 0.04, 3)
+        x0 = snap(round((x0 + x1 - width) / 2 / 0.005) * 0.005)
+        k = 0
+        while k + 1 < len(ys):
+            placed = False
+            for span, lr in lrs.items():
+                if k + span >= len(ys):
+                    continue
+                s0, s1 = ys[k], ys[k + span]
+                if abs((s1 - s0) - span * pitch) > 0.02:
+                    continue
+                b0, b1 = s0 + 0.045, s1 - 0.045              # MOM outline: bus bars 0.11 um, centred 0.1 um inside
+                inside = lo_y <= b0 and b1 <= hi_y
+                clear = not any(ax0 < x0 + width and x0 < ax1 and ay0 < b1 and b0 < ay1
+                                for ax0, ay0, ax1, ay1 in spec["mom"]["avoid"])
+                covered = any(a["x"][0] <= x0 and x0 + width <= a["x"][1] and a["y"][0] <= s0 and s1 <= a["y"][1]
+                              for a in arrays)
+                if inside and clear and covered and net_at[s1] != net_at[s0]:
+                    placed = True
+                    break
+            if not placed:
+                k += 1
+                continue
+            top_net, bottom_net = net_at[s1], net_at[s0]
+            orient = "R0" if top_net == plus else "MX"
+            oy = b0 if orient == "R0" else b1
+            name = f"CM_{len(tiles)}"
+            c.pcells.append(dict(cell="cfmom_2t", name=name, xy=[x0, snap(oy)], orient=orient,
+                                 params=dict(StartMn="5", StopMn="7", Nfinger=str(nr), Lfinger=f"{lr}u",
+                                             Wfinger="50n", Sfinger="50n", StartMn_ov_StopMn="Stack:M5-M7", lay="3"),
+                                 nets=dict(PLUS=plus, MINUS=minus)))
+            for y, net in ((s0 + 0.1, bottom_net), (s1 - 0.1, top_net)):
+                n_cut = int((width - 0.4) / 0.3)
+                for i in range(n_cut + 1):
+                    cx = snap(round((x0 + 0.2 + i * (width - 0.4) / max(n_cut, 1)) / 0.005) * 0.005)
+                    c.rect(net, "VIA4", cx - 0.025, snap(y) - 0.025, cx + 0.025, snap(y) + 0.025)
+            area = width * (b1 - b0)
+            tiles.append(dict(name=name, box=[x0, b0, x0 + width, b1], nr=nr, lr=lr, orient=orient,
+                              c_F=MOM_F_PER_UM2_LAYER * 3 * area))
+            k += span
+    return tiles
 
 
 # ------------------------------------------------------------------------------------------------ core VSS ring
@@ -412,4 +526,5 @@ def guard_ring():
 
 OBJECTS = {"clamps": clamps, "vss_ring": vss_ring, "guard_ring": guard_ring, "clamps_r2": lambda: clamps(2),
            **{f"decap_{b}": (lambda b=b: decap(b)) for b in DECAPS},
-           **{f"decap_{b}_r2": (lambda b=b: decap(b, 2)) for b in DECAPS}}
+           **{f"decap_{b}_r2": (lambda b=b: decap(b, 2)) for b in DECAPS},
+           **{f"decap_{b}_r3": (lambda b=b: decap(b, 3)) for b in DECAPS_R3}}

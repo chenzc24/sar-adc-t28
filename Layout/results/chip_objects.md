@@ -98,7 +98,7 @@ Revision 2 of the decap and clamp cells (`layout_r2` views; the `layout` views a
 | SAR | (510, 528)-(646.5, 646.5), minus the SAR clamp | 3543 | 134.6 pF | 132.2 | 1.66 / 1.88 ohm, two ports per net |
 | DVDD | (578, 340)-(640, 426) | 1380 | 52.4 pF | 51.6 | 1.87 / 2.21 ohm |
 
-- **Analog clamp moved.** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model. The app note's pad-to-clamp bus limit is still unchecked (an existing open item).
+- **Analog clamp moved (superseded by revision 3 below: this place fails the ESD bus check).** Between the VIN routes the analog decap reaches at most 87 pF with its clamp in place. Nothing outside the VINN/VINP pair can join the analog trunk without crossing VIN. So the analog PCLAMPC_H_G moved to (230, 279), beside the pair clamp, and is fed by straps from the pair trunks the same way. There are still three clamps on AVDD_CORE/AVSS_CORE. The analog pads now reach their nearest clamp, the SAR clamp, over about 3 (AVDD) and 6 (AVSS) pad pitches of the TACVDD/TACVSS bus, roughly 0.45 / 0.9 ohm at 25 C by the constraints.json bus model. The app note's pad-to-clamp bus limit is still unchecked (an existing open item).
 - **SAR** grows west to x 510, 9.5 um from the VINP route edge. The plan's minimum is 6 um; its earlier text said 30.
 - **Ports** sit next to the ADC pins, with the ground (M8) port nearest. On the SAR side, short stubs north from the SAR trunks reach the near-pin ports, and the revision 1 ports stay in parallel. The ESR model is the one above, an upper bound. Ring feed, as a loop at 125 C rcworst_T, drawn vs the plan's 10 um M8 values:
   - pad to pin: analog 0.53 (0.73), pair 2.34 (2.85), SAR 1.61 (1.45) ohm;
@@ -123,10 +123,40 @@ DRC by rule: the eight whole-die DMn.R.1 advisories clear with the filled core; 
 
 The first LVS of this view (in `chip-dcf5-b1-chk`) was INCORRECT. Its source wired the revision 2 clamps and the analog and pair decaps backwards: their subcircuits list AVSS first, but the chip source connected the ports in a fixed order. `chip_full_source.py` now connects object ports by name, and the revision 1 source is byte-identical. The reruns above use the corrected source.
 
+## Analog clamp back in place: `sar8_adc_chip/layout_full_fill5_r3`
+
+Revision 3 fixes the ESD fault of revision 2. The analog PCLAMPC_H_G returns to (360, 622) on the analog trunks, between top_3/top_4 and the core (app note 8.7.3 step 2; the `sar8_esd_clamps/layout` view). Pad-to-clamp bus resistance at 125 C rcworst_T: AVDD (top_4) 0.02 ohm and AVSS (top_3) 0.06 ohm along the trunks, against 1 ohm (Table 10.1). In revision 2 they were 0.57 and 0.95 ohm over the TACVDD/TACVSS bus, before the pad cells' own resistance.
+
+With the clamp back in its region, the analog decap cannot reach its plan. The new `sar8_decap_analog/layout_r3` recovers what it can:
+
+| Part | Drawn |
+| --- | --- |
+| nmoscap, wr 2.5 / lr 0.8 um | 2289 devices, 87.0 pF |
+| M5-M7 MOM (cfmom_2t) between the M5 bars, 13 um pitch | 37 tiles, 2529 um2, 5.9 pF |
+| total | **92.9 pF** (plan 114.2; revision 1 85.1) |
+| ESR per rail, model | 2.28 / 2.21 ohm (AVDD / AVSS) |
+
+- **MOM** is the PDK's minimum three-layer stack (M5-M7, 0.79 fF/um2 per layer by the PDK callback: 151.6 fF for nr 120, lr 5 um). It sits above the M6 collectors and below the core VSS ring's M7 band (y 629.5), and clear of the clamp and its trunk drops. Each tile spans three (or one) nmoscap rows, with its M5 bus bars on the M4 straps of the rails at its ends via VIA4. Cell LVS recognises all 37 as cfmom_2t (CORRECT).
+- **A larger nmoscap unit does not fit.** lr 1.0, 0.9 and 0.85 um (pitch lr + 0.5) all break PO.DN.4.1, the 65 % local poly limit (PDK cmax 47.2 / 42.6 / 40.3 fF against 38.0 fF), and lr 0.8 is already close to it.
+- **Cell DRC** shows density and the two advisories only.
+
+The chip view is built like `layout_full_dc_fill5` (build `chip-f5r3-b1`, `chip_integration.py --objects-rev 3`): the filled core `layout_fill5`, the clamps in `layout`, the analog decap in `layout_r3`, and the other decaps in `layout_r2`. All guarded views stayed byte-identical. By rule against `layout_full_dc_fill5`:
+
+| Check | `layout_full_fill5_r3` | `layout_full_dc_fill5` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-f5r3-b1-chk`) | 1484 | 1623 |
+| of which other than density and fill | 236 | 236 |
+| LUP.5.2.1 / 5.2.2, flat | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name | CORRECT | CORRECT |
+| ERC | 302, identical by check | 302 |
+
+Only density counts change: M7.DN.6 417 to 303 and M6.DN.6 253 to 233, because the MOM fills M5-M7 over the analog decap.
+
 ## Open
 
-- Pad decaps are at plan only in `layout_full_dc_fill5`; `layout_full` and `layout_full_boot_r2` keep 85 / 112 / 105 / 50 pF.
-- **The analog clamp's r2 place fails the ESD check; `layout_full_dc_fill5` is not final.** App note 8.7.3 step 2 places each PCLAMPC_H_G between its PVDD3AC/PVSS3AC pair and the core; at (230, 279) the analog pair (top_4/top_3) has none. Its nearest clamp is the SAR one, reached only over the TACVDD/TACVSS bus (constraints.json shared_bus, 0.15 / 0.19 ohm per 60 um at 25 C / 125 C rcworst): AVDD top_4 to top_1 180 um, 0.45 / 0.57 ohm; AVSS top_3 to right_8 about 300 um around the NE corner, 0.75 / 0.96 ohm, against the 1 ohm of Table 10.1 between 3AC cells, before the two cells' own core-port resistance. In revision 1 the clamp sits on the analog trunk about 30 um from top_3/top_4 (well under 0.1 ohm). Next: the clamp back at (360, 622) and the missing ~29 pF found another way (for example MOM on M6-M7 over the decaps, which the M6/M7.DN.6 fill also needs).
-- ESR from extraction (the model above is an upper bound).
+- `layout_full_fill5_r3` is the current chip view; `layout_full_dc_fill5` is superseded (ESD).
+- Analog pad decap 92.9 pF against the planned 114.2 (Stage 1 recommends about 100 pF per branch): rerun the rail budget with the drawn values (analog 92.9, pair 115.9, SAR 134.6, DVDD 52.4 pF). Stage 2's runs at 85 pF bound it from below.
+- ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
 - Fill of the pad decap and VSS-ring areas (M6/M7.DN.6), and the seal ring (the chip deck runs with WITH_SEALRING).
-- LUP.5.2.x at the Bootstrap VIN switches: cleared by the r2 Bootstrap in `layout_full_boot_r2` and `layout_full_dc_fill5` (0 flat); `layout_full` keeps the old core.

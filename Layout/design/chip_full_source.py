@@ -84,12 +84,15 @@ def main():
     ap.add_argument("--base", required=True, help="the partial assembly's chip source (CDL)")
     ap.add_argument("--register", required=True, help="sar8_out_reg.cdl from Layout/design/output_register.py convert")
     ap.add_argument("--contents", required=True, help="directory with content_<object>.json")
-    ap.add_argument("--objects-rev", type=int, choices=(1, 2), default=1,
+    ap.add_argument("--objects-rev", type=int, choices=(1, 2, 3), default=1,
                     help="2: the grown pad decaps and moved analog clamp (content_<object>_r2.json)")
     ap.add_argument("--out", required=True)
     a = ap.parse_args()
-    suffix = "_r2" if a.objects_rev == 2 else ""
-    contents = {o: json.loads((Path(a.contents) / f"content_{o}{suffix}.json").read_text(encoding="utf-8"))
+    from Layout.design.chip_integration import object_views
+    views = object_views(a.objects_rev)
+    suffix = {"layout": "", "layout_r2": "_r2", "layout_r3": "_r3"}
+    cells = {"clamps": "sar8_esd_clamps", **{f"decap_{b}": f"sar8_decap_{b}" for b in ("analog", "pair", "sar", "dvdd")}}
+    contents = {o: json.loads((Path(a.contents) / f"content_{o}{suffix[views[cells[o]]]}.json").read_text(encoding="utf-8"))
                 for _, o, _ in OBJECTS}
     text, missing = build(Path(a.base).read_text(encoding="latin1"), Path(a.register).read_text(encoding="ascii"), contents)
     Path(a.out).write_text(text, encoding="latin1", newline="\n")

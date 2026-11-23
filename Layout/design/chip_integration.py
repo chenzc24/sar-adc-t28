@@ -79,9 +79,14 @@ def mstack(c, net, x, y, lo, hi, axis="y"):
 
 
 def object_views(rev=1):
-    """OA view of each object cell: revision 2 has the grown pad decaps and the moved analog clamp (layout_r2)."""
-    grown = {"sar8_esd_clamps", "sar8_decap_analog", "sar8_decap_pair", "sar8_decap_sar", "sar8_decap_dvdd"}
-    return {cell: ("layout_r2" if rev == 2 and cell in grown else "layout") for cell in OBJECT_CELLS}
+    """OA view of each object cell. Revision 2: the grown pad decaps and the moved analog clamp (layout_r2).
+    Revision 3: the clamps back in place (layout), the analog decap with MOM (layout_r3), the other decaps layout_r2."""
+    views = {cell: "layout" for cell in OBJECT_CELLS}
+    if rev >= 2:
+        views.update({f"sar8_decap_{b}": geo.decap_view(b, rev) for b in geo.DECAPS})
+    if rev == 2:
+        views["sar8_esd_clamps"] = "layout_r2"
+    return views
 
 
 def content(readback, rev=1):
@@ -251,9 +256,12 @@ def build_script(identity, readback_id, view=VIEW, core_view=None, rev=1, core_c
     guarded = [(CHIP, SOURCE_VIEW), ("sar8_io_ring", "layout"), ("sar8_adc_core", "layout_route_guard")]
     if view != VIEW:
         guarded.append((CHIP, VIEW))
-    if view not in (VIEW, "layout_full_boot_r2"):
-        guarded.append((CHIP, "layout_full_boot_r2"))
-    if rev == 2:
+    for other in ("layout_full_boot_r2", "layout_full_dc_fill5"):
+        if view != other:
+            guarded.append((CHIP, other))
+    if rev >= 2:
+        guarded += [(cell, v) for cell, v in object_views(2).items() if v != "layout" and (cell, v) not in
+                    object_views(rev).items()]
         guarded += [(cell, "layout") for cell, v in object_views(rev).items() if v != "layout"]
     if core_view:
         data["replace_masters"] = [dict(inst="XADC", lib=config()["library"], cell=core_cell, view=core_view)]
@@ -270,7 +278,8 @@ def main():
     ap.add_argument("--view", default=VIEW, help="chip view to build (a new name leaves layout_full untouched)")
     ap.add_argument("--core-view", help="view for XADC instead of sar8_adc_core/layout_route_guard")
     ap.add_argument("--core-cell", default="sar8_adc_core", help="cell of --core-view (e.g. a filled core wrapper)")
-    ap.add_argument("--objects-rev", type=int, choices=(1, 2), default=1, help="object views: 2 = grown pad decaps")
+    ap.add_argument("--objects-rev", type=int, choices=(1, 2, 3), default=1,
+                    help="object views: 2 = grown pad decaps, 3 = clamps back in place and MOM in the analog decap")
     a = ap.parse_args()
     if a.view != VIEW and not a.core_view:
         raise SystemExit("A new chip view needs --core-view")

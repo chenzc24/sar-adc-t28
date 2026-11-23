@@ -27,7 +27,7 @@ WORK = ROOT / "work/layout/chip-objects"
 PHYSICAL = ROOT / "Layout/tools/physical"
 OWNER = "Layout/design/chip_objects.py"
 PDK_LIBRARY = "tsmcN28"
-PCELLS = {"nmoscap", "rupolym"}
+PCELLS = {"nmoscap", "rupolym", "cfmom_2t"}
 SHARED_CDS = "/home/dmanager/shared_lib/TSMC28/cds.lib"
 PAD_LIBRARY = "PAD"                      # PAD60GU bond pads of the ring (as Layout/design/chip_assembly.py)
 NAME = re.compile(r"[A-Za-z][A-Za-z0-9_]{1,63}")
@@ -239,10 +239,15 @@ def lvs_source(content):
         else:
             raise ValueError("No LVS source rule for " + i["cell"])
     for p in content.get("pcells", []):
-        if p["cell"] != "nmoscap":
-            raise ValueError("No LVS source rule for " + p["cell"])
         prm = p["params"]
-        lines.append(f"X{p['name']} {p['nets']['PLUS']} {p['nets']['MINUS']} nmoscap wr={prm['wr']} lr={prm['lr']}")
+        if p["cell"] == "nmoscap":
+            lines.append(f"X{p['name']} {p['nets']['PLUS']} {p['nets']['MINUS']} nmoscap wr={prm['wr']} lr={prm['lr']}")
+        elif p["cell"] == "cfmom_2t":
+            lines.append(f"X{p['name']} {p['nets']['PLUS']} {p['nets']['MINUS']} cfmom_2t nr={prm['Nfinger']} "
+                         f"lr={prm['Lfinger']} w={prm['Wfinger']} s={prm['Sfinger']} stm={prm['StartMn']} "
+                         f"spm={prm['StopMn']} multi=1")
+        else:
+            raise ValueError("No LVS source rule for " + p["cell"])
     lines.append(f".ENDS {content['cell']}")
     return "\n".join(lines) + "\n"
 
