@@ -8,6 +8,7 @@ An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The single-edge SAR 
 
 | Topic | Entry point |
 | --- | --- |
+| Version history | [ADC revisions, layout views and post-layout runs](docs/adc-iteration-history.md#version-timeline) |
 | Design specification | [Specification](docs/specification.md) and its machine-readable source [specs/arch.json](specs/arch.json) |
 | Top level | [ADC top](design/top/adc_top.scs) and [complete DUT includes](design/dut.scs) |
 | Single-edge adoption with cell LPE and extracted CDAC | [Adoption report](results/design/sar_single_edge_adoption_20261120.md) and its [record](results/design/sar_single_edge_adoption_20261120.json) |
