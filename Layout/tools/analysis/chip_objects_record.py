@@ -319,6 +319,27 @@ def clamp_feed_current_density(feed=False):
     return out
 
 
+def landing_current_density(m1_avss=False):
+    """ESD.CD.1gU at the supply pad landings: the Mx width the landing takes out of each AVDD/AVSS pad's core pin (the
+    fingers it extends) against 1.3 A at the Mx density. m1_avss: revision 5, the AVSS landings also extend the M1
+    fingers (chip_integration.avss_landing_m1). The AVDD (PVDD3AC) pin has M2 fingers only: the IO cell's own pin."""
+    from Layout.design.chip_integration import AVSS_LANDINGS, pad_fingers
+    ring = json.loads((ROOT / "Layout/design/io_ring.json").read_bytes())
+    rb = json.loads((ROOT / "work/layout/chip/chip-ring-readback-20261122c/ring_readback.json").read_bytes())
+    out = {}
+    for route in ("AVDD_analog", "AVDD_pair", "AVDD_sar") + AVSS_LANDINGS:
+        pos = ring["routes"][route]["from"]
+        inst, side, figs = pad_fingers(rb, pos)
+        width = {m: round(sum((f[2] - f[0]) if side in ("top", "bottom") else (f[3] - f[1]) for f in fs), 3)
+                 for m, fs in figs.items() if fs}
+        used = ["M2"] + (["M1"] if m1_avss and route in AVSS_LANDINGS else [])
+        um = sum(width.get(m, 0.0) for m in used)
+        out[route] = dict(pad=pos, pin_fingers_um=width, landing_layers=used, landing_um=round(um, 3),
+                          capacity_A=round(um * ESD_CD["Mx_A_per_um"], 3), ok=um * ESD_CD["Mx_A_per_um"] >= ESD_CD["current_A"],
+                          note="the IO cell's own pin (M2 only)" if "M1" not in width else "")
+    return out
+
+
 def object_geometry(rev=1):
     out = {}
     cmax = {0.8: 37.9651e-15, 0.85: 40.2842e-15, 0.9: 42.6034e-15, 1.0: 47.2416e-15}   # PDK nmoscap cmax, wr 2.5 um
@@ -507,7 +528,9 @@ def main():
         basis="clamp_feed_current_density: via cuts of the drop stacks per rail, and the worst M4 bar current with the "
               "clamp current split equally over its nine M3 terminal strips per net",
         three_drops_rev1_3=clamp_feed_current_density(False),
-        clamp_feed_rev4=clamp_feed_current_density(True))
+        clamp_feed_rev4=clamp_feed_current_density(True),
+        pad_landings_rev1_4=landing_current_density(False),
+        pad_landings_rev5=landing_current_density(True))
     write_json(ROOT / a.out, record)
     print(json.dumps(dict(drc=record["drc"]["markers"], new=list(new), gone=list(gone), lvs=record["lvs"]["verdict"],
                           erc=record["erc"]["chip_full_total"]), indent=1))

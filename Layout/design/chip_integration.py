@@ -302,6 +302,63 @@ def clamp_feed(rev=1):
     return c, info
 
 
+# Revision 5 AVSS landings (Layout/design/chip_landing_m1.py). A PVSS3AC core pin is seven M1 and seven M2 fingers on
+# top of each other, 1.5 um wide; the landings (chip_routes.landing) extend only the M2 fingers, 10.5 um of Mx, where
+# the DRM's ESD current density asks 16 um for the 1.3 A of ESD.CD.1gU. This extends the M1 fingers the same way, with
+# an M1 bar under the landing's M2 bar and a VIA1 grid under its VIA2 grid: 21 um. (A PVDD3AC pin is ten M2 fingers,
+# 14.1 um, with nothing on M1: the IO cell's own pin.)
+AVSS_LANDINGS = ("AVSS_analog", "AVSS_pair", "AVSS_sar", "AVSS_guard")
+
+
+def pad_fingers(readback, pos, layers=("M1", "M2")):
+    """Core-pin fingers of the IO cell at ring position pos, per layer, on the cell's core-side edge."""
+    from Layout.design.chip_routes import ring_plan
+    pad = next(p for p in ring_plan()["pads"] if p["position"] == pos)
+    x, y = pad["core_pin_um"]
+    inst = next(n for n, i in readback["instances"].items()
+                if not i["cell"].startswith(("PFILLER", "PCORNER", "PRCUT", "PAD60"))
+                and i["bbox"][0] - 1 <= x <= i["bbox"][2] + 1 and i["bbox"][1] - 1 <= y <= i["bbox"][3] + 1)
+    side = pos.split("_")[0]
+    keep = {"top": lambda b: b[1] < 650.5, "left": lambda b: b[2] > 109.5, "right": lambda b: b[0] < 650.5}[side]
+    figs = {m: sorted({tuple(p["bbox"]) for p in readback["pins"] if p["inst"] == inst and p["term"] == pad["core_pin"]
+                       and p["layer"] == m and keep(p["bbox"])}) for m in layers}
+    return inst, side, figs
+
+
+def avss_landing_m1(readback):
+    """Content of the revision 5 AVSS landings: M1 finger extensions, M1 bar and VIA1 grid at every AVSS pad landing."""
+    from Layout.design.chip_routes import LOW_PITCH, M2_BAR, via_grid
+    c = Content()
+    info = {}
+    for route in AVSS_LANDINGS:
+        pos = plan()["routes"][route]["from"]
+        inst, side, figs = pad_fingers(readback, pos)
+        if figs["M1"] != figs["M2"] or not figs["M1"]:
+            raise ValueError(f"{pos}: the M1 and M2 fingers differ")
+        fingers = figs["M1"]
+        if side == "top":
+            xs0, xs1 = min(f[0] for f in fingers), max(f[2] for f in fingers)
+            bar = (xs0, 650.0 - M2_BAR, xs1, 650.0)
+            ext = [(f[0], bar[1], f[2], 650.2) for f in fingers]
+        elif side == "left":
+            ys0, ys1 = min(f[1] for f in fingers), max(f[3] for f in fingers)
+            bar = (110.0, ys0, 110.0 + M2_BAR, ys1)
+            ext = [(109.8, f[1], bar[2], f[3]) for f in fingers]
+        else:
+            ys0, ys1 = min(f[1] for f in fingers), max(f[3] for f in fingers)
+            bar = (650.0 - M2_BAR, ys0, 650.0, ys1)
+            ext = [(bar[0], f[1], 650.2, f[3]) for f in fingers]
+        for box in ext:
+            c.rect(AVSS, "M1", *box)
+        c.rect(AVSS, "M1", *bar)
+        n0 = len(c.rects)
+        via_grid(c, AVSS, "VIA1", bar, LOW_PITCH, 0.05, 0.1)
+        width = sum((f[2] - f[0]) if side == "top" else (f[3] - f[1]) for f in fingers)
+        info[pos] = dict(route=route, inst=inst, fingers=len(fingers), m1_um=round(width, 3), m2_um=round(width, 3),
+                         bar=list(bar), via1=len(c.rects) - n0)
+    return c, info
+
+
 def build_script(identity, readback_id, view=VIEW, core_view=None, rev=1, core_cell="sar8_adc_core"):
     """build.il of the integrated chip view. With core_view, the copied XADC instance is placed on that view of
     core_cell (sar8_adc_core, or a filled wrapper of it) instead of layout_route_guard, at the same origin: the

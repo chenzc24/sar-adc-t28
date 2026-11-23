@@ -297,9 +297,7 @@ The stacks keep clear of the core VSS ring's M7 band and M6 ties, the other net'
 - **Bar spreading is small:** pin and distributed differ by only about 0.05 ohm.
 - **What remains** is mostly the pad landing and the trunk.
 
-**Pad landings against ESD.CD.1gU (not changed here).** Current leaves each supply pad through its core-pin fingers:
-- **AVDD (PVDD3AC):** ten M2 fingers, 14.1 um in total, about 1.15 A at the Mx density. The landing uses all of them; that is the cell's pin.
-- **AVSS (PVSS3AC):** seven M1 and seven M2 fingers of 10.5 um each. The landings extend only the M2 fingers (0.85 A). Extending the M1 fingers too, as the VSS_digital/VSS_analog stubs do, would give 21 um (1.7 A).
+**Pad landings** against ESD.CD.1gU: the AVSS landings used only the pads' M2 fingers (0.85 A). Revision 5 below adds their M1 fingers.
 
 By rule against `layout_full_fill5_r3_seal`:
 
@@ -315,12 +313,52 @@ By rule against `layout_full_fill5_r3_seal`:
 
 Only density counts change: M6.DN.6 386 to 362 and M7.DN.6 287 to 279, from the new M6/M7 plates. The record is in [chip periphery](chip_periphery.json) `clamp_bus` (extractions `chip-periph-x2`, `chip-periph-x3`).
 
+## AVSS pad landings on M1: `sar8_adc_chip/layout_full_fill5_r5_seal`
+
+ESD current leaves each supply pad through its core-pin fingers, and the landing that joins them is the first metal of the pad-to-clamp path. ESD.CD.1gU asks 16 um of Mx for its 1.3 A (`chip_objects_record.landing_current_density`, in `chip_objects.json` `esd_current_density`):
+
+| Pad | Core pin | Landing before | Landing in r5 |
+| --- | --- | --- | --- |
+| AVSS (PVSS3AC: top_3, left_6, right_8, left_0) | seven M1 + seven M2 fingers, 10.5 um each | M2 only: 10.5 um, 0.85 A | M1 + M2: 21 um, **1.71 A** |
+| AVDD (PVDD3AC: top_4, left_5, top_1) | ten M2 fingers, 14.1 um, nothing on M1 | 14.1 um, 1.15 A | unchanged |
+
+- **AVDD** stays at 1.15 A. The 14.1 um of M2 is the IO cell's own core pin, rated by the library, and lies outside our wiring; the landing already uses all of it.
+- **Build:** `Layout/design/chip_landing_m1.py` (build `chip-landm1-b1`; geometry in `chip_integration.avss_landing_m1`) copies `layout_full_fill5_r4_seal`, which stays unchanged.
+- **Added at each AVSS landing:** the seven M1 finger extensions over the M2 ones, an M1 bar under the landing's 1 um M2 bar, and a VIA1 grid under its VIA2 grid (78 cuts per pad, 2.0 A). That is 344 shapes, M1 and VIA1 only, in four boxes in the landing band (die um):
+  - top_3: (432.14, 649.0)-(447.86, 650.2)
+  - left_6: (109.8, 252.14)-(111.0, 267.86)
+  - right_8: (649.0, 612.14)-(650.2, 627.86)
+  - left_0: (109.8, 612.14)-(111.0, 627.86)
+
+By rule against `layout_full_fill5_r4_seal`:
+
+| Check | `layout_full_fill5_r5_seal` | `layout_full_fill5_r4_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-landm1-b1-chk`) | 1912, every rule equal | 1912 |
+| of which other than density and fill | 235 | 235 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-landm1-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-landm1-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+Pad to clamp, for information (clamps flattened, `chip-periph-x4`; distributed): the AVSS rails fall by about 0.1 ohm, and AVDD is unchanged.
+
+| Rail | r4_seal | r5_seal |
+| --- | --- | --- |
+| Analog AVSS | 0.94 ohm | 0.83 ohm |
+| Pair AVSS | 0.80 ohm | 0.70 ohm |
+| SAR AVSS | 0.84 ohm | 0.74 ohm |
+| AVDD (all three) | 0.79-0.81 ohm | 0.79-0.81 ohm |
+
+This is the frozen chip view for fill. Its stream is `chip-landm1-b1-chk/fixture.gds`, sha256 7b2973da…
+
 ## Open
 
-- `layout_full_fill5_r4_seal` (clamp feed along the bars) is the current chip view. `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3` are its sources and stay unchanged; `layout_full_dc_fill5` is superseded (ESD).
+- `layout_full_fill5_r5_seal` is the current and frozen chip view. Its sources stay unchanged: `layout_full_fill5_r4_seal` (clamp feed), `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3`. `layout_full_dc_fill5` is superseded (ESD).
 - Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
-- ESD connection to the clamps: the bars and drop vias of `layout_full_fill5_r4_seal` meet ESD.CD.1gU. The AVSS pad landings use only the pads' M2 fingers (10.5 um, 0.85 A against the 1.3 A guideline); extending their M1 fingers too would give 21 um. The AVDD pads' own core pins are 14.1 um of M2 (1.15 A).
+- ESD connection to the clamps meets ESD.CD.1gU in `layout_full_fill5_r5_seal`: clamp bars, drop vias and AVSS landings. The exception is the AVDD pads' own core pin, 14.1 um of M2 (1.15 A), which belongs to the IO cell.
 - The decap-port stacks use the same two VIA7/VIA8 recipe (decap port to ADC pin 1.2-1.8 ohm loop). The rail budget passes with them (20.3 mV); more stacks there would lower the droop further.
 - VIN routes are 56.6 ohm (1 um Mx) in series with the sampling switch; Stage 2 checks the tracking with the VIN netlist.
 - Periphery extraction after fill, and at 125 C rcworst (scaled here).
