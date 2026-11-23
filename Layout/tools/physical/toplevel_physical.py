@@ -43,7 +43,7 @@ def main():
     ap.add_argument("--top", default=TOP, help="top cell (default %s; the fill wrapper sar8_adc_core_filled)" % TOP)
     args = ap.parse_args()
     cell = args.top
-    if not re.match(r"\Asar8_adc_core(_filled)?\Z", cell):
+    if not re.match(r"\A(sar8_adc_core(_filled)?|sar8_chip_routes)\Z", cell):
         raise ValueError("Unexpected top cell")
     out = os.getcwd()
     if os.path.basename(out) != args.identity:

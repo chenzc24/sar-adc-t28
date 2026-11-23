@@ -1,4 +1,5 @@
-"""The ADC core fill-owner table (Layout/specs/fill-policy.md) names every floorplan region once."""
+"""The ADC core fill-owner table (Layout/specs/fill-policy.md) names every floorplan region once; the chip fill-owner
+table gives every chip region an owner."""
 import json
 from pathlib import Path
 import re
@@ -7,8 +8,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def owner_rows(text):
-    section = text.split('### ADC Core Fill Owners', 1)[1].split('\n### ', 1)[0]
+def owner_rows(text, heading='### ADC Core Fill Owners'):
+    section = text.split(heading, 1)[1].split('\n### ', 1)[0]
     rows = [line for line in section.splitlines() if line.startswith('| ')]
     cells = [[c.strip() for c in row.strip('|').split('|')] for row in rows[2:]]
     return {cell[0]: cell[1:] for cell in cells}
@@ -16,7 +17,9 @@ def owner_rows(text):
 
 class FillOwnership(unittest.TestCase):
     def setUp(self):
-        self.rows = owner_rows((ROOT / 'Layout/specs/fill-policy.md').read_text(encoding='utf-8'))
+        text = (ROOT / 'Layout/specs/fill-policy.md').read_text(encoding='utf-8')
+        self.rows = owner_rows(text)
+        self.chip_rows = owner_rows(text, '### Chip Fill Owners')
         plan = json.loads((ROOT / 'Layout/design/floorplan.json').read_text(encoding='utf-8'))
         self.regions = [b['id'] for b in plan['blocks']] + [r['id'] for r in plan['reserved_regions']]
 
@@ -31,7 +34,15 @@ class FillOwnership(unittest.TestCase):
         self.assertTrue(any(r.startswith('Rest of the core') for r in self.rows))
         ring = [cells for r, cells in self.rows.items() if 'io_ring.json' in r]
         self.assertEqual(len(ring), 1)
-        self.assertEqual((ring[0][0], ring[0][2]), ('Chip level', 'Pending'))
+        self.assertEqual(ring[0][0], 'Chip level')
+        self.assertIn('#chip-fill-owners', ring[0][1])
+
+    def test_every_chip_row_has_an_owner(self):
+        self.assertTrue(self.chip_rows)
+        for region, (owner, fill, status) in self.chip_rows.items():
+            self.assertTrue(owner and fill and status, region)
+        self.assertTrue(any(r.startswith('IO ring cells') for r in self.chip_rows))
+        self.assertTrue(any(r.startswith('The rest of the ring opening') for r in self.chip_rows))
 
 
 if __name__ == '__main__':

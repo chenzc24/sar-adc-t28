@@ -13,6 +13,7 @@ import json
 import re
 import shlex
 import subprocess
+from pathlib import Path
 
 from Layout.design.toplevel_route import CADENCE, IDENTITY, STANDARD_LIBRARY, sk
 from Layout.project import ROOT, config, write_json
@@ -244,7 +245,7 @@ def build(identity, readback_id):
 PHYSICAL = ROOT / "Layout/tools/physical"
 
 
-def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None, top=CHIP[0]):
+def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None, top=CHIP[0], gds=None):
     """Start Layout/tools/physical/chip_physical.py in a fresh evidence directory (status/fetch: toplevel_route)."""
     if not IDENTITY.fullmatch(identity):
         raise ValueError("Invalid identity")
@@ -252,8 +253,19 @@ def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None,
     q = shlex.quote
     evidence = f"{cfg['remote_root']}/evidence/{identity}"
     files = {n: (PHYSICAL / n).read_bytes() for n in ("chip_physical.py", "run_physical.py", "workspace.py")}
-    args = ["python", "-u", "chip_physical.py", identity, "--top", top, "--view", view,
+    args = ["python", "-u", "chip_physical.py", identity, "--top", top,
             "--lock", cfg["legacy_root"] + "/layout.lock", "--stages", stages]
+    staged = None
+    if gds:
+        # An assembly not in OA (for example a fill wrapper before its OA build): sent ahead with compressed scp
+        # (inline base64 times out for a filled chip) into the owned state folder, moved in and hash-checked.
+        blob = Path(gds).read_bytes()
+        staged = (f"{cfg['remote_root']}/state/{identity}.candidate.gds", hashlib.sha256(blob).hexdigest())
+        subprocess.run(["scp", "-C", "-q", "-o", "BatchMode=yes", str(gds), f"{cfg['host']}:{staged[0]}"],
+                       check=True, timeout=3600)
+        args += ["--gds", "candidate.gds"]
+    else:
+        args += ["--view", view]
     if hcells:
         files["hcells.txt"] = ("\n".join(hcells) + "\n").encode("ascii")
         args += ["--hcells", "hcells.txt"]
@@ -262,6 +274,9 @@ def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None,
         args += ["--source", "source.cdl"]
     script = ["set -eu", "umask 077", f"test \"$(hostname -s)\" = {q(cfg['host'])}", f"test ! -e {q(evidence)}",
               f"mkdir {q(evidence)}", f"cd {q(evidence)}"]
+    if staged:
+        script += [f"mv {q(staged[0])} candidate.gds",
+                   f"test \"$(sha256sum candidate.gds | cut -d' ' -f1)\" = {staged[1]} || {{ echo CANDIDATE_HASH_DIFFERS; exit 9; }}"]
     for name, blob in files.items():
         script += [f"base64 -d > {name} <<'B64'", base64.b64encode(blob).decode("ascii"), "B64"]
     script += [f"cp {q(cfg['remote_root'] + '/runtime/cds.lib')} cds.lib"]
@@ -273,7 +288,8 @@ def physical(identity, view=CHIP[1], stages="drc,lvs", hcells=None, source=None,
     run = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10", cfg["host"], "bash -s"],
                          input="\n".join(script).encode("ascii"), capture_output=True, timeout=180)
     receipt = dict(identity=identity, arguments=args, returncode=run.returncode,
-                   uploaded_sha256={n: hashlib.sha256(b).hexdigest() for n, b in files.items()},
+                   uploaded_sha256=dict({n: hashlib.sha256(b).hexdigest() for n, b in files.items()},
+                                        **({"candidate.gds": staged[1]} if staged else {})),
                    stdout=run.stdout.decode("utf-8", "replace").splitlines())
     write_json(WORK / identity / "launch.json", receipt)
     return receipt
@@ -296,12 +312,13 @@ def main():
     a.add_argument("--source", help="chip LVS source (CDL)")
     a.add_argument("--top", default=CHIP[0], help="cell to check (baselines: sar8_io_ring, sar8_adc_core)")
     a.add_argument("--view", default=CHIP[1])
+    a.add_argument("--gds", help="local GDS assembly to check instead of the OA view")
     args = ap.parse_args()
     if args.action == "physical":
         from Layout.design.toplevel_route import block_masters
         hc = block_masters(args.hcells_from) if args.hcells_from else None
         print(json.dumps(physical(args.identity, view=args.view, stages=args.stages, hcells=hc, source=args.source,
-                                  top=args.top), indent=1))
+                                  top=args.top, gds=args.gds), indent=1))
         return
     if args.action == "readback":
         print(json.dumps(readback(args.identity), indent=1))

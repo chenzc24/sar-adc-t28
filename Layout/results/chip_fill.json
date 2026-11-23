@@ -1,0 +1,467 @@
+{
+  "stage": "Stage 5 chip-level fill",
+  "issue": "chenzc24/sar-adc-t28#12",
+  "builder": "Layout/design/chip_fill.py",
+  "policy": "Layout/specs/fill-policy.md#chip-fill-owners",
+  "waivers": "Layout/results/chip_drc_waivers.md",
+  "current": {
+    "revision": 7,
+    "chip_view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r8_seal",
+    "chip_build": "chip-r8-b1",
+    "chip_stream": {
+      "evidence": "chip-r8-b1-chk/fixture.gds",
+      "sha256": "2bba5a25a224ac70c61bc82cde731011c7eff4a63aa8881a2a682444a6c50518"
+    },
+    "die_um": [
+      -66,
+      -66,
+      826,
+      826
+    ],
+    "bounds_um": [
+      -39.0,
+      -39.0,
+      799.0,
+      799.0
+    ],
+    "corner_cut_um": 125.0,
+    "seed": {
+      "identity": "chip-sfill7-pass",
+      "sha256": "8544c37616b718e8b5b7e771fc864650926f5c8d705febba37b96c6d033916ea",
+      "exclusions": 1097
+    },
+    "fill_pass": {
+      "identity": "chip-sfill7-pass",
+      "dummy_tcd": false,
+      "steps": {
+        "ODPO": {
+          "gds_sha256": "f90369a8b56b6ba1edf3a005056887a185b6b59e01c7ab7716afdf7bdf5b702f",
+          "returncode": 0,
+          "seconds": 75,
+          "source": "/home/dmanager/shared_lib/TSMC28/dummy/dummy_script_ODPO",
+          "source_sha256": "76a394c529ba941d3564a4a1559ffec935ee652baffef1baff65eb5b7cc936c0",
+          "job_sha256": "81ed95cf4cfc8b74d683cf8b7b2328262ab299acc2b2bb5a159a6ecd85c09d30"
+        },
+        "metal": {
+          "gds_sha256": "b4fa1156d50ec0f93042210a5a17b062ca49196e7c75f9a25623b1b6208f439f",
+          "returncode": 0,
+          "seconds": 757,
+          "source": "/home/dmanager/shared_lib/TSMC28/dummy/dummy_script_metal",
+          "source_sha256": "be279ed3ecd717d55e075112b5a06be547554e392a184bb9ab98fc82766e4dae",
+          "job_sha256": "b58c6592163151e676fe02f914d29331212b79347596b3e8577083db460f0b83"
+        }
+      }
+    },
+    "planned_m9": {
+      "master": "sar8_chip_fill7_m9",
+      "stripes": 980,
+      "area_um2": 73331,
+      "bands_um": [
+        [
+          255.0,
+          380.0,
+          567.5,
+          630.0
+        ],
+        [
+          113.0,
+          113.0,
+          647.0,
+          184.0
+        ],
+        [
+          113.0,
+          559.0,
+          647.0,
+          647.0
+        ],
+        [
+          113.0,
+          184.0,
+          184.0,
+          559.0
+        ],
+        [
+          559.0,
+          184.0,
+          647.0,
+          559.0
+        ]
+      ],
+      "stripe_um": {
+        "width": 3.0,
+        "space": 3.0,
+        "max_length": 30.0
+      },
+      "clearance_um": 3.0
+    },
+    "library": {
+      "identity": "chip-sfill7-lib",
+      "sha256": "d6fedab180aad7f72678af43598f28eaffb214aa4cd0436a43ca128e0f50fa39",
+      "top": "sar8_chip_fill7",
+      "masters": {
+        "odpo": "sar8_chip_fill7_odpo",
+        "metal": "sar8_chip_fill7_metal",
+        "m9": "sar8_chip_fill7_m9",
+        "excl": "sar8_chip_fill7_excl"
+      },
+      "cells": 97,
+      "area_um2_by_layer": {
+        "150/1": 56597.24,
+        "150/2": 56909.112,
+        "150/20": 55421.424,
+        "150/21": 55421.424,
+        "150/3": 57073.848,
+        "150/4": 55291.08,
+        "150/5": 55291.08,
+        "150/6": 55291.08,
+        "150/7": 70136.32,
+        "150/8": 69824.448,
+        "150/9": 61355.464,
+        "17/1": 149717.824,
+        "17/7": 3260.764,
+        "25/0": 113717.982,
+        "31/1": 174051.66,
+        "31/7": 12455.849,
+        "32/1": 174794.7,
+        "32/7": 7488.67,
+        "33/1": 172247.28,
+        "33/7": 3029.964,
+        "34/1": 174308.4,
+        "34/7": 2570.589,
+        "35/1": 174074.64,
+        "35/7": 1219.487,
+        "36/1": 178577.46,
+        "36/7": 1523.557,
+        "37/1": 159851.58,
+        "37/7": 504.235,
+        "38/41": 226370.56,
+        "39/61": 140569.575,
+        "51/1": 16955.957,
+        "52/1": 16823.534,
+        "53/1": 17133.293,
+        "54/1": 17041.55,
+        "55/1": 16968.456,
+        "56/1": 15465.125,
+        "6/1": 106001.492,
+        "6/7": 3691.283
+      }
+    },
+    "verify": {
+      "against": "inputs/chip_r8seal.gds",
+      "passed": true,
+      "max_overlap_with_drawn_um2": 0.0,
+      "max_fill_in_exclusions_um2": 0.0,
+      "max_fill_outside_keep_in_um2": 0.0
+    },
+    "wrapper": {
+      "identity": "chip-sfill7-chk",
+      "top": "sar8_adc_chip_filled",
+      "sha256": "ab46c098472649b8d1ac7bc2ecfcfc5872cfa5b39eb3afd44f07872ae7934dbf",
+      "labels": 56,
+      "oa_built": true
+    },
+    "lvs_source": {
+      "path": "work/layout/chip-fill/inputs/lvs/source_r8_filled.cdl",
+      "note": "chip-r8-b1-chk/source.cdl with the top subcircuit renamed sar8_adc_chip_filled"
+    },
+    "oa": {
+      "build": "chip-sfill7-build",
+      "view": "SAR_ADC_T28_LAYOUT/sar8_adc_chip_filled/layout_fill7",
+      "fill_top": "sar8_chip_fill7",
+      "cells_imported": 97,
+      "strmin_errors": 0,
+      "write_mode": "noOverwrite",
+      "chip_layout_oa_sha256_before_after": "8294bd77e6bbb2a3761ce5f6f934ca1d55b1ed772b09420c4b3470e2fd86c13a",
+      "wrapper_layout_oa_sha256": "9d370f3c4e95c2f2adf04a91846730cb56a32e0c1dd363668f586dda0a253995",
+      "approved_by": "user, 2026-11-23 (\"Build in OA\")",
+      "stream_check": {
+        "identity": "chip-sfill7-oa-chk2",
+        "gds_sha256": "27b239972d3cc62820413d22956e65788d39e082acacf4fc57be15fb9f1cf0d5",
+        "drc_markers": 224,
+        "drc_markers_by_rule": {
+          "DIODMY_L:WARNING": 1,
+          "ESD.18g": 120,
+          "ESD.19g": 96,
+          "ESD.WARN.1": 6,
+          "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+        },
+        "lvs_verdict": "CORRECT",
+        "erc_results_by_check": {
+          "floating.nxwell_float": 4,
+          "mnpg": 280,
+          "npvss49": 12
+        },
+        "equals_assembly": "chip subtree, sar8_chip_fill7 and the 56 top texts identical to chip-sfill7-chk (name-independent cell hashes)"
+      },
+      "failed_attempt": {
+        "identity": "chip-sfill7-oa-chk",
+        "reason": "check cds.lib lacked the sealring library (strmout XSTRM-341)"
+      }
+    }
+  },
+  "checks": {
+    "filled": {
+      "identity": "chip-sfill7-chk",
+      "gds_sha256": "ab46c098472649b8d1ac7bc2ecfcfc5872cfa5b39eb3afd44f07872ae7934dbf",
+      "drc_markers": 224,
+      "drc_markers_by_rule": {
+        "DIODMY_L:WARNING": 1,
+        "ESD.18g": 120,
+        "ESD.19g": 96,
+        "ESD.WARN.1": 6,
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1
+      },
+      "lvs_verdict": "CORRECT",
+      "lvs_cell_verdicts": [
+        "CORRECT"
+      ],
+      "erc_results_by_check": {
+        "floating.nxwell_float": 4,
+        "mnpg": 280,
+        "npvss49": 12
+      },
+      "density_markers": 0
+    },
+    "unfilled": {
+      "identity": "chip-r8-b1-chk",
+      "gds_sha256": "2bba5a25a224ac70c61bc82cde731011c7eff4a63aa8881a2a682444a6c50518",
+      "drc_markers": 2896,
+      "drc_markers_by_rule": {
+        "DIODMY_L:WARNING": 1,
+        "ESD.18g": 120,
+        "ESD.19g": 96,
+        "ESD.WARN.1": 6,
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+        "M1.DN.1": 1,
+        "M1.DN.6": 283,
+        "M2.DN.1": 1,
+        "M2.DN.6": 281,
+        "M3.DN.1": 1,
+        "M3.DN.6": 287,
+        "M4.DN.1": 1,
+        "M4.DN.6": 311,
+        "M5.DN.1": 1,
+        "M5.DN.6": 267,
+        "M6.DN.1": 1,
+        "M6.DN.6": 488,
+        "M7.DN.1": 1,
+        "M7.DN.3": 1,
+        "M7.DN.6": 526,
+        "M8.DN.1": 1,
+        "M9.DN.3": 1,
+        "Mx.DN.7:M1_M2_M3": 3,
+        "Mx.DN.7:M2_M3_M4": 2,
+        "Mx.DN.7:M3_M4_M5": 3,
+        "Mx.DN.7:M4_M5_M6": 3,
+        "Mx.DN.7:M5_M6_M7": 4,
+        "OD.DN.3": 4,
+        "OD.S.14": 20,
+        "PO.DN.3": 3,
+        "PO.DN.3.1": 5,
+        "SR_DOD.DN.1": 172
+      },
+      "lvs_verdict": "CORRECT",
+      "lvs_cell_verdicts": [
+        "CORRECT"
+      ],
+      "erc_results_by_check": {
+        "floating.nxwell_float": 4,
+        "mnpg": 280,
+        "npvss49": 12
+      },
+      "density_markers": 2672
+    },
+    "revision6_on_r8": {
+      "identity": "chip-sfill6r8b-chk",
+      "gds_sha256": "c0e785adc0e537a7a159ae789ec546b9ba5612b8211bce31818477320c3b7043",
+      "drc_markers": 452,
+      "drc_markers_by_rule": {
+        "DIODMY_L:WARNING": 1,
+        "ESD.18g": 120,
+        "ESD.19g": 96,
+        "ESD.WARN.1": 6,
+        "IO_CONNECT_CORE_NET_VOLTAGE_IS_CORE:WARNING1": 1,
+        "M8.DN.1": 4,
+        "M9.DN.3": 1,
+        "Mx.DN.7:M1_M2_M3": 4,
+        "Mx.DN.7:M2_M3_M4": 4,
+        "Mx.DN.7:M3_M4_M5": 4,
+        "Mx.DN.7:M4_M5_M6": 4,
+        "Mx.DN.7:M5_M6_M7": 4,
+        "OD.DN.3": 2,
+        "OD.S.14": 169,
+        "PO.DN.3": 8,
+        "PO.DN.3.1": 24
+      },
+      "lvs_verdict": "CORRECT",
+      "lvs_cell_verdicts": [
+        "CORRECT"
+      ],
+      "erc_results_by_check": {
+        "floating.nxwell_float": 4,
+        "mnpg": 280,
+        "npvss49": 12
+      },
+      "density_markers": 228
+    },
+    "flat_lup_esd": {
+      "filled": {
+        "run": "<remote_root>/userdrc/chip-sfill7-flat-lupesd",
+        "markers": 978,
+        "markers_by_rule": {
+          "ESD.18g": 540,
+          "ESD.19g": 432,
+          "ESD.WARN.1": 6
+        },
+        "lup": 0
+      },
+      "unfilled": {
+        "identity": "chip-r8-b1-flat-lupesd",
+        "markers": 978,
+        "lup": 0
+      },
+      "deck": "chip-r8-b1-flat-lupesd/drc/drc.svrf, 72 LUP/ESD checks, flat"
+    },
+    "core": {
+      "markers_inside": 0,
+      "markers_crossing": "only the two chip-wide advisories"
+    }
+  },
+  "corridor_extraction": {
+    "scope": "VINN/VINP/VREFP/VREFN chip routes with a 5 um corridor, cell sar8_chip_routes, typical xRC; floating fill counts as ground in this deck, so the changes are upper bounds",
+    "unfilled": "chip-sfill7-route-base-xtr (r8)",
+    "filled": "chip-sfill7-route-filled-xtr",
+    "nets": [
+      {
+        "net": "VINN",
+        "unfilled_fF": 56.492,
+        "filled_fF": 65.395,
+        "change_fF": 8.902,
+        "ground_unfilled_fF": 41.049,
+        "ground_filled_fF": 50.423
+      },
+      {
+        "net": "VINP",
+        "unfilled_fF": 56.491,
+        "filled_fF": 64.637,
+        "change_fF": 8.146,
+        "ground_unfilled_fF": 41.048,
+        "ground_filled_fF": 49.651
+      },
+      {
+        "net": "VREFN",
+        "unfilled_fF": 92.211,
+        "filled_fF": 253.309,
+        "change_fF": 161.098,
+        "ground_unfilled_fF": 73.132,
+        "ground_filled_fF": 235.511
+      },
+      {
+        "net": "VREFP",
+        "unfilled_fF": 85.864,
+        "filled_fF": 222.627,
+        "change_fF": 136.763,
+        "ground_unfilled_fF": 66.785,
+        "ground_filled_fF": 204.766
+      }
+    ],
+    "revision5_on_r6": {
+      "unfilled": "chip-sfill5-route-base-xtr",
+      "filled": "chip-sfill5-route-filled-xtr",
+      "nets": [
+        {
+          "net": "VINN",
+          "unfilled_fF": 56.492,
+          "filled_fF": 64.652,
+          "change_fF": 8.16,
+          "ground_unfilled_fF": 41.049,
+          "ground_filled_fF": 49.264
+        },
+        {
+          "net": "VINP",
+          "unfilled_fF": 56.491,
+          "filled_fF": 64.436,
+          "change_fF": 7.945,
+          "ground_unfilled_fF": 41.048,
+          "ground_filled_fF": 49.07
+        },
+        {
+          "net": "VREFN",
+          "unfilled_fF": 92.211,
+          "filled_fF": 259.042,
+          "change_fF": 166.831,
+          "ground_unfilled_fF": 73.132,
+          "ground_filled_fF": 240.55
+        },
+        {
+          "net": "VREFP",
+          "unfilled_fF": 85.864,
+          "filled_fF": 226.736,
+          "change_fF": 140.872,
+          "ground_unfilled_fF": 66.785,
+          "ground_filled_fF": 208.255
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "note": "GDS-only trials on layout_full_fill5_r7_seal that led to revision 7; nothing in OA",
+    "m9_frame": {
+      "drc": "chip-se1-drc",
+      "result": "side M9.DN.3 windows 20-32 %, no DM9 rule; DRC 462 -> 465 (frame pieces split)"
+    },
+    "io_west": {
+      "drc": "chip-se2c-drc",
+      "result": "west slice: OD/PO/M8/M9 density 0 in the slice, no dummy rule; DRC 423"
+    },
+    "io_corner_east": {
+      "drc": "chip-se3-drc",
+      "result": "SW corner and east slices: OD.S.14, M8.DN.1, Mx.DN.7, PO.DN.3 0 there; DRC 377"
+    },
+    "clamp_vg": {
+      "drc": "chip-clamp-vg-trial",
+      "result": "PCLAMPC_V_G in place of PCLAMPC_H_G: DRC 462 -> 452"
+    }
+  },
+  "revisions": [
+    {
+      "revision": "1-3",
+      "chip_views": "layout_full_*_r3_seal, r4_seal",
+      "status": "superseded"
+    },
+    {
+      "revision": 4,
+      "chip_view": "layout_full_fill5_r6_seal",
+      "check": "chip-sfill4b-chk",
+      "drc": "1911 -> 379",
+      "status": "superseded"
+    },
+    {
+      "revision": 5,
+      "chip_view": "layout_full_fill5_r6_seal (1000 um die)",
+      "check": "chip-sfill5-chk",
+      "drc": "1911 -> 369",
+      "status": "superseded by the 892 um die"
+    },
+    {
+      "revision": 6,
+      "chip_view": "layout_full_fill5_r7_seal",
+      "check": "chip-sfill6-chk2",
+      "drc": "2904 -> 462",
+      "note": "revision 5 clipped to the 892 um keep-out (chip_fill.py clip); rewrapped on r8 as chip-sfill6r8b-chk, DRC 452",
+      "status": "fallback if IO-cell fill is refused"
+    },
+    {
+      "revision": 7,
+      "chip_view": "layout_full_fill5_r8_seal",
+      "check": "chip-sfill7-chk",
+      "drc": "2896 -> 224",
+      "status": "current"
+    }
+  ],
+  "open_items": [
+    "TSMC or shuttle acceptance of dummy fill inside IO library cells",
+    "VINN-VINP corridor difference 0.76 fF after fill (0.21 fF with revision 5): for the chip-level periphery check"
+  ]
+}

@@ -32,7 +32,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("identity")
     ap.add_argument("--top", default=DEFAULT_TOP)
-    ap.add_argument("--view", required=True)
+    source = ap.add_mutually_exclusive_group(required=True)
+    source.add_argument("--view")
+    source.add_argument("--gds", help="uploaded GDS in the evidence directory (an assembly not in OA)")
     ap.add_argument("--lock", required=True)
     ap.add_argument("--stages", default="drc,lvs")
     ap.add_argument("--hcells")
@@ -47,9 +49,11 @@ def main():
     wanted = tuple(s for s in args.stages.split(",") if s)
     if not set(wanted) <= set(STAGES) or ("lvs" in wanted and not args.source):
         raise ValueError("Bad --stages or missing --source")
-    if not re.match(r"\Alayout[a-z0-9_]*\Z", args.view):
+    if args.view and not re.match(r"\Alayout[a-z0-9_]*\Z", args.view):
         raise ValueError("Invalid OA view")
-    report = dict(identity=args.identity, top=TOP, library=native.LIB, source=dict(view=args.view), stages=list(wanted),
+    if args.gds and (os.path.basename(args.gds) != args.gds or not isfile(join(out, args.gds))):
+        raise ValueError("The GDS must be uploaded into the evidence directory")
+    report = dict(identity=args.identity, top=TOP, library=native.LIB, source=dict(view=args.view) if args.view else dict(gds=args.gds), stages=list(wanted),
                   driver_sha256=dict((n, native.sha(native.raw(join(out, n))))
                                      for n in ("chip_physical.py", "run_physical.py", "workspace.py", "cds.lib")),
                   checks={}, decks={})
@@ -69,17 +73,20 @@ def main():
 
     gds = join(out, "fixture.gds")
     try:
-        with open(args.lock, "a") as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
-            oa = join(native.LIB_PATH, TOP, args.view, "layout.oa")
-            report["source"]["layout_oa_sha256"] = native.sha(native.raw(oa))
-            launch("stream", native.CADENCE,
-                   ["strmout", "-library", native.LIB, "-topCell", TOP, "-view", args.view, "-strmFile", gds,
-                    "-cdslib", join(out, "cds.lib"), "-layerMap", join(native.PDK, "tsmcN28.layermap"),
-                    "-runDir", out, "-logFile", join(out, "stream.log"), "-summaryFile", join(out, "stream.sum"),
-                    "-convertPin", "geometry", "-convertPcellPin", "geometry"], out, 1800)
-            if native.sha(native.raw(oa)) != report["source"]["layout_oa_sha256"]:
-                raise RuntimeError("layout.oa changed while streaming")
+        if args.gds:
+            shutil.copyfile(join(out, args.gds), gds)
+        else:
+            with open(args.lock, "a") as lock:
+                fcntl.flock(lock, fcntl.LOCK_EX)
+                oa = join(native.LIB_PATH, TOP, args.view, "layout.oa")
+                report["source"]["layout_oa_sha256"] = native.sha(native.raw(oa))
+                launch("stream", native.CADENCE,
+                       ["strmout", "-library", native.LIB, "-topCell", TOP, "-view", args.view, "-strmFile", gds,
+                        "-cdslib", join(out, "cds.lib"), "-layerMap", join(native.PDK, "tsmcN28.layermap"),
+                        "-runDir", out, "-logFile", join(out, "stream.log"), "-summaryFile", join(out, "stream.sum"),
+                        "-convertPin", "geometry", "-convertPcellPin", "geometry"], out, 1800)
+                if native.sha(native.raw(oa)) != report["source"]["layout_oa_sha256"]:
+                    raise RuntimeError("layout.oa changed while streaming")
         report["gds"] = dict(sha256=native.sha(native.raw(gds)), bytes=os.path.getsize(gds))
         save()
         for stage in wanted:
