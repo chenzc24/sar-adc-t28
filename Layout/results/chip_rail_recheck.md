@@ -19,4 +19,14 @@ Both models take these through optional arguments that default to the Stage 1 va
 
 Every branch passes with margin; the worst is 17.9 mV. The analog branch, 19 % below its planned bulk (92.9 against 114.2 pF), loses 0.8 mV against the planned case. A lower ESR than the model's upper bound reduces the droop, so no damping concern follows from it.
 
-Limitations: the ESR and the MOM capacitance come from models, not extraction; the in-core values are the Stage 4b extraction of `layout_route_full`; the charge model keeps the Stage 1 calibration.
+**With the extracted ring feeds** (`extracted_feed`). The feeds above are hand square-counts of the trunks. The periphery extraction ([chip periphery](chip_periphery.json), `chip-periph-x1`) also includes the pad landings and the via stacks onto the decap ports, and gives several times more. Each rail's star (pad, decap port, ADC pin) is scaled from 25 C typical to 125 C rcworst_T by its trunk layer. The decap arm adds to the decap's ESR.
+
+| Branch | Pad to bulk (loop) | Bulk to pin (loop) | ESR per rail | Droop | Coupled ring |
+| --- | --- | --- | --- | --- | --- |
+| Analog | 1.99 ohm | 0.37 ohm | 3.35 ohm | **20.3 mV** | 18.6 mV |
+| Pair | 3.73 ohm | 0.12 ohm | 2.95 ohm | **17.8 mV** | 17.6 mV |
+| SAR | 2.26 ohm | 0.70 ohm | 2.26 ohm | **11.8 mV** | 13.3 mV |
+
+Still a pass: worst 20.3 mV against 45 mV.
+
+Limitations: the ESR and the MOM capacitance come from models, not extraction; the in-core values are the Stage 4b extraction of `layout_route_full`; the charge model keeps the Stage 1 calibration. The extracted feeds are at 25 C typical, scaled to 125 C by the trunk metal's coefficients; the via stacks may scale differently.

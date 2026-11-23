@@ -78,6 +78,17 @@ def mstack(c, net, x, y, lo, hi, axis="y"):
         c.mx(net, x, y, m, axis, pads=(True, True))
 
 
+def drop_xs(branch, net, rev=1):
+    """x of the trunk drop stacks onto a clamp bar: between the pair trunks at 30/50/70 um into the clamp, else under
+    the trunk."""
+    x0, _ = geo.CLAMP_ORIGIN[rev][branch]
+    if branch == "pair" or (branch == "analog" and rev == 2):
+        return tuple(x0 + d for d in (30.0, 50.0, 70.0))
+    if branch == "analog":
+        return (377.0, 380.0, 383.0) if net == AVDD else (437.0, 440.0, 443.0)
+    return (557.0, 560.0, 563.0) if net == AVDD else (597.0, 600.0, 603.0)
+
+
 def object_views(rev=1):
     """OA view of each object cell. Revision 2: the grown pad decaps and the moved analog clamp (layout_r2).
     Revision 3: the clamps back in place (layout), the analog decap with MOM (layout_r3), the other decaps layout_r2."""
@@ -230,10 +241,8 @@ def content(readback, rev=1):
                 else:                             # M8 straps down to AVSS_pair (y 255-265)
                     for x in xs:
                         c.rect(net, "M8", x - 1.5, 260.0, x + 1.5, yb + 1.0)
-            elif branch == "analog":
-                xs = (377.0, 380.0, 383.0) if net == AVDD else (437.0, 440.0, 443.0)
             else:
-                xs = (557.0, 560.0, 563.0) if net == AVDD else (597.0, 600.0, 603.0)
+                xs = drop_xs(branch, net, rev)
             h = min(1.0, (hi - lo) / 2 - 0.1)       # plates 0.6 um or more from the M7 ring (Mx.S.6)
             for x in xs:
                 top = 9 if net == AVDD else 8
@@ -241,6 +250,52 @@ def content(readback, rev=1):
                 stack_hi(c, net, x, yb, 7, top)
                 drops.append([net, x, yb])
         info[f"clamp_{branch}"] = drops
+    return c, info
+
+
+# Revision 4 clamp feed (Layout/design/chip_clamp_feed.py). The drops above feed each clamp's 99 um M4 bars at one
+# place, so the far M3 terminal strips hang on the thin bar. This adds a top-metal strap over each bar (AVDD on M9,
+# AVSS on M8, the trunk metals) and a drop stack every FEED_PITCH um along it: the M4-M7 via fields and the VIA7/VIA8
+# pairs of the drops above. Stacks keep 0.6 um from the core VSS ring's M7 band and M6 ties, and their M8 pads clear
+# the other net's M8 trunk; the pair clamp also gets straps every 10 um up to AVDD_pair (M9) and down to AVSS_pair (M8).
+FEED_PITCH = 6.0
+FEED_KEEP_X = {  # x ranges (die um) a stack centre stays out of, per clamp and net
+    "analog": {AVDD: [(433.6, 446.4)], AVSS: []},             # AVSS trunk M8 x 435-445
+    "pair": {AVDD: [(0.0, 131.9)], AVSS: [(0.0, 131.9)]},     # west M7 band x 113-130.5
+    "sar": {AVDD: [(593.6, 606.4), (628.1, 999.0)], AVSS: [(628.1, 999.0)]},   # AVSS trunk x 595-605, east M7 band
+}
+
+
+def clamp_feed(rev=1):
+    """Content of the revision 4 clamp feed: straps and drop stacks along every clamp bar (origins of revision rev)."""
+    c = Content()
+    info = {}
+    for branch, bars in geo.clamp_bars(rev).items():
+        x0, y0 = geo.CLAMP_ORIGIN[rev][branch]
+        info[branch] = {}
+        for net, (lo, hi) in bars.items():
+            yb = (y0 + lo + y0 + hi) / 2
+            top = 9 if net == AVDD else 8
+            strap = "M9" if net == AVDD else "M8"
+            c.rect(net, strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi)
+            if branch == "pair":                   # straps every 10 um to the pair trunks
+                for x in [x0 + 5.0 + 10.0 * k for k in range(10)]:
+                    if net == AVDD:
+                        c.rect(net, "M9", x - 1.5, y0 + lo, x + 1.5, 320.0)
+                    else:
+                        c.rect(net, "M8", x - 1.5, 260.0, x + 1.5, y0 + hi)
+            h = min(1.0, (hi - lo) / 2 - 0.1)
+            xs = []
+            x = x0 + 2.0
+            while x <= x0 + 98.0:
+                if not any(a <= x <= b for a, b in FEED_KEEP_X[branch][net]) and \
+                        all(abs(x - d) >= 3.0 for d in drop_xs(branch, net, rev)):
+                    xs.append(round(x, 3))
+                x += FEED_PITCH
+            for x in xs:
+                via_fields(c, net, (g(x - 0.8), g(yb - h), g(x + 0.8), g(yb + h)), 4, 7)
+                stack_hi(c, net, x, yb, 7, top)
+            info[branch][net] = dict(strap=[strap, x0 + 0.5, y0 + lo, x0 + 99.5, y0 + hi], stacks=xs)
     return c, info
 
 

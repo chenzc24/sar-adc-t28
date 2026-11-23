@@ -230,7 +230,15 @@ python -m Layout.design.chip_full_source --base PARTIAL_CHIP_CDL --register REGI
 python -m Layout.design.chip_assembly physical CHECK_ID --view layout_full --hcells-from BASE_GDS --source CHIP_CDL
 python -m Layout.tools.analysis.chip_objects_record --chip-build BUILD_ID --chip-checks CHECK_ID
 python -m Layout.tools.analysis.chip_rail_recheck
+python -m Layout.design.chip_seal_ring BUILD_ID
+python -m Layout.tools.analysis.chip_periphery launch EXTRACTION_ID CHIP_GDS --source-evidence CHECK_ID [--flatten PCLAMPC_H_G]
+python -m Layout.tools.analysis.chip_periphery fetch EXTRACTION_ID
+python -m Layout.tools.analysis.chip_periphery report EXTRACTION_ID
+python -m Layout.tools.analysis.chip_periphery clamp-bus EXTRACTION_ID --record VIEW
+python -m Layout.design.chip_clamp_feed BUILD_ID
 ```
+
+The die is the lab's 1 x 1 mm seal ring (`io_ring.json` `seal_ring`, from the shared `sealring` library), added by `Layout/design/chip_seal_ring.py` to a copy of the current chip view. The chip deck then runs with its seal-ring checks satisfied. `chip_periphery.py` extracts the chip-level wiring with every block, pad cell and object kept as an xcell (`Layout/tools/physical/toplevel_wiring_xcell.py` with `supplies.txt`, so AVDD/VDD are extracted too). Fetch the run's manifest and `pex/` files into `work/layout/chip-periphery/EXTRACTION_ID/`, with the stream as `candidate.gds`. `report` then gives two-point resistances and capacitance per route against `constraints.json` `stage6_supply_model`, and writes the Stage 2 VIN and output-path netlists. The ESD bus check (pad to clamp, app note Table 10.1) needs the clamps' own metal and transistors: launch with `--flatten PCLAMPC_H_G` and run `clamp-bus`, because an xcell would tie the clamp's terminal strips into one ideal node. `chip_clamp_feed.py` adds the straps and drop stacks along the clamp bars to a copy of the chip view.
 
 [Chip objects record](../results/chip_objects.md)
 

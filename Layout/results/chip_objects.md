@@ -154,9 +154,152 @@ The chip view is built like `layout_full_dc_fill5` (build `chip-f5r3-b1`, `chip_
 
 Only density counts change: M7.DN.6 417 to 303 and M6.DN.6 253 to 233, because the MOM fills M5-M7 over the analog decap.
 
+## Seal ring: `sar8_adc_chip/layout_full_fill5_r3_seal`
+
+The die is the lab's 1 x 1 mm seal ring, `sealring/N28_TSMC_SRDMB_Mu/layout` from the shared seal-ring library (not drawn here), placed at die (-120, -120), R0, by `Layout/design/chip_seal_ring.py` (build `chip-seal-b1`). The view is a copy of `layout_full_fill5_r3` with only that instance added. All 16 guarded views (every chip view, the ring, the cores and the object views) stayed byte-identical. `io_ring.json` `seal_ring` and `die_bbox` (-120, -120)-(880, 880) and `floorplan.json` `die_bbox` record it.
+
+| Clearance (die um) | |
+| --- | --- |
+| Seal-ring band (SEALRING_ALL 162;2) | 24 um from the die edge: -120 to -96 and 856 to 880 |
+| Corner chamfers | within x + y <= 121.72 um of each die corner (seal-ring frame); the IO corner cells start at x + y = 240 |
+| IO-cell outline | 0 to 760, 120 um from each die edge |
+| PAD60GU metal (783.32 um envelope) | 108.34 um from the die edge, 84.34 um clear of the band |
+
+By rule against `layout_full_fill5_r3`:
+
+| Check | `layout_full_fill5_r3_seal` | `layout_full_fill5_r3` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-seal-b1-chk`) | 1944 | 1484 |
+| of which other than density and fill | 235 | 236 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-seal-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-seal-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305 | 302 |
+
+- **Non-density:** the only change is that `WITH_SEALRING_OPTION:WARNING` (the chip deck's missing-seal-ring warning) is gone.
+- **Density and fill:** +461, in the empty margin between the IO ring and the seal ring, which has no fill yet:
+  - M1-M7.DN.1: 1 to 5 each.
+  - M1-M6.DN.6: +33 to +153 each.
+  - OD.S.14 (at most 10 um between OD): 16 to 27.
+  - The seal ring's own dummy OD and poly lower OD.DN.3 (19 to 3) and PO.DN.3 (10 to 2).
+- **ERC:** no new location. Both runs flag the same floating P-substrate and N-well pieces at the two PRCUTA_G domain cuts (die y 225-235 on the west edge, y 585-595 on the east edge). The seal-ring run also lists three of them under the ring cell's context. The seal ring adds no ERC result.
+
+Fill keep-out, agreed with the fill session:
+- No dummy fill outside die (-93, -93)-(853, 853), which is the band plus 3 um (CSR_DMu_S_1).
+- No fill within x + y <= 125 um of the die corners.
+- Everything else outside the IO ring is open to fill.
+- The fill goes into the fill session's own wrapper `sar8_adc_chip_filled`, which places the current chip view `layout_full_fill5_r4_seal` unchanged and uses the `chip-cfeed-b1-chk` stream. Its other exclusions are the IO cells, the filled core, the clamps (the pair clamp to (120, 255)-(220, 325), with its new straps) and the VIN routes ±1 um.
+
+## Periphery extraction ([record](chip_periphery.json))
+
+**Extraction setup.** `Layout/tools/analysis/chip_periphery.py` runs Calibre xRC on the `layout_full_fill5_r3_seal` stream (extraction `chip-periph-x1`: typical, 25 C, coupling capacitance grounded).
+- **Kept as xcells:** every IO-library cell, the core, the register, the decaps, the PCLAMPC_H_G clamps and the seal ring.
+- **Extracted as RC:** the chip-level wiring, ending on the xcell pins, including the bond-pad metal and the AVDD/VDD nets the deck normally keeps ideal.
+- **Analysis:** each node set's two-point resistance on the extracted network, with the other attachments floating.
+- **Not covered:**
+  - Inductance (xRC gives none; the L below is a straight-bar estimate).
+  - The insides of the xcells.
+  - Fill, of which the chip margin and pad decap areas have none yet, so wiring C will rise.
+
+**Pad cell capacitance.** It is taken from the pad's LVS netlist (IO library SPICE: PDB3AC has 15 ndio_18 and 5 pdio_18). The PDK junction models are applied at TT and at the node voltage, with AVDD at 0.9 V.
+
+Reference rails against `constraints.json` `stage6_supply_model` (per rail, both pads):
+
+| Term | Model | VREFP | VREFN |
+| --- | --- | --- | --- |
+| Route R, both routes in parallel | 0.85 ohm (0.14-1.2) | 1.08 ohm (routes a/b 2.12 / 2.23) | 1.09 ohm (1.93 / 2.52) |
+| Route R at 125 C rcworst (M8 scaling) | 1.2 ohm | about 1.53 ohm | about 1.54 ohm |
+| Route L | 0.17 nH | 0.16 nH (estimate) | 0.16 nH (estimate) |
+| Route C | 0.27 pF | 0.066 pF | 0.075 pF |
+| Pad C, two pads | 2 x 0.5 pF | 2 x (1.02 junction + 0.075 bond metal) = 2.19 pF | 2 x (1.09 + 0.075) = 2.34 pF |
+
+- **Route resistance:** within the model's range at 25 C and inside the 0-2 ohm bracket at 125 C.
+- **Route capacitance:** a quarter of the model's (M8 over an unfilled field).
+- **Pad capacitance:** more than twice the model's 0.5 pF per pad, dominated by the ESD diodes.
+
+Supply ring feeds, loop AVDD + AVSS (pad = the pad cell's core pin, bulk = the decap port, pin = the ADC pin):
+
+| Branch | Pad to pin, extracted 25 C (125 C scaled) | Hand count 25 C / 125 C | Bulk to pin, extracted (scaled) | Hand count 125 C | Pad to clamp, AVDD / AVSS (25 C) |
+| --- | --- | --- | --- | --- | --- |
+| Analog | 1.63 (2.36) ohm | 0.37 / 0.53 | 1.77 (2.58) ohm | 0.14 | 1.10 / 1.08 ohm |
+| Pair | 2.68 (3.85) ohm | 1.64 / 2.34 | 1.60 (2.32) ohm | 0.12 | 1.11 / 1.11 ohm |
+| SAR | 2.05 (2.95) ohm | 1.13 / 1.61 | 1.16 (1.67) ohm | 0.49 | 1.11 / 1.10 ohm |
+
+- **Hand counts are low.** The `ring_feed()` values were trunk squares only. The extraction includes the pad landings and the via stacks (two VIA7 and two VIA8 per stack at the decap ports and the clamp drops), which carry most of the resistance.
+- **Rail budget still passes** with the extracted feeds: worst 20.3 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
+- **Pad to clamp is 1.08-1.11 ohm on every clamp rail at 25 C.** That is above the app note's 1 ohm (Table 10.1), where the trunk-only estimate gave 0.02-0.06 ohm.
+  - The extraction with the clamps flattened gave 1.19-1.79 ohm.
+  - The clamp feed along the bars fixes it (section "Clamp feed along the bars" below).
+
+VIN and output path (25 C typical):
+
+| Path | R | Wiring C | Pad cell |
+| --- | --- | --- | --- |
+| VINP / VINN, pad AIO to core VIN pin | 56.6 ohm each (1 um M5 + M6, 0.3 um neck) | 16 fF route + 75 fF bond-pad metal | PDB3AC_V_G, 1.09 / 1.03 / 1.02 pF at 0 / 0.45 / 0.9 V |
+| ADC_D0-7, core to register D | 26.4 ohm | 0.2 fF | |
+| D0_CORE-D7_CORE, register Q to pad I | 249-559 ohm (0.4 um M5/M6) | 15-27 fF | PRUW08SDGZ_H/V_G |
+| D0-D7, pad to bond pad | 0.02 ohm | 75 fF | |
+| SAMPLE_CORE, pad C to core / register CK | 19.1 / 37.0 ohm | 16 fF | PDDW16SDGZ |
+| Register DVDD from the DVDD pads | 21.7 ohm (DVDD decap tap 5.6 ohm from the pads) | | |
+
+The register's VSS return is not resolved, because the extraction joins every xcell's VSS at one substrate node.
+
+Stage 2 has two netlists in `work/layout/chip-periphery/chip-periph-x1/stage2/` (sha256 in the record):
+- `sar8_vin_path.scs`: the PDB3AC pad cells plus the extracted VIN routes and bond-pad metal.
+- `sar8_output_path.scs`: the register, the eight PRUW08SDGZ and the SAMPLE PDDW16SDGZ, their extracted routes, and the DVDD star with the DVDD decap. It also has `sar8_output_board`: 0.2 ohm + 2 nH package and a stated 15 pF board load per data pad.
+
+## Clamp feed along the bars: `sar8_adc_chip/layout_full_fill5_r4_seal`
+
+**The fault.** The extraction with the clamps flattened (`chip-periph-x2`: PCLAMPC_H_G extracted with its metal and transistors, not as an xcell) confirms the ESD bus fault and shows it is worse than the xcell estimate. From each pad's core pin to its clamp the bus measured 1.19-1.73 ohm, against 1 ohm (app note Table 10.1).
+- The resistance is not in spreading along the clamp's M4 bars: that adds only about 0.05 ohm.
+- It is in the three drop stacks that fed each bar at one place, with two VIA7 and two VIA8 each, plus the pad landing.
+
+**The fix.** `Layout/design/chip_clamp_feed.py` (build `chip-clampfeed-b1`; geometry in `chip_integration.clamp_feed`) copies `layout_full_fill5_r3_seal` and adds:
+- a strap on the trunk metal over every bar (AVDD on M9, AVSS on M8);
+- a drop stack every 6 um along it (M4-M7 via fields, VIA7/VIA8 pairs);
+- for the pair clamp, straps every 10 um to its trunks.
+
+The stacks keep clear of the core VSS ring's M7 band and M6 ties, the other net's trunk, and the existing drops. That gives 15-16 stacks per rail instead of 3. The clamp cells and all other views are unchanged.
+
+Pad to clamp (Calibre xRC typical, 25 C):
+- **pin:** resistance to the clamp's transistor terminals, all shorted.
+- **distributed:** the clamp current drawn by its transistors in proportion to their width; includes the clamp's own metal down to each finger.
+
+| Clamp, rail | `layout_full_fill5_r3_seal`, pin / distributed | `layout_full_fill5_r4_seal`, pin / distributed |
+| --- | --- | --- |
+| Analog, AVDD (top_4) | 1.26 / 1.32 ohm | 0.76 / 0.80 ohm |
+| Analog, AVSS (top_3) | 1.73 / 1.79 ohm | 0.92 / **0.94** ohm |
+| Pair, AVDD (left_5) | 1.19 / 1.26 ohm | 0.77 / 0.81 ohm |
+| Pair, AVSS (left_6) | 1.20 / 1.22 ohm | 0.78 / 0.80 ohm |
+| SAR, AVDD (top_1) | 1.20 / 1.25 ohm | 0.75 / 0.79 ohm |
+| SAR, AVSS (right_8) | 1.41 / 1.46 ohm | 0.82 / 0.84 ohm |
+
+- **All six rails now meet 1 ohm**, the worst being the analog AVSS rail at 0.94 ohm (6 % margin).
+- **What remains** is mostly the pad landing, where the current enters through the pad cell's M2 fingers, and the trunk.
+- **125 C:** scaled to 125 C rcworst by the trunk metal, the values would rise by about 1.4x.
+
+By rule against `layout_full_fill5_r3_seal`:
+
+| Check | `layout_full_fill5_r4_seal` | `layout_full_fill5_r3_seal` |
+| --- | --- | --- |
+| DRC, installed chip deck (`chip-cfeed-b1-chk`) | 1912 | 1944 |
+| of which other than density and fill | 235 | 235 |
+| LUP.5.2.1 / 5.2.2, flat (`chip-cfeed-b1-flat-lupesd`) | 0 / 0 | 0 / 0 |
+| ESD.18g / 19g / WARN.1, flat | 540 / 432 / 6 | 540 / 432 / 6 |
+| LVS, full `chip_netlist` (ports, nets) | CORRECT (31, 1536) | CORRECT (31, 1536) |
+| LVS, only supply nets joined by name (`chip-cfeed-b1-lvs-vcs`) | CORRECT | CORRECT |
+| ERC | 305, identical by check | 305 |
+
+Only density counts change: M6.DN.6 386 to 362 and M7.DN.6 287 to 279, from the new M6/M7 plates. The record is in [chip periphery](chip_periphery.json) `clamp_bus` (extractions `chip-periph-x2`, `chip-periph-x3`).
+
 ## Open
 
-- `layout_full_fill5_r3` is the current chip view; `layout_full_dc_fill5` is superseded (ESD).
+- `layout_full_fill5_r4_seal` (clamp feed along the bars) is the current chip view. `layout_full_fill5_r3_seal` (seal ring) and `layout_full_fill5_r3` are its sources and stay unchanged; `layout_full_dc_fill5` is superseded (ESD).
 - Analog pad decap 92.9 pF against the planned 114.2: the rail budget with the drawn values passes, worst droop 17.9 mV against 45 mV ([chip rail recheck](chip_rail_recheck.md)).
 - ESR from extraction (the model above is an upper bound); MOM values from the PDK callback, not extracted.
-- Fill of the pad decap and VSS-ring areas (M6/M7.DN.6), and the seal ring (the chip deck runs with WITH_SEALRING).
+- ESD bus: fixed in `layout_full_fill5_r4_seal`, at most 0.94 ohm per rail (analog AVSS). For more margin, the next lever is the pad landings: M1 alongside the M2 fingers, or a deeper bar.
+- The decap-port stacks use the same two VIA7/VIA8 recipe (decap port to ADC pin 1.2-1.8 ohm loop). The rail budget passes with them (20.3 mV); more stacks there would lower the droop further.
+- VIN routes are 56.6 ohm (1 um Mx) in series with the sampling switch; Stage 2 checks the tracking with the VIN netlist.
+- Periphery extraction after fill, and at 125 C rcworst (scaled here).
+- Fill (the fill session's): the pad decap and VSS-ring areas (M6/M7.DN.6) and the margin between the IO ring and the seal ring (Mx.DN.1/DN.6, OD.S.14), within the keep-out above.

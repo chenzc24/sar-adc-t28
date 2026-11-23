@@ -2736,7 +2736,7 @@
         "core_alone": 0,
         "chip_full_by_area": {
           "io_ring": 1,
-          "pclampc_analog": 1
+          "opening": 1
         },
         "density_or_fill": true
       },
@@ -2748,12 +2748,13 @@
         "chip_full_by_area": {
           "opening": 1,
           "pclampc_pair": 30,
-          "analog_pad_decap": 112,
+          "analog_pad_decap": 110,
           "adc_core": 42,
           "pair_pad_decap": 273,
           "output_register": 2,
           "sar_pad_decap": 224,
           "dvdd_decap": 118,
+          "pclampc_analog": 2,
           "pclampc_sar": 2,
           "io_ring": 20
         },
@@ -2910,7 +2911,8 @@
         "ring_alone": 2,
         "core_alone": 1,
         "chip_full_by_area": {
-          "analog_pad_decap": 2,
+          "analog_pad_decap": 1,
+          "pclampc_analog": 1,
           "core_vss_ring_band": 1,
           "adc_core": 1,
           "sar_pad_decap": 1,
@@ -2966,7 +2968,7 @@
           "io_ring": 146,
           "adc_core": 19,
           "output_register": 1,
-          "analog_pad_decap": 1,
+          "pclampc_analog": 1,
           "pclampc_sar": 1
         },
         "density_or_fill": true
@@ -3366,6 +3368,22 @@
       "lvs": "chip-f5r3-b1-chk",
       "flat": "chip-f5r3-b1-flat-lupesd",
       "vcs": "chip-f5r3-b1-lvs-vcs"
+    },
+    "variant_layout_full_fill5_r3_seal": {
+      "view": "layout_full_fill5_r3_seal",
+      "build": "chip-seal-b1",
+      "checks": "chip-seal-b1-chk",
+      "lvs": "chip-seal-b1-chk",
+      "flat": "chip-seal-b1-flat-lupesd",
+      "vcs": "chip-seal-b1-lvs-vcs"
+    },
+    "variant_layout_full_fill5_r4_seal": {
+      "view": "layout_full_fill5_r4_seal",
+      "build": "chip-clampfeed-b1",
+      "checks": "chip-cfeed-b1-chk",
+      "lvs": "chip-cfeed-b1-chk",
+      "flat": "chip-cfeed-b1-flat-lupesd",
+      "vcs": "chip-cfeed-b1-lvs-vcs"
     }
   },
   "variants": {
@@ -3801,16 +3819,16 @@
             "variant": 253,
             "reference": 398,
             "variant_by_area": {
-              "opening": 9,
+              "opening": 10,
               "io_ring": 64,
               "pclampc_pair": 25,
-              "analog_pad_decap": 18,
+              "analog_pad_decap": 14,
+              "pclampc_analog": 4,
               "adc_core": 2,
               "pair_pad_decap": 38,
               "output_register": 2,
               "sar_pad_decap": 44,
               "dvdd_decap": 46,
-              "pclampc_analog": 1,
               "core_vss_ring_band": 3,
               "pclampc_sar": 1
             },
@@ -3823,7 +3841,8 @@
               "pair_pad_decap": 110,
               "opening": 3,
               "pclampc_pair": 38,
-              "analog_pad_decap": 80,
+              "analog_pad_decap": 76,
+              "pclampc_analog": 4,
               "adc_core": 2,
               "output_register": 2,
               "sar_pad_decap": 102,
@@ -4180,14 +4199,13 @@
             "variant": 233,
             "reference": 253,
             "variant_by_area": {
-              "opening": 7,
+              "opening": 9,
               "io_ring": 64,
               "adc_core": 2,
               "pair_pad_decap": 51,
               "output_register": 2,
               "sar_pad_decap": 53,
               "dvdd_decap": 48,
-              "pclampc_analog": 2,
               "core_vss_ring_band": 3,
               "pclampc_sar": 1
             },
@@ -4222,8 +4240,9 @@
             "variant": 6,
             "reference": 5,
             "variant_by_area": {
-              "analog_pad_decap": 2,
+              "analog_pad_decap": 1,
               "adc_core": 1,
+              "pclampc_analog": 1,
               "opening": 1,
               "sar_pad_decap": 1,
               "pair_pad_decap": 1
@@ -4423,6 +4442,770 @@
       },
       "flat_lup_esd": {
         "identity": "chip-f5r3-b1-flat-lupesd",
+        "variant": {
+          "ESD.18g": 540,
+          "ESD.19g": 432,
+          "ESD.WARN.1": 6
+        },
+        "reference": {
+          "ESD.18g": 540,
+          "ESD.19g": 432,
+          "ESD.WARN.1": 6
+        },
+        "changed": {}
+      }
+    },
+    "layout_full_fill5_r3_seal": {
+      "cellview": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r3_seal",
+      "reference": "layout_full_fill5_r3",
+      "build": "chip-seal-b1",
+      "ok": true,
+      "replace_masters": null,
+      "object_views": {
+        "N28_TSMC_SRDMB_Mu": "layout"
+      },
+      "guarded_unchanged": true,
+      "layout_oa_sha256": "645c9675845f0359eb4c1d071c777acaca9818f1c765166a8c506d0d694def3e",
+      "drc": {
+        "identity": "chip-seal-b1-chk",
+        "markers": 1944,
+        "reference": 1484,
+        "non_density": 235,
+        "reference_non_density": 236,
+        "changed_rules": {
+          "M1.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M1.DN.6": {
+            "variant": 159,
+            "reference": 126,
+            "variant_by_area": {
+              "opening": 4,
+              "pair_pad_decap": 21,
+              "io_ring": 118,
+              "analog_pad_decap": 4,
+              "output_register": 4,
+              "sar_pad_decap": 4,
+              "dvdd_decap": 2,
+              "adc_core": 2
+            },
+            "density_or_fill": true
+          },
+          "M2.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M2.DN.6": {
+            "variant": 158,
+            "reference": 112,
+            "variant_by_area": {
+              "pair_pad_decap": 24,
+              "io_ring": 118,
+              "opening": 4,
+              "core_vss_ring_band": 2,
+              "output_register": 4,
+              "sar_pad_decap": 4,
+              "dvdd_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "M3.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M3.DN.6": {
+            "variant": 148,
+            "reference": 56,
+            "variant_by_area": {
+              "pair_pad_decap": 24,
+              "io_ring": 102,
+              "adc_core": 8,
+              "adc_guard_ring": 4,
+              "output_register": 4,
+              "sar_pad_decap": 2,
+              "dvdd_decap": 2,
+              "opening": 2
+            },
+            "density_or_fill": true
+          },
+          "M4.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M4.DN.6": {
+            "variant": 170,
+            "reference": 100,
+            "variant_by_area": {
+              "pair_pad_decap": 50,
+              "io_ring": 98,
+              "opening": 4,
+              "core_vss_ring_band": 2,
+              "adc_core": 6,
+              "adc_guard_ring": 4,
+              "output_register": 4,
+              "dvdd_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "M5.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "M5.DN.6": {
+            "variant": 142,
+            "reference": 54,
+            "variant_by_area": {
+              "opening": 7,
+              "pair_pad_decap": 21,
+              "io_ring": 98,
+              "core_vss_ring_band": 8,
+              "adc_core": 6,
+              "dvdd_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "M6.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M6.DN.6": {
+            "variant": 386,
+            "reference": 233,
+            "variant_by_area": {
+              "opening": 9,
+              "pair_pad_decap": 97,
+              "io_ring": 98,
+              "core_vss_ring_band": 32,
+              "adc_core": 6,
+              "output_register": 2,
+              "sar_pad_decap": 85,
+              "dvdd_decap": 56,
+              "pclampc_sar": 1
+            },
+            "density_or_fill": true
+          },
+          "M7.DN.1": {
+            "variant": 5,
+            "reference": 1,
+            "variant_by_area": {
+              "io_ring": 4,
+              "adc_core": 1
+            },
+            "density_or_fill": true
+          },
+          "M7.DN.3": {
+            "variant": 0,
+            "reference": 2,
+            "variant_by_area": {},
+            "density_or_fill": true
+          },
+          "M7.DN.6": {
+            "variant": 287,
+            "reference": 303,
+            "variant_by_area": {
+              "pair_pad_decap": 54,
+              "sar_pad_decap": 55,
+              "io_ring": 98,
+              "analog_pad_decap": 36,
+              "adc_guard_ring": 4,
+              "adc_core": 12,
+              "output_register": 2,
+              "dvdd_decap": 24,
+              "pclampc_sar": 2
+            },
+            "density_or_fill": true
+          },
+          "Mx.DN.7:M1_M2_M3": {
+            "variant": 2,
+            "reference": 5,
+            "variant_by_area": {
+              "opening": 1,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "Mx.DN.7:M2_M3_M4": {
+            "variant": 2,
+            "reference": 4,
+            "variant_by_area": {
+              "opening": 1,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "Mx.DN.7:M3_M4_M5": {
+            "variant": 2,
+            "reference": 6,
+            "variant_by_area": {
+              "pair_pad_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "Mx.DN.7:M4_M5_M6": {
+            "variant": 3,
+            "reference": 7,
+            "variant_by_area": {
+              "opening": 2,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "Mx.DN.7:M5_M6_M7": {
+            "variant": 4,
+            "reference": 8,
+            "variant_by_area": {
+              "opening": 3,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "OD.DN.3": {
+            "variant": 3,
+            "reference": 19,
+            "variant_by_area": {
+              "sar_pad_decap": 1,
+              "pair_pad_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "OD.S.14": {
+            "variant": 27,
+            "reference": 16,
+            "variant_by_area": {
+              "io_ring": 22,
+              "sar_pad_decap": 3,
+              "opening": 1,
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "PO.DN.1": {
+            "variant": 1,
+            "reference": 0,
+            "variant_by_area": {
+              "pair_pad_decap": 1
+            },
+            "density_or_fill": true
+          },
+          "PO.DN.3": {
+            "variant": 2,
+            "reference": 10,
+            "variant_by_area": {
+              "pair_pad_decap": 1,
+              "opening": 1
+            },
+            "density_or_fill": true
+          },
+          "PO.DN.3.1": {
+            "variant": 5,
+            "reference": 6,
+            "variant_by_area": {
+              "core_vss_ring_band": 1,
+              "analog_pad_decap": 1,
+              "sar_pad_decap": 1,
+              "pair_pad_decap": 2
+            },
+            "density_or_fill": true
+          },
+          "SSD.DN.1": {
+            "variant": 0,
+            "reference": 1,
+            "variant_by_area": {},
+            "density_or_fill": true
+          },
+          "WITH_SEALRING_OPTION:WARNING": {
+            "variant": 0,
+            "reference": 1,
+            "variant_by_area": {},
+            "density_or_fill": false
+          }
+        }
+      },
+      "lvs": {
+        "identity": "chip-seal-b1-chk",
+        "verdict": "CORRECT",
+        "source_sha256": "cf39133026e67b446a935f4d162ab72ec153fe9d3b66b94f52d0a35c1452e2f0",
+        "top": {
+          "layout": "sar8_adc_chip",
+          "initial": {
+            "Ports": [
+              31,
+              31
+            ],
+            "Nets": [
+              2047,
+              1538
+            ],
+            "Instances MN (4 pins)": [
+              4879,
+              4717
+            ],
+            "Instances MP (4 pins)": [
+              3282,
+              2953
+            ],
+            "Instances rm1w (2 pins)": [
+              7,
+              7
+            ],
+            "Instances rm2w (2 pins)": [
+              10,
+              10
+            ],
+            "Instances rnodwo_m (3 pins)": [
+              30,
+              30
+            ],
+            "Instances rpodwo_m (3 pins)": [
+              37,
+              28
+            ],
+            "Instances rupolym (2 pins)": [
+              104,
+              104
+            ],
+            "Instances rupolym_m (3 pins)": [
+              510,
+              11
+            ],
+            "Instances D (2 pins)": [
+              566,
+              171
+            ],
+            "Instances cfmom_2t (2 pins)": [
+              37,
+              37
+            ],
+            "Instances nmoscap (2 pins)": [
+              11139,
+              11139
+            ],
+            "Instances sar8_se_core (24 pins)": [
+              1,
+              1
+            ],
+            "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+              2,
+              2
+            ],
+            "Instances sar_strongarm_t28_core (7 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8i_refword (27 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8j_r1_cdac (38 pins)": [
+              1,
+              1
+            ],
+            "Total Inst": [
+              20607,
+              19213
+            ]
+          },
+          "after": {
+            "Ports": [
+              31,
+              31
+            ],
+            "Nets": [
+              1536,
+              1536
+            ],
+            "Instances MN (4 pins)": [
+              1090,
+              1090
+            ],
+            "Instances MP (4 pins)": [
+              1449,
+              1449
+            ],
+            "Instances rm1w (2 pins)": [
+              1,
+              1
+            ],
+            "Instances rm2w (2 pins)": [
+              2,
+              2
+            ],
+            "Instances rnodwo_m (3 pins)": [
+              30,
+              30
+            ],
+            "Instances rpodwo_m (3 pins)": [
+              28,
+              28
+            ],
+            "Instances rupolym (2 pins)": [
+              2,
+              2
+            ],
+            "Instances rupolym_m (3 pins)": [
+              11,
+              11
+            ],
+            "Instances D (2 pins)": [
+              24,
+              24
+            ],
+            "Instances cfmom_2t (2 pins)": [
+              37,
+              37
+            ],
+            "Instances nmoscap (2 pins)": [
+              11139,
+              11139
+            ],
+            "Instances sar8_se_core (24 pins)": [
+              1,
+              1
+            ],
+            "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+              2,
+              2
+            ],
+            "Instances sar_strongarm_t28_core (7 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8i_refword (27 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8j_r1_cdac (38 pins)": [
+              1,
+              1
+            ],
+            "Total Inst": [
+              13819,
+              13819
+            ]
+          },
+          "warnings": [
+            "Ambiguity points were found and resolved arbitrarily.",
+            "Unbalanced smashed mosfets were matched."
+          ]
+        },
+        "supply_only_virtual_connect": {
+          "identity": "chip-seal-b1-lvs-vcs",
+          "verdict": "CORRECT",
+          "erc": {
+            "floating.nxwell_float": 7,
+            "floating.psub": 6,
+            "mnpg": 280,
+            "npvss49": 12
+          }
+        }
+      },
+      "erc": {
+        "variant": {
+          "floating.nxwell_float": 7,
+          "floating.psub": 6,
+          "mnpg": 280,
+          "npvss49": 12
+        },
+        "total": 305,
+        "reference_total": 302,
+        "changed": {
+          "floating.psub": [
+            4,
+            6
+          ],
+          "floating.nxwell_float": [
+            6,
+            7
+          ]
+        }
+      },
+      "flat_lup_esd": {
+        "identity": "chip-seal-b1-flat-lupesd",
+        "variant": {
+          "ESD.18g": 540,
+          "ESD.19g": 432,
+          "ESD.WARN.1": 6
+        },
+        "reference": {
+          "ESD.18g": 540,
+          "ESD.19g": 432,
+          "ESD.WARN.1": 6
+        },
+        "changed": {}
+      }
+    },
+    "layout_full_fill5_r4_seal": {
+      "cellview": "SAR_ADC_T28_LAYOUT/sar8_adc_chip/layout_full_fill5_r4_seal",
+      "reference": "layout_full_fill5_r3_seal",
+      "build": "chip-clampfeed-b1",
+      "ok": true,
+      "replace_masters": null,
+      "object_views": {},
+      "guarded_unchanged": true,
+      "layout_oa_sha256": "594cb0bc54b1bf84934ed08bcb94c2db6abaa5fcedb3f520ab4c575949062729",
+      "drc": {
+        "identity": "chip-cfeed-b1-chk",
+        "markers": 1912,
+        "reference": 1944,
+        "non_density": 235,
+        "reference_non_density": 235,
+        "changed_rules": {
+          "M6.DN.6": {
+            "variant": 362,
+            "reference": 386,
+            "variant_by_area": {
+              "opening": 9,
+              "pair_pad_decap": 97,
+              "io_ring": 98,
+              "core_vss_ring_band": 28,
+              "adc_core": 6,
+              "output_register": 2,
+              "sar_pad_decap": 66,
+              "dvdd_decap": 56
+            },
+            "density_or_fill": true
+          },
+          "M7.DN.6": {
+            "variant": 279,
+            "reference": 287,
+            "variant_by_area": {
+              "opening": 1,
+              "sar_pad_decap": 47,
+              "pair_pad_decap": 53,
+              "io_ring": 98,
+              "analog_pad_decap": 36,
+              "adc_guard_ring": 4,
+              "adc_core": 12,
+              "output_register": 2,
+              "dvdd_decap": 24,
+              "pclampc_sar": 2
+            },
+            "density_or_fill": true
+          }
+        }
+      },
+      "lvs": {
+        "identity": "chip-cfeed-b1-chk",
+        "verdict": "CORRECT",
+        "source_sha256": "cf39133026e67b446a935f4d162ab72ec153fe9d3b66b94f52d0a35c1452e2f0",
+        "top": {
+          "layout": "sar8_adc_chip",
+          "initial": {
+            "Ports": [
+              31,
+              31
+            ],
+            "Nets": [
+              2047,
+              1538
+            ],
+            "Instances MN (4 pins)": [
+              4879,
+              4717
+            ],
+            "Instances MP (4 pins)": [
+              3282,
+              2953
+            ],
+            "Instances rm1w (2 pins)": [
+              7,
+              7
+            ],
+            "Instances rm2w (2 pins)": [
+              10,
+              10
+            ],
+            "Instances rnodwo_m (3 pins)": [
+              30,
+              30
+            ],
+            "Instances rpodwo_m (3 pins)": [
+              37,
+              28
+            ],
+            "Instances rupolym (2 pins)": [
+              104,
+              104
+            ],
+            "Instances rupolym_m (3 pins)": [
+              510,
+              11
+            ],
+            "Instances D (2 pins)": [
+              566,
+              171
+            ],
+            "Instances cfmom_2t (2 pins)": [
+              37,
+              37
+            ],
+            "Instances nmoscap (2 pins)": [
+              11139,
+              11139
+            ],
+            "Instances sar8_se_core (24 pins)": [
+              1,
+              1
+            ],
+            "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+              2,
+              2
+            ],
+            "Instances sar_strongarm_t28_core (7 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8i_refword (27 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8j_r1_cdac (38 pins)": [
+              1,
+              1
+            ],
+            "Total Inst": [
+              20607,
+              19213
+            ]
+          },
+          "after": {
+            "Ports": [
+              31,
+              31
+            ],
+            "Nets": [
+              1536,
+              1536
+            ],
+            "Instances MN (4 pins)": [
+              1090,
+              1090
+            ],
+            "Instances MP (4 pins)": [
+              1449,
+              1449
+            ],
+            "Instances rm1w (2 pins)": [
+              1,
+              1
+            ],
+            "Instances rm2w (2 pins)": [
+              2,
+              2
+            ],
+            "Instances rnodwo_m (3 pins)": [
+              30,
+              30
+            ],
+            "Instances rpodwo_m (3 pins)": [
+              28,
+              28
+            ],
+            "Instances rupolym (2 pins)": [
+              2,
+              2
+            ],
+            "Instances rupolym_m (3 pins)": [
+              11,
+              11
+            ],
+            "Instances D (2 pins)": [
+              24,
+              24
+            ],
+            "Instances cfmom_2t (2 pins)": [
+              37,
+              37
+            ],
+            "Instances nmoscap (2 pins)": [
+              11139,
+              11139
+            ],
+            "Instances sar8_se_core (24 pins)": [
+              1,
+              1
+            ],
+            "Instances sar_bootstrap_flat_8b_p_core (5 pins)": [
+              2,
+              2
+            ],
+            "Instances sar_strongarm_t28_core (7 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8i_refword (27 pins)": [
+              1,
+              1
+            ],
+            "Instances sar8j_r1_cdac (38 pins)": [
+              1,
+              1
+            ],
+            "Total Inst": [
+              13819,
+              13819
+            ]
+          },
+          "warnings": [
+            "Ambiguity points were found and resolved arbitrarily.",
+            "Unbalanced smashed mosfets were matched."
+          ]
+        },
+        "supply_only_virtual_connect": {
+          "identity": "chip-cfeed-b1-lvs-vcs",
+          "verdict": "CORRECT",
+          "erc": {
+            "floating.nxwell_float": 7,
+            "floating.psub": 6,
+            "mnpg": 280,
+            "npvss49": 12
+          }
+        }
+      },
+      "erc": {
+        "variant": {
+          "floating.nxwell_float": 7,
+          "floating.psub": 6,
+          "mnpg": 280,
+          "npvss49": 12
+        },
+        "total": 305,
+        "reference_total": 305,
+        "changed": {}
+      },
+      "flat_lup_esd": {
+        "identity": "chip-cfeed-b1-flat-lupesd",
         "variant": {
           "ESD.18g": 540,
           "ESD.19g": 432,
