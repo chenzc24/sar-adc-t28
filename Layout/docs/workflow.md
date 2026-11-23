@@ -229,6 +229,7 @@ python -m Layout.design.chip_integration BUILD_ID --readback READBACK_ID --view 
 python -m Layout.design.chip_full_source --base PARTIAL_CHIP_CDL --register REGISTER_CDL --contents CONTENT_DIR [--objects-rev 2] --out CHIP_CDL
 python -m Layout.design.chip_assembly physical CHECK_ID --view layout_full --hcells-from BASE_GDS --source CHIP_CDL
 python -m Layout.tools.analysis.chip_objects_record --chip-build BUILD_ID --chip-checks CHECK_ID
+python -m Layout.tools.analysis.chip_rail_recheck
 ```
 
 [Chip objects record](../results/chip_objects.md)
