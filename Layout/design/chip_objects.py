@@ -93,8 +93,20 @@ def build_script(identity, content, guarded=()):
                          " dbDeleteObject(inst) inst=dbCreateInstByMasterName(cv lib cell view name xy orient)"
                          ' coNeed(inst sprintf(nil "Cannot place %s/%s/%s" lib cell view))'
                          ' printf("SWAPPED %s %s/%s/%s %L %s\\n" name lib cell view xy orient)))']
+        if any("xy" in s for s in swaps):
+            # A swap that also moves the instance (a re-tiled seal ring keeps its orientation, not its origin).
+            lines[:0] = ["procedure(coSwapAt(cv name lib cell view xy) let((inst orient)"
+                         " inst=car(setof(i cv~>instances i~>name==name))"
+                         ' coNeed(inst sprintf(nil "No instance %s" name)) orient=inst~>orient'
+                         " dbDeleteObject(inst) inst=dbCreateInstByMasterName(cv lib cell view name xy orient)"
+                         ' coNeed(inst sprintf(nil "Cannot place %s/%s/%s" lib cell view))'
+                         ' printf("SWAPPED %s %s/%s/%s %L %s\\n" name lib cell view xy orient)))']
         for s in swaps:
-            lines.append(f"  coSwap(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])})")
+            if "xy" in s:
+                lines.append(f"  coSwapAt(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])} "
+                             f"list({num(s['xy'][0])} {num(s['xy'][1])}))")
+            else:
+                lines.append(f"  coSwap(cv {sk(s['inst'])} {sk(s['lib'])} {sk(s['cell'])} {sk(s['view'])})")
     else:
         lines += [
             f"  cv=dbOpenCellViewByType({lib} {sk(cell)} {sk(view)} \"maskLayout\" \"w\")",

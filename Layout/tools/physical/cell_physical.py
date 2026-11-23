@@ -148,7 +148,8 @@ def main():
                 selected = []
                 prefixes = [s for s in args.select_prefix.split(",") if s]
                 if prefixes:
-                    names = re.findall(r"(?m)^([A-Za-z][\w.]*)[ \t]*\{", text)
+                    # Rule names may carry a ':' qualifier (CSR.R.1:DNWi, G.1:MATCHING).
+                    names = re.findall(r"(?m)^([A-Za-z][\w.:]*)[ \t]*\{", text)
                     selected = sorted(set(n for n in names if any(n.startswith(pre) for pre in prefixes)))
                     if not selected:
                         raise ValueError("No rule check matches " + args.select_prefix)
