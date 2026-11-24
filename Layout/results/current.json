@@ -290,7 +290,43 @@
         "codes_match_respective_controls": true,
         "vin_route_ohm_per_side": 56.6,
         "vin_widening_required": false
+      },
+      "electrical_followup": {
+        "ff_cold_vds": {
+          "status": "open",
+          "pairs_over_duration_limit": 16,
+          "worst_duration_ps": 757.8,
+          "duration_limit_ps": 100
+        },
+        "ff_hot_bootstrap_hold": {
+          "status": "open",
+          "worst_single_ended_mv": 4.13,
+          "limit_mv": 3.515625
+        },
+        "record": "results/integration/stage6_ff_electrical_20261124.json",
+        "preliminary_power": {
+          "cases": 9,
+          "min_uw": 57.46,
+          "max_uw": 393.93,
+          "scope": "Core VDD, VREF and on-chip output register replay. Pad supplies excluded.",
+          "record": "results/integration/adc_register_power_20261124.md"
+        },
+        "final_tt_noise_fft": "pending",
+        "full_code_transition_linearity": "open",
+        "coverage_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/60"
       }
+    },
+    "chip_physical_review": {
+      "stream": "chip-sfill7-oa-chk2",
+      "lvs": "CORRECT",
+      "drc_markers": 224,
+      "density_markers": 0,
+      "erc_markers": 296,
+      "flat_latchup_markers": 0,
+      "core_exclusion_dummy_vias_found": 15,
+      "core_exclusion_record": "Layout/results/chip_fill7_core_dummy_vias.json",
+      "open": "Foundry/shuttle acceptance of IO-region fill and waiver applicability, analog pad ESD disposition, Bootstrap diode disposition and package boundary review.",
+      "handoff": "https://github.com/chenzc24/sar-adc-t28/issues/12#issuecomment-7118488357"
     }
   }
 }

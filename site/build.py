@@ -28,7 +28,7 @@ PAGES = {
         "layout": ("Layout", "Inspect the unfilled r8 die from the IO ring to individual devices."),
         "verification": ("Verification", "Post-layout results, limits and open checks."),
         "history": ("History", "The SAR ADC design revisions and historical measurements."),
-        "report": ("Report", "Design review of the comparator, SAR timing and chip assembly, November 2026."),
+        "report": ("Report", "Design history from behavioral model to extracted ADC, including layout revisions, IO, fill and open verification."),
     },
     "zh-CN": {
         "index": ("概览", "TSMC 28 nm 工艺的 8 位、10 MS/s 异步 SAR ADC。"),
@@ -36,7 +36,7 @@ PAGES = {
         "layout": ("版图", "查看 r8 无填充版图，从 IO 环放大到单个晶体管。"),
         "verification": ("验证", "后仿结果、指标和待完成的验证。"),
         "history": ("迭代", "ADC 的设计变更与历史测量。"),
-        "report": ("阶段报告", "比较器、SAR 时序和整片装配的设计取舍与后仿结果。"),
+        "report": ("阶段报告", "从行为模型到整片提取，回看采样器、SAR、CDAC、IO 与填充的返工及未收口事项。"),
     },
 }
 REDIRECTS = {"architecture": ("index", "architecture"), "review": ("verification", "electrical-checks")}
@@ -44,10 +44,12 @@ FIGURES = {
     "assets/baseline-spectrum.png": "results/fft/ab_spectrum.png",
     "assets/report-rc.png": "Layout/results/figures/sar_timing_compact.png",
     "assets/report-sar.png": "Layout/results/figures/sar_se_core.png",
+    "assets/report-cdac.png": "Layout/results/figures/cdac_paired_comparison.png",
+    "assets/report-small-bits.png": "Layout/results/figures/cdac_small_bit_center.png",
 }
 STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js",
           "assets/schematic-view.js", "assets/language.js",
-          "assets/report-comparator.png", "assets/report-chip.png")
+          "assets/report-comparator.png", "assets/report-chip.png", "assets/report-ff-stress.png")
 LAYOUT_PART_SIZE = 192 * 1024
 RNL_VIEWER = "https://rich-netlist.github.io/rnl/viewer/"
 RNL_ENTRY = "design/rnl/export.scs"
