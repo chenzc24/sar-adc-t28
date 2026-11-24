@@ -136,6 +136,8 @@ code { font-family: var(--mono); font-size: .9em; overflow-wrap: anywhere; }
 .jump-links { display: flex; flex-wrap: wrap; gap: .45rem .65rem; margin-top: 1.35rem; }
 .jump-links a { padding: .32rem .62rem; border: 1px solid var(--line); border-radius: .37rem; background: #fafbf7; font-weight: 650; font-size: .83rem; text-decoration: none; }
 .jump-links a:hover { background: #e8efdf; }
+.schematic-links { margin-top: 0; }
+.schematic-frame { display: block; width: 100%; height: clamp(31rem, 74vh, 53rem); margin-top: .8rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); }
 
 .signal-panel { padding: clamp(1rem, 2.6vw, 2rem); border-radius: .75rem; background: var(--dark); color: #f0f4eb; }
 .panel-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .45rem 1rem; align-items: baseline; margin-bottom: 1.45rem; }
@@ -222,9 +224,12 @@ td { color: #36493f; }
   .hero h1 { font-size: clamp(3.7rem, 9vw, 6.2rem); }
 }
 
-@media (max-width: 52rem) {
+@media (max-width: 61rem) {
   .header-inner { grid-template-columns: 1fr auto; gap: 0 1rem; padding-top: .6rem; }
   .site-nav { grid-row: 2; grid-column: 1 / -1; justify-content: start; flex-wrap: wrap; gap: .2rem; margin-block: .45rem; }
+}
+
+@media (max-width: 52rem) {
   .hero { grid-template-columns: 1fr; gap: 1.6rem; padding-top: 2.4rem; }
   .hero h1 { font-size: clamp(3.5rem, 11vw, 6.2rem); }
   .hero-copy br { display: none; }

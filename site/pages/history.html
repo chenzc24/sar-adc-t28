@@ -1,0 +1,36 @@
+<section class="page-intro">
+  <p class="eyebrow">Design history</p>
+  <h1>How the ADC evolved<span class="title-period">.</span></h1>
+  <p class="lead">Circuit changes, the measurements that motivated them, and the evidence preserved at each revision.</p>
+  <p class="link-row"><a href="$snapshot/docs/adc-iteration-history.md">Engineering timeline ↗</a><a href="verification.html">Release verification →</a></p>
+</section>
+
+<section class="section first-section" aria-labelledby="revision-title">
+  <div class="section-heading"><h2 id="revision-title">Design revisions</h2></div>
+  <div class="review-list">
+    <article>
+      <div><p class="eyebrow">October · Frozen B</p><h3>Close the native loop</h3></div>
+      <div><p>The B revision fixed the reference-controller handoff and established the first reusable transistor-level baseline. Its deterministic TT spectrum measured 48.79 dB SNDR, 7.81-bit ENOB and 64.77 dBc SFDR.</p><p class="link-row"><a href="$snapshot/results/fft/results.json">A/B spectral record ↗</a><a href="$snapshot/results/static/results.json">Full-code data ↗</a></p></div>
+    </article>
+    <article>
+      <div><p class="eyebrow">November 15–16 · Reset-OR</p><h3>Repair asynchronous reset stress</h3></div>
+      <div><p>The reset-OR candidate moved a data edge out of the stressful clear interval. The 45-point PVT run passed 490 short frames. A separate single-seed TT noisy FFT recorded 48.55 dB SNDR and 7.77-bit ENOB in the schematic.</p><p class="link-row"><a href="$snapshot/results/pvt/resetor_45_short_20261115.md">45-point scope ↗</a><a href="$snapshot/results/noise/resetor_1024_20261116/README.md">Noisy FFT ↗</a></p></div>
+    </article>
+    <article>
+      <div><p class="eyebrow">November 20 · Single-edge</p><h3>Register per-bit settling taps</h3></div>
+      <div><p>Per-bit tap studies exposed margin differences at a major carry. One COMMIT edge and registered tap selection established the current sequence. The adoption tests used cell extraction and an extracted CDAC with ideal SAR interconnect.</p><p class="link-row"><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">Adoption evidence ↗</a><a href="$snapshot/results/design/sar_single_edge_settling_reference_20261120.md">Settling comparison ↗</a></p></div>
+    </article>
+    <article>
+      <div><p class="eyebrow">November 21–24 · Post-layout</p><h3>Route and assemble the chip</h3></div>
+      <div><p>The four-finger Bootstrap, paired CDAC and routed SAR were qualified in stages. The chip assembly added IO and the seal ring. Fill5 core and r8 fill7 chip records track the electrical and physical checks at their respective views.</p><p class="link-row"><a href="$snapshot/results/integration/stage2_all_extracted_20261122.md">Early extracted integration ↗</a><a href="$snapshot/Layout/results/chip_fill.md#earlier-revisions">Fill revisions ↗</a></p></div>
+    </article>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="baseline-title">
+  <div class="section-heading"><h2 id="baseline-title">Schematic baseline spectra</h2></div>
+  <figure class="figure-card">
+    <a href="assets/baseline-spectrum.png" target="_blank" rel="noopener"><img src="assets/baseline-spectrum.png" width="2040" height="1360" alt="Deterministic output spectra for schematic revisions A and B" loading="lazy"></a>
+    <figcaption>Deterministic TT 1,024-point spectra for earlier schematic revisions. <a href="$snapshot/results/fft/results.json">Run records ↗</a></figcaption>
+  </figure>
+</section>

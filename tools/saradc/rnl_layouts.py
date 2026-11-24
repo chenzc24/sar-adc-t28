@@ -8,36 +8,32 @@ import re
 from .rnl import Sheet, POWER, GROUND, instances, strip
 
 def top(s):
-    s.text(-24,105,'SAR8 / single-edge transistor hierarchy',2)
-    s.text(-24,97,'VIN pair → Bootstrap → MOM CDAC → StrongARM → single-edge asynchronous SAR',1.15)
-    for n,x,y in [('XSAMPLE',0,67),('XSEQ',65,67),('XDONE',150,67),('XPRESET',195,67),
-                  ('XBOOTN',0,12),('XBOOTP',0,-25),('XCDAC',72,-7),
-                  ('XCOMP',137,-7),('XCTRL',204,-7),('XREF',72,-91),
-                  ('CL_COMP_N',168,-45),('CL_COMP_P',184,-45),('CL_CMP_CLK',222,-45)]:s.place(n,x,y)
-    for n,label in [('XSAMPLE','Sample buffer'),('XSEQ','Acquire edge'),('XPRESET','Preset'),
-                    ('XBOOTN','Bootstrap -'),('XBOOTP','Bootstrap +'),('XCDAC','MOM CDAC'),
-                    ('XCOMP','StrongARM'),('XCTRL','Single-edge SAR'),('XREF','Reference word')]:
-        x,y,_=s.pos[n];s.text(x-12,y+s.geometry[n].height/2+5,label,2.4)
+    s.text(-21,83,'SAR8 / Single-edge ADC core',2.6)
+    for n,x,y in [('XSAMPLE',0,59),('XSEQ',39,59),('XDONE',146,59),('XPRESET',181,59),
+                  ('XBOOTN',0,32),('XBOOTP',0,10),('XCDAC',60,-11),
+                  ('XCOMP',103,16),('XCTRL',153,16),('XREF',60,-56),
+                  ('CL_COMP_N',123,-14),('CL_COMP_P',138,-25),('CL_CMP_CLK',105,51)]:s.place(n,x,y)
+    for x,y,label in [(-21,72,'Sample and acquire'),(140,72,'Reference preset'),
+                      (-21,46,'Bootstrap sampling'),(38,1,'Binary MOM CDAC'),
+                      (89,31,'StrongARM'),(136,32,'Single-edge SAR'),(42,-78,'Reference gate drive')]:
+        s.text(x,y,label,1.65)
     s.route('XSAMPLE:Z','XSEQ:REQUEST')
     s.route('XDONE:Y','XPRESET:A1')
-    s.join('SEQ_SAMPLE',['XSEQ:TRACK','XBOOTN:CLKS','XBOOTP:CLKS'],'x',-25,color='clock')
-    s.route('XBOOTN:VOUT','XCDAC:TOPN',[(32,12),(32,24),(98,24),(98,s.pin('XCDAC:TOPN')[0][1])])
-    s.route('XBOOTP:VOUT','XCDAC:TOPP',[(36,-25),(36,-31),(101,-31),(101,s.pin('XCDAC:TOPP')[0][1])])
-    for n in ['TOPN','TOPP']:
-        s.route('XCDAC:'+n,'XCOMP:VIN'+n[-1])
-    for n in ['COMP_N','COMP_P']:
-        a='XCOMP:OUT'+n[-1];b='XCTRL:'+n;c='CL_'+n+':1'
-        x=s.pin(c)[0][0];s.join(n,[a,b,c],'x',x)
-    s.join('CMP_CLK',['XCTRL:CMP_CLK','XCOMP:CLK','CL_CMP_CLK:1'],'y',34,color='clock')
-    for i,p in enumerate(['GNN','GNP','GPN','GPP']):
-        a=s.pin('XREF:'+p+'0')[0];b=s.pin('XCDAC:'+p+'0')[0];x=41-i*4
-        s.bus([('XREF',p+'0'),('XCDAC',p+'0')],[(111+i*4,a[1]),(111+i*4,-60-i*4),(x,-60-i*4),(x,b[1])])
-    for i,p in enumerate(['CODE','D']):
-        a=s.pin('XCTRL:'+p+'0')[0];b=s.pin('XREF:'+p+'0')[0]
-        s.bus([('XCTRL',p+'0'),('XREF',p+'0')],[(244+i*4,a[1]),(244+i*4,-132-i*4),(43-i*4,-132-i*4),(43-i*4,b[1])])
-    s.text(155,-128,'CODE[7:0] / D[7:0] feedback',.95)
-    # Clock/sample controls cross sections by their exact source net names.
-    s.text(-24,-145,'All three physical comparator/clock MOM loads are shown. VDD! / 0 are global rails.',.95)
+    for side,rail_y in [('N',25),('P',9)]:
+        boot='XBOOT'+side+':VOUT';comp='XCOMP:VIN'+side;cdac='XCDAC:TOP'+side
+        xb,yb=s.pin(boot)[0];xc,yc=s.pin(comp)[0];xd,yd=s.pin(cdac)[0]
+        branch=(xd,rail_y)
+        s.wire('TOP'+side,boot,(xb+6,yb),(xb+6,rail_y),branch,(xc-5,rail_y),(xc-5,yc),comp,color='analog')
+        s.wire('TOP'+side,cdac,branch,color='analog');s.dot(branch)
+    for n,x in [('COMP_N',123),('COMP_P',133)]:
+        s.join(n,['XCOMP:OUT'+n[-1],'XCTRL:'+n,'CL_'+n+':1'],'x',x,color='analog')
+    s.join('CMP_CLK',['XCTRL:CMP_CLK','XCOMP:CLK','CL_CMP_CLK:1'],'y',43,color='clock')
+    for prefix in ('GNN','GNP','GPN','GPP'):
+        s.bus([('XREF',prefix+'0'),('XCDAC',prefix+'0')],[])
+    for i,prefix in enumerate(('CODE','D')):
+        a=s.pin('XCTRL:'+prefix+'0')[0];b=s.pin('XREF:'+prefix+'0')[0];x=176+i*9
+        s.bus([('XCTRL',prefix+'0'),('XREF',prefix+'0')],[(x,a[1]),(x,b[1])])
+    s.text(95,-60,'Trial and stored words',1.25)
 
 def comparator(s):
     s.text(-47,72,'StrongARM / 11 MOS / symmetric latch and input pair',1.5)
@@ -226,6 +222,72 @@ def graph(s):
         s.text(-20,5,'Interface view only — no transistor body is distributed here.',1.2)
         s.text(-20,-2,'Ports: '+', '.join(s.ports[s.name]),.9)
 
+
+def placed_row(s, names, y, start=0, pitch=34):
+    for column,name in enumerate(names):
+        s.place(name,start+pitch*column,y)
+
+
+def se_controller(s):
+    s.text(-18,84,'Single-edge SAR',2.15)
+    s.text(-18,67,'Compare / timing',1.25)
+    s.text(56,67,'Next trial word',1.25)
+    s.text(147,67,'Completion',1.25)
+    placed_row(s,('XTIM','XWORD','XDONE','XACTIVE'),44,pitch=62)
+    s.text(-18,20,'Registered settling taps',1.35)
+    for row,bit in enumerate((9,7,6,5,4)):
+        placed_row(s,tuple('XSEL'+str(bit)+suffix for suffix in ('_QB','_TB','_D','')),-row*30)
+    s.text(136,20,'Bit stores',1.35)
+    for bit in range(8):
+        s.place(f'XBIT{bit}',157+(bit%2)*37,-(bit//2)*31)
+    placed_row(s,('XMSBD','XMSBQ'),-129,start=157,pitch=37)
+    s.local(distance=41)
+
+
+def se_timing(s):
+    s.text(-17,54,'Asynchronous compare and commit timing',2.05)
+    rows=[('Latch decision',('XPR','XNR','XNRB','XDATA','XRAW','XVD','XVALID')),
+          ('Commit and phase',('XSN','XW0','XW1','XCP','XPHA','XPHBN','XPHB','XPHX')),
+          ('Settling window',('XPHR','XWINDOW','XREADY','XCLR','XSND1','XSND2','XSNQ')),
+          ('Comparator clock',('XLIVE','XIDLE','XSET0','XSET','XHIGH','XCLOCK','XCMP'))]
+    for index,(label,names) in enumerate(rows):
+        y=22-index*50;s.text(-17,y+15,label,1.35);placed_row(s,names,y,pitch=39)
+    s.local(distance=45)
+
+
+def se_window(s):
+    s.text(-14,59,'Settling window / delay chain and selected taps',1.9)
+    placed_row(s,tuple(f'XDEL{k}' for k in range(1,12)),25,pitch=27)
+    placed_row(s,tuple(f'XTAP{k}' for k in (4,5,6,7,9)),-24,pitch=54)
+    for k in range(1,11):
+        first=f'XDEL{k}';second=f'XDEL{k+1}'
+        # The common terminal follows the actual stage-to-stage connection.
+        common=(set(s.parts[first][0]) & set(s.parts[second][0])) - POWER - GROUND
+        if len(common)==1:
+            n=next(iter(common));a,b=(f'{inst}:{s.parts[inst][0].index(n)+1}' for inst in (first,second));s.route(a,b)
+    s.local(distance=58)
+
+
+def next_word(s):
+    s.text(-18,45,'Next trial word',2)
+    placed_row(s,('X01','X23','X45','X02','X03','X04','X05','X06'),22,pitch=34)
+    for bit in range(8):
+        names=[f'X{prefix}{bit}' for prefix in ('EMPTY','TRIAL','VISIBLE','READ','BASE','KEEP','NEXT')]
+        y=-12-bit*32;s.text(-24,y+7,f'Bit {bit}',1.2)
+        for column,name in enumerate(names):
+            if name in s.parts:s.place(name,column*35,y)
+    s.local(distance=39)
+
+
+def se_reference(s):
+    s.text(-17,70,'Single-edge reference decode and switch drive',2)
+    placed_row(s,('XPRESET_N','WUNUSED'),42,pitch=34)
+    for bit in range(8):
+        names=[name for name in (f'XINITIAL{bit}_A',f'XINITIAL{bit}_B',f'XINITIAL{bit}',f'XINV{bit}',
+                                 f'XPN{bit}',f'XNN{bit}',f'WNP{bit}',f'WPP{bit}') if name in s.parts]
+        y=9-bit*30;s.text(-18,y+8,f'Bit {bit}',1.2);placed_row(s,names,y,pitch=34)
+    s.local(distance=42)
+
 def layout(name,body,portmap):
     s=Sheet(name,body,portmap)
     if name=='sar_adc8_join_r4':top(s)
@@ -237,6 +299,11 @@ def layout(name,body,portmap):
     elif 'refdrv_b' in name:refdriver(s)
     elif name=='sar8p_bitseq8':bitseq(s)
     elif name=='sar8p_timing':timing(s)
+    elif name=='sar8_se_ctrl':se_controller(s)
+    elif name=='sar8_se_timing':se_timing(s)
+    elif name=='sar8_se_window':se_window(s)
+    elif name=='sar8_next_word':next_word(s)
+    elif name=='sar8i_refword' and 'XPRESET_N' in s.parts:se_reference(s)
     elif name in {'sar8i_ctrl','sar_logic_8b_physical'}:sar(s)
     elif name in {'sar8i_refword','sar8s_refword','sar8p_refword'}:
         if 'X000' in s.parts:refword(s)
