@@ -8,42 +8,77 @@ import re
 from .rnl import Sheet, POWER, GROUND, instances, strip
 
 def top(s):
-    s.text(-29,84,'SAR8   /   Asynchronous differential ADC',2.75)
-    s.text(-29,76,'Sample control',1.35)
-    s.text(111,76,'Reference preset',1.35)
-    for n,x,y in [('XSAMPLE',0,62),('XSEQ',36,62),('XDONE',132,62),('XPRESET',161,62),
-                  ('XBOOTN',0,27),('XBOOTP',0,4),('XCDAC',46,-12),
-                  ('XCOMP',94,18),('XCTRL',139,18),('XREF',46,-48),
-                  ('CL_COMP_N',113,-13),('CL_COMP_P',127,-24),('CL_CMP_CLK',95,51)]:
-        s.place(n,x,y,'MX' if n=='CL_CMP_CLK' else 'R0')
-    for n,label,dy in [('XSAMPLE','Buffer',0),('XSEQ','Acquisition',0),('XDONE','Done',8),
-                       ('XPRESET','Preset',0),('XBOOTN','Sampler N',0),('XBOOTP','Sampler P',0),
-                       ('XCDAC','MOM CDAC',0),('XCOMP','StrongARM',0),
-                       ('XCTRL','SAR',5),('XREF','Reference drive',0)]:
-        s.caption(n,label,dy)
-    for n in ('CL_COMP_N','CL_COMP_P','CL_CMP_CLK'):
-        s.emit('#'+n+' @TEXT("",key="value");')
+    s.text(-24,68,'SAR8 / Asynchronous differential ADC',2.7)
+    s.text(-15,60,'Acquisition',1.4)
+    s.text(65,60,'Reference preset',1.4)
+    for name,x,y,orient in [
+        ('XSAMPLE',0,46,'R0'), ('XSEQ',29,46,'R0'),
+        ('XDONE',77,46,'R0'), ('XPRESET',112,46,'R0'),
+        ('XBOOTP',0,24,'R0'), ('XBOOTN',0,3,'MX'),
+        ('XCOMP',67,13,'R0'), ('XCTRL',111,13,'R0'),
+        ('XCDAC',36,-11,'R0'), ('XREF',36,-38,'R0'),
+        ('CL_COMP_P',88,23,'MX'), ('CL_COMP_N',84,3,'R0'),
+        ('CL_CMP_CLK',92,36,'MX'),
+    ]:
+        s.place(name,x,y,orient)
+    for name,label,dy in [
+        ('XSAMPLE','Sample buffer',0), ('XSEQ','Track control',2.7),
+        ('XDONE','Done',8), ('XPRESET','Preset',8),
+        ('XBOOTP','Bootstrap P',0), ('XBOOTN','Bootstrap N',0),
+        ('XCOMP','StrongARM',0), ('XCTRL','SAR',0),
+        ('XCDAC','MOM CDAC',0), ('XREF','Reference driver',2.5),
+    ]:
+        s.caption(name,label,dy)
+    for name,label,at in [
+        ('CL_COMP_P','C_P',(91,26)), ('CL_COMP_N','C_N',(87,6)),
+        ('CL_CMP_CLK','C_CLK',(95,39)),
+    ]:
+        s.emit('#%s @TEXT("%s",key="name",size=1.05,halign="start") => @PLACE(%g,%g);' %
+               (name,label,*at))
+        s.emit('#'+name+' @TEXT("",key="value");')
+
     s.input_port('XSAMPLE:I',color='clock')
-    s.input_port('XBOOTN:Vin',color='analog')
-    s.input_port('XBOOTP:Vin',color='analog')
     s.route('XSAMPLE:Z','XSEQ:REQUEST')
     s.route('XDONE:Y','XPRESET:A1')
-    for side,rail_y in [('N',27),('P',7)]:
-        boot='XBOOT'+side+':VOUT';comp='XCOMP:VIN'+side;cdac='XCDAC:TOP'+side
-        xb,yb=s.pin(boot)[0];xc,yc=s.pin(comp)[0];xd,_=s.pin(cdac)[0]
-        branch=(xd,rail_y)
-        lead=[(xb+6,yb),(xb+6,rail_y)] if yb!=rail_y else []
-        s.wire('TOP'+side,boot,*lead,branch,(xc-6,rail_y),(xc-6,yc),comp,color='analog')
-        s.wire('TOP'+side,cdac,branch,color='analog');s.dot(branch)
-        s.text(xd+8,rail_y+1.6,'TOP'+side,1.13)
-    for n,x in [('COMP_N',113),('COMP_P',122)]:
-        s.join(n,['XCOMP:OUT'+n[-1],'XCTRL:'+n,'CL_'+n+':1'],'x',x,color='analog')
-    s.join('CMP_CLK',['XCTRL:CMP_CLK','XCOMP:CLK','CL_CMP_CLK:1'],'y',42,color='clock')
+    for ref in ('XBOOTP:Vin','XBOOTN:Vin','XCDAC:VREFP','XCDAC:VREFN'):
+        s.input_port(ref,color='analog')
+
+    for side,rail_y in [('P',24),('N',3)]:
+        net = 'TOP'+side
+        sampler = 'XBOOT'+side+':VOUT'
+        comparator_input = 'XCOMP:VIN'+side
+        capacitor = 'XCDAC:TOP'+side
+        x,_ = s.pin(capacitor)[0]
+        _,y = s.pin(comparator_input)[0]
+        branch = s.junction((x,rail_y))
+        s.wire(net,sampler,branch,(46,rail_y),(46,y),comparator_input,color='analog')
+        s.wire(net,branch,capacitor,color='analog')
+        s.text(x+(2 if side=='P' else -12),rail_y+1.8,net,1.1)
+
+    for side,x in [('P',88),('N',84)]:
+        net = 'COMP_'+side
+        source, sink = 'XCOMP:OUT'+side, 'XCTRL:'+net
+        _,y1 = s.pin(source)[0]
+        _,y2 = s.pin(sink)[0]
+        branch = s.junction((x,y1))
+        s.wire(net,source,branch,(92,y1),(92,y2),sink,color='analog')
+        s.wire(net,branch,'CL_'+net+':1',color='analog')
+
+    clk_x = s.pin('XCOMP:CLK')[0][0]
+    sar_clk_x = s.pin('XCTRL:CMP_CLK')[0][0]
+    branch = s.junction((92,31))
+    s.wire('CMP_CLK','XCOMP:CLK',(clk_x,31),branch,(sar_clk_x,31),'XCTRL:CMP_CLK',color='clock')
+    s.wire('CMP_CLK',branch,'CL_CMP_CLK:1',color='clock')
+    s.text(70,32.8,'CMP_CLK',1.0)
+
     for prefix in ('REFSEL_N','REFSEL_P'):
         s.bus([('XREF',prefix+'0'),('XCDAC',prefix+'0')],[],color='#536f4b')
-    a=s.pin('XCTRL:CODE0')[0];b=s.pin('XREF:CODE0')[0];x=161
-    s.bus([('XCTRL','CODE0'),('XREF','CODE0')],[(x,a[1]),(x,b[1])],color='#66538a')
-    s.text(121,-37,'Digital feedback',1.3)
+    code_x = s.pin('XCTRL:CODE0')[0][0]
+    _,drive_y = s.pin('XREF:CODE0')[0]
+    s.bus([('XCTRL','CODE0'),('XREF','CODE0')],
+          [(code_x,-29),(58,-29),(58,drive_y)],color='#66538a')
+    s.text(72,-27.2,'CODE[7:0]',1.1)
+
 
 def comparator(s):
     s.text(-48,68,'StrongARM  /  differential latch',1.7)
@@ -90,24 +125,48 @@ def bootstrap(s):
     s.text(-13,-37,'Clock inverter',1.15);s.text(33,-37,'Precharge and boost',1.15);s.text(144,-37,'Vin → VOUT',1.15)
 
 def switch(s):
-    s.place('MP_HIGH',0,20);s.place('MN_LOW',0,-10)
-    s.join('BOT',['MP_HIGH:1','MN_LOW:1'],'y',5,color='analog')
-    if 'SEL' in s.ports[s.name]:
-        s.join('SEL',['MP_HIGH:2','MN_LOW:2'],'x',-12)
-    s.text(-20,48,s.name+' / real reference switches',1.3)
+    s.place('MP_HIGH',0,14)
+    s.place('MN_LOW',0,-14)
+    if 'SEL' not in s.ports[s.name]:
+        s.join('BOT',['MP_HIGH:1','MN_LOW:1'],'y',0,color='analog')
+        return
+    bit = s.name[-1]
+    s.text(-27,36,f'Bit {bit} reference switch',2.0)
+    s.text(-27,31,'SEL low selects VREFP. SEL high selects VREFN.',1.12)
+    bot = s.junction((0,0))
+    s.wire('BOT','MP_HIGH:1',bot,'MN_LOW:1',color='analog')
+    s.wire('BOT',bot,s.port('BOT',(22,0),'MY'),color='analog')
+    gate = s.junction((-13,0))
+    s.wire('SEL',s.port('SEL',(-24,0)),gate,color='clock')
+    s.wire('SEL',gate,(-13,14),'MP_HIGH:2',color='clock')
+    s.wire('SEL',gate,(-13,-14),'MN_LOW:2',color='clock')
+    s.wire('VREFP',s.port('VREFP',(0,25),'R270'),'MP_HIGH:3',color='analog')
+    s.wire('VREFN',s.port('VREFN',(0,-25),'R90'),'MN_LOW:3',color='analog')
 
 def cdac(s):
-    s.text(-15,68,'Differential MOM CDAC  /  binary weights and unit dummy',1.65)
-    for side,y in [('N',34),('P',-32)]:
-        caprefs=[]
+    s.text(-16,60,'Differential MOM CDAC',2.0)
+    for side,y in [('P',29),('N',-29)]:
+        top_net = 'TOP'+side
+        taps = []
         for k in range(9):
-            x=k*38;n='CMOM'+side+str(k);s.place(n,x,y);caprefs.append(n+':1')
+            x = k*32
+            name = 'CMOM'+side+str(k)
+            s.place(name,x,y)
+            at = s.junction((x,y+12))
+            s.wire(top_net,at,name+':1',color='analog')
+            taps.append(at)
             if k<8:
-                sw='XS'+side+str(k);s.place(sw,x,y-22)
-                s.route(n+':2',sw+':BOT')
-        s.join('TOP'+side,caprefs,'y',y+12,color='analog')
-        s.text(-15,y+20,'TOP'+side+' / '+('negative' if side=='N' else 'positive')+' bank',1.2)
-        s.text(289,y-18,'Dummy → '+s.parts['CMOM'+side+'8'][0][1],1)
+                sw = 'XS'+side+str(k)
+                s.place(sw,x,y-22)
+                s.wire(s.parts[name][0][1],name+':2',sw+':BOT',color='analog')
+            label = f'B{k}' if k < 8 else 'Dummy'
+            weight = re.search(r'\bmulti=(\d+)',s.parts[name][2])[1]
+            value = '1 unit' if weight == '1' else f'{weight} units'
+            s.emit('#%s @TEXT("%s",key="name",size=1.48,halign="start");' % (name,label))
+            s.emit('#%s @TEXT("%s",key="value",size=1.16,halign="start");' % (name,value))
+        ext = s.port(top_net,(-11,y+12))
+        s.wire(top_net,ext,*taps,color='analog')
+        s.text(-16,y+19,side+' bank / TOP'+side,1.35)
 
 def delay(s):
     s.text(-18,47,s.name+' / two RC stages with active clear',1.4)
@@ -232,7 +291,9 @@ def graph(s):
         (sources if m in {'vsource','isource'} else loads if m in {'cfmom_2t','capacitor','resistor','rupolym'} else blocks).append(n)
     for group,x in [(sources,-70),(blocks,0),(loads,90)]:
         for i,n in enumerate(group):s.place(n,x+(i//12)*55,-(i%12)*33)
-    s.local(exclude=tuple(POWER|GROUND),distance=120)
+    # The fixture's plate leads stay named at the precharge switches and DUT.
+    plate_nets = {'d_n','d_p'} if s.name == 'tb_cdac' else set()
+    s.local(exclude=POWER|GROUND|plate_nets,distance=120)
     s.text(-89,30,s.name+' / source-derived connections',1.4)
     if not s.parts:
         s.text(-20,5,'Interface view only — no transistor body is distributed here.',1.2)
@@ -245,19 +306,85 @@ def placed_row(s, names, y, start=0, pitch=34):
 
 
 def se_controller(s):
-    s.text(-18,84,'Single-edge SAR',2.15)
-    s.text(-18,67,'Compare / timing',1.25)
-    s.text(56,67,'Next trial word',1.25)
-    s.text(147,67,'Completion',1.25)
-    placed_row(s,('XTIM','XWORD','XDONE','XACTIVE'),44,pitch=57)
-    s.text(-18,20,'Registered settling taps',1.35)
-    for row,bit in enumerate((9,7,6,5,4)):
-        placed_row(s,tuple('XSEL'+str(bit)+suffix for suffix in ('_QB','_TB','_D','')),-row*26,pitch=31)
-    s.text(122,20,'Bit stores',1.35)
+    s.text(-25,92,'SAR / Single-edge controller',2.55)
+    for name,x in [('XTIM',-2),('XWORD',64),('XDONE',136),('XACTIVE',165)]:
+        s.place(name,x,55)
+    for name,label,dy in [('XTIM','Timing',0),('XWORD','Trial word',0),
+                          ('XDONE','Last bit',0),('XACTIVE','Active',9)]:
+        s.caption(name,label,dy)
+    s.frame((-25,36),(25,79),'Compare and commit',['XTIM'],'Latch the comparator result.')
+    s.frame((42,36),(90,79),'Next trial word',['XWORD'],'Build the next word and expose D.')
+    s.frame((116,36),(190,79),'Conversion complete',['XDONE','XACTIVE'],'Release ACTIVE after the last commit.')
+    s.route('XTIM:DATA','XWORD:DATA')
+    cmp_write_y = s.pin('XTIM:COMMIT')[0][1]
+    done_clk_y = s.pin('XDONE:CK')[0][1]
+    s.wire('COMMIT','XTIM:COMMIT',(32,cmp_write_y),(32,83),(110,83),
+           (110,done_clk_y),'XDONE:CK',color='clock')
+    s.text(78,85,'COMMIT',1.1)
+    done = s.junction((149,47))
+    s.wire('DONE','XDONE:Q',done,(150,47),(150,55),'XACTIVE:A')
+    word_done_y = s.pin('XWORD:DONE')[0][1]
+    s.wire('DONE',done,(149,38),(94,38),(94,word_done_y),'XWORD:DONE')
+
+    bits = [f'XBIT{bit}' for bit in range(7,-1,-1)]
+    for index,name in enumerate(bits):
+        s.place(name,26*index,-4)
+        s.caption(name,'B'+name[-1])
+    s.place('XMSBD',-13,5)
+    s.place('XMSBQ',-10,-22)
+    s.caption('XMSBD','MSB in',8)
+    s.caption('XMSBQ','MSB out',8)
+    s.frame((-24,-35),(204,30),'Bit registers',bits+['XMSBD','XMSBQ'],
+            'COMMIT stores NEXT as CODE for the next comparison.')
+
+    next_rail, code_rail = 18, -31
+    next_pin_y = s.pin('XWORD:NEXT0')[0][1]
+    next_branch = s.junction((101,next_rail))
+    s.bus_from('XWORD:NEXT0',(101,next_pin_y),next_branch)
+    next_taps = [(101,next_branch)]
+    code_taps = []
     for bit in range(8):
-        s.place(f'XBIT{bit}',140+(bit%2)*34,-(bit//2)*28)
-    placed_row(s,('XMSBD','XMSBQ'),-112,start=140,pitch=42)
-    s.local(distance=41)
+        register = f'XBIT{bit}'
+        if bit == 7:
+            x_data = -21
+            x_code = -3
+            s.wire('MSBD','XMSBD:Y',(-4,5),register+':DATA')
+            s.wire('MSBQ',register+':Q',(4,-18),(-19,-18),(-19,-22),'XMSBQ:A')
+            data_ref, code_ref = 'XMSBD:A','XMSBQ:Y'
+        else:
+            data_ref, code_ref = register+':DATA',register+':Q'
+            x_data = s.pin(data_ref)[0][0]
+            x_code = s.pin(code_ref)[0][0]
+        data_tap = s.junction((x_data,next_rail))
+        code_tap = s.junction((x_code,code_rail))
+        next_taps.append((x_data,data_tap))
+        code_taps.append((x_code,code_tap))
+        if bit == 7:
+            s.wire('NEXT7',data_tap,(x_data,5),data_ref)
+        else:
+            s.wire(f'NEXT{bit}',data_tap,data_ref)
+        s.wire(f'CODE{bit}',code_ref,code_tap)
+    s.bus_path([f'NEXT{bit}' for bit in range(8)],*(tap for _,tap in sorted(next_taps)))
+    code_back_y = s.pin('XWORD:CODE0')[0][1]
+    s.bus_from('XWORD:CODE0',(35,code_back_y),(35,32),(-28,32),(-28,code_rail),
+               *(tap for _,tap in sorted(code_taps)))
+    s.text(152,20.2,'NEXT[7:0]',1.15)
+    s.text(152,-28.8,'CODE[7:0]',1.15)
+
+    taps = []
+    for i,tap in enumerate((9,7,6,5,4)):
+        prefix = f'XSEL{tap}'
+        qbar, trial, latch_d = [prefix+suffix for suffix in ('_QB','_TB','_D')]
+        x = 41*i
+        taps.extend([qbar,trial,latch_d,prefix])
+        for name,dx,y in [(qbar,0,-60),(trial,2,-76),(latch_d,16,-67),(prefix,22,-88)]:
+            s.place(name,x+dx,y)
+            s.caption(name,f'Tap {tap}' if name == prefix else '')
+        s.route(qbar+':Y',latch_d+':A')
+        s.route(trial+':Y',latch_d+':B')
+        s.wire(f'SEL{tap}_D',latch_d+':Y',(x+27,-67),(x+27,-77),(x+18,-77),prefix+':DATA')
+    s.short_rails(taps)
+    s.frame((-24,-104),(204,-38),'Settling window selection',taps,'The trial bit sets a tap until the next sample.')
 
 
 def se_timing(s):
@@ -267,8 +394,25 @@ def se_timing(s):
           ('Settling window',('XPHR','XWINDOW','XREADY','XCLR','XSND1','XSND2','XSNQ')),
           ('Comparator clock',('XLIVE','XIDLE','XSET0','XSET','XHIGH','XCLOCK','XCMP'))]
     for index,(label,names) in enumerate(rows):
-        y=22-index*50;s.text(-17,y+15,label,1.35);placed_row(s,names,y,pitch=39)
-    s.local(distance=45)
+        y=22-index*43;s.text(-17,y+15,label,1.35);placed_row(s,names,y,pitch=33)
+    s.local(distance=22,forward=True)
+
+
+def se_store(s):
+    for name,x,y in [('XDR',0,10),('XCLR',0,-10),('XREG',35,0)]:
+        s.place(name,x,y)
+        s.caption(name,'')
+    s.text(-22,26,'Commit register',2.0)
+    s.input_port('XDR:A1')
+    reset = s.junction((-17,0))
+    s.wire('RESET',s.port('RESET',(-25,0)),reset,color='clock')
+    s.wire('RESET',reset,(-17,8.3),'XDR:A2',color='clock')
+    s.wire('RESET',reset,(-17,-10),'XCLR:A',color='clock')
+    s.route('XDR:Z','XREG:D')
+    s.route('XCLR:Y','XREG:RN')
+    s.input_port('XREG:CK',reach=8,color='clock')
+    s.wire('Q','XREG:Q',s.port('Q',(51,0),'MY'))
+    s.short_rails(('XDR','XCLR','XREG'))
 
 
 def se_window(s):
@@ -289,20 +433,54 @@ def next_word(s):
     placed_row(s,('X01','X23','X45','X02','X03','X04','X05','X06'),22,pitch=34)
     for bit in range(8):
         names=[f'X{prefix}{bit}' for prefix in ('EMPTY','TRIAL','VISIBLE','READ','BASE','KEEP','NEXT')]
-        y=-12-bit*32;s.text(-24,y+7,f'Bit {bit}',1.2)
+        y=-12-bit*27;s.text(-24,y+7,f'Bit {bit}',1.2)
         for column,name in enumerate(names):
-            if name in s.parts:s.place(name,column*35,y)
-    s.local(distance=39)
+            if name in s.parts:s.place(name,column*31,y)
+    s.local(distance=22,forward=True)
 
 
 def se_reference(s):
-    s.text(-17,70,'Single-edge reference decode and switch drive',2)
-    s.place('XPRESET_N',0,38)
-    for bit in range(8):
-        names=[name for name in (f'XINITIAL{bit}_A',f'XINITIAL{bit}_B',f'XINITIAL{bit}',f'XINV{bit}',
-                                 f'XPN{bit}',f'XNN{bit}') if name in s.parts]
-        y=9-bit*25;s.text(-18,y+8,f'Bit {bit}',1.2);placed_row(s,names,y,pitch=34)
-    s.local(distance=42)
+    s.text(-24,91,'Reference drive',2.55)
+    s.place('XPRESET_N',2,71)
+    s.caption('XPRESET_N','')
+    s.input_port('XPRESET_N:A',color='clock')
+
+    for first,count,x in [(0,4,0),(4,3,110)]:
+        parts = []
+        for row in range(count):
+            bit = first+row
+            y = 43-24*row
+            decode, negative, positive = f'XINITIAL{bit}',f'XNN{bit}',f'XPN{bit}'
+            for name,dx,dy in [(decode,0,0),(negative,30,6),(positive,54,-5)]:
+                s.place(name,x+dx,y+dy)
+                s.caption(name,'')
+                parts.append(name)
+            s.text(x-22,y,f'B{bit}',1.15)
+            reference_branches(s,bit,decode+':Y',x+14,y)
+        s.short_rails(parts)
+        s.frame((x-24,43-24*(count-1)-17),(x+83,60),f'Bits {first}-{first+count-1}',parts)
+
+    names = ('XINITIAL7_A','XINITIAL7_B','XINITIAL7','XINV7','XNN7','XPN7')
+    for name,x,y in zip(names,(-2,2,31,57,90,114),(-67,-87,-77,-77,-71,-82),strict=True):
+        s.place(name,x,y)
+        s.caption(name,'')
+    s.short_rails(names)
+    s.frame((-24,-99),(151,-51),'Bit 7 / MSB',names,'PRESET selects the 0x80 startup word.')
+    s.route('XINITIAL7_A:Y','XINITIAL7:A')
+    s.route('XINITIAL7_B:Y','XINITIAL7:B')
+    s.route('XINITIAL7:Y','XINV7:A')
+    reference_branches(s,7,'XINV7:Y',72,-77)
+
+
+def reference_branches(s,bit,source,x,y):
+    net = f'QN{bit}'
+    branch = s.junction((x,y))
+    s.wire(net,source,branch)
+    p_input = 'I' if bit == 7 else 'A'
+    for driver in (f'XNN{bit}:I', f'XPN{bit}:{p_input}'):
+        _,pin_y = s.pin(driver)[0]
+        s.wire(net,branch,(x,pin_y),driver)
+
 
 def layout(name,body,portmap):
     s=Sheet(name,body,portmap)
@@ -317,6 +495,7 @@ def layout(name,body,portmap):
     elif name=='sar8p_timing':timing(s)
     elif name=='sar8_se_ctrl':se_controller(s)
     elif name=='sar8_se_timing':se_timing(s)
+    elif name=='sar8_se_store':se_store(s)
     elif name=='sar8_se_window':se_window(s)
     elif name=='sar8_next_word':next_word(s)
     elif name=='sar8i_refword' and 'XPRESET_N' in s.parts:se_reference(s)
