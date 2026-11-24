@@ -1,9 +1,9 @@
 <section class="page-intro">
-  <h1 id="assembly-title">版图<span class="title-period">.</span></h1>
+  <h1 id="assembly-title">版图</h1>
   <p class="mono minor">r8 无填充 · 892 × 892 µm · LayoutML TSMC28 DRF</p>
 </section>
 
-<section class="section first-section" id="assembly" aria-labelledby="assembly-title">
+<section class="section" id="assembly" aria-labelledby="assembly-title">
   <div class="layout-explorer" id="chip-viewer">
     <div class="layout-toolbar" aria-label="版图操作">
       <div class="layout-tools">
@@ -30,8 +30,10 @@
     </div>
     <div class="layout-footer"><span id="layout-location">整片</span><span id="layout-scale"></span></div>
   </div>
-  <p id="layout-help" class="evidence-line">左键或中键拖动平移，滚轮或双指缩放。放大到晶体管尺度可见 D/S 标注。</p>
-  <p class="link-row" id="physical-checks"><a href="verification.html#physical-checks">物理检查 →</a><a id="routing" href="verification.html#routing">外围走线负载 →</a><a href="${asset_base}layout-data/release.json">GDS 与层表 ↗</a><a href="$snapshot/Layout/design/io_ring.json">焊盘规划 ↗</a></p>
+  <div class="layout-details">
+    <p id="layout-help" class="evidence-line">左键或中键平移 · 滚轮或双指缩放 · 器件级显示 D/S</p>
+    <p class="link-row" id="physical-checks"><a href="verification.html#physical-checks">物理检查 →</a><a id="routing" href="verification.html#routing">外围走线负载 →</a><a href="${asset_base}layout-data/release.json">GDS 与层表 ↗</a><a href="$snapshot/Layout/design/io_ring.json">焊盘规划 ↗</a></p>
+  </div>
   <script src="https://liixtt.github.io/LayoutML/assets/renderer/webgl-canvas.js" crossorigin="anonymous" defer></script>
   <script src="${asset_base}assets/layout-view.js?display=terminals" defer></script>
 </section>

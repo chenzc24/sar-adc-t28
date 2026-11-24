@@ -1,54 +1,56 @@
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-copy">
     <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span> TSMC 28 nm</p>
-    <h1 id="hero-title">8 位<br> SAR ADC<span class="title-period">.</span></h1>
+    <h1 id="hero-title">8 位 SAR ADC<span class="title-period">.</span></h1>
     <p class="lead">全差分转换器，采用自举采样、二进制 MOM CDAC 和单边沿异步控制。</p>
+    <dl class="spec-strip" aria-label="设计规格">
+      <div><dt>采样率</dt><dd>10 <small>MS/s</small><span>100 ns 采样周期</span></dd></div>
+      <div><dt>差分输入</dt><dd>±0.90 <small>V</small><span>标称共模电压 0.45&nbsp;V</span></dd></div>
+      <div><dt>标称 LSB</dt><dd>7.031 <small>mV</small><span>256 个输出码</span></dd></div>
+    </dl>
     <div class="actions">
       <a class="button button-primary" href="verification.html">查看验证 <span aria-hidden="true">→</span></a>
       <a class="button button-outline" href="schematic.html">打开原理图 <span aria-hidden="true">→</span></a>
     </div>
   </div>
   <figure class="hero-floorplan">
-    <figcaption class="floorplan-heading"><span>ADC 核心布局</span><span class="mono">122 × 111 µm</span></figcaption>
+    <figcaption class="floorplan-heading"><span>核心布局示意</span><span class="mono">122 × 111 µm</span></figcaption>
     <div class="floorplan-frame" role="group" aria-label="核心模块位置，点击查看模块说明">
       <div class="floorplan">$floorplan</div>
     </div>
-    <div class="floorplan-caption"><span>模块位置示意</span><a href="layout.html">浏览版图 <span aria-hidden="true">↗</span></a></div>
+    <div class="floorplan-caption"><a href="layout.html">浏览版图 <span aria-hidden="true">↗</span></a></div>
   </figure>
 </section>
 
-<dl class="spec-strip spec-strip-three" aria-label="设计规格">
-  <div><dt>采样率</dt><dd>10 <small>MS/s</small><span>100 ns 采样周期</span></dd></div>
-  <div><dt>差分输入</dt><dd>±0.90 <small>V</small><span>标称共模电压 0.45 V</span></dd></div>
-  <div><dt>标称 LSB</dt><dd>7.031 <small>mV</small><span>256 个输出码</span></dd></div>
-</dl>
-
-<section class="section" id="architecture" aria-labelledby="signal-title">
-  <div class="section-heading"><h2 id="signal-title">信号路径</h2><a class="text-link" href="$snapshot/docs/specification.md">设计规格 ↗</a></div>
-  <div class="signal-panel">
+<div class="overview-flow">
+  <section class="flow-card signal-panel" id="architecture" aria-labelledby="signal-title">
+    <div class="section-heading"><h2 id="signal-title">信号路径</h2><a class="text-link" href="$snapshot/docs/specification.md">设计规格 ↗</a></div>
     <ol class="signal-chain">
-      <li><span class="signal-label">差分输入</span><strong>VINP − VINN</strong></li>
+      <li><div class="signal-input"><span class="signal-label">差分输入</span><strong>VINP − VINN</strong></div></li>
       <li><a href="#bootstrap"><span class="signal-label">采样</span><strong>自举采样对</strong></a></li>
       <li><a href="#cdac"><span class="signal-label">试探电压</span><strong>二进制 CDAC</strong></a></li>
       <li><a href="#comparator"><span class="signal-label">比较</span><strong>StrongARM</strong></a></li>
       <li><a href="#sar"><span class="signal-label">写入</span><strong>SAR · D[7:0]</strong></a></li>
     </ol>
     <div class="signal-feedback"><a href="#reference">↶ 参考驱动</a><span>每次写入决定 CDAC 的下一次试探电压。</span></div>
-  </div>
-  <div class="block-list" id="blocks">
+  </section>
+  <section class="flow-card" id="timing" aria-labelledby="timing-title">
+    <div class="section-heading"><h2 id="timing-title">一次转换</h2><span class="mono minor">SAMPLE</span></div>
+    <figure class="timing-panel">
+      <div class="timing-phases"><div><span>跟踪与复位</span><strong>45 ns</strong></div><div><span>保持与转换</span><strong>55 ns</strong></div></div>
+      <div class="timing-ticks" aria-hidden="true"><span>0 ns</span><span>45 ns</span><span>100 ns</span></div>
+      <figcaption>SAMPLE 下降沿触发八次比较和八次 COMMIT。下次采样前读出稳定的 D[7:0]。</figcaption>
+    </figure>
+  </section>
+</div>
+
+<section class="section" id="blocks" aria-labelledby="blocks-title">
+  <div class="section-heading"><h2 id="blocks-title">电路模块</h2></div>
+  <div class="block-list">
     <article id="bootstrap"><h3>自举采样</h3><p>每侧四个并联厚氧化层开关将输入采到 CDAC 顶板。</p><a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">采样器提取 ↗</a></article>
     <article id="cdac"><h3>二进制 MOM CDAC</h3><p>每侧堆叠阵列包含八个二进制权重和一个单位 dummy。</p><a href="$snapshot/Layout/results/cdac.md">CDAC 权重 ↗</a></article>
     <article id="comparator"><h3>StrongARM 比较器</h3><p>由 11 个 MOS 构成的锁存器判定差分极性，并触发 SAR 握手。</p><a href="$snapshot/Layout/results/comparator.md">比较器记录 ↗</a></article>
     <article id="sar"><h3>单边沿 SAR</h3><p>一次 COMMIT 写入一位，同时锁存下一次比较用的建立时间抽头。</p><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">控制器设计 ↗</a></article>
     <article id="reference"><h3>参考驱动</h3><p>CODE 和 PRESET 控制两侧阵列的互补参考开关。</p><a href="$snapshot/Layout/results/single_edge_xref.md">驱动布线 ↗</a></article>
   </div>
-</section>
-
-<section class="section" id="timing" aria-labelledby="timing-title">
-  <div class="section-heading"><h2 id="timing-title">一次转换</h2><span class="mono minor">SAMPLE</span></div>
-  <figure class="timing-panel">
-    <div class="timing-phases"><div><strong>45 ns</strong><span>跟踪与复位</span></div><div><strong>55 ns</strong><span>保持与转换</span></div></div>
-    <div class="timing-ticks" aria-hidden="true"><span>0 ns</span><span>45 ns</span><span>100 ns</span></div>
-    <figcaption>SAMPLE 下降沿启动八次比较和八次 COMMIT 写入。下一次采样前读取稳定的 D[7:0]。</figcaption>
-  </figure>
 </section>

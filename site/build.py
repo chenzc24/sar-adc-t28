@@ -60,12 +60,12 @@ SCHEMATIC_LEVELS = {
     "sar8i_refword": ("Reference drive", "参考驱动"),
 }
 BLOCKS = {
-    "bootstrap_n": (("Bootstrap N", "自举 N"), "bootstrap", "bootstrap"),
-    "bootstrap_p": (("Bootstrap P", "自举 P"), "bootstrap", "bootstrap"),
+    "bootstrap_n": (("Boot N", "自举 N"), "bootstrap", "bootstrap"),
+    "bootstrap_p": (("Boot P", "自举 P"), "bootstrap", "bootstrap"),
     "cdac": (("MOM CDAC", "MOM CDAC"), "cdac", "cdac"),
     "comparator": (("StrongARM", "StrongARM"), "comparator", "comparator"),
     "reference": (("Reference drive", "参考驱动"), "reference", "reference"),
-    "sar": (("SAR logic", "SAR 逻辑"), "sar", "sar"),
+    "sar": (("SAR", "SAR"), "sar", "sar"),
 }
 
 

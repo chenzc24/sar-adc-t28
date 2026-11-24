@@ -1,34 +1,36 @@
 <section class="page-intro">
-  <h1>设计迭代<span class="title-period">.</span></h1>
+  <h1>设计迭代</h1>
   <p class="link-row"><a href="$snapshot/docs/adc-iteration-history.md">工程时间线 ↗</a><a href="verification.html">当前版验证 →</a></p>
 </section>
 
-<section class="section first-section" aria-labelledby="revision-title">
-  <div class="section-heading"><h2 id="revision-title">设计版本</h2></div>
-  <div class="review-list">
-    <article>
-      <div><p class="eyebrow">10 月 · Frozen B</p><h3>打通晶体管级闭环</h3></div>
-      <div><p>B 版修复参考控制器的交接。TT 确定性频谱测得 SNDR 48.79 dB、ENOB 7.81 位、SFDR 64.77 dBc。</p><p class="link-row"><a href="$snapshot/results/fft/results.json">A/B 频谱 ↗</a><a href="$snapshot/results/static/results.json">全码数据 ↗</a></p></div>
-    </article>
-    <article>
-      <div><p class="eyebrow">11 月 15–16 日 · Reset-OR</p><h3>调整异步复位边沿</h3></div>
-      <div><p>将数据边沿移出高应力的清零区间。45 个 PVT 点的 490 个短测帧通过。原理图 TT 单种子有噪声 FFT 测得 SNDR 48.55 dB、ENOB 7.77 位。</p><p class="link-row"><a href="$snapshot/results/pvt/resetor_45_short_20261115.md">45 点短测 ↗</a><a href="$snapshot/results/noise/resetor_1024_20261116/README.md">有噪声 FFT ↗</a></p></div>
-    </article>
-    <article>
-      <div><p class="eyebrow">11 月 20 日 · 单边沿</p><h3>锁存逐位建立抽头</h3></div>
-      <div><p>大进位试验显示各位建立裕量不同。设计改为单次 COMMIT 写入和逐位锁存抽头。验证采用单元提取、CDAC 提取和理想 SAR 互连。</p><p class="link-row"><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">采用记录 ↗</a><a href="$snapshot/results/design/sar_single_edge_settling_reference_20261120.md">建立时间对比 ↗</a></p></div>
-    </article>
-    <article>
-      <div><p class="eyebrow">11 月 21–24 日 · 后仿</p><h3>布线与整片装配</h3></div>
-      <div><p>四路并联自举开关、配对 CDAC 与布线后的 SAR 进入提取联调。整片加入 IO 环和密封环。</p><p class="link-row"><a href="$snapshot/results/integration/stage2_all_extracted_20261122.md">早期提取联调 ↗</a><a href="$snapshot/Layout/results/chip_fill.md#earlier-revisions">填充版本 ↗</a></p></div>
-    </article>
-  </div>
-</section>
+<div class="history-content">
+  <section class="section" aria-labelledby="revision-title">
+    <div class="section-heading"><h2 id="revision-title">设计版本</h2></div>
+    <div class="review-list">
+      <article>
+        <div><p class="eyebrow">10 月 · Frozen B</p><h3>打通晶体管级闭环</h3></div>
+        <div><p>B 版修复参考控制器的交接。TT 确定性频谱测得 SNDR 48.79 dB、ENOB 7.81 位、SFDR 64.77 dBc。</p><p class="link-row"><a href="$snapshot/results/fft/results.json">A/B 频谱 ↗</a><a href="$snapshot/results/static/results.json">全码数据 ↗</a></p></div>
+      </article>
+      <article>
+        <div><p class="eyebrow">11 月 15–16 日 · Reset-OR</p><h3>调整异步复位边沿</h3></div>
+        <div><p>将数据边沿移出高应力的清零区间。45 个 PVT 点的 490 个短测帧通过。原理图 TT 单种子有噪声 FFT 测得 SNDR 48.55 dB、ENOB 7.77 位。</p><p class="link-row"><a href="$snapshot/results/pvt/resetor_45_short_20261115.md">45 点短测 ↗</a><a href="$snapshot/results/noise/resetor_1024_20261116/README.md">有噪声 FFT ↗</a></p></div>
+      </article>
+      <article>
+        <div><p class="eyebrow">11 月 20 日 · 单边沿</p><h3>锁存逐位建立抽头</h3></div>
+        <div><p>大进位试验显示各位建立裕量不同。设计改为单次 COMMIT 写入和逐位锁存抽头。验证采用单元提取、CDAC 提取和理想 SAR 互连。</p><p class="link-row"><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">采用记录 ↗</a><a href="$snapshot/results/design/sar_single_edge_settling_reference_20261120.md">建立时间对比 ↗</a></p></div>
+      </article>
+      <article>
+        <div><p class="eyebrow">11 月 21–24 日 · 后仿</p><h3>布线与整片装配</h3></div>
+        <div><p>四路并联自举开关、配对 CDAC 与布线后的 SAR 进入提取联调。整片加入 IO 环和密封环。</p><p class="link-row"><a href="$snapshot/results/integration/stage2_all_extracted_20261122.md">早期提取联调 ↗</a><a href="$snapshot/Layout/results/chip_fill.md#earlier-revisions">填充版本 ↗</a></p></div>
+      </article>
+    </div>
+  </section>
 
-<section class="section" aria-labelledby="baseline-title">
-  <div class="section-heading"><h2 id="baseline-title">原理图基线频谱</h2></div>
-  <figure class="figure-card">
-    <a href="${asset_base}assets/baseline-spectrum.png" target="_blank" rel="noopener"><img src="${asset_base}assets/baseline-spectrum.png" width="2040" height="1360" alt="A 版和 B 版原理图的确定性输出频谱" loading="lazy"></a>
-    <figcaption>早期原理图版本在 TT 下的 1,024 点确定性频谱。<a href="$snapshot/results/fft/results.json">运行记录 ↗</a></figcaption>
-  </figure>
-</section>
+  <section class="section" aria-labelledby="baseline-title">
+    <div class="section-heading"><h2 id="baseline-title">原理图基线频谱</h2></div>
+    <figure class="figure-card">
+      <a href="${asset_base}assets/baseline-spectrum.png" target="_blank" rel="noopener"><img src="${asset_base}assets/baseline-spectrum.png" width="2040" height="1360" alt="A 版和 B 版原理图的确定性输出频谱" loading="lazy"></a>
+      <figcaption>TT · 1,024 点确定性频谱。<a href="$snapshot/results/fft/results.json">运行记录 ↗</a></figcaption>
+    </figure>
+  </section>
+</div>

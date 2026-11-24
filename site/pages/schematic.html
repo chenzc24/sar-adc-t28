@@ -1,17 +1,21 @@
 <section class="page-intro">
-  <h1>Schematics<span class="title-period">.</span></h1>
-  <p class="lead">Double-click a block in the drawing to enter its subcircuit.</p>
+  <div class="page-intro-copy">
+    <h1 id="native-title">Schematics</h1>
+    <p class="lead">Double-click a block to open its subcircuit.</p>
+  </div>
   <div class="actions">
     <a class="button button-primary" href="$rnl_full" target="_blank" rel="noopener">Open full RNL Viewer <span aria-hidden="true">↗</span></a>
     <a class="button button-outline" href="${asset_base}$rnl_entry">RNL source <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
-<section class="section first-section" aria-labelledby="native-title">
-  <div class="section-heading"><h2 id="native-title">Circuit hierarchy</h2><span class="mono minor">RNL $rnl_version · $rnl_revision</span></div>
-  <nav class="jump-links schematic-links" aria-label="Schematic levels">
-    $rnl_links
-  </nav>
+<section class="section" aria-labelledby="native-title">
+  <div class="schematic-toolbar">
+    <nav class="jump-links schematic-links" aria-label="Schematic levels">
+      $rnl_links
+    </nav>
+    <span class="mono minor">RNL $rnl_version · $rnl_revision</span>
+  </div>
   <iframe class="schematic-frame" name="rnl-frame" title="Official RNL Viewer" src="$rnl_embed" allowfullscreen></iframe>
   <script src="${asset_base}assets/schematic-view.js" defer></script>
 </section>
