@@ -37,7 +37,7 @@ For an electrical review, follow the [specification](docs/specification.md), [DU
 | Input and reference | VINP − VINN spans −0.9 to +0.9 V at 0.45 V nominal common mode. VREFN = 0 V and VREFP = 0.9 V. One LSB is 7.03125 mV. |
 | Dynamic performance | ENOB ≥ 7 bits and SNDR ≥ 43.9 dB at −1 dBFS. |
 | Static accuracy | Monotonic, no missing codes. Absolute DNL and endpoint INL each ≤ 1 LSB. Code-domain gain error ≤ 6% at TT and ≤ 10% at any corner. |
-| Power | ≤ 1 mW. |
+| Power | ≤ 1 mW through the on-chip output register, including VREF-port power. [Measurement boundary](results/integration/adc_register_power_20261124.md) |
 
 ## Simulation conditions
 
@@ -59,7 +59,8 @@ All 12 short functional runs passed. The table shows the **verify stimulus** at 
 | --- | --- |
 | Board readout at FF hot | With 0.99 V core, 1.98 V IO, a 0.2 Ω / 2 nH bond and 15 pF per output, the board word settled 2.046 ns after register capture for the scored 0xFF conversion. The slower direction of the 0x7F ↔ 0x80 eight-bit switching test settled in 2.023 ns. [Endpoint conversion](results/integration/ffh_board_conversion.md) · [Simultaneous switching](results/integration/ffh_board_switching.md) |
 | CDAC gain | The standalone TT bit-weight measurement on the stacked CDAC with planned fill gave a scale factor of 0.95950 and a code-domain gain error of 4.22%, within the 4.7% CDAC allocation. [CDAC bit weights and gain](Layout/results/cdac.md#gain-error-assessment) |
-| Dynamic, static and power targets | The final TT 1,024-point transient-noise FFT at −1 dBFS (bin 461, 10 MS/s) is pending. Final Stage 6 SNDR, ENOB, full-code DNL/INL and average power are unreported in the current results index. [FFT setup](Layout/tools/simulation/prepare_stage6.py) · [Electrical results by revision](results/README.md) |
+| Preliminary conversion power | The nine 10 MS/s short cases cover TT, SS cold and FF hot, with Core VDD, VREF and the on-chip output register included. The highest case was FF-hot carry at 393.93 µW against a 1 mW target. [Method, scope and results](results/integration/adc_register_power_20261124.md) |
+| Dynamic and static performance | The final TT 1,024-point transient-noise FFT at −1 dBFS (bin 461, 10 MS/s) is pending. The final Stage 6 SNDR, ENOB and full-code DNL/INL remain open. [FFT setup](Layout/tools/simulation/prepare_stage6.py) · [Electrical results by revision](results/README.md) |
 | FF-cold device stress | **Open.** At 0.99 V and −40 °C, 16 VDS pairs exceeded the project duration screen over eight extreme frames. SAR bit-1 register PMOS MM79 reached 1.11185 V absolute VDS and spent 757.8 ps above 1.10 V in a sliding 10 ns window (limit 100 ps). [Terminal measurements](results/integration/stage6_ff_electrical_20261124.json) · [Project rule](specs/soa_rule.yaml) |
 | FF-hot Bootstrap sampling | **Open.** At 0.99 V and 125 °C the maximum single-ended error from input at sampling close to held TOP at first comparison was 4.130 mV against a 3.515625 mV limit. Verify and extreme exceeded the limit. Carry passed. The maximum differential error was 1.689 mV. [Sampling measurements](results/integration/stage6_ff_electrical_20261124.json) |
 | Chip physical verification | The 122 × 111 µm core sits in an 892 × 892 µm die. The r8 filled chip view `sar8_adc_chip_filled/layout_fill7`, streamed as `chip-sfill7-oa-chk2`, returned **LVS CORRECT**, 224 DRC markers (zero density), 296 ERC markers and zero flat latch-up markers. The waiver matrix records foundry evidence and items awaiting disposition. [Fill and extraction](Layout/results/chip_fill.md) · [Waiver matrix](Layout/results/chip_drc_waivers.md) |
