@@ -26,6 +26,26 @@ GROUND = {'VSS','0'}
 COLORS = {'wire':'#30485d','clock':'#94601a','analog':'#226e85','power':'#647584'}
 BLOCK_COLORS = {'sar_bootstrap_flat_8b_p':'#eaf5ef', 'sar8j_r1_cdac':'#eef4e3',
                 'sar_strongarm_t28':'#eaf2fa', 'sar8_se_ctrl':'#f1eef8', 'sar8i_refword':'#f6f0e5'}
+PIN_LAYOUT = {
+    'sar_strongarm_t28': {'left': ('VINP', 'VINN'), 'right': ('OUTP', 'OUTN'), 'up': ('CLK', 'VDD')},
+    'sar8_se_ctrl': {'left': ('COMP_P', 'COMP_N', 'SAMPLE'), 'right': ('D0', 'ACTIVE', 'COMMIT'),
+                     'up': ('CMP_CLK', 'VDD'), 'down': ('CODE0', 'VSS')},
+    'sar8j_r1_cdac': {'up': ('TOPP', 'VDD', 'TOPN'), 'down': ('REFSEL_N0', 'VSS', 'REFSEL_P0'),
+                      'left': ('VREFP', 'VREFN')},
+    'sar8i_refword': {'up': ('REFSEL_N0', 'VDD', 'REFSEL_P0'), 'left': ('PRESET',), 'right': ('CODE0',)},
+    'sar8_se_timing': {'left': ('COMP_P', 'COMP_N', 'SAMPLE', 'ACTIVE'), 'up': ('VDD',),
+                       'right': ('DATA', 'COMMIT', 'CMP_CLK'), 'down': ('SEL9', 'SEL7', 'SEL6', 'SEL5', 'SEL4', 'VSS')},
+    'sar8_next_word': {'left': ('DATA', 'CODE0'), 'right': ('D0', 'DONE', 'NEXT0'), 'down': ('TRIAL6', 'VSS')},
+    'sar8_se_store': {'left': ('CK', 'RESET'), 'up': ('DATA', 'VDD'), 'down': ('VSS', 'Q')},
+}
+GATE_SYMBOLS = {
+    'INVD1BWP12T30P140': 'INV', 'INVD2BWP12T30P140': 'INV',
+    'BUFFD1BWP12T30P140': 'BUF', 'BUFFD2BWP12T30P140': 'BUF',
+    'ND2D1BWP12T30P140': 'NAND', 'OR2D1BWP12T30P140': 'OR',
+    'DFCNQD1BWP12T30P140': 'DFF',
+    'sar8p_inv': 'INV', 'sar8p_buf': 'BUF', 'sar8p_clkbuf': 'BUF', 'sar8p_nand2': 'NAND',
+    'sar8p_and2': 'AND', 'sar8p_or2': 'OR', 'sar8p_xor2': 'XOR', 'sar8p_dffr': 'DFF', 'sar8p_mux2': 'MUX',
+}
 
 def q(value): return json.dumps(str(value), ensure_ascii=False)
 def xy(point): return '(%g,%g)' % tuple(point)
@@ -49,7 +69,7 @@ def symbol(master, ports):
     groups=[];seen=set()
     for p in ports:
         if p in seen:continue
-        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T|NEXT|TRIAL)(\d+)',p)
+        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|REFSEL_[NP]|T|NEXT|TRIAL)(\d+)',p)
         members=[v for v in ports if m and re.fullmatch(re.escape(m[1])+r'\d+',v)] if m else [p]
         if len(members)<2:members=[p]
         seen.update(members);groups.append((p,members))
@@ -60,20 +80,29 @@ def symbol(master, ports):
     exact={'sar_bootstrap_flat_8b_p':{'VOUT'},'sar_strongarm_t28':{'OUTN','OUTP'}}
     if master in exact:outputs=exact[master]
     sides={'left':[],'right':[],'up':[],'down':[]}
+    layout = PIN_LAYOUT.get(master, {})
+    explicit_side = {pin: direction for direction, pins in layout.items() for pin in pins}
     for p,members in groups:
         side='up' if p in POWER else 'down' if p in GROUND else 'right' if p in outputs or re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T)\d+',p) else 'left'
         if master in {'sar8i_refword','sar8s_refword','sar8p_refword','b_reference'} and re.fullmatch(r'(CODE|D)\d+',p):side='left'
         if master == 'sar8j_r1_cdac':
-            if p.startswith(('GNN','GNP','GPN','GPP')):side='down'
+            if p.startswith(('GNN','GNP','GPN','GPP','REFSEL_')):side='down'
             elif p in {'TOPN','TOPP'}:side='up'
         if master == 'sar8i_refword':
-            if p.startswith(('GNN','GNP','GPN','GPP')):side='up'
+            if p.startswith(('GNN','GNP','GPN','GPP','REFSEL_')):side='up'
             elif re.fullmatch(r'(CODE|D)\d+',p):side='right'
         if master == 'b_cdac' and p.startswith(('GNN','GNP','GPN','GPP')):side='left'
         if master in {'sar_adc8_join_r4','tb_sar_top','tb_sar_stalled_top'}:side='right' if p.startswith('D') and p[1:].isdigit() else side
-        sides[side].append((p,members))
+        sides[explicit_side.get(p, side)].append((p,members))
+    for side, ordered in layout.items():
+        sides[side].sort(key=lambda item: ordered.index(item[0]) if item[0] in ordered else len(ordered))
     h=max(6,(max(len(sides['left']),len(sides['right']))+1)*1.65)
-    w=max(11,4*(max(len(sides['up']),len(sides['down']))-1)+2)
+    vertical_pitch = 6 if master == 'sar8_se_timing' else 8
+    w=max(11,vertical_pitch/2*(max(len(sides['up']),len(sides['down']))-1)+2)
+    if master == 'sar8_se_store':
+        w = 8.5
+    elif master in BLOCK_COLORS:
+        w = max(w, 13)
     pins={};dirs={};lines=[]
     def pin(members,x,y,d):
         ids=[ports.index(p)+1 for p in members]
@@ -84,7 +113,7 @@ def symbol(master, ports):
         lines.append('%s @TEXT(%s,size=%g,halign=%s,valign="middle");'%(xy((x,y)),q(t),size,q(align)))
     for side,items in sides.items():
         for i,(p,members) in enumerate(items):
-            x,y=((-w-2 if side=='left' else w+2),(len(items)-1-2*i)*1.65) if side in {'left','right'} else ((i-(len(items)-1)/2)*8,(h+2 if side=='up' else -h-2))
+            x,y=((-w-2 if side=='left' else w+2),(len(items)-1-2*i)*1.65) if side in {'left','right'} else ((i-(len(items)-1)/2)*vertical_pitch,(h+2 if side=='up' else -h-2))
             pin(members,x,y,side)
             ex=x+(2 if side=='left' else -2 if side=='right' else 0);ey=y+(-2 if side=='up' else 2 if side=='down' else 0)
             lines.append('@LINE {%s %s};'%(xy((x,y)),xy((ex,ey))))
@@ -92,18 +121,20 @@ def symbol(master, ports):
             if len(members)>1:
                 bits=[int(re.search(r'\d+$',member)[0]) for member in members]
                 label=re.sub(r'\d+$','',p)+'[%s:%s]'%(max(bits),min(bits))
-            text(ex+(.5 if side=='left' else -.5 if side=='right' else 0),ey+(.8 if side=='down' else -.8 if side=='up' else 0),label,align='start' if side=='left' else 'end' if side=='right' else 'middle')
+            text(ex+(.5 if side=='left' else -.5 if side=='right' else 0),ey+(.8 if side=='down' else -.8 if side=='up' else 0),
+                 label,size=1.2 if layout else 1.1,align='start' if side=='left' else 'end' if side=='right' else 'middle')
     corners=[(-w,h),(w,h),(w,-h),(-w,-h),(-w,h)]
     outline='@LINE'
     if master in BLOCK_COLORS:
         outline+='(fill="fillcolor",fillcolor='+q(BLOCK_COLORS[master])+')'
     lines.insert(0,outline+' {'+' '.join(xy(point) for point in corners)+'};')
     # Native library symbols include their real power terminals; no made-up body.
-    gate='INV' if master in {'sar8p_inv','INVD1BWP12T30P140'} else 'BUF' if master in {'sar8p_buf','sar8p_clkbuf'} else 'NAND' if master in {'sar8p_nand2','ND2D1BWP12T30P140'} else 'AND' if master=='sar8p_and2' else 'OR' if master=='sar8p_or2' else 'XOR' if master=='sar8p_xor2' else 'DFF' if master in {'sar8p_dffr','DFCNQD1BWP12T30P140'} else 'MUX' if master=='sar8p_mux2' else None
+    gate = GATE_SYMBOLS.get(master)
     if gate:
         # Compact full-pin logic symbol, with clock/reset polarity explicit.
         lines=[];pins={};dirs={};w=5;h=5
-        ins=[p for p in ports if p not in POWER|GROUND|{'Y','Q'}];out='Y' if 'Y' in ports else 'Q'
+        out = next(p for p in ports if p in {'Y', 'Q', 'Z', 'ZN'})
+        ins = [p for p in ports if p not in POWER | GROUND | {out}]
         for i,p in enumerate(ins):
             y=(len(ins)-1-2*i)*1.7;pin([p],-7,y,'left');lines.append('@LINE {(-7,%g) (-5,%g)};'%(y,y))
             if gate in {'DFF','MUX'}:text(-4.5,y,p,align='start',size=.7)
@@ -127,8 +158,14 @@ def symbol(master, ports):
     switch=re.fullmatch(r'sar8j_r1_sw_b\d',master)
     if switch:
         lines=['@LINE {(-9,7) (9,7) (9,-7) (-9,-7) (-9,7)};'];pins={};dirs={};w=9;h=7
-        for p,x,y,d in [('BOT',0,12,'up'),('GN',-5,-12,'down'),('GP',5,-12,'down'),
-                        ('VREFN',-11,-4,'left'),('VREFP',-11,4,'left'),('VDD',11,4,'right'),('VSS',11,-4,'right')]:
+        if 'SEL' in ports:
+            gate_ports = [('SEL',-3,-12,'down')]
+            supplies = [('VDD',6,12,'up'),('VSS',6,-12,'down')]
+        else:
+            gate_ports = [('GN',-5,-12,'down'),('GP',5,-12,'down')]
+            supplies = [('VDD',11,4,'right'),('VSS',11,-4,'right')]
+        for p,x,y,d in [('BOT',0,12,'up'),*gate_ports,
+                        ('VREFN',-11,-4,'left'),('VREFP',-11,4,'left'),*supplies]:
             pin([p],x,y,d)
             ex=x+(2 if d=='left' else -2 if d=='right' else 0);ey=7 if d=='up' else -7 if d=='down' else y
             lines.append('@LINE {%s %s};'%(xy((x,y)),xy((ex,ey))))
@@ -179,6 +216,37 @@ class Sheet:
         self.emit('#%s @TEXT(%s,key="name",size=1.65,halign="middle",textcolor="#223d52") => @PLACE%s;'
                   %(name,q(title),xy((x,y+dy))))
         self.emit('#%s @TEXT("",key="model");'%name)
+    def frame(self, lower_left, upper_right, title, parts, note=None):
+        self.emit('{%s} @GROUP;' % ' '.join('#'+name for name in parts))
+        self.emit('@RECTANGLE(linecolor="#a9b8c5",linewidth=0.16,fill="fillcolor",fillcolor="#f7f9fc") '
+                  '{%s %s} => @LAYER("bottom");' % (xy(lower_left), xy(upper_right)))
+        self.text(lower_left[0]+3,upper_right[1]-4,title,1.95)
+        if note:
+            self.text(lower_left[0]+3,upper_right[1]-7.5,note,1.26)
+    def short_rails(self, names):
+        for inst in names:
+            for i,node in enumerate(self.parts[inst][0],1):
+                if node not in POWER | GROUND or (inst,i) in self.wired:
+                    continue
+                direction = 1 if node in POWER else -1
+                ref = f'{inst}:{i}'
+                (x,y),_,_,_ = self.pin(ref)
+                end = y+1.45*direction
+                self.wire(node,ref,(x,end),color='power')
+                self.emit('%s @TEXT(%s,size=0.98,halign="middle",valign=%s);' %
+                          (xy((x,end+0.32*direction)),q(node),q('bottom' if direction>0 else 'top')))
+    def junction(self, point):
+        self.serial += 1
+        name = f'%sar_junction{self.serial}'
+        self.emit('%s = %s;' % (name, xy(point)))
+        self.emit('%s @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") '
+                  '=> @LAYER("top");' % name)
+        return name
+    def port(self, name, at, orient='R0'):
+        self.serial += 1
+        tag = f'%sar_port{self.serial}'
+        self.emit('%s = $IO_PORT @ATTACH %s => @PLACE%s => @ORIENT(%s);' % (tag,net(name),xy(at),q(orient)))
+        return tag+':p'
     def input_port(self,ref,reach=10,color='wire'):
         (x,y),n,inst,i=self.pin(ref)
         self.serial+=1;tag=f'%sar_port{self.serial}'
@@ -189,7 +257,9 @@ class Sheet:
     def wire(self,n,*points,color='wire'):
         out=[];refs=[]
         for p in points:
-            if isinstance(p,str):
+            if isinstance(p,str) and p.startswith('%'):
+                out.append(p)
+            elif isinstance(p,str):
                 at,actual,inst,i=self.pin(p)
                 if actual!=n:raise ValueError('%s: %s is %s, not %s'%(self.name,p,actual,n))
                 out.append('#'+inst+':'+str(i));self.wired.add((inst,i));refs.append(p)
@@ -226,8 +296,19 @@ class Sheet:
         points=via if via is not None else [(mid,p[1]),(mid,e[1])]
         style=',linecolor='+q(color) if color else ''
         self.emit('{%s} @WIRE(mode="straight",linewidth=0.24%s) {#%s:%s %s #%s:%s};'
-                  %(' '.join(net(n) for n in nets),style,a,ai,' '.join(xy(v) for v in points),b,bi))
-    def local(self,exclude=(),distance=65):
+                  %(' '.join(net(n) for n in nets),style,a,ai,' '.join(v if isinstance(v,str) else xy(v) for v in points),b,bi))
+    def bus_from(self, ref, *path, color='#66538a'):
+        _,_,inst,index = self.pin(ref)
+        pins = self.geometry[inst].pins
+        members = [i for i,point in pins.items() if point == pins[index]]
+        nets = self.parts[inst][0]
+        self.wired.update((inst,i) for i in members)
+        self.bus_path([nets[i-1] for i in members], '#%s:%s' % (inst,index), *path, color=color)
+    def bus_path(self, nets, *path, color='#66538a'):
+        points = ' '.join(p if isinstance(p,str) else xy(p) for p in path)
+        self.emit('{%s} @WIRE(mode="straight",linewidth=0.27,linecolor=%s) {%s};'
+                  %(' '.join(net(n) for n in nets),q(color),points))
+    def local(self,exclude=(),distance=65,forward=False):
         """Wire short internal links. Global clocks and cross-section nets use named ports."""
         by={}
         for inst,(nodes,master,_) in self.parts.items():
@@ -241,7 +322,15 @@ class Sheet:
             if len(rs)<2:continue
             pts=[self.pin(r)[0] for r in rs]
             if max(p[0] for p in pts)-min(p[0] for p in pts)>distance or max(p[1] for p in pts)-min(p[1] for p in pts)>distance:continue
-            if len(rs)==2:self.route(*rs)
+            if len(rs)!=2:continue
+            if forward:
+                rs.sort(key=lambda r:self.pin(r)[0][0])
+                start,end = [self.pin(r) for r in rs]
+                if (self.geometry[start[2]].directions[start[3]] != 'right' or
+                    self.geometry[end[2]].directions[end[3]] != 'left' or
+                    self.pos[start[2]][1] != self.pos[end[2]][1]):
+                    continue
+            self.route(*rs)
     def finish(self):
         if set(self.parts)!=set(self.pos):raise ValueError('Unplaced instances in '+self.name+': '+str(set(self.parts)-set(self.pos)))
         # Every remaining terminal gets a visible net or bus stub, including bulk/power.

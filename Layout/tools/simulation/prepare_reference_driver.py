@@ -11,6 +11,8 @@ from dataclasses import dataclass
 
 from Layout.design.cdac import PORTS as CDAC_PORTS
 from Layout.design.reference_driver import CDAC, COMBINED, DRIVER_SOURCE
+from tools.saradc import refsel
+from tools.saradc.schematic import electrical_statements
 from Layout.project import ROOT, evidence
 from Layout.tools.simulation.prepare_full_sim import pull, sha
 from tools.saradc import views
@@ -71,7 +73,12 @@ def fetch_pex(identity):
         raise ValueError(f"Physical LVS and PEX are required for {identity}")
     if manifest.get("case") == "reference-driver":
         intent = json.loads(read_native("intent.json", manifest["input_hashes"]["intent.json"]))
-        if intent["source_sha256"] != {DRIVER_SOURCE: sha((ROOT / DRIVER_SOURCE).read_bytes())}:
+        source = (ROOT / DRIVER_SOURCE).read_bytes()
+        physical_source = json.loads((ROOT / 'Layout/results/single_edge_xref.json').read_text())['source']
+        binding = json.loads((ROOT / 'Layout/specs/interfaces.json').read_text())['masters']['sar8i_refword']
+        electrical_sha = sha('\n'.join(electrical_statements(source.decode())).encode())
+        equivalent = intent['source_sha256'] == physical_source and electrical_sha == binding['physical_equivalent_statement_sha256']
+        if intent['source_sha256'] != {DRIVER_SOURCE: sha(source)} and not equivalent:
             raise ValueError(f"The XREF electrical source differs from {identity}")
         if manifest["top"] != COMBINED:
             raise ValueError("The transient fixture requires the integrated XREF/CDAC extraction")
@@ -217,13 +224,12 @@ def stimulus(prefix, pins, model, vdd, pilot):
         for port in root:
             if port in mapping:
                 formal[port] = mapping[port]
-            elif port.startswith("G"):
+            elif port in refsel.SELECTS:
                 formal[port] = name + port.lower()
-            elif port == "RST_DONE":
-                formal[port] = name + "rst_done"
             else:
-                formal[port] = "0"
+                raise ValueError(f'Unbound schematic reference port {port}')
         mapping.update(formal)
+        mapping.update({pin: formal[select] for pin, select in refsel.SPLIT_TO_SELECT.items()})
         signals.append("X_control_ref (" + " ".join(formal[n] for n in root) + ") sar8i_refword")
     for port in CDAC_PORTS[:32]:
         if port not in mapping:
@@ -293,13 +299,18 @@ def replace_adc(payload, pins, model):
     top = "top/adc_top.scs"
     body = payload[top].decode()
     old_cdac = re.search(r"(?m)^\s*XCDAC[ \t]+\(([^)]+)\)[ \t]+sar8j_r1_cdac[ \t]*$", body)
-    mapping = dict(zip(CDAC_PORTS, old_cdac[1].split(), strict=True))
+    actual = old_cdac[1].split()
+    formals = refsel.CDAC_PORTS if len(actual) == len(refsel.CDAC_PORTS) else CDAC_PORTS
+    mapping = dict(zip(formals, actual, strict=True))
+    if formals == refsel.CDAC_PORTS:
+        mapping.update({pin: mapping[select] for pin, select in refsel.SPLIT_TO_SELECT.items()})
     if model == COMBINED:
         xref = re.search(r"(?m)^\s*XREF[ \t]+\(([^)]+)\)[ \t]+sar8i_refword[ \t]*$", body)
         formal = re.search(r"(?m)^subckt sar8i_refword (.+)$", payload[DRIVER_SOURCE.removeprefix("design/")].decode())[1]
         mapping.update(zip(formal.split(), xref[1].split(), strict=True))
-        # The original compatibility port is an ideal tie inside XREF.
-        body = body[:xref.start()] + "\n    W_REFERENCE_RST (" + mapping["RST_DONE"] + " 0) iprobe" + body[xref.end():]
+        # Older staged decks exposed the dummy RST_DONE tie through XREF.
+        replacement = "\n    W_REFERENCE_RST (" + mapping["RST_DONE"] + " 0) iprobe" if 'RST_DONE' in mapping else ''
+        body = body[:xref.start()] + replacement + body[xref.end():]
     body, count = re.subn(r"(?m)^[ \t]*XCDAC[ \t]+\([^)]+\)[ \t]+sar8j_r1_cdac[ \t]*$",
                           "    XCDAC (" + " ".join(mapping[n] for n in pins) + ") " + model, body)
     if count != 1:

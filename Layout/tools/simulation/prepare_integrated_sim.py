@@ -69,11 +69,13 @@ def main():
     pex,count=re.subn(r'(?m)^(subckt|ends)\s+sar8j_r1_cdac\b',r'\1 cdac_extracted',pex)
     assert count==2
     payload['extracted.scs']=pex.encode('ascii')
-    payload['cdac_pex_wrapper.scs']=('\n'.join([
+    from tools.saradc.refsel import CDAC_PORTS, shared_pex_wrapper
+    wrapper = '\n'.join([
         'simulator lang=spectre','include "extracted.scs"',
         'subckt sar8j_r1_cdac ('+' '.join(PORTS)+')',
         'XPEX ('+' '.join(pins)+') cdac_extracted',
-        'ends sar8j_r1_cdac',''])).encode()
+        'ends sar8j_r1_cdac',''])
+    payload['cdac_pex_wrapper.scs'] = shared_pex_wrapper(wrapper).encode()
     # Reuse the current handshake stimulus/observer, not the old B CAP_CLK reducer.
     # This staging identity is never registered or submitted.
     codes=json.loads((ROOT/'tb/top/short/context.json').read_text())['expected_codes']
@@ -92,7 +94,7 @@ def main():
     old_cdac=(dest/'xtor/cdac/cdac.scs').read_bytes()
     original_header=re.search(r'(?m)^subckt sar8j_r1_cdac\s+([^\n]+)',
                               re.sub(r'\\\s*\n\s*',' ',old_cdac.decode()))[1].split()
-    assert original_header==PORTS, 'Original positional interface changed'
+    assert tuple(original_header)==CDAC_PORTS, 'Original positional interface changed'
     original_dut=(dest/'dut.scs').read_bytes()
     # The analyzer's event order depends on the SAR actually included, not the view name.
     if b'include "xtor/sar/single_edge.scs"' in original_dut:

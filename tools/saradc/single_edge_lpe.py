@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 
 from . import reference_short as short
+from .refsel import shared_pex_wrapper, split_cdac
+from .schematic import electrical_statements
 from .single_edge import CP_HIGH_PS, use_restart
 
 ROOT = short.ROOT
@@ -165,13 +167,18 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
     dut = (ROOT / 'design/dut.scs').read_bytes()
     sources = {name: (ROOT / 'design' / name).read_bytes()
                for name in re.findall(r'^include "([^"]+)"', dut.decode(), re.M)}
-    if not xref and sources['xtor/cdac/cdac.scs'] != bundle['schematic']:
-        raise ValueError('Schematic CDAC identity differs from extraction control')
+    if not xref:
+        cdac = split_cdac(sources['xtor/cdac/cdac.scs'].decode())
+        if electrical_statements(cdac) != electrical_statements(bundle['schematic'].decode()):
+            raise ValueError('Schematic CDAC identity differs from extraction control')
     sources[CTRL] = set_window(sources[CTRL], taps)
     if dut.count(b'"xtor/cdac/cdac.scs"') != 1:
         raise ValueError('Expected one CDAC include')
     sources['dut.scs'] = dut if xref else dut.replace(b'"xtor/cdac/cdac.scs"', b'"cdac_pex_wrapper.scs"')
     sources.update(bundle['files'])
+    if not xref:
+        wrapper = sources['cdac_pex_wrapper.scs'].decode()
+        sources['cdac_pex_wrapper.scs'] = shared_pex_wrapper(wrapper).encode()
     if boot:
         sources['dut.scs'] = bootstrap_pex.use(sources['dut.scs'])
         sources.update(boot['files'])
@@ -191,7 +198,8 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
         sources.update(comparator['files'])
     library = (ROOT / ('tb/common/platform/library_lpe_%s.scs' % rc)).read_bytes()
     template = ROOT / short.prepare('single_edge', corner, '%s-%s-%s' % (family, label, revision),
-                                    codes=CODES[kind], source_blobs=sources, cell_library=library)
+                                    codes=CODES[kind], source_blobs=sources, cell_library=library,
+                                    extracted_gate_probes=bool(xref))
     recipe = json.loads(template.read_bytes())
     blobs = {f['name']: (ROOT / f['source']).read_bytes() for f in recipe['inputs']}
     ctx = json.loads(blobs['context.json'])

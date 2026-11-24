@@ -32,7 +32,7 @@ def stimulus(codes, sign):
 
 
 def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_output_mib=None, source_blobs=None,
-            cell_library=None):
+            cell_library=None, extracted_gate_probes=False):
     if version not in ('b', 'current', 'single_edge'):
         raise ValueError('Unknown reference short version')
     if version == 'single_edge' and source_blobs is None:
@@ -74,8 +74,9 @@ def prepare(version, corner, revision='v1', *, condition=None, codes=None, max_o
     # Keep passive sections identical and explicit, rather than guessing slow/fast MOM.
     signal_names = ['D%d'%i for i in range(8)] + ['SAMPLE','VDD!','VINP_SRC','VINN_SRC','VINP','VINN','VREFP','VREFN']
     signal_names += ['XDUT.'+s for s in ['SAMPLE_INT','SEQ_SAMPLE','CMP_CLK','PHI_U','ACTIVE','PRESET','TOPP','TOPN','COMP_P','COMP_N','XCTRL.PHI_W','XCTRL.XTIM.PR','XCTRL.XTIM.NR','XBOOTP.G','XBOOTN.G','XBOOTP.BTOP','XBOOTP.BBOT','XBOOTN.BTOP','XBOOTN.BBOT']]
+    gate_prefixes = ('GNN', 'GNP', 'GPN', 'GPP') if version == 'b' or extracted_gate_probes else ('REFSEL_N', 'REFSEL_P')
     for bit in range(8):
-        signal_names += ['XDUT.'+s+str(bit) for s in ['GNN','GNP','GPN','GPP','CODE']]
+        signal_names += ['XDUT.%s%d' % (prefix, bit) for prefix in (*gate_prefixes, 'CODE')]
         signal_names += ['XDUT.XCDAC.B'+side+str(bit) for side in ['N','P']]
     if version != 'b':
         signal_names.remove('XDUT.XCTRL.PHI_W')

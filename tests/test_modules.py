@@ -87,15 +87,23 @@ class ModuleChecks(unittest.TestCase):
             self.assertIn('sampler.va',blobs)
             self.assertIn(b'ahdl_include "sampler.va"',blobs['dut.scs'])
 
-    def test_electrical_leaf_ports_match_the_B_interfaces(self):
+    def test_electrical_leaf_ports_match_the_behavioral_adapters(self):
+        from tools.saradc import refsel
         manifest=json.loads((entry.ROOT/'design/manifest.json').read_text())['subcircuits']
+        split_ports = {'cdac': refsel.SPLIT_CDAC_PORTS, 'reference': refsel.SPLIT_REFERENCE_PORTS}
         for key,row in views.registry()['modules'].items():
             if key=='sampler':continue  # Explicit three-to-five pin wrapper.
             text=(entry.ROOT/'design/behav/veriloga'/row['file']).read_text()
             pins=re.search(r'module '+row['va']+r'\(([^)]+)\)',text).group(1).split(',')
             # The single-edge SAR drives the B update position with its COMMIT write edge.
             physical=[{'COMMIT':'PHI_U'}.get(p,p) for p in manifest[row['master']]['ports']]
-            self.assertEqual(pins,physical)
+            self.assertEqual(pins,list(split_ports.get(key,physical)))
+        top = views.build(['current','reference=va'])['top/adc_top.scs'].decode()
+        driver = refsel.connections(top,'XREF',refsel.SPLIT_REFERENCE_PORTS)
+        load = refsel.connections(top,'XCDAC',refsel.SPLIT_CDAC_PORTS)
+        self.assertEqual({p:driver[p] for p in refsel.SPLIT_TO_SELECT},
+                         {p:load[p] for p in refsel.SPLIT_TO_SELECT})
+        self.assertEqual(len({load[p] for p in refsel.SPLIT_TO_SELECT}),32)
 
     def test_edited_current_leaf_is_packaged_without_changing_frozen_regression(self):
         with tempfile.TemporaryDirectory() as d:

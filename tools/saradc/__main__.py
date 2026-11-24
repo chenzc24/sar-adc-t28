@@ -136,6 +136,9 @@ def prepare(case_name, run_id=None, seed=None, split_design=None, view=None, can
     if mixed:
         from .modular import adapt_short
         adapt_short(blobs,context,ROOT)
+    elif not frozen and 'dut.scs' in blobs:
+        from .refsel import adapt_legacy_saves
+        adapt_legacy_saves(blobs)
     if seed is not None:
         original_seed = context['seed']
         needle = re.compile(rb'\bseed=' + str(original_seed).encode() + rb'\b')

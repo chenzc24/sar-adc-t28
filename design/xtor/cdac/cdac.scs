@@ -1,20 +1,20 @@
-// Generated from frozen B by scripts/sar8_entry.py build.
+// Single-edge CDAC with a shared NMOS/PMOS select per bit and side.
 // BEGIN SARADC RNL
 // @RNL(type="header") { @VERSION("0.3");
 // @USE-PACKAGE(name="sar8",version="0.1",path="../../rnl/sar8.rnl");
 // @USE-PACKAGE(name="rnl-std-fill") {}; }
 // END SARADC RNL
-// Electrical subcircuit statements are preserved verbatim.
+// Switch device parameters and capacitor weights come from the frozen B source.
 
-subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=3 nf=1 \
+subckt sar8j_r1_sw_b0 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=3 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=3 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=3 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -24,45 +24,49 @@ subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=3",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=3",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=3",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=3",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b0 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 0 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b0
 
-subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=6 nf=1 \
+subckt sar8j_r1_sw_b1 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=6 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=6 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=6 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -72,45 +76,49 @@ subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=6",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=6",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=6",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=6",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b1 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 1 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b1
 
-subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=12 nf=1 \
+subckt sar8j_r1_sw_b2 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=12 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=12 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=12 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -120,45 +128,49 @@ subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=12",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=12",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=12",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=12",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b2 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 2 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b2
 
-subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=24 nf=1 \
+subckt sar8j_r1_sw_b3 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=24 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=24 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=24 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -168,45 +180,49 @@ subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=24",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=24",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=24",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=24",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b3 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 3 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b3
 
-subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=48 nf=1 \
+subckt sar8j_r1_sw_b4 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=48 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=48 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=48 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -216,45 +232,49 @@ subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=48",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=48",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=48",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=48",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b4 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 4 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b4
 
-subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=96 nf=1 \
+subckt sar8j_r1_sw_b5 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=96 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=96 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=96 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -264,45 +284,49 @@ subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=96",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=96",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=96",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=96",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b5 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 5 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b5
 
-subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=192 nf=1 \
+subckt sar8j_r1_sw_b6 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=192 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=192 nf=1 \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=192 nf=1 \
         sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -312,45 +336,49 @@ subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=192",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=192",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=192",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=192",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b6 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 6 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b6
 
-subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=384 nf=1 \
+subckt sar8j_r1_sw_b7 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=384 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=384 nf=1 \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=384 nf=1 \
         sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -360,40 +388,43 @@ subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // #MP_HIGH @SET-SYMBOL $PMOS_4TERM;
-// #MP_HIGH @PLACE(0,20) => @ORIENT("R0");
-// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,23);
-// #MP_HIGH @TEXT("l=90n w=175.00n multi=384",key="value",size=0.9,halign="start") => @PLACE(3,16);
+// #MP_HIGH @PLACE(0,14) => @ORIENT("R0");
+// #MP_HIGH @TEXT("MP_HIGH",key="name",size=1.3,halign="start") => @PLACE(3,17);
+// #MP_HIGH @TEXT("l=90n w=175.00n multi=384",key="value",size=0.9,halign="start") => @PLACE(3,10);
 // #MP_HIGH @TEXT("",key="model");
 // #MN_LOW @SET-SYMBOL $NMOS_4TERM;
-// #MN_LOW @PLACE(0,-10) => @ORIENT("R0");
-// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-7);
-// #MN_LOW @TEXT("l=90n w=150.0n multi=384",key="value",size=0.9,halign="start") => @PLACE(3,-14);
+// #MN_LOW @PLACE(0,-14) => @ORIENT("R0");
+// #MN_LOW @TEXT("MN_LOW",key="name",size=1.3,halign="start") => @PLACE(3,-11);
+// #MN_LOW @TEXT("l=90n w=150.0n multi=384",key="value",size=0.9,halign="start") => @PLACE(3,-18);
 // #MN_LOW @TEXT("",key="model");
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
-// $JUNCTION @ATTACH (0,5);
-// (-20,48) @TEXT("sar8j_r1_sw_b7 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
-// (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
-// (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
-// (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
-// (4.4,-10) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// (-27,36) @TEXT("Bit 7 reference switch",size=2,halign="start",textcolor="#223d52");
+// (-27,31) @TEXT("SEL low selects VREFP. SEL high selects VREFN.",size=1.12,halign="start",textcolor="#223d52");
+// %sar_junction1 = (0,0);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MP_HIGH:1 %sar_junction1 #MN_LOW:1};
+// %sar_port2 = $IO_PORT @ATTACH &"BOT" => @PLACE(22,0) => @ORIENT("MY");
+// &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 %sar_port2:p};
+// %sar_junction3 = (-13,0);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// %sar_port4 = $IO_PORT @ATTACH &"SEL" => @PLACE(-24,0) => @ORIENT("R0");
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_port4:p %sar_junction3};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,14) #MP_HIGH:2};
+// &"SEL" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {%sar_junction3 (-13,-14) #MN_LOW:2};
+// %sar_port5 = $IO_PORT @ATTACH &"VREFP" => @PLACE(0,25) => @ORIENT("R270");
+// &"VREFP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port5:p #MP_HIGH:3};
+// %sar_port6 = $IO_PORT @ATTACH &"VREFN" => @PLACE(0,-25) => @ORIENT("R90");
+// &"VREFN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port6:p #MN_LOW:3};
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,14)};
+// (4.4,14) @TEXT("VDD",size=1.1,halign="start",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-14)};
+// (4.4,-14) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL
 ends sar8j_r1_sw_b7
 
-subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
-        GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 \
-        GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD VREFN \
-        VREFP VSS
+subckt sar8j_r1_cdac REFSEL_N0 REFSEL_N1 REFSEL_N2 REFSEL_N3 REFSEL_N4 REFSEL_N5 REFSEL_N6 REFSEL_N7 \
+    REFSEL_P0 REFSEL_P1 REFSEL_P2 REFSEL_P3 REFSEL_P4 REFSEL_P5 REFSEL_P6 REFSEL_P7 \
+    TOPN TOPP VDD VREFN VREFP VSS
     CMOMN8 (TOPN VREFN) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
         multi=1 mismatchflag=1
     CMOMN7 (TOPN BN7) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
@@ -430,401 +461,423 @@ subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
         mismatchflag=1
     CMOMP0 (TOPP BP0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1 \
         mismatchflag=1
-    XSN0 (BN0 GNN0 GNP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
-    XSP0 (BP0 GPN0 GPP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
-    XSN1 (BN1 GNN1 GNP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
-    XSP1 (BP1 GPN1 GPP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
-    XSN2 (BN2 GNN2 GNP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
-    XSP2 (BP2 GPN2 GPP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
-    XSN3 (BN3 GNN3 GNP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
-    XSP3 (BP3 GPN3 GPP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
-    XSN4 (BN4 GNN4 GNP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
-    XSP4 (BP4 GPN4 GPP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
-    XSN5 (BN5 GNN5 GNP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
-    XSP5 (BP5 GPN5 GPP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
-    XSN6 (BN6 GNN6 GNP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
-    XSP6 (BP6 GPN6 GPP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
-    XSN7 (BN7 GNN7 GNP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
-    XSP7 (BP7 GPN7 GPP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+    XSN0 (BN0 REFSEL_N0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSP0 (BP0 REFSEL_P0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSN1 (BN1 REFSEL_N1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSP1 (BP1 REFSEL_P1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSN2 (BN2 REFSEL_N2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSP2 (BP2 REFSEL_P2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSN3 (BN3 REFSEL_N3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSP3 (BP3 REFSEL_P3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSN4 (BN4 REFSEL_N4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSP4 (BP4 REFSEL_P4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSN5 (BN5 REFSEL_N5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSP5 (BP5 REFSEL_P5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSN6 (BN6 REFSEL_N6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSP6 (BP6 REFSEL_P6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSN7 (BN7 REFSEL_N7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+    XSP7 (BP7 REFSEL_P7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
-// (-15,68) @TEXT("Differential MOM CDAC  /  binary weights and unit dummy",size=1.65,halign="start",textcolor="#223d52");
-// #CMOMN0 @SET-SYMBOL $CAPACITOR;
-// #CMOMN0 @PLACE(0,34) => @ORIENT("R0");
-// #CMOMN0 @TEXT("CMOMN0",key="name",size=1.3,halign="start") => @PLACE(3,37);
-// #CMOMN0 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(3,30);
-// #CMOMN0 @TEXT("",key="model");
-// #XSN0 @SET-SYMBOL $S_sar8j_r1_sw_b0;
-// #XSN0 @PLACE(0,12) => @ORIENT("R0");
-// &"BN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN0:2 (0,32) (0,24) #XSN0:1};
-// #CMOMN1 @SET-SYMBOL $CAPACITOR;
-// #CMOMN1 @PLACE(38,34) => @ORIENT("R0");
-// #CMOMN1 @TEXT("CMOMN1",key="name",size=1.3,halign="start") => @PLACE(41,37);
-// #CMOMN1 @TEXT("nr=8 lr=2u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(41,30);
-// #CMOMN1 @TEXT("",key="model");
-// #XSN1 @SET-SYMBOL $S_sar8j_r1_sw_b1;
-// #XSN1 @PLACE(38,12) => @ORIENT("R0");
-// &"BN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN1:2 (38,32) (38,24) #XSN1:1};
-// #CMOMN2 @SET-SYMBOL $CAPACITOR;
-// #CMOMN2 @PLACE(76,34) => @ORIENT("R0");
-// #CMOMN2 @TEXT("CMOMN2",key="name",size=1.3,halign="start") => @PLACE(79,37);
-// #CMOMN2 @TEXT("nr=8 lr=2u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(79,30);
-// #CMOMN2 @TEXT("",key="model");
-// #XSN2 @SET-SYMBOL $S_sar8j_r1_sw_b2;
-// #XSN2 @PLACE(76,12) => @ORIENT("R0");
-// &"BN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN2:2 (76,32) (76,24) #XSN2:1};
-// #CMOMN3 @SET-SYMBOL $CAPACITOR;
-// #CMOMN3 @PLACE(114,34) => @ORIENT("R0");
-// #CMOMN3 @TEXT("CMOMN3",key="name",size=1.3,halign="start") => @PLACE(117,37);
-// #CMOMN3 @TEXT("nr=8 lr=2u w=50n multi=8",key="value",size=0.9,halign="start") => @PLACE(117,30);
-// #CMOMN3 @TEXT("",key="model");
-// #XSN3 @SET-SYMBOL $S_sar8j_r1_sw_b3;
-// #XSN3 @PLACE(114,12) => @ORIENT("R0");
-// &"BN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN3:2 (114,32) (114,24) #XSN3:1};
-// #CMOMN4 @SET-SYMBOL $CAPACITOR;
-// #CMOMN4 @PLACE(152,34) => @ORIENT("R0");
-// #CMOMN4 @TEXT("CMOMN4",key="name",size=1.3,halign="start") => @PLACE(155,37);
-// #CMOMN4 @TEXT("nr=8 lr=2u w=50n multi=16",key="value",size=0.9,halign="start") => @PLACE(155,30);
-// #CMOMN4 @TEXT("",key="model");
-// #XSN4 @SET-SYMBOL $S_sar8j_r1_sw_b4;
-// #XSN4 @PLACE(152,12) => @ORIENT("R0");
-// &"BN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN4:2 (152,32) (152,24) #XSN4:1};
-// #CMOMN5 @SET-SYMBOL $CAPACITOR;
-// #CMOMN5 @PLACE(190,34) => @ORIENT("R0");
-// #CMOMN5 @TEXT("CMOMN5",key="name",size=1.3,halign="start") => @PLACE(193,37);
-// #CMOMN5 @TEXT("nr=8 lr=2u w=50n multi=32",key="value",size=0.9,halign="start") => @PLACE(193,30);
-// #CMOMN5 @TEXT("",key="model");
-// #XSN5 @SET-SYMBOL $S_sar8j_r1_sw_b5;
-// #XSN5 @PLACE(190,12) => @ORIENT("R0");
-// &"BN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN5:2 (190,32) (190,24) #XSN5:1};
-// #CMOMN6 @SET-SYMBOL $CAPACITOR;
-// #CMOMN6 @PLACE(228,34) => @ORIENT("R0");
-// #CMOMN6 @TEXT("CMOMN6",key="name",size=1.3,halign="start") => @PLACE(231,37);
-// #CMOMN6 @TEXT("nr=8 lr=2u w=50n multi=64",key="value",size=0.9,halign="start") => @PLACE(231,30);
-// #CMOMN6 @TEXT("",key="model");
-// #XSN6 @SET-SYMBOL $S_sar8j_r1_sw_b6;
-// #XSN6 @PLACE(228,12) => @ORIENT("R0");
-// &"BN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN6:2 (228,32) (228,24) #XSN6:1};
-// #CMOMN7 @SET-SYMBOL $CAPACITOR;
-// #CMOMN7 @PLACE(266,34) => @ORIENT("R0");
-// #CMOMN7 @TEXT("CMOMN7",key="name",size=1.3,halign="start") => @PLACE(269,37);
-// #CMOMN7 @TEXT("nr=8 lr=2u w=50n multi=128",key="value",size=0.9,halign="start") => @PLACE(269,30);
-// #CMOMN7 @TEXT("",key="model");
-// #XSN7 @SET-SYMBOL $S_sar8j_r1_sw_b7;
-// #XSN7 @PLACE(266,12) => @ORIENT("R0");
-// &"BN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN7:2 (266,32) (266,24) #XSN7:1};
-// #CMOMN8 @SET-SYMBOL $CAPACITOR;
-// #CMOMN8 @PLACE(304,34) => @ORIENT("R0");
-// #CMOMN8 @TEXT("CMOMN8",key="name",size=1.3,halign="start") => @PLACE(307,37);
-// #CMOMN8 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(307,30);
-// #CMOMN8 @TEXT("",key="model");
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(0,46) (38,46) (76,46) (114,46) (152,46) (190,46) (228,46) (266,46) (304,46)};
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN0:1 (0,46)};
-// $JUNCTION @ATTACH (0,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN1:1 (38,46)};
-// $JUNCTION @ATTACH (38,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN2:1 (76,46)};
-// $JUNCTION @ATTACH (76,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN3:1 (114,46)};
-// $JUNCTION @ATTACH (114,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN4:1 (152,46)};
-// $JUNCTION @ATTACH (152,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN5:1 (190,46)};
-// $JUNCTION @ATTACH (190,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN6:1 (228,46)};
-// $JUNCTION @ATTACH (228,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN7:1 (266,46)};
-// $JUNCTION @ATTACH (266,46);
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN8:1 (304,46)};
-// $JUNCTION @ATTACH (304,46);
-// (-15,54) @TEXT("TOPN / negative bank",size=1.2,halign="start",textcolor="#223d52");
-// (289,16) @TEXT("Dummy -> VREFN",size=1,halign="start",textcolor="#223d52");
+// (-16,60) @TEXT("Differential MOM CDAC",size=2,halign="start",textcolor="#223d52");
 // #CMOMP0 @SET-SYMBOL $CAPACITOR;
-// #CMOMP0 @PLACE(0,-32) => @ORIENT("R0");
-// #CMOMP0 @TEXT("CMOMP0",key="name",size=1.3,halign="start") => @PLACE(3,-29);
-// #CMOMP0 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(3,-36);
+// #CMOMP0 @PLACE(0,29) => @ORIENT("R0");
+// #CMOMP0 @TEXT("CMOMP0",key="name",size=1.3,halign="start") => @PLACE(3,32);
+// #CMOMP0 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(3,25);
 // #CMOMP0 @TEXT("",key="model");
+// %sar_junction1 = (0,41);
+// %sar_junction1 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction1 #CMOMP0:1};
 // #XSP0 @SET-SYMBOL $S_sar8j_r1_sw_b0;
-// #XSP0 @PLACE(0,-54) => @ORIENT("R0");
-// &"BP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP0:2 (0,-34) (0,-42) #XSP0:1};
+// #XSP0 @PLACE(0,7) => @ORIENT("R0");
+// &"BP0" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP0:2 #XSP0:1};
+// #CMOMP0 @TEXT("B0",key="name",size=1.48,halign="start");
+// #CMOMP0 @TEXT("1 unit",key="value",size=1.16,halign="start");
 // #CMOMP1 @SET-SYMBOL $CAPACITOR;
-// #CMOMP1 @PLACE(38,-32) => @ORIENT("R0");
-// #CMOMP1 @TEXT("CMOMP1",key="name",size=1.3,halign="start") => @PLACE(41,-29);
-// #CMOMP1 @TEXT("nr=8 lr=2u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(41,-36);
+// #CMOMP1 @PLACE(32,29) => @ORIENT("R0");
+// #CMOMP1 @TEXT("CMOMP1",key="name",size=1.3,halign="start") => @PLACE(35,32);
+// #CMOMP1 @TEXT("nr=8 lr=2u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(35,25);
 // #CMOMP1 @TEXT("",key="model");
+// %sar_junction2 = (32,41);
+// %sar_junction2 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction2 #CMOMP1:1};
 // #XSP1 @SET-SYMBOL $S_sar8j_r1_sw_b1;
-// #XSP1 @PLACE(38,-54) => @ORIENT("R0");
-// &"BP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP1:2 (38,-34) (38,-42) #XSP1:1};
+// #XSP1 @PLACE(32,7) => @ORIENT("R0");
+// &"BP1" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP1:2 #XSP1:1};
+// #CMOMP1 @TEXT("B1",key="name",size=1.48,halign="start");
+// #CMOMP1 @TEXT("2 units",key="value",size=1.16,halign="start");
 // #CMOMP2 @SET-SYMBOL $CAPACITOR;
-// #CMOMP2 @PLACE(76,-32) => @ORIENT("R0");
-// #CMOMP2 @TEXT("CMOMP2",key="name",size=1.3,halign="start") => @PLACE(79,-29);
-// #CMOMP2 @TEXT("nr=8 lr=2u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(79,-36);
+// #CMOMP2 @PLACE(64,29) => @ORIENT("R0");
+// #CMOMP2 @TEXT("CMOMP2",key="name",size=1.3,halign="start") => @PLACE(67,32);
+// #CMOMP2 @TEXT("nr=8 lr=2u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(67,25);
 // #CMOMP2 @TEXT("",key="model");
+// %sar_junction3 = (64,41);
+// %sar_junction3 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction3 #CMOMP2:1};
 // #XSP2 @SET-SYMBOL $S_sar8j_r1_sw_b2;
-// #XSP2 @PLACE(76,-54) => @ORIENT("R0");
-// &"BP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP2:2 (76,-34) (76,-42) #XSP2:1};
+// #XSP2 @PLACE(64,7) => @ORIENT("R0");
+// &"BP2" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP2:2 #XSP2:1};
+// #CMOMP2 @TEXT("B2",key="name",size=1.48,halign="start");
+// #CMOMP2 @TEXT("4 units",key="value",size=1.16,halign="start");
 // #CMOMP3 @SET-SYMBOL $CAPACITOR;
-// #CMOMP3 @PLACE(114,-32) => @ORIENT("R0");
-// #CMOMP3 @TEXT("CMOMP3",key="name",size=1.3,halign="start") => @PLACE(117,-29);
-// #CMOMP3 @TEXT("nr=8 lr=2u w=50n multi=8",key="value",size=0.9,halign="start") => @PLACE(117,-36);
+// #CMOMP3 @PLACE(96,29) => @ORIENT("R0");
+// #CMOMP3 @TEXT("CMOMP3",key="name",size=1.3,halign="start") => @PLACE(99,32);
+// #CMOMP3 @TEXT("nr=8 lr=2u w=50n multi=8",key="value",size=0.9,halign="start") => @PLACE(99,25);
 // #CMOMP3 @TEXT("",key="model");
+// %sar_junction4 = (96,41);
+// %sar_junction4 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction4 #CMOMP3:1};
 // #XSP3 @SET-SYMBOL $S_sar8j_r1_sw_b3;
-// #XSP3 @PLACE(114,-54) => @ORIENT("R0");
-// &"BP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP3:2 (114,-34) (114,-42) #XSP3:1};
+// #XSP3 @PLACE(96,7) => @ORIENT("R0");
+// &"BP3" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP3:2 #XSP3:1};
+// #CMOMP3 @TEXT("B3",key="name",size=1.48,halign="start");
+// #CMOMP3 @TEXT("8 units",key="value",size=1.16,halign="start");
 // #CMOMP4 @SET-SYMBOL $CAPACITOR;
-// #CMOMP4 @PLACE(152,-32) => @ORIENT("R0");
-// #CMOMP4 @TEXT("CMOMP4",key="name",size=1.3,halign="start") => @PLACE(155,-29);
-// #CMOMP4 @TEXT("nr=8 lr=2u w=50n multi=16",key="value",size=0.9,halign="start") => @PLACE(155,-36);
+// #CMOMP4 @PLACE(128,29) => @ORIENT("R0");
+// #CMOMP4 @TEXT("CMOMP4",key="name",size=1.3,halign="start") => @PLACE(131,32);
+// #CMOMP4 @TEXT("nr=8 lr=2u w=50n multi=16",key="value",size=0.9,halign="start") => @PLACE(131,25);
 // #CMOMP4 @TEXT("",key="model");
+// %sar_junction5 = (128,41);
+// %sar_junction5 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction5 #CMOMP4:1};
 // #XSP4 @SET-SYMBOL $S_sar8j_r1_sw_b4;
-// #XSP4 @PLACE(152,-54) => @ORIENT("R0");
-// &"BP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP4:2 (152,-34) (152,-42) #XSP4:1};
+// #XSP4 @PLACE(128,7) => @ORIENT("R0");
+// &"BP4" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP4:2 #XSP4:1};
+// #CMOMP4 @TEXT("B4",key="name",size=1.48,halign="start");
+// #CMOMP4 @TEXT("16 units",key="value",size=1.16,halign="start");
 // #CMOMP5 @SET-SYMBOL $CAPACITOR;
-// #CMOMP5 @PLACE(190,-32) => @ORIENT("R0");
-// #CMOMP5 @TEXT("CMOMP5",key="name",size=1.3,halign="start") => @PLACE(193,-29);
-// #CMOMP5 @TEXT("nr=8 lr=2u w=50n multi=32",key="value",size=0.9,halign="start") => @PLACE(193,-36);
+// #CMOMP5 @PLACE(160,29) => @ORIENT("R0");
+// #CMOMP5 @TEXT("CMOMP5",key="name",size=1.3,halign="start") => @PLACE(163,32);
+// #CMOMP5 @TEXT("nr=8 lr=2u w=50n multi=32",key="value",size=0.9,halign="start") => @PLACE(163,25);
 // #CMOMP5 @TEXT("",key="model");
+// %sar_junction6 = (160,41);
+// %sar_junction6 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction6 #CMOMP5:1};
 // #XSP5 @SET-SYMBOL $S_sar8j_r1_sw_b5;
-// #XSP5 @PLACE(190,-54) => @ORIENT("R0");
-// &"BP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP5:2 (190,-34) (190,-42) #XSP5:1};
+// #XSP5 @PLACE(160,7) => @ORIENT("R0");
+// &"BP5" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP5:2 #XSP5:1};
+// #CMOMP5 @TEXT("B5",key="name",size=1.48,halign="start");
+// #CMOMP5 @TEXT("32 units",key="value",size=1.16,halign="start");
 // #CMOMP6 @SET-SYMBOL $CAPACITOR;
-// #CMOMP6 @PLACE(228,-32) => @ORIENT("R0");
-// #CMOMP6 @TEXT("CMOMP6",key="name",size=1.3,halign="start") => @PLACE(231,-29);
-// #CMOMP6 @TEXT("nr=8 lr=2u w=50n multi=64",key="value",size=0.9,halign="start") => @PLACE(231,-36);
+// #CMOMP6 @PLACE(192,29) => @ORIENT("R0");
+// #CMOMP6 @TEXT("CMOMP6",key="name",size=1.3,halign="start") => @PLACE(195,32);
+// #CMOMP6 @TEXT("nr=8 lr=2u w=50n multi=64",key="value",size=0.9,halign="start") => @PLACE(195,25);
 // #CMOMP6 @TEXT("",key="model");
+// %sar_junction7 = (192,41);
+// %sar_junction7 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction7 #CMOMP6:1};
 // #XSP6 @SET-SYMBOL $S_sar8j_r1_sw_b6;
-// #XSP6 @PLACE(228,-54) => @ORIENT("R0");
-// &"BP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP6:2 (228,-34) (228,-42) #XSP6:1};
+// #XSP6 @PLACE(192,7) => @ORIENT("R0");
+// &"BP6" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP6:2 #XSP6:1};
+// #CMOMP6 @TEXT("B6",key="name",size=1.48,halign="start");
+// #CMOMP6 @TEXT("64 units",key="value",size=1.16,halign="start");
 // #CMOMP7 @SET-SYMBOL $CAPACITOR;
-// #CMOMP7 @PLACE(266,-32) => @ORIENT("R0");
-// #CMOMP7 @TEXT("CMOMP7",key="name",size=1.3,halign="start") => @PLACE(269,-29);
-// #CMOMP7 @TEXT("nr=8 lr=2u w=50n multi=128",key="value",size=0.9,halign="start") => @PLACE(269,-36);
+// #CMOMP7 @PLACE(224,29) => @ORIENT("R0");
+// #CMOMP7 @TEXT("CMOMP7",key="name",size=1.3,halign="start") => @PLACE(227,32);
+// #CMOMP7 @TEXT("nr=8 lr=2u w=50n multi=128",key="value",size=0.9,halign="start") => @PLACE(227,25);
 // #CMOMP7 @TEXT("",key="model");
+// %sar_junction8 = (224,41);
+// %sar_junction8 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction8 #CMOMP7:1};
 // #XSP7 @SET-SYMBOL $S_sar8j_r1_sw_b7;
-// #XSP7 @PLACE(266,-54) => @ORIENT("R0");
-// &"BP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP7:2 (266,-34) (266,-42) #XSP7:1};
+// #XSP7 @PLACE(224,7) => @ORIENT("R0");
+// &"BP7" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP7:2 #XSP7:1};
+// #CMOMP7 @TEXT("B7",key="name",size=1.48,halign="start");
+// #CMOMP7 @TEXT("128 units",key="value",size=1.16,halign="start");
 // #CMOMP8 @SET-SYMBOL $CAPACITOR;
-// #CMOMP8 @PLACE(304,-32) => @ORIENT("R0");
-// #CMOMP8 @TEXT("CMOMP8",key="name",size=1.3,halign="start") => @PLACE(307,-29);
-// #CMOMP8 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(307,-36);
+// #CMOMP8 @PLACE(256,29) => @ORIENT("R0");
+// #CMOMP8 @TEXT("CMOMP8",key="name",size=1.3,halign="start") => @PLACE(259,32);
+// #CMOMP8 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(259,25);
 // #CMOMP8 @TEXT("",key="model");
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(0,-20) (38,-20) (76,-20) (114,-20) (152,-20) (190,-20) (228,-20) (266,-20) (304,-20)};
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP0:1 (0,-20)};
-// $JUNCTION @ATTACH (0,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP1:1 (38,-20)};
-// $JUNCTION @ATTACH (38,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP2:1 (76,-20)};
-// $JUNCTION @ATTACH (76,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP3:1 (114,-20)};
-// $JUNCTION @ATTACH (114,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP4:1 (152,-20)};
-// $JUNCTION @ATTACH (152,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP5:1 (190,-20)};
-// $JUNCTION @ATTACH (190,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP6:1 (228,-20)};
-// $JUNCTION @ATTACH (228,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP7:1 (266,-20)};
-// $JUNCTION @ATTACH (266,-20);
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMP8:1 (304,-20)};
-// $JUNCTION @ATTACH (304,-20);
-// (-15,-12) @TEXT("TOPP / positive bank",size=1.2,halign="start",textcolor="#223d52");
-// (289,-50) @TEXT("Dummy -> VREFP",size=1,halign="start",textcolor="#223d52");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN8:2 (304,29)};
-// (304,28.6) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP8:2 (304,-37)};
-// (304,-37.4) @TEXT("VREFP",size=1.1,halign="middle",valign="top");
-// &"GNN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:2 (-5,-3)};
-// (-5,-3.4) @TEXT("GNN0",size=1.1,halign="middle",valign="top");
-// &"GNP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:3 (5,-3)};
-// (5,-3.4) @TEXT("GNP0",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:4 (14,16)};
-// (14.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:5 (-14,8)};
-// (-14.4,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:6 (-14,16)};
-// (-14.4,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:7 (14,8)};
-// (14.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:2 (-5,-69)};
-// (-5,-69.4) @TEXT("GPN0",size=1.1,halign="middle",valign="top");
-// &"GPP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:3 (5,-69)};
-// (5,-69.4) @TEXT("GPP0",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:4 (14,-50)};
-// (14.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:5 (-14,-58)};
-// (-14.4,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:6 (-14,-50)};
-// (-14.4,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:7 (14,-58)};
-// (14.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:2 (33,-3)};
-// (33,-3.4) @TEXT("GNN1",size=1.1,halign="middle",valign="top");
-// &"GNP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:3 (43,-3)};
-// (43,-3.4) @TEXT("GNP1",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:4 (52,16)};
-// (52.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:5 (24,8)};
-// (23.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:6 (24,16)};
-// (23.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:7 (52,8)};
-// (52.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:2 (33,-69)};
-// (33,-69.4) @TEXT("GPN1",size=1.1,halign="middle",valign="top");
-// &"GPP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:3 (43,-69)};
-// (43,-69.4) @TEXT("GPP1",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:4 (52,-50)};
-// (52.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:5 (24,-58)};
-// (23.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:6 (24,-50)};
-// (23.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:7 (52,-58)};
-// (52.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:2 (71,-3)};
-// (71,-3.4) @TEXT("GNN2",size=1.1,halign="middle",valign="top");
-// &"GNP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:3 (81,-3)};
-// (81,-3.4) @TEXT("GNP2",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:4 (90,16)};
-// (90.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:5 (62,8)};
-// (61.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:6 (62,16)};
-// (61.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:7 (90,8)};
-// (90.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:2 (71,-69)};
-// (71,-69.4) @TEXT("GPN2",size=1.1,halign="middle",valign="top");
-// &"GPP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:3 (81,-69)};
-// (81,-69.4) @TEXT("GPP2",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:4 (90,-50)};
-// (90.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:5 (62,-58)};
-// (61.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:6 (62,-50)};
-// (61.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:7 (90,-58)};
-// (90.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:2 (109,-3)};
-// (109,-3.4) @TEXT("GNN3",size=1.1,halign="middle",valign="top");
-// &"GNP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:3 (119,-3)};
-// (119,-3.4) @TEXT("GNP3",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:4 (128,16)};
-// (128.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:5 (100,8)};
-// (99.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:6 (100,16)};
-// (99.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:7 (128,8)};
-// (128.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:2 (109,-69)};
-// (109,-69.4) @TEXT("GPN3",size=1.1,halign="middle",valign="top");
-// &"GPP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:3 (119,-69)};
-// (119,-69.4) @TEXT("GPP3",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:4 (128,-50)};
-// (128.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:5 (100,-58)};
-// (99.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:6 (100,-50)};
-// (99.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:7 (128,-58)};
-// (128.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:2 (147,-3)};
-// (147,-3.4) @TEXT("GNN4",size=1.1,halign="middle",valign="top");
-// &"GNP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:3 (157,-3)};
-// (157,-3.4) @TEXT("GNP4",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:4 (166,16)};
-// (166.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:5 (138,8)};
-// (137.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:6 (138,16)};
-// (137.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:7 (166,8)};
-// (166.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:2 (147,-69)};
-// (147,-69.4) @TEXT("GPN4",size=1.1,halign="middle",valign="top");
-// &"GPP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:3 (157,-69)};
-// (157,-69.4) @TEXT("GPP4",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:4 (166,-50)};
-// (166.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:5 (138,-58)};
-// (137.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:6 (138,-50)};
-// (137.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:7 (166,-58)};
-// (166.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:2 (185,-3)};
-// (185,-3.4) @TEXT("GNN5",size=1.1,halign="middle",valign="top");
-// &"GNP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:3 (195,-3)};
-// (195,-3.4) @TEXT("GNP5",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:4 (204,16)};
-// (204.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:5 (176,8)};
-// (175.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:6 (176,16)};
-// (175.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:7 (204,8)};
-// (204.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:2 (185,-69)};
-// (185,-69.4) @TEXT("GPN5",size=1.1,halign="middle",valign="top");
-// &"GPP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:3 (195,-69)};
-// (195,-69.4) @TEXT("GPP5",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:4 (204,-50)};
-// (204.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:5 (176,-58)};
-// (175.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:6 (176,-50)};
-// (175.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:7 (204,-58)};
-// (204.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:2 (223,-3)};
-// (223,-3.4) @TEXT("GNN6",size=1.1,halign="middle",valign="top");
-// &"GNP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:3 (233,-3)};
-// (233,-3.4) @TEXT("GNP6",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:4 (242,16)};
-// (242.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:5 (214,8)};
-// (213.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:6 (214,16)};
-// (213.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:7 (242,8)};
-// (242.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:2 (223,-69)};
-// (223,-69.4) @TEXT("GPN6",size=1.1,halign="middle",valign="top");
-// &"GPP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:3 (233,-69)};
-// (233,-69.4) @TEXT("GPP6",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:4 (242,-50)};
-// (242.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:5 (214,-58)};
-// (213.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:6 (214,-50)};
-// (213.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:7 (242,-58)};
-// (242.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:2 (261,-3)};
-// (261,-3.4) @TEXT("GNN7",size=1.1,halign="middle",valign="top");
-// &"GNP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:3 (271,-3)};
-// (271,-3.4) @TEXT("GNP7",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:4 (280,16)};
-// (280.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:5 (252,8)};
-// (251.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:6 (252,16)};
-// (251.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:7 (280,8)};
-// (280.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:2 (261,-69)};
-// (261,-69.4) @TEXT("GPN7",size=1.1,halign="middle",valign="top");
-// &"GPP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:3 (271,-69)};
-// (271,-69.4) @TEXT("GPP7",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:4 (280,-50)};
-// (280.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:5 (252,-58)};
-// (251.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:6 (252,-50)};
-// (251.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:7 (280,-58)};
-// (280.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
+// %sar_junction9 = (256,41);
+// %sar_junction9 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction9 #CMOMP8:1};
+// #CMOMP8 @TEXT("Dummy",key="name",size=1.48,halign="start");
+// #CMOMP8 @TEXT("1 unit",key="value",size=1.16,halign="start");
+// %sar_port10 = $IO_PORT @ATTACH &"TOPP" => @PLACE(-11,41) => @ORIENT("R0");
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port10:p %sar_junction1 %sar_junction2 %sar_junction3 %sar_junction4 %sar_junction5 %sar_junction6 %sar_junction7 %sar_junction8 %sar_junction9};
+// (-16,48) @TEXT("P bank / TOPP",size=1.35,halign="start",textcolor="#223d52");
+// #CMOMN0 @SET-SYMBOL $CAPACITOR;
+// #CMOMN0 @PLACE(0,-29) => @ORIENT("R0");
+// #CMOMN0 @TEXT("CMOMN0",key="name",size=1.3,halign="start") => @PLACE(3,-26);
+// #CMOMN0 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(3,-33);
+// #CMOMN0 @TEXT("",key="model");
+// %sar_junction11 = (0,-17);
+// %sar_junction11 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction11 #CMOMN0:1};
+// #XSN0 @SET-SYMBOL $S_sar8j_r1_sw_b0;
+// #XSN0 @PLACE(0,-51) => @ORIENT("R0");
+// &"BN0" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN0:2 #XSN0:1};
+// #CMOMN0 @TEXT("B0",key="name",size=1.48,halign="start");
+// #CMOMN0 @TEXT("1 unit",key="value",size=1.16,halign="start");
+// #CMOMN1 @SET-SYMBOL $CAPACITOR;
+// #CMOMN1 @PLACE(32,-29) => @ORIENT("R0");
+// #CMOMN1 @TEXT("CMOMN1",key="name",size=1.3,halign="start") => @PLACE(35,-26);
+// #CMOMN1 @TEXT("nr=8 lr=2u w=50n multi=2",key="value",size=0.9,halign="start") => @PLACE(35,-33);
+// #CMOMN1 @TEXT("",key="model");
+// %sar_junction12 = (32,-17);
+// %sar_junction12 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction12 #CMOMN1:1};
+// #XSN1 @SET-SYMBOL $S_sar8j_r1_sw_b1;
+// #XSN1 @PLACE(32,-51) => @ORIENT("R0");
+// &"BN1" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN1:2 #XSN1:1};
+// #CMOMN1 @TEXT("B1",key="name",size=1.48,halign="start");
+// #CMOMN1 @TEXT("2 units",key="value",size=1.16,halign="start");
+// #CMOMN2 @SET-SYMBOL $CAPACITOR;
+// #CMOMN2 @PLACE(64,-29) => @ORIENT("R0");
+// #CMOMN2 @TEXT("CMOMN2",key="name",size=1.3,halign="start") => @PLACE(67,-26);
+// #CMOMN2 @TEXT("nr=8 lr=2u w=50n multi=4",key="value",size=0.9,halign="start") => @PLACE(67,-33);
+// #CMOMN2 @TEXT("",key="model");
+// %sar_junction13 = (64,-17);
+// %sar_junction13 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction13 #CMOMN2:1};
+// #XSN2 @SET-SYMBOL $S_sar8j_r1_sw_b2;
+// #XSN2 @PLACE(64,-51) => @ORIENT("R0");
+// &"BN2" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN2:2 #XSN2:1};
+// #CMOMN2 @TEXT("B2",key="name",size=1.48,halign="start");
+// #CMOMN2 @TEXT("4 units",key="value",size=1.16,halign="start");
+// #CMOMN3 @SET-SYMBOL $CAPACITOR;
+// #CMOMN3 @PLACE(96,-29) => @ORIENT("R0");
+// #CMOMN3 @TEXT("CMOMN3",key="name",size=1.3,halign="start") => @PLACE(99,-26);
+// #CMOMN3 @TEXT("nr=8 lr=2u w=50n multi=8",key="value",size=0.9,halign="start") => @PLACE(99,-33);
+// #CMOMN3 @TEXT("",key="model");
+// %sar_junction14 = (96,-17);
+// %sar_junction14 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction14 #CMOMN3:1};
+// #XSN3 @SET-SYMBOL $S_sar8j_r1_sw_b3;
+// #XSN3 @PLACE(96,-51) => @ORIENT("R0");
+// &"BN3" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN3:2 #XSN3:1};
+// #CMOMN3 @TEXT("B3",key="name",size=1.48,halign="start");
+// #CMOMN3 @TEXT("8 units",key="value",size=1.16,halign="start");
+// #CMOMN4 @SET-SYMBOL $CAPACITOR;
+// #CMOMN4 @PLACE(128,-29) => @ORIENT("R0");
+// #CMOMN4 @TEXT("CMOMN4",key="name",size=1.3,halign="start") => @PLACE(131,-26);
+// #CMOMN4 @TEXT("nr=8 lr=2u w=50n multi=16",key="value",size=0.9,halign="start") => @PLACE(131,-33);
+// #CMOMN4 @TEXT("",key="model");
+// %sar_junction15 = (128,-17);
+// %sar_junction15 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction15 #CMOMN4:1};
+// #XSN4 @SET-SYMBOL $S_sar8j_r1_sw_b4;
+// #XSN4 @PLACE(128,-51) => @ORIENT("R0");
+// &"BN4" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN4:2 #XSN4:1};
+// #CMOMN4 @TEXT("B4",key="name",size=1.48,halign="start");
+// #CMOMN4 @TEXT("16 units",key="value",size=1.16,halign="start");
+// #CMOMN5 @SET-SYMBOL $CAPACITOR;
+// #CMOMN5 @PLACE(160,-29) => @ORIENT("R0");
+// #CMOMN5 @TEXT("CMOMN5",key="name",size=1.3,halign="start") => @PLACE(163,-26);
+// #CMOMN5 @TEXT("nr=8 lr=2u w=50n multi=32",key="value",size=0.9,halign="start") => @PLACE(163,-33);
+// #CMOMN5 @TEXT("",key="model");
+// %sar_junction16 = (160,-17);
+// %sar_junction16 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction16 #CMOMN5:1};
+// #XSN5 @SET-SYMBOL $S_sar8j_r1_sw_b5;
+// #XSN5 @PLACE(160,-51) => @ORIENT("R0");
+// &"BN5" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN5:2 #XSN5:1};
+// #CMOMN5 @TEXT("B5",key="name",size=1.48,halign="start");
+// #CMOMN5 @TEXT("32 units",key="value",size=1.16,halign="start");
+// #CMOMN6 @SET-SYMBOL $CAPACITOR;
+// #CMOMN6 @PLACE(192,-29) => @ORIENT("R0");
+// #CMOMN6 @TEXT("CMOMN6",key="name",size=1.3,halign="start") => @PLACE(195,-26);
+// #CMOMN6 @TEXT("nr=8 lr=2u w=50n multi=64",key="value",size=0.9,halign="start") => @PLACE(195,-33);
+// #CMOMN6 @TEXT("",key="model");
+// %sar_junction17 = (192,-17);
+// %sar_junction17 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction17 #CMOMN6:1};
+// #XSN6 @SET-SYMBOL $S_sar8j_r1_sw_b6;
+// #XSN6 @PLACE(192,-51) => @ORIENT("R0");
+// &"BN6" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN6:2 #XSN6:1};
+// #CMOMN6 @TEXT("B6",key="name",size=1.48,halign="start");
+// #CMOMN6 @TEXT("64 units",key="value",size=1.16,halign="start");
+// #CMOMN7 @SET-SYMBOL $CAPACITOR;
+// #CMOMN7 @PLACE(224,-29) => @ORIENT("R0");
+// #CMOMN7 @TEXT("CMOMN7",key="name",size=1.3,halign="start") => @PLACE(227,-26);
+// #CMOMN7 @TEXT("nr=8 lr=2u w=50n multi=128",key="value",size=0.9,halign="start") => @PLACE(227,-33);
+// #CMOMN7 @TEXT("",key="model");
+// %sar_junction18 = (224,-17);
+// %sar_junction18 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction18 #CMOMN7:1};
+// #XSN7 @SET-SYMBOL $S_sar8j_r1_sw_b7;
+// #XSN7 @PLACE(224,-51) => @ORIENT("R0");
+// &"BN7" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#CMOMN7:2 #XSN7:1};
+// #CMOMN7 @TEXT("B7",key="name",size=1.48,halign="start");
+// #CMOMN7 @TEXT("128 units",key="value",size=1.16,halign="start");
+// #CMOMN8 @SET-SYMBOL $CAPACITOR;
+// #CMOMN8 @PLACE(256,-29) => @ORIENT("R0");
+// #CMOMN8 @TEXT("CMOMN8",key="name",size=1.3,halign="start") => @PLACE(259,-26);
+// #CMOMN8 @TEXT("nr=8 lr=2u w=50n multi=1",key="value",size=0.9,halign="start") => @PLACE(259,-33);
+// #CMOMN8 @TEXT("",key="model");
+// %sar_junction19 = (256,-17);
+// %sar_junction19 @CIRCLE(radius=0.34,linecolor="#30485d",fill="fillcolor",fillcolor="#30485d") => @LAYER("top");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_junction19 #CMOMN8:1};
+// #CMOMN8 @TEXT("Dummy",key="name",size=1.48,halign="start");
+// #CMOMN8 @TEXT("1 unit",key="value",size=1.16,halign="start");
+// %sar_port20 = $IO_PORT @ATTACH &"TOPN" => @PLACE(-11,-17) => @ORIENT("R0");
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {%sar_port20:p %sar_junction11 %sar_junction12 %sar_junction13 %sar_junction14 %sar_junction15 %sar_junction16 %sar_junction17 %sar_junction18 %sar_junction19};
+// (-16,-10) @TEXT("N bank / TOPN",size=1.35,halign="start",textcolor="#223d52");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMN8:2 (256,-34)};
+// (256,-34.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP8:2 (256,24)};
+// (256,23.6) @TEXT("VREFP",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:2 (-3,-66)};
+// (-3,-66.4) @TEXT("REFSEL_N0",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:3 (6,-36)};
+// (6,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:4 (-14,-55)};
+// (-14.4,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:5 (-14,-47)};
+// (-14.4,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:6 (6,-66)};
+// (6,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:2 (-3,-8)};
+// (-3,-8.4) @TEXT("REFSEL_P0",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:3 (6,22)};
+// (6,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:4 (-14,3)};
+// (-14.4,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:5 (-14,11)};
+// (-14.4,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:6 (6,-8)};
+// (6,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:2 (29,-66)};
+// (29,-66.4) @TEXT("REFSEL_N1",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:3 (38,-36)};
+// (38,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:4 (18,-55)};
+// (17.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:5 (18,-47)};
+// (17.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:6 (38,-66)};
+// (38,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:2 (29,-8)};
+// (29,-8.4) @TEXT("REFSEL_P1",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:3 (38,22)};
+// (38,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:4 (18,3)};
+// (17.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:5 (18,11)};
+// (17.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:6 (38,-8)};
+// (38,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:2 (61,-66)};
+// (61,-66.4) @TEXT("REFSEL_N2",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:3 (70,-36)};
+// (70,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:4 (50,-55)};
+// (49.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:5 (50,-47)};
+// (49.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:6 (70,-66)};
+// (70,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:2 (61,-8)};
+// (61,-8.4) @TEXT("REFSEL_P2",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:3 (70,22)};
+// (70,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:4 (50,3)};
+// (49.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:5 (50,11)};
+// (49.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:6 (70,-8)};
+// (70,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:2 (93,-66)};
+// (93,-66.4) @TEXT("REFSEL_N3",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:3 (102,-36)};
+// (102,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:4 (82,-55)};
+// (81.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:5 (82,-47)};
+// (81.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:6 (102,-66)};
+// (102,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:2 (93,-8)};
+// (93,-8.4) @TEXT("REFSEL_P3",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:3 (102,22)};
+// (102,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:4 (82,3)};
+// (81.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:5 (82,11)};
+// (81.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:6 (102,-8)};
+// (102,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:2 (125,-66)};
+// (125,-66.4) @TEXT("REFSEL_N4",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:3 (134,-36)};
+// (134,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:4 (114,-55)};
+// (113.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:5 (114,-47)};
+// (113.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:6 (134,-66)};
+// (134,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:2 (125,-8)};
+// (125,-8.4) @TEXT("REFSEL_P4",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:3 (134,22)};
+// (134,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:4 (114,3)};
+// (113.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:5 (114,11)};
+// (113.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:6 (134,-8)};
+// (134,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:2 (157,-66)};
+// (157,-66.4) @TEXT("REFSEL_N5",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:3 (166,-36)};
+// (166,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:4 (146,-55)};
+// (145.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:5 (146,-47)};
+// (145.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:6 (166,-66)};
+// (166,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:2 (157,-8)};
+// (157,-8.4) @TEXT("REFSEL_P5",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:3 (166,22)};
+// (166,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:4 (146,3)};
+// (145.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:5 (146,11)};
+// (145.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:6 (166,-8)};
+// (166,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:2 (189,-66)};
+// (189,-66.4) @TEXT("REFSEL_N6",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:3 (198,-36)};
+// (198,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:4 (178,-55)};
+// (177.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:5 (178,-47)};
+// (177.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:6 (198,-66)};
+// (198,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:2 (189,-8)};
+// (189,-8.4) @TEXT("REFSEL_P6",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:3 (198,22)};
+// (198,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:4 (178,3)};
+// (177.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:5 (178,11)};
+// (177.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:6 (198,-8)};
+// (198,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_N7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:2 (221,-66)};
+// (221,-66.4) @TEXT("REFSEL_N7",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:3 (230,-36)};
+// (230,-35.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:4 (210,-55)};
+// (209.6,-55) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:5 (210,-47)};
+// (209.6,-47) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:6 (230,-66)};
+// (230,-66.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
+// &"REFSEL_P7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:2 (221,-8)};
+// (221,-8.4) @TEXT("REFSEL_P7",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:3 (230,22)};
+// (230,22.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:4 (210,3)};
+// (209.6,3) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:5 (210,11)};
+// (209.6,11) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:6 (230,-8)};
+// (230,-8.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // }
 // END SARADC RNL
 ends sar8j_r1_cdac
