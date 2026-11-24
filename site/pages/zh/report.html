@@ -43,6 +43,7 @@
 <p>单位 MOM 和 1∶2 小阵列用断开 B1、恢复连线的对照验证了 LVS 流程。放大到整阵列后，第一版两侧功能走线合计 16.736 mm，每侧 TOP 长 404.44 µm。11 月 18 日保留同一电气参考，把相邻行的顶板相向放置，每侧 65 组折叠开关缩至 16 组；差分核心从 8354.62 缩至 3738.62 µm²，每侧 TOP 降到 213.27 µm。相同 TT 前填充夹具中，各位权重之和相对于原理图的比值从 95.292% 升到 96.994%，但增益归一后的最差单比特残差却从 0.049 升到 0.129 LSB。</p>
 <div class="report-pair"><figure><a href="${asset_base}assets/report-cdac.png"><img loading="lazy" src="${asset_base}assets/report-cdac.png" alt="原版与配对重排后的两侧 CDAC 和底板开关，同一比例"></a><figcaption>原版与重排版，保留端口、总管宽和电气位权。</figcaption></figure><figure><a href="${asset_base}assets/report-small-bits.png"><img loading="lazy" src="${asset_base}assets/report-small-bits.png" alt="同一阵列中心，小位中心反演布局与按位权顺序堆叠的 M4 路线"></a><figcaption>中心两列的小位。对称摆放让小位的引线穿越过多阵列行。</figcaption></figure></div>
 <p>通用填充把 TOP 固定负载从每侧约 38.6 fF 推到约 141 fF。改为阵列自管填充后，逐导体提取又揭示了另一个问题：MOM 本体每单位的耦合相同，偏重来自小位过长的 M4 干线，47→48 等转换处 DNL 达 −0.35 LSB。保留大位布局，只把中心小位按权重重排，最终独立提取瞬态 DNL/INL 为 0.123/0.084 LSB，增益误差仍为 4.22%。随后全 ADC 的 SS 冷角短测虽读对十帧，其中一帧采样残差仍达 0.351 LSB，超过 0.25 LSB，问题回到了采样器。</p>
+<p>11 月 24 日整理现用原理图时，团队把两两同网的 32 个栅端口合成 16 个 REFSEL。折叠理想探针后，两版同为 298 个实例、245 个连通分组，器件参数与顶层端口顺序一致。这次简化依据连接等价沿用既有提取结果。 <a href="$repository/pull/69">原理图逐网核对 ↗</a></p>
 <p class="report-sources"><a href="$repository/issues/1">单位阵列测试范围 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">布线、填充和逐位对照 ↗</a> · <a href="$snapshot/results/design/sampler_mmain4_adoption_20261121.md">随后如何重选采样开关 ↗</a></p></section>
 <section class="report-case" id="sar"><p class="audit-period">11 月 18–21 日 · 11 月 24 日提取复查</p><h3>从 RC 到标准延时，再到单边沿逐位定时</h3>
 <ol class="audit-log">
