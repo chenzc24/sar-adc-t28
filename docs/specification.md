@@ -99,7 +99,7 @@ For short ADC tests, compute the expected code as `clip(128+floor(Vin/(LSB·k)),
 - The historical 0.25 LSB offset allocation is a provisional residual target after correction. The current comparator offset is reported as measured.
 - The Monte Carlo specification defines the 200-seed module tests and the 50-seed closed-loop tests at each of SS cold and FF cold. Closed-loop local mismatch is enabled only in the comparator and CDAC. [Sampling scope](../specs/monte_carlo.json)
 - The B version has one TT transient-noise seed. Bandwidth and statistical convergence are open, as are full-circuit local mismatch, PEX, full common-mode range, calibration range and accuracy, power integration convergence, and terminal-voltage reliability. [Noise comparison](../results/noise/comparison.json)
-- Use the terminal-voltage rule for engineering acceptance. The FF-cold full-terminal scan of the adopted netlist has no rule violations, pending the usual resolution review. Repeat it after layout and rely on separate evidence for reliability signoff. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Adoption record](../results/design/sar_single_edge_adoption_20261120.json)
+- Use the terminal-voltage rule for engineering acceptance. The FF-cold adoption-stage scan reported no violations. The subsequent Stage 6 fill5 post-layout scan found 16 VDS pairs over the duration limit. Reliability disposition remains open. [Terminal-voltage rule](../specs/soa_rule.yaml) · [Adoption record](../results/design/sar_single_edge_adoption_20261120.json) · [Post-layout measurements](../results/integration/stage6_ff_electrical_20261124.json)
 
 ## Behavioral Views and Cross-Checks
 
