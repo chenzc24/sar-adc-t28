@@ -6,8 +6,11 @@ const transforms = {
   MX: [1, 0, 0, -1], MY: [-1, 0, 0, 1], MXR90: [0, 1, 1, 0], MYR90: [0, -1, -1, 0],
 };
 const pointPattern = /\((-?\d+),(-?\d+)\)/g;
+const nativePack = "virtuoso_tsmc28";
+// The upstream pack calls its active and gate packets diff and poly.
+const drawingStyleNames = { OD: "diff", PO: "poly" };
 
-function parseLayout(text, release) {
+function parseLayout(text, release, renderer) {
   const layers = new Map();
   const cells = new Map();
   let current;
@@ -16,11 +19,9 @@ function parseLayout(text, release) {
     const line = raw.trim();
     const [kind, name] = line.split(" ", 2);
     if (kind === "layer") {
-      layers.set(name, {
-        color: line.match(/color="(#[\da-f]+)"/i)[1],
-        visible: !/^(?:V[1-8]|Contact|Active|Poly)$/.test(name),
-        outline: line.includes("fill=outline"),
-      });
+      if (!release.shape_counts[name]) continue;
+      const style = renderer.resolveStyle({ name: drawingStyleNames[name] ?? name });
+      layers.set(name, { style, visible: !/^(?:VIA[1-8]|CO|NW|PP|NP)$/.test(name) });
     } else if (kind === "cell") {
       current = { id: name, bounds: release.cell_bounds_nm[name], paths: new Map(), instances: [] };
       cells.set(name, current);
@@ -49,8 +50,6 @@ function parseLayout(text, release) {
     }
   }
   for (const cell of cells.values()) {
-    cell.paint = [...layers].filter(([name]) => cell.paths.has(name))
-      .map(([name, layer]) => ({ layer, path: cell.paths.get(name) }));
     cell.footprint = cell.instances.length === 0 && cell.paths.size === 1 && cell.paths.has("Footprint");
   }
   if (!cells.has(top)) throw new Error("Missing LayoutML top cell");
@@ -92,7 +91,7 @@ function landmarkBounds(model, labels) {
   return result;
 }
 
-function installLayout(model, release) {
+function installLayout(model, release, renderer) {
   const shell = document.querySelector("#chip-viewer");
   const canvas = document.querySelector("#layout-canvas");
   const stage = canvas.parentElement;
@@ -104,14 +103,15 @@ function installLayout(model, release) {
   const boxButton = shell.querySelector('[data-layout-action="box"]');
   const fullscreenButton = shell.querySelector('[data-layout-action="fullscreen"]');
   const view = { x: 0, y: 0, scale: 1, bounds: release.bounds_nm, name: "Whole die" };
+  const layerOrder = [...model.layers].sort(([, a], [, b]) => a.style.z - b.style.z);
   let queued = false;
   let fitMode = true;
   let boxStart;
   const touches = new Map();
 
   function transform([a, b, c, d, x, y], scale, width, height) {
-    const k = scale * view.scale;
-    ctx.setTransform(k*a, -k*b, k*c, -k*d, width/2+(x-view.x)*k, height/2-(y-view.y)*k);
+    return { a: scale*a, b: -scale*b, c: scale*c, d: -scale*d,
+      e: width/2+(x-view.x)*scale, f: height/2-(y-view.y)*scale };
   }
 
   function render() {
@@ -121,12 +121,14 @@ function installLayout(model, release) {
     const h = Math.round(canvas.clientHeight * dpr);
     if (!w || !h) return;
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = window.LML_STYLE_PACKS[nativePack].background;
+    ctx.fillRect(0, 0, w, h);
     const scale = dpr * view.scale;
     const halfWidth = w / (2*scale), halfHeight = h / (2*scale);
     const x0 = view.x-halfWidth, y0 = view.y-halfHeight, x1 = view.x+halfWidth, y1 = view.y+halfHeight;
-    const showFootprints = model.layers.get("Footprint").visible;
+    const visiblePaths = new Map(layerOrder.filter(([, layer]) => layer.visible)
+      .map(([name]) => [name, new Path2D()]));
+    const showFootprints = visiblePaths.has("Footprint");
 
     function draw(id, pose) {
       const cell = model.cells.get(id);
@@ -143,25 +145,21 @@ function installLayout(model, release) {
           }
         }
       }
-      if (!cell.paint.length) return;
-      transform(pose, dpr, w, h);
-      for (const { layer, path } of cell.paint) {
-        if (!layer.visible) continue;
-        if (layer.outline) {
-          ctx.strokeStyle = "#9db4ac"; ctx.lineWidth = 0.7 / view.scale; ctx.globalAlpha = 0.54; ctx.stroke(path);
-        } else {
-          ctx.fillStyle = layer.color; ctx.globalAlpha = 0.68; ctx.fill(path);
-        }
-      }
+      if (!cell.paths.size) return;
+      const matrix = transform(pose, scale, w, h);
+      for (const [name, path] of cell.paths) visiblePaths.get(name)?.addPath(path, matrix);
     }
 
     draw(model.top, identity);
+    for (const [name, path] of visiblePaths) {
+      renderer.paintDRFPath(ctx, path, model.layers.get(name).style, [], dpr);
+    }
     const [x, y, right, top] = release.bounds_nm;
-    transform(identity, dpr, w, h);
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = "#abd492";
-    ctx.lineWidth = 1 / view.scale;
-    ctx.strokeRect(x, y, right-x, top-y);
+    const die = new Path2D();
+    const rectangle = new Path2D();
+    rectangle.rect(x, y, right-x, top-y);
+    die.addPath(rectangle, transform(identity, scale, w, h));
+    renderer.paintDRFPath(ctx, die, renderer.resolveStyle({ name: "Die outline" }), [], dpr);
     scaleLabel.textContent = `${(1 / view.scale / 1000).toPrecision(2)} µm/px`;
     locationLabel.textContent = `${view.name} · ${ (view.x/1000).toFixed(2) }, ${ (view.y/1000).toFixed(2) } µm`;
   }
@@ -289,7 +287,7 @@ function installLayout(model, release) {
     toggle.type = "checkbox";
     toggle.checked = layer.visible;
     toggle.addEventListener("change", () => { layer.visible = toggle.checked; requestPaint(); });
-    swatch.style.setProperty("--layer-color", layer.color);
+    swatch.style.setProperty("--layer-color", layer.style.color);
     label.append(toggle, swatch, name);
     document.querySelector("#layout-layers").append(label);
   }
@@ -312,7 +310,12 @@ async function fetchLayoutPart(path) {
 async function loadLayout() {
   const status = document.querySelector("#layout-loading");
   try {
-    const manifest = await fetch("layout-data/release.json?parts=1");
+    const renderer = window.LMLWebGLRenderer;
+    if (!renderer?.paintDRFPath || !window.LML_STYLE_PACKS?.[nativePack]) {
+      throw new Error("LayoutML's TSMC28 renderer is unavailable.");
+    }
+    renderer.setStylePack(nativePack);
+    const manifest = await fetch("layout-data/release.json?display=tsmc28");
     if (!manifest.ok) throw new Error("Layout manifest request failed");
     const release = await manifest.json();
     let loaded = 0;
@@ -323,7 +326,7 @@ async function loadLayout() {
     }));
     const stream = new Blob(parts).stream().pipeThrough(new DecompressionStream("gzip"));
     const bytes = await new Response(stream).text();
-    installLayout(parseLayout(bytes, release), release);
+    installLayout(parseLayout(bytes, release, renderer), release, renderer);
     status.hidden = true;
   } catch (error) {
     status.textContent = `Could not open the layout. ${error.message}`;
