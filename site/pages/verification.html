@@ -1,12 +1,12 @@
 <section class="page-intro">
   <p class="eyebrow">Verification</p>
   <h1>Results and limits<span class="title-period">.</span></h1>
-  <p class="lead">The current evidence covers short functional runs of the fill5 extracted core, selected IO and board checks, and two measured electrical exceptions. Final performance remains open.</p>
+  <p class="lead">The release evidence covers the fill5 extracted core, the r8 fill7 chip and the stated IO and board models. The results below identify the tested view and operating conditions.</p>
   <nav class="jump-links" aria-label="On this page">
     <a href="#short-tests">Short tests ↓</a>
     <a href="#electrical-checks">Electrical exceptions ↓</a>
     <a href="#performance">Performance ↓</a>
-    <a href="#history">Earlier results ↓</a>
+    <a href="layout.html#physical-checks">Chip physical checks →</a>
   </nav>
 </section>
 
@@ -66,25 +66,11 @@
       <thead><tr><th scope="col">Metric</th><th scope="col">Target</th><th scope="col">Available evidence</th></tr></thead>
       <tbody>
         <tr><th scope="row">SNDR / ENOB</th><td>≥43.9 dB / ≥7 bits at −1 dBFS</td><td>Final TT transient-noise FFT pending. The deck specifies 1,024 points at 4.502 MHz, with eight segments and separate seeds.</td></tr>
-        <tr><th scope="row">Static linearity</th><td>|DNL| and endpoint |INL| ≤1 LSB<br>Monotonic, no missing codes</td><td>Final full-code post-layout result pending. Frozen B has a separate full-code result.</td></tr>
-        <tr><th scope="row">Code-domain gain error</th><td>≤6% at TT · ≤10% at any corner</td><td>4.22% standalone CDAC gain error at TT within the 4.7% CDAC allocation. Measure the total on the integrated core.</td></tr>
-        <tr><th scope="row">Average power</th><td>≤1 mW</td><td>Final average power unreported in the results index. Earlier rail and charge studies cover specific fixtures.</td></tr>
+        <tr><th scope="row">Static linearity</th><td>|DNL| and endpoint |INL| ≤1 LSB<br>Monotonic, no missing codes</td><td>Final full-code post-layout result pending.</td></tr>
+        <tr><th scope="row">Code-domain gain error</th><td>≤6% at TT · ≤10% at any corner</td><td>Final integrated core gain measurement pending.</td></tr>
+        <tr><th scope="row">Average power</th><td>≤1 mW</td><td>Final average power unreported in the results index.</td></tr>
       </tbody>
     </table>
   </div>
   <p class="link-row"><a href="$snapshot/Layout/tools/simulation/prepare_stage6.py#L555">FFT setup ↗</a><a href="$snapshot/docs/specification.md#performance-targets-and-error-budget">Design limits ↗</a><a href="$snapshot/results/README.md">Results index ↗</a></p>
-</section>
-
-<section class="section" id="history" aria-labelledby="history-title">
-  <div class="section-heading"><h2 id="history-title">Earlier results</h2><a class="text-link" href="$snapshot/docs/adc-iteration-history.md">Revision history ↗</a></div>
-  <div class="history-grid">
-    <figure class="figure-card">
-      <a href="assets/baseline-spectrum.png" target="_blank" rel="noopener"><img src="assets/baseline-spectrum.png" width="2040" height="1360" alt="Deterministic output spectra for the earlier A and B schematic revisions" loading="lazy"></a>
-      <figcaption>Deterministic TT 1,024-point spectra for the earlier A and B schematic revisions. <a href="$snapshot/results/fft/results.json">Run results ↗</a></figcaption>
-    </figure>
-    <div class="historical-results">
-      <article><h3>Frozen B schematic</h3><p>48.79 dB SNDR, 7.81-bit ENOB and 64.77 dBc SFDR at TT with transient noise disabled.</p><a href="$snapshot/results/static/results.json">Frozen B full-code data ↗</a></article>
-      <article><h3>Reset-OR schematic</h3><p>490 short frames passed across 45 PVT points. A separate single-seed TT transient-noise run measured 48.55 dB SNDR and 7.77-bit ENOB.</p><p class="link-row"><a href="$snapshot/results/pvt/resetor_45_short_20261115.md">PVT scope ↗</a><a href="$snapshot/results/noise/resetor_1024_20261116/README.md">Noisy FFT ↗</a></p></article>
-    </div>
-  </div>
 </section>

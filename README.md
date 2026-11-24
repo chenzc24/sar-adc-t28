@@ -1,6 +1,6 @@
 # TSMC 28 nm SAR ADC
 
-An 8-bit, 10 MS/s fully differential asynchronous SAR ADC with a binary-weighted CDAC, bootstrapped sampling switches and a StrongARM comparator. The current single-edge SAR runs without calibration. The extracted core passed all 12 short functional runs. Two electrical checks remain open, and final TT dynamic performance is pending. [Circuit design](design/README.md) · [Schematic viewer](docs/schematics/index.html) · [System review #12](https://github.com/chenzc24/sar-adc-t28/issues/12)
+An 8-bit, 10 MS/s fully differential asynchronous SAR ADC with a binary-weighted CDAC, bootstrapped sampling switches and a StrongARM comparator. The current single-edge SAR runs without calibration. The extracted core passed all 12 short functional runs. Two electrical checks remain open, and final TT dynamic performance is pending. [Circuit design](design/README.md) · [RNL schematics](https://chenzc24.github.io/sar-adc-t28/schematic.html) · [System review #12](https://github.com/chenzc24/sar-adc-t28/issues/12)
 
 [**Project website**](https://chenzc24.github.io/sar-adc-t28/) · [Site build guide](site/README.md)
 

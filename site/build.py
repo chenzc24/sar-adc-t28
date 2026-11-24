@@ -1,6 +1,7 @@
-"""Build the static project site from a pinned engineering snapshot."""
+"""Build the static site, current RNL workspace and versioned layout display."""
 
 import argparse
+import hashlib
 import html
 import json
 import shutil
@@ -8,27 +9,40 @@ import subprocess
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from string import Template
-from urllib.parse import unquote, urlsplit
+from urllib.parse import unquote, urlencode, urlsplit
 
 
 SITE = Path(__file__).resolve().parent
 ROOT = SITE.parent
 REPOSITORY = "https://github.com/chenzc24/sar-adc-t28"
+PAGES_URL = "https://chenzc24.github.io/sar-adc-t28/"
 REVISION = "63c36806c5d7f612bb7e9ecafb4d3ce2da7a78cc"
 SNAPSHOT = f"{REPOSITORY}/blob/{REVISION}"
 PAGES = {
     "index": ("Overview", "An 8-bit, 10 MS/s asynchronous SAR ADC in TSMC 28 nm."),
     "architecture": ("Architecture", "The sampling, decision and feedback paths of the SAR ADC."),
+    "schematic": ("Schematics", "Browse the current circuit hierarchy and Spectre sources in RNL Viewer."),
     "verification": ("Verification", "Post-layout measurements, limits and coverage for the SAR ADC."),
     "layout": ("Layout", "The routed ADC core, filled die, IO ring and physical verification."),
     "review": ("Design review", "Open design and verification items with their evidence and acceptance criteria."),
+    "history": ("History", "The SAR ADC design revisions, experiments and historical measurements."),
 }
-SCHEMATIC = "schematic.html"
 FIGURES = {
-    "assets/io-ring.png": "Layout/results/io_ring.png",
-    "assets/cdac-fill.png": "Layout/results/figures/cdac_planned_fill.png",
-    "assets/sar-routing.png": "Layout/results/figures/sar_se_core.png",
     "assets/baseline-spectrum.png": "results/fft/ab_spectrum.png",
+}
+STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js",
+          "layout-data/release.json", "layout-data/chip.core.lml.gz")
+NATIVE_VIEWERS = {
+    "0.3": "https://rich-netlist.github.io/rnl/viewer-0.3/",
+    "0.4": "https://rich-netlist.github.io/rnl/viewer/",
+}
+SCHEMATIC_LEVELS = {
+    "ADC core": "sar_adc8_join_r4",
+    "Bootstrap": "sar_bootstrap_flat_8b_p",
+    "CDAC": "sar8j_r1_cdac",
+    "StrongARM": "sar_strongarm_t28",
+    "SAR controller": "sar8_se_ctrl",
+    "Reference drive": "sar8i_refword",
 }
 BLOCKS = {
     "bootstrap_n": ("Bootstrap N", "bootstrap", "bootstrap"),
@@ -48,16 +62,55 @@ def frozen_file(path):
     return git_output("show", f"{REVISION}:{path}")
 
 
-def static_schematic():
-    viewer = frozen_file("docs/schematics/index.html")
-    native_mode = b"nativeMode=location.protocol!=='file:'"
-    mode_button = b'<button id="mode">'
-    if viewer.count(native_mode) != 2 or viewer.count(mode_button) != 1:
-        raise SystemExit("Review the static schematic adapter for the pinned viewer revision.")
-    # The bundled SVGs work on a static host. The native viewer requires draw --serve.
-    return viewer.replace(native_mode, b"nativeMode=false").replace(
-        mode_button, b'<button id="mode" hidden>'
+def schematic_workspace(base_url):
+    workspace = json.loads((ROOT / "design/rnl/workspace.json").read_text(encoding="utf-8"))
+    design = json.loads((ROOT / "design/manifest.json").read_text(encoding="utf-8"))
+    scheme, host, *_ = urlsplit(base_url)
+    revision = git_output("rev-parse", "HEAD").decode().strip()
+    workspace.update(
+        base=f"{base_url}rnl/source/",
+        level=design["top"],
+        source={"repo": "chenzc24/sar-adc-t28", "commit": revision, "url": f"{REPOSITORY}/commit/{revision}"},
     )
+    files = {}
+    for item in workspace["files"]:
+        relative = PurePosixPath(item["path"])
+        if relative.parts[0] != "design" or ".." in relative.parts or relative.suffix not in {".scs", ".rnl"}:
+            raise SystemExit(f"Invalid schematic workspace path {relative}")
+        content = (ROOT / relative).read_bytes()
+        if len(content) != item["size"] or hashlib.sha256(content).hexdigest() != item["sha256"]:
+            raise SystemExit(f"Regenerate the native RNL workspace after changing {relative}")
+        files[f"rnl/source/{relative}"] = content
+    files["rnl/workspace.json"] = json.dumps(workspace, indent=2).encode()
+    entry = files[f'rnl/source/{workspace["entry"]}']
+    version = next((v for v in NATIVE_VIEWERS if f'@VERSION("{v}")'.encode() in entry), None)
+    if version is None:
+        raise SystemExit("The schematic has no supported RNL version in its header.")
+    drawing = json.loads((ROOT / "design/rnl/manifest.json").read_text(encoding="utf-8"))
+    dut = ROOT / "design/dut.scs"
+    if hashlib.sha256(dut.read_bytes()).hexdigest() != drawing["source_hashes"]["design/dut.scs"]:
+        raise SystemExit("Regenerate the native RNL workspace for the current DUT entry.")
+    levels = drawing["levels"]
+    if any(level not in levels for level in SCHEMATIC_LEVELS.values()):
+        raise SystemExit("Check the site's schematic module links against the current hierarchy.")
+
+    def url(level, embed=False):
+        params = {"manifest": f"{base_url}rnl/workspace.json", "level": level, "lang": "en"}
+        if embed:
+            params.update(embed="1", origin=f"{scheme}://{host}")
+        return html.escape(f"{NATIVE_VIEWERS[version]}?{urlencode(params)}", quote=True)
+
+    links = "\n".join(f'<a href="{url(level, True)}" target="rnl-frame">{label}</a>'
+                      for label, level in SCHEMATIC_LEVELS.items())
+    return files, {
+        "rnl_embed": url(design["top"], True),
+        "rnl_full": url(design["top"]),
+        "rnl_links": links,
+        "rnl_version": version,
+        "rnl_top": design["top"],
+        "rnl_revision": revision[:7],
+        "rnl_entry": f'rnl/source/{workspace["entry"]}',
+    }
 
 
 def floorplan():
@@ -88,7 +141,7 @@ def navigation(current):
     return "\n".join(links)
 
 
-def render_pages():
+def render_pages(schematic):
     layout = Template((SITE / "layout.html").read_text(encoding="utf-8"))
     context = {
         "repository": REPOSITORY,
@@ -96,6 +149,7 @@ def render_pages():
         "revision": REVISION,
         "short_revision": REVISION[:7],
         "floorplan": floorplan(),
+        **schematic,
     }
     pages = {}
     for name, (label, description) in PAGES.items():
@@ -152,11 +206,17 @@ def check_links(pages, assets):
         raise SystemExit("\n".join(errors))
 
 
-def build(output):
-    pages = render_pages()
-    css = "assets/project.css"
-    check_links(pages, {*FIGURES, css, SCHEMATIC})
-    schematic = static_schematic()
+def build(output, base_url):
+    schematic, context = schematic_workspace(base_url.rstrip("/") + "/")
+    pages = render_pages(context)
+    check_links(pages, {*FIGURES, *STATIC, *schematic})
+    release = json.loads((SITE / "layout-data/release.json").read_text(encoding="utf-8"))
+    layout_record = json.loads((ROOT / "Layout/results/chip_fill.json").read_text(encoding="utf-8"))
+    if release["source_sha256"] != layout_record["current"]["chip_stream"]["sha256"]:
+        raise SystemExit("Regenerate the layout display for the current unfilled chip stream.")
+    geometry = SITE / "layout-data/chip.core.lml.gz"
+    if hashlib.sha256(geometry.read_bytes()).hexdigest() != release["geometry_sha256"]:
+        raise SystemExit("The layout geometry does not match its release metadata.")
     for name, content in pages.items():
         destination = output / name
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -165,12 +225,20 @@ def build(output):
         destination = output / filename
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(frozen_file(source))
-    (output / SCHEMATIC).write_bytes(schematic)
-    shutil.copyfile(SITE / css, output / css)
-    print(f"Built {len(pages)} pages and the schematic viewer at {output}")
+    for name, content in schematic.items():
+        path = output / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+    for name in STATIC:
+        path = output / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(SITE / name, path)
+    print(f"Built {len(pages)} pages, the RNL workspace, and the layout viewer at {output}")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "dist" / "site")
-    build(parser.parse_args().output.resolve())
+    parser.add_argument("--base-url", default=PAGES_URL)
+    args = parser.parse_args()
+    build(args.output.resolve(), args.base_url)

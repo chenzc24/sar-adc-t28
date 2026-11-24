@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'design/manifest.json'
+      - 'design/dut.scs'
+      - 'design/rnl/**'
+      - 'design/top/**'
+      - 'design/xtor/**'
       - '.github/workflows/project-site.yml'
   push:
     branches: [main]
@@ -24,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          # The build reads the schematic and figures at a pinned commit.
+          # The engineering evidence and figures use a pinned commit.
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-python@v7

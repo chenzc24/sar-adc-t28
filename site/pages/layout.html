@@ -1,23 +1,42 @@
 <section class="page-intro">
   <p class="eyebrow">Physical design</p>
   <h1>From core to pad ring<span class="title-period">.</span></h1>
-  <p class="lead">A 122 × 111 µm core connects to the output register, reference routes and a 9 × 9 IO ring. Electrical measurements use the fill5 core. Physical checks use the r8 fill7 chip stream.</p>
+  <p class="lead">Inspect the unfilled r8 die, from the 9 × 9 IO ring to the routed ADC core. The viewer uses the recorded chip stream and omits the local density-fill geometry for inspection.</p>
   <nav class="jump-links" aria-label="On this page">
-    <a href="#assembly">Chip assembly ↓</a><a href="#physical-checks">Physical checks ↓</a><a href="#routing">Routing and fill ↓</a>
+    <a href="#assembly">Interactive layout ↓</a><a href="#physical-checks">Physical checks ↓</a><a href="#routing">Fill7 peripheral loading ↓</a>
   </nav>
 </section>
 
 <section class="section first-section" id="assembly" aria-labelledby="assembly-title">
-  <div class="section-heading"><h2 id="assembly-title">Chip assembly</h2><a class="text-link" href="$snapshot/Layout/README.md">Layout index ↗</a></div>
-  <dl class="spec-strip spec-strip-three" aria-label="Layout dimensions and pads">
-    <div><dt>Core outline</dt><dd>122 × 111 <small>µm</small><span>Fill5 electrical view</span></dd></div>
-    <div><dt>Die outline</dt><dd>892 × 892 <small>µm</small><span>r8 with seal ring</span></dd></div>
-    <div><dt>Bond openings</dt><dd>36<span>9 × 9 IO ring plan</span></dd></div>
-  </dl>
-  <figure class="figure-card full-figure">
-    <a href="assets/io-ring.png" target="_blank" rel="noopener"><img src="assets/io-ring.png" width="2625" height="1380" alt="IO-ring plan with analog, reference and output routes and a close-up of the core connections"></a>
-    <figcaption>The 760 × 760 µm IO outline and a detail of routes into the core. The bond map remains under package review. <a href="$snapshot/Layout/design/io_ring.json">Pad plan ↗</a></figcaption>
-  </figure>
+  <div class="section-heading"><h2 id="assembly-title">Chip layout</h2><span class="mono minor">r8 unfilled · 892 × 892 µm</span></div>
+  <div class="layout-explorer" id="chip-viewer">
+    <div class="layout-toolbar" aria-label="Layout controls">
+      <div class="layout-tools">
+        <button type="button" data-layout-action="in" aria-label="Zoom in">+</button>
+        <button type="button" data-layout-action="out" aria-label="Zoom out">−</button>
+        <button type="button" data-layout-action="fit">Fit die</button>
+        <button type="button" data-layout-action="box" aria-pressed="false">Box zoom</button>
+      </div>
+      <button type="button" data-layout-action="fullscreen">Full screen</button>
+    </div>
+    <div class="layout-work-area">
+      <div class="layout-stage">
+        <canvas id="layout-canvas" tabindex="0" aria-label="Interactive r8 SAR ADC die layout" aria-describedby="layout-help"></canvas>
+        <div id="layout-zoom-box" class="layout-zoom-box" hidden></div>
+        <p id="layout-loading" class="layout-loading" role="status">Loading the r8 chip layout…</p>
+      </div>
+      <aside class="layout-sidebar" aria-label="Layout navigation">
+        <h3>Go to</h3>
+        <div class="layout-landmarks" id="layout-landmarks"></div>
+        <h3>Layers</h3>
+        <div class="layout-layers" id="layout-layers"></div>
+      </aside>
+    </div>
+    <div class="layout-footer"><span id="layout-location">Die view</span><span id="layout-scale"></span></div>
+  </div>
+  <p id="layout-help" class="evidence-line">Drag to pan. Scroll or pinch to zoom. Use the arrow keys, +, − and 0 when the canvas has focus.</p>
+  <p class="evidence-line">The LayoutML display includes project-owned drawing geometry and measured library-cell outlines. The source die has 36 bond openings. <a href="layout-data/release.json">Stream and display provenance ↗</a> · <a href="$snapshot/Layout/design/io_ring.json">Pad plan ↗</a></p>
+  <script src="assets/layout-view.js" defer></script>
 </section>
 
 <section class="section" id="physical-checks" aria-labelledby="physical-title">
@@ -40,19 +59,8 @@
 </section>
 
 <section class="section" id="routing" aria-labelledby="routing-title">
-  <div class="section-heading"><h2 id="routing-title">Routing and fill</h2></div>
-  <div class="figure-grid">
-    <figure class="figure-card">
-      <a href="assets/cdac-fill.png" target="_blank" rel="noopener"><img src="assets/cdac-fill.png" width="2250" height="930" alt="Planned fill across the paired CDAC and a detail of the bottom-plate column gaps" loading="lazy"></a>
-      <figcaption>Local CDAC fill keeps dummy features away from sensitive TOP edges. <a href="$snapshot/Layout/results/cdac.md">CDAC extraction ↗</a></figcaption>
-    </figure>
-    <figure class="figure-card">
-      <a href="assets/sar-routing.png" target="_blank" rel="noopener"><img src="assets/sar-routing.png" width="1900" height="2005" alt="Routed SAR macro with logic regions, timing cells and metal tracks" loading="lazy"></a>
-      <figcaption>The routed SAR macro groups the delay chain, trial-word logic and bit registers. <a href="$snapshot/Layout/results/sar_se_core.md">SAR macro ↗</a></figcaption>
-    </figure>
-  </div>
+  <div class="section-heading"><h2 id="routing-title">Fill7 peripheral loading</h2></div>
   <div class="note-panel">
-    <h3>Fill7 peripheral loading</h3>
     <p>The extracted route corridors report 65.40 fF on VINN and 64.64 fF on VINP, a 0.76 fF difference. VREFN and VREFP are 253.31 fF and 222.63 fF. The extraction treats fill coupling as capacitance to ground, giving an upper-bound estimate for these route loads.</p>
     <a class="text-link" href="$snapshot/Layout/results/chip_fill.md#extraction-of-the-chip-routes">Route capacitance comparison ↗</a>
   </div>

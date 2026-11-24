@@ -47,7 +47,7 @@ def symbol(master, ports):
     groups=[];seen=set()
     for p in ports:
         if p in seen:continue
-        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T)(\d+)',p)
+        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T|NEXT|TRIAL)(\d+)',p)
         members=[v for v in ports if m and re.fullmatch(re.escape(m[1])+r'\d+',v)] if m else [p]
         if len(members)<2:members=[p]
         seen.update(members);groups.append((p,members))
@@ -61,10 +61,17 @@ def symbol(master, ports):
     for p,members in groups:
         side='up' if p in POWER else 'down' if p in GROUND else 'right' if p in outputs or re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T)\d+',p) else 'left'
         if master in {'sar8i_refword','sar8s_refword','sar8p_refword','b_reference'} and re.fullmatch(r'(CODE|D)\d+',p):side='left'
-        if master in {'sar8j_r1_cdac','b_cdac'} and p.startswith(('GNN','GNP','GPN','GPP')):side='left'
+        if master == 'sar8j_r1_cdac':
+            if p.startswith(('GNN','GNP','GPN','GPP')):side='down'
+            elif p in {'TOPN','TOPP'}:side='up'
+        if master == 'sar8i_refword':
+            if p.startswith(('GNN','GNP','GPN','GPP')):side='up'
+            elif re.fullmatch(r'(CODE|D)\d+',p):side='right'
+        if master == 'b_cdac' and p.startswith(('GNN','GNP','GPN','GPP')):side='left'
         if master in {'sar_adc8_join_r4','tb_sar_top','tb_sar_stalled_top'}:side='right' if p.startswith('D') and p[1:].isdigit() else side
         sides[side].append((p,members))
-    h=max(6,(max(len(sides['left']),len(sides['right']))+1)*1.65);w=11
+    h=max(6,(max(len(sides['left']),len(sides['right']))+1)*1.65)
+    w=max(11,4*(max(len(sides['up']),len(sides['down']))-1)+2)
     pins={};dirs={};lines=[]
     def pin(members,x,y,d):
         ids=[ports.index(p)+1 for p in members]
@@ -75,13 +82,17 @@ def symbol(master, ports):
         lines.append('%s @TEXT(%s,size=%g,halign=%s,valign="middle");'%(xy((x,y)),q(t),size,q(align)))
     for side,items in sides.items():
         for i,(p,members) in enumerate(items):
-            x,y=((-w-2 if side=='left' else w+2),(len(items)-1-2*i)*1.65) if side in {'left','right'} else ((i-(len(items)-1)/2)*7,(h+2 if side=='up' else -h-2))
+            x,y=((-w-2 if side=='left' else w+2),(len(items)-1-2*i)*1.65) if side in {'left','right'} else ((i-(len(items)-1)/2)*8,(h+2 if side=='up' else -h-2))
             pin(members,x,y,side)
             ex=x+(2 if side=='left' else -2 if side=='right' else 0);ey=y+(-2 if side=='up' else 2 if side=='down' else 0)
             lines.append('@LINE {%s %s};'%(xy((x,y)),xy((ex,ey))))
-            label=(re.sub(r'\d+$','',p)+'[%s:%s]'%(re.search(r'\d+$',members[-1])[0],re.search(r'\d+$',members[0])[0])) if len(members)>1 else p
+            label=p
+            if len(members)>1:
+                bits=[int(re.search(r'\d+$',member)[0]) for member in members]
+                label=re.sub(r'\d+$','',p)+'[%s:%s]'%(max(bits),min(bits))
             text(ex+(.5 if side=='left' else -.5 if side=='right' else 0),ey+(.8 if side=='down' else -.8 if side=='up' else 0),label,align='start' if side=='left' else 'end' if side=='right' else 'middle')
-    lines.insert(0,'@LINE {(-11,%g) (11,%g) (11,%g) (-11,%g) (-11,%g)};'%(h,h,-h,-h,h))
+    corners=[(-w,h),(w,h),(w,-h),(-w,-h),(-w,h)]
+    lines.insert(0,'@LINE {'+' '.join(xy(point) for point in corners)+'};')
     # Native library symbols include their real power terminals; no made-up body.
     gate='INV' if master in {'sar8p_inv','INVD1BWP12T30P140'} else 'BUF' if master in {'sar8p_buf','sar8p_clkbuf'} else 'NAND' if master in {'sar8p_nand2','ND2D1BWP12T30P140'} else 'AND' if master=='sar8p_and2' else 'OR' if master=='sar8p_or2' else 'XOR' if master=='sar8p_xor2' else 'DFF' if master in {'sar8p_dffr','DFCNQD1BWP12T30P140'} else 'MUX' if master=='sar8p_mux2' else None
     if gate:
