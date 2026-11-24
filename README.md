@@ -2,6 +2,8 @@
 
 An 8-bit, 10 MS/s fully differential asynchronous SAR ADC with a binary-weighted CDAC, bootstrapped sampling switches and a StrongARM comparator. The current single-edge SAR runs without calibration. The extracted core passed all 12 short functional runs. Two electrical checks remain open, and final TT dynamic performance is pending. [Circuit design](design/README.md) · [Schematic viewer](docs/schematics/index.html) · [System review #12](https://github.com/chenzc24/sar-adc-t28/issues/12)
 
+The [project website](site/README.md) brings the architecture, layout, measurements and open review items together in a static site built from a pinned evidence snapshot.
+
 ## Repository structure
 
 ```text

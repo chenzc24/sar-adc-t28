@@ -1,0 +1,74 @@
+<section class="page-intro">
+  <p class="eyebrow">Design review</p>
+  <h1>What remains open<span class="title-period">.</span></h1>
+  <p class="lead">The short tests establish that the extracted ADC converts. Electrical acceptance, system performance and the final physical handoff have separate release criteria.</p>
+  <nav class="jump-links" aria-label="On this page">
+    <a href="#electrical-gates">Electrical gates ↓</a><a href="#coverage">Verification gaps ↓</a><a href="#design-margins">Design margins ↓</a><a href="#physical-handoff">Physical handoff ↓</a>
+  </nav>
+</section>
+
+<section class="section first-section" id="electrical-gates" aria-labelledby="gates-title">
+  <div class="section-heading"><h2 id="gates-title">Electrical gates</h2><span class="badge badge-open">Measured exceptions</span></div>
+  <div class="review-list">
+    <article id="sar-stress">
+      <div><p class="eyebrow">FF cold · SAR</p><h3>Resolve terminal stress</h3></div>
+      <div>
+        <p>Sixteen VDS pairs exceed the project screen. The pair with the longest event peaks at 1.11185 V and spends 757.8 ps above 1.10 V in a sliding 10 ns window. The allowed duration is 100 ps.</p>
+        <p>Trace the register and timing-cell terminal waveforms with the standard-cell owner. A repair needs the same extracted extreme run with every applicable pair inside the rule, followed by the SS-cold timing regression. A reliability disposition needs device-specific foundry evidence.</p>
+        <p class="link-row"><a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">Stress measurements ↗</a><a href="$snapshot/specs/soa_rule.yaml">Acceptance rule ↗</a></p>
+      </div>
+    </article>
+    <article id="sampler-margin">
+      <div><p class="eyebrow">FF hot · Bootstrap</p><h3>Recover hold accuracy</h3></div>
+      <div>
+        <p>Verify and extreme each exceed the single-ended error limit by about 0.614 mV. The maximum differential error is 1.689 mV. Report both common-mode and differential effects when evaluating a change.</p>
+        <p>Break out the residual at acquisition close and the shift before first comparison. Check gate fall and charge injection before changing the driver or switch. Recheck the 3.515625 mV per-side limit at FF hot and the 0.1000 V gate limit at SS cold, where existing margin is 0.9 mV.</p>
+        <p class="link-row"><a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">Held-voltage data ↗</a><a href="$repository/issues/12#issuecomment-7093047607">SS-cold gate measurement ↗</a></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="coverage" aria-labelledby="coverage-title">
+  <div class="section-heading"><h2 id="coverage-title">Verification gaps</h2></div>
+  <p class="section-description">ADC-12b-100M defines a test, applicable corners, limits and input provenance for each result. Its top-level plan covers high and low input frequencies, clock duty and sine-fit outliers. Those test categories translate to the operating range and limits of this 10 MS/s ADC. <a href="https://github.com/many-question/ADC-12b-100M/blob/4be5c0fa9f30c344701f7071a4328eeae9fb43c3/specs/blocks/adc_top.yaml">Reference test definitions ↗</a></p>
+  <div class="table-wrap" role="region" tabindex="0" aria-label="Verification gaps and acceptance evidence">
+    <table class="review-table">
+      <caption>Evidence needed on the current extracted design</caption>
+      <thead><tr><th scope="col">Area</th><th scope="col">Evidence today</th><th scope="col">Evidence to close</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Dynamic performance</th><td>Final TT noisy FFT is pending. The completed spectra belong to earlier schematic revisions.</td><td>Collect the 1,024-point Stage 6 FFT and report ENOB, SNDR, SFDR, missing decisions and outlier codes. Use a continuous control or convergence evidence for low-frequency noise across the eight independently seeded segments. Add a low-tone case and duty limits at selected corners.</td></tr>
+        <tr><th scope="row">Static and power</th><td>The 12 short cases use gain-adjusted code expectations. They sample only selected transitions.</td><td>Measure all 256 codes for DNL, endpoint INL, monotonicity and missing codes. Score total gain against 6% TT and 10% across corners. Report settled-frame power per rail with a defined inclusion scope and compare the ADC total with 1 mW.</td></tr>
+        <tr><th scope="row">PVT and periphery</th><td>Fill5 short coverage is TT, SS cold and FF hot. The 45-point matrix belongs to Reset-OR. FF-hot board evidence uses the stated receiver and bond model.</td><td>Start with the two missing established short-test conditions, SS hot and FF cold. Add risk-ranked cross corners and paired passive / RC conditions, then use the final fill7 peripheral loads and board assumptions in selected long cases. Sweep input common mode and source impedance.</td></tr>
+        <tr><th scope="row">Mismatch and yield</th><td>Block Monte Carlo and earlier selective-boundary runs cover defined devices and seeds. Final closed-loop yield remains open.</td><td>Set the yield criterion and sample scope first. Run current extracted closed-loop mismatch with the relevant models and a same-draw control. Publish failures, confidence bounds and the effect of any proposed correction.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="link-row"><a href="$snapshot/results/README.md">Current evidence ↗</a><a href="$snapshot/specs/monte_carlo.json">Monte Carlo scope ↗</a><a href="$snapshot/docs/verification.md">Verification guide ↗</a></p>
+</section>
+
+<section class="section" id="design-margins" aria-labelledby="margins-title">
+  <div class="section-heading"><h2 id="margins-title">Design margins to quantify</h2></div>
+  <div class="review-list">
+    <article>
+      <div><h3>Comparator offset</h3></div>
+      <div>
+        <p>The extracted v8 block measured σ = 12.05 mV, about 1.71 LSB, across 200 seeds. The sampled extremes were −34.7 to +34.1 mV. Characterize the current uncalibrated ADC around midscale and the endpoints. If system yield needs correction, qualify zero-input offset measurement, correction range and residual error. The physical record describes digital code-offset subtraction as the planned remedy.</p>
+        <p class="link-row"><a href="$snapshot/Layout/results/comparator.md">Extracted comparator ↗</a><a href="$snapshot/Layout/results/current.json">Recorded design decision ↗</a></p>
+      </div>
+    </article>
+    <article>
+      <div><h3>CDAC and reference headroom</h3></div>
+      <div>
+        <p>The standalone TT CDAC has 0.48 percentage points of margin to its 4.7% gain allocation. Measure integrated gain, VREF droop and recovery after major carries with the fill7 route loads and package model. Measure unclipped input range over common mode and relevant corners before spending area on a topology change.</p>
+        <p class="link-row"><a href="$snapshot/Layout/results/cdac.md#gain-error-assessment">CDAC gain budget ↗</a><a href="$snapshot/Layout/results/chip_rail_recheck.md">Extracted rail model ↗</a></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="physical-handoff" aria-labelledby="handoff-title">
+  <div class="section-heading"><h2 id="handoff-title">Physical handoff</h2><span class="badge badge-review">Disposition pending</span></div>
+  <p class="section-description">Close the six ESD advisories and the Bootstrap diode disposition, confirm the IO waiver and fill policy with the shuttle, and resolve the 15 dummy vias inside the core exclusion. Reconcile the final 36 bond openings with the r8 pad orientation, board net names and LVS source.</p>
+  <p class="link-row"><a href="$snapshot/Layout/results/chip_drc_waivers.md#summary">Waiver matrix ↗</a><a href="$repository/issues/12">System review ↗</a><a href="$repository/issues/18">Package handoff ↗</a></p>
+</section>
