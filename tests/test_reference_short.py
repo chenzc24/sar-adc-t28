@@ -34,10 +34,6 @@ class MinimalReferenceTests(unittest.TestCase):
                 nodes.update({'CODE%d'%i:bool(word & (1<<i)) for i in range(8)})
                 for pins,master in calls:
                     n=pins.split()
-                    if master=='iprobe':
-                        if n[0] in nodes:nodes[n[1]]=nodes[n[0]]
-                        else:nodes[n[0]]=nodes[n[1]]
-                        continue
                     cell=re.match(r'(INV|BUFF|ND2|OR2)D\d',master).group(1)
                     ins,out=n[:-3],n[-3]
                     if cell=='INV':nodes[out]=not nodes[ins[0]]
@@ -47,13 +43,13 @@ class MinimalReferenceTests(unittest.TestCase):
                     else:self.fail(master)
                 expected=128 if preset else word
                 for bit in range(8):
-                    for name in ['GPN','GPP']:self.assertEqual(nodes[name+str(bit)],bool(expected & (1<<bit)))
-                    for name in ['GNN','GNP']:self.assertEqual(nodes[name+str(bit)],not bool(expected & (1<<bit)))
+                    self.assertEqual(nodes['REFSEL_P'+str(bit)],bool(expected & (1<<bit)))
+                    self.assertEqual(nodes['REFSEL_N'+str(bit)],not bool(expected & (1<<bit)))
 
     def test_reference_word_has_no_storage(self):
         masters={m for _,m in self.reference_calls()}
         self.assertFalse(any(m.startswith(('DFCN','LHCN','DEL','MUX')) for m in masters))
-        self.assertEqual(sum(m=='iprobe' for _,m in self.reference_calls()),17)
+        self.assertNotIn('iprobe', masters)
 
     def test_code_threshold_tracks_supply(self):
         values={'vdd!':.81}

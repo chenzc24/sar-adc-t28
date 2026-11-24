@@ -9,6 +9,7 @@ import os
 import re
 
 import native_stream
+from reference_short import gate_pair
 
 
 def samples(path, ctx):
@@ -23,7 +24,7 @@ def bottom_state(v, groups, lsb):
     for side in ('n', 'p'):
         gates = 0
         for bit, ports in enumerate(groups[side]):
-            gn, gp = [v['xdut.g%s%s%d' % (side, gate, bit)] > .5*v['vdd!'] for gate in ('n', 'p')]
+            gn, gp = [gate > .5*v['vdd!'] for gate in gate_pair(v, side, bit)]
             if gn != gp:
                 return None
             gates |= int(gn) << bit
@@ -53,7 +54,7 @@ def signed_settling(v, groups, weights, lsb, rails):
         for side, sign in (('p', 1.), ('n', -1.)):
             ports = groups[side][bit]
             mean = sum(v[p] for p in ports)/len(ports)
-            low = v['xdut.g%sn%d' % (side, bit)] > .5*v['vdd!']
+            low = gate_pair(v, side, bit)[0] > .5*v['vdd!']
             diff += sign*(mean - (rails[0] if low else rails[1]))
         total += weights[bit]/span*diff
     return total/lsb

@@ -22,13 +22,20 @@ def code(v):
     return sum(1 << i for i in range(8) if v['d%d'%i] > .5*v['vdd!'])
 
 
+def gate_pair(values, side, bit):
+    """Read a schematic select or both distributed/legacy gate voltages."""
+    select = 'xdut.refsel_%s%d' % (side, bit)
+    if select in values:
+        return values[select], values[select]
+    return values['xdut.g%sn%d' % (side, bit)], values['xdut.g%sp%d' % (side, bit)]
+
+
 def bottom(v, lsb):
     total=0.;worst=0.;state=[]
     for side in ['n','p']:
         word=0
         for bit in range(8):
-            gn=v['xdut.g%sn%d'%(side,bit)] > .5*v['vdd!']
-            gp=v['xdut.g%sp%d'%(side,bit)] > .5*v['vdd!']
+            gn,gp=(gate > .5*v['vdd!'] for gate in gate_pair(v,side,bit))
             if gn != gp:return None
             word |= (1 << bit) if gn else 0
             rail=v['vrefn' if gn else 'vrefp']
@@ -121,7 +128,7 @@ def analyze(run_dir,output_dir,frame_finisher=None,sample_reader=None,context=No
                     if code(v)!=f['output_reference']:f['output_stable']=False
                 f['reference_max_droop_v']=max(f['reference_max_droop_v'],abs(.9-v['vrefp']),abs(v['vrefn']))
                 f['reference_current_peak_a']=max(f['reference_current_peak_a'],abs(.9-v['vrefp'])/50,abs(v['vrefn'])/50)
-                gates=[v['xdut.g%s%s%d'%(s,p,i)] for s in ['n','p'] for p in ['n','p'] for i in range(8)]
+                gates=[gate for side in 'np' for bit in range(8) for gate in gate_pair(v,side,bit)]
                 f['gate_min_v']=min(gates+[f['gate_min_v']]) if f['gate_min_v'] is not None else min(gates)
                 f['gate_max_v']=max(gates+[f['gate_max_v']]) if f['gate_max_v'] is not None else max(gates)
                 overlap=0.

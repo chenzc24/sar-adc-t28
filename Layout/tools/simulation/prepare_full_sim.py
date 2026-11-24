@@ -74,8 +74,8 @@ def main():
     pins=re.search(r'(?mi)^subckt\s+sar8j_r1_cdac\s*\(([^)]+)\)',joined)[1].split()
     assert sorted(pins)==sorted(PORTS)
     assert len(re.findall(r'\)\s*cfmom_2t\b',joined))==680
-    original=(ROOT/'design/xtor/cdac/cdac.scs').read_text()
-    source='\n'.join(l for l in original.splitlines() if not l.lstrip().startswith('//'))
+    from tools.saradc.refsel import split_cdac
+    source=split_cdac((ROOT/'design/xtor/cdac/cdac.scs').read_text())
     payload['schematic.scs']=re.sub(r'\bsar8j_r1_cdac\b','schematic_cdac',source).encode()
     fixture=(ROOT/'tb/blocks/cdac/acceptance.scs').read_text()
     if a.corner!='tt':

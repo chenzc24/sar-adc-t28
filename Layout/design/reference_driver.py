@@ -13,6 +13,7 @@ from Layout.design.cdac import PORTS as CDAC_PORTS
 from Layout.design.sar_single_edge import PINS, SITES, STD, SUFFIX
 from Layout.project import ROOT, write_json
 from tools.saradc.candidates import definitions
+from tools.saradc.refsel import REFERENCE_PORTS, SELECTS
 from tools.saradc.rnl import instances
 
 
@@ -58,7 +59,7 @@ class Cell:
 
 
 def electrical(bits):
-    """Bind native pins directly from the electrical source, including the ideal shorts."""
+    """Bind the shared schematic selects to the verified physical pin names."""
     source = (ROOT / DRIVER_SOURCE).read_bytes()
     if 'include "' + DRIVER_SOURCE.removeprefix("design/") + '"' not in (ROOT / "design/dut.scs").read_text():
         raise ValueError("DUT no longer uses the single-edge D2 reference")
@@ -67,37 +68,23 @@ def electrical(bits):
     outputs = [f"G{s}N{b}" for s in "NP" for b in bits]
     available = set(driver_inputs + outputs + list(SUPPLIES))
     parts = instances(root)
-    alias = {}
-    for name, (ports, child, _) in parts.items():
-        if child != "iprobe":
-            continue
-        left, right = ports
-        if name == "WUNUSED":
-            alias[left] = right
-        else:
-            alias[right] = left
-    expected = {f"G{s}P{b}": f"G{s}N{b}" for s in "NP" for b in range(8)}
-    if alias != {**expected, "RST_DONE": "VSS"}:
-        raise ValueError("Ideal shorts in the electrical source changed")
+    alias = {f"G{s}P{b}": f"G{s}N{b}" for s in "NP" for b in range(8)}
+    physical = dict(zip(SELECTS, (f"G{s}N{b}" for s in "NP" for b in range(8)), strict=True))
     cells = {}
 
     for name, (nets, child, _) in parts.items():
-        if child == "iprobe":
-            continue
         if name == "XPRESET_N":
             if bits == (7,):
                 continue
         elif int(re.search(r"\d+", name)[0]) not in bits:
             continue
         model = child.removesuffix(SUFFIX)
-        cells[name] = Cell(model, dict(zip(NATIVE_PINS[model], (alias.get(n, n) for n in nets), strict=True)))
+        cells[name] = Cell(model, dict(zip(NATIVE_PINS[model], (physical.get(n, n) for n in nets), strict=True)))
     used_top_nets = {n for c in cells.values() for n in c.nets.values()}
     if not available <= used_top_nets or len(cells) != (6 if bits == (7,) else 28):
         raise ValueError("Unexpected active driver topology or standard-cell count")
     if bits == tuple(range(8)):
-        declared = set(root.splitlines()[0].split()[2:])
-        unused = {f"D{i}" for i in bits} | {"PHI_U", "SAMPLE"}
-        if declared != (available | set(alias) | unused) or used_top_nets & unused:
+        if tuple(root.splitlines()[0].split()[2:]) != REFERENCE_PORTS:
             raise ValueError("Physical projection differs from the source interface")
     return cells, driver_inputs, outputs, alias, {DRIVER_SOURCE: hashlib.sha256(source).hexdigest()}
 

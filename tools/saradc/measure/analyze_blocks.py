@@ -33,8 +33,12 @@ def analyze(context,trace,probes):
     kick_extrema=[];reference_rails={};gate_last_outside=[None]*6
     edge_names=['c_clock','c_outn','c_outp','t_clock']+['t_out'+str(i) for i in range(10)]+['xsar.cmp_clk','xsar.phi_u','xsar.comp_n','xsar.comp_p']
     if context.get('sar_stalled'):edge_names+=['xstalled.cmp_clk','xstalled.phi_u']
-    required=set(context['required_signals'])
+    gate_aliases=context.get('reference_gate_aliases',{})
+    required=set(context['required_signals']) | set(gate_aliases)
     for t,values in trace():
+        if gate_aliases:
+            values=dict(values)
+            values.update((alias,values[signal]) for alias,signal in gate_aliases.items())
         if 'comparator' in modules and 15.05e-9<=t<=20.05e-9:
             dv=values['k_p']-values['k_n'];cm=(values['k_p']+values['k_n'])/2
             if not kick_extrema:kick_extrema=[dv,dv,cm,cm]

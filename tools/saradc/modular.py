@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import re
 import time
-from . import views
+from . import refsel, views
 
 ROOT=Path(__file__).resolve().parents[2]
 PROFILES=['current','behavioral','comparator_xtor','cdac_xtor','sampler_xtor','control_xtor']
@@ -49,8 +49,12 @@ def prepare(run_id='sar8-modules-v3'):
     common=views.build('behavioral')['dut.scs'].decode('utf-8')
     wrappers=common[common.index('subckt b_sampler_bridge'):common.index('simulator lang=spectre')]
     text=includes+wrappers+'\n'
+    separate_cdac = views.build('cdac_xtor')[refsel.CDAC_FILE].decode('utf-8')
+    text += re.sub(r'\bsar8j_r1_(?:cdac|sw_b[0-7])\b', r'\g<0>_split', separate_cdac) + '\n'
     for index,name in enumerate(PROFILES):
         top=source_top if name=='current' else views.build(name)['top/adc_top.scs'].decode('utf-8')
+        if name == 'cdac_xtor':
+            top = re.sub(r'(\)\s+)sar8j_r1_cdac\b', r'\1sar8j_r1_cdac_split', top)
         top=top.replace('sar_adc8_join_r4','profile_'+name)
         top=re.sub(r'\bb_sar\s*$', 'b_sar model_id='+str(index),top,flags=re.M)
         text+=top+'\n'
