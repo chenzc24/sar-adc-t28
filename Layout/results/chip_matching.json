@@ -134,10 +134,10 @@
       "expected_also": "AN.R.79.5m (one MOS type per array and its 6 um halo; the P row is 0.23 um from the N array), not run"
     },
     "accepted_risk": {
-      "statement": "MATCH.WARN.1: MOSFET matching may degrade at least 3x when the high/medium array rules are not met. Accepted: up to 3x the SPICE mismatch.",
+      "statement": "MATCH.WARN.1: MOSFET matching may degrade at least 3x when the high/medium array rules are not met. The rule specifies no upper bound on mismatch.",
       "offset_mc": "Layout/results/comparator.md v8 extracted, 200 seeds: sigma 12.05 mV, range -34.7 to +34.1 mV",
-      "at_3x": "extreme die about +/-104 mV, 11.6 % of the +/-0.9 V full scale",
-      "consequence": "The offset is static and corrected off-chip; the cost is input range, not accuracy."
+      "at_3x": "about +/-104 mV by scaling the 200-seed sample extrema; sensitivity example only",
+      "consequence": "The ADC is uncalibrated. Correction range, resolution and qualification remain open in docs/specification.md and issue #12."
     }
   },
   "sign_off": {

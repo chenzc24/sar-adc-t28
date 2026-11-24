@@ -129,10 +129,10 @@ DECISION = dict(
                                               "0.23 um from the N array), not run"),
     accepted_risk=dict(
         statement="MATCH.WARN.1: MOSFET matching may degrade at least 3x when the high/medium array rules are not met. "
-                  "Accepted: up to 3x the SPICE mismatch.",
+                  "The rule specifies no upper bound on mismatch.",
         offset_mc="Layout/results/comparator.md v8 extracted, 200 seeds: sigma 12.05 mV, range -34.7 to +34.1 mV",
-        at_3x="extreme die about +/-104 mV, 11.6 % of the +/-0.9 V full scale",
-        consequence="The offset is static and corrected off-chip; the cost is input range, not accuracy."),
+        at_3x="about +/-104 mV by scaling the 200-seed sample extrema; sensitivity example only",
+        consequence="The ADC is uncalibrated. Correction range, resolution and qualification remain open in docs/specification.md and issue #12."),
 )
 # Every chip-deck check that reads MATCHING. CSR.R.1:MATCHING (no MATCHING in the corner triangles) sits under
 # #IFNDEF WITH_SEALRING, so it does not run on a chip with its seal ring; the markers are about 400 um from any corner.

@@ -402,9 +402,9 @@ The user chose option A: "Add markers, write waiver". The sign-off stream carrie
 - **Deviation from high matching:** the ANARRAY_H evidence is `chip-match-h1`.
   - AN.R.79.2m fails on OD density: 0.348 (N array) and 0.257 (P array), against 0.10.
   - AN.R.79.5m (one MOS type per array and halo) would fail as well, because the P row is 0.23 um from the N array.
-- **Accepted risk:** MATCH.WARN.1 says matching may degrade "at least by 3X" when those rules are not met. The accepted figure is up to 3x the SPICE mismatch, applied to the extracted Monte Carlo ([comparator](comparator.md): sigma 12.05 mV, 200-seed range -34.7 to +34.1 mV).
-  - The offset is static and corrected off-chip, so the cost is input range, not accuracy.
-  - At 3x, an extreme die sits at about +/-104 mV, 11.6 % of the +/-0.9 V full scale.
+- The normal-MATCHING decision accepts a layout deviation. The rule gives no upper bound on mismatch. The [v8 comparator Monte Carlo](comparator.md) measured σ = 12.05 mV over 200 seeds, with observed offsets from −34.7 to +34.1 mV.
+  - The ADC is uncalibrated. Correction range and resolution remain open in the [specification](../../docs/specification.md).
+  - Multiplying those sample extrema by three gives about ±104 mV as a sensitivity example.
 - **Stage 6 is unaffected:** `calibre.lvs` and `calibre.rcx` map no 205;8 (only 205;6, PMET), so neither device recognition nor extraction reads the marker. The comparator, the cores and their streams are unchanged.
 
 **Sign-off view: `sar8_adc_chip/layout_full_fill5_r6_seal`.**
