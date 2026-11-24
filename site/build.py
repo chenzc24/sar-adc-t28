@@ -11,6 +11,8 @@ from pathlib import Path, PurePosixPath
 from string import Template
 from urllib.parse import unquote, urlencode, urlsplit
 
+from schematic_rnl import convert
+
 
 SITE = Path(__file__).resolve().parent
 ROOT = SITE.parent
@@ -30,12 +32,10 @@ PAGES = {
 FIGURES = {
     "assets/baseline-spectrum.png": "results/fft/ab_spectrum.png",
 }
-STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js")
+STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js", "assets/schematic-view.js")
 LAYOUT_PART_SIZE = 192 * 1024
-NATIVE_VIEWERS = {
-    "0.3": "https://rich-netlist.github.io/rnl/viewer-0.3/",
-    "0.4": "https://rich-netlist.github.io/rnl/viewer/",
-}
+RNL_VIEWER = "https://rich-netlist.github.io/rnl/viewer/"
+RNL_ENTRY = "design/rnl/export.scs"
 SCHEMATIC_LEVELS = {
     "ADC core": "sar_adc8_join_r4",
     "Bootstrap": "sar_bootstrap_flat_8b_p",
@@ -62,7 +62,7 @@ def frozen_file(path):
     return git_output("show", f"{REVISION}:{path}")
 
 
-def schematic_workspace(base_url):
+def schematic_workspace(base_url, upgrader, checker):
     workspace = json.loads((ROOT / "design/rnl/workspace.json").read_text(encoding="utf-8"))
     design = json.loads((ROOT / "design/manifest.json").read_text(encoding="utf-8"))
     scheme, host, *_ = urlsplit(base_url)
@@ -72,7 +72,7 @@ def schematic_workspace(base_url):
         level=design["top"],
         source={"repo": "chenzc24/sar-adc-t28", "commit": revision, "url": f"{REPOSITORY}/commit/{revision}"},
     )
-    files = {}
+    source_paths = set()
     for item in workspace["files"]:
         relative = PurePosixPath(item["path"])
         if relative.parts[0] != "design" or ".." in relative.parts or relative.suffix not in {".scs", ".rnl"}:
@@ -80,12 +80,9 @@ def schematic_workspace(base_url):
         content = (ROOT / relative).read_bytes()
         if len(content) != item["size"] or hashlib.sha256(content).hexdigest() != item["sha256"]:
             raise SystemExit(f"Regenerate the native RNL workspace after changing {relative}")
-        files[f"rnl/source/{relative}"] = content
-    files["rnl/workspace.json"] = json.dumps(workspace, indent=2).encode()
-    entry = files[f'rnl/source/{workspace["entry"]}']
-    version = next((v for v in NATIVE_VIEWERS if f'@VERSION("{v}")'.encode() in entry), None)
-    if version is None:
-        raise SystemExit("The schematic has no supported RNL version in its header.")
+        source_paths.add(relative.as_posix())
+    if RNL_ENTRY not in source_paths:
+        raise SystemExit("Regenerate the portable RNL source for the current DUT.")
     drawing = json.loads((ROOT / "design/rnl/manifest.json").read_text(encoding="utf-8"))
     dut = ROOT / "design/dut.scs"
     if hashlib.sha256(dut.read_bytes()).hexdigest() != drawing["source_hashes"]["design/dut.scs"]:
@@ -93,20 +90,25 @@ def schematic_workspace(base_url):
     levels = drawing["levels"]
     if any(level not in levels for level in SCHEMATIC_LEVELS.values()):
         raise SystemExit("Check the site's schematic module links against the current hierarchy.")
+    entry = convert(ROOT / RNL_ENTRY, upgrader, checker)
+    workspace["entry"] = RNL_ENTRY
+    workspace["files"] = [{"path": RNL_ENTRY, "size": len(entry), "sha256": hashlib.sha256(entry).hexdigest()}]
+    files = {f"rnl/source/{RNL_ENTRY}": entry}
+    files["rnl/workspace.json"] = json.dumps(workspace, indent=2).encode()
 
     def url(level, embed=False):
         params = {"manifest": f"{base_url}rnl/workspace.json", "level": level, "lang": "en"}
         if embed:
             params.update(embed="1", origin=f"{scheme}://{host}")
-        return html.escape(f"{NATIVE_VIEWERS[version]}?{urlencode(params)}", quote=True)
+        return html.escape(f"{RNL_VIEWER}?{urlencode(params)}", quote=True)
 
-    links = "\n".join(f'<a href="{url(level, True)}" target="rnl-frame">{label}</a>'
+    links = "\n".join(f'<a href="{url(level, True)}" data-level="{level}" target="rnl-frame">{label}</a>'
                       for label, level in SCHEMATIC_LEVELS.items())
     return files, {
         "rnl_embed": url(design["top"], True),
         "rnl_full": url(design["top"]),
         "rnl_links": links,
-        "rnl_version": version,
+        "rnl_version": "0.4",
         "rnl_top": design["top"],
         "rnl_revision": revision[:7],
         "rnl_entry": f'rnl/source/{workspace["entry"]}',
@@ -225,8 +227,8 @@ def layout_artifacts():
     return parts
 
 
-def build(output, base_url):
-    schematic, context = schematic_workspace(base_url.rstrip("/") + "/")
+def build(output, base_url, upgrader, checker):
+    schematic, context = schematic_workspace(base_url.rstrip("/") + "/", upgrader, checker)
     artifacts = {**schematic, **layout_artifacts()}
     pages = render_pages(context)
     check_links(pages, {*FIGURES, *STATIC, *artifacts})
@@ -253,5 +255,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "dist" / "site")
     parser.add_argument("--base-url", default=PAGES_URL)
+    parser.add_argument("--rnl-upgrader", default="rnl-upgrade-0.5.7")
+    parser.add_argument("--rnl-checker", default="rnl")
     args = parser.parse_args()
-    build(args.output.resolve(), args.base_url)
+    build(args.output.resolve(), args.base_url, args.rnl_upgrader, args.rnl_checker)

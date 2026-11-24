@@ -12,7 +12,8 @@ def top(s):
     for n,x,y in [('XSAMPLE',0,59),('XSEQ',39,59),('XDONE',146,59),('XPRESET',181,59),
                   ('XBOOTN',0,32),('XBOOTP',0,10),('XCDAC',60,-11),
                   ('XCOMP',103,16),('XCTRL',153,16),('XREF',60,-56),
-                  ('CL_COMP_N',123,-14),('CL_COMP_P',138,-25),('CL_CMP_CLK',105,51)]:s.place(n,x,y)
+                  ('CL_COMP_N',123,-14),('CL_COMP_P',138,-25),('CL_CMP_CLK',105,51)]:
+        s.place(n,x,y,'MX' if n=='CL_CMP_CLK' else 'R0')
     for x,y,label in [(-21,72,'Sample and acquire'),(140,72,'Reference preset'),
                       (-21,46,'Bootstrap sampling'),(38,1,'Binary MOM CDAC'),
                       (89,31,'StrongARM'),(136,32,'Single-edge SAR'),(42,-78,'Reference gate drive')]:
@@ -43,7 +44,10 @@ def comparator(s):
     for n,(x,y) in placement.items():
         mirrored=(x<0 if n.startswith(('MPLAT','MNLAT')) else x>0)
         s.place(n,x,y,'MY' if mirrored else 'R0')
-    s.join('VDD',[n+':3' for n in placement if n.startswith('MP')],'y',61,color='power')
+    s.join('VDD',[n+':3' for n in ('MPLATN','MPLATP','MPRSTN','MPRSTP')],'y',61,color='power')
+    for name,outer in [('MPRSTY',-55),('MPRSTX',55)]:
+        x,y=placement[name]
+        s.wire('VDD',name+':3',(x,y+5),(outer,y+5),(outer,61),(x,61),color='power')
     s.join('OUTN',['MPLATN:1','MNLATN:1','MPRSTN:1'],'y',31,color='analog')
     s.join('OUTP',['MPLATP:1','MNLATP:1','MPRSTP:1'],'y',33,color='analog')
     s.wire('OUTN','MPLATN:1',(-20,36),(8,36),(8,42),'MPLATP:2',color='analog')
@@ -64,8 +68,12 @@ def bootstrap(s):
          'Mmain_U3':(158,42),'Mmain':(158,17),'Mmain_U1':(158,-8),'Mmain_U2':(158,-33)}
     for n,(x,y) in pos.items():s.place(n,x,y,'R270' if n.startswith('Mmain') else 'R0')
     s.join('CLKSB',['MPCLK:1','MNCLK:1'],'y',20)
-    s.join('CTRL',['M4B:1','M4C:1','M4A:1','M4:2'],'y',60)
-    s.join('BTOP',['Cboot:1','M2:1','M4:3'],'y',31,color='analog')
+    s.join('CTRL',['M4A:1','M4:2'],'y',60)
+    s.wire('CTRL',(28,60),(31,60),(56,60))
+    s.wire('CTRL','M4B:1',(38,29),(31,29),(31,60));s.dot((31,60))
+    s.wire('CTRL','M4C:1',(38,12),(28,12),(28,60));s.dot((28,60))
+    s.join('BTOP',['Cboot:1','M2:1'],'y',31,color='analog')
+    s.wire('BTOP','M4:3',(116,48),(124,48),(124,31),(80,31),color='analog')
     s.join('BBOT',['Cboot:2','M4C:3','M4A:3','M8:1','Msin:1'],'y',-2,color='analog')
     s.join('G',['M4:1','Maux:1']+[m+':2' for m in mains],'x',138,color='analog')
     s.route('Maux:3','MRSTG:1')

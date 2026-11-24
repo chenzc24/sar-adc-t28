@@ -35,7 +35,27 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
-      - run: python site/build.py
+      - name: Install pinned RNL export tools
+        shell: bash
+        run: |
+          install_rnl() {
+            local version="$1" digest="$2"
+            local archive="$RUNNER_TEMP/rnl-$version.tar.gz"
+            local directory="$RUNNER_TEMP/rnl-$version"
+            curl --fail --location --retry 3 --output "$archive" \
+              "https://github.com/rich-netlist/rnl/releases/download/core-v$version/rnl-x86_64-unknown-linux-musl.tar.gz"
+            printf '%s  %s\n' "$digest" "$archive" | sha256sum --check
+            mkdir -p "$directory"
+            tar -xzf "$archive" -C "$directory" rnl
+          }
+          install_rnl 0.5.7 19acb416b7f521cfb0c0d5d3ddf38964ddff0b8f3c6feaba2b150382ca11cad5
+          install_rnl 0.6.1 2410bd507c57a4f92ec9b063f869076d2fa0ade4532a6c93219d5a6138e5913c
+      - name: Build the site
+        shell: bash
+        run: |
+          python site/build.py \
+            --rnl-upgrader "$RUNNER_TEMP/rnl-0.5.7/rnl" \
+            --rnl-checker "$RUNNER_TEMP/rnl-0.6.1/rnl"
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5

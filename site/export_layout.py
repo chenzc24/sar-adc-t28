@@ -16,21 +16,22 @@ import gdstk
 SITE = Path(__file__).resolve().parent
 TOP = "sar8_adc_chip"
 LAYERS = [
-    (6, "Active", "active", "#69bb85"),
-    (17, "Poly", "conductor", "#f7938f"),
-    (30, "Contact", "cut", "#e0cbd9"),
-    (31, "M1", "conductor", "#75c9f2"),
-    (32, "M2", "conductor", "#e7a6ee"),
-    (33, "M3", "conductor", "#b7d776"),
-    (34, "M4", "conductor", "#f3c762"),
-    (35, "M5", "conductor", "#9d9fff"),
-    (36, "M6", "conductor", "#53d5be"),
-    (37, "M7", "conductor", "#ea866b"),
-    (38, "M8", "conductor", "#95b8fa"),
-    (39, "M9", "conductor", "#d9e28b"),
-    *((50 + k, f"V{k}", "cut", "#dadce4") for k in range(1, 9)),
+    ((3, 0), "NW", "well"),
+    ((6, 0), "OD", "active"),
+    ((17, 0), "PO", "conductor"),
+    ((25, 0), "PP", "implant"),
+    ((26, 0), "NP", "implant"),
+    ((30, 0), "CO", "cut"),
+    # This 1P9M stream uses the thick-metal and pin purposes documented in toplevel_fill.py.
+    *(((30 + n, 0), f"M{n}", "conductor") for n in range(1, 8)),
+    ((38, 40), "M8", "conductor"),
+    ((39, 60), "M9", "conductor"),
+    *(((50 + n, 0), f"VIA{n}", "cut") for n in range(1, 7)),
+    ((57, 40), "VIA7", "cut"),
+    ((58, 60), "VIA8", "cut"),
+    *(((130 + n, 0), f"M{n}.pin", "conductor") for n in range(1, 10)),
 ]
-DRAWING = {number: name for number, name, _, _ in LAYERS}
+DRAWING = {spec: name for spec, name, _ in LAYERS}
 LANDMARKS = {
     "sar8_io_ring": "IO ring",
     "sar8_adc_core": "ADC core",
@@ -41,6 +42,7 @@ LANDMARKS = {
     "sar8_out_reg": "Output register",
 }
 FILL = re.compile(r"^sar8_adc_core_fill5(?:_|$)|^sar8_cdac_fill_plan$|^sar_bootstrap_flat_8b_p_fill$")
+VIA_MASTER = re.compile(r"M[2-9]_M[1-8]_CDNS_\d+")
 
 
 def nm(value):
@@ -86,7 +88,7 @@ def origin_and_array(ref):
 
 
 def polygon_line(poly):
-    layer = DRAWING[poly.layer]
+    layer = DRAWING[poly.layer, poly.datatype]
     vertices = [(nm(x), nm(y)) for x, y in poly.points]
     if vertices and vertices[0] == vertices[-1]:
         vertices.pop()
@@ -123,9 +125,8 @@ def export(source, output):
     if bounds(top.bounding_box()) != [nm(value) for value in record["current"]["die_um"]]:
         raise ValueError("The stream extent does not match the recorded die outline.")
     lines = ["layoutml 0.1 profile=core", "units user=1n dbu=1n grid=1n"]
-    lines.extend(f'layer {name} gds=({number},0) kind={kind} color="{color}" fill=solid'
-                 for number, name, kind, color in LAYERS)
-    lines.append('layer Footprint gds=(65535,65535) kind=marker color="#899cb3" fill=outline')
+    lines.extend(f"layer {name} gds={point(*spec)} kind={kind}" for spec, name, kind in LAYERS)
+    lines.append("layer Footprint gds=(65535,65535) kind=marker fill=outline")
     cell_labels = {}
     written = set()
     excluded = set()
@@ -144,16 +145,20 @@ def export(source, output):
         if name in written:
             return
         written.add(name)
-        cell_labels[name] = cell.name if cell.name.startswith("sar") else "Library cell"
+        owned = cell.name.startswith("sar")
+        via = VIA_MASTER.fullmatch(cell.name)
+        cell_labels[name] = cell.name if owned else "Generated via" if via else "Library cell"
         box = cell_box(cell)
         cell_bounds[name] = box
         lines.append(f"cell {name} {{")
         children = []
-        if cell.name.startswith("sar"):
-            for poly in (*cell.polygons, *(p for path in cell.paths for p in path.to_polygons())):
-                if poly.datatype == 0 and poly.layer in DRAWING:
-                    lines.append("  " + polygon_line(poly))
-                    shape_counts[DRAWING[poly.layer]] += 1
+        if owned or via or cell.name == "PAD60GU":
+            for poly in cell.get_polygons(depth=0):
+                layer = DRAWING.get((poly.layer, poly.datatype))
+                if not layer or (cell.name == "PAD60GU" and not layer.startswith("M")):
+                    continue
+                lines.append("  " + polygon_line(poly))
+                shape_counts[layer] += 1
             for ref in cell.references:
                 child = ref.cell
                 if FILL.search(child.name) or child.name.startswith(("FILL", "PFILLER")):
@@ -174,6 +179,9 @@ def export(source, output):
             visit(child)
 
     visit(top)
+    missing = {name for name in ("M8", "M9", "VIA7", "VIA8") if not shape_counts[name]}
+    if missing:
+        raise ValueError(f"Missing 1P9M routing purposes: {', '.join(sorted(missing))}")
     lines.append(f"top {names[top.name]}")
     data = gzip.compress(("\n".join(lines) + "\n").encode(), mtime=0)
     release = {
@@ -186,6 +194,7 @@ def export(source, output):
         "cell_labels": cell_labels,
         "landmarks": {names[name]: label for name, label in LANDMARKS.items() if names.get(name) in written},
         "excluded_fill_cells": sorted(excluded),
+        "gds_layer_purposes": {name: list(spec) for spec, name, _ in LAYERS},
         "shape_counts": shape_counts,
         "instance_records": instance_records,
     }
