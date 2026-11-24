@@ -30,8 +30,8 @@ PAGES = {
 FIGURES = {
     "assets/baseline-spectrum.png": "results/fft/ab_spectrum.png",
 }
-STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js",
-          "layout-data/release.json", "layout-data/chip.core.lml.gz")
+STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js")
+LAYOUT_PART_SIZE = 192 * 1024
 NATIVE_VIEWERS = {
     "0.3": "https://rich-netlist.github.io/rnl/viewer-0.3/",
     "0.4": "https://rich-netlist.github.io/rnl/viewer/",
@@ -206,17 +206,30 @@ def check_links(pages, assets):
         raise SystemExit("\n".join(errors))
 
 
-def build(output, base_url):
-    schematic, context = schematic_workspace(base_url.rstrip("/") + "/")
-    pages = render_pages(context)
-    check_links(pages, {*FIGURES, *STATIC, *schematic})
+def layout_artifacts():
     release = json.loads((SITE / "layout-data/release.json").read_text(encoding="utf-8"))
     layout_record = json.loads((ROOT / "Layout/results/chip_fill.json").read_text(encoding="utf-8"))
     if release["source_sha256"] != layout_record["current"]["chip_stream"]["sha256"]:
         raise SystemExit("Regenerate the layout display for the current unfilled chip stream.")
-    geometry = SITE / "layout-data/chip.core.lml.gz"
-    if hashlib.sha256(geometry.read_bytes()).hexdigest() != release["geometry_sha256"]:
+    geometry = (SITE / "layout-data/chip.core.lml.gz").read_bytes()
+    digest = hashlib.sha256(geometry).hexdigest()
+    if digest != release["geometry_sha256"]:
         raise SystemExit("The layout geometry does not match its release metadata.")
+    # Keep the original gzip stream intact and transfer its bytes in small, retryable parts.
+    parts = {
+        f"layout-data/chip-{digest[:12]}-{index:02}.bin": geometry[offset:offset + LAYOUT_PART_SIZE]
+        for index, offset in enumerate(range(0, len(geometry), LAYOUT_PART_SIZE))
+    }
+    release["geometry_parts"] = list(parts)
+    parts["layout-data/release.json"] = json.dumps(release, indent=2).encode()
+    return parts
+
+
+def build(output, base_url):
+    schematic, context = schematic_workspace(base_url.rstrip("/") + "/")
+    artifacts = {**schematic, **layout_artifacts()}
+    pages = render_pages(context)
+    check_links(pages, {*FIGURES, *STATIC, *artifacts})
     for name, content in pages.items():
         destination = output / name
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -225,7 +238,7 @@ def build(output, base_url):
         destination = output / filename
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_bytes(frozen_file(source))
-    for name, content in schematic.items():
+    for name, content in artifacts.items():
         path = output / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(content)
