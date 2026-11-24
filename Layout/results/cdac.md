@@ -262,7 +262,7 @@ TOP 至固定电位的负载平均增加约 **149.80 fF/侧**。它增加电荷�
 
 ## 2026-11-09 填充前诊断结果
 
-完整布线已生成并保存，外框约 **90.33 × 92.48 µm**。共 512 个功能单位 MOM（510 个二进制位权单位、2 个固定参考单位），加 168 个边界 dummy；16 组参考开关折成 130 对 NMOS/PMOS 分块。固定工作 cell 的实际 GDS 截图见 [完整 CDAC](../../work/layout/screenshots/sar8-cdac-full.png)。
+完整布线已生成并保存，外框约 **90.33 × 92.48 µm**。共 512 个功能单位 MOM（510 个二进制位权单位、2 个固定参考单位），加 168 个边界 dummy；16 组参考开关折成 130 对 NMOS/PMOS 分块。固定工作 cell 的实际 GDS 截图见 完整 CDAC (local archive: `work/layout/screenshots/sar8-cdac-full.png`)。
 
 最终几何证据 `cdac-full-route3` 的 **LVS 为 CORRECT，DRC 为 NOT_CLEAN**。器件、接触及互连的宽度/间距违规已经修正；仍保留 17 个金属/OD/PO 密度或最大 OD 空白区标记，以及两条 deck 提示。没有关闭规则，没有把这些标记当作签核通过。最初两轮的失败报告保留在各自 evidence 目录。
 

@@ -1,5 +1,15 @@
 # Verification Results
 
+## Current review
+
+| Verification scope | Result and evidence |
+| --- | --- |
+| Stage 6 electrical verification | The extracted fill5 core with the Stage 1 package and reference model passed 12 final runs across TT, SS cold and FF hot. The [system tracker](https://github.com/chenzc24/sar-adc-t28/issues/12) records the corner results, periphery comparisons and outstanding FF checks. |
+| Stage 6 TT FFT | Final spectrum and dynamic metrics are pending segment assembly and acceptance in [#12](https://github.com/chenzc24/sar-adc-t28/issues/12). The [early routed-core report](integration/stage6_early_20261123.md) describes the earlier extraction. |
+| Chip physical verification | The r8 OA assembly with fill7 has 224 DRC results, zero density results, LVS CORRECT and 296 ERC results. [Fill record](../Layout/results/chip_fill.md) · [Waiver status](../Layout/results/chip_drc_waivers.md) · [Pad and package review](https://github.com/chenzc24/sar-adc-t28/issues/18) |
+
+## Earlier measurements and archive records
+
 At experiment closeout, archive compact data, figures, warnings, and run identities. The retention policy permits cleanup of eligible raw waveforms. Keep receipts and archive indexes under `results/storage/`. [Waveform Retention and Cleanup](../docs/waveform-retention.md)
 
 On 2026-11-15, cleanup recovered 374.985 GiB of old waveforms on thu-song and retained the latest five-corner OR data. [Archive and deletion receipt](storage/20261115-song-waveform-cleanup.md)
@@ -17,7 +27,7 @@ The designs removed after commit `c46d9d6` keep their results and source digests
 | Current single-edge SAR adoption | [Report](design/sar_single_edge_adoption_20261120.md) · [Record](design/sar_single_edge_adoption_20261120.json) · [Bit-6 aperture of the earlier 8/6 and 9/6 taps](design/sar_bit6_reference_overlay.md) |
 | Single-edge native SAR front end | [Registered 9/6 tap waveforms, bit-6 differential and 90 ns read margin](design/sar_registered_9_6.md) · [Earlier 8/6 timing gains, five PVT points, six mismatch draws and sampling restart](design/sar_single_edge_frontend.md) |
 | TT full-code test, 255 transitions and 256 code centers | [Static results](static/results.json) |
-| TT 1024-point FFT and ADCtoolbox | [FFT results](fft/results.json), [A/B spectra](fft/ab_spectrum.png), and [B's 12-plot panel](fft/b_toolbox_panel.png) |
+| Historical A/B TT 1024-point FFT and ADCtoolbox | [FFT results](fft/results.json), [A/B spectra](fft/ab_spectrum.png), and [B's 12-plot panel](fft/b_toolbox_panel.png) |
 | 17.13 µm reset-OR design, continuous 1024-point noisy FFT | SNR 48.576 dB, SNDR 48.554 dB, ENOB 7.773 bits, and SFDR 65.495 dBc. All 1032 frame protocols passed. The test uses one noise seed and retains terminal-voltage and LTE warnings and convergence limits. [Final results and spectrum](noise/resetor_1024_20261116/README.md) |
 | 17.13 µm reset-OR design, full-circuit global-plus-local Monte Carlo | 36/36 seeds collected. All 360 frames and 2880 bit comparisons passed timing and settling screens. See the report for code shifts and measurement scope. [Final MC results](mc/resetor_global_local_36/README.md) |
 | 17.13 µm reset-OR design, selective-mismatch boundary supplement | 14/16 cases collected. All 476 frames and 3808 bit comparisons passed the diagnostic. Nominal C/D are outside the completed coverage due to the budget. See the report for shifts and warnings. [Boundary results](mc/selective_boundary_results_20261116/README.md) |

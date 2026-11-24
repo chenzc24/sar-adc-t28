@@ -59,5 +59,5 @@ TT、0.90V、27°C，Fs=10MS/s，Fin=4.501953125MHz（1024点中的第461频点�
 - [机器汇总及三方核对](results.json)、[原生分析输出](native_result.json)、[冻结运行配方](recipe.json)、[回收与散列回执](collection_receipt.json)。
 - [全部1032帧](all_frames.csv)、[实际FFT的1024码与采样时刻](fft_codes.csv)、[单边频谱数值](spectrum.csv)。
 - [频谱PNG](spectrum.png)、[频谱SVG](spectrum.svg)、[残差与逐帧转换时间](residual_timing.png)。
-- [原始Spectre日志](spectre.out)、[仿真状态](simulation.state.json)、[分析状态](analysis.state.json)。
+- [原始Spectre日志 · collection receipt](collection_receipt.json)、[仿真状态](simulation.state.json)、[分析状态](analysis.state.json)。
 - 可重复生成报告的入口：`python -m tools.saradc.analysis.noise_fft_report`。全部冻结输入已保留在本地 `work/output/managed_execution/runs/sar8-resetor-noise-tt-fft1024-s101-v1/inputs/`，模型及标准库仍只读引用。

@@ -1,7 +1,8 @@
 {
  "units": "um",
- "status": "ring_cell_in_oa_assembly_not_applied",
+ "status": "ring_r2_assembled_in_chip_r8",
  "verification": "Layout/results/io_ring_verification.json",
+ "chip_assembly_record": "Layout/results/chip_fill.json",
  "scope": "Chip-level pad ring around the ADC core of floorplan.json: pad order and cells, supply and pin connections, ADC placement, pad-to-core routes, pad decoupling, core VSS ring, ESD clamps and the reserved regions in the ring opening. Die coordinates; floorplan.json io_ring links here.",
  "rule_source": "TSMC N28 General I/O Library Application Note v1.4 (section numbers cited; the note itself stays outside git).",
  "die_bbox": [
@@ -2630,7 +2631,6 @@
   "Feed widths: the 9 x 9 rail budget (chenzc24/sar-adc-t28#27, constraints.json) sets at least 4.8 um M8 for the pair route and 6.3 um for the SAR feed; EM at the pin peaks is still to check.",
   "ADC_D0-ADC_D7 load (route over the SAR plus the register input, about 8-10 fF per bit) and register hold at FF -40/125 C.",
   "Cross-domain interfaces: SAMPLE (DVDD to VDD!) and ADC_D0-ADC_D7 (VDD! to DVDD); review them with the ESD rules.",
-  "Ring cell in OA (SAR_ADC_T28_LAYOUT/sar8_io_ring): label the POC rail, and run chip-level DRC, LVS and ERC once the ADC is assembled in it (Layout/results/io_ring_verification.json open_items; its ERC results are waived there).",
   "Die size: confirm 892 x 892 um with the shuttle provider before tapeout (die-size grid, billing blocks, scribe width, and whether the provider adds the seal ring itself, DRM 4.5.66.2 option 1). 892 um is the CSR.R.1 minimum for this IO ring (882 um) plus a 10 um margin."
  ],
  "floorplan_link": "floorplan.json die_bbox, io_ring and the ADC.*@* boundary pins (pins_um, unrouted_pins) come from this plan."

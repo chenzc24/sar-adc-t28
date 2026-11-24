@@ -31,7 +31,7 @@ V7 将输入对和尾管均拆成 0.5 µm 单指，在 P、N1、N2 三行内共�
 
 ## 本轮物理验证
 
-**Calibre LVS 为 CORRECT。** 版图的两只半宽尾管并联归并后，与冻结 B 版网表的 5 只 NMOS、6 只 PMOS、10 个网络和 7 个端口逐项匹配。提取还识别出一个阱结二极管，LVS 按规则过滤，xRC 网表保留。单元 DRC 从 253 个标记降至 2 个，剩下的是规则集对核心／IO 电压选项和低漏电二极管标识的全局提醒。局部几何违规为 0。XStream 保留了 `XSTRM-35`，对应层映射中的 `instance:drawing`。[DRC 标记](../../../work/layout/layoutml-clean-comparator/native/sa-oa-core-20261118o/drc/DRC_RES.db) · [LVS 原文](../../../work/layout/layoutml-clean-comparator/native/sa-oa-core-20261118o/lvs/lvs.rep)
+**Calibre LVS 为 CORRECT。** 版图的两只半宽尾管并联归并后，与冻结 B 版网表的 5 只 NMOS、6 只 PMOS、10 个网络和 7 个端口逐项匹配。提取还识别出一个阱结二极管，LVS 按规则过滤，xRC 网表保留。单元 DRC 从 253 个标记降至 2 个，剩下的是规则集对核心／IO 电压选项和低漏电二极管标识的全局提醒。局部几何违规为 0。XStream 保留了 `XSTRM-35`，对应层映射中的 `instance:drawing`。DRC 标记 (local archive: `work/layout/layoutml-clean-comparator/native/sa-oa-core-20261118o/drc/DRC_RES.db`) · LVS 原文 (local archive: `work/layout/layoutml-clean-comparator/native/sa-oa-core-20261118o/lvs/lvs.rep`)
 
 ![同一份 GDS 的器件、衬底和 M1–M4 引脚视图](virtuoso_core.png)
 
@@ -67,19 +67,19 @@ V7 将输入对和尾管均拆成 0.5 µm 单指，在 P、N1、N2 三行内共�
 | 十点最慢复位 | 32.83 ps | 39.16 ps | 34.17 ps |
 | 浮置输入测试的差分回踢峰值 | 35.84 µV | 47.74 µV | 54.63 µV |
 
-所有点均完成再生和复位。当前版通过半 LSB 功能筛查，十点完整验证仍有一个极性错误。另用 50 µV 步长从 −1 mV 扫到 +1 mV，再反向扫描，每次比较之间经过完整复位。两个方向均单调，+250 µV 时为负判决，+300 µV 时为正判决。本次 TT 的输入折算翻转点在 **+0.25～+0.30 mV（0.036～0.043 LSB）**。此区间量化的是标称提取电路的偏移。随机失调分布还需用这份版图做失配 Monte Carlo。[TT 原始分析](../../../work/output/managed_execution/runs/sa-oa-tt-20261118o/collected/derived/result.json) · [双向扫描](../../../work/output/managed_execution/runs/sa-oa-trip-20261118o/collected/derived/result.json)
+所有点均完成再生和复位。当前版通过半 LSB 功能筛查，十点完整验证仍有一个极性错误。另用 50 µV 步长从 −1 mV 扫到 +1 mV，再反向扫描，每次比较之间经过完整复位。两个方向均单调，+250 µV 时为负判决，+300 µV 时为正判决。本次 TT 的输入折算翻转点在 **+0.25～+0.30 mV（0.036～0.043 LSB）**。此区间量化的是标称提取电路的偏移。随机失调分布还需用这份版图做失配 Monte Carlo。TT 原始分析 (local archive: `work/output/managed_execution/runs/sa-oa-tt-20261118o/collected/derived/result.json`) · 双向扫描 (local archive: `work/output/managed_execution/runs/sa-oa-trip-20261118o/collected/derived/result.json`)
 
-单侧尾管、居中阱接触时，翻转点在 −0.25～−0.20 mV。改为两侧并联半尾管后，第一次测得 +0.30～+0.35 mV。最后把反馈引出处收拢，将向东的输出移到 M4，得到上表结果。这些数据保留了偏移变化的方向。本次覆盖填充前的单元；顶层互连、密度填充、整机时序、PVT 和版图失配尚待验证。Spectre 原始日志保留四类警告，其中 `SFE-3031` 涉及两个测试台副本各一只浮空提取电容。[Spectre 日志](../../../work/output/managed_execution/runs/sa-oa-tt-20261118o/collected/spectre.out)
+单侧尾管、居中阱接触时，翻转点在 −0.25～−0.20 mV。改为两侧并联半尾管后，第一次测得 +0.30～+0.35 mV。最后把反馈引出处收拢，将向东的输出移到 M4，得到上表结果。这些数据保留了偏移变化的方向。本次覆盖填充前的单元；顶层互连、密度填充、整机时序、PVT 和版图失配尚待验证。Spectre 原始日志保留四类警告，其中 `SFE-3031` 涉及两个测试台副本各一只浮空提取电容。Spectre 日志 (local archive: `work/output/managed_execution/runs/sa-oa-tt-20261118o/collected/spectre.out`)
 
 改变原生参数和摆放使用 [PCell / SKILL](virtuoso_core.il) 与[布图源](virtuoso_design.py)。[测量脚本](virtuoso_metrics.py) 按导出的 GDS 和 Calibre xRC 散列核对物理结果。[TT 测试台](virtuoso_tt.py) 复用已有版前测试的激励、负载和分析器。[审阅脚本](virtuoso_review.py) 直接从 GDS 绘图并生成[数值与运行身份](virtuoso_result.json)。
 
 ## 首次交接及前端草稿（历史）
 
-[器件摆放与关键布线](review.png) · [分层金属与旧图成因](contacts.png) · [离线交互视图](../../../work/layout/layoutml-clean-comparator/layoutml-viewer.html) · [交接时的 LML](strongarm.meso.lml) · [原始测量](measurements.json)
+[器件摆放与关键布线](review.png) · [分层金属与旧图成因](contacts.png) · 离线交互视图 (local archive: `work/layout/layoutml-clean-comparator/layoutml-viewer.html`) · [交接时的 LML](strongarm.meso.lml) · [原始测量](measurements.json)
 
 ## 2026-11-18 · Virtuoso 和 Calibre 首次筛查
 
-**LVS 通过，DRC 未通过。** 在 `thu-wei` 的 Virtuoso IC6.1.8 批处理会话中生成并保存了 `SAR_ADC_T28_LAYOUT / sar_strongarm_lml_exp / layout`，另起只读会话重新打开，核对 11 个原生 MOS 的 44 个端子和 7 个 M2 引脚。DRC 与 LVS 使用同一次 XStream 导出的 GDS。LVS 对冻结 B 版 CDL 匹配了 5 个 NMOS、6 个 PMOS、10 个网络和 7 个端口。原始提取多出 2 个二极管，规则过滤后未匹配项为零。[原始 LVS 报告](../../../work/layout/layoutml-clean-comparator/native/lml-comp-native-screen-20261118a/lvs/lvs.rep)
+**LVS 通过，DRC 未通过。** 在 `thu-wei` 的 Virtuoso IC6.1.8 批处理会话中生成并保存了 `SAR_ADC_T28_LAYOUT / sar_strongarm_lml_exp / layout`，另起只读会话重新打开，核对 11 个原生 MOS 的 44 个端子和 7 个 M2 引脚。DRC 与 LVS 使用同一次 XStream 导出的 GDS。LVS 对冻结 B 版 CDL 匹配了 5 个 NMOS、6 个 PMOS、10 个网络和 7 个端口。原始提取多出 2 个二极管，规则过滤后未匹配项为零。原始 LVS 报告 (local archive: `work/layout/layoutml-clean-comparator/native/lml-comp-native-screen-20261118a/lvs/lvs.rep`)
 
 | 草稿转入 OA 后的测量 | 实测结果 |
 | --- | --- |
@@ -93,7 +93,7 @@ V7 将输入对和尾管均拆成 0.5 µm 单指，在 P、N1、N2 三行内共�
 
 优先修 11 个栅接触共用的几何，先验证一个真实 PCell 的栅接入和相邻 130 nm 栅距下的两个独立栅。用它实际占用的空间决定哪些栅头需要错位，以及哪一排需要放宽，再调整反馈线拐角和小面积落点。当前金属层的异或为零，继续调整预览渲染无法消除这些标记。
 
-**运行记录。** `lml-comp-native-screen-20261118a` 从服务器登记到最终报告约 34 秒，包含两次 Virtuoso 启动、stream-out 和两套 Calibre 规则运行。这个耗时只计算原生检查作业。XStream 原始日志保留了 `XSTRM-35`，提示 `instance:drawing` 未列入流片层映射。独立原语试验中，两侧 dummy 均关闭时直接启用自动栅接入的几个参数组合触发了 PCell 求值错误。正式实验使用已复核的四端原生 MOS 与显式 `M1_PO` 栅接触，原语探针和正式运行分别留档。[逐层异或、规则计数、证据路径与散列](native_screen.json) · [原始 DRC 标记](../../../work/layout/layoutml-clean-comparator/native/lml-comp-native-screen-20261118a/drc/DRC_RES.db)
+**运行记录。** `lml-comp-native-screen-20261118a` 从服务器登记到最终报告约 34 秒，包含两次 Virtuoso 启动、stream-out 和两套 Calibre 规则运行。这个耗时只计算原生检查作业。XStream 原始日志保留了 `XSTRM-35`，提示 `instance:drawing` 未列入流片层映射。独立原语试验中，两侧 dummy 均关闭时直接启用自动栅接入的几个参数组合触发了 PCell 求值错误。正式实验使用已复核的四端原生 MOS 与显式 `M1_PO` 栅接触，原语探针和正式运行分别留档。[逐层异或、规则计数、证据路径与散列](native_screen.json) · 原始 DRC 标记 (local archive: `work/layout/layoutml-clean-comparator/native/lml-comp-native-screen-20261118a/drc/DRC_RES.db`)
 
 ## 摆放决定
 

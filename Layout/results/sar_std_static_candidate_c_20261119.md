@@ -62,7 +62,7 @@ On this shorter route the QB interconnect contributes 0.110 fF to ground and 0.5
 
 The extracted DC resistance from the macro power port to each of 18 selected device diffusion terminals spans 38.7–62.9 Ω on VDD and 36.2–56.8 Ω on VSS. The VDD paths to the first QUIET delay and its final qualifier measure 43.2 Ω and 43.7 Ω. These two-terminal measurements leave the other device loads open.
 
-The maintained generator reproduces the four seed inputs byte for byte. Applying its detailed route to a fresh private OA view reproduces the verified core geometry digest. [Placement generator](../design/sar_standard.py)
+The maintained generator reproduces the four seed inputs byte for byte. Applying its detailed route to a fresh private OA view reproduces the verified core geometry digest. [Placement generator](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/Layout/design/sar_standard.py)
 
 In frame 0 of the SS cold extraction, the eighth comparison moves from 97.953 to 97.524 ns after rerouting. At 90 ns the rerouted macro has issued 7 comparisons, 6 writes and 6 updates out of eight.
 

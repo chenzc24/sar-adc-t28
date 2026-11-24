@@ -1,6 +1,6 @@
 # SAR standard delay cells
 
-Five active RC delays were replaced by 52 native T28 DEL cells and 28 input-qualification AND gates. Ten polysilicon resistors and 230 MOM delay units were removed. The tested v3 DUT includes one explicit MOM load, CQB, from the internal clock latch node QB to VSS. The cross-coupled NAND gates store the logic state. An early prototype used an explicit 5 fF load at this node (commit efea0db, docs/sar8_async_implementation.md). The 5 fF value describes that prototype. The v3 measurements include the MOM device and do not establish that it is required. [Delay circuit](../../design/xtor/clock/delays_std.scs) · [Controller](../../design/xtor/sar/reset_data_or_std_delay.scs) · [Measured data, source hashes and run IDs](sar_std_delay_20261119.json)
+Five active RC delays were replaced by 52 native T28 DEL cells and 28 input-qualification AND gates. Ten polysilicon resistors and 230 MOM delay units were removed. The tested v3 DUT includes one explicit MOM load, CQB, from the internal clock latch node QB to VSS. The cross-coupled NAND gates store the logic state. An early prototype used an explicit 5 fF load at this node (commit efea0db, docs/sar8_async_implementation.md). The 5 fF value describes that prototype. The v3 measurements include the MOM device and do not establish that it is required. [Delay circuit](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/design/xtor/clock/delays_std.scs) · [Controller](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/design/xtor/sar/reset_data_or_std_delay.scs) · [Measured data, source hashes and run IDs](sar_std_delay_20261119.json)
 
 ## Clock and controller
 
@@ -59,4 +59,4 @@ The full-device measurements use native time points from startup through the two
 
 Full-code linearity, FFT, routed area and extracted timing belong to separate measurements. The previous RC layout remains bound to its original electrical sources.
 
-The layout checker flags the current DEL schematic against the previous RC floorplan. Its original [electrical manifest](../../design/frozen/quiet8p5_20261118/manifest.json) and [DUT entry](../../design/frozen/quiet8p5_20261118/dut.scs) remain available for reproducing the RC checks.
+The layout checker flags the current DEL schematic against the previous RC floorplan. Its original [electrical manifest](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/design/frozen/quiet8p5_20261118/manifest.json) and [DUT entry](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/design/frozen/quiet8p5_20261118/dut.scs) remain available for reproducing the RC checks.

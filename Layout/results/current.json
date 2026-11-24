@@ -2,11 +2,11 @@
   "planning_inputs_sha256": {
     "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "bde958452e88b369ed544270a2136a4e55728eb7140fbf9cfd9fd10551cafbdc",
-    "Layout/design/floorplan.json": "3364cbf1bd4b3573f3ba706b85d1e1a9b9f6be61803ffbd029deeebc44264d5b",
-    "Layout/specs/interfaces.json": "a8be4cfd9babb2d609a87db761602eb6f8d5cdc1815c68ae257a593c2ffa76b6",
-    "Layout/specs/constraints.json": "dcce7f4338715f80d545afbf1499705f2fc712b1195de50d7725cfaaa246e3b5",
-    "Layout/design/io_ring.json": "deb0c1f3d101771b1c68bc009cdc9ed4cdb16299db58d375c1c8b78bd54169f6",
+    "Layout/design/manifest.json": "39e555bddce68502c872bb6d9fae036b0fe4c899236b75987b89c1b7fd04459e",
+    "Layout/design/floorplan.json": "36ce2dee484190a2d90573ac4e3e2cee1024f8ab75b8b420e770255ac00b6f4c",
+    "Layout/specs/interfaces.json": "1f6364da8434ac4d81a026c6a70f180ed97f02cfcbe703c2d898924baac91fc3",
+    "Layout/specs/constraints.json": "d509edad632c61bd24659e6a577e3ac13b16b3b096e6589293603c0d25881a1f",
+    "Layout/design/io_ring.json": "9ce306d6eb95ca82799aab3bf597a0a07f3ed4caab128273fbf0966cbec877fc",
     "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
@@ -16,12 +16,12 @@
   "planning": {
     "view": "floorplan.svg",
     "area": "area.json",
-    "status": "coarse_plan_unimplemented",
+    "status": "floorplan_projection",
     "unresolved_budgets": []
   },
   "signoff": false,
   "electrical_design_id": "sar8_single_edge_bitwise_v1",
-  "qualification_scope": "Module-level only. No assembled ADC layout exists; every ADC run so far combines at most two extracted modules with schematic or cell-LPE views and ideal top-level wiring and supplies.",
+  "qualification_scope": "The block entries retain their dated module evidence. Chip physical verification is recorded for the r8 assembly with fill7. Stage 6 electrical results apply to the extracted fill5 core with its stated package and periphery models.",
   "bootstrap": {
     "status": "prefill_core_verified",
     "main_switch": "4 x 1 um/150 nm nch_18_mac, adopted 2026-11-21",
@@ -163,9 +163,9 @@
   },
   "integration": {
     "tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
-    "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/4",
-    "scope": "ADC core macro inside the planning envelope; IO ring, die and pads deferred",
-    "stage": "Stage 2 all-extracted ADC passed at TT, SS cold and FF hot (2026-11-22); route budgets adopted 2026-11-22 in Layout/specs/constraints.json; Stage 3 floorplan and Stage 4 placement merged (#17, #19); Stage 4a core-internal routes in sar8_adc_core/layout_route_int (2026-11-22, toplevel_route_internal.json: no new DRC rule, exact connectivity, adopted route budgets met in extraction); boundary routes, supply feeds and the shield VSS tie wait for the IO ring",
+    "signoff_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/12",
+    "scope": "ADC core, IO ring and filled chip. Package and bond-map acceptance are tracked in issue #18.",
+    "stage": "Stage 5 OA stream chip-sfill7-oa-chk2 checked. Stage 6 three-corner runs reported in issue #12. Final TT FFT and remaining electrical and physical dispositions are tracked there.",
     "freeze": {
       "date": "2026-11-21",
       "rule": "A block core change after the freeze reruns that block standalone checks and its pairwise ADC run with the CDAC before integration continues.",
@@ -246,6 +246,11 @@
         "status": "adopted 2026-11-22; Layout/specs/constraints.json holds the authoritative values"
       },
       "watch": "COMP_P/COMP_N are unbuffered StrongARM latch nodes; route load on them sets the SS-cold margin (3.6 ns per planned length at 0.2 fF/um). Every Stage 2 run also kept the ~10 fF CL_COMP_P/CL_COMP_N/CL_CMP_CLK model loads, so the adopted load limits have about 10 fF of headroom."
-    }
+    },
+    "chip_view": "sar8_adc_chip/layout_full_fill5_r8_seal",
+    "filled_chip_view": "sar8_adc_chip_filled/layout_fill7",
+    "chip_verification_record": "Layout/results/chip_fill.json",
+    "waiver_record": "Layout/results/chip_drc_waivers.md",
+    "package_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/18"
   }
 }

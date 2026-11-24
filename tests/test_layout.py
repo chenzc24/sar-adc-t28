@@ -126,11 +126,13 @@ class LayoutPlanTests(unittest.TestCase):
     def test_new_render_cannot_refresh_old_qualification(self):
         planning.render(self.root)
         p = self.root/'Layout/results/current.json'; data = json.loads(p.read_text())
+        data['signoff'] = True
         data['qualification_inputs_sha256'] = data['planning_inputs_sha256']
         p.write_text(json.dumps(data))
         self.mutate('design/floorplan.json', lambda d: d['blocks'][0]['origin'].__setitem__(0, d['blocks'][0]['origin'][0] + 1))
         self.assertTrue(planning.check(self.root)['planning_projection_stale'])
         planning.render(self.root)
+        self.assertTrue(json.loads(p.read_text())['signoff'])
         self.assertEqual(planning.check(self.root)['qualification_applicability'], 'stale')
 
     def test_current_schematic_cannot_inherit_another_layout(self):
