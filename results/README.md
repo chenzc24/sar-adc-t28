@@ -10,6 +10,10 @@
 
 ## Earlier measurements and archive records
 
+The frozen B standalone CDAC and comparator experiment used 30 local-mismatch seeds per module at TT, plus a nominal case and one repeat per module. It measured schematic block behavior. The original commit retains all 64 cases, receipts, scripts and numerical warnings. [Summary](mc/frozen_b_blocks_30/summary.json) · [Per-seed samples](mc/frozen_b_blocks_30/samples.csv) · [Validation](mc/frozen_b_blocks_30/validation_v2.json) · [Complete experiment](https://github.com/chenzc24/sar-adc-t28/blob/7477de9ba5db4008d1c6d5fbf5ce132538c1aaba/verification/sar8_mc/blocks/REVIEW.md)
+
+The early StrongARM input-pair screen compared one, two and four fingers. The four-finger candidate reduced nominal delay from 223.35 to 133.73 ps, but none of its 16 local-mismatch draws met the screened offset bracket. Neither candidate was adopted. The report identifies its fixtures, netlist hashes and reproduction scripts. [Experiment and measurements](https://github.com/chenzc24/sar-adc-t28/blob/bc6f75c45fa57ba7ceddb83d6f7dffc81f530692/docs/strongarm_input_pair_scaling.md)
+
 At experiment closeout, archive compact data, figures, warnings, and run identities. The retention policy permits cleanup of eligible raw waveforms. Keep receipts and archive indexes under `results/storage/`. [Waveform Retention and Cleanup](../docs/waveform-retention.md)
 
 On 2026-11-15, cleanup recovered 374.985 GiB of old waveforms on thu-song and retained the latest five-corner OR data. [Archive and deletion receipt](storage/20261115-song-waveform-cleanup.md)

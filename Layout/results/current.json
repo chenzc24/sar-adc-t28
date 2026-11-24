@@ -251,6 +251,46 @@
     "filled_chip_view": "sar8_adc_chip_filled/layout_fill7",
     "chip_verification_record": "Layout/results/chip_fill.json",
     "waiver_record": "Layout/results/chip_drc_waivers.md",
-    "package_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/18"
+    "package_tracker": "https://github.com/chenzc24/sar-adc-t28/issues/18",
+    "stage6": {
+      "final_corner_evidence": "https://github.com/chenzc24/sar-adc-t28/issues/12#issuecomment-7093047607",
+      "run_family": "sar8-s6f-*",
+      "wiring": "fill5 wiring extracted at the paired corner",
+      "reference_and_package": "Stage 1 system model",
+      "passed_corner_runs": 12,
+      "corners": [
+        "SS cold",
+        "TT",
+        "FF hot"
+      ],
+      "stimuli": [
+        "verify",
+        "extreme",
+        "carry",
+        "restart"
+      ],
+      "code_tolerance_lsb": 1,
+      "ss_cold_verify_read_margin_ns": 8.73,
+      "ss_cold_verify_gate_screen_v": 0.0991,
+      "gate_screen_limit_v": 0.1,
+      "ff_hot_carry_charge_disposition": {
+        "status": "accepted",
+        "supply_switching_charge_to_budget_ratio": 1.11,
+        "droop_mv": 22,
+        "droop_limit_mv": 45,
+        "pin_peaks_pass": true
+      },
+      "periphery": {
+        "evidence": "Layout/results/chip_objects.md#open",
+        "vin_run_ids": [
+          "sar8-s6pv-ssc-verify-a",
+          "sar8-s6pv-tt-verify-a"
+        ],
+        "output_run_id": "sar8-s6po-ffh-verify-a",
+        "codes_match_respective_controls": true,
+        "vin_route_ohm_per_side": 56.6,
+        "vin_widening_required": false
+      }
+    }
   }
 }
