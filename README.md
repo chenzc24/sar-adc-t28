@@ -1,6 +1,8 @@
 # SAR ADC T28
 
-An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The current design is the single-edge SAR with registered per-bit delay taps and a 45 ns high / 55 ns low external clock, adopted on 2026-11-20. It is qualified with foundry cell LPE and the extracted CDAC; its layout is not drawn yet. [Adoption report](results/design/sar_single_edge_adoption_20261120.md) · [Settling reference](results/design/sar_single_edge_settling_reference_20261120.md)
+An 8-bit, 10 MS/s, fully differential asynchronous SAR ADC. The current design is the single-edge SAR with registered per-bit delay taps and a 45 ns high / 55 ns low external clock, adopted on 2026-11-20. [Adoption report](results/design/sar_single_edge_adoption_20261120.md) · [Settling reference](results/design/sar_single_edge_settling_reference_20261120.md)
+
+The filled chip is available for review as `sar8_adc_chip_filled/layout_fill7` (r8, 892 µm). The OA stream has 224 DRC results, zero density results, LVS CORRECT and 296 ERC results. [Physical verification and waiver status](Layout/results/chip_drc_waivers.md) · [Fill exclusion audit](Layout/results/chip_fill.md#result) · [System verification and pending decisions](https://github.com/chenzc24/sar-adc-t28/issues/12) · [Pad and package review](https://github.com/chenzc24/sar-adc-t28/issues/18)
 
 | Topic | Entry point |
 | --- | --- |

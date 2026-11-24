@@ -31,7 +31,7 @@ This document covers every DRC and ERC result left on the filled chip. Each resu
 | Deviation | Comparator matching class: MATCHING, not ANARRAY_H/M | — | comparator | Accepted by the user |
 | Confirm | WITH_SEALRING_OPTION:WARNING, DM1–DM9.R.1 | 0 | — | Cleared |
 
-All 224 DRC results on `chip-sfill7-chk`: ESD.18g 120, ESD.19g 96, ESD.WARN.1 6, DIODMY_L 1, IO_CONNECT 1. The documented waivers cover 217. A run of `drc_waived.svrf` (`<remote_root>/userdrc/chip-sfill7/DRC_waived.rep`) reports 8: the conditional and open results. IO_CONNECT stays selected in that deck. All 296 ERC results are documented. No result lies inside the ADC core.
+All 224 DRC results on `chip-sfill7-chk`: ESD.18g 120, ESD.19g 96, ESD.WARN.1 6, DIODMY_L 1, IO_CONNECT 1. The documented waivers cover 217. A run of `drc_waived.svrf` (`<remote_root>/userdrc/chip-sfill7/DRC_waived.rep`) reports 8 results. Six ESD.WARN.1 await foundry guidance, one DIODMY_L needs the Bootstrap owner’s statement, and one IO_CONNECT remains selected as a documented non-gating advisory. All 296 ERC results are documented. No result lies inside the ADC core.
 
 ## Documented
 
@@ -107,8 +107,8 @@ Fill revision 7 lets the foundry utility fill inside the IO ring cells and under
 | AN.R.79.2m, OD density inside vs the 6 µm halo, limit 0.10 difference | **fails**: N array, die (409.74, 519.08)-(410.26, 520.94), 0.59 vs 0.24 (difference 0.348); P array, die (409.61, 521.17)-(410.39, 522.37), 0.50 vs 0.24 (difference 0.257) |
 | AN.R.79.5m | not run; would likely fail, the P row is 0.23 µm from the N array |
 
-- **Accepted risk:** per the deck's MATCH.WARN.1 text, mismatch may reach 3× the SPICE value. Against the extracted Monte Carlo of the v8 comparator (200 seeds, σ 12.05 mV, range −34.7 to +34.1 mV), that is about ±104 mV for an extreme die, 11.6 % of full scale.
-- **Why it is accepted:** the offset is a static input offset, measured and subtracted off-chip (issue #12, digital correction). It costs input range, not linearity. A real fix means re-laying out the comparator inside the frozen core and rerunning all of Stage 6. The halo lies mostly where the fill policy keeps OD out on purpose, so fill cannot close it.
+- The deck warns that mismatch may degrade by at least 3×. It gives no upper bound. The v8 extracted Monte Carlo measured σ = 12.05 mV and offsets from −34.7 to +34.1 mV over 200 seeds. Scaling those observed endpoints by 3 gives about ±104 mV as a sensitivity example. A silicon offset limit and yield would require separate evidence.
+- The recorded decision accepts normal MATCHING and the documented deviation from high matching. The ADC is uncalibrated. The 0.25 LSB allocation is a provisional residual target after correction. Correction range, resolution and qualification remain open in [the specification](../../docs/specification.md) and [#12](https://github.com/chenzc24/sar-adc-t28/issues/12).
 - **Decision:** the user, 2026-11-23 ("Add markers, write waiver").
 
 ## Cleared (confirm)
