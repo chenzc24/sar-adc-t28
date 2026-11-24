@@ -297,15 +297,32 @@ function installLayout(model, release) {
   fit();
 }
 
+async function fetchLayoutPart(path) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const response = await fetch(path, { signal: AbortSignal.timeout(18000) });
+      if (!response.ok) throw new Error(`Layout data request failed (${response.status})`);
+      return await response.arrayBuffer();
+    } catch (error) {
+      if (attempt === 1) throw error;
+    }
+  }
+}
+
 async function loadLayout() {
   const status = document.querySelector("#layout-loading");
   try {
-    const [manifest, geometry] = await Promise.all([
-      fetch("layout-data/release.json"), fetch("layout-data/chip.core.lml.gz"),
-    ]);
-    if (!manifest.ok || !geometry.ok) throw new Error("Layout data request failed");
+    const manifest = await fetch("layout-data/release.json?parts=1");
+    if (!manifest.ok) throw new Error("Layout manifest request failed");
     const release = await manifest.json();
-    const bytes = await new Response(geometry.body.pipeThrough(new DecompressionStream("gzip"))).text();
+    let loaded = 0;
+    const parts = await Promise.all(release.geometry_parts.map(async path => {
+      const bytes = await fetchLayoutPart(path);
+      status.textContent = `Loading the r8 chip layout (${++loaded}/${release.geometry_parts.length})…`;
+      return bytes;
+    }));
+    const stream = new Blob(parts).stream().pipeThrough(new DecompressionStream("gzip"));
+    const bytes = await new Response(stream).text();
     installLayout(parseLayout(bytes, release), release);
     status.hidden = true;
   } catch (error) {
