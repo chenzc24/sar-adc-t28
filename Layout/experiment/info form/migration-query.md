@@ -38,4 +38,4 @@ V4 的同一份 GDS 做了两次负对照。只把参考 CDL 中 NINP 的栅由 
 2. CDAC 在审阅版几何变化后按需重建，供同版多次查询。输出中过孔数明确标注“外部 route”或“含 PCell 内部的物理整网”。可先迁 MOM 位置、位分组、外部已赋名端口。
 3. Bootstrap 先迁 MOM 摆放；GRESET、浮动体端与完整器件连接沿用 OA/CDL/LVS。含填充 CDAC、SAR 数字单元层级、未保存 OA 修改均未取得足够的迁移证据。签核与寄生量继续引用同版 GDS、DRC/LVS/PEX。
 
-原始样本、转换日志及本机复核脚本位于 [work/layout/layoutml-migration-survey](../../../work/layout/layoutml-migration-survey/)。其中 `measure.py` 测转换，`out_query.py` 做独立金属连通与查询耗时对比，`mom_check.py` 核对电容，`change_check.py` 验证单线修改，`mos_check.py` 核对 MOS 关系。实验使用固定的 LayoutML 提交 `e19fb224207147ddb531d0ea2b1812b5862fd7e4`。
+原始样本、转换日志及本机复核脚本位于 work/layout/layoutml-migration-survey (local archive: `work/layout/layoutml-migration-survey`)。其中 `measure.py` 测转换，`out_query.py` 做独立金属连通与查询耗时对比，`mom_check.py` 核对电容，`change_check.py` 验证单线修改，`mos_check.py` 核对 MOS 关系。实验使用固定的 LayoutML 提交 `e19fb224207147ddb531d0ea2b1812b5862fd7e4`。

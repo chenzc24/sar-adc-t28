@@ -45,4 +45,4 @@ FF、0.99 V、−40°C，沿用 18 帧整机激励，含启动重复帧、12 个
 - 仿真零错误完成，耗时约 783 s；原始 CMI 告警、700.134 ns 附近的 SPECTRE-16780/16881 提示均保留。求解日志实际设置为 trap、reltol=1e-6、最大步长 2 ps。
 - 通过仅针对该 FF 冷角、18 帧、当前原生模型及工程规则；未覆盖其他角、MC、噪声、PEX、供电上电斜坡。体端与厚氧器件没有因薄氧规则通过而获得可靠性资格。OA/Canvas 未更新。
 
-[机器可读对照与逐位结果](dff_reset_or_ffc_20261115.json) · [候选网表](../../design/xtor/sar/reset_data_or.scs) · [现行规则](../../specs/soa_rule.yaml) · [先前隔离对照](dff_periphery_order_20261115.md)
+[机器可读对照与逐位结果](dff_reset_or_ffc_20261115.json) · [候选网表](https://github.com/chenzc24/sar-adc-t28/blob/377b5a09bea2fb9449829a34160207b25f8d0a37/design/xtor/sar/reset_data_or.scs) · [现行规则](../../specs/soa_rule.yaml) · [先前隔离对照](dff_periphery_order_20261115.md)

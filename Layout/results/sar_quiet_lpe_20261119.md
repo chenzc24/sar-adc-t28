@@ -90,7 +90,7 @@ The native traces also record sample tracking, the final write relative to guard
 
 The measured 30%–70% local-rail transition time divided by the library derate gives the slew at the table index. The JSON distinguishes in-table interpolation, table-boundary estimates and intervals censored by the trace boundary. [Liberty Reference Manual, section 1.6.29](https://people.eecs.berkeley.edu/~alanmi/publications/other/liberty07_03.pdf)
 
-PRESET is the OR of SAMPLE_INT and the delayed idle request. A short gap between conversions can cancel the pending idle request. At each recorded frame boundary, the table measures PRESET against the actual SEQ_SAMPLE track opening. The JSON also records which OR inputs were high at the PRESET transition. [Reference controller](../../design/xtor/reference/minimal_msb_d2.scs)
+PRESET is the OR of SAMPLE_INT and the delayed idle request. A short gap between conversions can cancel the pending idle request. At each recorded frame boundary, the table measures PRESET against the actual SEQ_SAMPLE track opening. The JSON also records which OR inputs were high at the PRESET transition. [Reference controller](https://github.com/chenzc24/sar-adc-t28/blob/94e6394a7a9591107f54cebf37ae395485e07e05/design/xtor/reference/minimal_msb_d2.scs)
 
 The previous FF-cold circuit measured 1.0337 ns from QUIET request to qualified output. The branch target is approximately 1.03 ns. The update-to-comparison interval includes other gates and is measured separately.
 

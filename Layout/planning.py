@@ -455,7 +455,7 @@ def render(root=ROOT):
               f'<text x="12" y="{ch+44}" font-size="3.5">Green: measured outlines. Dashed: channels (brown), decoupling (green),</text>',
               f'<text x="12" y="{ch+51}" font-size="3.5">fill exclusion (red), keep-out (dark red), guard ring (purple).</text>',
               f'<text x="12" y="{ch+58}" font-size="3.5">Lines: TOP (orange), VIN (teal), signals (blue), balance stubs (grey).</text>',
-              f'<text x="12" y="{ch+65}" font-size="3.5">Circles: declared crossings. Die / IO / extracted budgets: not finalized.</text>',
+              f'<text x="12" y="{ch+65}" font-size="3.5">Circles: declared crossings. Chip assembly and verification: see chip_fill.md.</text>',
               '</g></svg>']
     target = root/'Layout/results/floorplan.svg'
     target.write_text('\n'.join(parts)+'\n', encoding='utf-8')
@@ -463,7 +463,8 @@ def render(root=ROOT):
     current_path = root/'Layout/results/current.json'
     current = json.loads(current_path.read_text()) if current_path.exists() else {}
     current.update(planning_inputs_sha256=report['planning_inputs_sha256'],
-                   planning={'view': 'floorplan.svg', 'area': 'area.json', 'status': 'coarse_plan_unimplemented',
-                             'unresolved_budgets': report['unresolved_budgets']}, signoff=False)
+                   planning={'view': 'floorplan.svg', 'area': 'area.json', 'status': 'floorplan_projection',
+                             'unresolved_budgets': report['unresolved_budgets']})
+    current.setdefault('signoff', False)
     write_json(current_path, current)
     return {'view': str(target), 'area': str(root/'Layout/results/area.json'), 'signoff': False}

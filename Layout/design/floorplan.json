@@ -1,6 +1,6 @@
 {
   "units": "um",
-  "status": "coarse_proposal_not_applied_to_OA",
+  "status": "floorplan_projection",
   "core_bbox": [
     0,
     0,
@@ -23,7 +23,7 @@
       449.0
     ],
     "frame_note": "die_bbox is in this file's core frame; io_ring.json uses die coordinates.",
-    "status": "ring_cell_in_oa_assembly_not_applied"
+    "status": "ring_r2_assembled_in_chip_r8"
   },
   "blocks": [
     {
@@ -1954,7 +1954,7 @@
     "north": "VINN/VINP straight onto the two Bootstrap VIN pins (M5, 9.93 um each, mirrored); the analog VDD/VSS trunk enters between them at ADC.VDD!@north/ADC.0@north (x 44.115/48.115) through analog_decap_slot.",
     "east": "D0-D7 out and SAMPLE in on M7 across the SAR macro; SAR VDD/VSS at ADC.VDD!@sar/ADC.0@sar (y 74/71) above SAMPLE, into sar_decap_north.",
     "south_west": "VREFP/VREFN on four west-edge pins interleaved like their pads (ADC.VREFP@a/b at y 67/55, ADC.VREFN@a/b at y 61/49) into the reference network; pair VDD/VSS at ADC.VDD!@pair/ADC.0@pair on the south edge (x 44/48), below the pair's M6 terminals on the XREF strip.",
-    "die_and_io": "Layout/design/io_ring.json: 9 x 9 ring, 760 x 760 um outline, core origin at die (363.885, 449). The ring cell is in OA as SAR_ADC_T28_LAYOUT/sar8_io_ring (cell-level DRC and LVS clean, Layout/results/io_ring_verification.json); the ADC assembly is not applied."
+    "die_and_io": "Layout/design/io_ring.json: 9 x 9 ring, 760 x 760 um outline, core origin at die (363.885, 449). The ring cell is in OA as SAR_ADC_T28_LAYOUT/sar8_io_ring (cell-level DRC and LVS clean, Layout/results/io_ring_verification.json); the r8 assembly uses sar8_io_ring/layout_r2, with the filled OA verification in Layout/results/chip_fill.json."
   },
   "reasoning": "The XREF + CDAC pair anchors the plan. The comparator sits on the CDAC TOP exits, flanked by the two Bootstrap cells so TOPN and TOPP see mirrored branches. The Bootstrap cells are lifted 2.7 um above the comparator to leave a channel for its outputs, CMP_CLK and the SEQ_SAMPLE tree. The comparator pins fix the channel order (OUTP lowest, CMP_CLK, OUTN), so nothing crosses near the comparator. The frozen SAR pin order (SEQ_SAMPLE, COMP_N, COMP_P, CMP_CLK from south to north) then forces five crossings, placed in the corridor; a balance stub gives OUTP the CMP_CLK crossing that OUTN cannot avoid. The CODE bus runs CODE0 on the eastmost corridor track and has no crossings. D0-D7 and SAMPLE cross the SAR macro to the east edge.",
   "reserve": "Unallocated space belongs to routing, supplies, isolation, guard rings and decoupling; it is not a routed utilization measurement. Decoupling regions are sized at the planning density in power_plan.",
