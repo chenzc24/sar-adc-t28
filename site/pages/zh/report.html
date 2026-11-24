@@ -3,91 +3,339 @@
   <div><p class="report-date">2026.11.24 · TSMC 28 nm</p>
   <h1>一个 SAR ADC 的设计与返工</h1>
   <p class="report-subtitle">8 位异步 SAR ADC 阶段报告</p>
+  <p class="report-verdict">提取后的 ADC 通过了全部 12 组最终工艺角短测，填充后整片的每个 DRC 结果都已归类。下方地图标出的 36 次返工与未决发现中，28 次源于模块结论没能经受下一层的负载、接口或规则。</p>
   <p>几次最昂贵的返工，起点都早于版图：参考状态在两个模块里重复保存，数字门换了而 RC 延时还在，模块通过后才接入真实焊盘。沿着每一版的网表、提取和规则检查回看，可以找到哪些决定本可提前做。</p>
-  <nav class="report-jumps" aria-label="报告目录"><a href="#scope">指标与边界</a><a href="#iterations">设计迭代</a><a href="#next">经验与下一步</a></nav></div>
+  <nav class="report-jumps" aria-label="报告目录"><a href="#map">返工地图</a><a href="#iterations">四条返工链</a><a href="#review">放行关口</a><a href="#scope">指标与边界</a><a href="#status">未决事项</a><a href="#lanes">其他记录</a></nav></div>
   <figure><a href="layout.html"><img src="${asset_base}assets/report-chip.png" alt="892 µm 方形芯片的外围焊盘、顶层互连与 ADC 核心位置"></a><figcaption>r8 未填充版图 · 892 × 892 µm，核心 122 × 111 µm。 <a href="layout.html">放大查看 ↗</a></figcaption></figure>
 </header>
-<section class="report-section" id="scope"><h2>转换器的边界</h2>
+<section class="report-glance" aria-label="状态与经验">
+<dl class="report-figures">
+<div class="figure-pass"><dt>最终工艺角短测</dt><dd><strong>12/12</strong> 通过</dd><dd>fill5 核心 · SS 冷、TT、FF 热 × 常规、极值、大进位、重启 · 输出在 ±1 码内。 <a href="$repository/issues/12#issuecomment-7093047607">12 组后仿 ↗</a></dd></div>
+<div class="figure-pass"><dt>填充后整片 DRC 结果</dt><dd><strong>224</strong> 全部归类</dd><dd>217 项有文件依据 · 1 项待自举负责人书面说明 · 6 项提交 TSMC。LVS 一致、密度 0、平坦闩锁 0。 <a href="$snapshot/Layout/results/chip_drc_waivers.md#summary">豁免清单 ↗</a></dd></div>
+<div class="figure-open"><dt>FF 超限</dt><dd><strong>2</strong> 项未决</dd><dd>FF 冷 VDS 757.8 ps，限值 100 ps · FF 热保持 4.130 mV，限值 3.516 mV。 <a href="#status">责任人 ↓</a></dd></div>
+<div class="figure-pending"><dt>TT 有噪 FFT</dt><dd><strong>待回收</strong></dd><dd>提取版 ADC 的 SNDR 与 ENOB；随后做码密度线性估计。目前功耗 57–394 µW，目标 1 mW。 <a href="$repository/issues/60">全码与频谱计划 ↗</a></dd></div>
+</dl>
+<h2 class="glance-heading">四条经验</h2>
+<ul class="lesson-cards">
+<li class="lesson-load"><h3>通过只对当时的负载成立</h3><p>采样器、CDAC 和延时单元都先通过，又在下一层加上负载后失效：平坦阵列、通用填充、单元内部互连、VIN 焊盘。</p><a href="#frontend">采样器链 ↓</a></li>
+<li class="lesson-handoff"><h3>交接未闭合的条件</h3><p>输出保持、参考栅控和 RC 延时面积都曾注明留待后续。没有一次冻结把这些备注交给下一位负责人，于是各自变成了返工。</p><a href="#handoff">验证范围链 ↓</a></li>
+<li class="lesson-rule"><h3>引用规则原文，而非标记位置</h3><p>焊盘供电数量、钳位摆放、1 Ω 母线规则、钳位方向和密封环角部，都是核对规则原文之后才定下来。</p><a href="#chip">外围链 ↓</a></li>
+<li class="lesson-scope"><h3>写明每项检查覆盖了什么</h3><p>部分 LVS、层次 DRC、改名探针和理想延时元件，都“通过”了它们并未检查的内容。正是外围回放，才让核心结果能代表整片。</p><a href="#handoff">验证范围链 ↓</a></li>
+</ul>
+</section>
+<section class="report-section" id="map"><h2>返工地图</h2>
+<p class="section-lead">每个标记是一次返工，放在它改动的模块泳道上，按根因着色。连线把同一条返工链串起来。时间轴向集成阶段放大，大部分返工发生在那里。点击标记可展开对应记录。</p>
+<!-- map:start -->
+<div class="map-scroll">
+<svg class="rework-map" viewBox="0 0 1200 480" role="group" aria-labelledby="map-title map-desc" font-family="inherit">
+<title id="map-title">返工地图：按模块分泳道，横轴为时间，标记按根因着色</title><desc id="map-desc">36 次返工与未决发现，8 月至 11 月 24 日。时间轴在 11 月 21–24 日放大。每个标记链接到下方折叠的详细记录。</desc>
+<rect x="0" y="40" width="1200" height="72" fill="#f3f6ee"/>
+<text x="10" y="80" font-size="12.5" font-weight="650" fill="#17241e">采样器 · 自举</text>
+<text x="10" y="152" font-size="12.5" font-weight="650" fill="#17241e">SAR 时序 · 控制</text>
+<rect x="0" y="184" width="1200" height="72" fill="#f3f6ee"/>
+<text x="10" y="224" font-size="12.5" font-weight="650" fill="#17241e">比较器</text>
+<text x="10" y="296" font-size="12.5" font-weight="650" fill="#17241e">CDAC · 参考</text>
+<rect x="0" y="328" width="1200" height="72" fill="#f3f6ee"/>
+<text x="10" y="368" font-size="12.5" font-weight="650" fill="#17241e">IO · ESD · 封装</text>
+<text x="10" y="440" font-size="12.5" font-weight="650" fill="#17241e">填充 · 规则 · 验证</text>
+<rect x="183" y="40" width="8" height="432" fill="#fff"/>
+<path d="M183.0 28l4 -6l4 6" fill="none" stroke="#6b7b71" stroke-width="1.2"/>
+<rect x="343" y="40" width="8" height="432" fill="#fff"/>
+<path d="M343.0 28l4 -6l4 6" fill="none" stroke="#6b7b71" stroke-width="1.2"/>
+<line x1="150.0" y1="36" x2="150.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="150.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">8 月</text>
+<line x1="192.0" y1="36" x2="192.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="192.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">10/15</text>
+<line x1="239.7" y1="36" x2="239.7" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="239.7" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">22</text>
+<line x1="287.5" y1="36" x2="287.5" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="287.5" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">29</text>
+<line x1="307.9" y1="36" x2="307.9" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="307.9" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick"></text>
+<line x1="352.0" y1="36" x2="352.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="352.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">11/15</text>
+<line x1="418.7" y1="36" x2="418.7" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="418.7" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">16</text>
+<line x1="485.3" y1="36" x2="485.3" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="485.3" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">17</text>
+<line x1="552.0" y1="36" x2="552.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="552.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">18</text>
+<line x1="618.7" y1="36" x2="618.7" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="618.7" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">19</text>
+<line x1="685.3" y1="36" x2="685.3" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="685.3" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">20</text>
+<line x1="752.0" y1="36" x2="752.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="752.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">21</text>
+<line x1="861.0" y1="36" x2="861.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="861.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">22</text>
+<line x1="970.0" y1="36" x2="970.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="970.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">23</text>
+<line x1="1079.0" y1="36" x2="1079.0" y2="472" stroke="#d7dfd1" stroke-width="1"/>
+<text x="1079.0" y="30" font-size="11" text-anchor="middle" fill="#4c5f55" class="tick">24</text>
+<text x="152" y="464" font-size="10.5" fill="#4c5f55">8 月：10 位行为模型 · 9 月：开关关断实验</text>
+<line x1="160.2" y1="76.0" x2="205.6" y2="76.0" stroke="#7c8a80" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<line x1="226.1" y1="148.0" x2="246.5" y2="148.0" stroke="#2a78d6" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<line x1="273.8" y1="148.0" x2="328.4" y2="148.0" stroke="#2a78d6" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<line x1="418.7" y1="220.0" x2="752.0" y2="220.0" stroke="#7c8a80" stroke-opacity=".45" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 3"/>
+<line x1="253.4" y1="292.0" x2="287.5" y2="292.0" stroke="#9b59b6" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<line x1="592.0" y1="292.0" x2="718.7" y2="292.0" stroke="#eb6834" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<line x1="226.1" y1="364.0" x2="861.0" y2="364.0" stroke="#2a78d6" stroke-opacity=".45" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 3"/>
+<line x1="970.0" y1="436.0" x2="1079.0" y2="436.0" stroke="#eb6834" stroke-opacity=".45" stroke-width="4" stroke-linecap="round"/>
+<g fill="none" stroke="#33463b" stroke-opacity=".38" stroke-width="1.4">
+<path d="M328.4 148.0L552.0 148.0"/>
+<path d="M552.0 148.0L638.7 148.0"/>
+<path d="M638.7 148.0L678.7 148.0"/>
+<path d="M678.7 148.0L712.0 148.0"/>
+<path d="M712.0 148.0L745.3 148.0"/>
+<path d="M745.3 148.0L1111.7 148.0"/>
+<path d="M205.6 76.0L225.4 76.0"/>
+<path d="M225.4 76.0C225.4 184.0 718.7 184.0 718.7 292.0"/>
+<path d="M718.7 292.0C718.7 184.0 762.9 184.0 762.9 76.0"/>
+<path d="M762.9 76.0L877.3 76.0"/>
+<path d="M877.3 76.0L926.4 76.0"/>
+<path d="M926.4 76.0L1013.6 76.0"/>
+<path d="M1013.6 76.0L1111.7 76.0"/>
+<path d="M817.4 364.0L931.8 364.0"/>
+<path d="M931.8 364.0L970.0 364.0"/>
+<path d="M970.0 364.0L1019.0 364.0"/>
+<path d="M1019.0 364.0L1062.7 364.0"/>
+<path d="M1062.7 364.0C1062.7 400.0 1079.0 400.0 1079.0 436.0"/>
+<path d="M1079.0 436.0L1139.0 436.0"/>
+<path d="M226.1 148.0L246.5 148.0" stroke-dasharray="5 4"/>
+<path d="M246.5 148.0C246.5 256.0 861.0 256.0 861.0 364.0" stroke-dasharray="5 4"/>
+<path d="M861.0 364.0C861.0 256.0 871.9 256.0 871.9 148.0" stroke-dasharray="5 4"/>
+<path d="M871.9 148.0C871.9 292.0 899.2 292.0 899.2 436.0" stroke-dasharray="5 4"/>
+<path d="M899.2 436.0C899.2 400.0 931.8 400.0 931.8 364.0" stroke-dasharray="5 4"/>
+<path d="M931.8 364.0C931.8 400.0 1139.0 400.0 1139.0 436.0" stroke-dasharray="5 4"/>
+</g>
+<a href="#sar" aria-label="链 1"><circle cx="311.4" cy="148.0" r="8" fill="#15251e"/><text x="311.4" y="151.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">1</text></a>
+<a href="#frontend" aria-label="链 2"><circle cx="188.6" cy="76.0" r="8" fill="#15251e"/><text x="188.6" y="79.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">2</text></a>
+<a href="#chip" aria-label="链 3"><circle cx="800.4" cy="364.0" r="8" fill="#15251e"/><text x="800.4" y="367.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">3</text></a>
+<a href="#handoff" aria-label="链 4"><circle cx="209.1" cy="148.0" r="8" fill="#15251e"/><text x="209.1" y="151.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">4</text></a>
+<a href="#d-boot-topology" aria-label="8 月底–10 月 19 日 · 自举换拓扑；同一 10 位负载下保持误差 1.536 → 0.394 mV"><title>8 月底–10 月 19 日 · 自举换拓扑；同一 10 位负载下保持误差 1.536 → 0.394 mV</title><rect x="191.6" y="62.0" width="28" height="28" fill="transparent"/><circle cx="205.6" cy="76.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="205.6" y="64.0" font-size="11" text-anchor="middle" fill="#17241e">换拓扑</text></a>
+<a href="#d-boot-topology" aria-label="10 月 19 日 · 8 位平坦阵列加大负载：0.5 µm 开关 12.59 mV，1 µm 降到 0.126 mV"><title>10 月 19 日 · 8 位平坦阵列加大负载：0.5 µm 开关 12.59 mV，1 µm 降到 0.126 mV</title><rect x="211.4" y="62.0" width="28" height="28" fill="transparent"/><circle cx="225.4" cy="76.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="225.4" y="97.0" font-size="11" text-anchor="middle" fill="#17241e">开关加宽</text></a>
+<a href="#d-sampler-fingers" aria-label="11 月 21 日 · 接入提取 CDAC 后 SS 冷 10 帧中 7 帧超过 0.25 LSB；改用四指"><title>11 月 21 日 · 接入提取 CDAC 后 SS 冷 10 帧中 7 帧超过 0.25 LSB；改用四指</title><rect x="748.9" y="62.0" width="28" height="28" fill="transparent"/><circle cx="762.9" cy="76.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="762.9" y="64.0" font-size="11" text-anchor="middle" fill="#17241e">两指→四指</text></a>
+<a href="#d-boot-r2" aria-label="11 月 22–23 日 · 接入焊盘后两路采样器出现闩锁标记；r2 加宽护环"><title>11 月 22–23 日 · 接入焊盘后两路采样器出现闩锁标记；r2 加宽护环</title><rect x="863.3" y="62.0" width="28" height="28" fill="transparent"/><circle cx="877.3" cy="76.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="877.3" y="97.0" font-size="11" text-anchor="middle" fill="#17241e">VIN 焊盘闩锁</text></a>
+<a href="#d-boot-fill" aria-label="11 月 22 日 · 顶层填充使自举电容极板对地由 27–33 fF 升到 127 fF；r2 自带填充，37.9 / 40.4 fF"><title>11 月 22 日 · 顶层填充使自举电容极板对地由 27–33 fF 升到 127 fF；r2 自带填充，37.9 / 40.4 fF</title><rect x="912.4" y="62.0" width="28" height="28" fill="transparent"/><circle cx="926.4" cy="76.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="926.4" y="64.0" font-size="11" text-anchor="middle" fill="#17241e">自举电容被填充</text></a>
+<a href="#d-boot-gate" aria-label="11 月 23 日 · SS 冷栅压筛查 0.118 → 0.0972 → 0.0991 V，限值 0.100 V"><title>11 月 23 日 · SS 冷栅压筛查 0.118 → 0.0972 → 0.0991 V，限值 0.100 V</title><rect x="999.6" y="62.0" width="28" height="28" fill="transparent"/><circle cx="1013.6" cy="76.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="1013.6" y="97.0" font-size="11" text-anchor="middle" fill="#17241e">栅压余约 1 mV</text></a>
+<a href="#d-boot-ffhot" aria-label="11 月 24 日 · 未决：FF 热单端保持误差 4.130 mV，限值 3.516 mV"><title>11 月 24 日 · 未决：FF 热单端保持误差 4.130 mV，限值 3.516 mV</title><rect x="1097.7" y="62.0" width="28" height="28" fill="transparent"/><circle cx="1111.7" cy="76.0" r="6.5" fill="#fff" stroke="#eb6834" stroke-width="2.2"/><text x="1111.7" y="64.0" font-size="11" text-anchor="middle" fill="#17241e">FF 热保持</text></a>
+<a href="#d-sar-simplify" aria-label="10 月 20 日 · 删去输出存储与 EOC，1742 → 1476 MOS；输出保持留给芯片接口"><title>10 月 20 日 · 删去输出存储与 EOC，1742 → 1476 MOS；输出保持留给芯片接口</title><rect x="212.1" y="134.0" width="28" height="28" fill="transparent"/><circle cx="226.1" cy="148.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="226.1" y="136.0" font-size="11" text-anchor="middle" fill="#17241e">SAR 简化</text></a>
+<a href="#d-ref-interface" aria-label="10 月 20–23 日 · 理想栅控掩盖了一次被拒的定时回调（65 → 1）；R4 改为管级控制"><title>10 月 20–23 日 · 理想栅控掩盖了一次被拒的定时回调（65 → 1）；R4 改为管级控制</title><rect x="232.5" y="134.0" width="28" height="28" fill="transparent"/><rect x="240.5" y="142.0" width="12" height="12" rx="1.5" fill="#2a78d6" stroke="#fff" stroke-width="1.5"/><text x="246.5" y="169.0" font-size="11" text-anchor="middle" fill="#17241e">理想参考栅控</text></a>
+<a href="#d-rc-migrate" aria-label="10 月 27 日–11 月 4 日 · 门换标准单元，RC 延时保留；其占地和布线后读出不在验收范围"><title>10 月 27 日–11 月 4 日 · 门换标准单元，RC 延时保留；其占地和布线后读出不在验收范围</title><rect x="314.4" y="134.0" width="28" height="28" fill="transparent"/><rect x="322.4" y="142.0" width="12" height="12" rx="1.5" fill="#2a78d6" stroke="#fff" stroke-width="1.5"/><text x="328.4" y="136.0" font-size="11" text-anchor="middle" fill="#17241e">保留 RC</text></a>
+<a href="#d-rc-cost" aria-label="11 月 18 日 · 布线后 QUIET 电阻在 SS 冷晚读 6.11 ns；RC 宏 2058 µm²"><title>11 月 18 日 · 布线后 QUIET 电阻在 SS 冷晚读 6.11 ns；RC 宏 2058 µm²</title><rect x="538.0" y="134.0" width="28" height="28" fill="transparent"/><circle cx="552.0" cy="148.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="552.0" y="169.0" font-size="11" text-anchor="middle" fill="#17241e">RC 晚读 6.11 ns</text></a>
+<a href="#d-std-delay" aria-label="11 月 19 日 · 52 个 DEL、28 个 AND 取代 RC；单元内部互连使 DEL250 由 280 增至 471 ps"><title>11 月 19 日 · 52 个 DEL、28 个 AND 取代 RC；单元内部互连使 DEL250 由 280 增至 471 ps</title><rect x="624.7" y="134.0" width="28" height="28" fill="transparent"/><circle cx="638.7" cy="148.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="638.7" y="136.0" font-size="11" text-anchor="middle" fill="#17241e">标准延时</text></a>
+<a href="#d-commit" aria-label="11 月 19–20 日 · 采样开启误差 25.23 LSB 暴露复位过晚；改为单一 COMMIT 边沿"><title>11 月 19–20 日 · 采样开启误差 25.23 LSB 暴露复位过晚；改为单一 COMMIT 边沿</title><rect x="664.7" y="134.0" width="28" height="28" fill="transparent"/><circle cx="678.7" cy="148.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="678.7" y="169.0" font-size="11" text-anchor="middle" fill="#17241e">COMMIT</text></a>
+<a href="#d-bit6" aria-label="11 月 20 日 · 读码正确，却掩盖了 FF 冷 bit 6 顶板 −0.393 LSB 误差"><title>11 月 20 日 · 读码正确，却掩盖了 FF 冷 bit 6 顶板 −0.393 LSB 误差</title><rect x="698.0" y="134.0" width="28" height="28" fill="transparent"/><path d="M712.0 140.5L719.5 148.0L712.0 155.5L704.5 148.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="712.0" y="136.0" font-size="11" text-anchor="middle" fill="#17241e">bit 6 误差</text></a>
+<a href="#d-4555" aria-label="11 月 20–21 日 · 采样 45 ns，逐位抽头 11/9/7/6/5/4/4；布线后余量 6.95 ns"><title>11 月 20–21 日 · 采样 45 ns，逐位抽头 11/9/7/6/5/4/4；布线后余量 6.95 ns</title><rect x="731.3" y="134.0" width="28" height="28" fill="transparent"/><circle cx="745.3" cy="148.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="745.3" y="169.0" font-size="11" text-anchor="middle" fill="#17241e">45/55 ns</text></a>
+<a href="#d-route-budgets" aria-label="11 月 22 日 · Stage 2 理想延时元件去掉了接收端负载；改为 RC；模型负载重复计入"><title>11 月 22 日 · Stage 2 理想延时元件去掉了接收端负载；改为 RC；模型负载重复计入</title><rect x="857.9" y="134.0" width="28" height="28" fill="transparent"/><path d="M871.9 140.5L879.4 148.0L871.9 155.5L864.4 148.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="871.9" y="136.0" font-size="11" text-anchor="middle" fill="#17241e">理想延时</text></a>
+<a href="#d-vds" aria-label="11 月 20 → 24 日 · 未决：扩大提取后端压重开，16 对 VDS，最坏 757.8 ps，限值 100 ps"><title>11 月 20 → 24 日 · 未决：扩大提取后端压重开，16 对 VDS，最坏 757.8 ps，限值 100 ps</title><rect x="1097.7" y="134.0" width="28" height="28" fill="transparent"/><circle cx="1111.7" cy="148.0" r="6.5" fill="#fff" stroke="#eb6834" stroke-width="2.2"/><text x="1111.7" y="169.0" font-size="11" text-anchor="middle" fill="#17241e">FF 冷 VDS</text></a>
+<a href="#d-comparator" aria-label="11 月 16–21 日 · sym2 → v8：99.18 → 5.74 µm²，最大判决延迟 517.3 → 314.3 ps"><title>11 月 16–21 日 · sym2 → v8：99.18 → 5.74 µm²，最大判决延迟 517.3 → 314.3 ps</title><rect x="738.0" y="206.0" width="28" height="28" fill="transparent"/><circle cx="752.0" cy="220.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="752.0" y="208.0" font-size="11" text-anchor="middle" fill="#17241e">三行共享扩散</text></a>
+<a href="#d-matching" aria-label="11 月 23 日 · ANARRAY_H 未过 OD 密度；改用普通 MATCHING 标记，接受偏离高匹配"><title>11 月 23 日 · ANARRAY_H 未过 OD 密度；改用普通 MATCHING 标记，接受偏离高匹配</title><rect x="999.6" y="206.0" width="28" height="28" fill="transparent"/><path d="M1013.6 212.5L1021.1 220.0L1013.6 227.5L1006.1 220.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="1013.6" y="241.0" font-size="11" text-anchor="middle" fill="#17241e">匹配等级</text></a>
+<a href="#d-soa-trials" aria-label="10 月 24–29 日 · 栅阻与 MOM 试改转移了最坏应力；0.99 V 只是模型偏置告警线"><title>10 月 24–29 日 · 栅阻与 MOM 试改转移了最坏应力；0.99 V 只是模型偏置告警线</title><rect x="273.5" y="278.0" width="28" height="28" fill="transparent"/><path d="M287.5 284.5L295.0 292.0L287.5 299.5L280.0 292.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="287.5" y="280.0" font-size="11" text-anchor="middle" fill="#17241e">SOA 试改</text></a>
+<a href="#d-dup-state" aria-label="11 月 15 日 · 参考驱动另存一份试探码；判决状态收回 SAR"><title>11 月 15 日 · 参考驱动另存一份试探码；判决状态收回 SAR</title><rect x="358.0" y="278.0" width="28" height="28" fill="transparent"/><rect x="366.0" y="286.0" width="12" height="12" rx="1.5" fill="#2a78d6" stroke="#fff" stroke-width="1.5"/><text x="372.0" y="280.0" font-size="11" text-anchor="middle" fill="#17241e">重复状态</text></a>
+<a href="#d-d2-or" aria-label="11 月 15 日 · MSB 换 D2、DFF 复位加 OR，原理图端压违例清零"><title>11 月 15 日 · MSB 换 D2、DFF 复位加 OR，原理图端压违例清零</title><rect x="398.0" y="278.0" width="28" height="28" fill="transparent"/><circle cx="412.0" cy="292.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="412.0" y="313.0" font-size="11" text-anchor="middle" fill="#17241e">D2 与复位 OR</text></a>
+<a href="#d-cdac-pair" aria-label="11 月 18 日 · 8354.62 → 3738.62 µm²；最差单比特残差 0.049 → 0.129 LSB"><title>11 月 18 日 · 8354.62 → 3738.62 µm²；最差单比特残差 0.049 → 0.129 LSB</title><rect x="538.0" y="278.0" width="28" height="28" fill="transparent"/><circle cx="552.0" cy="292.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="552.0" y="280.0" font-size="11" text-anchor="middle" fill="#17241e">配对重排</text></a>
+<a href="#d-cdac-fill" aria-label="11 月 18–21 日 · 通用填充使 TOP 负载 38.6 → 141 fF；改为阵列自管填充并重排小位"><title>11 月 18–21 日 · 通用填充使 TOP 负载 38.6 → 141 fF；改为阵列自管填充并重排小位</title><rect x="704.7" y="278.0" width="28" height="28" fill="transparent"/><circle cx="718.7" cy="292.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="718.7" y="313.0" font-size="11" text-anchor="middle" fill="#17241e">填充：TOP +100 fF</text></a>
+<a href="#d-rref" aria-label="11 月 22 日 · 首版 RREF 提取 21.7–24.6 Ω，0.12 LSB 超过 0.10；重画后 17.2 Ω、0.035 LSB"><title>11 月 22 日 · 首版 RREF 提取 21.7–24.6 Ω，0.12 LSB 超过 0.10；重画后 17.2 Ω、0.035 LSB</title><rect x="890.6" y="278.0" width="28" height="28" fill="transparent"/><circle cx="904.6" cy="292.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="904.6" y="280.0" font-size="11" text-anchor="middle" fill="#17241e">RREF 42 → 52 段</text></a>
+<a href="#d-refsel" aria-label="11 月 24 日 · 32 个栅端口合为 16 个 REFSEL；连接不变"><title>11 月 24 日 · 32 个栅端口合为 16 个 REFSEL；连接不变</title><rect x="1075.9" y="278.0" width="28" height="28" fill="transparent"/><circle cx="1089.9" cy="292.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="1089.9" y="313.0" font-size="11" text-anchor="middle" fill="#17241e">16 个 REFSEL</text></a>
+<a href="#d-output-register" aria-label="10 月 20 日–11 月 22 日 · 输出保持无人承担；寄存器未画时部分 LVS 已通过"><title>10 月 20 日–11 月 22 日 · 输出保持无人承担；寄存器未画时部分 LVS 已通过</title><rect x="847.0" y="350.0" width="28" height="28" fill="transparent"/><rect x="855.0" y="358.0" width="12" height="12" rx="1.5" fill="#2a78d6" stroke="#fff" stroke-width="1.5"/><text x="861.0" y="385.0" font-size="11" text-anchor="middle" fill="#17241e">输出保持</text></a>
+<a href="#d-ring" aria-label="11 月 21–22 日 · 模拟 PVDD3AC 只有 1 个，库要求至少 3 个；改为 36 焊盘 9 × 9"><title>11 月 21–22 日 · 模拟 PVDD3AC 只有 1 个，库要求至少 3 个；改为 36 焊盘 9 × 9</title><rect x="803.4" y="350.0" width="28" height="28" fill="transparent"/><path d="M817.4 356.5L824.9 364.0L817.4 371.5L809.9 364.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="817.4" y="352.0" font-size="11" text-anchor="middle" fill="#17241e">7×7 → 9×9</text></a>
+<a href="#d-sso" aria-label="11 月 22 日 · D0–D7 改用 PRUW08SDGZ：驱动因子 3.84 → 1.547，2 个 VDDIO 即可"><title>11 月 22 日 · D0–D7 改用 PRUW08SDGZ：驱动因子 3.84 → 1.547，2 个 VDDIO 即可</title><rect x="879.7" y="350.0" width="28" height="28" fill="transparent"/><circle cx="893.7" cy="364.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/><text x="893.7" y="352.0" font-size="11" text-anchor="middle" fill="#17241e">D0–D7 限摆率</text></a>
+<a href="#d-double-cut" aria-label="11 月 22 日 · 生成器每个边界放两个 PRCUTA_G；改名探针接受了 ERC 结果"><title>11 月 22 日 · 生成器每个边界放两个 PRCUTA_G；改名探针接受了 ERC 结果</title><rect x="917.8" y="350.0" width="28" height="28" fill="transparent"/><path d="M931.8 356.5L939.3 364.0L931.8 371.5L924.3 364.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="931.8" y="385.0" font-size="11" text-anchor="middle" fill="#17241e">多出的 cut</text></a>
+<a href="#d-clamp" aria-label="11 月 22–23 日 · 为去耦挪走钳位又移回；1 Ω 母线规则改为 1.3 A 电流密度"><title>11 月 22–23 日 · 为去耦挪走钳位又移回；1 Ω 母线规则改为 1.3 A 电流密度</title><rect x="956.0" y="350.0" width="28" height="28" fill="transparent"/><path d="M970.0 356.5L977.5 364.0L970.0 371.5L962.5 364.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="970.0" y="352.0" font-size="11" text-anchor="middle" fill="#17241e">钳位规则</text></a>
+<a href="#d-pclampc" aria-label="11 月 23 日 · R0 放置的 H_G 栅向错误；换 V_G 清除 10 个标记"><title>11 月 23 日 · R0 放置的 H_G 栅向错误；换 V_G 清除 10 个标记</title><rect x="1005.0" y="350.0" width="28" height="28" fill="transparent"/><path d="M1019.0 356.5L1026.5 364.0L1019.0 371.5L1011.5 364.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="1019.0" y="385.0" font-size="11" text-anchor="middle" fill="#17241e">PCLAMPC 栅向</text></a>
+<a href="#d-seal" aria-label="11 月 23 日 · CSR.R.1 探针：1 mm 样例改为 892 µm，fill 边界重做"><title>11 月 23 日 · CSR.R.1 探针：1 mm 样例改为 892 µm，fill 边界重做</title><rect x="1048.7" y="350.0" width="28" height="28" fill="transparent"/><path d="M1062.7 356.5L1070.2 364.0L1062.7 371.5L1055.2 364.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="1062.7" y="352.0" font-size="11" text-anchor="middle" fill="#17241e">892 µm 外框</text></a>
+<a href="#d-boot-r2" aria-label="11 月 22 日 · 层次 DRC 只报负侧闩锁；平坦化后两侧都有"><title>11 月 22 日 · 层次 DRC 只报负侧闩锁；平坦化后两侧都有</title><rect x="885.2" y="422.0" width="28" height="28" fill="transparent"/><path d="M899.2 428.5L906.7 436.0L899.2 443.5L891.7 436.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/><text x="899.2" y="457.0" font-size="11" text-anchor="middle" fill="#17241e">层次 DRC 漏报</text></a>
+<a href="#d-fill-revisions" aria-label="11 月 23–24 日 · 七版填充跟随版图修订；fill7 清零 2672 个密度标记"><title>11 月 23–24 日 · 七版填充跟随版图修订；fill7 清零 2672 个密度标记</title><rect x="1065.0" y="422.0" width="28" height="28" fill="transparent"/><circle cx="1079.0" cy="436.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/><text x="1079.0" y="424.0" font-size="11" text-anchor="middle" fill="#17241e">fill 1 → 7</text></a>
+<a href="#d-ledger" aria-label="11 月 24 日 · 未决：6 项 ESD.WARN.1、1 项 DIODMY_L、IO 单元内填充、禁填区 15 个过孔"><title>11 月 24 日 · 未决：6 项 ESD.WARN.1、1 项 DIODMY_L、IO 单元内填充、禁填区 15 个过孔</title><rect x="1125.0" y="422.0" width="28" height="28" fill="transparent"/><path d="M1139.0 428.5L1146.5 436.0L1139.0 443.5L1131.5 436.0Z" fill="#fff" stroke="#9b59b6" stroke-width="2.2"/><text x="1139.0" y="457.0" font-size="11" text-anchor="middle" fill="#17241e">签核清单</text></a>
+</svg>
+</div>
+<ul class="map-legend"><li><svg viewBox="-9 -9 18 18" aria-hidden="true"><circle cx="0.0" cy="0.0" r="6.5" fill="#eb6834" stroke="#fff" stroke-width="1.5"/></svg><span>下一层改变了负载或环境</span><b>13</b></li><li><svg viewBox="-9 -9 18 18" aria-hidden="true"><rect x="-6.0" y="-6.0" width="12" height="12" rx="1.5" fill="#2a78d6" stroke="#fff" stroke-width="1.5"/></svg><span>接口或责任没有交接</span><b>4</b></li><li><svg viewBox="-9 -9 18 18" aria-hidden="true"><path d="M0.0 -7.5L7.5 0.0L0.0 7.5L-7.5 0.0Z" fill="#9b59b6" stroke="#fff" stroke-width="1.5"/></svg><span>规则读错，或检查本身掩盖了问题</span><b>11</b></li><li><svg viewBox="-9 -9 18 18" aria-hidden="true"><circle cx="0.0" cy="0.0" r="5" fill="#7c8a80" stroke="#fff" stroke-width="1.5"/></svg><span>正常优化</span><b>8</b></li><li><svg viewBox="-9 -9 18 18" aria-hidden="true"><circle cx="0.0" cy="0.0" r="6.5" fill="#fff" stroke="#4c5f55" stroke-width="2.2"/></svg><span>空心：仍未决</span></li><li><svg viewBox="0 -9 22 18" aria-hidden="true"><path d="M1 0H21" stroke="#33463b" stroke-opacity=".5" stroke-width="1.6"/></svg><span>连线：同一返工链（虚线为链 4）</span></li></ul>
+<!-- map:end -->
+<p class="report-sources">根因分类是本次复盘对记录的解读。 <a href="$snapshot/docs/adc-iteration-history.md">按日期的迭代记录 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p>
+</section>
+<section class="report-section" id="iterations"><h2>四条返工链</h2>
+<p class="section-lead">10 月，团队删掉复杂握手，在当时的控制器测试里读对了八位。11 月，同一套读出要求先后卡在 RC 延时、标准单元内部互连和焊盘输出三个位置。后端逐层加入之后，前一轮“通过”所用的负载、时钟和端口已变。每条链写明假设、打破它的因素、代价和经验；按日期的记录折叠在下方。</p>
+
+<article class="chain" id="sar">
+<header class="chain-head"><span class="chain-number">1</span><div><p class="audit-period">10 月 27 日—11 月 24 日 · SAR 时序</p><h3>从 RC 到标准延时，再到单边沿逐位定时</h3></div></header>
+<ol class="chain-flow">
+<li><b>假设</b><p>RC 延时网络能从原理图直接带到版图。标准单元迁移保留了它们，验收只看功能和频谱。</p></li>
+<li><b>打破它的</b><p>布线后的负载。QUIET 电阻在 SS 冷晚读 6.11 ns；单元内部互连使 DEL250 由 280 增至 471 ps；读码正确却掩盖了 bit 6 的 −0.393 LSB。</p></li>
+<li><b>代价</b><p>四天内换了三套时序方案，从 2058 µm² 的 RC 宏到布线后余量 6.95 ns 的单边沿 SAR。FF 冷端压随之重开，至今未决。</p></li>
+<li class="chain-lesson"><b>经验</b><p>每个延时都按布线后负载在快、慢两角做预算；每次判决看模拟量，不只看码。</p></li>
+</ol>
+<details class="report-fold"><summary>按日期的记录 · 8 步，2 张图</summary>
+<ol class="audit-log">
+<li id="d-rc-migrate"><strong>10 月 27 日–11 月 4 日 · 数字门换成标准单元，RC 时序保留。</strong><p>团队回到冻结的 L90/Mmain2 母版，单独替换反相器、NAND、复位 DFF、时钟缓冲和参考驱动，便于隔离诊断分支的影响。迁移记录明确保留 RC/clear、SR 锁存器外部负载及参考电阻。冻结 B 后有全码和频谱回归，但这次替换的验收没有把 RC 元件的实际占地和布线后读出时间纳入。后端接手时，仅延时宏的 231 个 MOM 和十个电阻就占了约 845 µm²。</p><p class="report-sources"><a href="$repository/blob/f4f8e20/plan/2026-10-27-sar8-frozen-stdcell/plan.md">迁移保留项 ↗</a> · <a href="$repository/blob/f4f8e20/README.md">冻结 B ↗</a> · <a href="$snapshot/Layout/results/sar_timing.md">实际占地 ↗</a></p></li>
+<li id="d-rc-cost"><strong>11/18　RC 延时的版图账单</strong><p>布线后的 SAR 宏占 2058 µm²，其中 231 个 MOM 电容占 513 µm²，10 个电阻占 333 µm²。17.13 µm 的 QUIET 电阻前仿通过，布线后 SS 冷角晚读 6.11 ns。11 µm 仍晚 1.25 ns，8.5 µm 才余 2.59 ns。冻结延时电路前，面积预算应包含实画器件，读点预算应包含实际负载与走线。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_timing.md">版图与三次电阻试验 ↗</a></p></li>
+<li id="d-std-delay"><strong>11/19　换标准延时，先过前仿端压</strong><p>v3 用 52 个 DEL、28 个 AND 取代五条 RC 路径。首轮六帧错四码；在接收端加缓冲并保留末级请求门控后，五角各 18 帧读码正确。FF 冷角两帧薄氧端压扫描中，超限端子对从 2 降到 0，最坏累计时长从 457.8 降至 75.0 ps，限值 100 ps。这次通过只覆盖指定波形和网表，后续布线版本仍需重扫。</p><p class="report-sources"><a href="$snapshot/results/design/sar_std_delay_20261119.md">五角回归与两帧 SOA ↗</a></p></li>
+<li id="d-cell-wiring"><strong>11/19　同一延时单元，换模型就错过读点</strong><p>九级候选去掉锁存器 QB 电容，原理图 SS 冷角仍有 13.51 ns 裕量；耦合提取后首帧到 90 ns 仅比较六次。补回电容仍只有六次。固定输入边沿和负载，DEL250 从原理图 280 ps、仅器件几何 283 ps，增至含单元内部互连的 471 ps。另一组单边沿抽头在 FF 冷/CBEST_T 与 SS 冷/CWORST_T 分别为 1.431 和 3.894 ns。一个 TT 标称延时不足以同时预算快角建立和慢角读出。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_std_static_candidate_c_20261119.md">补回电容的对照 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_taps.md">同一抽头的冷角实测 ↗</a></p></li>
+<li id="d-commit"><strong>11/19–20　调短延时救回读出，却暴露复位太晚</strong><p>在原 40 ns 采样脉冲下，缩短 QUIET 和采样使能后，双提取的 DEL200 候选四帧均读对；SS 冷角采样开启时，510 个底板的加权误差仍达 25.23 LSB，限值 0.25 LSB。团队暂停延时扫描，改查帧边界：单边沿控制器用 COMMIT 同时写位、推进试探字，转换完成即复位参考，撤去 29 级空闲等待。在四帧同条件对照中，末次更新到读点的裕量从 3.642 增至 10.917 ns。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_cdac_aperture_results_20261119.md">开窗误差与暂停记录 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_taps.md">同条件重放 ↗</a></p></li>
+<li id="d-bit6"><strong>11/20　码对了，bit 6 的参考仍未恢复</strong><p>单边沿 8/6 抽头先按实际参考端电压检查 510 个底板。改用 24/24 长等待作稳态对照，8/6 抽头在 FF 冷角 bit 6 的顶板误差为 −0.393 LSB，其中 −0.355 LSB 来自参考端恢复。延长到 9/6 后又在 bit 3 看到三次阈值穿越；将选择信号提前一级寄存，同一 63→64 输入重放变为一次。此后逐位检查比较瞬间的顶板、参考端和交接边沿。</p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_settling_reference_20261120.md">长等待分解 ↗</a> · <a href="$snapshot/results/design/sar_registered_9_6.md">寄存选择器重放 ↗</a></p></li>
+<li id="d-4555"><strong>11/20–21　45 ns 分给采样，剩余时间按位重新预算</strong><p>早期单边沿候选仍用 40/60 ns。采用版将采样延长至 45 ns、转换缩至 55 ns，90 ns 读点不动。按单元提取与 CDAC 寄生重新分配各位抽头，bit 6 到 bit 0 依次等待 11、9、7、6、5、4、4 级。SS 冷角、最差互连模型下，采用版在 SAR 单元间理想连线时读出余量 7.59 ns；换成实际布线的 SAR 宏与提取 CDAC，8/8 帧通过，余量 6.95 ns。应把采样占空比、真实门控窗、各位等待与板端读点放在同一张时序表里。</p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_frontend.md">40 ns 试验 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">45/55 ns 采用记录 ↗</a> · <a href="$snapshot/Layout/results/sar_se_core.md">布线后配对实测 ↗</a></p></li>
+<li id="d-vds"><strong>11/20 → 11/24　端压结论随提取范围重开</strong><p>单边沿采用前的 FF 冷扫描发现 5 个违规；调整写入 AND 的输入脚和选择/参考逻辑后，采用网表的 1902 个器件扫描为 0，数值分辨率仍待确认。到 fill5 核心加供电与封装模型的 FF 冷极值工况，16 对 VDS 超时，最坏 757.8 ps。两次网表、负载、激励与扫描范围不同，现有记录不能把回归唯一归因于某段布线；这正是需要在每次集成冻结前重跑同一应力用例的原因。</p><p>主干上的状态记录把这项列为未决，交由单元与可靠性负责人。 <a href="$repository/pull/57">未决记录 ↗</a></p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">采用网表的端压扫描 ↗</a> · <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">最终核心端压数据 ↗</a></p></li>
+</ol>
+<div class="report-pair"><figure><a href="${asset_base}assets/report-rc.png"><img loading="lazy" src="${asset_base}assets/report-rc.png" alt="原 RC 延时宏的初始摆放与压紧后布线"></a><figcaption>RC 时序宏的两次布局，右图布线核心为 39.885 × 51.600 µm。</figcaption></figure><figure><a href="${asset_base}assets/report-sar.png"><img loading="lazy" src="${asset_base}assets/report-sar.png" alt="最终单边沿 SAR 的标准单元版图"></a><figcaption>单边沿 SAR 宏，174 个原生标准单元，18.495 × 16.8 µm。两张图各用自己的坐标尺度。</figcaption></figure></div>
+</details>
+</article>
+
+<article class="chain" id="frontend">
+<header class="chain-head"><span class="chain-number">2</span><div><p class="audit-period">8 月—11 月 24 日 · 采样器</p><h3>同一个自举开关，每进一层就重开一次</h3></div></header>
+<ol class="chain-flow">
+<li><b>假设</b><p>自举开关作为模块已经通过：在 8 位平坦阵列上用 1 µm 开关，保持误差 0.126 mV。</p></li>
+<li><b>打破它的</b><p>接入提取 CDAC 后采样关闭残差 0.351 LSB；VIN 焊盘带来闩锁规则；通用填充把自举电容极板对地电容由 27–33 fF 推到 127 fF。</p></li>
+<li><b>代价</b><p>先改四指，再做加宽护环、自带填充的 r2，独立与闭环重新验收。现在 SS 冷栅压筛查只余约 1 mV，FF 热保持误差却超出 0.61 mV。</p></li>
+<li class="chain-lesson"><b>经验</b><p>冻结采样器前，带上焊盘、填充和真实 CDAC 一起验收，并同时盯住两个工艺角的余量。</p></li>
+</ol>
+<details class="report-fold"><summary>按日期的记录 · 6 步</summary>
+<ol class="audit-log">
+<li id="d-boot-topology"><strong>8 月底–10 月 19 日 · 自举开关换拓扑。</strong><p>早期原型反复调整尺寸、放电和复位先后，保持误差和核心管应力仍并存。10 月 21 日的设计笔记记录，设计者另给了一套拓扑。新实现采用 12 只 T28 1.8 V MOS、1 pF 自举电容和本地反相器。同一 10 位分裂 CDAC 负载下，五点 TT 最坏差分保持误差从 1.536 降至 0.394 mV。换到 8 位平坦阵列，负载反而变大，0.5 µm 主开关的保持误差达到 12.59 mV；加宽到 1 µm 后才降至 0.126 mV。每次“通过”都要写明负载和工艺角。</p><p class="report-sources"><a href="$repository/blob/52feb04/Obsidian_docs/Report/Wrap-up%20%26%20Experience.md">同期设计者笔记 ↗</a> · <a href="$repository/blob/c5d6c08/docs/canvas_bootstrap_full_cdac.md">新旧同载对照 ↗</a> · <a href="$repository/blob/4ced90a/docs/eight_bit_flat_migration.md">八位负载复测 ↗</a></p></li>
+<li id="d-sampler-fingers"><strong>11 月 21 日 · 提取后的 ADC 重开采样器尺寸。</strong><p>11 月 21 日，采样器尺寸也被重新打开。两指版进入带提取 CDAC 的 ADC 后，SS 冷角十帧中七帧超过 0.25 LSB。去掉井邻近效应仍有 1.52 LSB；两指加到四指使时间常数从 4.6 降到 2.3 ns，再加到六指却使 FF 冷角独立误差超限。最终选四指，后来因 VIN 焊盘闩锁和填充又重开同一个模块。 <a href="$snapshot/results/design/sampler_mmain4_adoption_20261121.md">尺寸筛选与复验 ↗</a></p></li>
+<li id="d-boot-r2"><strong>11 月 22–23 日 · Bootstrap 通过块级验证，接入 VIN 焊盘后重开。</strong><p>闩锁规则依赖焊盘连通性。层次 DRC 只报负侧，平坦化在两路各查出 1 + 6 个标记。r2 加宽护环、移动 PMOS 行，使 VIN 扩散到最近 PMOS 扩散的距离达到 2.40 µm，规则要求 2.30 µm。首轮加宽又碰到 dummy poly，只得改为向外加宽。两路闩锁清零后还要重做填充、提取、独立采样与闭环验证。</p><p class="report-sources"><a href="$repository/pull/33">平坦化定位 ↗</a> · <a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">r2 更改与复验 ↗</a></p></li>
+<li id="d-boot-fill"><strong>11 月 22 日 · 通用填充压上了自举电容。</strong><p>自举电容由 200 个 MOM 单元组成，占单元 613 µm² 中的 444 µm²。未填充时每个极板对地 27–33 fF。顶层 M1–M9 填充把它推到 127 fF；只放 OD/PO 仍有 66–69 fF。周围填充只增加不到 2 fF，原因在单元内部的 dummy 图形。现在自举开关自带填充图形，独立提取为 37.9 / 40.4 fF，放进核心后为 38–42 fF。SS 冷角下，带填充的 r2 把采样关闭残差从未填充时的 0.039 LSB 抬到 0.093–0.097 LSB。</p><p class="report-sources"><a href="$snapshot/Layout/results/toplevel_fill.md">填充方案与极板负载 ↗</a> · <a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">带填充 r2 的寄生与残差 ↗</a></p></li>
+<li id="d-boot-gate"><strong>11 月 23 日 · SS 冷栅压筛查只余约 1 mV。</strong><p>SS 冷自举栅压筛查的限值是 0.100 V。在早期布线时钟下，旧核心读到 0.118 V；同一套仿真中带填充的 r2 读到 0.0972 V，直接通过，未用到书面兜底条件。最终 fill5 核心的后仿读到 0.0991 V。早期布线仿真已经显示自举栅极下降偏慢。</p><p class="report-sources"><a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">布线后栅压筛查 ↗</a> · <a href="$snapshot/Layout/results/current.json">栅压筛查决定 ↗</a> · <a href="$snapshot/docs/adc-iteration-history.md">最终后仿摘要 ↗</a> · <a href="$repository/issues/12#issuecomment-7093047607">最终工艺角结果 ↗</a></p></li>
+<li id="d-boot-ffhot"><strong>11 月 24 日 · FF 热从另一侧挤压同一个采样器。</strong><p>FF 热角下，最终 fill5 核心网表的单端保持误差达 4.130 mV，独立筛查限值为 3.516 mV（半个 LSB）。大进位用例以 3.180 mV 通过。主干上的状态记录把这项列为未决，交由自举负责人。于是采样器在 SS 冷栅压限值内只剩约 1 mV，在 FF 热保持限值外超出 0.61 mV。</p><p class="report-sources"><a href="$repository/pull/57">未决记录 ↗</a> · <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">FF 测量 ↗</a></p></li>
+</ol>
+</details>
+</article>
+
+<article class="chain" id="chip">
+<header class="chain-head"><span class="chain-number">3</span><div><p class="audit-period">11 月 21–24 日 · 从核心到封装边界</p><h3>焊盘环、钳位与密封环：模块冻结后才读规则</h3></div></header>
+<ol class="chain-flow">
+<li><b>假设</b><p>焊盘环、cut、钳位和密封环可以跟在核心之后再定；库单元里的标记可以豁免。</p></li>
+<li><b>打破它的</b><p>库的供电规则、每处多放一道 cut 的生成器、钳位摆放与 ESD 电流密度规则、栅向画错的钳位，以及密封环角部规则。</p></li>
+<li><b>代价</b><p>芯片版本从 r2 改到 r8，焊盘由 7 × 7 改为 36 个，fill 按 892 µm 外框重做。10 个钳位标记跨过了多轮 fill。</p></li>
+<li class="chain-lesson"><b>经验</b><p>每项例外都引用规则原文；进入 fill 前数清 cut、核对钳位 master、定下外框。</p></li>
+</ol>
+<details class="report-fold"><summary>按日期的记录 · 6 步</summary>
+<ol class="audit-log">
+<li id="d-ring"><strong>11 月 21–22 日 · 核心冻结时，焊盘供电还在改。</strong><p>第一版 7 × 7 规划只放了 1 个模拟 PVDD3AC，库应用说明要求至少 3 个，还缺少 PVSS2AC。逐项核对模拟与数字供电、角单元和域边界后才发现至少需要 34 个焊盘，遂改成 9 × 9、36 个焊盘，重排核心并重算参考线与供电预算。</p><p class="report-sources"><a href="$repository/pull/23">旧规划逐条对照 ↗</a> · <a href="$repository/pull/27">9 × 9 预算重算 ↗</a></p></li>
+<li id="d-sso"><strong>11 月 22 日 · 数据焊盘改为限摆率，应对同时开关。</strong><p>D0–D7 从 PDDW16SDGZ（16 mA，无摆率控制）改为 PRUW08SDGZ（8 mA，限摆率），引脚和外框相同。按数据手册的驱动因子，IO 单元合计由 3.84 降到 1.547，2 个 VDDIO 和 2 个 VSSIO 即满足 TSMC IO 应用说明的规则。SAMPLE 仍用 PDDW16SDGZ。</p><p class="report-sources"><a href="$repository/pull/28">数据焊盘更改 ↗</a> · <a href="$snapshot/Layout/design/io_ring.json">IO 环与同时开关预算 ↗</a></p></li>
+<li id="d-double-cut"><strong>11 月 22 日 · IO 工具在每个域边界多放了一道 cut。</strong><p>计划每边界一个 PRCUTA_G，生成器却用两个填满 40 µm 间隙。改名对照把环级 ERC 从 334 项降到 6 项，剩余的 2 个浮井和 4 个浮衬底正落在相邻 cut 处。当时按“位于库单元内”整组接受；直到 r8 才把两个边界各多出来的 cut 换成 PFILLER20_G。器件数与 LVS 都无法发现这种无器件的域隔离错误。</p><p class="report-sources"><a href="$repository/pull/28">当时的环级处置 ↗</a> · <a href="$repository/pull/51">r8 实物修订 ↗</a></p></li>
+<li id="d-clamp"><strong>11 月 22–23 日 · 去耦、钳位与 ESD 用了不同的验收口径。</strong><p>面积估算漏扣钳位占地。r2 挪走模拟钳位以放大去耦，却违反钳位应在本支路焊盘和核心之间的放置要求。r3 移回钳位，加 MOM 后有 92.9 pF，并按实画馈线复算最坏压降 20.3 mV。另一轮又把 IO 电源单元间的 1 Ω 母线规则用于焊盘至钳位；改按 1.3 A ESD 电流密度审查，r4 补馈线、r5 补 AVSS 焊盘 M1。</p><p class="report-sources"><a href="$repository/pull/41">钳位回迁 ↗</a> · <a href="$repository/pull/46">规则更正 ↗</a> · <a href="$repository/pull/47">焊盘补金属 ↗</a> · <a href="$snapshot/Layout/results/chip_rail_recheck.md">压降复算 ↗</a></p></li>
+<li id="d-pclampc"><strong>11 月 23 日 · 已知的 PCLAMPC 标记跨过了多轮 fill。</strong><p>第一次整片装配就把 10 个栅相关标记定位在 PCLAMPC_H_G 内，当时列为待书面豁免。小范围换单元实验才证实，R0 放置 H_G 使栅方向错误。r8 在原位改为 V_G，同外框、同引脚，这 10 项全部消失。位置落在库单元中只能说明来源；是否属于可豁免项，还取决于方向、版本和适用条款。</p><p class="report-sources"><a href="$repository/issues/12#issuecomment-7081027104">当时的豁免待办 ↗</a> · <a href="$snapshot/Layout/results/chip_fill.md#how-revision-7-was-chosen">替换试验 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">最终分类 ↗</a></p></li>
+<li id="d-seal"><strong>11 月 23 日 · 密封环先按样例装配，后核实角部规则。</strong><p>r3 至 r6 使用实验室 1 mm 样例，前五版 fill 据此划禁填区。后来才复现样例拼块并测 CSR.R.1：带密封环运行时检查组不会生成目标三角区，需移除密封环、补角标记做探针。当前 IO 环给出的最小边长是 882 µm，r7 选 892 µm 留 10 µm 裕量，面积约少 20%，fill 边界随之重做；MPW 尺寸确认仍未完成。</p><p class="report-sources"><a href="$repository/pull/45">1 mm 样例 ↗</a> · <a href="$repository/pull/50">角区探针与改尺寸 ↗</a></p></li>
+</ol>
+</details>
+</article>
+
+<article class="chain" id="handoff">
+<header class="chain-head"><span class="chain-number">4</span><div><p class="audit-period">8 月—11 月 24 日 · 验证范围</p><h3>检查“通过”了它并未检查的内容</h3></div></header>
+<ol class="chain-flow">
+<li><b>假设</b><p>检查通过，就代表它所在的接口已被覆盖。</p></li>
+<li><b>打破它的</b><p>理想参考控制器、缺输出寄存器的部分 LVS、层次化闩锁 DRC、按电源名的 ERC 探针，以及去掉接收端负载的延时元件。</p></li>
+<li><b>代价</b><p>集成时才补上输出寄存器，改出 r2 采样器，r8 修正焊盘环，走线预算改用 RC 梯形网络重做。</p></li>
+<li class="chain-lesson"><b>经验</b><p>写明每个结论的范围，再用真实外围对核心回放。正是这次回放，让只含核心的 Stage 6 结果能代表整片。</p></li>
+</ol>
+<details class="report-fold"><summary>按日期的记录 · 6 步</summary>
+<ol class="audit-log">
+<li id="d-frontend"><strong>8 月—10 月 · 前端如何收敛，又留下哪些物理假设。</strong><p>8 月先用 10 位行为模型检查噪声预算。9 月开始在完整负载下逐一隔离自举开关的关断路径。10 月改为 8 位平坦阵列，省去了分裂电容的桥接比例问题，但单位电容的选择改变了总采样负载，前一版开关必须重新验收。八位行为模型的 16,384 个理想输出码与 Python 逐码一致；注入预算噪声后，ENOB 从 7.80 降到 7.33 位。把参考电阻提高到 500 Ω、底板电阻提高到 1800 Ω，宏模型仍可能读对码，建立残差却达 4.41 LSB。这个反例在版图前就说明，验收必须检查每次判决时的模拟量。 <a href="$repository/blob/4ced90a/docs/eight_bit_flat_migration.md">8 位迁移记录 ↗</a></p></li>
+<li id="d-sar-simplify"><strong>10 月 20 日 · SAR 第一次简化，发生在版图之前。</strong><p>旧自搭 CMOS 控制器有判决确认、复位确认、超时和独立输出存储。慢热角到截止点只完成七位。改用 SAMPLE 初始化本地位循环，去掉独立输出存储与 EOC，展开 MOS 从 1742 减至 1476。理想模拟接口上的 13 项功能和时序短测通过。代价也在当时写明：比较停住时可能留下部分码。输出该在哪个边沿锁存、谁负责驱动焊盘，仍需芯片接口另作决定。</p><p class="report-sources"><a href="$repository/blob/5ce35d2/docs/sar8_simple_async.md">控制器与测试边界 ↗</a></p></li>
+<li id="d-ref-interface"><strong>10 月 20–23 日 · 理想参考接口掩盖了实现缺口。</strong><p>R1 用真实参考开关和理想栅控打通闭环。到 R3，某帧八次比较齐全，结果仍从预期 65 跳到 1。同一输入历史回放将原因锁定到理想控制器拒绝了一次定时回调，修正后读回 65。R4 才把参考控制做成管级，随后又试验将分段复位移入空闲期。同期笔记已指出，数字与模拟分头验证时，参考栅控的实现责任没有随接口一起交接。</p><p class="report-sources"><a href="$repository/blob/39a2ee2/docs/r3_refgate_events.md">第 9 帧回放 ↗</a> · <a href="$repository/commit/e276458">原生参考控制 ↗</a> · <a href="$repository/blob/ec2d3c4/docs/sar8_idle_performance.md">空闲复位对照 ↗</a></p></li>
+<li id="d-output-register"><strong>10 月 20 日至 11 月 22 日 · 谁来保持上一帧的码？</strong><p>10 月简化 SAR 时主动删掉独立输出寄存器组，采样即清工作码；核心读点能读对，板端持续输出仍需寄存。首版 IO 规划已经在核心外预留寄存器，但部分整片通过 LVS 时它仍待画。后来在 DVDD 域加 8 路寄存器，SAMPLE 上升沿同时触发捕获和核心清零，D 端补 DEL250 才把 FF 热角保持裕量从 0.30 提到 0.50 ns。核心测试通过后才闭合这一接口。</p><p class="report-sources"><a href="$repository/blob/5ce35d2/docs/sar8_simple_async.md">输出契约 ↗</a> · <a href="$repository/blob/89cfdd7/Layout/design/io_ring.json">最初预留 ↗</a> · <a href="$snapshot/Layout/results/chip_assembly.md">部分装配 ↗</a> · <a href="$snapshot/Layout/results/output_register_timing.md">捕获复验 ↗</a></p></li>
+<li id="d-route-budgets"><strong>11 月 22 日 · 理想延时元件去掉了接收端负载。</strong><p>Stage 2 最初的走线预算检查在每个握手交叉处插入 Verilog-A 延时。它不吸取输入电流，等于把比较器、SAR 时钟和 CODE 的接收端负载从驱动端拿掉：加 200 ps 后，SS 冷余量反而为 7.84 ns，高于 7.77 ns 的对照。这些仿真只保留为诊断。预算改用真实驱动与接收端之间的四段 RC 梯形网络重做：每个比较器输出 11.4 fF 时 SS 冷余 4.16 ns，规划长度加倍时只余 0.66 ns。随后的更正发现，每套仿真还带着约 10 fF 的未绘制模型负载，因此采用的负载上限留有约 10 fF 余量。</p><p class="report-sources"><a href="$snapshot/results/integration/stage2_all_extracted_20261122.md">Stage 2 走线检查 ↗</a> · <a href="$repository/pull/22">预算采用与负载更正 ↗</a></p></li>
+<li id="d-mixed-level"><strong>11 月 23 日 · 外围回放把核心结论接到整片。</strong><p>Stage 6 先用理想 VIN、Stage 1 封装与参考模型、不含输出路径，跑提取后的 fill5 核心；再在同一组仿真上回放外围。56.6 Ω 的 VIN 走线与焊盘电容使 SS 冷残差由 0.1015 增至 0.1085 LSB（+0.007 LSB），读码相同，读出裕量同为 8.73 ns，无需加宽。FF 热加上输出寄存器、焊盘驱动和每脚 15 pF 后，读码不变，读出裕量由 30.27 变为 29.96 ns（−0.31 ns）。驱动翻转相对采样关闭的时序另作分析。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_objects.md#open">仿真编号与对照 ↗</a> · <a href="$repository/pull/49">外围结论 ↗</a></p></li>
+</ol>
+</details>
+</article>
+</section>
+
+<section id="review" class="report-section"><h2>审查在哪一步应该拦下来</h2>
+<p class="section-lead">下轮建议的审查顺序；责任列表示所需专业角色。每个关口注明它本可拦下的返工链。</p>
+<ol class="gate-flow">
+<li><h3>电路与时序冻结</h3><p class="gate-roles"><span>SAR</span><span>模拟</span><span>版图</span></p><p>对 90 ns 读点，当前负载和最快／最慢单元 RC 还剩多少裕量？RC 面积、周期间状态和输出保持由哪个模块承担？</p><p class="gate-catch">本可拦下：<a href="#sar">链 1</a>、<a href="#d-output-register">输出保持</a></p></li>
+<li><h3>模块进入核心</h3><p class="gate-roles"><span>模块</span><span>顶层</span><span>可靠性</span></p><p>用真实 CDAC、焊盘连接和供电寄生重看哪一项会失效？每次 SOA 修订是否复扫全端对，并同时复验建立与功能？</p><p class="gate-catch">本可拦下：<a href="#frontend">链 2</a></p></li>
+<li><h3>芯片底图交给填充</h3><p class="gate-roles"><span>IO/ESD</span><span>封装</span><span>版图验证</span></p><p>逐个对数 CUT、核钳位 master 与工艺指南；把芯片边界、seal ring、IO 库内允许填充范围和需外部接受的豁免单独签认。</p><p class="gate-catch">本可拦下：<a href="#chip">链 3</a></p></li>
+<li><h3>最终候选交付</h3><p class="gate-roles"><span>系统</span><span>验证</span><span>封装</span></p><p>哪条结论来自块级、fill5 核心、外围单独回放或 fill7 整片？未决项附版本、限值、责任人及下一次复验，不让旧版“通过”替新版背书。</p><p class="gate-catch">本可拦下：<a href="#handoff">链 4</a>、<a href="#status">未决事项</a></p></li>
+</ol>
+<details class="report-fold"><summary>记录对审查说明了什么</summary>
+<p>11 月 15 日的参考驱动 Issue 已点出重复状态；16 日的版图规划 Issue 明写整机面积与接口缺少集中入口；21 日的模块审计才列齐 XREF、顶层和独立后仿缺口。说明这些问题有些早已有人提出，失效的是交接：一层验收通过后，未完成的跨层条件没有逐条跟到下一次冻结。部分 LVS 能正确核对一张不含输出寄存器的网表；按命名探针解释 ERC 也不能证明 CUT 数符合供电规划。这两次都需要有人核对验收对象本身。</p>
+<p class="report-sources"><a href="$repository/issues/2">参考状态审查 ↗</a> · <a href="$repository/issues/3">整机规划缺口 ↗</a> · <a href="$repository/issues/4#issuecomment-7061612067">模块审计当时的结论 ↗</a> · <a href="$repository/issues/12#issuecomment-7118488357">最终交接复查 ↗</a></p>
+<p>项目层面的责任是具体的：设计需要交代未建模的负载和延时，审核需要查独立规则和完整接口，放行需要记录例外由谁接受。现存提交和验证记录足以定位这些失守的环节；对某位审核人的职责、当时掌握的信息及个人过失，记录不足以作出认定。</p>
+</details>
+</section>
+
+<section class="report-section" id="scope"><h2>设计目标与本轮测量</h2>
+<p class="section-lead">截至 11 月 24 日，各项目标对应的证据。</p>
+<div class="target-tiles">
+<article class="tile-pass"><h3>转换与读出</h3><p class="tile-target">目标 · 8 bit · 10 MS/s</p><p class="tile-value">12/12 <small>组通过</small></p><p>填充核心 fill5：SS 冷、TT、FF 热各测常规、极值、大进位和重启，12/12 通过，输出在增益修正预期的 ±1 码内。常规用例读出裕量依次为 8.73、24.9、30.3 ns。</p></article>
+<article class="tile-pending"><h3>动态与线性</h3><p class="tile-target">目标 · ENOB ≥7 位；SNDR ≥43.9 dB；|INL|、|DNL| ≤1 LSB</p><p class="tile-value">待回收 <small>最终 FFT</small></p><p>当前提取版的最终 FFT 待回收，全码转移点扫描仍待安排。作为历史对照，冻结 B 版 TT 无噪声 FFT 为 48.79 dB、7.81 位；当前独立 CDAC 的提取 DNL/INL 为 0.123/0.084 LSB。</p></article>
+<article class="tile-pass"><h3>平均功耗</h3><p class="tile-target">目标 · ≤1 mW</p><p class="tile-value">57–394 <small>µW</small></p><p>九组短测 57.46–393.93 µW，TT 常规 75.61 µW。包含核心 VDD、参考端口和单独回放测得的输出寄存器功耗，焊盘供电另计。</p></article>
+<article class="tile-pass"><h3>板端读出</h3><p class="tile-target">目标 · 15 pF/位测试负载</p><p class="tile-value">2.046 <small>ns 内建立</small></p><p>独立 FF 热输出路径测试中，捕获 0xFF 后板端在 2.046 ns 内建立。</p></article>
+</div>
+<p class="report-sources"><a href="$repository/issues/12#issuecomment-7093047607">12 组后仿 ↗</a> · <a href="$snapshot/results/integration/adc_register_power_20261124.md">功耗口径 ↗</a> · <a href="$snapshot/results/integration/ffh_board_conversion.md">输出负载 ↗</a> · <a href="$snapshot/results/fft/results.json">历史频谱 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">CDAC ↗</a></p>
+<details class="report-fold"><summary>转换器的边界</summary>
 <p>标称核心供电 0.90 V，共模 0.45 V，差分满量程 −0.90 至 +0.90 V，1 LSB 为 7.031 mV。外部 SAMPLE 提供 45 ns 采样、55 ns 转换的节拍，片内异步逻辑自行完成八次判决。自举开关直接将输入采到 MOM CDAC，比较器判定顶板差分电压，SAR 据此切换参考。</p>
 <p>板上提供输入驱动、基准电压和采样时钟。片内包含参考开关、驱动与去耦，无独立基准源、采样时钟发生器、连续时间模拟输入缓冲或片上校准。数字输出经过片内寄存器、Q 缓冲和 IO 焊盘驱动器；比较器静态失调预留片外校正。</p>
 <p class="report-sources"><a href="$snapshot/docs/specification.md">规格与接口 ↗</a> · <a href="$snapshot/Layout/results/chip_objects.md">片上外围 ↗</a></p>
-<div class="table-wrap"><table><caption>设计目标与本轮测量</caption><thead><tr><th>项目</th><th>目标</th><th>截至 11 月 24 日的证据</th></tr></thead><tbody>
-<tr><th scope="row">转换与读出</th><td>8 bit · 10 MS/s</td><td>填充核心 fill5：SS 冷、TT、FF 热各测常规、极值、大进位和重启，12/12 通过，输出在增益修正预期的 ±1 码内。常规用例读出裕量依次为 8.73、24.9、30.3 ns。</td></tr>
-<tr><th scope="row">动态与线性</th><td>ENOB ≥7 位；SNDR ≥43.9 dB；|INL|、|DNL| ≤1 LSB</td><td>当前提取版的最终 FFT 待回收，全码转移点扫描仍待安排。作为历史对照，冻结 B 版 TT 无噪声 FFT 为 48.79 dB、7.81 位；当前独立 CDAC 的提取 DNL/INL 为 0.123/0.084 LSB。</td></tr>
-<tr><th scope="row">平均功耗</th><td>≤1 mW</td><td>九组短测 57.46–393.93 µW，TT 常规 75.61 µW。包含核心 VDD、参考端口和单独回放测得的输出寄存器功耗，焊盘供电另计。</td></tr>
-<tr><th scope="row">板端读出</th><td>15 pF/位测试负载</td><td>独立 FF 热输出路径测试中，捕获 0xFF 后板端在 2.046 ns 内建立。</td></tr>
-</tbody></table></div>
-<p class="report-sources"><a href="$repository/issues/12#issuecomment-7093047607">12 组后仿 ↗</a> · <a href="$snapshot/results/integration/adc_register_power_20261124.md">功耗口径 ↗</a> · <a href="$snapshot/results/integration/ffh_board_conversion.md">输出负载 ↗</a> · <a href="$snapshot/results/fft/results.json">历史频谱 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">CDAC ↗</a></p></section>
-<section class="report-section" id="iterations"><h2>从行为模型到整片，哪些决定被重做了</h2>
-<p>10 月，团队删掉复杂握手，在当时的控制器测试里读对了八位。11 月，同一套读出要求先后卡在 RC 延时、标准单元内部互连和焊盘输出三个位置。后端逐层加入之后，前一轮“通过”所用的负载、时钟和端口已变。以下按这条依赖关系还原改版，同时标出各次放行实际覆盖的范围。</p>
-<nav class="report-jumps audit-nav" aria-label="返工记录目录"><a href="#frontend">采样与控制</a><a href="#comparator">比较器版图</a><a href="#cdac">CDAC</a><a href="#sar">SAR 时序</a><a href="#chip">IO 与填充</a><a href="#review">放行责任</a></nav>
-<section class="report-case" id="frontend"><p class="audit-period">8 月—11 月 15 日</p><h3>前端如何收敛，又留下哪些物理假设</h3><p>8 月先用 10 位行为模型检查噪声预算。9 月开始在完整负载下逐一隔离自举开关的关断路径。10 月改为 8 位平坦阵列，省去了分裂电容的桥接比例问题，但单位电容的选择改变了总采样负载，前一版开关必须重新验收。八位行为模型的 16,384 个理想输出码与 Python 逐码一致；注入预算噪声后，ENOB 从 7.80 降到 7.33 位。把参考电阻提高到 500 Ω、底板电阻提高到 1800 Ω，宏模型仍可能读对码，建立残差却达 4.41 LSB。这个反例在版图前就说明，验收必须检查每次判决时的模拟量。 <a href="$repository/blob/4ced90a/docs/eight_bit_flat_migration.md">8 位迁移记录 ↗</a></p>
-<ol class="audit-log">
-<li><strong>8 月底–10 月 19 日 · 自举开关换拓扑。</strong><p>早期原型反复调整尺寸、放电和复位先后，保持误差和核心管应力仍并存。10 月 21 日的设计笔记记录，设计者另给了一套拓扑。新实现采用 12 只 T28 1.8 V MOS、1 pF 自举电容和本地反相器。同一 10 位分裂 CDAC 负载下，五点 TT 最坏差分保持误差从 1.536 降至 0.394 mV。换到 8 位平坦阵列，负载反而变大，0.5 µm 主开关的保持误差达到 12.59 mV；加宽到 1 µm 后才降至 0.126 mV。每次“通过”都要写明负载和工艺角。</p><p class="report-sources"><a href="$repository/blob/52feb04/Obsidian_docs/Report/Wrap-up%20%26%20Experience.md">同期设计者笔记 ↗</a> · <a href="$repository/blob/c5d6c08/docs/canvas_bootstrap_full_cdac.md">新旧同载对照 ↗</a> · <a href="$repository/blob/4ced90a/docs/eight_bit_flat_migration.md">八位负载复测 ↗</a></p></li>
-<li><strong>10 月 20 日 · SAR 第一次简化，发生在版图之前。</strong><p>旧自搭 CMOS 控制器有判决确认、复位确认、超时和独立输出存储。慢热角到截止点只完成七位。改用 SAMPLE 初始化本地位循环，去掉独立输出存储与 EOC，展开 MOS 从 1742 减至 1476。理想模拟接口上的 13 项功能和时序短测通过。代价也在当时写明：比较停住时可能留下部分码。输出该在哪个边沿锁存、谁负责驱动焊盘，仍需芯片接口另作决定。</p><p class="report-sources"><a href="$repository/blob/5ce35d2/docs/sar8_simple_async.md">控制器与测试边界 ↗</a></p></li>
-<li><strong>10 月 20–23 日 · 理想参考接口掩盖了实现缺口。</strong><p>R1 用真实参考开关和理想栅控打通闭环。到 R3，某帧八次比较齐全，结果仍从预期 65 跳到 1。同一输入历史回放将原因锁定到理想控制器拒绝了一次定时回调，修正后读回 65。R4 才把参考控制做成管级，随后又试验将分段复位移入空闲期。同期笔记已指出，数字与模拟分头验证时，参考栅控的实现责任没有随接口一起交接。</p><p class="report-sources"><a href="$repository/blob/39a2ee2/docs/r3_refgate_events.md">第 9 帧回放 ↗</a> · <a href="$repository/commit/e276458">原生参考控制 ↗</a> · <a href="$repository/blob/ec2d3c4/docs/sar8_idle_performance.md">空闲复位对照 ↗</a></p></li>
-<li><strong>10 月 24–29 日 · SOA 改善了一个节点，最坏端对却换了地方。</strong><p>在 FF 冷角把栅极串联电阻减至四分之一，底板建立略快（2.217 → 2.166 ns），下冲却加深（−56.94 → −75.61 mV）。继续给 32 路栅极加总计 4.084 pF 的 MOM，目标节点超电源幅度降了约 85%，新的最坏点转到 MSB 参考 PMOS 的体漏端。这个电容候选最终放弃。10 月 29 日复核资料才厘清：当时使用的 0.99 V 是模型偏置告警线，手头缺少适用的瞬态寿命包络。复盘判断：开始多轮器件试改前，应先约定哪些超限能决定去留。</p><p class="report-sources"><a href="$repository/blob/1101428/docs/sar8_stress_closure.md">栅阻对照 ↗</a> · <a href="$repository/blob/b7cd241/docs/sar8_physical_repair.md">电容与耐压器件试验 ↗</a> · <a href="$repository/blob/f4f8e20/verification/sar8_overvoltage_doc_review/README.md">阈值资料核对 ↗</a></p></li>
-<li><strong>10 月 27 日–11 月 4 日 · 数字门换成标准单元，RC 时序保留。</strong><p>团队回到冻结的 L90/Mmain2 母版，单独替换反相器、NAND、复位 DFF、时钟缓冲和参考驱动，便于隔离诊断分支的影响。迁移记录明确保留 RC/clear、SR 锁存器外部负载及参考电阻。冻结 B 后有全码和频谱回归，但这次替换的验收没有把 RC 元件的实际占地和布线后读出时间纳入。后端接手时，仅延时宏的 231 个 MOM 和十个电阻就占了约 845 µm²。</p><p class="report-sources"><a href="$repository/blob/f4f8e20/plan/2026-10-27-sar8-frozen-stdcell/plan.md">迁移保留项 ↗</a> · <a href="$repository/blob/f4f8e20/README.md">冻结 B ↗</a> · <a href="$snapshot/Layout/results/sar_timing.md">实际占地 ↗</a></p></li>
-<li><strong>11 月 15 日 · 版图前删去 CDAC 开关驱动的第二套状态。</strong><p>为抑制切换扰动和排查端压，B 的参考侧累积了八个 MUX、八个 DFF、两步捕获、逐位复位、非交叠发生器和长驱动链。重新沿试探码追踪状态后，让 SAR 统一保存判决，参考侧仅保留公共初态选择和必要的栅极驱动。带真实开关负载复测五角，每角 18/18 帧读码正确。按薄栅端压持续时间另行筛查，FF 冷仍有九对超限、FF 热一对；最简驱动本身没有新增该规则违例。</p><p class="report-sources"><a href="$repository/issues/2">简化范围与取舍 ↗</a> · <a href="$snapshot/results/soa/minimal_reference_five_corner_20261115.md">同版五角短测 ↗</a></p></li>
-<li><strong>11 月 15 日 · 从整体调参回到具体端对和边沿。</strong><p>只将 MSB 两侧末级驱动从 D1 换到 D2，比较器输入管在 FF 冷角的超限累计从 166.1 降到 47.7 ps。剩余八处位于标准 DFF 内部。隔离清零时的数据反馈后，在每位 D 输入前加 OR，最坏累计从 131.5 降至 52.5 ps，18 帧原理图短测中超过时长限值的端子对由八降为零。后来 Stage 6 在另一版提取网表中重新发现 FF 冷角超限。旧版修复和新版可靠性各有自己的结论。</p><p class="report-sources"><a href="$snapshot/results/soa/msb_drive_d2_trial_20261115.md">D2 对照 ↗</a> · <a href="$snapshot/results/soa/dff_reset_or_ffc_20261115.md">OR 复验 ↗</a> · <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">提取版端压 ↗</a></p></li>
-</ol>
-<figure><a href="${asset_base}assets/report-ff-stress.png"><img loading="lazy" src="${asset_base}assets/report-ff-stress.png" alt="FF 冷角同一采样边沿，原始栅阻与减小栅阻的 VGB 应力和底板负向尖峰"></a><figcaption>同一 FF 冷角输入历史下，减小参考开关栅阻使建立略快，底板下冲反而加深。两条波形一起看，才知道这次改动把代价转到了哪里。 <a href="$repository/blob/1101428/docs/sar8_stress_closure.md">原始对照 ↗</a></figcaption></figure>
+</details>
 </section>
-<section id="comparator" class="report-case"><p class="audit-period">11 月 16–21 日 · StrongARM 版图</p><h3>比较器：从分散摆放到三行共享扩散</h3>
+
+<section id="status" class="report-section"><h2>未决事项</h2>
+<p class="section-lead">按本报告截止时主干上的记录列出状态、记录中的责任人和下一步复查。<a href="#next">原文的下一轮计划</a>折叠在表格下方。</p>
+<div class="table-wrap"><table class="status-board"><caption>11 月 24 日的未决与待回收事项</caption><thead><tr><th>事项</th><th>现状</th><th>责任人</th><th>下一步</th></tr></thead><tbody>
+<tr><th scope="row">FF 冷端压 <span class="status-chip chip-open">未决</span></th><td>16 对 VDS 超过时长规则，最坏 757.8 ps，限值 100 ps</td><td>单元与可靠性负责人</td><td>在最坏寄存器上做同条件回放，再把处置写入主干记录。 <a href="$repository/pull/57">记录 ↗</a></td></tr>
+<tr><th scope="row">FF 热采样误差 <span class="status-chip chip-open">未决</span></th><td>单端 4.130 mV，限值 3.516 mV</td><td>自举负责人</td><td>复查采样边沿与差分误差，再把处置写入主干记录。 <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">数据 ↗</a></td></tr>
+<tr><th scope="row">TT 有噪 FFT <span class="status-chip chip-pending">待回收</span></th><td>1024 点，求 SNDR 与 ENOB</td><td>覆盖跟踪</td><td>收齐 FFT，再做码密度线性估计并列出未覆盖码。 <a href="$repository/issues/60">计划 ↗</a></td></tr>
+<tr><th scope="row">全码线性 <span class="status-chip chip-open">未决</span></th><td>转移点扫描延后</td><td>覆盖跟踪</td><td>与码密度估计分开安排。 <a href="$repository/issues/60">计划 ↗</a></td></tr>
+<tr><th scope="row">比较器失调范围 <span class="status-chip chip-open">未决</span></th><td>200 次提取 σ 12.05 mV。匹配可能恶化至少 3 倍，且无上限；样本极值乘以 3 约为 ±104 mV，仅作灵敏度示例（0.90 V 单边满量程的 11.6 %）</td><td>系统审查</td><td>为不校准的 ADC 规定校正范围、分辨率与验证。 <a href="$snapshot/Layout/results/chip_matching.json">匹配记录 ↗</a> · <a href="$snapshot/docs/specification.md">规格书 ↗</a></td></tr>
+<tr><th scope="row">PDB3AC 上的 ESD.WARN.1 <span class="status-chip chip-open">未决</span></th><td>6 项；库 master 不含 SDI 图形</td><td>TSMC</td><td>询问该 master 上出现此警告是否正常。 <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a></td></tr>
+<tr><th scope="row">IO 单元内填充 <span class="status-chip chip-open">未决</span></th><td>fill7 在 IO 库单元内放 dummy</td><td>TSMC 或 MPW 方</td><td>请其接受；备选 fill6 需豁免 228 个密度项。 <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a></td></tr>
+<tr><th scope="row">DIODMY_L <span class="status-chip chip-open">未决</span></th><td>自举 BTOP N 阱二极管 1 项</td><td>自举负责人</td><td>书面说明，或在新的自举版本加 DIODMY 与 DIODMY_L。 <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a></td></tr>
+<tr><th scope="row">核心禁填区过孔 <span class="status-chip chip-open">未决</span></th><td>核心内 V1–V6 上 15 个芯片级 dummy via</td><td>系统审查</td><td>说明理由后保留，或重新生成并复验。 <a href="$snapshot/Layout/results/chip_fill7_core_dummy_vias.json">核查 ↗</a> · <a href="$repository/pull/53">复核 ↗</a></td></tr>
+<tr><th scope="row">芯片尺寸与封装 <span class="status-chip chip-open">未决</span></th><td>892 µm = CSR.R.1 最小值 882 µm 加 10 µm</td><td>MPW 方 · 封装 Issue</td><td>尺寸网格、划片道、密封环归属与 36 焊盘键合表。 <a href="$snapshot/Layout/results/chip_objects.md#open">记录 ↗</a> · <a href="$repository/issues/18">封装 ↗</a></td></tr>
+</tbody></table></div>
+<details class="report-fold" id="next"><summary>复盘与下一轮（原文）</summary>
+<ol class="report-steps">
+<li><strong>先定位两项实测超限。</strong> FF 冷角有 16 对 VDS 超过时长规则，最坏 757.8 ps，限值 100 ps。FF 热角自举单端保持误差达 4.130 mV，限值 3.516 mV。分别回到最坏位的寄存器和采样关闭边沿，复验修订对时序与差分误差的影响。</li>
+<li><strong>补齐性能曲线。</strong> 先收齐当前提取版 1024 点有噪 FFT，报告 SNDR、ENOB；用现有码流做码密度估计并列出未覆盖码，完整转移点扫描另排，再把 200 次提取比较器失配的 σ = 12.05 mV 换算为片外校正范围与可用输入余量，并计入匹配偏差：MATCH.WARN.1 提示至少 3 倍恶化且无上限，样本极值乘以 3 约为 ±104 mV，仅作灵敏度示例。</li>
+<li><strong>完成物理与封装交接。</strong> 逐项确认 IO/ESD 豁免、核心禁填区过孔和最终 VIN/VREF 提取；核实 892 µm 边界、36 个焊盘的键合表及板上参考与时钟条件。</li></ol>
+<p class="report-sources"><a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">FF 超限测量 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a> · <a href="$repository/issues/60">全码与频谱计划 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p>
+</details>
+</section>
+
+<section id="lanes" class="report-section"><h2>按模块的其他记录</h2>
+<p class="section-lead">四条链之外的返工，按模块折叠：<a href="#comparator">比较器</a>、<a href="#cdac">CDAC 与参考驱动</a>、<a href="#fill">填充与签核</a>。</p>
+<details class="report-fold" id="comparator"><summary>比较器 · 11 月 16–23 日 · 三行布局与匹配等级</summary>
+<p class="audit-period">11 月 16–21 日 · StrongARM 版图</p><h3>比较器：从分散摆放到三行共享扩散</h3>
+<div id="d-comparator">
 <p>最早的 sym2 把同一只 StrongARM 摊在 7.96 × 12.46 µm 内。压成三行以后，又遇到多指器件端子对应和不同指宽的拼接问题。v7 统一为 0.5 µm 单指，按原理图逐指连接，相邻器件共享扩散，差分输入从行间向两侧引出。面积从 99.18 降至 5.74 µm²。</p>
 <p>v3/v4 为紧凑性把多个器件组合成多指 PCell，版图端子命名和栅极分配却难与电路逐一核对。v6 改回每个原理图器件一个实例，又引入 0.5/1 µm 扩散宽度台阶和单独的尾管行。v7 才同时满足紧凑性与端子可核查性。</p>
 <figure><a href="${asset_base}assets/report-comparator.png"><img loading="lazy" src="${asset_base}assets/report-comparator.png" alt="sym2 与紧凑版比较器的同尺度面积对照"></a><figcaption>原生 GDS 重绘。前两幅按同一比例显示 sym2 与 v8，右图将 v8 放大 2.6 倍。紧凑核心为 1.63 × 3.52 µm。</figcaption></figure>
 <p>同一组十点 TT 激励下，最大判决延迟从 sym2 的 517.3 降到 v7 的 301.7 ps，差分回踢峰值却从 52.18 升到 59.63 µV。v8 为供电加 M2 引脚和冗余过孔，尾管地路径从 38.7 降至 29.4 Ω，最大延迟为 314.3 ps。曾试过单侧额外加一个时钟过孔，+0.1 mV 输入判错，最终保留对称方案。</p>
-<p class="report-sources"><a href="$snapshot/Layout/results/comparator.md">历版尺寸、寄生和判决测量 ↗</a> · <a href="$repository/pull/10">v8 独立验证 ↗</a></p></section>
-<section class="report-case" id="cdac"><p class="audit-period">11 月 16–18 日 · 与 SAR 布局并行</p><h3>CDAC：先把走线缩短，再查清小位为何偏重</h3>
-<p>单位 MOM 和 1∶2 小阵列用断开 B1、恢复连线的对照验证了 LVS 流程。放大到整阵列后，第一版两侧功能走线合计 16.736 mm，每侧 TOP 长 404.44 µm。11 月 18 日保留同一电气参考，把相邻行的顶板相向放置，每侧 65 组折叠开关缩至 16 组；差分核心从 8354.62 缩至 3738.62 µm²，每侧 TOP 降到 213.27 µm。相同 TT 前填充夹具中，各位权重之和相对于原理图的比值从 95.292% 升到 96.994%，但增益归一后的最差单比特残差却从 0.049 升到 0.129 LSB。</p>
-<div class="report-pair"><figure><a href="${asset_base}assets/report-cdac.png"><img loading="lazy" src="${asset_base}assets/report-cdac.png" alt="原版与配对重排后的两侧 CDAC 和底板开关，同一比例"></a><figcaption>原版与重排版，保留端口、总管宽和电气位权。</figcaption></figure><figure><a href="${asset_base}assets/report-small-bits.png"><img loading="lazy" src="${asset_base}assets/report-small-bits.png" alt="同一阵列中心，小位中心反演布局与按位权顺序堆叠的 M4 路线"></a><figcaption>中心两列的小位。对称摆放让小位的引线穿越过多阵列行。</figcaption></figure></div>
-<p>通用填充把 TOP 固定负载从每侧约 38.6 fF 推到约 141 fF。改为阵列自管填充后，逐导体提取又揭示了另一个问题：MOM 本体每单位的耦合相同，偏重来自小位过长的 M4 干线，47→48 等转换处 DNL 达 −0.35 LSB。保留大位布局，只把中心小位按权重重排，最终独立提取瞬态 DNL/INL 为 0.123/0.084 LSB，增益误差仍为 4.22%。随后全 ADC 的 SS 冷角短测虽读对十帧，其中一帧采样残差仍达 0.351 LSB，超过 0.25 LSB，问题回到了采样器。</p>
-<p>11 月 24 日整理现用原理图时，团队把两两同网的 32 个栅端口合成 16 个 REFSEL。折叠理想探针后，两版同为 298 个实例、245 个连通分组，器件参数与顶层端口顺序一致。这次简化依据连接等价沿用既有提取结果。 <a href="$repository/pull/69">原理图逐网核对 ↗</a></p>
-<p class="report-sources"><a href="$repository/issues/1">单位阵列测试范围 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">布线、填充和逐位对照 ↗</a> · <a href="$snapshot/results/design/sampler_mmain4_adoption_20261121.md">随后如何重选采样开关 ↗</a></p></section>
-<section class="report-case" id="sar"><p class="audit-period">11 月 18–21 日 · 11 月 24 日提取复查</p><h3>从 RC 到标准延时，再到单边沿逐位定时</h3>
+<p class="report-sources"><a href="$snapshot/Layout/results/comparator.md">历版尺寸、寄生和判决测量 ↗</a> · <a href="$repository/pull/10">v8 独立验证 ↗</a></p>
+</div>
 <ol class="audit-log">
-<li><strong>11/18　RC 延时的版图账单</strong><p>布线后的 SAR 宏占 2058 µm²，其中 231 个 MOM 电容占 513 µm²，10 个电阻占 333 µm²。17.13 µm 的 QUIET 电阻前仿通过，布线后 SS 冷角晚读 6.11 ns。11 µm 仍晚 1.25 ns，8.5 µm 才余 2.59 ns。冻结延时电路前，面积预算应包含实画器件，读点预算应包含实际负载与走线。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_timing.md">版图与三次电阻试验 ↗</a></p></li>
-<li><strong>11/19　换标准延时，先过前仿端压</strong><p>v3 用 52 个 DEL、28 个 AND 取代五条 RC 路径。首轮六帧错四码；在接收端加缓冲并保留末级请求门控后，五角各 18 帧读码正确。FF 冷角两帧薄氧端压扫描中，超限端子对从 2 降到 0，最坏累计时长从 457.8 降至 75.0 ps，限值 100 ps。这次通过只覆盖指定波形和网表，后续布线版本仍需重扫。</p><p class="report-sources"><a href="$snapshot/results/design/sar_std_delay_20261119.md">五角回归与两帧 SOA ↗</a></p></li>
-<li><strong>11/19　同一延时单元，换模型就错过读点</strong><p>九级候选去掉锁存器 QB 电容，原理图 SS 冷角仍有 13.51 ns 裕量；耦合提取后首帧到 90 ns 仅比较六次。补回电容仍只有六次。固定输入边沿和负载，DEL250 从原理图 280 ps、仅器件几何 283 ps，增至含单元内部互连的 471 ps。另一组单边沿抽头在 FF 冷/CBEST_T 与 SS 冷/CWORST_T 分别为 1.431 和 3.894 ns。一个 TT 标称延时不足以同时预算快角建立和慢角读出。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_std_static_candidate_c_20261119.md">补回电容的对照 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_taps.md">同一抽头的冷角实测 ↗</a></p></li>
-<li><strong>11/19–20　调短延时救回读出，却暴露复位太晚</strong><p>在原 40 ns 采样脉冲下，缩短 QUIET 和采样使能后，双提取的 DEL200 候选四帧均读对；SS 冷角采样开启时，510 个底板的加权误差仍达 25.23 LSB，限值 0.25 LSB。团队暂停延时扫描，改查帧边界：单边沿控制器用 COMMIT 同时写位、推进试探字，转换完成即复位参考，撤去 29 级空闲等待。在四帧同条件对照中，末次更新到读点的裕量从 3.642 增至 10.917 ns。</p><p class="report-sources"><a href="$snapshot/Layout/results/sar_cdac_aperture_results_20261119.md">开窗误差与暂停记录 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_taps.md">同条件重放 ↗</a></p></li>
-<li><strong>11/20　码对了，bit 6 的参考仍未恢复</strong><p>单边沿 8/6 抽头先按实际参考端电压检查 510 个底板。改用 24/24 长等待作稳态对照，8/6 抽头在 FF 冷角 bit 6 的顶板误差为 −0.393 LSB，其中 −0.355 LSB 来自参考端恢复。延长到 9/6 后又在 bit 3 看到三次阈值穿越；将选择信号提前一级寄存，同一 63→64 输入重放变为一次。此后逐位检查比较瞬间的顶板、参考端和交接边沿。</p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_settling_reference_20261120.md">长等待分解 ↗</a> · <a href="$snapshot/results/design/sar_registered_9_6.md">寄存选择器重放 ↗</a></p></li>
-<li><strong>11/20–21　45 ns 分给采样，剩余时间按位重新预算</strong><p>早期单边沿候选仍用 40/60 ns。采用版将采样延长至 45 ns、转换缩至 55 ns，90 ns 读点不动。按单元提取与 CDAC 寄生重新分配各位抽头，bit 6 到 bit 0 依次等待 11、9、7、6、5、4、4 级。SS 冷角、最差互连模型下，采用版在 SAR 单元间理想连线时读出余量 7.59 ns；换成实际布线的 SAR 宏与提取 CDAC，8/8 帧通过，余量 6.95 ns。应把采样占空比、真实门控窗、各位等待与板端读点放在同一张时序表里。</p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_frontend.md">40 ns 试验 ↗</a> · <a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">45/55 ns 采用记录 ↗</a> · <a href="$snapshot/Layout/results/sar_se_core.md">布线后配对实测 ↗</a></p></li>
-<li><strong>11/20 → 11/24　端压结论随提取范围重开</strong><p>单边沿采用前的 FF 冷扫描发现 5 个违规；调整写入 AND 的输入脚和选择/参考逻辑后，采用网表的 1902 个器件扫描为 0，数值分辨率仍待确认。到 fill5 核心加供电与封装模型的 FF 冷极值工况，16 对 VDS 超时，最坏 757.8 ps。两次网表、负载、激励与扫描范围不同，现有记录不能把回归唯一归因于某段布线；这正是需要在每次集成冻结前重跑同一应力用例的原因。</p><p class="report-sources"><a href="$snapshot/results/design/sar_single_edge_adoption_20261120.md">采用网表的端压扫描 ↗</a> · <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">最终核心端压数据 ↗</a></p></li>
+<li id="d-matching"><strong>11 月 23 日 · 紧凑比较器达不到高匹配等级。</strong><p>在比较器阵列上加 ANARRAY_H 标记后，AN.R.79.2m 因 OD 密度失败：阵列与周边环区的密度差为 0.348（N）和 0.257（P），限值 0.10。用相同 dummy 重画阵列的方案被否决。比较器改加普通 MATCHING 标记，清除 MATCH.WARN.1（现为 0），并把偏离高匹配作为设计决定接受。MATCH.WARN.1 指出，不满足高、中匹配阵列规则时，匹配可能恶化至少 3 倍，且规则没有给出上限。把 200 次提取样本的极值（−34.7 与 +34.1 mV，σ 12.05 mV）乘以 3，得到约 ±104 mV。记录明确这只是灵敏度示例，不是最坏情况。作为对照，104 mV 是 0.90 V 单边满量程的 11.6 %；−1 dBFS 正弦每侧约余 98 mV，失调达到这个量级的芯片恰好会削顶。ADC 不做校准；校正范围、分辨率与验证仍在规格书和集成跟踪中待定。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_matching.json">匹配检查与决定 ↗</a> · <a href="$repository/pull/48">标记更改 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">设计偏差 ↗</a> · <a href="$snapshot/docs/specification.md">规格书 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p></li>
 </ol>
-<div class="report-pair"><figure><a href="${asset_base}assets/report-rc.png"><img loading="lazy" src="${asset_base}assets/report-rc.png" alt="原 RC 延时宏的初始摆放与压紧后布线"></a><figcaption>RC 时序宏的两次布局，右图布线核心为 39.885 × 51.600 µm。</figcaption></figure><figure><a href="${asset_base}assets/report-sar.png"><img loading="lazy" src="${asset_base}assets/report-sar.png" alt="最终单边沿 SAR 的标准单元版图"></a><figcaption>单边沿 SAR 宏，174 个原生标准单元，18.495 × 16.8 µm。两张图各用自己的坐标尺度。</figcaption></figure></div>
-<p>11 月 21 日，采样器尺寸也被重新打开。两指版进入带提取 CDAC 的 ADC 后，SS 冷角十帧中七帧超过 0.25 LSB。去掉井邻近效应仍有 1.52 LSB；两指加到四指使时间常数从 4.6 降到 2.3 ns，再加到六指却使 FF 冷角独立误差超限。最终选四指，后来因 VIN 焊盘闩锁和填充又重开同一个模块。 <a href="$snapshot/results/design/sampler_mmain4_adoption_20261121.md">尺寸筛选与复验 ↗</a></p></section>
-<section class="report-case" id="chip"><p class="audit-period">11 月 21–24 日 · 从核心到封装边界</p><h3>顶层接口、规则与 fill 的连锁返工</h3>
+</details>
+<details class="report-fold" id="cdac"><summary>CDAC 与参考驱动 · 10 月 24 日—11 月 24 日</summary>
 <ol class="audit-log">
-<li><strong>11 月 21–22 日 · 核心冻结时，焊盘供电还在改。</strong><p>第一版 7 × 7 规划只放了 1 个模拟 PVDD3AC，库应用说明要求至少 3 个，还缺少 PVSS2AC。逐项核对模拟与数字供电、角单元和域边界后才发现至少需要 34 个焊盘，遂改成 9 × 9、36 个焊盘，重排核心并重算参考线与供电预算。</p><p class="report-sources"><a href="$repository/pull/23">旧规划逐条对照 ↗</a> · <a href="$repository/pull/27">9 × 9 预算重算 ↗</a></p></li>
-<li><strong>11 月 22 日 · IO 工具在每个域边界多放了一道 cut。</strong><p>计划每边界一个 PRCUTA_G，生成器却用两个填满 40 µm 间隙。改名对照把环级 ERC 从 334 项降到 6 项，剩余的 2 个浮井和 4 个浮衬底正落在相邻 cut 处。当时按“位于库单元内”整组接受；直到 r8 才把两个边界各多出来的 cut 换成 PFILLER20_G。器件数与 LVS 都无法发现这种无器件的域隔离错误。</p><p class="report-sources"><a href="$repository/pull/28">当时的环级处置 ↗</a> · <a href="$repository/pull/51">r8 实物修订 ↗</a></p></li>
-<li><strong>10 月 20 日至 11 月 22 日 · 谁来保持上一帧的码？</strong><p>10 月简化 SAR 时主动删掉独立输出寄存器组，采样即清工作码；核心读点能读对，板端持续输出仍需寄存。首版 IO 规划已经在核心外预留寄存器，但部分整片通过 LVS 时它仍待画。后来在 DVDD 域加 8 路寄存器，SAMPLE 上升沿同时触发捕获和核心清零，D 端补 DEL250 才把 FF 热角保持裕量从 0.30 提到 0.50 ns。核心测试通过后才闭合这一接口。</p><p class="report-sources"><a href="$repository/blob/5ce35d2/docs/sar8_simple_async.md">输出契约 ↗</a> · <a href="$repository/blob/89cfdd7/Layout/design/io_ring.json">最初预留 ↗</a> · <a href="$snapshot/Layout/results/chip_assembly.md">部分装配 ↗</a> · <a href="$snapshot/Layout/results/output_register_timing.md">捕获复验 ↗</a></p></li>
-<li><strong>11 月 22–23 日 · Bootstrap 通过块级验证，接入 VIN 焊盘后重开。</strong><p>闩锁规则依赖焊盘连通性。层次 DRC 只报负侧，平坦化在两路各查出 1 + 6 个标记。r2 加宽护环、移动 PMOS 行，使 VIN 扩散到最近 PMOS 扩散的距离达到 2.40 µm，规则要求 2.30 µm。首轮加宽又碰到 dummy poly，只得改为向外加宽。两路闩锁清零后还要重做填充、提取、独立采样与闭环验证。</p><p class="report-sources"><a href="$repository/pull/33">平坦化定位 ↗</a> · <a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">r2 更改与复验 ↗</a></p></li>
-<li><strong>11 月 22–23 日 · 去耦、钳位与 ESD 用了不同的验收口径。</strong><p>面积估算漏扣钳位占地。r2 挪走模拟钳位以放大去耦，却违反钳位应在本支路焊盘和核心之间的放置要求。r3 移回钳位，加 MOM 后有 92.9 pF，并按实画馈线复算最坏压降 20.3 mV。另一轮又把 IO 电源单元间的 1 Ω 母线规则用于焊盘至钳位；改按 1.3 A ESD 电流密度审查，r4 补馈线、r5 补 AVSS 焊盘 M1。</p><p class="report-sources"><a href="$repository/pull/41">钳位回迁 ↗</a> · <a href="$repository/pull/46">规则更正 ↗</a> · <a href="$repository/pull/47">焊盘补金属 ↗</a> · <a href="$snapshot/Layout/results/chip_rail_recheck.md">压降复算 ↗</a></p></li>
-<li><strong>11 月 23 日 · 已知的 PCLAMPC 标记跨过了多轮 fill。</strong><p>第一次整片装配就把 10 个栅相关标记定位在 PCLAMPC_H_G 内，当时列为待书面豁免。小范围换单元实验才证实，R0 放置 H_G 使栅方向错误。r8 在原位改为 V_G，同外框、同引脚，这 10 项全部消失。位置落在库单元中只能说明来源；是否属于可豁免项，还取决于方向、版本和适用条款。</p><p class="report-sources"><a href="$repository/issues/12#issuecomment-7081027104">当时的豁免待办 ↗</a> · <a href="$snapshot/Layout/results/chip_fill.md#how-revision-7-was-chosen">替换试验 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">最终分类 ↗</a></p></li>
-<li><strong>11 月 23 日 · 密封环先按样例装配，后核实角部规则。</strong><p>r3 至 r6 使用实验室 1 mm 样例，前五版 fill 据此划禁填区。后来才复现样例拼块并测 CSR.R.1：带密封环运行时检查组不会生成目标三角区，需移除密封环、补角标记做探针。当前 IO 环给出的最小边长是 882 µm，r7 选 892 µm 留 10 µm 裕量，面积约少 20%，fill 边界随之重做；MPW 尺寸确认仍未完成。</p><p class="report-sources"><a href="$repository/pull/45">1 mm 样例 ↗</a> · <a href="$repository/pull/50">角区探针与改尺寸 ↗</a></p></li>
-<li><strong>11 月 23–24 日 · 七次 fill 改动的不是同一份输入。</strong><p>Fill1 在输出寄存器附近留密度空窗，fill2 开放上层金属和引脚边缘。Fill3–4 跟随芯片馈线和版图版本；fill5 缩小钳位馈线禁填层并加 M9 带。Fill6 把旧结果裁到 892 µm，仍因排除全部 IO 单元留下 228 个密度项。Fill7 在试验片段验证后，整片一次跑填充，开放 IO 区并加 M9 框，r8 的 2672 个密度标记归零。首次拼接试验还产生过 15,540 个重复填充标记，追溯到片段重叠。</p><p class="report-sources"><a href="$snapshot/Layout/design/chip_fill.py">各区填充权限 ↗</a> · <a href="$snapshot/Layout/results/chip_fill.md">版本、试验与实测 ↗</a></p></li>
-<li><strong>11 月 24 日 · 密度归零后，签核账仍须逐项结算。</strong><p>r8/fill7 的 OA 流复验为 LVS 一致、DRC 224、ERC 296、平坦闩锁 0。六项模拟焊盘 ESD.WARN.1 仍需晶圆厂意见，自举二极管需设计方书面处置，IO 单元内放 dummy 仍需接受。另一次逐层核查在核心禁填区找到 15 个 dummy via。规则检查、工程处置、代工方接受应分别记录责任人和状态。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_drc_waivers.md#summary">豁免依据与归属 ↗</a> · <a href="$snapshot/Layout/results/chip_fill7_core_dummy_vias.json">禁填区过孔 ↗</a></p></li>
+<li id="d-soa-trials"><strong>10 月 24–29 日 · SOA 改善了一个节点，最坏端对却换了地方。</strong><p>在 FF 冷角把栅极串联电阻减至四分之一，底板建立略快（2.217 → 2.166 ns），下冲却加深（−56.94 → −75.61 mV）。继续给 32 路栅极加总计 4.084 pF 的 MOM，目标节点超电源幅度降了约 85%，新的最坏点转到 MSB 参考 PMOS 的体漏端。这个电容候选最终放弃。10 月 29 日复核资料才厘清：当时使用的 0.99 V 是模型偏置告警线，手头缺少适用的瞬态寿命包络。复盘判断：开始多轮器件试改前，应先约定哪些超限能决定去留。</p><p class="report-sources"><a href="$repository/blob/1101428/docs/sar8_stress_closure.md">栅阻对照 ↗</a> · <a href="$repository/blob/b7cd241/docs/sar8_physical_repair.md">电容与耐压器件试验 ↗</a> · <a href="$repository/blob/f4f8e20/verification/sar8_overvoltage_doc_review/README.md">阈值资料核对 ↗</a></p>
+<figure><a href="${asset_base}assets/report-ff-stress.png"><img loading="lazy" src="${asset_base}assets/report-ff-stress.png" alt="FF 冷角同一采样边沿，原始栅阻与减小栅阻的 VGB 应力和底板负向尖峰"></a><figcaption>同一 FF 冷角输入历史下，减小参考开关栅阻使建立略快，底板下冲反而加深。两条波形一起看，才知道这次改动把代价转到了哪里。 <a href="$repository/blob/1101428/docs/sar8_stress_closure.md">原始对照 ↗</a></figcaption></figure></li>
+<li id="d-dup-state"><strong>11 月 15 日 · 版图前删去 CDAC 开关驱动的第二套状态。</strong><p>为抑制切换扰动和排查端压，B 的参考侧累积了八个 MUX、八个 DFF、两步捕获、逐位复位、非交叠发生器和长驱动链。重新沿试探码追踪状态后，让 SAR 统一保存判决，参考侧仅保留公共初态选择和必要的栅极驱动。带真实开关负载复测五角，每角 18/18 帧读码正确。按薄栅端压持续时间另行筛查，FF 冷仍有九对超限、FF 热一对；最简驱动本身没有新增该规则违例。</p><p class="report-sources"><a href="$repository/issues/2">简化范围与取舍 ↗</a> · <a href="$snapshot/results/soa/minimal_reference_five_corner_20261115.md">同版五角短测 ↗</a></p></li>
+<li id="d-d2-or"><strong>11 月 15 日 · 从整体调参回到具体端对和边沿。</strong><p>只将 MSB 两侧末级驱动从 D1 换到 D2，比较器输入管在 FF 冷角的超限累计从 166.1 降到 47.7 ps。剩余八处位于标准 DFF 内部。隔离清零时的数据反馈后，在每位 D 输入前加 OR，最坏累计从 131.5 降至 52.5 ps，18 帧原理图短测中超过时长限值的端子对由八降为零。后来 Stage 6 在另一版提取网表中重新发现 FF 冷角超限。旧版修复和新版可靠性各有自己的结论。</p><p class="report-sources"><a href="$snapshot/results/soa/msb_drive_d2_trial_20261115.md">D2 对照 ↗</a> · <a href="$snapshot/results/soa/dff_reset_or_ffc_20261115.md">OR 复验 ↗</a> · <a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">提取版端压 ↗</a></p></li>
+<li id="d-cdac-pair"><strong>11 月 16–18 日 · CDAC：先把走线缩短，再查清小位为何偏重。</strong><p>单位 MOM 和 1∶2 小阵列用断开 B1、恢复连线的对照验证了 LVS 流程。放大到整阵列后，第一版两侧功能走线合计 16.736 mm，每侧 TOP 长 404.44 µm。11 月 18 日保留同一电气参考，把相邻行的顶板相向放置，每侧 65 组折叠开关缩至 16 组；差分核心从 8354.62 缩至 3738.62 µm²，每侧 TOP 降到 213.27 µm。相同 TT 前填充夹具中，各位权重之和相对于原理图的比值从 95.292% 升到 96.994%，但增益归一后的最差单比特残差却从 0.049 升到 0.129 LSB。</p>
+<div class="report-pair"><figure><a href="${asset_base}assets/report-cdac.png"><img loading="lazy" src="${asset_base}assets/report-cdac.png" alt="原版与配对重排后的两侧 CDAC 和底板开关，同一比例"></a><figcaption>原版与重排版，保留端口、总管宽和电气位权。</figcaption></figure><figure><a href="${asset_base}assets/report-small-bits.png"><img loading="lazy" src="${asset_base}assets/report-small-bits.png" alt="同一阵列中心，小位中心反演布局与按位权顺序堆叠的 M4 路线"></a><figcaption>中心两列的小位。对称摆放让小位的引线穿越过多阵列行。</figcaption></figure></div></li>
+<li id="d-cdac-fill"><strong>11 月 18–21 日 · 填充与过长干线让小位偏重。</strong><p>通用填充把 TOP 固定负载从每侧约 38.6 fF 推到约 141 fF。改为阵列自管填充后，逐导体提取又揭示了另一个问题：MOM 本体每单位的耦合相同，偏重来自小位过长的 M4 干线，47→48 等转换处 DNL 达 −0.35 LSB。保留大位布局，只把中心小位按权重重排，最终独立提取瞬态 DNL/INL 为 0.123/0.084 LSB，增益误差仍为 4.22%。随后全 ADC 的 SS 冷角短测虽读对十帧，其中一帧采样残差仍达 0.351 LSB，超过 0.25 LSB，问题回到了采样器。</p></li>
+<li id="d-rref"><strong>11 月 22 日 · 首版片上参考电阻未过供电预算。</strong><p>首版 RREF 每轨 42 段多晶，干线叠孔较薄。从引脚到轨端提取为 21.7 / 24.6 Ω，供电预算在 22 Ω 下给出 0.12 LSB 判决误差，限值 0.10 LSB。每轨改为 52 段、2 × 2 叠孔并加跨接：17.2 Ω，CREF 6.23 pF，在容差范围内最坏判决误差为 FF 冷 0.035 LSB。</p><p class="report-sources"><a href="$snapshot/Layout/results/toplevel_route_full.md">参考网络与供电预算 ↗</a></p></li>
+<li id="d-refsel"><strong>11 月 24 日 · 16 个 REFSEL 端口。</strong><p>11 月 24 日整理现用原理图时，团队把两两同网的 32 个栅端口合成 16 个 REFSEL。折叠理想探针后，两版同为 298 个实例、245 个连通分组，器件参数与顶层端口顺序一致。这次简化依据连接等价沿用既有提取结果。 <a href="$repository/pull/69">原理图逐网核对 ↗</a></p></li>
+</ol>
+<p class="report-sources"><a href="$repository/issues/1">单位阵列测试范围 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">布线、填充和逐位对照 ↗</a> · <a href="$snapshot/results/design/sampler_mmain4_adoption_20261121.md">随后如何重选采样开关 ↗</a></p>
+</details>
+<details class="report-fold" id="fill"><summary>填充、预算与签核清单 · 11 月 22–24 日</summary>
+<ol class="audit-log">
+<li id="d-charge-budgets"><strong>11 月 22 日 · 静态漏电与开关电荷分开计。</strong><p>FF 热（0.99 V、125 °C）下，静态漏电占测得电荷的很大一部分。记录的决定把它单独报告，取每帧的安静窗口测量：VDD 227 µA（225 µW），每路参考 7.9 µA。按开关电荷计，参考预算通过。供电开关电荷为预算的 1.01–1.09 倍，予以接受：这些电荷预算只是去耦尺寸的代理指标，而它们保护的检查都通过了，供电压降 28 mV（限值 45 mV），供电引脚峰值 1.70 mA（限值 5.5 mA），参考引脚峰值 4.22 mA（限值 5.2 mA）。限值没有改动。最终 fill5 核心后仿中，大进位用例为 1.11 倍，压降 22 mV。</p><p class="report-sources"><a href="$snapshot/Layout/results/current.json">记录的决定 ↗</a></p></li>
+<li id="d-fill-revisions"><strong>11 月 23–24 日 · 七次 fill 改动的不是同一份输入。</strong><p>Fill1 在输出寄存器附近留密度空窗，fill2 开放上层金属和引脚边缘。Fill3–4 跟随芯片馈线和版图版本；fill5 缩小钳位馈线禁填层并加 M9 带。Fill6 把旧结果裁到 892 µm，仍因排除全部 IO 单元留下 228 个密度项。Fill7 在试验片段验证后，整片一次跑填充，开放 IO 区并加 M9 框，r8 的 2672 个密度标记归零。首次拼接试验还产生过 15,540 个重复填充标记，追溯到片段重叠。</p><p class="report-sources"><a href="$snapshot/Layout/design/chip_fill.py">各区填充权限 ↗</a> · <a href="$snapshot/Layout/results/chip_fill.md">版本、试验与实测 ↗</a></p></li>
+<li id="d-ledger"><strong>11 月 24 日 · 密度归零后，签核账仍须逐项结算。</strong><p>r8/fill7 的 OA 流复验为 LVS 一致、DRC 224、ERC 296、平坦闩锁 0。六项模拟焊盘 ESD.WARN.1 仍需晶圆厂意见，自举二极管需设计方书面处置，IO 单元内放 dummy 仍需接受。另一次逐层核查在核心禁填区找到 15 个 dummy via。规则检查、工程处置、代工方接受应分别记录责任人和状态。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_drc_waivers.md#summary">豁免依据与归属 ↗</a> · <a href="$snapshot/Layout/results/chip_fill7_core_dummy_vias.json">禁填区过孔 ↗</a></p></li>
 </ol>
 <figure class="report-bars"><figcaption>填充前 → 填充后，DRC 标记总数</figcaption>
 <div class="report-bar"><strong>r6 · fill5</strong><span class="report-track" aria-hidden="true"><i style="width:63.7%"></i><b style="width:12.3%"></b></span><span>1911 → 369</span></div>
 <div class="report-bar"><strong>r7 · fill6</strong><span class="report-track" aria-hidden="true"><i style="width:96.8%"></i><b style="width:15.4%"></b></span><span>2904 → 462</span></div>
 <div class="report-bar"><strong>r8 · fill7</strong><span class="report-track" aria-hidden="true"><i style="width:96.5%"></i><b style="width:7.5%"></b></span><span>2896 → 224</span></div>
 <p>每行在同一芯片底图上对照。浅色为未填充，深色为填充后剩余标记。r7 开始采用 892 µm 外框，不能将不同行的差额全部归因于填充。</p></figure>
-</section></section>
-<section id="review" class="report-section"><h2>审查在哪一步应该拦下来</h2>
-<p>11 月 15 日的参考驱动 Issue 已点出重复状态；16 日的版图规划 Issue 明写整机面积与接口缺少集中入口；21 日的模块审计才列齐 XREF、顶层和独立后仿缺口。说明这些问题有些早已有人提出，失效的是交接：一层验收通过后，未完成的跨层条件没有逐条跟到下一次冻结。部分 LVS 能正确核对一张不含输出寄存器的网表；按命名探针解释 ERC 也不能证明 CUT 数符合供电规划。这两次都需要有人核对验收对象本身。</p>
-<p class="report-sources"><a href="$repository/issues/2">参考状态审查 ↗</a> · <a href="$repository/issues/3">整机规划缺口 ↗</a> · <a href="$repository/issues/4#issuecomment-7061612067">模块审计当时的结论 ↗</a> · <a href="$repository/issues/12#issuecomment-7118488357">最终交接复查 ↗</a></p>
-<div class="table-wrap"><table><caption>下轮建议的审查顺序；责任列表示所需专业角色</caption><thead><tr><th>放行点</th><th>主审与会签</th><th>放行前必须回答的问题</th></tr></thead><tbody>
-<tr><th scope="row">电路与时序冻结</th><td>SAR、模拟、版图</td><td>对 90 ns 读点，当前负载和最快／最慢单元 RC 还剩多少裕量？RC 面积、周期间状态和输出保持由哪个模块承担？</td></tr>
-<tr><th scope="row">模块进入核心</th><td>模块、顶层、可靠性</td><td>用真实 CDAC、焊盘连接和供电寄生重看哪一项会失效？每次 SOA 修订是否复扫全端对，并同时复验建立与功能？</td></tr>
-<tr><th scope="row">芯片底图交给填充</th><td>IO/ESD、封装、版图验证</td><td>逐个对数 CUT、核钳位 master 与工艺指南；把芯片边界、seal ring、IO 库内允许填充范围和需外部接受的豁免单独签认。</td></tr>
-<tr><th scope="row">最终候选交付</th><td>系统、验证、封装</td><td>哪条结论来自块级、fill5 核心、外围单独回放或 fill7 整片？未决项附版本、限值、责任人及下一次复验，不让旧版“通过”替新版背书。</td></tr>
-</tbody></table></div>
-<p>项目层面的责任是具体的：设计需要交代未建模的负载和延时，审核需要查独立规则和完整接口，放行需要记录例外由谁接受。现存提交和验证记录足以定位这些失守的环节；对某位审核人的职责、当时掌握的信息及个人过失，记录不足以作出认定。</p></section>
-<section id="next" class="report-section"><h2>复盘与下一轮</h2>
-<ol class="report-steps">
-<li><strong>先定位两项实测超限。</strong> FF 冷角有 16 对 VDS 超过时长规则，最坏 757.8 ps，限值 100 ps。FF 热角自举单端保持误差达 4.130 mV，限值 3.516 mV。分别回到最坏位的寄存器和采样关闭边沿，复验修订对时序与差分误差的影响。</li>
-<li><strong>补齐性能曲线。</strong> 先收齐当前提取版 1024 点有噪 FFT，报告 SNDR、ENOB；用现有码流做码密度估计并列出未覆盖码，完整转移点扫描另排，再把 200 次提取比较器失配的 σ = 12.05 mV 换算为片外校正范围与可用输入余量。</li>
-<li><strong>完成物理与封装交接。</strong> 逐项确认 IO/ESD 豁免、核心禁填区过孔和最终 VIN/VREF 提取；核实 892 µm 边界、36 个焊盘的键合表及板上参考与时钟条件。</li></ol>
-<p class="report-sources"><a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">FF 超限测量 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a> · <a href="$repository/issues/60">全码与频谱计划 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p></section></article>
+</details>
+</section>
+<script src="${asset_base}assets/report.js" defer></script>
+</article>
