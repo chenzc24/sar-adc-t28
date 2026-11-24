@@ -1,0 +1,53 @@
+<article class="adc-report">
+<header class="report-cover">
+  <div><p class="report-date">2026.11.24 · TSMC 28 nm</p>
+  <h1>从比较器到整片</h1>
+  <p class="report-subtitle">8 位异步 SAR ADC 阶段报告</p>
+  <p>单边沿 SAR 与填充核心在三个工艺角完成了 12 组短测。整片已集成焊盘、输出寄存器、ESD 钳位和密封环。当前最窄的裕量出现在采样开关，快角端压也留下了需要修改的器件。</p>
+  <nav class="report-jumps" aria-label="报告目录"><a href="#scope">指标与边界</a><a href="#iterations">设计迭代</a><a href="#next">经验与下一步</a></nav></div>
+  <figure><a href="layout.html"><img src="${asset_base}assets/report-chip.png" alt="892 µm 方形芯片的外围焊盘、顶层互连与 ADC 核心位置"></a><figcaption>r8 未填充版图 · 892 × 892 µm，核心 122 × 111 µm。 <a href="layout.html">放大查看 ↗</a></figcaption></figure>
+</header>
+<section class="report-section" id="scope"><h2>转换器的边界</h2>
+<p>标称核心供电 0.90 V，共模 0.45 V，差分满量程 −0.90 至 +0.90 V，1 LSB 为 7.031 mV。外部 SAMPLE 提供 45 ns 采样、55 ns 转换的节拍，片内异步逻辑自行完成八次判决。自举开关直接将输入采到 MOM CDAC，比较器判定顶板差分电压，SAR 据此切换参考。</p>
+<p>板上提供输入驱动、基准电压和采样时钟。片内包含参考开关、驱动与去耦，无独立基准源、采样时钟发生器、连续时间模拟输入缓冲或片上校准。数字输出经过片内寄存器、Q 缓冲和 IO 焊盘驱动器；比较器静态失调预留片外校正。</p>
+<p class="report-sources"><a href="$snapshot/docs/specification.md">规格与接口 ↗</a> · <a href="$snapshot/Layout/results/chip_objects.md">片上外围 ↗</a></p>
+<div class="table-wrap"><table><caption>设计目标与本轮测量</caption><thead><tr><th>项目</th><th>目标</th><th>截至 11 月 24 日的证据</th></tr></thead><tbody>
+<tr><th scope="row">转换与读出</th><td>8 bit · 10 MS/s</td><td>填充核心 fill5：SS 冷、TT、FF 热各测常规、极值、大进位和重启，12/12 通过，输出在增益修正预期的 ±1 码内。常规用例读出裕量依次为 8.73、24.9、30.3 ns。</td></tr>
+<tr><th scope="row">动态与线性</th><td>ENOB ≥7 位；SNDR ≥43.9 dB；|INL|、|DNL| ≤1 LSB</td><td>当前提取版的最终 FFT 与全码结果待收齐。作为历史对照，冻结 B 版 TT 无噪声 FFT 为 48.79 dB、7.81 位；当前独立 CDAC 的提取 DNL/INL 为 0.123/0.084 LSB。</td></tr>
+<tr><th scope="row">平均功耗</th><td>≤1 mW</td><td>九组短测 57.46–393.93 µW，TT 常规 75.61 µW。包含核心 VDD、参考端口和单独回放测得的输出寄存器功耗，焊盘供电另计。</td></tr>
+<tr><th scope="row">板端读出</th><td>15 pF/位测试负载</td><td>独立 FF 热输出路径测试中，捕获 0xFF 后板端在 2.046 ns 内建立。</td></tr>
+</tbody></table></div>
+<p class="report-sources"><a href="$repository/issues/12#issuecomment-7093047607">12 组后仿 ↗</a> · <a href="$snapshot/results/integration/adc_register_power_20261124.md">功耗口径 ↗</a> · <a href="$snapshot/results/integration/ffh_board_conversion.md">输出负载 ↗</a> · <a href="$snapshot/results/fft/results.json">历史频谱 ↗</a> · <a href="$snapshot/Layout/results/cdac.md">CDAC ↗</a></p></section>
+<section class="report-section" id="iterations"><h2>哪些设计被版图改变了</h2>
+<section id="comparator" class="report-case"><h3>比较器：从分散摆放到三行共享扩散</h3>
+<p>最早的 sym2 把同一只 StrongARM 摊在 7.96 × 12.46 µm 内。压成三行以后，又遇到多指器件端子对应和不同指宽的拼接问题。v7 统一为 0.5 µm 单指，按原理图逐指连接，相邻器件共享扩散，差分输入从行间向两侧引出。面积从 99.18 降至 5.74 µm²。</p>
+<figure><a href="${asset_base}assets/report-comparator.png"><img loading="lazy" src="${asset_base}assets/report-comparator.png" alt="sym2 与紧凑版比较器的同尺度面积对照"></a><figcaption>原生 GDS 重绘。前两幅按同一比例显示 sym2 与 v8，右图将 v8 放大 2.6 倍。紧凑核心为 1.63 × 3.52 µm。</figcaption></figure>
+<p>同一组十点 TT 激励下，最大判决延迟从 517.3 降到 301.7 ps，差分回踢峰值却从 52.18 升到 59.63 µV。v8 为供电加 M2 引脚和冗余过孔，尾管地路径从 38.7 降至 29.4 Ω，最大延迟为 314.3 ps。曾试过单侧额外加一个时钟过孔，+0.1 mV 输入判错，最终保留对称方案。</p>
+<p class="report-sources"><a href="$snapshot/Layout/results/comparator.md">历版尺寸、寄生和判决测量 ↗</a> · <a href="$repository/pull/10">v8 独立验证 ↗</a></p></section>
+<section id="sar" class="report-case"><h3>SAR：先删状态，再重做延时</h3>
+<ol class="report-steps">
+<li><strong>版图前先减掉一层握手。</strong> 早期自搭数字控制器有判决确认、复位确认、超时保护和独立输出存储。慢角一帧只来得及完成七位。改由 SAMPLE 初始化，每一位只循环比较、写入、推进和建立，去掉独立输出存储与 EOC。展开 MOS 数从 1742 降至 1476，13 项控制时序测试通过。</li>
+<li><strong>RC 搬进版图，面积和延时都变了。</strong> 231 个 MOM 电容占 512.64 µm²，10 个电阻占 332.57 µm²。QUIET 路径的 17.13 µm 电阻在前仿通过，布线后 SS 冷角却晚 6.11 ns；11 µm 仍晚 1.25 ns，缩到 8.5 µm 才留出 2.59 ns。</li>
+<li><strong>换库单元后，仍要测内部互连。</strong> 标准延时 v3 用 52 个 DEL 和 28 个 AND 取代五条 RC。去掉 QB 电容的候选前仿有 13.51 ns 裕量，提取后到 90 ns 只完成六次比较。固定输入边沿和负载，DEL250 延迟从前仿 280 ps、仅计器件几何 283 ps，变为含内部互连的 471 ps。最终采用单一 COMMIT 边沿和逐位寄存抽头，把时序留给最慢的位。</li></ol>
+<div class="report-pair"><figure><a href="${asset_base}assets/report-rc.png"><img loading="lazy" src="${asset_base}assets/report-rc.png" alt="原 RC 延时宏的初始摆放与压紧后布线"></a><figcaption>RC 时序宏的两次布局，右图布线核心为 39.885 × 51.600 µm。</figcaption></figure><figure><a href="${asset_base}assets/report-sar.png"><img loading="lazy" src="${asset_base}assets/report-sar.png" alt="最终单边沿 SAR 的标准单元版图"></a><figcaption>单边沿 SAR 宏，174 个原生标准单元，18.495 × 16.8 µm。两张图各用自己的坐标尺度。</figcaption></figure></div>
+<p>将新 SAR 和 CDAC 同时提取后，SS 冷角最差互连测试读对 8/8 帧，裕量 6.95 ns。这里检验的是宏与 CDAC 的配对；加入其他模块、顶层布线和供电模型后，才得到上面的 Stage 6 整机短测。</p>
+<p class="report-sources"><a href="$repository/blob/5ce35d2/docs/sar8_simple_async.md">版图前简化 ↗</a> · <a href="$snapshot/Layout/results/sar_timing.md">RC 三次试验 ↗</a> · <a href="$snapshot/Layout/results/sar_std_static_candidate_c_20261119.md">单元隔离实验 ↗</a> · <a href="$snapshot/Layout/results/sar_se_core.md">单边沿宏 ↗</a></p></section>
+<section id="chip" class="report-case"><h3>整片：焊盘、供电和填充让核心重新开版</h3>
+<ol class="report-steps">
+<li><strong>从 7 × 7 到 9 × 9 焊盘环。</strong> 按 IO 供电规则重排 36 个焊盘，再用实画去耦和供电路径重算。模拟支路最终为 92.9 pF，低于原计划 114.2 pF；计入提取馈线后最坏模型压降为 20.3 mV，限值 45 mV。</li>
+<li><strong>VIN 接到焊盘后，重新打开采样器。</strong> 平坦化闩锁检查在两路采样器都找到标记。通用填充又使自举电容极板对地寄生升至约 66–127 fF。r2 调整护环和井距，由单元自行规划填充，极板回到 37.9／40.4 fF，两路闩锁标记清零。最终核心 SS 冷角门极筛查为 99.1 mV，距 100 mV 限值仅 0.9 mV。</li>
+<li><strong>r3 到 r8，逐项处理外围。</strong> r3 把模拟钳位移回供电干线；r4 分布式接入 ESD 钳位；r5 补强 AVSS 焊盘 M1；r6 加比较器匹配标记，保留失调校正风险。r7 将密封环从 1 mm 方形缩到 892 µm 方形；r8 更换垂直栅钳位并修改供电切断位置。该尺寸仍待与 MPW 方确认。</li>
+<li><strong>fill7，密度清零后仍有签核工作。</strong> fill6 整体排除 IO 单元，IO 带与角落留下 228 个密度标记。fill7 允许工具在相应 IO 区填充，并沿环布置 M9 条带。同一 r8 从未填充到 fill7，密度项 2672 → 0，DRC 总数 2896 → 224；LVS 一致，ERC 296，平坦闩锁为 0。剩余 DRC 包括 IO/ESD 规则，另有核心禁填区内 15 个 dummy via 待处置。</li></ol>
+<figure class="report-bars"><figcaption>填充前 → 填充后，DRC 标记总数</figcaption>
+<div class="report-bar"><strong>r6 · fill5</strong><span class="report-track" aria-hidden="true"><i style="width:63.7%"></i><b style="width:12.3%"></b></span><span>1911 → 369</span></div>
+<div class="report-bar"><strong>r7 · fill6</strong><span class="report-track" aria-hidden="true"><i style="width:96.8%"></i><b style="width:15.4%"></b></span><span>2904 → 462</span></div>
+<div class="report-bar"><strong>r8 · fill7</strong><span class="report-track" aria-hidden="true"><i style="width:96.5%"></i><b style="width:7.5%"></b></span><span>2896 → 224</span></div>
+<p>每行在同一芯片底图上对照。浅色为未填充，深色为填充后剩余标记。r7 开始采用 892 µm 外框，不能将不同行的差额全部归因于填充。</p></figure>
+<p class="report-sources"><a href="$repository/pull/23">焊盘重排 ↗</a> · <a href="$snapshot/Layout/results/chip_rail_recheck.md">馈线预算 ↗</a> · <a href="$snapshot/results/integration/bootstrap_rev2_20261122.md">采样器 r2 ↗</a> · <a href="$snapshot/Layout/results/chip_objects.md">芯片版本 ↗</a> · <a href="$snapshot/Layout/results/chip_fill.md">fill7 实测 ↗</a></p></section></section>
+<section id="next" class="report-section"><h2>复盘与下一轮</h2>
+<p>这轮最有用的实验都保留了一个可比较的对照：比较器用同一组十点输入，SAR 用同一输入边沿和负载拆开器件与互连，整片填充用同一 r8 对比前后。下轮沿用这些条件，才能判断一次修订究竟改善了速度、功耗，还是只把误差移到了另一个工况。</p>
+<ol class="report-steps">
+<li><strong>先定位两项实测超限。</strong> FF 冷角有 16 对 VDS 超过时长规则，最坏 757.8 ps，限值 100 ps。FF 热角自举单端保持误差达 4.130 mV，限值 3.516 mV。分别回到最坏位的寄存器和采样关闭边沿，复验修订对时序与差分误差的影响。</li>
+<li><strong>补齐性能曲线。</strong> 收齐当前提取版的 1024 点有噪 FFT 和 256 码静态扫描，报告 SNDR、ENOB、DNL/INL，再把 200 次提取比较器失配的 σ = 12.05 mV 换算为片外校正范围与可用输入余量。</li>
+<li><strong>完成物理与封装交接。</strong> 逐项确认 IO/ESD 豁免、核心禁填区过孔和最终 VIN/VREF 提取；核实 892 µm 边界、36 个焊盘的键合表及板上参考与时钟条件。</li></ol>
+<p class="report-sources"><a href="$snapshot/results/integration/stage6_ff_electrical_20261124.json">FF 超限测量 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">豁免清单 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p></section></article>
