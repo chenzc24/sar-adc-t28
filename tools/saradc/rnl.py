@@ -49,7 +49,7 @@ def symbol(master, ports):
     groups=[];seen=set()
     for p in ports:
         if p in seen:continue
-        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T|NEXT|TRIAL)(\d+)',p)
+        m=re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|REFSEL_[NP]|T|NEXT|TRIAL)(\d+)',p)
         members=[v for v in ports if m and re.fullmatch(re.escape(m[1])+r'\d+',v)] if m else [p]
         if len(members)<2:members=[p]
         seen.update(members);groups.append((p,members))
@@ -64,10 +64,10 @@ def symbol(master, ports):
         side='up' if p in POWER else 'down' if p in GROUND else 'right' if p in outputs or re.fullmatch(r'(CODE|D|GNN|GNP|GPN|GPP|T)\d+',p) else 'left'
         if master in {'sar8i_refword','sar8s_refword','sar8p_refword','b_reference'} and re.fullmatch(r'(CODE|D)\d+',p):side='left'
         if master == 'sar8j_r1_cdac':
-            if p.startswith(('GNN','GNP','GPN','GPP')):side='down'
+            if p.startswith(('GNN','GNP','GPN','GPP','REFSEL_')):side='down'
             elif p in {'TOPN','TOPP'}:side='up'
         if master == 'sar8i_refword':
-            if p.startswith(('GNN','GNP','GPN','GPP')):side='up'
+            if p.startswith(('GNN','GNP','GPN','GPP','REFSEL_')):side='up'
             elif re.fullmatch(r'(CODE|D)\d+',p):side='right'
         if master == 'b_cdac' and p.startswith(('GNN','GNP','GPN','GPP')):side='left'
         if master in {'sar_adc8_join_r4','tb_sar_top','tb_sar_stalled_top'}:side='right' if p.startswith('D') and p[1:].isdigit() else side
@@ -127,7 +127,8 @@ def symbol(master, ports):
     switch=re.fullmatch(r'sar8j_r1_sw_b\d',master)
     if switch:
         lines=['@LINE {(-9,7) (9,7) (9,-7) (-9,-7) (-9,7)};'];pins={};dirs={};w=9;h=7
-        for p,x,y,d in [('BOT',0,12,'up'),('GN',-5,-12,'down'),('GP',5,-12,'down'),
+        gate_ports=[('SEL',0,-12,'down')] if 'SEL' in ports else [('GN',-5,-12,'down'),('GP',5,-12,'down')]
+        for p,x,y,d in [('BOT',0,12,'up'),*gate_ports,
                         ('VREFN',-11,-4,'left'),('VREFP',-11,4,'left'),('VDD',11,4,'right'),('VSS',11,-4,'right')]:
             pin([p],x,y,d)
             ex=x+(2 if d=='left' else -2 if d=='right' else 0);ey=7 if d=='up' else -7 if d=='down' else y

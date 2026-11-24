@@ -39,11 +39,10 @@ def top(s):
     for n,x in [('COMP_N',113),('COMP_P',122)]:
         s.join(n,['XCOMP:OUT'+n[-1],'XCTRL:'+n,'CL_'+n+':1'],'x',x,color='analog')
     s.join('CMP_CLK',['XCTRL:CMP_CLK','XCOMP:CLK','CL_CMP_CLK:1'],'y',42,color='clock')
-    for prefix in ('GNN','GNP','GPN','GPP'):
+    for prefix in ('REFSEL_N','REFSEL_P'):
         s.bus([('XREF',prefix+'0'),('XCDAC',prefix+'0')],[],color='#536f4b')
-    for i,prefix in enumerate(('CODE','D')):
-        a=s.pin('XCTRL:'+prefix+'0')[0];b=s.pin('XREF:'+prefix+'0')[0];x=161+i*9
-        s.bus([('XCTRL',prefix+'0'),('XREF',prefix+'0')],[(x,a[1]),(x,b[1])],color='#66538a')
+    a=s.pin('XCTRL:CODE0')[0];b=s.pin('XREF:CODE0')[0];x=161
+    s.bus([('XCTRL','CODE0'),('XREF','CODE0')],[(x,a[1]),(x,b[1])],color='#66538a')
     s.text(121,-37,'Digital feedback',1.3)
 
 def comparator(s):
@@ -93,6 +92,8 @@ def bootstrap(s):
 def switch(s):
     s.place('MP_HIGH',0,20);s.place('MN_LOW',0,-10)
     s.join('BOT',['MP_HIGH:1','MN_LOW:1'],'y',5,color='analog')
+    if 'SEL' in s.ports[s.name]:
+        s.join('SEL',['MP_HIGH:2','MN_LOW:2'],'x',-12)
     s.text(-20,48,s.name+' / real reference switches',1.3)
 
 def cdac(s):
@@ -296,10 +297,10 @@ def next_word(s):
 
 def se_reference(s):
     s.text(-17,70,'Single-edge reference decode and switch drive',2)
-    placed_row(s,('XPRESET_N','WUNUSED'),38,pitch=31)
+    s.place('XPRESET_N',0,38)
     for bit in range(8):
         names=[name for name in (f'XINITIAL{bit}_A',f'XINITIAL{bit}_B',f'XINITIAL{bit}',f'XINV{bit}',
-                                 f'XPN{bit}',f'XNN{bit}',f'WNP{bit}',f'WPP{bit}') if name in s.parts]
+                                 f'XPN{bit}',f'XNN{bit}') if name in s.parts]
         y=9-bit*25;s.text(-18,y+8,f'Bit {bit}',1.2);placed_row(s,names,y,pitch=34)
     s.local(distance=42)
 

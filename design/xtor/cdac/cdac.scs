@@ -1,20 +1,20 @@
-// Generated from frozen B by scripts/sar8_entry.py build.
+// Single-edge CDAC with a shared NMOS/PMOS select per bit and side.
 // BEGIN SARADC RNL
 // @RNL(type="header") { @VERSION("0.3");
 // @USE-PACKAGE(name="sar8",version="0.1",path="../../rnl/sar8.rnl");
 // @USE-PACKAGE(name="rnl-std-fill") {}; }
 // END SARADC RNL
-// Electrical subcircuit statements are preserved verbatim.
+// Switch device parameters and capacitor weights come from the frozen B source.
 
-subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=3 nf=1 \
+subckt sar8j_r1_sw_b0 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=3 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=3 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=3 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -37,15 +37,16 @@ subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b0 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -54,15 +55,15 @@ subckt sar8j_r1_sw_b0 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b0
 
-subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=6 nf=1 \
+subckt sar8j_r1_sw_b1 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=6 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=6 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=6 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -85,15 +86,16 @@ subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b1 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -102,15 +104,15 @@ subckt sar8j_r1_sw_b1 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b1
 
-subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=12 nf=1 \
+subckt sar8j_r1_sw_b2 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=12 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=12 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=12 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -133,15 +135,16 @@ subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b2 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -150,15 +153,15 @@ subckt sar8j_r1_sw_b2 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b2
 
-subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=24 nf=1 \
+subckt sar8j_r1_sw_b3 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=24 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=24 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=24 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -181,15 +184,16 @@ subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b3 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -198,15 +202,15 @@ subckt sar8j_r1_sw_b3 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b3
 
-subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=48 nf=1 \
+subckt sar8j_r1_sw_b4 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=48 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=48 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=48 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -229,15 +233,16 @@ subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b4 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -246,15 +251,15 @@ subckt sar8j_r1_sw_b4 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b4
 
-subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=96 nf=1 \
+subckt sar8j_r1_sw_b5 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=96 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=96 nf=1 sd=100n \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=96 nf=1 sd=100n \
         ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -277,15 +282,16 @@ subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b5 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -294,15 +300,15 @@ subckt sar8j_r1_sw_b5 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b5
 
-subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=192 nf=1 \
+subckt sar8j_r1_sw_b6 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=192 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=192 nf=1 \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=192 nf=1 \
         sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -325,15 +331,16 @@ subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b6 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -342,15 +349,15 @@ subckt sar8j_r1_sw_b6 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b6
 
-subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
-    MP_HIGH (BOT GP VREFP VDD) pch_mac l=90n w=175.00n multi=384 nf=1 \
+subckt sar8j_r1_sw_b7 BOT SEL VDD VREFN VREFP VSS
+    MP_HIGH (BOT SEL VREFP VDD) pch_mac l=90n w=175.00n multi=384 nf=1 \
         sd=100n ad=1.3125e-14 as=1.3125e-14 pd=500n ps=500n nrd=1.633331 \
         nrs=1.633331 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
         spa2=100n spa3=100n sap=91.9776n sapb=114.444n spba=115.715n \
         spba1=117.043n dfm_flag=0 spmt=1.11111e+15 spomt=0 \
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
-    MN_LOW (BOT GN VREFN VSS) nch_mac l=90n w=150.0n multi=384 nf=1 \
+    MN_LOW (BOT SEL VREFN VSS) nch_mac l=90n w=150.0n multi=384 nf=1 \
         sd=100n ad=1.125e-14 as=1.125e-14 pd=450.0n ps=450.0n nrd=2.702751 \
         nrs=2.702751 sa=75.0n sb=75.0n sa1=75.0n sa2=75.0n sa3=75.0n \
         sa4=75.0n sb1=75.0n sb2=75.0n sb3=75.0n spa=100n spa1=100n \
@@ -373,15 +380,16 @@ subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
 // $JUNCTION @ATTACH (0,5);
 // &"BOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MN_LOW:1 (0,5)};
 // $JUNCTION @ATTACH (0,5);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {(-12,-10) (-12,20)};
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-12,20)};
+// $JUNCTION @ATTACH (-12,20);
+// &"SEL" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-12,-10)};
+// $JUNCTION @ATTACH (-12,-10);
 // (-20,48) @TEXT("sar8j_r1_sw_b7 / real reference switches",size=1.3,halign="start",textcolor="#223d52");
-// &"GP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:2 (-6,20)};
-// (-6.4,20) @TEXT("GP",size=1.1,halign="end",valign="middle");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:3 (0,25)};
 // (0,25.4) @TEXT("VREFP",size=1.1,halign="middle",valign="bottom");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MP_HIGH:4 (4,20)};
 // (4.4,20) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"GN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:2 (-6,-10)};
-// (-6.4,-10) @TEXT("GN",size=1.1,halign="end",valign="middle");
 // &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:3 (0,-15)};
 // (0,-15.4) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MN_LOW:4 (4,-10)};
@@ -390,10 +398,9 @@ subckt sar8j_r1_sw_b7 BOT GN GP VDD VREFN VREFP VSS
 // END SARADC RNL
 ends sar8j_r1_sw_b7
 
-subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
-        GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 \
-        GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD VREFN \
-        VREFP VSS
+subckt sar8j_r1_cdac REFSEL_N0 REFSEL_N1 REFSEL_N2 REFSEL_N3 REFSEL_N4 REFSEL_N5 REFSEL_N6 REFSEL_N7 \
+    REFSEL_P0 REFSEL_P1 REFSEL_P2 REFSEL_P3 REFSEL_P4 REFSEL_P5 REFSEL_P6 REFSEL_P7 \
+    TOPN TOPP VDD VREFN VREFP VSS
     CMOMN8 (TOPN VREFN) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
         multi=1 mismatchflag=1
     CMOMN7 (TOPN BN7) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 \
@@ -430,22 +437,22 @@ subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
         mismatchflag=1
     CMOMP0 (TOPP BP0) cfmom_2t nr=8 lr=2u w=50n s=50n stm=1 spm=3 multi=1 \
         mismatchflag=1
-    XSN0 (BN0 GNN0 GNP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
-    XSP0 (BP0 GPN0 GPP0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
-    XSN1 (BN1 GNN1 GNP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
-    XSP1 (BP1 GPN1 GPP1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
-    XSN2 (BN2 GNN2 GNP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
-    XSP2 (BP2 GPN2 GPP2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
-    XSN3 (BN3 GNN3 GNP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
-    XSP3 (BP3 GPN3 GPP3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
-    XSN4 (BN4 GNN4 GNP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
-    XSP4 (BP4 GPN4 GPP4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
-    XSN5 (BN5 GNN5 GNP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
-    XSP5 (BP5 GPN5 GPP5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
-    XSN6 (BN6 GNN6 GNP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
-    XSP6 (BP6 GPN6 GPP6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
-    XSN7 (BN7 GNN7 GNP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
-    XSP7 (BP7 GPN7 GPP7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+    XSN0 (BN0 REFSEL_N0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSP0 (BP0 REFSEL_P0 VDD VREFN VREFP VSS) sar8j_r1_sw_b0
+    XSN1 (BN1 REFSEL_N1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSP1 (BP1 REFSEL_P1 VDD VREFN VREFP VSS) sar8j_r1_sw_b1
+    XSN2 (BN2 REFSEL_N2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSP2 (BP2 REFSEL_P2 VDD VREFN VREFP VSS) sar8j_r1_sw_b2
+    XSN3 (BN3 REFSEL_N3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSP3 (BP3 REFSEL_P3 VDD VREFN VREFP VSS) sar8j_r1_sw_b3
+    XSN4 (BN4 REFSEL_N4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSP4 (BP4 REFSEL_P4 VDD VREFN VREFP VSS) sar8j_r1_sw_b4
+    XSN5 (BN5 REFSEL_N5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSP5 (BP5 REFSEL_P5 VDD VREFN VREFP VSS) sar8j_r1_sw_b5
+    XSN6 (BN6 REFSEL_N6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSP6 (BP6 REFSEL_P6 VDD VREFN VREFP VSS) sar8j_r1_sw_b6
+    XSN7 (BN7 REFSEL_N7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
+    XSP7 (BP7 REFSEL_P7 VDD VREFN VREFP VSS) sar8j_r1_sw_b7
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // (-15,68) @TEXT("Differential MOM CDAC  /  binary weights and unit dummy",size=1.65,halign="start",textcolor="#223d52");
@@ -633,197 +640,165 @@ subckt sar8j_r1_cdac GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 \
 // (304,28.6) @TEXT("VREFN",size=1.1,halign="middle",valign="top");
 // &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#CMOMP8:2 (304,-37)};
 // (304,-37.4) @TEXT("VREFP",size=1.1,halign="middle",valign="top");
-// &"GNN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:2 (-5,-3)};
-// (-5,-3.4) @TEXT("GNN0",size=1.1,halign="middle",valign="top");
-// &"GNP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:3 (5,-3)};
-// (5,-3.4) @TEXT("GNP0",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:4 (14,16)};
+// &"REFSEL_N0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:2 (0,-3)};
+// (0,-3.4) @TEXT("REFSEL_N0",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:3 (14,16)};
 // (14.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:5 (-14,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:4 (-14,8)};
 // (-14.4,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:6 (-14,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:5 (-14,16)};
 // (-14.4,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:7 (14,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN0:6 (14,8)};
 // (14.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:2 (-5,-69)};
-// (-5,-69.4) @TEXT("GPN0",size=1.1,halign="middle",valign="top");
-// &"GPP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:3 (5,-69)};
-// (5,-69.4) @TEXT("GPP0",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:4 (14,-50)};
+// &"REFSEL_P0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:2 (0,-69)};
+// (0,-69.4) @TEXT("REFSEL_P0",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:3 (14,-50)};
 // (14.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:5 (-14,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:4 (-14,-58)};
 // (-14.4,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:6 (-14,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:5 (-14,-50)};
 // (-14.4,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:7 (14,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP0:6 (14,-58)};
 // (14.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:2 (33,-3)};
-// (33,-3.4) @TEXT("GNN1",size=1.1,halign="middle",valign="top");
-// &"GNP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:3 (43,-3)};
-// (43,-3.4) @TEXT("GNP1",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:4 (52,16)};
+// &"REFSEL_N1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:2 (38,-3)};
+// (38,-3.4) @TEXT("REFSEL_N1",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:3 (52,16)};
 // (52.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:5 (24,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:4 (24,8)};
 // (23.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:6 (24,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:5 (24,16)};
 // (23.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:7 (52,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN1:6 (52,8)};
 // (52.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:2 (33,-69)};
-// (33,-69.4) @TEXT("GPN1",size=1.1,halign="middle",valign="top");
-// &"GPP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:3 (43,-69)};
-// (43,-69.4) @TEXT("GPP1",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:4 (52,-50)};
+// &"REFSEL_P1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:2 (38,-69)};
+// (38,-69.4) @TEXT("REFSEL_P1",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:3 (52,-50)};
 // (52.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:5 (24,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:4 (24,-58)};
 // (23.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:6 (24,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:5 (24,-50)};
 // (23.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:7 (52,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP1:6 (52,-58)};
 // (52.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:2 (71,-3)};
-// (71,-3.4) @TEXT("GNN2",size=1.1,halign="middle",valign="top");
-// &"GNP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:3 (81,-3)};
-// (81,-3.4) @TEXT("GNP2",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:4 (90,16)};
+// &"REFSEL_N2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:2 (76,-3)};
+// (76,-3.4) @TEXT("REFSEL_N2",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:3 (90,16)};
 // (90.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:5 (62,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:4 (62,8)};
 // (61.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:6 (62,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:5 (62,16)};
 // (61.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:7 (90,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN2:6 (90,8)};
 // (90.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:2 (71,-69)};
-// (71,-69.4) @TEXT("GPN2",size=1.1,halign="middle",valign="top");
-// &"GPP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:3 (81,-69)};
-// (81,-69.4) @TEXT("GPP2",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:4 (90,-50)};
+// &"REFSEL_P2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:2 (76,-69)};
+// (76,-69.4) @TEXT("REFSEL_P2",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:3 (90,-50)};
 // (90.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:5 (62,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:4 (62,-58)};
 // (61.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:6 (62,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:5 (62,-50)};
 // (61.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:7 (90,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP2:6 (90,-58)};
 // (90.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:2 (109,-3)};
-// (109,-3.4) @TEXT("GNN3",size=1.1,halign="middle",valign="top");
-// &"GNP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:3 (119,-3)};
-// (119,-3.4) @TEXT("GNP3",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:4 (128,16)};
+// &"REFSEL_N3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:2 (114,-3)};
+// (114,-3.4) @TEXT("REFSEL_N3",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:3 (128,16)};
 // (128.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:5 (100,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:4 (100,8)};
 // (99.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:6 (100,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:5 (100,16)};
 // (99.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:7 (128,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN3:6 (128,8)};
 // (128.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:2 (109,-69)};
-// (109,-69.4) @TEXT("GPN3",size=1.1,halign="middle",valign="top");
-// &"GPP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:3 (119,-69)};
-// (119,-69.4) @TEXT("GPP3",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:4 (128,-50)};
+// &"REFSEL_P3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:2 (114,-69)};
+// (114,-69.4) @TEXT("REFSEL_P3",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:3 (128,-50)};
 // (128.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:5 (100,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:4 (100,-58)};
 // (99.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:6 (100,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:5 (100,-50)};
 // (99.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:7 (128,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP3:6 (128,-58)};
 // (128.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:2 (147,-3)};
-// (147,-3.4) @TEXT("GNN4",size=1.1,halign="middle",valign="top");
-// &"GNP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:3 (157,-3)};
-// (157,-3.4) @TEXT("GNP4",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:4 (166,16)};
+// &"REFSEL_N4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:2 (152,-3)};
+// (152,-3.4) @TEXT("REFSEL_N4",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:3 (166,16)};
 // (166.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:5 (138,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:4 (138,8)};
 // (137.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:6 (138,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:5 (138,16)};
 // (137.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:7 (166,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN4:6 (166,8)};
 // (166.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:2 (147,-69)};
-// (147,-69.4) @TEXT("GPN4",size=1.1,halign="middle",valign="top");
-// &"GPP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:3 (157,-69)};
-// (157,-69.4) @TEXT("GPP4",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:4 (166,-50)};
+// &"REFSEL_P4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:2 (152,-69)};
+// (152,-69.4) @TEXT("REFSEL_P4",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:3 (166,-50)};
 // (166.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:5 (138,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:4 (138,-58)};
 // (137.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:6 (138,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:5 (138,-50)};
 // (137.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:7 (166,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP4:6 (166,-58)};
 // (166.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:2 (185,-3)};
-// (185,-3.4) @TEXT("GNN5",size=1.1,halign="middle",valign="top");
-// &"GNP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:3 (195,-3)};
-// (195,-3.4) @TEXT("GNP5",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:4 (204,16)};
+// &"REFSEL_N5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:2 (190,-3)};
+// (190,-3.4) @TEXT("REFSEL_N5",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:3 (204,16)};
 // (204.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:5 (176,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:4 (176,8)};
 // (175.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:6 (176,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:5 (176,16)};
 // (175.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:7 (204,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN5:6 (204,8)};
 // (204.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:2 (185,-69)};
-// (185,-69.4) @TEXT("GPN5",size=1.1,halign="middle",valign="top");
-// &"GPP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:3 (195,-69)};
-// (195,-69.4) @TEXT("GPP5",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:4 (204,-50)};
+// &"REFSEL_P5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:2 (190,-69)};
+// (190,-69.4) @TEXT("REFSEL_P5",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:3 (204,-50)};
 // (204.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:5 (176,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:4 (176,-58)};
 // (175.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:6 (176,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:5 (176,-50)};
 // (175.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:7 (204,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP5:6 (204,-58)};
 // (204.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:2 (223,-3)};
-// (223,-3.4) @TEXT("GNN6",size=1.1,halign="middle",valign="top");
-// &"GNP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:3 (233,-3)};
-// (233,-3.4) @TEXT("GNP6",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:4 (242,16)};
+// &"REFSEL_N6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:2 (228,-3)};
+// (228,-3.4) @TEXT("REFSEL_N6",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:3 (242,16)};
 // (242.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:5 (214,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:4 (214,8)};
 // (213.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:6 (214,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:5 (214,16)};
 // (213.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:7 (242,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN6:6 (242,8)};
 // (242.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:2 (223,-69)};
-// (223,-69.4) @TEXT("GPN6",size=1.1,halign="middle",valign="top");
-// &"GPP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:3 (233,-69)};
-// (233,-69.4) @TEXT("GPP6",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:4 (242,-50)};
+// &"REFSEL_P6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:2 (228,-69)};
+// (228,-69.4) @TEXT("REFSEL_P6",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:3 (242,-50)};
 // (242.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:5 (214,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:4 (214,-58)};
 // (213.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:6 (214,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:5 (214,-50)};
 // (213.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:7 (242,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP6:6 (242,-58)};
 // (242.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GNN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:2 (261,-3)};
-// (261,-3.4) @TEXT("GNN7",size=1.1,halign="middle",valign="top");
-// &"GNP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:3 (271,-3)};
-// (271,-3.4) @TEXT("GNP7",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:4 (280,16)};
+// &"REFSEL_N7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:2 (266,-3)};
+// (266,-3.4) @TEXT("REFSEL_N7",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:3 (280,16)};
 // (280.4,16) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:5 (252,8)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:4 (252,8)};
 // (251.6,8) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:6 (252,16)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:5 (252,16)};
 // (251.6,16) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:7 (280,8)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSN7:6 (280,8)};
 // (280.4,8) @TEXT("VSS",size=1.1,halign="start",valign="middle");
-// &"GPN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:2 (261,-69)};
-// (261,-69.4) @TEXT("GPN7",size=1.1,halign="middle",valign="top");
-// &"GPP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:3 (271,-69)};
-// (271,-69.4) @TEXT("GPP7",size=1.1,halign="middle",valign="top");
-// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:4 (280,-50)};
+// &"REFSEL_P7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:2 (266,-69)};
+// (266,-69.4) @TEXT("REFSEL_P7",size=1.1,halign="middle",valign="top");
+// &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:3 (280,-50)};
 // (280.4,-50) @TEXT("VDD",size=1.1,halign="start",valign="middle");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:5 (252,-58)};
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:4 (252,-58)};
 // (251.6,-58) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:6 (252,-50)};
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:5 (252,-50)};
 // (251.6,-50) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:7 (280,-58)};
+// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSP7:6 (280,-58)};
 // (280.4,-58) @TEXT("VSS",size=1.1,halign="start",valign="middle");
 // }
 // END SARADC RNL

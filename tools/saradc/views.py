@@ -2,7 +2,8 @@
 import json
 from pathlib import Path
 import re
-from . import candidates
+from . import candidates, refsel
+from .rnl import strip
 ROOT=Path(__file__).resolve().parents[2]
 MODULES=('sampler','cdac','comparator','sar','reference')
 
@@ -88,6 +89,22 @@ def build(name='current',root=None,candidate_overrides=None):
         for old,new in mapping.items():
             text=re.sub(r'(\)\s+)'+re.escape(old)+r'(?=\s*(?:\n|$))',r'\g<1>'+new,text)
         blobs[path]=text.encode('utf-8')
+    top_path = 'top/adc_top.scs'
+    top = strip(blobs[top_path].decode('utf-8'))
+    if profile['reference'] == 'va':
+        # The behavioral driver commands break-before-make on two physical gates.
+        # Its independent outputs cannot drive the shared-gate schematic interface.
+        cdac = refsel.connections(top, 'XCDAC', refsel.CDAC_PORTS)
+        top = refsel.rebind(top, 'XCDAC', [*refsel.SPLIT_TO_SELECT, *(cdac[p] for p in refsel.CDAC_RAILS)])
+        reference = refsel.connections(top, 'XREF', refsel.REFERENCE_PORTS)
+        reference.update({p:p for p in (*refsel.DATA, *refsel.SPLIT_TO_SELECT, 'PHI_U', 'RST_DONE')})
+        reference['SAMPLE'] = 'SAMPLE_INT'
+        top = refsel.rebind(top, 'XREF', [reference[p] for p in refsel.SPLIT_REFERENCE_PORTS])
+        blobs[refsel.CDAC_FILE] = refsel.split_cdac(blobs[refsel.CDAC_FILE].decode('utf-8')).encode('utf-8')
+    elif profile['cdac'] == 'va':
+        cdac = refsel.connections(top, 'XCDAC', refsel.CDAC_PORTS)
+        top = refsel.rebind(top, 'XCDAC', [cdac[refsel.SPLIT_TO_SELECT.get(p, p)] for p in refsel.SPLIT_CDAC_PORTS])
+    blobs[top_path] = top.encode('utf-8')
     files=sorted(p for p in (root/'design/behav/veriloga').iterdir() if p.suffix in {'.va','.vh'})
     for p in files:blobs[p.name]=p.read_bytes()
     prelude=''.join('ahdl_include "'+p.name+'"\n' for p in files if p.suffix=='.va')

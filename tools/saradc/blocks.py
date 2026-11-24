@@ -1,7 +1,8 @@
 """Independent module fixtures, composed views, and managed characterization receipts."""
 import hashlib,json,re,time
 from pathlib import Path
-from . import views,candidates
+from . import views,candidates,refsel
+from .rnl import instances
 ROOT=Path(__file__).resolve().parents[2]
 
 
@@ -34,10 +35,30 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
     else:blobs['fixture_models.scs']=b'// VA masters already included by dut.scs\n'
     va=views.registry(root)['modules'];mapping={module:(va[module]['va'] if profile[module]=='va' else va[module]['master']) for module in va}
     substitutions={k.upper():v for k,v in mapping.items()}
+    shared_reference = profile['reference'] == 'xtor'
+    select_probes = {f'r_g{side}p{bit}': f'r_g{side}n{bit}' for side in 'np' for bit in range(8)}
     for module in modules:
         text=(root/tests[module]['template']).read_text(encoding='utf-8')
         for key,value in substitutions.items():text=text.replace('@'+key+'@',value)
         if re.search(r'@\w+@',text):raise ValueError('Unresolved fixture placeholder: '+module)
+        if module == 'cdac' and shared_reference and profile['cdac'] == 'xtor':
+            parts = instances(text)
+            for side in 'np':
+                for bit in range(8):
+                    if parts[f'VDg{side}n{bit}'][2] != parts[f'VDg{side}p{bit}'][2]:
+                        raise ValueError('Shared CDAC gate fixture requires identical gate stimuli')
+            text = re.sub(r'(?m)^VDg[np]p[0-7] .*\n', '', text)
+            gates = refsel.connections(text, 'XDAC', refsel.SPLIT_CDAC_PORTS)
+            text = refsel.rebind(text, 'XDAC', [gates[p] for p in refsel.SPLIT_CDAC_PORTS
+                                               if p not in refsel.SPLIT_TO_SELECT or p[2] == 'N'])
+        if module == 'reference' and shared_reference:
+            driver = refsel.connections(text, 'XREF', refsel.SPLIT_REFERENCE_PORTS)
+            load = refsel.connections(text, 'XRLOAD', refsel.SPLIT_CDAC_PORTS)
+            select = {refsel.SPLIT_TO_SELECT[p]: driver[p] for p in refsel.SPLIT_TO_SELECT if p[2] == 'N'}
+            driver.update(select)
+            load.update(select)
+            text = refsel.rebind(text, 'XREF', [driver[p] for p in refsel.REFERENCE_PORTS])
+            text = refsel.rebind(text, 'XRLOAD', [load[p] for p in refsel.CDAC_PORTS])
         blobs[module+'_fixture.scs']=text.encode('utf-8')
     if 'sar' in modules:
         sar_view=['behavioral','sar='+profile['sar']]
@@ -63,6 +84,8 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
             'reference':['r_phi','r_reset','r_done']+['r_'+g+str(k) for g in ['gnn','gnp','gpn','gpp'] for k in range(8)],
             'sar':['s_clock']+['s_d'+str(k) for k in range(8)]+['XSAR.'+n for n in ['CMP_CLK','PHI_U','SEQ_SAMPLE','COMP_N','COMP_P']]}
     groups['sar']+=['XSTALLED.CMP_CLK','XSTALLED.PHI_U']+['f_d'+str(k) for k in range(8)]
+    if shared_reference:
+        groups['reference'] = [s for s in groups['reference'] if s not in select_probes and s != 'r_done']
     for module in modules:signals.extend(groups[module])
     deck+=['simulatorOptions options reltol=1e-5 vabstol=1e-8 iabstol=1e-13 temp=27',
            'saveOptions options save=selected','tran_blocks tran stop=665n maxstep=100p errpreset=moderate','save '+' '.join(signals)]
@@ -74,7 +97,8 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
     sources=[root/'specs/block_tests.json',root/'specs/candidates.json',root/'specs/views.json',root/'specs/arch.json',
              *[root/tests[m]['template'] for m in modules],*[root/r['file'] for r in selected.values()],
              *sorted((root/'design/behav/veriloga').glob('*.*')),root/'tb/common/veriloga/block_switch.va',
-             root/'tb/behav/observer.va',root/'tools/saradc/blocks.py',root/'tools/saradc/views.py',root/'tools/saradc/candidates.py']
+             root/'tb/behav/observer.va',root/'tools/saradc/blocks.py',root/'tools/saradc/views.py',
+             root/'tools/saradc/candidates.py',root/'tools/saradc/refsel.py']
     context=dict(run_id=run_id,modules=modules,module_views=profile,
                  sar_stalled='sar' in modules,
                  candidates={k:{key:v for key,v in row.items() if key!='definitions'} for k,row in selected.items()},
@@ -82,6 +106,8 @@ def prepare(run_id,modules=None,view='current',candidate=None,root=None,preview=
                  comparator_inputs_v=[.1,-.1,.03,-.03,.003515625,-.003515625,.001,-.001,.0001,-.0001],
                  required_signals=[s.lower() for s in signals],source_hashes={p.relative_to(root).as_posix():digest(p.read_bytes()) for p in sources},
                  conditions=catalog(root)['conditions'],contracts={m:tests[m] for m in modules})
+    if shared_reference and 'reference' in modules:
+        context['reference_gate_aliases'] = select_probes
     blobs['context.json']=(json.dumps(context,indent=2)+'\n').encode('utf-8')
     if preview:return blobs
     # Validate all outputs before creating an identity or writing its first input.

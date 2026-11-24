@@ -1,64 +1,45 @@
-// Native-cell reference decoding and complementary gate drives for the single-edge top.
+// Native-cell reference decoding and shared per-side selects for the single-edge top.
 // BEGIN SARADC RNL
 // @RNL(type="header") { @VERSION("0.3");
 // @USE-PACKAGE(name="sar8",version="0.1",path="../../rnl/sar8.rnl");
 // @USE-PACKAGE(name="rnl-std-fill") {}; }
 // END SARADC RNL
-subckt sar8i_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1  D2 D3 D4 D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0  GNP1 GNP2 GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5  GPN6 GPN7 GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE VDD  VSS RST_DONE PRESET
+subckt sar8i_refword CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 REFSEL_N0 REFSEL_N1 REFSEL_N2 REFSEL_N3 REFSEL_N4 REFSEL_N5 REFSEL_N6 REFSEL_N7 REFSEL_P0 REFSEL_P1 REFSEL_P2 REFSEL_P3 REFSEL_P4 REFSEL_P5 REFSEL_P6 REFSEL_P7 VDD VSS PRESET
 XPRESET_N (PRESET RUN VDD VSS) INVD1BWP12T30P140
 XINITIAL0 (CODE0 RUN QN0 VDD VSS) ND2D1BWP12T30P140
-XPN0 (QN0 GPN0 VDD VSS) INVD1BWP12T30P140
-XNN0 (QN0 GNN0 VDD VSS) BUFFD1BWP12T30P140
-WNP0 (GNN0 GNP0) iprobe
-WPP0 (GPN0 GPP0) iprobe
+XPN0 (QN0 REFSEL_P0 VDD VSS) INVD1BWP12T30P140
+XNN0 (QN0 REFSEL_N0 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL1 (CODE1 RUN QN1 VDD VSS) ND2D1BWP12T30P140
-XPN1 (QN1 GPN1 VDD VSS) INVD1BWP12T30P140
-XNN1 (QN1 GNN1 VDD VSS) BUFFD1BWP12T30P140
-WNP1 (GNN1 GNP1) iprobe
-WPP1 (GPN1 GPP1) iprobe
+XPN1 (QN1 REFSEL_P1 VDD VSS) INVD1BWP12T30P140
+XNN1 (QN1 REFSEL_N1 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL2 (CODE2 RUN QN2 VDD VSS) ND2D1BWP12T30P140
-XPN2 (QN2 GPN2 VDD VSS) INVD1BWP12T30P140
-XNN2 (QN2 GNN2 VDD VSS) BUFFD1BWP12T30P140
-WNP2 (GNN2 GNP2) iprobe
-WPP2 (GPN2 GPP2) iprobe
+XPN2 (QN2 REFSEL_P2 VDD VSS) INVD1BWP12T30P140
+XNN2 (QN2 REFSEL_N2 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL3 (CODE3 RUN QN3 VDD VSS) ND2D1BWP12T30P140
-XPN3 (QN3 GPN3 VDD VSS) INVD1BWP12T30P140
-XNN3 (QN3 GNN3 VDD VSS) BUFFD1BWP12T30P140
-WNP3 (GNN3 GNP3) iprobe
-WPP3 (GPN3 GPP3) iprobe
+XPN3 (QN3 REFSEL_P3 VDD VSS) INVD1BWP12T30P140
+XNN3 (QN3 REFSEL_N3 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL4 (CODE4 RUN QN4 VDD VSS) ND2D1BWP12T30P140
-XPN4 (QN4 GPN4 VDD VSS) INVD1BWP12T30P140
-XNN4 (QN4 GNN4 VDD VSS) BUFFD1BWP12T30P140
-WNP4 (GNN4 GNP4) iprobe
-WPP4 (GPN4 GPP4) iprobe
+XPN4 (QN4 REFSEL_P4 VDD VSS) INVD1BWP12T30P140
+XNN4 (QN4 REFSEL_N4 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL5 (CODE5 RUN QN5 VDD VSS) ND2D1BWP12T30P140
-XPN5 (QN5 GPN5 VDD VSS) INVD1BWP12T30P140
-XNN5 (QN5 GNN5 VDD VSS) BUFFD1BWP12T30P140
-WNP5 (GNN5 GNP5) iprobe
-WPP5 (GPN5 GPP5) iprobe
+XPN5 (QN5 REFSEL_P5 VDD VSS) INVD1BWP12T30P140
+XNN5 (QN5 REFSEL_N5 VDD VSS) BUFFD1BWP12T30P140
 XINITIAL6 (CODE6 RUN QN6 VDD VSS) ND2D1BWP12T30P140
-XPN6 (QN6 GPN6 VDD VSS) INVD1BWP12T30P140
-XNN6 (QN6 GNN6 VDD VSS) BUFFD1BWP12T30P140
-WNP6 (GNN6 GNP6) iprobe
-WPP6 (GPN6 GPP6) iprobe
+XPN6 (QN6 REFSEL_P6 VDD VSS) INVD1BWP12T30P140
+XNN6 (QN6 REFSEL_N6 VDD VSS) BUFFD1BWP12T30P140
 // PRESET rises with CODE7 high at the end of every MSB-1 conversion. The INV+INV+ND2 form keeps
 // the stacked node within the terminal-voltage rule (native OR2D1 reached 1.124 V).
 XINITIAL7_A (CODE7 CODE7_B VDD VSS) INVD1BWP12T30P140
 XINITIAL7_B (PRESET PRESET_B VDD VSS) INVD1BWP12T30P140
 XINITIAL7 (CODE7_B PRESET_B Q7 VDD VSS) ND2D1BWP12T30P140
 XINV7 (Q7 QN7 VDD VSS) INVD1BWP12T30P140
-XPN7 (QN7 GPN7 VDD VSS) INVD2BWP12T30P140
-XNN7 (QN7 GNN7 VDD VSS) BUFFD2BWP12T30P140
-WNP7 (GNN7 GNP7) iprobe
-WPP7 (GPN7 GPP7) iprobe
-WUNUSED (RST_DONE VSS) iprobe
+XPN7 (QN7 REFSEL_P7 VDD VSS) INVD2BWP12T30P140
+XNN7 (QN7 REFSEL_N7 VDD VSS) BUFFD2BWP12T30P140
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
 // (-17,70) @TEXT("Single-edge reference decode and switch drive",size=2,halign="start",textcolor="#223d52");
 // #XPRESET_N @SET-SYMBOL $S_INVD1BWP12T30P140;
 // #XPRESET_N @PLACE(0,38) => @ORIENT("R0");
-// #WUNUSED @SET-SYMBOL $S_iprobe;
-// #WUNUSED @PLACE(31,38) => @ORIENT("R0");
 // (-18,17) @TEXT("Bit 0",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL0 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL0 @PLACE(0,9) => @ORIENT("R0");
@@ -66,10 +47,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN0 @PLACE(34,9) => @ORIENT("R0");
 // #XNN0 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN0 @PLACE(68,9) => @ORIENT("R0");
-// #WNP0 @SET-SYMBOL $S_iprobe;
-// #WNP0 @PLACE(102,9) => @ORIENT("R0");
-// #WPP0 @SET-SYMBOL $S_iprobe;
-// #WPP0 @PLACE(136,9) => @ORIENT("R0");
 // (-18,-8) @TEXT("Bit 1",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL1 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL1 @PLACE(0,-16) => @ORIENT("R0");
@@ -77,10 +54,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN1 @PLACE(34,-16) => @ORIENT("R0");
 // #XNN1 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN1 @PLACE(68,-16) => @ORIENT("R0");
-// #WNP1 @SET-SYMBOL $S_iprobe;
-// #WNP1 @PLACE(102,-16) => @ORIENT("R0");
-// #WPP1 @SET-SYMBOL $S_iprobe;
-// #WPP1 @PLACE(136,-16) => @ORIENT("R0");
 // (-18,-33) @TEXT("Bit 2",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL2 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL2 @PLACE(0,-41) => @ORIENT("R0");
@@ -88,10 +61,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN2 @PLACE(34,-41) => @ORIENT("R0");
 // #XNN2 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN2 @PLACE(68,-41) => @ORIENT("R0");
-// #WNP2 @SET-SYMBOL $S_iprobe;
-// #WNP2 @PLACE(102,-41) => @ORIENT("R0");
-// #WPP2 @SET-SYMBOL $S_iprobe;
-// #WPP2 @PLACE(136,-41) => @ORIENT("R0");
 // (-18,-58) @TEXT("Bit 3",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL3 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL3 @PLACE(0,-66) => @ORIENT("R0");
@@ -99,10 +68,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN3 @PLACE(34,-66) => @ORIENT("R0");
 // #XNN3 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN3 @PLACE(68,-66) => @ORIENT("R0");
-// #WNP3 @SET-SYMBOL $S_iprobe;
-// #WNP3 @PLACE(102,-66) => @ORIENT("R0");
-// #WPP3 @SET-SYMBOL $S_iprobe;
-// #WPP3 @PLACE(136,-66) => @ORIENT("R0");
 // (-18,-83) @TEXT("Bit 4",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL4 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL4 @PLACE(0,-91) => @ORIENT("R0");
@@ -110,10 +75,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN4 @PLACE(34,-91) => @ORIENT("R0");
 // #XNN4 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN4 @PLACE(68,-91) => @ORIENT("R0");
-// #WNP4 @SET-SYMBOL $S_iprobe;
-// #WNP4 @PLACE(102,-91) => @ORIENT("R0");
-// #WPP4 @SET-SYMBOL $S_iprobe;
-// #WPP4 @PLACE(136,-91) => @ORIENT("R0");
 // (-18,-108) @TEXT("Bit 5",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL5 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL5 @PLACE(0,-116) => @ORIENT("R0");
@@ -121,10 +82,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN5 @PLACE(34,-116) => @ORIENT("R0");
 // #XNN5 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN5 @PLACE(68,-116) => @ORIENT("R0");
-// #WNP5 @SET-SYMBOL $S_iprobe;
-// #WNP5 @PLACE(102,-116) => @ORIENT("R0");
-// #WPP5 @SET-SYMBOL $S_iprobe;
-// #WPP5 @PLACE(136,-116) => @ORIENT("R0");
 // (-18,-133) @TEXT("Bit 6",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL6 @SET-SYMBOL $S_ND2D1BWP12T30P140;
 // #XINITIAL6 @PLACE(0,-141) => @ORIENT("R0");
@@ -132,10 +89,6 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN6 @PLACE(34,-141) => @ORIENT("R0");
 // #XNN6 @SET-SYMBOL $S_BUFFD1BWP12T30P140;
 // #XNN6 @PLACE(68,-141) => @ORIENT("R0");
-// #WNP6 @SET-SYMBOL $S_iprobe;
-// #WNP6 @PLACE(102,-141) => @ORIENT("R0");
-// #WPP6 @SET-SYMBOL $S_iprobe;
-// #WPP6 @PLACE(136,-141) => @ORIENT("R0");
 // (-18,-158) @TEXT("Bit 7",size=1.2,halign="start",textcolor="#223d52");
 // #XINITIAL7_A @SET-SYMBOL $S_INVD1BWP12T30P140;
 // #XINITIAL7_A @PLACE(0,-166) => @ORIENT("R0");
@@ -149,20 +102,8 @@ WUNUSED (RST_DONE VSS) iprobe
 // #XPN7 @PLACE(136,-166) => @ORIENT("R0");
 // #XNN7 @SET-SYMBOL $S_BUFFD2BWP12T30P140;
 // #XNN7 @PLACE(170,-166) => @ORIENT("R0");
-// #WNP7 @SET-SYMBOL $S_iprobe;
-// #WNP7 @PLACE(204,-166) => @ORIENT("R0");
-// #WPP7 @SET-SYMBOL $S_iprobe;
-// #WPP7 @PLACE(238,-166) => @ORIENT("R0");
-// &"GNN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN0:2 (85,9) (85,10.65) #WNP0:1};
-// &"GNN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN1:2 (85,-16) (85,-14.35) #WNP1:1};
-// &"GNN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN2:2 (85,-41) (85,-39.35) #WNP2:1};
-// &"GNN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN3:2 (85,-66) (85,-64.35) #WNP3:1};
-// &"GNN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN4:2 (85,-91) (85,-89.35) #WNP4:1};
-// &"GNN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN5:2 (85,-116) (85,-114.35) #WNP5:1};
-// &"GNN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN6:2 (85,-141) (85,-139.35) #WNP6:1};
 // &"PRESET_B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL7_B:2 (51,-166) (51,-167.7) #XINITIAL7:2};
 // &"Q7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL7:3 (85,-166) (85,-166) #XINV7:1};
-// &"GNN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN7:2 (187,-166) (187,-164.35) #WNP7:1};
 // &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET_N:1 (-10,38)};
 // (-10.4,38) @TEXT("PRESET",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPRESET_N:2 (10,38)};
@@ -183,24 +124,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-1.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN0:1 (24,9)};
 // (23.6,9) @TEXT("QN0",size=1.1,halign="end",valign="middle");
-// &"GPN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN0:2 (44,9)};
-// (44.4,9) @TEXT("GPN0",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN0:2 (44,9)};
+// (44.4,9) @TEXT("REFSEL_P0",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN0:3 (34,19)};
 // (34,19.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN0:4 (34,-1)};
 // (34,-1.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN0:1 (52,9)};
 // (51.6,9) @TEXT("QN0",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN0:2 (84,9)};
+// (84.4,9) @TEXT("REFSEL_N0",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN0:3 (68,20)};
 // (68,20.4) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN0:4 (68,-2)};
 // (68,-2.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP0:2 (86,7.35)};
-// (85.6,7.35) @TEXT("GNP0",size=1.1,halign="end",valign="middle");
-// &"GPN0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP0:1 (120,10.65)};
-// (119.6,10.65) @TEXT("GPN0",size=1.1,halign="end",valign="middle");
-// &"GPP0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP0:2 (120,7.35)};
-// (119.6,7.35) @TEXT("GPP0",size=1.1,halign="end",valign="middle");
 // &"CODE1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL1:1 (-10,-14.3)};
 // (-10.4,-14.3) @TEXT("CODE1",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL1:2 (-10,-17.7)};
@@ -213,24 +150,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-26.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN1:1 (24,-16)};
 // (23.6,-16) @TEXT("QN1",size=1.1,halign="end",valign="middle");
-// &"GPN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN1:2 (44,-16)};
-// (44.4,-16) @TEXT("GPN1",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN1:2 (44,-16)};
+// (44.4,-16) @TEXT("REFSEL_P1",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN1:3 (34,-6)};
 // (34,-5.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN1:4 (34,-26)};
 // (34,-26.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN1:1 (52,-16)};
 // (51.6,-16) @TEXT("QN1",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN1:2 (84,-16)};
+// (84.4,-16) @TEXT("REFSEL_N1",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN1:3 (68,-5)};
 // (68,-4.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN1:4 (68,-27)};
 // (68,-27.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP1:2 (86,-17.65)};
-// (85.6,-17.65) @TEXT("GNP1",size=1.1,halign="end",valign="middle");
-// &"GPN1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP1:1 (120,-14.35)};
-// (119.6,-14.35) @TEXT("GPN1",size=1.1,halign="end",valign="middle");
-// &"GPP1" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP1:2 (120,-17.65)};
-// (119.6,-17.65) @TEXT("GPP1",size=1.1,halign="end",valign="middle");
 // &"CODE2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL2:1 (-10,-39.3)};
 // (-10.4,-39.3) @TEXT("CODE2",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL2:2 (-10,-42.7)};
@@ -243,24 +176,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-51.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN2:1 (24,-41)};
 // (23.6,-41) @TEXT("QN2",size=1.1,halign="end",valign="middle");
-// &"GPN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN2:2 (44,-41)};
-// (44.4,-41) @TEXT("GPN2",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN2:2 (44,-41)};
+// (44.4,-41) @TEXT("REFSEL_P2",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN2:3 (34,-31)};
 // (34,-30.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN2:4 (34,-51)};
 // (34,-51.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN2:1 (52,-41)};
 // (51.6,-41) @TEXT("QN2",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN2:2 (84,-41)};
+// (84.4,-41) @TEXT("REFSEL_N2",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN2:3 (68,-30)};
 // (68,-29.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN2:4 (68,-52)};
 // (68,-52.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP2:2 (86,-42.65)};
-// (85.6,-42.65) @TEXT("GNP2",size=1.1,halign="end",valign="middle");
-// &"GPN2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP2:1 (120,-39.35)};
-// (119.6,-39.35) @TEXT("GPN2",size=1.1,halign="end",valign="middle");
-// &"GPP2" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP2:2 (120,-42.65)};
-// (119.6,-42.65) @TEXT("GPP2",size=1.1,halign="end",valign="middle");
 // &"CODE3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL3:1 (-10,-64.3)};
 // (-10.4,-64.3) @TEXT("CODE3",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL3:2 (-10,-67.7)};
@@ -273,24 +202,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-76.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN3:1 (24,-66)};
 // (23.6,-66) @TEXT("QN3",size=1.1,halign="end",valign="middle");
-// &"GPN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN3:2 (44,-66)};
-// (44.4,-66) @TEXT("GPN3",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN3:2 (44,-66)};
+// (44.4,-66) @TEXT("REFSEL_P3",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN3:3 (34,-56)};
 // (34,-55.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN3:4 (34,-76)};
 // (34,-76.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN3:1 (52,-66)};
 // (51.6,-66) @TEXT("QN3",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN3:2 (84,-66)};
+// (84.4,-66) @TEXT("REFSEL_N3",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN3:3 (68,-55)};
 // (68,-54.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN3:4 (68,-77)};
 // (68,-77.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP3:2 (86,-67.65)};
-// (85.6,-67.65) @TEXT("GNP3",size=1.1,halign="end",valign="middle");
-// &"GPN3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP3:1 (120,-64.35)};
-// (119.6,-64.35) @TEXT("GPN3",size=1.1,halign="end",valign="middle");
-// &"GPP3" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP3:2 (120,-67.65)};
-// (119.6,-67.65) @TEXT("GPP3",size=1.1,halign="end",valign="middle");
 // &"CODE4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL4:1 (-10,-89.3)};
 // (-10.4,-89.3) @TEXT("CODE4",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL4:2 (-10,-92.7)};
@@ -303,24 +228,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-101.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN4:1 (24,-91)};
 // (23.6,-91) @TEXT("QN4",size=1.1,halign="end",valign="middle");
-// &"GPN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN4:2 (44,-91)};
-// (44.4,-91) @TEXT("GPN4",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN4:2 (44,-91)};
+// (44.4,-91) @TEXT("REFSEL_P4",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN4:3 (34,-81)};
 // (34,-80.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN4:4 (34,-101)};
 // (34,-101.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN4:1 (52,-91)};
 // (51.6,-91) @TEXT("QN4",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN4:2 (84,-91)};
+// (84.4,-91) @TEXT("REFSEL_N4",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN4:3 (68,-80)};
 // (68,-79.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN4:4 (68,-102)};
 // (68,-102.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP4:2 (86,-92.65)};
-// (85.6,-92.65) @TEXT("GNP4",size=1.1,halign="end",valign="middle");
-// &"GPN4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP4:1 (120,-89.35)};
-// (119.6,-89.35) @TEXT("GPN4",size=1.1,halign="end",valign="middle");
-// &"GPP4" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP4:2 (120,-92.65)};
-// (119.6,-92.65) @TEXT("GPP4",size=1.1,halign="end",valign="middle");
 // &"CODE5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL5:1 (-10,-114.3)};
 // (-10.4,-114.3) @TEXT("CODE5",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL5:2 (-10,-117.7)};
@@ -333,24 +254,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-126.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN5:1 (24,-116)};
 // (23.6,-116) @TEXT("QN5",size=1.1,halign="end",valign="middle");
-// &"GPN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN5:2 (44,-116)};
-// (44.4,-116) @TEXT("GPN5",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN5:2 (44,-116)};
+// (44.4,-116) @TEXT("REFSEL_P5",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN5:3 (34,-106)};
 // (34,-105.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN5:4 (34,-126)};
 // (34,-126.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN5:1 (52,-116)};
 // (51.6,-116) @TEXT("QN5",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN5:2 (84,-116)};
+// (84.4,-116) @TEXT("REFSEL_N5",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN5:3 (68,-105)};
 // (68,-104.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN5:4 (68,-127)};
 // (68,-127.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP5:2 (86,-117.65)};
-// (85.6,-117.65) @TEXT("GNP5",size=1.1,halign="end",valign="middle");
-// &"GPN5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP5:1 (120,-114.35)};
-// (119.6,-114.35) @TEXT("GPN5",size=1.1,halign="end",valign="middle");
-// &"GPP5" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP5:2 (120,-117.65)};
-// (119.6,-117.65) @TEXT("GPP5",size=1.1,halign="end",valign="middle");
 // &"CODE6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL6:1 (-10,-139.3)};
 // (-10.4,-139.3) @TEXT("CODE6",size=1.1,halign="end",valign="middle");
 // &"RUN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL6:2 (-10,-142.7)};
@@ -363,24 +280,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (0,-151.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN6:1 (24,-141)};
 // (23.6,-141) @TEXT("QN6",size=1.1,halign="end",valign="middle");
-// &"GPN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN6:2 (44,-141)};
-// (44.4,-141) @TEXT("GPN6",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN6:2 (44,-141)};
+// (44.4,-141) @TEXT("REFSEL_P6",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN6:3 (34,-131)};
 // (34,-130.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN6:4 (34,-151)};
 // (34,-151.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN6:1 (52,-141)};
 // (51.6,-141) @TEXT("QN6",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN6:2 (84,-141)};
+// (84.4,-141) @TEXT("REFSEL_N6",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN6:3 (68,-130)};
 // (68,-129.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN6:4 (68,-152)};
 // (68,-152.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP6:2 (86,-142.65)};
-// (85.6,-142.65) @TEXT("GNP6",size=1.1,halign="end",valign="middle");
-// &"GPN6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP6:1 (120,-139.35)};
-// (119.6,-139.35) @TEXT("GPN6",size=1.1,halign="end",valign="middle");
-// &"GPP6" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP6:2 (120,-142.65)};
-// (119.6,-142.65) @TEXT("GPP6",size=1.1,halign="end",valign="middle");
 // &"CODE7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL7_A:1 (-10,-166)};
 // (-10.4,-166) @TEXT("CODE7",size=1.1,halign="end",valign="middle");
 // &"CODE7_B" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XINITIAL7_A:2 (10,-166)};
@@ -409,28 +322,20 @@ WUNUSED (RST_DONE VSS) iprobe
 // (102,-176.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN7:1 (120,-166)};
 // (119.6,-166) @TEXT("QN7",size=1.1,halign="end",valign="middle");
-// &"GPN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN7:2 (152,-166)};
-// (152.4,-166) @TEXT("GPN7",size=1.1,halign="start",valign="middle");
+// &"REFSEL_P7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN7:2 (152,-166)};
+// (152.4,-166) @TEXT("REFSEL_P7",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN7:3 (136,-155)};
 // (136,-154.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XPN7:4 (136,-177)};
 // (136,-177.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
 // &"QN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN7:1 (154,-166)};
 // (153.6,-166) @TEXT("QN7",size=1.1,halign="end",valign="middle");
+// &"REFSEL_N7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN7:2 (186,-166)};
+// (186.4,-166) @TEXT("REFSEL_N7",size=1.1,halign="start",valign="middle");
 // &"VDD" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN7:3 (170,-155)};
 // (170,-154.6) @TEXT("VDD",size=1.1,halign="middle",valign="bottom");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XNN7:4 (170,-177)};
 // (170,-177.4) @TEXT("VSS",size=1.1,halign="middle",valign="top");
-// &"GNP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WNP7:2 (188,-167.65)};
-// (187.6,-167.65) @TEXT("GNP7",size=1.1,halign="end",valign="middle");
-// &"GPN7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP7:1 (222,-164.35)};
-// (221.6,-164.35) @TEXT("GPN7",size=1.1,halign="end",valign="middle");
-// &"GPP7" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WPP7:2 (222,-167.65)};
-// (221.6,-167.65) @TEXT("GPP7",size=1.1,halign="end",valign="middle");
-// &"RST_DONE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WUNUSED:1 (15,39.65)};
-// (14.6,39.65) @TEXT("RST_DONE",size=1.1,halign="end",valign="middle");
-// &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#WUNUSED:2 (15,36.35)};
-// (14.6,36.35) @TEXT("VSS",size=1.1,halign="end",valign="middle");
 // }
 // END SARADC RNL
 ends sar8i_refword

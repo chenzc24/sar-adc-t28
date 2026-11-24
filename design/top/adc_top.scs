@@ -11,9 +11,9 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
     XSAMPLE (SAMPLE SAMPLE_INT VDD! 0) CKBD1BWP12T30P140
     XBOOTN (SEQ_SAMPLE TOPN VINN) sar_bootstrap_flat_8b_p
     XBOOTP (SEQ_SAMPLE TOPP VINP) sar_bootstrap_flat_8b_p
-    XCDAC (GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2 GNP3  GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7 GPP0  GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
+    XCDAC (REFSEL_N0 REFSEL_N1 REFSEL_N2 REFSEL_N3 REFSEL_N4 REFSEL_N5 REFSEL_N6 REFSEL_N7 REFSEL_P0 REFSEL_P1 REFSEL_P2 REFSEL_P3 REFSEL_P4 REFSEL_P5 REFSEL_P6 REFSEL_P7 TOPN TOPP VDD! VREFN VREFP 0)  sar8j_r1_cdac
     XCTRL (CMP_CLK CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 COMP_N  COMP_P D0 D1 D2 D3 D4 D5 D6 D7 PHI_U SEQ_SAMPLE VDD! 0 ACTIVE) sar8_se_ctrl
-    XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 D0 D1 D2 D3 D4  D5 D6 D7 GNN0 GNN1 GNN2 GNN3 GNN4 GNN5 GNN6 GNN7 GNP0 GNP1 GNP2  GNP3 GNP4 GNP5 GNP6 GNP7 GPN0 GPN1 GPN2 GPN3 GPN4 GPN5 GPN6 GPN7  GPP0 GPP1 GPP2 GPP3 GPP4 GPP5 GPP6 GPP7 PHI_U SAMPLE_INT VDD! 0 RST_DONE PRESET)  sar8i_refword
+    XREF (CODE0 CODE1 CODE2 CODE3 CODE4 CODE5 CODE6 CODE7 REFSEL_N0 REFSEL_N1 REFSEL_N2 REFSEL_N3 REFSEL_N4 REFSEL_N5 REFSEL_N6 REFSEL_N7 REFSEL_P0 REFSEL_P1 REFSEL_P2 REFSEL_P3 REFSEL_P4 REFSEL_P5 REFSEL_P6 REFSEL_P7 VDD! 0 PRESET)  sar8i_refword
     XCOMP (CMP_CLK COMP_N COMP_P VDD! TOPN TOPP 0) sar_strongarm_t28
     CL_COMP_N (COMP_N 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
     CL_COMP_P (COMP_P 0) cfmom_2t nr=8 lr=2.5u w=50n s=50n stm=1 spm=3  multi=2 mismatchflag=1
@@ -90,11 +90,11 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSAMPLE:2 (18,62) (18,62) #XSEQ:1};
 // &"DONE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XDONE:2 (143.5,62) (143.5,63.65) #XPRESET:1};
 // &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XBOOTN:2 (38,27) (75,27) (75,18) #XCOMP:5};
-// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XCDAC:33 (38,27)};
+// &"TOPN" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XCDAC:17 (38,27)};
 // $JUNCTION @ATTACH (38,27);
 // (46,28.6) @TEXT("TOPN",size=1.13,halign="start",textcolor="#223d52");
 // &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XBOOTP:2 (19,4) (19,7) (46,7) (75,7) (75,14.7) #XCOMP:6};
-// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XCDAC:34 (46,7)};
+// &"TOPP" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#XCDAC:18 (46,7)};
 // $JUNCTION @ATTACH (46,7);
 // (54,8.6) @TEXT("TOPP",size=1.13,halign="start",textcolor="#223d52");
 // &"COMP_N" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(113,-11) (113,19.65) (113,21.3)};
@@ -118,12 +118,9 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // $JUNCTION @ATTACH (81,42);
 // &"CMP_CLK" @WIRE(mode="straight",linecolor="#94601a",linewidth=0.16) {#CL_CMP_CLK:1 (95,42)};
 // $JUNCTION @ATTACH (95,42);
-// {&"GNN0" &"GNN1" &"GNN2" &"GNN3" &"GNN4" &"GNN5" &"GNN6" &"GNN7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:17  #XCDAC:1};
-// {&"GNP0" &"GNP1" &"GNP2" &"GNP3" &"GNP4" &"GNP5" &"GNP6" &"GNP7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:25  #XCDAC:9};
-// {&"GPN0" &"GPN1" &"GPN2" &"GPN3" &"GPN4" &"GPN5" &"GPN6" &"GPN7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:33  #XCDAC:17};
-// {&"GPP0" &"GPP1" &"GPP2" &"GPP3" &"GPP4" &"GPP5" &"GPP6" &"GPP7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:41  #XCDAC:25};
-// {&"CODE0" &"CODE1" &"CODE2" &"CODE3" &"CODE4" &"CODE5" &"CODE6" &"CODE7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#66538a") {#XCTRL:2 (161,21.3) (161,-43.05) #XREF:1};
-// {&"D0" &"D1" &"D2" &"D3" &"D4" &"D5" &"D6" &"D7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#66538a") {#XCTRL:12 (170,18) (170,-46.35) #XREF:9};
+// {&"REFSEL_N0" &"REFSEL_N1" &"REFSEL_N2" &"REFSEL_N3" &"REFSEL_N4" &"REFSEL_N5" &"REFSEL_N6" &"REFSEL_N7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:9  #XCDAC:1};
+// {&"REFSEL_P0" &"REFSEL_P1" &"REFSEL_P2" &"REFSEL_P3" &"REFSEL_P4" &"REFSEL_P5" &"REFSEL_P6" &"REFSEL_P7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#536f4b") {#XREF:17  #XCDAC:9};
+// {&"CODE0" &"CODE1" &"CODE2" &"CODE3" &"CODE4" &"CODE5" &"CODE6" &"CODE7"} @WIRE(mode="straight",linewidth=0.24,linecolor="#66538a") {#XCTRL:2 (161,21.3) (161,-46.35) #XREF:1};
 // (121,-37) @TEXT("Digital feedback",size=1.3,halign="start",textcolor="#223d52");
 // &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XSEQ:2 (36,73)};
 // (36,73.4) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
@@ -153,14 +150,16 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // (-16.4,28.65) @TEXT("SEQ_SAMPLE",size=1.1,halign="end",valign="middle");
 // &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XBOOTP:1 (-16,5.65)};
 // (-16.4,5.65) @TEXT("SEQ_SAMPLE",size=1.1,halign="end",valign="middle");
-// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:35 (54,-1)};
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:19 (54,-1)};
 // (54,-0.6) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
-// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:36 (23,-10.35)};
-// (22.6,-10.35) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
-// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:37 (23,-13.65)};
-// (22.6,-13.65) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
-// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:38 (62,-23)};
-// (62,-23.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"VREFN" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:20 (30,-10.35)};
+// (29.6,-10.35) @TEXT("VREFN",size=1.1,halign="end",valign="middle");
+// &"VREFP" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:21 (30,-13.65)};
+// (29.6,-13.65) @TEXT("VREFP",size=1.1,halign="end",valign="middle");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCDAC:22 (54,-23)};
+// (54,-23.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// {&"D0" &"D1" &"D2" &"D3" &"D4" &"D5" &"D6" &"D7"} @WIRE(mode="straight",linewidth=0.3) {#XCTRL:12 (155,18)};
+// (155.4,18) @TEXT("D[7:0]",size=1.1,halign="start",valign="middle");
 // &"PHI_U" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:20 (155,14.7)};
 // (155.4,14.7) @TEXT("PHI_U",size=1.1,halign="start",valign="middle");
 // &"SEQ_SAMPLE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:21 (123,14.7)};
@@ -171,18 +170,12 @@ subckt sar_adc8_join_r4 D0 D1 D2 D3 D4 D5 D6 D7 SAMPLE VDD! VINN VINP  VREFN VRE
 // (139,2.7) @TEXT("0",size=1.1,halign="middle",valign="top");
 // &"ACTIVE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCTRL:24 (155,11.4)};
 // (155.4,11.4) @TEXT("ACTIVE",size=1.1,halign="start",valign="middle");
-// &"PHI_U" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:49 (23,-46.35)};
-// (22.6,-46.35) @TEXT("PHI_U",size=1.1,halign="end",valign="middle");
-// &"SAMPLE_INT" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:50 (23,-49.65)};
-// (22.6,-49.65) @TEXT("SAMPLE_INT",size=1.1,halign="end",valign="middle");
-// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:51 (62,-34.75)};
-// (62,-34.35) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
-// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:52 (46,-61.25)};
-// (46,-61.65) @TEXT("0",size=1.1,halign="middle",valign="top");
-// &"RST_DONE" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:53 (69,-49.65)};
-// (69.4,-49.65) @TEXT("RST_DONE",size=1.1,halign="start",valign="middle");
-// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:54 (69,-52.95)};
-// (69.4,-52.95) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
+// &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:25 (54,-37)};
+// (54,-36.6) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:26 (46,-59)};
+// (46,-59.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"PRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XREF:27 (62,-49.65)};
+// (62.4,-49.65) @TEXT("PRESET",size=1.1,halign="start",valign="middle");
 // &"VDD!" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:4 (94,29.6)};
 // (94,30) @TEXT("VDD!",size=1.1,halign="middle",valign="bottom");
 // &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#XCOMP:7 (94,6.4)};

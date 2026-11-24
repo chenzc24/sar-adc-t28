@@ -9,6 +9,7 @@ from pathlib import Path
 import hashlib
 import json
 import re
+from tools.saradc.refsel import split_cdac
 
 ROOT = Path(__file__).resolve().parents[2]
 DEST = ROOT / "work/layout/full-cdac"
@@ -58,7 +59,7 @@ def cap_assignment():
 
 
 def independent_reference():
-    text = (ROOT / "design/xtor/cdac/cdac.scs").read_text()
+    text = split_cdac((ROOT / "design/xtor/cdac/cdac.scs").read_text())
     electrical = "\n".join(line for line in text.splitlines() if not line.lstrip().startswith("//"))
     electrical = re.sub(r"\\\s*\n\s*", " ", electrical)
     header = re.search(r"^subckt sar8j_r1_cdac (.+)$", electrical, re.M)[1].split()

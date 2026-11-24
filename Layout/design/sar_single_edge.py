@@ -33,6 +33,8 @@ SITES = {name + SUFFIX: n for name, n in {
 }.items()}
 SITE, ROW = 0.14, 1.2
 INPUTS = ("COMP_P", "COMP_N", "SAMPLE")
+# The routed macro exposes these internal nets for waveform observation.
+MONITOR_PORTS = ("PHI_U", "SAMPLE_INT")
 # Left-edge order, bottom to top: reference-side buses first, comparator-side signals last.
 PORT_ORDER = (*[f"{b}{i}" for i in range(8) for b in ("D", "CODE")],
               "PHI_U", "PRESET", "SAMPLE_INT", "SEQ_SAMPLE", "SAMPLE", "COMP_N", "COMP_P", "CMP_CLK")
@@ -61,6 +63,7 @@ def electrical():
     if set(block["instances"]) != set(GROUP):
         raise ValueError("The floorplan SAR block changed; review the macro group")
     public = set(subs[top].splitlines()[0].split()[2:])
+    public.update(MONITOR_PORTS)
     for inst, (nets, _, _) in parts.items():
         if inst not in GROUP:
             public.update(nets)
