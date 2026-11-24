@@ -1,10 +1,9 @@
 <section class="page-intro">
-  <p class="eyebrow">Transistor schematic</p>
-  <h1>Explore the circuit<span class="title-period">.</span></h1>
-  <p class="lead">Browse the current Spectre netlist in the official RNL Viewer. Select a block below or enter a subcircuit from the drawing.</p>
+  <h1>Schematics<span class="title-period">.</span></h1>
+  <p class="lead">Double-click a block in the drawing to enter its subcircuit.</p>
   <div class="actions">
     <a class="button button-primary" href="$rnl_full" target="_blank" rel="noopener">Open full RNL Viewer <span aria-hidden="true">↗</span></a>
-    <a class="button button-outline" href="$rnl_entry">RNL entry source <span aria-hidden="true">↗</span></a>
+    <a class="button button-outline" href="${asset_base}$rnl_entry">RNL source <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -14,6 +13,5 @@
     $rnl_links
   </nav>
   <iframe class="schematic-frame" name="rnl-frame" title="Official RNL Viewer" src="$rnl_embed" allowfullscreen></iframe>
-  <p class="evidence-line">Top level <code>$rnl_top</code>. <a href="rnl/workspace.json">Workspace manifest ↗</a></p>
-  <script src="assets/schematic-view.js" defer></script>
+  <script src="${asset_base}assets/schematic-view.js" defer></script>
 </section>

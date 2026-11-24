@@ -7,6 +7,21 @@ const transforms = {
 };
 const pointPattern = /\((-?\d+),(-?\d+)\)/g;
 const nativePack = "virtuoso_tsmc28";
+const siteRoot = new URL("../", document.currentScript.src);
+const chinese = document.documentElement.lang === "zh-CN";
+const layoutStrings = chinese ? {
+  die: "整片", selection: "选区", full: "全屏", exit: "退出全屏", fullError: "无法进入全屏",
+  loading: (done, total) => `正在加载 r8 版图（${done}/${total}）…`,
+  loadError: "版图加载失败。", rendererError: "暂时无法加载 LayoutML 渲染器。",
+  landmarks: { "IO ring": "IO 环", "ADC core": "ADC 核心", "CDAC and reference": "CDAC 与参考驱动",
+    "Bootstrap pair": "自举采样对", "SAR controller": "SAR 控制器", "Output register": "输出寄存器" },
+  footprint: "单元外框",
+} : {
+  die: "Whole die", selection: "Selected area", full: "Full screen", exit: "Exit full screen",
+  fullError: "Full screen unavailable", loading: (done, total) => `Loading the r8 chip layout (${done}/${total})…`,
+  loadError: "Could not open the layout.", rendererError: "LayoutML's TSMC28 renderer is unavailable.",
+  landmarks: {}, footprint: "Footprint",
+};
 // The upstream pack calls its active and gate packets diff and poly.
 const drawingStyleNames = { OD: "diff", PO: "poly" };
 
@@ -21,9 +36,10 @@ function parseLayout(text, release, renderer) {
     if (kind === "layer") {
       if (!release.shape_counts[name]) continue;
       const style = renderer.resolveStyle({ name: drawingStyleNames[name] ?? name });
-      layers.set(name, { style, visible: !/^(?:VIA[1-8]|CO|NW|PP|NP)$/.test(name) });
+      layers.set(name, { style, visible: !/^(?:VIA[1-8]|NW|PP|NP)$/.test(name) });
     } else if (kind === "cell") {
-      current = { id: name, bounds: release.cell_bounds_nm[name], paths: new Map(), instances: [] };
+      current = { bounds: release.cell_bounds_nm[name], terminals: release.terminal_labels_nm?.[name] ?? [],
+        paths: new Map(), instances: [] };
       cells.set(name, current);
     } else if (kind === "inst") {
       const [, child, x, y, orient, columns, rows, dx, dy] = line.match(
@@ -102,7 +118,8 @@ function installLayout(model, release, renderer) {
   const fitButton = shell.querySelector('[data-layout-action="fit"]');
   const boxButton = shell.querySelector('[data-layout-action="box"]');
   const fullscreenButton = shell.querySelector('[data-layout-action="fullscreen"]');
-  const view = { x: 0, y: 0, scale: 1, bounds: release.bounds_nm, name: "Whole die" };
+  const terminalToggle = shell.querySelector("#layout-terminal-labels");
+  const view = { x: 0, y: 0, scale: 1, bounds: release.bounds_nm, name: layoutStrings.die };
   const layerOrder = [...model.layers].sort(([, a], [, b]) => a.style.z - b.style.z);
   let queued = false;
   let fitMode = true;
@@ -126,9 +143,11 @@ function installLayout(model, release, renderer) {
     const scale = dpr * view.scale;
     const halfWidth = w / (2*scale), halfHeight = h / (2*scale);
     const x0 = view.x-halfWidth, y0 = view.y-halfHeight, x1 = view.x+halfWidth, y1 = view.y+halfHeight;
-    const visiblePaths = new Map(layerOrder.filter(([, layer]) => layer.visible)
+    const visiblePaths = new Map(layerOrder.filter(([name, layer]) => layer.visible && (name !== "CO" || view.scale >= 0.018))
       .map(([name]) => [name, new Path2D()]));
     const showFootprints = visiblePaths.has("Footprint");
+    const showTerminals = terminalToggle.checked && view.scale >= 0.13;
+    const terminals = [];
 
     function draw(id, pose) {
       const cell = model.cells.get(id);
@@ -145,9 +164,14 @@ function installLayout(model, release, renderer) {
           }
         }
       }
-      if (!cell.paths.size) return;
+      if (!cell.paths.size && !cell.terminals.length) return;
       const matrix = transform(pose, scale, w, h);
       for (const [name, path] of cell.paths) visiblePaths.get(name)?.addPath(path, matrix);
+      if (showTerminals) {
+        for (const [label, x, y] of cell.terminals) {
+          terminals.push([label, matrix.a*x + matrix.c*y + matrix.e, matrix.b*x + matrix.d*y + matrix.f]);
+        }
+      }
     }
 
     draw(model.top, identity);
@@ -160,6 +184,16 @@ function installLayout(model, release, renderer) {
     rectangle.rect(x, y, right-x, top-y);
     die.addPath(rectangle, transform(identity, scale, w, h));
     renderer.paintDRFPath(ctx, die, renderer.resolveStyle({ name: "Die outline" }), [], dpr);
+    ctx.font = `600 ${11*dpr}px monospace`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.lineWidth = 2*dpr;
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    for (const terminal of terminals) {
+      ctx.strokeText(...terminal);
+      ctx.fillText(...terminal);
+    }
     scaleLabel.textContent = `${(1 / view.scale / 1000).toPrecision(2)} µm/px`;
     locationLabel.textContent = `${view.name} · ${ (view.x/1000).toFixed(2) }, ${ (view.y/1000).toFixed(2) } µm`;
   }
@@ -170,7 +204,7 @@ function installLayout(model, release, renderer) {
     requestAnimationFrame(render);
   }
 
-  function fit(bounds = release.bounds_nm, name = "Whole die") {
+  function fit(bounds = release.bounds_nm, name = layoutStrings.die) {
     const [x, y, x1, y1] = bounds;
     Object.assign(view, { x: (x+x1)/2, y: (y+y1)/2, name, bounds,
       scale: 0.89*Math.min(canvas.clientWidth/(x1-x), canvas.clientHeight/(y1-y)) });
@@ -212,13 +246,15 @@ function installLayout(model, release, renderer) {
     zoom(Math.exp(-Math.max(-240, Math.min(240, event.deltaY*units))*0.0025), ...xy(event));
   }, { passive: false });
   canvas.addEventListener("pointerdown", event => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 && event.button !== 1) return;
+    if (event.button === 1) event.preventDefault();
     canvas.setPointerCapture(event.pointerId);
     const point = xy(event);
     touches.set(event.pointerId, point);
-    if (touches.size === 1 && (canvas.dataset.box === "true" || event.shiftKey)) boxStart = point;
+    if (event.button === 0 && touches.size === 1 && (canvas.dataset.box === "true" || event.shiftKey)) boxStart = point;
     if (touches.size > 1) { boxStart = undefined; boxOverlay.hidden = true; }
   });
+  canvas.addEventListener("auxclick", event => { if (event.button === 1) event.preventDefault(); });
   canvas.addEventListener("pointermove", event => {
     if (!touches.has(event.pointerId)) return;
     const previous = [...touches.values()];
@@ -251,7 +287,7 @@ function installLayout(model, release, renderer) {
     if (event.type !== "pointerup" || Math.min(Math.abs(x1-x), Math.abs(y1-y)) < 8) return;
     const worldX = px => view.x + (px-canvas.clientWidth/2)/view.scale;
     const worldY = py => view.y - (py-canvas.clientHeight/2)/view.scale;
-    fit([worldX(Math.min(x, x1)), worldY(Math.max(y, y1)), worldX(Math.max(x, x1)), worldY(Math.min(y, y1))], "Selected area");
+    fit([worldX(Math.min(x, x1)), worldY(Math.max(y, y1)), worldX(Math.max(x, x1)), worldY(Math.min(y, y1))], layoutStrings.selection);
   }
   canvas.addEventListener("pointerup", releasePointer);
   canvas.addEventListener("pointercancel", releasePointer);
@@ -266,17 +302,19 @@ function installLayout(model, release, renderer) {
   shell.querySelector('[data-layout-action="out"]').addEventListener("click", () => zoom(1/1.4));
   fitButton.addEventListener("click", () => fit());
   boxButton.addEventListener("click", () => boxMode(canvas.dataset.box !== "true"));
+  terminalToggle.addEventListener("change", requestPaint);
   fullscreenButton.addEventListener("click", () => {
     const action = document.fullscreenElement ? document.exitFullscreen() : shell.requestFullscreen();
-    action.catch(() => { fullscreenButton.textContent = "Full screen unavailable"; });
+    action.catch(() => { fullscreenButton.textContent = layoutStrings.fullError; });
   });
   document.addEventListener("fullscreenchange", () => {
-    fullscreenButton.textContent = document.fullscreenElement ? "Exit full screen" : "Full screen";
+    fullscreenButton.textContent = document.fullscreenElement ? layoutStrings.exit : layoutStrings.full;
   });
   for (const [id, bounds] of landmarkBounds(model, release.landmarks)) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = release.landmarks[id];
+    const title = release.landmarks[id];
+    button.textContent = layoutStrings.landmarks[title] ?? title;
     button.addEventListener("click", () => fit(bounds, button.textContent));
     document.querySelector("#layout-landmarks").append(button);
   }
@@ -288,7 +326,7 @@ function installLayout(model, release, renderer) {
     toggle.checked = layer.visible;
     toggle.addEventListener("change", () => { layer.visible = toggle.checked; requestPaint(); });
     swatch.style.setProperty("--layer-color", layer.style.color);
-    label.append(toggle, swatch, name);
+    label.append(toggle, swatch, name === "Footprint" ? layoutStrings.footprint : name);
     document.querySelector("#layout-layers").append(label);
   }
   new ResizeObserver(() => fitMode ? fit(view.bounds, view.name) : requestPaint()).observe(stage);
@@ -298,7 +336,7 @@ function installLayout(model, release, renderer) {
 async function fetchLayoutPart(path) {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const response = await fetch(path, { signal: AbortSignal.timeout(18000) });
+      const response = await fetch(new URL(path, siteRoot), { signal: AbortSignal.timeout(18000) });
       if (!response.ok) throw new Error(`Layout data request failed (${response.status})`);
       return await response.arrayBuffer();
     } catch (error) {
@@ -312,16 +350,16 @@ async function loadLayout() {
   try {
     const renderer = window.LMLWebGLRenderer;
     if (!renderer?.paintDRFPath || !window.LML_STYLE_PACKS?.[nativePack]) {
-      throw new Error("LayoutML's TSMC28 renderer is unavailable.");
+      throw new Error(layoutStrings.rendererError);
     }
     renderer.setStylePack(nativePack);
-    const manifest = await fetch("layout-data/release.json?display=tsmc28");
+    const manifest = await fetch(new URL("layout-data/release.json?display=terminals", siteRoot));
     if (!manifest.ok) throw new Error("Layout manifest request failed");
     const release = await manifest.json();
     let loaded = 0;
     const parts = await Promise.all(release.geometry_parts.map(async path => {
       const bytes = await fetchLayoutPart(path);
-      status.textContent = `Loading the r8 chip layout (${++loaded}/${release.geometry_parts.length})…`;
+      status.textContent = layoutStrings.loading(++loaded, release.geometry_parts.length);
       return bytes;
     }));
     const stream = new Blob(parts).stream().pipeThrough(new DecompressionStream("gzip"));
@@ -329,7 +367,7 @@ async function loadLayout() {
     installLayout(parseLayout(bytes, release, renderer), release, renderer);
     status.hidden = true;
   } catch (error) {
-    status.textContent = `Could not open the layout. ${error.message}`;
+    status.textContent = `${layoutStrings.loadError} ${error.message}`;
   }
 }
 

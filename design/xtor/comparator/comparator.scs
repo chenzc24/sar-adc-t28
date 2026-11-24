@@ -86,7 +86,7 @@ subckt sar_strongarm_t28 CLK OUTN OUTP VDD VINN VINP VSS
         spomt1=1.11111e+60 spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
-// (-47,72) @TEXT("StrongARM / 11 MOS / symmetric latch and input pair",size=1.5,halign="start",textcolor="#223d52");
+// (-48,68) @TEXT("StrongARM  /  differential latch",size=1.7,halign="start",textcolor="#223d52");
 // #MPLATN @SET-SYMBOL $PMOS_4TERM;
 // #MPLATN @PLACE(-20,42) => @ORIENT("MY");
 // #MPLATN @TEXT("MPLATN",key="name",size=1.3,halign="start") => @PLACE(-17,45);
@@ -194,7 +194,6 @@ subckt sar_strongarm_t28 CLK OUTN OUTP VDD VINN VINP VSS
 // $JUNCTION @ATTACH (20,-18);
 // &"TAIL" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#MNTAIL:1 (0,-18)};
 // $JUNCTION @ATTACH (0,-18);
-// (-46,-48) @TEXT("VINP -> Y -> OUTN; VINN -> X -> OUTP. CLK resets PMOS and enables tail NMOS.",size=0.95,halign="start",textcolor="#223d52");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MNLATN:4 (-24,20)};
 // (-24.4,20) @TEXT("VSS",size=1.1,halign="end",valign="middle");
 // &"VSS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MNLATP:4 (24,20)};
