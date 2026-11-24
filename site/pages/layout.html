@@ -1,0 +1,59 @@
+<section class="page-intro">
+  <p class="eyebrow">Physical design</p>
+  <h1>From core to pad ring<span class="title-period">.</span></h1>
+  <p class="lead">A 122 × 111 µm core connects to the output register, reference routes and a 9 × 9 IO ring. Electrical measurements use the fill5 core. Physical checks use the r8 fill7 chip stream.</p>
+  <nav class="jump-links" aria-label="On this page">
+    <a href="#assembly">Chip assembly ↓</a><a href="#physical-checks">Physical checks ↓</a><a href="#routing">Routing and fill ↓</a>
+  </nav>
+</section>
+
+<section class="section first-section" id="assembly" aria-labelledby="assembly-title">
+  <div class="section-heading"><h2 id="assembly-title">Chip assembly</h2><a class="text-link" href="$snapshot/Layout/README.md">Layout index ↗</a></div>
+  <dl class="spec-strip spec-strip-three" aria-label="Layout dimensions and pads">
+    <div><dt>Core outline</dt><dd>122 × 111 <small>µm</small><span>Fill5 electrical view</span></dd></div>
+    <div><dt>Die outline</dt><dd>892 × 892 <small>µm</small><span>r8 with seal ring</span></dd></div>
+    <div><dt>Bond openings</dt><dd>36<span>9 × 9 IO ring plan</span></dd></div>
+  </dl>
+  <figure class="figure-card full-figure">
+    <a href="assets/io-ring.png" target="_blank" rel="noopener"><img src="assets/io-ring.png" width="2625" height="1380" alt="IO-ring plan with analog, reference and output routes and a close-up of the core connections"></a>
+    <figcaption>The 760 × 760 µm IO outline and a detail of routes into the core. The bond map remains under package review. <a href="$snapshot/Layout/design/io_ring.json">Pad plan ↗</a></figcaption>
+  </figure>
+</section>
+
+<section class="section" id="physical-checks" aria-labelledby="physical-title">
+  <div class="section-heading"><h2 id="physical-title">Physical checks</h2><span class="badge badge-review">Waiver review open</span></div>
+  <p class="section-description">The OA stream <code>chip-sfill7-oa-chk2</code> reproduces the fill7 assembly checks for <code>sar8_adc_chip_filled/layout_fill7</code>.</p>
+  <div class="table-wrap" role="region" tabindex="0" aria-label="Filled chip checks">
+    <table>
+      <caption>r8 fill7 chip stream</caption>
+      <thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Review scope</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">LVS</th><td><strong>Correct</strong></td><td>Stream connectivity agrees with the checked source.</td></tr>
+        <tr><th scope="row">DRC</th><td>224 markers</td><td>Zero density markers. The IO and Bootstrap categories have separate dispositions.</td></tr>
+        <tr><th scope="row">ERC</th><td>296 markers</td><td>IO master release notes document the marker classes. Confirm submission-deck applicability.</td></tr>
+        <tr><th scope="row">Flat latch-up</th><td>0 markers</td><td>Latch-up subset of the flat LUP / ESD deck.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="evidence-line">Fifteen chip-level dummy vias land inside the all-layer core exclusion. Their disposition and the acceptance of fill inside IO cells are open. <a href="$snapshot/Layout/results/chip_fill7_core_dummy_vias.json">Via audit ↗</a></p>
+  <p class="link-row"><a href="$snapshot/Layout/results/chip_fill.md">Fill and stream checks ↗</a><a href="$snapshot/Layout/results/chip_drc_waivers.md#summary">DRC / ERC waiver matrix ↗</a><a href="$repository/issues/18">Package review ↗</a></p>
+</section>
+
+<section class="section" id="routing" aria-labelledby="routing-title">
+  <div class="section-heading"><h2 id="routing-title">Routing and fill</h2></div>
+  <div class="figure-grid">
+    <figure class="figure-card">
+      <a href="assets/cdac-fill.png" target="_blank" rel="noopener"><img src="assets/cdac-fill.png" width="2250" height="930" alt="Planned fill across the paired CDAC and a detail of the bottom-plate column gaps" loading="lazy"></a>
+      <figcaption>Local CDAC fill keeps dummy features away from sensitive TOP edges. <a href="$snapshot/Layout/results/cdac.md">CDAC extraction ↗</a></figcaption>
+    </figure>
+    <figure class="figure-card">
+      <a href="assets/sar-routing.png" target="_blank" rel="noopener"><img src="assets/sar-routing.png" width="1900" height="2005" alt="Routed SAR macro with logic regions, timing cells and metal tracks" loading="lazy"></a>
+      <figcaption>The routed SAR macro groups the delay chain, trial-word logic and bit registers. <a href="$snapshot/Layout/results/sar_se_core.md">SAR macro ↗</a></figcaption>
+    </figure>
+  </div>
+  <div class="note-panel">
+    <h3>Fill7 peripheral loading</h3>
+    <p>The extracted route corridors report 65.40 fF on VINN and 64.64 fF on VINP, a 0.76 fF difference. VREFN and VREFP are 253.31 fF and 222.63 fF. The extraction treats fill coupling as capacitance to ground, giving an upper-bound estimate for these route loads.</p>
+    <a class="text-link" href="$snapshot/Layout/results/chip_fill.md#extraction-of-the-chip-routes">Route capacitance comparison ↗</a>
+  </div>
+</section>
