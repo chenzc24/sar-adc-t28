@@ -20,7 +20,7 @@
 <li class="lesson-load"><h3>通过只对当时的负载成立</h3><p>采样器、CDAC 和延时单元都先通过，又在下一层加上负载后失效：平坦阵列、通用填充、单元内部互连、VIN 焊盘。</p><a href="#frontend">采样器链 ↓</a></li>
 <li class="lesson-handoff"><h3>交接未闭合的条件</h3><p>输出保持、参考栅控和 RC 延时面积都曾注明留待后续。没有一次冻结把这些备注交给下一位负责人，于是各自变成了返工。</p><a href="#handoff">验证范围链 ↓</a></li>
 <li class="lesson-rule"><h3>引用规则原文，而非标记位置</h3><p>焊盘供电数量、钳位摆放、1 Ω 母线规则、钳位方向和密封环角部，都是核对规则原文之后才定下来。</p><a href="#chip">外围链 ↓</a></li>
-<li class="lesson-scope"><h3>写明每项检查覆盖了什么</h3><p>部分 LVS、层次 DRC、改名探针和理想延时元件，都“通过”了它们并未检查的内容。正是外围回放，才让核心结果能代表整片。</p><a href="#handoff">验证范围链 ↓</a></li>
+<li class="lesson-scope"><h3>写明每项检查覆盖了什么</h3><p>部分 LVS、层次 DRC、比较器的单元级 DRC、改名探针和理想延时元件，都“通过”了它们并未检查的内容。正是外围回放，才让核心结果能代表整片。</p><a href="#handoff">验证范围链 ↓</a></li>
 </ul>
 </section>
 <section class="report-section" id="map"><h2>返工地图</h2>
@@ -106,7 +106,8 @@
 <path d="M861.0 364.0C861.0 256.0 871.9 256.0 871.9 148.0" stroke-dasharray="5 4"/>
 <path d="M871.9 148.0C871.9 292.0 899.2 292.0 899.2 436.0" stroke-dasharray="5 4"/>
 <path d="M899.2 436.0C899.2 400.0 931.8 400.0 931.8 364.0" stroke-dasharray="5 4"/>
-<path d="M931.8 364.0C931.8 400.0 1139.0 400.0 1139.0 436.0" stroke-dasharray="5 4"/>
+<path d="M931.8 364.0C931.8 292.0 1013.6 292.0 1013.6 220.0" stroke-dasharray="5 4"/>
+<path d="M1013.6 220.0C1013.6 328.0 1139.0 328.0 1139.0 436.0" stroke-dasharray="5 4"/>
 </g>
 <a href="#sar" aria-label="链 1"><circle cx="311.4" cy="148.0" r="8" fill="#15251e"/><text x="311.4" y="151.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">1</text></a>
 <a href="#frontend" aria-label="链 2"><circle cx="188.6" cy="76.0" r="8" fill="#15251e"/><text x="188.6" y="79.8" font-size="10.5" font-weight="700" text-anchor="middle" fill="#ceef8d">2</text></a>
@@ -224,8 +225,8 @@
 <header class="chain-head"><span class="chain-number">4</span><div><p class="audit-period">8 月—11 月 24 日 · 验证范围</p><h3>检查“通过”了它并未检查的内容</h3></div></header>
 <ol class="chain-flow">
 <li><b>假设</b><p>检查通过，就代表它所在的接口已被覆盖。</p></li>
-<li><b>打破它的</b><p>理想参考控制器、缺输出寄存器的部分 LVS、层次化闩锁 DRC、按电源名的 ERC 探针，以及去掉接收端负载的延时元件。</p></li>
-<li><b>代价</b><p>集成时才补上输出寄存器，改出 r2 采样器，r8 修正焊盘环，走线预算改用 RC 梯形网络重做。</p></li>
+<li><b>打破它的</b><p>理想参考控制器、缺输出寄存器的部分 LVS、层次化闩锁 DRC、从不运行匹配检查的比较器单元级 DRC、按电源名的 ERC 探针，以及去掉接收端负载的延时元件。</p></li>
+<li><b>代价</b><p>集成时才补上输出寄存器，改出 r2 采样器，r8 修正焊盘环，走线预算改用 RC 梯形网络重做，并在已冻结的比较器上接受匹配等级偏差。</p></li>
 <li class="chain-lesson"><b>经验</b><p>写明每个结论的范围，再用真实外围对核心回放。正是这次回放，让只含核心的 Stage 6 结果能代表整片。</p></li>
 </ol>
 <details class="report-fold"><summary>按日期的记录 · 6 步</summary>
@@ -237,6 +238,7 @@
 <li id="d-route-budgets"><strong>11 月 22 日 · 理想延时元件去掉了接收端负载。</strong><p>Stage 2 最初的走线预算检查在每个握手交叉处插入 Verilog-A 延时。它不吸取输入电流，等于把比较器、SAR 时钟和 CODE 的接收端负载从驱动端拿掉：加 200 ps 后，SS 冷余量反而为 7.84 ns，高于 7.77 ns 的对照。这些仿真只保留为诊断。预算改用真实驱动与接收端之间的四段 RC 梯形网络重做：每个比较器输出 11.4 fF 时 SS 冷余 4.16 ns，规划长度加倍时只余 0.66 ns。随后的更正发现，每套仿真还带着约 10 fF 的未绘制模型负载，因此采用的负载上限留有约 10 fF 余量。</p><p class="report-sources"><a href="$snapshot/results/integration/stage2_all_extracted_20261122.md">Stage 2 走线检查 ↗</a> · <a href="$repository/pull/22">预算采用与负载更正 ↗</a></p></li>
 <li id="d-mixed-level"><strong>11 月 23 日 · 外围回放把核心结论接到整片。</strong><p>Stage 6 先用理想 VIN、Stage 1 封装与参考模型、不含输出路径，跑提取后的 fill5 核心；再在同一组仿真上回放外围。56.6 Ω 的 VIN 走线与焊盘电容使 SS 冷残差由 0.1015 增至 0.1085 LSB（+0.007 LSB），读码相同，读出裕量同为 8.73 ns，无需加宽。FF 热加上输出寄存器、焊盘驱动和每脚 15 pF 后，读码不变，读出裕量由 30.27 变为 29.96 ns（−0.31 ns）。驱动翻转相对采样关闭的时序另作分析。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_objects.md#open">仿真编号与对照 ↗</a> · <a href="$repository/pull/49">外围结论 ↗</a></p></li>
 </ol>
+<p>比较器的匹配缺口也属于这条链，记录放在比较器部分：<a href="#d-matching">匹配等级</a>。</p>
 </details>
 </article>
 </section>
@@ -245,8 +247,8 @@
 <p class="section-lead">下轮建议的审查顺序；责任列表示所需专业角色。每个关口注明它本可拦下的返工链。</p>
 <ol class="gate-flow">
 <li><h3>电路与时序冻结</h3><p class="gate-roles"><span>SAR</span><span>模拟</span><span>版图</span></p><p>对 90 ns 读点，当前负载和最快／最慢单元 RC 还剩多少裕量？RC 面积、周期间状态和输出保持由哪个模块承担？</p><p class="gate-catch">本可拦下：<a href="#sar">链 1</a>、<a href="#d-output-register">输出保持</a></p></li>
-<li><h3>模块进入核心</h3><p class="gate-roles"><span>模块</span><span>顶层</span><span>可靠性</span></p><p>用真实 CDAC、焊盘连接和供电寄生重看哪一项会失效？每次 SOA 修订是否复扫全端对，并同时复验建立与功能？</p><p class="gate-catch">本可拦下：<a href="#frontend">链 2</a></p></li>
-<li><h3>芯片底图交给填充</h3><p class="gate-roles"><span>IO/ESD</span><span>封装</span><span>版图验证</span></p><p>逐个对数 CUT、核钳位 master 与工艺指南；把芯片边界、seal ring、IO 库内允许填充范围和需外部接受的豁免单独签认。</p><p class="gate-catch">本可拦下：<a href="#chip">链 3</a></p></li>
+<li><h3>模块进入核心</h3><p class="gate-roles"><span>模块</span><span>顶层</span><span>可靠性</span></p><p>用真实 CDAC、焊盘连接和供电寄生重看哪一项会失效？每次 SOA 修订是否复扫全端对，并同时复验建立与功能？对匹配敏感的模块是否带上匹配标记，并读过一次只看警告的 FULL_CHIP 检查？</p><p class="gate-catch">本可拦下：<a href="#frontend">链 2</a>、<a href="#d-matching">匹配等级</a></p></li>
+<li><h3>芯片底图交给填充</h3><p class="gate-roles"><span>IO/ESD</span><span>封装</span><span>版图验证</span></p><p>逐个对数 CUT、核钳位 master 与工艺指南；把芯片边界、seal ring、IO 库内允许填充范围和需外部接受的豁免单独签认。给每条整片警告归类前，先读它的规则原文。</p><p class="gate-catch">本可拦下：<a href="#chip">链 3</a></p></li>
 <li><h3>最终候选交付</h3><p class="gate-roles"><span>系统</span><span>验证</span><span>封装</span></p><p>哪条结论来自块级、fill5 核心、外围单独回放或 fill7 整片？未决项附版本、限值、责任人及下一次复验，不让旧版“通过”替新版背书。</p><p class="gate-catch">本可拦下：<a href="#handoff">链 4</a>、<a href="#status">未决事项</a></p></li>
 </ol>
 <details class="report-fold"><summary>记录对审查说明了什么</summary>
@@ -307,7 +309,7 @@
 <p class="report-sources"><a href="$snapshot/Layout/results/comparator.md">历版尺寸、寄生和判决测量 ↗</a> · <a href="$repository/pull/10">v8 独立验证 ↗</a></p>
 </div>
 <ol class="audit-log">
-<li id="d-matching"><strong>11 月 23 日 · 紧凑比较器达不到高匹配等级。</strong><p>在比较器阵列上加 ANARRAY_H 标记后，AN.R.79.2m 因 OD 密度失败：阵列与周边环区的密度差为 0.348（N）和 0.257（P），限值 0.10。用相同 dummy 重画阵列的方案被否决。比较器改加普通 MATCHING 标记，清除 MATCH.WARN.1（现为 0），并把偏离高匹配作为设计决定接受。MATCH.WARN.1 指出，不满足高、中匹配阵列规则时，匹配可能恶化至少 3 倍，且规则没有给出上限。把 200 次提取样本的极值（−34.7 与 +34.1 mV，σ 12.05 mV）乘以 3，得到约 ±104 mV。记录明确这只是灵敏度示例，不是最坏情况。作为对照，104 mV 是 0.90 V 单边满量程的 11.6 %；−1 dBFS 正弦每侧约余 98 mV，失调达到这个量级的芯片恰好会削顶。ADC 不做校准；校正范围、分辨率与验证仍在规格书和集成跟踪中待定。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_matching.json">匹配检查与决定 ↗</a> · <a href="$repository/pull/48">标记更改 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">设计偏差 ↗</a> · <a href="$snapshot/docs/specification.md">规格书 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p></li>
+<li id="d-matching"><strong>11 月 23 日 · 紧凑比较器达不到高匹配等级。</strong><p>在比较器阵列上加 ANARRAY_H 标记后，AN.R.79.2m 因 OD 密度失败：阵列与周边环区的密度差为 0.348（N）和 0.257（P），限值 0.10。用相同 dummy 重画阵列的方案被否决。比较器改加普通 MATCHING 标记，清除 MATCH.WARN.1（现为 0），并把偏离高匹配作为设计决定接受。MATCH.WARN.1 指出，不满足高、中匹配阵列规则时，匹配可能恶化至少 3 倍，且规则没有给出上限。把 200 次提取样本的极值（−34.7 与 +34.1 mV，σ 12.05 mV）乘以 3，得到约 ±104 mV。记录明确这只是灵敏度示例，不是最坏情况。作为对照，104 mV 是 0.90 V 单边满量程的 11.6 %；−1 dBFS 正弦每侧约余 98 mV，失调达到这个量级的芯片恰好会削顶。ADC 不做校准；校正范围、分辨率与验证仍在规格书和集成跟踪中待定。</p><p class="report-sources"><a href="$snapshot/Layout/results/chip_matching.json">匹配检查与决定 ↗</a> · <a href="$repository/pull/48">标记更改 ↗</a> · <a href="$snapshot/Layout/results/chip_drc_waivers.md">设计偏差 ↗</a> · <a href="$snapshot/docs/specification.md">规格书 ↗</a> · <a href="$repository/issues/12">集成跟踪 ↗</a></p><p>为什么这么晚才发现：比较器的模块级 DRC 用的是单元规则集，只留下两条无关警告（DIODMY_L 与 IO_CONNECT）。MATCH.WARN.1 只在加了 FULL_CHIP 的整片规则集中报告；没有画匹配标记时，匹配规则本身也不会运行。这条警告最早出现在 11 月 22 日 18:01 的部分整片装配中，和 WITH_SEALRING_OPTION、DIODMY_L、IO_CONNECT、DM1–DM9.R.1 同列在“整片警告”一行。直到审查 r5 整片 DRC 时才被拿出来处理，匹配记录在 11 月 23 日 12:50 提交，相隔近 19 小时；那时比较器早已冻结在核心里。</p><p class="report-sources"><a href="$snapshot/Layout/results/comparator.md">模块 DRC 结果 ↗</a> · <a href="$repository/commit/c8b0627">首次整片规则运行 ↗</a> · <a href="$snapshot/Layout/results/chip_assembly.md">整片警告 ↗</a> · <a href="$repository/commit/3b429fb">匹配记录提交 ↗</a></p></li>
 </ol>
 </details>
 <details class="report-fold" id="cdac"><summary>CDAC 与参考驱动 · 10 月 24 日—11 月 24 日</summary>
