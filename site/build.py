@@ -48,7 +48,7 @@ FIGURES = {
     "assets/report-small-bits.png": "Layout/results/figures/cdac_small_bit_center.png",
 }
 STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js",
-          "assets/schematic-view.js", "assets/language.js",
+          "assets/schematic-view.js", "assets/language.js", "assets/report.js",
           "assets/report-comparator.png", "assets/report-chip.png", "assets/report-ff-stress.png")
 LAYOUT_PART_SIZE = 192 * 1024
 RNL_VIEWER = "https://rich-netlist.github.io/rnl/viewer/"
