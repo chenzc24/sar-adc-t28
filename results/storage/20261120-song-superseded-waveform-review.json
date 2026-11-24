@@ -1,0 +1,774 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-20",
+  "host": "thu-song",
+  "policy": "docs/waveform-retention.md",
+  "authorization": "Routine cleanup authorized 2026-11-15; superseded-design scope after single-edge adoption 2026-11-20",
+  "scope": "reset-OR, standard-delay and QUIET runs in /server_local_ssd/chenzc_intern25/sar-adc-t28/runs",
+  "out_of_scope": [
+    "single-edge runs (incl. sar8-sepl-*-r3a, sar8-sebit-*)",
+    "B baseline timing runs (sar-qualified/arrayjp/basepin/fill/oldpg/eco/timing-*)",
+    "sar-acq-*",
+    "xref-*",
+    "adopted evidence in results/design/sar_single_edge_adoption_20261120.json incl. sar8-minref-soa-ffc-song-bitwise-a/-b"
+  ],
+  "inventory": {
+    "path": "work/storage/20261120-superseded/thu-song-inventory.json",
+    "sha256": "898d9a9b15e680dc9b56355c842a060050bd11dbf11df7f438e8ebd8d70a7b50",
+    "runs": 640,
+    "raw_GiB": 725.12,
+    "disk_free_bytes": 438754488320
+  },
+  "plan": {
+    "path": "E:/bridge-Agent-T28/archives/sar8/20261120-superseded-cleanup/thu-song/plan.json",
+    "sha256": "406aabd62b5e9e903bd4164bf5c5ab0fbc8d0da01cd716ddd9476b8763f45539",
+    "eligible": [
+      {
+        "run_id": "sar-qlpe-xrc-q5-ffc-pilot-20261119a",
+        "recipe_hash": "358e1e261aa4702986709294f7dd8a298eb390efa8652afadd313489801a5617",
+        "conclusion": "Layout/results/sar_quiet_lpe_20261119.md",
+        "conclusion_sha256": "603336dfbb11161fd8fc9af029b3d44939dd0c8c6d086780c987b4e8e348e7ec",
+        "archive": [
+          {
+            "path": "E:/bridge-Agent-T28/archives/sar8/sar-quiet-lpe-20261119/sar-qlpe-xrc-q5-ffc-pilot-20261119a.tar.gz",
+            "sha256": "d446a5ba7bdca19e2a77bd28b88bca7bf2b0241bb377b81ae4eb9c6cd967740a",
+            "bytes": 2142792
+          }
+        ],
+        "targets": [
+          {
+            "mtime_ns": 1795069998909462272,
+            "uid": 596,
+            "links": 1,
+            "bytes": 535897420,
+            "device": 64771,
+            "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar-qlpe-xrc-q5-ffc-pilot-20261119a/raw/tran_short.tran.tran",
+            "allocated": 535900160,
+            "inode": 84091201
+          }
+        ]
+      },
+      {
+        "run_id": "sar-qlpe-xrc-q5-ssc-pilot-20261119a",
+        "recipe_hash": "808f0b9d4afb41c349e346aaeff183078f1b3bab3eb69cb131d14ba937868b36",
+        "conclusion": "Layout/results/sar_quiet_lpe_20261119.md",
+        "conclusion_sha256": "603336dfbb11161fd8fc9af029b3d44939dd0c8c6d086780c987b4e8e348e7ec",
+        "archive": [
+          {
+            "path": "E:/bridge-Agent-T28/archives/sar8/sar-quiet-lpe-20261119/sar-qlpe-xrc-q5-ssc-pilot-20261119a.tar.gz",
+            "sha256": "e618ed7c5ee6c54893e8128980bb80ae024ba76f7aac52f59d02635d4efe24ff",
+            "bytes": 2146625
+          }
+        ],
+        "targets": [
+          {
+            "mtime_ns": 1795069866721467904,
+            "uid": 596,
+            "links": 1,
+            "bytes": 536105460,
+            "device": 64771,
+            "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar-qlpe-xrc-q5-ssc-pilot-20261119a/raw/tran_short.tran.tran",
+            "allocated": 536109056,
+            "inode": 2207559417
+          }
+        ]
+      },
+      {
+        "run_id": "sar-qlpe-xrc-q6-ffc-pilot-20261119a",
+        "recipe_hash": "de4eb3f53caf5752058f5ce87ddb6974d5efbc154cfee3f414a3ad8ea560165d",
+        "conclusion": "Layout/results/sar_quiet_lpe_20261119.md",
+        "conclusion_sha256": "603336dfbb11161fd8fc9af029b3d44939dd0c8c6d086780c987b4e8e348e7ec",
+        "archive": [
+          {
+            "path": "E:/bridge-Agent-T28/archives/sar8/sar-quiet-lpe-20261119/sar-qlpe-xrc-q6-ffc-pilot-20261119a.tar.gz",
+            "sha256": "2ffdc444bd6507eee3aa9cb37af07207dd57c9942bd3bb2717c37d7023bc7c4f",
+            "bytes": 2167742
+          }
+        ],
+        "targets": [
+          {
+            "mtime_ns": 1795070786055428608,
+            "uid": 596,
+            "links": 1,
+            "bytes": 535901858,
+            "device": 64771,
+            "path": "/server_local_ssd/chenzc_intern25/sar-adc-t28/runs/sar-qlpe-xrc-q6-ffc-pilot-20261119a/raw/tran_short.tran.tran",
+            "allocated": 535904256,
+            "inode": 6467678027
+          }
+        ]
+      }
+    ]
+  },
+  "preflight": {
+    "status": "failed_before_any_change",
+    "error": "IOError Errno 11 in assert_batch_idle/lock_file: a batch controller lock is held (running: sar8-sebit-pvt45-fft-fe-20261120b-fft, -pvt; 7 managed spectre jobs active)",
+    "server_receipt_dir_created": false,
+    "markers_written": 0,
+    "files_deleted": 0
+  },
+  "readback": {
+    "time": "2026-11-20T21:39:47+08:00",
+    "disk_free_bytes": 439269576704,
+    "eligible_targets_unchanged": true,
+    "raw_cleanup_markers": 0
+  },
+  "result": {
+    "files_deleted": 0,
+    "logical_bytes_deleted": 0,
+    "recovered_bytes": 0,
+    "status": "reviewed_not_deleted"
+  },
+  "held": [
+    {
+      "run_id": "delcell-lpe-ssc-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_prevalidation_20261119.json, sar_cdac_aperture_prevalidation_20261119.md",
+      "allocated": 20115456,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "delcell-lpe-tt-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "archived compact evidence does not match collection receipt (analysis.admission.json)",
+      "allocated": 20246528,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "delcell-plain-ssc-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 20451328,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "delcell-plain-tt-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 20185088,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar-del-ideal-intercell-ssc-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 249479168,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-ffc-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 2495766528,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-ffh-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 2495336448,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-ssc-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 2497007616,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-ssc-mom-control-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 213504000,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-ssh-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 2495483904,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-c-tt-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 2495881216,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-pex-return-d-ssc-short-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 482131968,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-schem-c-ssc-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 1827213312,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del-schem-c-tt-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 1825964032,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-del250-quiet-isolated-ssc-20261119",
+      "group": "standard-delay cells and timing",
+      "reason": "explicit hold: Held for slow-corner diagnosis and comparison with the pending ECO decision.",
+      "allocated": 745472,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "explicit hold (std-static candidate C)",
+      "release_condition": "Per results/storage/sar_std_static_candidate_c_20261119.json: complete analyses, verify compact evidence, close timing investigation."
+    },
+    {
+      "run_id": "sar-qlpe-q5-terminal-capture-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 3108864,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar-qlpe-q5-terminal-capture-20261119b",
+      "group": "QUIET LPE/XRC",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 3235840,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar-qlpe-q6-protocol-capture-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 3260416,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q5-ffc-cbest-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_prevalidation_20261119.json, sar_cdac_aperture_prevalidation_20261119.md",
+      "allocated": 535891968,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q5-ssc-cworst-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 536150016,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q6-ffc-cbest-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_results_20261119.json, report_run.py",
+      "allocated": 535900160,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q6-ssc-cworst-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_prevalidation_20261119.json, prepare.py",
+      "allocated": 536137728,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q6-ssc-cworst-transitions-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_results_20261119.json, report_run.py",
+      "allocated": 984256512,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q6d200-ffc-cbest-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_results_20261119.json, report_run.py",
+      "allocated": 535900160,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-rc-q6d200-ssc-cworst-transitions-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "source for CDAC aperture work not confirmed closed: sar_cdac_aperture_results_20261119.json, report_run.py",
+      "allocated": 984248320,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-screen-q9-ssc-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 507097088,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ffc-pvt-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 2774917120,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ffh-pvt-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 2774523904,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ssc-long-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "analysis not_started; no closed verdict recorded",
+      "allocated": 9647058944,
+      "simulation": "complete",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ssc-pilot-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "reference or SAR source of acquisition case sar-acq-q6-xrc-s10-ssc-20261119a, sar-acq-q6-xrc-s10-ssc-20261119b, sar-acq-q6-xrc-s10-ssc-20261119c",
+      "allocated": 536125440,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "consumer/provenance of CDAC aperture or adopted CDAC view",
+      "release_condition": "Owner confirms CDAC aperture work closed and that the adopted CDAC view needs no reanalysis of this waveform."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ssc-pvt-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 2776346624,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-ssh-pvt-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 2774740992,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar-qlpe-xrc-q6-tt-pvt-20261119a",
+      "group": "QUIET LPE/XRC",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 2775048192,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-delx-cal-clock-sar-tt-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 515063808,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-delx-pilot-clock-sar-tt-20261118a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 345227264,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar8-delx-qbuf-clock-sar-20261119b",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 514891776,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar8-delx-rc-clock-sar-tt-20261118a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 120541184,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar8-delx-rearm-ssc-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 98893824,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar8-delx-rearm-tt-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "measured issue or incomplete acceptance checks; anomaly excerpts not archived",
+      "allocated": 96485376,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "measured issue without archived anomaly excerpts / archive mismatch",
+      "release_condition": "Archive anomaly excerpts or close the measured issue; rebuild archive matching the collection receipt."
+    },
+    {
+      "run_id": "sar8-latch-static-ffc-4f-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 460214272,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-latch-static-ffh-4f-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 460177408,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-latch-static-tt-4f-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 460234752,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-latch-v3-ffc-4f-20261119a",
+      "group": "standard-delay cells and timing",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 460218368,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-minref-current-ffh-delx-cal-20261119a",
+      "group": "standard-delay calibration",
+      "reason": "run not cited by a conclusion record",
+      "allocated": 8092790784,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "no conclusion record",
+      "release_condition": "Cite the run with its verdict in a results/ conclusion record."
+    },
+    {
+      "run_id": "sar8-minref-current-ssc-delx-cal-20261119b",
+      "group": "standard-delay calibration",
+      "reason": "simulation limit_exceeded",
+      "allocated": 8589934592,
+      "simulation": "limit_exceeded",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-minref-current-tt-delx-cal-20261119a",
+      "group": "standard-delay calibration",
+      "reason": "simulation limit_exceeded",
+      "allocated": 8589934592,
+      "simulation": "limit_exceeded",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffc-song-delx-qbuf-20261119a",
+      "group": "standard-delay terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, time-step review, native-time excerpts of worst events",
+      "allocated": 19164512256,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffc-song-delx-stress-20261119a",
+      "group": "standard-delay terminal-voltage (SOA)",
+      "reason": "simulation limit_exceeded",
+      "allocated": 12884901888,
+      "simulation": "limit_exceeded",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffc-song-delx-stress-20261119b",
+      "group": "standard-delay terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events",
+      "allocated": 19216211968,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffc-song-msbd2-resetor-v1-step2p",
+      "group": "reset-OR terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events; also listed in batch sar8-pvt40-resetor-v1 (status still running, last update 2026-11-15)",
+      "allocated": 39991709696,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffh-song-delx-qbuf-20261119a",
+      "group": "standard-delay terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, time-step review, native-time excerpts of worst events",
+      "allocated": 16964759552,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ffh-song-msbd2-resetor-v1-step2p",
+      "group": "reset-OR terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events, time-step review; also listed in batch sar8-pvt40-resetor-v1 (status still running, last update 2026-11-15)",
+      "allocated": 38673645568,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ssc-song-msbd2-resetor-v1-step2p",
+      "group": "reset-OR terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events, time-step review; also listed in batch sar8-pvt40-resetor-v1 (status still running, last update 2026-11-15)",
+      "allocated": 40614723584,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-ssh-song-msbd2-resetor-v1-step2p",
+      "group": "reset-OR terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events, time-step review; also listed in batch sar8-pvt40-resetor-v1 (status still running, last update 2026-11-15)",
+      "allocated": 39499571200,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-minref-soa-tt-song-msbd2-resetor-v1-step2p",
+      "group": "reset-OR terminal-voltage (SOA)",
+      "reason": "terminal-voltage evidence missing: over-limit intervals, native-time excerpts of worst events, time-step review; also listed in batch sar8-pvt40-resetor-v1 (status still running, last update 2026-11-15)",
+      "allocated": 40852226048,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "terminal-voltage evidence incomplete",
+      "release_condition": "Analysis-only managed run extracting over-limit intervals and native-time excerpts (with full evaluation window) of worst/anomalous events, plus time-step review; archive with digests."
+    },
+    {
+      "run_id": "sar8-pair-s15212-cd-edge-v3",
+      "group": "reset-OR MC and pair edges",
+      "reason": "analysis rejected; no closed verdict recorded",
+      "allocated": 5125935104,
+      "simulation": "complete",
+      "analysis": "rejected",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-pair-s15212-cd-pilot-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 931336192,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    },
+    {
+      "run_id": "sar8-pair-s15212-p-edge-v3",
+      "group": "reset-OR MC and pair edges",
+      "reason": "analysis rejected; no closed verdict recorded",
+      "allocated": 5144576000,
+      "simulation": "complete",
+      "analysis": "rejected",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-pair-s15303-p-pilot-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 904466432,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-highm40-s15303-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 1481117696,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-lowm40-s15201-v1",
+      "group": "reset-OR MC and pair edges",
+      "reason": "analysis not_started; no closed verdict recorded",
+      "allocated": 1533308928,
+      "simulation": "complete",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-lowm40-s15206-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 1542729728,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-lowm40-s15212-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 1529802752,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-nom27-s15101-v1",
+      "group": "reset-OR MC and pair edges",
+      "reason": "analysis not_started; no closed verdict recorded",
+      "allocated": 1517899776,
+      "simulation": "complete",
+      "analysis": "not_started",
+      "class": "no closed verdict (limit_exceeded / not analysed / rejected)",
+      "release_condition": "Record a closed diagnosis or finish analysis, then archive."
+    },
+    {
+      "run_id": "sar8-resetor-mcgl-nom27-s15103-v2",
+      "group": "reset-OR MC and pair edges",
+      "reason": "not collected locally",
+      "allocated": 1503584256,
+      "simulation": "complete",
+      "analysis": "complete",
+      "class": "not collected locally",
+      "release_condition": "Collect under work/output/managed_execution/runs/<id>/collected and verify digests."
+    }
+  ]
+}

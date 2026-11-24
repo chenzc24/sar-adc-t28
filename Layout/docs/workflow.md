@@ -1,6 +1,6 @@
 # Layout Workflow
 
-Use the front-end manifest for the electrical design and the layout manifest for physical planning and ownership. The migration verifies repository organization and input equivalence. Track CDAC performance fixes separately. [Front-end manifest](../../design/manifest.json) · [Layout manifest](../design/manifest.json)
+Use the front-end manifest for the electrical design and the layout manifest for physical planning and ownership. The migration verifies repository organization and input equivalence. Track CDAC performance fixes separately. [Front-end manifest](../../design/manifest.json) 路 [Layout manifest](../design/manifest.json)
 
 ## From the Top Level to Modules and Back
 
@@ -8,9 +8,9 @@ The revised CDAC shares TOP row wiring and uses the `layout_paired_balanced` rev
 
 For a standalone rerun, use `python -m Layout.tools.simulation.prepare_full_sim UNIQUE_ID RUN_ID --adc-solver`. It uses the current ADC solver settings and the paired CDAC pre- and post-layout stimuli, a 260 ns run, and a 5 ps maximum step. Run both physical revisions with these settings to compare bit weights and settling time.
 
-Generate the current CDAC (`layout_paired_stacked`) with `python -m Layout generate --module cdac-paired --planned-fill --center stacked`. `--center stacked` orders the small bits by weight from the switch side so that each small-bit trunk length, and thus its TOP coupling, follows its unit count. Without `--center`, the generator reproduces the published central-inversion center of `layout_paired_balanced` and `layout_paired_planned`. The wrapper references the separate `sar8_cdac_fill_plan` cell. For acceptance, add foundry OD/PO and metal fill outside the array using the fill-exclusion layers, then run DRC, LVS, and coupling PEX on the combined stream. Add `--planned-fill` to `prepare_full_sim` for standalone testing and `prepare-tt` for ADC integration. Defer only the 125 µm metal-density rules (Mn.DN.1, Mn.DN.3, M9.DN.3) to the top level. Close OD/PO density and Mx.DN.7 within the module. For the filled netlist, use `--rss-mib 2560`. Compare ADC codes using the gain-corrected check and take k from the standalone test of the same revision. [Gain-corrected code comparison](../tools/analysis/gain_corrected_codes.py)
+Generate the current CDAC (`layout_paired_stacked`) with `python -m Layout generate --module cdac-paired --planned-fill --center stacked`. `--center stacked` orders the small bits by weight from the switch side so that each small-bit trunk length, and thus its TOP coupling, follows its unit count. Without `--center`, the generator reproduces the published central-inversion center of `layout_paired_balanced` and `layout_paired_planned`. The wrapper references the separate `sar8_cdac_fill_plan` cell. For acceptance, add foundry OD/PO and metal fill outside the array using the fill-exclusion layers, then run DRC, LVS, and coupling PEX on the combined stream. Add `--planned-fill` to `prepare_full_sim` for standalone testing and `prepare-tt` for ADC integration. Defer only the 125 碌m metal-density rules (Mn.DN.1, Mn.DN.3, M9.DN.3) to the top level. Close OD/PO density and Mx.DN.7 within the module. For the filled netlist, use `--rss-mib 2560`. Compare ADC codes using the gain-corrected check and take k from the standalone test of the same revision. [Gain-corrected code comparison](../tools/analysis/gain_corrected_codes.py)
 
-1. Update the floorplan, interfaces, and constraints. Set the core and module locations, orientations, signal exits, and space for power, isolation, and routing. Identify which dimensions are measured and which are reserved. [Floorplan](../design/floorplan.json) · [Interfaces](../specs/interfaces.json) · [Constraints](../specs/constraints.json)
+1. Update the floorplan, interfaces, and constraints. Set the core and module locations, orientations, signal exits, and space for power, isolation, and routing. Identify which dimensions are measured and which are reserved. [Floorplan](../design/floorplan.json) 路 [Interfaces](../specs/interfaces.json) 路 [Constraints](../specs/constraints.json)
 2. Run `python -m Layout check` to check electrical identity, port order, instance coverage, boundaries, and overlap. Use `render` for the planning figure and area table. Leave unallocated parasitic and timing budgets empty.
 3. Place devices for matching, read back native PCell and standard-cell parameters, and route each module. Make functional edits in the fixed core cell. Retain functional dummies, body contacts, guard rings, and shielding.
 4. Complete local geometry and connectivity checks, LVS, prefill PEX, and interface measurements. Use measured bounding boxes, loads, and timing to revise the floorplan. Track deferred density and top-level context rules according to the fill policy. Base module status on current evidence. [Fill policy](../specs/fill-policy.md)
@@ -34,9 +34,9 @@ Configure `site.local.yaml:layout`. The deployment tool checks host, account own
 
 ```text
 <configured remote_root>/
-├─ runtime/        # Active scripts, SKILL/CDL, workspace.json, cds.lib
-├─ state/          # Submission receipts, checkpoints, driver logs
-└─ evidence/<id>/  # Frozen native inputs, GDS, manifest, and raw reports
+鈹溾攢 runtime/        # Active scripts, SKILL/CDL, workspace.json, cds.lib
+鈹溾攢 state/          # Submission receipts, checkpoints, driver logs
+鈹斺攢 evidence/<id>/  # Frozen native inputs, GDS, manifest, and raw reports
 ```
 
 Configure the OA path separately at `llm_IO/SAR_ADC_T28_LAYOUT`. Resolve historical evidence at its original location and report ambiguity if old and new IDs collide. Keep historical failures, warnings, and paths as recorded. Deployment and native operations share one lock. Leave the runtime used by a running task intact. Use the current entry points for daily work and retain the original scripts for historical reference.
@@ -98,13 +98,27 @@ python -m Layout physical UNIQUE_ID --module sar-se --staging sar-se-r3 --view l
 python -m Layout.tools.simulation.prepare_sar_se UNIQUE_ID ssc verify --cdac cworst --revision NEW_ID
 ```
 
-`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction currently uses the typical interconnect rules. The D2 reference (`design/xtor/reference/single_edge_d2.scs`) is not drawn yet. The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) · [Interfaces](../specs/interfaces.json) · [Previous architecture](../README.md#previous-architecture)
+`sar_se_def` stops if its rendered routing differs from the Innovus stream on any layer. Without `--rebuild`, `physical` verifies the saved view. The extraction runs an LVS comparison first so that the xRC netlist keeps source net names; `prepare_sar_se` saves internal SAR probes at a receiving gate and the analyzers read them under their schematic names. The extraction currently uses the typical interconnect rules. The 28-cell D2 reference uses a south-edge row placed against the paired CDAC gate landings. [Current XREF and CDAC verification](../results/single_edge_xref.md). The SAR timing and gate-driver layout flows of the previous architecture were removed; their views and dated reports are listed in the layout index. [SAR macro results](../results/sar_se_core.md) 路 [Interfaces](../specs/interfaces.json) 路 [Previous architecture](../README.md#previous-architecture)
+
+The XREF flow reads the saved CDAC with `oaq pins`, derives the standard-cell bindings from `single_edge_d2.scs`, and creates fresh driver and integration views. For a new revision, run the B7 pilot through physical verification and the focused transient first. Then repeat the first two commands with a new ID and view, omitting `--pilot`. The ADC short uses the current 45 ns external high phase and single-edge observer. Submit each generated recipe through the managed runner.
+
+```powershell
+python -m Layout.design.reference_driver xref-b7-example --pilot --view layout_b7_example
+python -m Layout.tools.physical.submit_reference_driver xref-b7-example --default-supplies
+python -m Layout.tools.simulation.prepare_reference_driver xref-b7-example xref-b7-tt-example
+python -m Layout.tools.analysis.review_reference_routes xref-full-example
+python -m Layout.tools.simulation.prepare_reference_driver xref-full-example xref-adc-tt-example --adc --codes 12 127 128 243
+```
+
+For standalone verification of the XREF child, submit a fresh ID with `--driver-only --from-stream xref-full-example`. The runner compares the standalone stream digest with the corresponding child in the accepted integration. Use lowercase identities and fresh lowercase view names. The physical runner streams the saved pair, checks the original CDAC geometry hash and compares it to an independent transistor CDL. Omit `--default-supplies` for distributed supply RC. To compare supply modes on identical geometry, submit a fresh physical ID with `--from-stream xref-full-example`.
 
 ## Bootstrap Module
 
 `python -m Layout generate --module bootstrap` produces an LVS reference from the current electrical netlist. Verify the work library's existing core with `python -m Layout physical ID --module bootstrap --through pex`. An explicit `--rebuild` uses the deployed Bootstrap generator. The executor checks the OA edit lock and saves a recovery point for the existing work cell.
 
-After LVS and prefill PEX complete, prepare the standalone TT test with `python -m Layout.tools.simulation.prepare_bootstrap PHYSICAL_ID TT_ID`. Use another TT_ID and add `--schematic` for the schematic control. Both recipes use managed registration, simulation, analysis, and collection. [Bootstrap pins, interconnect RC, sampling results, and independent OD/PO trial fill](../results/bootstrap.json)
+After LVS and prefill PEX complete, prepare the standalone test with `python -m Layout.tools.simulation.prepare_bootstrap PHYSICAL_ID RUN_ID [--corner ssc]`. Use another RUN_ID and add `--schematic` for the schematic control. Both recipes use managed registration, simulation, analysis, and collection. To run the Bootstrap extraction inside the ADC, add `--bootstrap PHYSICAL_ID` to `prepare_integrated_sim`; one extracted channel then serves XBOOTP and XBOOTN beside the extracted CDAC. [Bootstrap pins, interconnect RC, sampling results, and independent OD/PO trial fill](../results/bootstrap.json)
+
+The generator draws the adopted four-finger main switch into `layout`. To try a different width, register a sampler candidate `mmain<N>` in `specs/candidates.json`, run `python -m Layout generate --module bootstrap --candidate mmain<N>`, and build it with `--view layout_mmain<N>`; the published view stays untouched. `prepare_bootstrap none RUN_ID --schematic --candidate mmain<N>` simulates its schematic.
 
 ## Applicability of Results
 

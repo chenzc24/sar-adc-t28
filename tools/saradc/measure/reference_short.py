@@ -80,8 +80,8 @@ def finish(f,ctx):
     return f
 
 
-def analyze(run_dir,output_dir,frame_finisher=None,sample_reader=None):
-    ctx=json.load(open(os.path.join(run_dir,'inputs/context.json')))
+def analyze(run_dir,output_dir,frame_finisher=None,sample_reader=None,context=None):
+    ctx=context if context is not None else json.load(open(os.path.join(run_dir,'inputs/context.json')))
     event_nodes = dict(EVENTS)
     if ctx.get('version') == 'single_edge':
         event_nodes['write'] = event_nodes['update']

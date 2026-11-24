@@ -1,12 +1,12 @@
 {
   "planning_inputs_sha256": {
-    "design/manifest.json": "d0a476babe166843b7d6a166177c05f93ec53ab3a9bedf054f43f7b0488323b7",
+    "design/manifest.json": "b9ec6ad34c5308b9d1ea1b13b2d22f418a9b9512e858833268eaeec1133b7e69",
     "design/top/adc_top.scs": "ab1378dc65f5787fb22bb782771df2c30a97a272b069ded4c44d6900279847e9",
-    "Layout/design/manifest.json": "ccd493b8088a08fe4a04a08481f7720a87d4d29ff0ba50fda5bbfd560483a644",
-    "Layout/design/floorplan.json": "bebb1c7258241fc0fddf519e2beac647025ccc399c11fa235f32e6aaffdfece2",
-    "Layout/specs/interfaces.json": "74a7d64247e41bb06893d7f8cc651bc3a4a16e845ac2611d2f64159030d042a6",
-    "Layout/specs/constraints.json": "497abd758411d778a60b343f6e4edf8d1dbfdd940ed341c36c41ae871862e932",
-    "design/xtor/bootstrap/bootstrap.scs": "0d1219ab86dec3f411ce7c01586cfd2efed27ff95ea6914547bd47d60df0e14c",
+    "Layout/design/manifest.json": "828630a3825ace1afe5a52c826748b63b422e35738ba49702812b1505881814c",
+    "Layout/design/floorplan.json": "afbf2351e26e9a9cd477485bf33dc984d84c4b1d1615036ad6c16310c36404f3",
+    "Layout/specs/interfaces.json": "46677864db08cc70f97a2d76817fcc6be8f38c3847f12ede697d718dc202d786",
+    "Layout/specs/constraints.json": "fd7639c4df11cc83a520a8b05e965057777409862abf2cd0ace5eb010816cd3a",
+    "design/xtor/bootstrap/bootstrap.scs": "9753b19ea987304d702b0c8726fda8417284e735933668c2ac34a943773f72dd",
     "design/xtor/cdac/cdac.scs": "4b7f3b8fffa2a94836583c2731fe6ef5d3d715d2497853952624414a168d47e2",
     "design/xtor/comparator/comparator.scs": "c7fcfed4f2e49a1d569af2babe307cba4bbbdac1e400c7325f32b954e70c54b3",
     "design/xtor/reference/single_edge_d2.scs": "f269a9b35d6230f57d96ce2124b822443e6bb2265239bb61816f9e6bfb202845",
@@ -102,5 +102,20 @@
     "accepted_corners": 5,
     "frames": 50,
     "report": "sar_timing.json"
+  },
+  "single_edge_xref": {
+    "source": "design/xtor/reference/single_edge_d2.scs",
+    "driver": "sar8i_refword/layout_se_d2_r2",
+    "integration": "sar8_cdac_with_xref/layout_se_d2_r2",
+    "physical_evidence": "se-xref-full-b",
+    "standalone_evidence": "se-xref-standalone",
+    "lvs": "CORRECT",
+    "utility_fill": "Module peripheral fill verified. M8.DN.1 and M9.DN.3 require top-level density context.",
+    "filled_stream_evidence": "se-xref-peripheral-dense",
+    "integration_status": "passed",
+    "accepted_routing": "Current south-side XREF placement and M6 gate routing",
+    "filled_verification": "single_edge_xref_filled.json",
+    "report": "single_edge_xref.json",
+    "physical_signoff": false
   }
 }

@@ -60,20 +60,21 @@ def comparator(s):
     s.text(-46,-48,'VINP → Y → OUTN; VINN → X → OUTP. CLK resets PMOS and enables tail NMOS.',.95)
 
 def bootstrap(s):
-    s.text(-13,70,'Bootstrap / two parallel sampling switches / MOM bootstrap capacitor',1.5)
+    s.text(-13,70,'Bootstrap / four parallel sampling switches / MOM bootstrap capacitor',1.5)
+    mains=['Mmain','Mmain_U1','Mmain_U2','Mmain_U3']
     pos={'MPCLK':(0,35),'MNCLK':(0,5),'M4B':(38,35),'M4C':(38,5),'M4A':(56,5),
          'Cboot':(80,21),'M2':(80,48),'M8':(80,-9),'Msin':(101,-9),
          'M4':(116,43),'Maux':(116,4),'MRSTG':(116,-22),
-         'Mmain':(158,17),'Mmain_U1':(158,-8)}
+         'Mmain_U3':(158,42),'Mmain':(158,17),'Mmain_U1':(158,-8),'Mmain_U2':(158,-33)}
     for n,(x,y) in pos.items():s.place(n,x,y,'R270' if n.startswith('Mmain') else 'R0')
     s.join('CLKSB',['MPCLK:1','MNCLK:1'],'y',20)
     s.join('CTRL',['M4B:1','M4C:1','M4A:1','M4:2'],'y',60)
     s.join('BTOP',['Cboot:1','M2:1','M4:3'],'y',31,color='analog')
     s.join('BBOT',['Cboot:2','M4C:3','M4A:3','M8:1','Msin:1'],'y',-2,color='analog')
-    s.join('G',['M4:1','Maux:1','Mmain:2','Mmain_U1:2'],'x',138,color='analog')
+    s.join('G',['M4:1','Maux:1']+[m+':2' for m in mains],'x',138,color='analog')
     s.route('Maux:3','MRSTG:1')
-    s.join('Vin',['Msin:3','Mmain:3','Mmain_U1:3'],'x',146,color='analog')
-    s.join('VOUT',['Mmain:1','Mmain_U1:1'],'x',177,color='analog')
+    s.join('Vin',['Msin:3']+[m+':3' for m in mains],'x',146,color='analog')
+    s.join('VOUT',[m+':1' for m in mains],'x',177,color='analog')
     s.text(-13,-44,'Clock inverter',1.1);s.text(33,-44,'Precharge / boosted G and BTOP',1.1);s.text(144,-44,'Vin → VOUT',1.1)
     s.text(-13,-51,'Bulk connections remain explicit: M2/M4 use BTOP; sampling MOS uses 0. No ideal replacement.',.9)
 

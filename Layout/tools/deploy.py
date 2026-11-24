@@ -14,8 +14,8 @@ def package():
         files['cdac-paired.il'] = paired.read_bytes()
     for comparator in (ROOT/'work/layout/comparator').glob('*-reference.cdl'):
         files[comparator.name] = comparator.read_bytes()
-    bootstrap = ROOT/'work/layout/bootstrap/bootstrap-reference.cdl'
-    if bootstrap.is_file():
+    # The selected sampler's reference and any candidate's bootstrap-<name>-reference.cdl.
+    for bootstrap in (ROOT/'work/layout/bootstrap').glob('bootstrap*-reference.cdl'):
         files[bootstrap.name] = bootstrap.read_bytes()
     files['workspace.json']=(json.dumps(c,indent=2)+'\n').encode()
     return c,files

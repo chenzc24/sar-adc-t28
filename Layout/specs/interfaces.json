@@ -101,8 +101,69 @@
         "PRESET"
       ],
       "source": "design/xtor/reference/single_edge_d2.scs",
-      "layout": "not_drawn",
-      "layout_note": "The single-edge D2 reference layout is not drawn yet. The earlier gate-driver layout belongs to the previous architecture."
+      "layout": "sar8i_refword/layout_se_d2_r2",
+      "layout_note": "Native single-edge D2 driver in SAR_ADC_T28_LAYOUT. Combined XREF/XCDAC view is sar8_cdac_with_xref/layout_se_d2_r2.",
+      "physical_ports": [
+        "CODE0",
+        "CODE1",
+        "CODE2",
+        "CODE3",
+        "CODE4",
+        "CODE5",
+        "CODE6",
+        "CODE7",
+        "PRESET",
+        "GNN0",
+        "GNN1",
+        "GNN2",
+        "GNN3",
+        "GNN4",
+        "GNN5",
+        "GNN6",
+        "GNN7",
+        "GPN0",
+        "GPN1",
+        "GPN2",
+        "GPN3",
+        "GPN4",
+        "GPN5",
+        "GPN6",
+        "GPN7",
+        "VSS",
+        "VDD"
+      ],
+      "ideal_aliases": {
+        "GNP0": "GNN0",
+        "GNP1": "GNN1",
+        "GNP2": "GNN2",
+        "GNP3": "GNN3",
+        "GNP4": "GNN4",
+        "GNP5": "GNN5",
+        "GNP6": "GNN6",
+        "GNP7": "GNN7",
+        "GPP0": "GPN0",
+        "GPP1": "GPN1",
+        "GPP2": "GPN2",
+        "GPP3": "GPN3",
+        "GPP4": "GPN4",
+        "GPP5": "GPN5",
+        "GPP6": "GPN6",
+        "GPP7": "GPN7",
+        "RST_DONE": "VSS"
+      },
+      "unused_compatibility_inputs": [
+        "D0",
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6",
+        "D7",
+        "PHI_U",
+        "SAMPLE"
+      ],
+      "report": "Layout/results/single_edge_xref.json"
     },
     "sar8j_r1_cdac": {
       "ports": [
@@ -480,18 +541,18 @@
   "implemented_pin_access": {
     "bootstrap": {
       "cell": "sar_bootstrap_flat_8b_p_core",
-      "evidence": "boot-core-20261118",
+      "evidence": "boot-core-20261121",
       "coordinate_frame": "Local core origin in R0, um",
       "ports": {
         "VIN": {
-          "layer": "M2",
+          "layer": "M5",
           "center_um": [
             -2.165,
-            0.07
+            24.825
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            0.3,
+            0.24
           ]
         },
         "VOUT": {
@@ -501,19 +562,19 @@
             0.07
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            0.2,
+            0.2
           ]
         },
         "VDD": {
-          "layer": "M3",
+          "layer": "M5",
           "center_um": [
-            1.8,
-            0.07
+            -0.1,
+            0.72
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            6.84,
+            0.2
           ]
         },
         "CLKS": {
@@ -528,19 +589,19 @@
           ]
         },
         "VSS": {
-          "layer": "M2",
+          "layer": "M5",
           "center_um": [
-            3.15,
-            0.07
+            -0.1,
+            0.36
           ],
           "pin_size_um": [
-            0.12,
-            0.12
+            6.84,
+            0.24
           ]
         }
       },
-      "top_integration": "Each channel uses this master. VOUT connects to TOPP or TOPN, VIN to VINP or VINN, and CLKS to SEQ_SAMPLE. All five ports face the lower edge in R0.",
-      "sensitive_regions": "VIN and VOUT below the main switch, the internal boosted G, and the M3/M4 BTOP and BBOT array feeds. Route the clock from the control side and check coupling in the integrated layout."
+      "top_integration": "Each channel uses this master. VOUT connects to TOPP or TOPN and leaves the lower edge on a 0.20 um M2 exit toward the CDAC. VIN enters the north edge on a 0.30 um M5 trunk. CLKS connects to SEQ_SAMPLE at the lower edge on M2. VDD and VSS are M5 rails across the switch bank for the top-level grid. Place XBOOTN as the MY mirror of XBOOTP.",
+      "sensitive_regions": "VOUT below the main switch, the internal boosted G, and the M3/M4 BTOP and BBOT array feeds. The M5 VIN trunk crosses the array above the plate feeds (about 0.87 fF to BTOP and 0.60 fF to BBOT in prefill xRC); keep other top-level M5/M6 routing off it. Route the clock from the control side and check coupling in the integrated layout."
     },
     "comparator": {
       "cell": "sar_strongarm_t28_core",

@@ -14,36 +14,37 @@
       "id": "cdac",
       "label": "MOM CDAC + switches",
       "origin": [
-        20,
-        40
+        20.0,
+        40.0
       ],
       "orientation": "R0",
       "size": [
-        90.33,
-        92.49
+        72.23,
+        51.76
       ],
       "instances": [
         "XCDAC"
       ],
       "basis": "measured_oa_bbox",
-      "uncertainty": "Existing OA bbox; may change during parasitic repair",
+      "uncertainty": "Measured in the routed XREF/CDAC pair. Absolute ADC top placement and surrounding density fill remain preliminary.",
       "evidence": {
-        "physical_id": "cdac-full-corefill-20261116",
-        "file": "oa.console",
+        "physical_id": "se-xref-full-b",
+        "cellview": "sar8j_r1_cdac/layout_paired_stacked",
         "native_bbox": [
           [
-            -1.165,
-            -50.0
+            -1.715,
+            -25.9
           ],
           [
-            89.165,
-            42.49
+            70.515,
+            25.86
           ]
-        ]
+        ],
+        "report": "Layout/results/single_edge_xref.json"
       },
       "native_origin_translation": [
-        21.165,
-        90.0
+        21.715,
+        65.9
       ]
     },
     {
@@ -87,14 +88,33 @@
       ],
       "orientation": "R0",
       "size": [
-        24,
-        14
+        24.52,
+        24.99
       ],
       "instances": [
         "XBOOTN"
       ],
-      "basis": "space_reservation",
-      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added",
+      "evidence": {
+        "physical_id": "boot-core-20261121",
+        "file": "oa.console",
+        "native_bbox": [
+          [
+            -11.82,
+            -0.045
+          ],
+          [
+            12.7,
+            24.945
+          ]
+        ]
+      },
+      "native_origin_translation": [
+        31.82,
+        140.045
+      ],
+      "placement_note": "Instantiate XBOOTN as the MY mirror of XBOOTP; the planner models the R0 bounding box only."
     },
     {
       "id": "bootstrap_p",
@@ -105,32 +125,69 @@
       ],
       "orientation": "R0",
       "size": [
-        24,
-        14
+        24.52,
+        24.99
       ],
       "instances": [
         "XBOOTP"
       ],
-      "basis": "space_reservation",
-      "uncertainty": "Unmeasured space reservation, no statistical confidence or final fit claim"
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Prefill core bbox from boot-core-20261121 (four-finger main switch); top-level power, isolation and routing margin not yet added",
+      "evidence": {
+        "physical_id": "boot-core-20261121",
+        "file": "oa.console",
+        "native_bbox": [
+          [
+            -11.82,
+            -0.045
+          ],
+          [
+            12.7,
+            24.945
+          ]
+        ]
+      },
+      "native_origin_translation": [
+        98.82,
+        140.045
+      ]
     },
     {
       "id": "reference",
       "label": "Reference drivers",
       "origin": [
-        20,
-        15
+        25.195,
+        33.435
       ],
       "orientation": "R0",
       "size": [
-        90,
-        16
+        63.354,
+        5.285
       ],
       "instances": [
         "XREF"
       ],
-      "basis": "space_reservation",
-      "uncertainty": "The single-edge D2 reference layout (design/xtor/reference/single_edge_d2.scs) is not drawn yet. Unmeasured space reservation, no statistical confidence or final fit claim"
+      "basis": "measured_oa_bbox",
+      "uncertainty": "Measured in the routed XREF/CDAC pair. Absolute ADC top placement and surrounding density fill remain preliminary.",
+      "native_origin_translation": [
+        21.715,
+        65.9
+      ],
+      "evidence": {
+        "physical_id": "se-xref-full-b",
+        "cellview": "sar8i_refword/layout_se_d2_r2",
+        "native_bbox": [
+          [
+            3.48,
+            -32.465
+          ],
+          [
+            66.834,
+            -27.18
+          ]
+        ],
+        "report": "Layout/results/single_edge_xref.json"
+      }
     },
     {
       "id": "sar",

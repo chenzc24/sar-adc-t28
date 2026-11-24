@@ -1,4 +1,4 @@
-// Generated from frozen B by scripts/sar8_entry.py build.
+// Generated from frozen B; main switch widened to four 1 um devices on 2026-11-21.
 // BEGIN SARADC RNL
 // @RNL(type="header") { @VERSION("0.3");
 // @USE-PACKAGE(name="sar8",version="0.1",path="../../rnl/sar8.rnl");
@@ -15,6 +15,20 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
         spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
         spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
     Mmain_U1 (VOUT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Mmain_U2 (VOUT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
+        ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
+        sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
+        sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
+        spa2=180.0n spa3=180.0n sap=172.362n sapb=242.67n spba=233.666n \
+        spba1=239.844n spmt=1.11111e+15 spomt=0 spomt1=1.11111e+60 \
+        spmb=1.11111e+15 spomb=0 spomb1=1.11111e+60
+    Mmain_U3 (VOUT G Vin 0) nch_18_mac l=150.0n w=1u multi=1 nf=1 sd=180.0n \
         ad=1.55e-13 as=1.55e-13 pd=2.31u ps=2.31u nrd=0 nrs=0 sa=155.00n \
         sb=155.00n sa1=155.00n sa2=155.00n sa3=155.00n sa4=155.00n \
         sb1=155.00n sb2=155.00n sb3=155.00n spa=180.0n spa1=180.0n \
@@ -102,7 +116,7 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
         multi=200 mismatchflag=1
 // BEGIN SARADC RNL
 // @RNL(author="saradc topology") {
-// (-13,70) @TEXT("Bootstrap / two parallel sampling switches / MOM bootstrap capacitor",size=1.5,halign="start",textcolor="#223d52");
+// (-13,70) @TEXT("Bootstrap / four parallel sampling switches / MOM bootstrap capacitor",size=1.5,halign="start",textcolor="#223d52");
 // #MPCLK @SET-SYMBOL $PMOS_4TERM;
 // #MPCLK @PLACE(0,35) => @ORIENT("R0");
 // #MPCLK @TEXT("MPCLK",key="name",size=1.3,halign="start") => @PLACE(3,38);
@@ -163,6 +177,11 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
 // #MRSTG @TEXT("MRSTG",key="name",size=1.3,halign="start") => @PLACE(119,-19);
 // #MRSTG @TEXT("l=150.0n w=1u multi=1",key="value",size=0.9,halign="start") => @PLACE(119,-26);
 // #MRSTG @TEXT("",key="model");
+// #Mmain_U3 @SET-SYMBOL $NMOS_4TERM;
+// #Mmain_U3 @PLACE(158,42) => @ORIENT("R270");
+// #Mmain_U3 @TEXT("Mmain_U3",key="name",size=1.3,halign="start") => @PLACE(161,45);
+// #Mmain_U3 @TEXT("l=150.0n w=1u multi=1",key="value",size=0.9,halign="start") => @PLACE(161,38);
+// #Mmain_U3 @TEXT("",key="model");
 // #Mmain @SET-SYMBOL $NMOS_4TERM;
 // #Mmain @PLACE(158,17) => @ORIENT("R270");
 // #Mmain @TEXT("Mmain",key="name",size=1.3,halign="start") => @PLACE(161,20);
@@ -173,6 +192,11 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
 // #Mmain_U1 @TEXT("Mmain_U1",key="name",size=1.3,halign="start") => @PLACE(161,-5);
 // #Mmain_U1 @TEXT("l=150.0n w=1u multi=1",key="value",size=0.9,halign="start") => @PLACE(161,-12);
 // #Mmain_U1 @TEXT("",key="model");
+// #Mmain_U2 @SET-SYMBOL $NMOS_4TERM;
+// #Mmain_U2 @PLACE(158,-33) => @ORIENT("R270");
+// #Mmain_U2 @TEXT("Mmain_U2",key="name",size=1.3,halign="start") => @PLACE(161,-30);
+// #Mmain_U2 @TEXT("l=150.0n w=1u multi=1",key="value",size=0.9,halign="start") => @PLACE(161,-37);
+// #Mmain_U2 @TEXT("",key="model");
 // &"CLKSB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MPCLK:1 (0,20)};
 // $JUNCTION @ATTACH (0,20);
 // &"CLKSB" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#MNCLK:1 (0,20)};
@@ -204,7 +228,7 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
 // $JUNCTION @ATTACH (80,-2);
 // &"BBOT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Msin:1 (101,-2)};
 // $JUNCTION @ATTACH (101,-2);
-// &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(138,-5) (138,6) (138,20) (138,41)};
+// &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(138,-30) (138,-5) (138,6) (138,20) (138,41) (138,45)};
 // &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#M4:1 (138,41)};
 // $JUNCTION @ATTACH (138,41);
 // &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Maux:1 (138,6)};
@@ -213,19 +237,31 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
 // $JUNCTION @ATTACH (138,20);
 // &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U1:2 (138,-5)};
 // $JUNCTION @ATTACH (138,-5);
+// &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U2:2 (138,-30)};
+// $JUNCTION @ATTACH (138,-30);
+// &"G" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U3:2 (138,45)};
+// $JUNCTION @ATTACH (138,45);
 // &"GRESET" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#Maux:3 (116,2) (116,-20) #MRSTG:1};
-// &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(146,-11) (146,-8) (146,17)};
+// &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(146,-33) (146,-11) (146,-8) (146,17) (146,42)};
 // &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Msin:3 (146,-11)};
 // $JUNCTION @ATTACH (146,-11);
 // &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain:3 (146,17)};
 // $JUNCTION @ATTACH (146,17);
 // &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U1:3 (146,-8)};
 // $JUNCTION @ATTACH (146,-8);
-// &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(177,-8) (177,17)};
+// &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U2:3 (146,-33)};
+// $JUNCTION @ATTACH (146,-33);
+// &"Vin" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U3:3 (146,42)};
+// $JUNCTION @ATTACH (146,42);
+// &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {(177,-33) (177,-8) (177,17) (177,42)};
 // &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain:1 (177,17)};
 // $JUNCTION @ATTACH (177,17);
 // &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U1:1 (177,-8)};
 // $JUNCTION @ATTACH (177,-8);
+// &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U2:1 (177,-33)};
+// $JUNCTION @ATTACH (177,-33);
+// &"VOUT" @WIRE(mode="straight",linecolor="#226e85",linewidth=0.16) {#Mmain_U3:1 (177,42)};
+// $JUNCTION @ATTACH (177,42);
 // (-13,-44) @TEXT("Clock inverter",size=1.1,halign="start",textcolor="#223d52");
 // (33,-44) @TEXT("Precharge / boosted G and BTOP",size=1.1,halign="start",textcolor="#223d52");
 // (144,-44) @TEXT("Vin -> VOUT",size=1.1,halign="start",textcolor="#223d52");
@@ -234,6 +270,10 @@ subckt sar_bootstrap_flat_8b_p CLKS VOUT Vin
 // (158,12.6) @TEXT("0",size=1.1,halign="middle",valign="top");
 // &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#Mmain_U1:4 (158,-12)};
 // (158,-12.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#Mmain_U2:4 (158,-37)};
+// (158,-37.4) @TEXT("0",size=1.1,halign="middle",valign="top");
+// &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#Mmain_U3:4 (158,38)};
+// (158,37.6) @TEXT("0",size=1.1,halign="middle",valign="top");
 // &"CLKS" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#M4C:2 (32,5)};
 // (31.6,5) @TEXT("CLKS",size=1.1,halign="end",valign="middle");
 // &"0" @WIRE(mode="straight",linecolor="#30485d",linewidth=0.16) {#M4C:4 (42,5)};

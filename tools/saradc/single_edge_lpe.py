@@ -122,9 +122,14 @@ def cdac_bundle(view, corner):
                 weights_sha=weights_sha)
 
 
-def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, macro=None):
-    """macro: extracted SAR macro from Layout.tools.simulation.prepare_sar_se (files, top, probe, record)."""
+def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, macro=None, bootstrap=None):
+    """macro: extracted SAR macro from Layout.tools.simulation.prepare_sar_se (files, top, probe, record).
+    bootstrap: physical ID of a verified Bootstrap core extraction that replaces both channels."""
     taps = tuple(taps)
+    boot = None
+    if bootstrap is not None:
+        from Layout.tools.simulation import bootstrap_pex
+        boot = bootstrap_pex.package(bootstrap)
     if corner not in CELL_RC or kind not in CODES:
         raise ValueError('Unknown corner or stimulus')
     if seed is not None and (corner not in ('ssc', 'ffc') or kind == 'restart'):
@@ -133,7 +138,8 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
         raise ValueError('The extracted macro fixes the delay taps')
     rc = CELL_RC[corner]
     tag = '' if taps == TAPS else '-t%d' % taps[0] if len(set(taps)) == 1 else '-t' + 'x'.join(map(str, taps))
-    label = {'nominal': 'nom', 'cworst': 'cw'}[cdac] + '-' + kind + tag + ('-s%d' % seed if seed is not None else '')
+    label = ({'nominal': 'nom', 'cworst': 'cw'}[cdac] + '-' + kind + tag + ('-bootx' if boot else '')
+             + ('-s%d' % seed if seed is not None else ''))
     rid = 'sar8-%s-%s-%s-%s' % ('sepl' if macro else 'sebit', corner, label, revision)
     dest = ROOT / 'work/decks' / rid
     bundle = cdac_bundle(cdac, corner)
@@ -147,6 +153,9 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
         raise ValueError('Expected one CDAC include')
     sources['dut.scs'] = dut.replace(b'"xtor/cdac/cdac.scs"', b'"cdac_pex_wrapper.scs"')
     sources.update(bundle['files'])
+    if boot:
+        sources['dut.scs'] = bootstrap_pex.use(sources['dut.scs'])
+        sources.update(boot['files'])
     if macro is not None:
         # The extracted macro replaces the five SAR-group instances of the top.
         top_include = b'include "top/adc_top.scs"'
@@ -182,15 +191,22 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
     group_names = [s for side in ('n', 'p') for group in bundle['groups'][side] for s in group]
     sel = selectors(taps)
     signals = [s for s in ctx['required_signals'] if not s.startswith('xdut.xcdac.')]
+    if boot:
+        signals = [s for s in signals if s not in bootstrap_pex.INTERNAL]
     extra = [r['q'] for r in sel] + [r['trial'] for r in sel] + [n for r in sel for n in r['inputs']] + PROBES
     signals += [s for s in dict.fromkeys(extra) if s not in signals]
     ctx['required_signals'] = signals + ([] if kind == 'restart' else group_names)
-    # A macro probe returns the exact, case-sensitive node to save, or None for an unchanged net.
-    probes = [macro['probe'](s) for s in signals] if macro else [None] * len(signals)
+
+    # A probe returns the exact, case-sensitive node to save, or None for an unchanged net.
+    def probe(s):
+        if boot and s in boot['probes']:
+            return boot['probes'][s]
+        return macro['probe'](s) if macro else None
+    probes = [probe(s) for s in signals]
     saved = [p or s.upper() for s, p in zip(signals, probes)]
     if len(set(saved)) != len(saved):
         raise ValueError('Two schematic probes map to one saved node')
-    if macro:
+    if any(probes):
         ctx['signal_aliases'] = {p.replace('\\', '').lower(): s for s, p in zip(signals, probes) if p}
     deck, count = re.subn(rb'(?m)^save [^\r\n]+', b'save ' + ' '.join(saved).encode(), blobs['test.scs'])
     if count != 1:
@@ -224,6 +240,8 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
                first_compare_gate_limit_v=.1)
     if macro:
         ctx.update(pex_modules=['cdac', 'sar'], sar_macro=macro['record'])
+    if boot:
+        ctx.update(boot['context'], pex_modules=ctx['pex_modules'] + ['bootstrap'])
     if kind == 'restart':
         blobs['single_edge_restart.py'] = (ROOT / 'tools/saradc/measure/single_edge_restart.py').read_bytes()
         analyzer = 'single_edge_restart.py'
@@ -242,7 +260,10 @@ def prepare(corner, kind, cdac='nominal', revision='a', taps=TAPS, seed=None, ma
     scope = ('%s cell LPE, %s extracted CDAC, ideal SAR inter-cell wiring, 45 ns sampling' % (rc, cdac) if not macro else
              'extracted SAR macro %s, %s cell LPE for the remaining cells, %s extracted CDAC, 45 ns sampling'
              % (macro['record']['physical_id'], rc, cdac))
-    recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_' + ('sar_macro_xrc' if macro else 'cell_lpe_cdac_xrc'),
+    if boot:
+        scope += ', extracted Bootstrap %s on both channels' % bootstrap
+    recipe.update(run_id=rid, design_id='sar8_single_edge_bitwise_' + ('sar_macro_xrc' if macro else 'cell_lpe_cdac_xrc')
+                  + ('_boot_xrc' if boot else ''),
                   analyzer=analyzer, qualification_scope=scope,
                   test_conditions=ctx, inputs=[dict(name=n, source=(dest / n).relative_to(ROOT).as_posix(),
                                                     sha256=digest(b)) for n, b in blobs.items()])
@@ -266,5 +287,6 @@ if __name__ == '__main__':
     p.add_argument('--revision', default='a')
     p.add_argument('--taps', type=lambda s: tuple(int(x) for x in s.split(',')), default=TAPS)
     p.add_argument('--seed', type=int)
+    p.add_argument('--bootstrap', metavar='PHYSICAL_ID', help='Replace both Bootstrap channels with this core extraction')
     a = p.parse_args()
-    print(prepare(a.corner, a.kind, a.cdac, a.revision, a.taps, a.seed))
+    print(prepare(a.corner, a.kind, a.cdac, a.revision, a.taps, a.seed, bootstrap=a.bootstrap))

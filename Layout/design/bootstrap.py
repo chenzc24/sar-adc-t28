@@ -1,5 +1,7 @@
 """Generate Bootstrap's independent LVS source from the electrical master."""
+import argparse
 import hashlib
+import json
 import re
 
 from Layout.project import ROOT
@@ -9,6 +11,28 @@ MASTER = 'sar_bootstrap_flat_8b_p'
 CORE = MASTER + '_core'
 SOURCE = ROOT / 'design/xtor/bootstrap/bootstrap.scs'
 OUTPUT = ROOT / 'work/layout/bootstrap/bootstrap-reference.cdl'
+
+
+def candidate_of(view):
+    """OA view layout holds the selected sampler; layout_<name> holds candidate <name>."""
+    if view == 'layout':
+        return None
+    match = re.fullmatch(r'layout_(mmain\d{1,2})', view)
+    if not match:
+        raise ValueError('Unknown Bootstrap view: ' + view)
+    return match[1]
+
+
+def source(candidate=None):
+    """Electrical netlist of the selected sampler, or of an unselected candidate."""
+    if not candidate:
+        return SOURCE
+    rows = json.loads((ROOT / 'specs/candidates.json').read_text(encoding='utf-8'))
+    return ROOT / rows['modules']['sampler']['candidates'][candidate]['file']
+
+
+def output(candidate=None):
+    return OUTPUT.with_name('bootstrap-%s-reference.cdl' % candidate) if candidate else OUTPUT
 
 
 def reference(source):
@@ -40,11 +64,14 @@ def reference(source):
     return '\n'.join(result + ['.ENDS ' + CORE, ''])
 
 
-def generate():
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text(reference(SOURCE.read_bytes()), encoding='ascii')
-    print(OUTPUT.relative_to(ROOT))
+def generate(candidate=None):
+    path = output(candidate)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(reference(source(candidate).read_bytes()), encoding='ascii')
+    print(path.relative_to(ROOT))
 
 
 if __name__ == '__main__':
-    generate()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--candidate', help='Unselected sampler candidate, built into OA view layout_<name>')
+    generate(parser.parse_args().candidate)

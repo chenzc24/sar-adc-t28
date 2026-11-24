@@ -1,6 +1,6 @@
 # Transistor Implementations and Candidates
 
-The current ADC uses `sar=single_edge` and `reference=single_edge_d2`. Sampler, CDAC and comparator use `b`. [Candidate registry](../../specs/candidates.json) · [Adoption report](../../results/design/sar_single_edge_adoption_20261120.md)
+The current ADC uses `sar=single_edge` and `reference=single_edge_d2`. Sampler, CDAC and comparator use `b`. Since 2026-11-21 the sampler `b` has four parallel 1 µm main switches instead of two. [Candidate registry](../../specs/candidates.json) · [Adoption report](../../results/design/sar_single_edge_adoption_20261120.md) · [Sampler main-switch adoption](../../results/design/sampler_mmain4_adoption_20261121.md)
 
 ## Single-edge SAR
 

@@ -15,12 +15,13 @@ def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None
             arguments.append('--build')
     else:
         view = view or 'layout'
-        if view not in ('layout','layout_paired_balanced'):raise ValueError('Unknown layout view '+view)
+        candidate_view = module == 'bootstrap' and re.fullmatch(r'layout_mmain\d{1,2}', view)
+        if view not in ('layout','layout_paired_balanced') and not candidate_view:raise ValueError('Unknown layout view '+view)
         if staging:raise ValueError('--staging applies to --module sar-se')
         if rebuild and module not in ('comparator', 'bootstrap'):
             raise ValueError('Rebuild is supported only for generator-owned cores')
-        if view != 'layout' and (module != 'cdac' or rebuild):
-            raise ValueError('Alternate views are supported for existing CDAC layouts')
+        if view != 'layout' and not candidate_view and (module != 'cdac' or rebuild):
+            raise ValueError('Alternate views are supported for existing CDAC layouts and Bootstrap candidates')
         case = {'cdac':'full', 'comparator':'comparator', 'comparator-filled':'comparator-filled', 'bootstrap':'bootstrap'}[module]
         arguments = ['python','-u','run_physical.py',case,identity,'--through',through,'--pex-timeout','1800']
         if not rebuild:
@@ -29,6 +30,8 @@ def physical(identity,through,module='cdac',rebuild=False,view=None,staging=None
                 arguments.extend(['--view',view])
         else:
             arguments.append('--rebuild-' + module)
+            if view != 'layout':
+                arguments.extend(['--view',view])
     command=' '.join(q(x) for x in arguments)
     script='\n'.join(['set -eu','umask 077','cd '+q(root+'/runtime'),
         'if test -e '+q(root+'/evidence/'+identity)+' || test -e '+q(legacy+'/evidence/'+identity)+'; then echo "Evidence identity already exists; query status, do not resubmit." >&2; exit 2; fi',
@@ -54,6 +57,7 @@ def main():
     a=sub.add_parser('generate');a.add_argument('--module',choices=['cdac','cdac-paired','comparator','bootstrap'],default='cdac')
     a.add_argument('--planned-fill',action='store_true',help='cdac-paired only: add the planned array fill cell')
     a.add_argument('--center',choices=['inverted','stacked'],help='cdac-paired only: small-bit layout of the two center columns')
+    a.add_argument('--candidate',help='bootstrap only: LVS source of an unselected sampler candidate')
     a=sub.add_parser('physical');a.add_argument('identity');a.add_argument('--through',choices=['stream','drc','lvs','pex'],default='pex')
     a.add_argument('--module',choices=['cdac','comparator','comparator-filled','bootstrap','sar-se'],default='cdac')
     a.add_argument('--rebuild',action='store_true',help='Rebuild a generator-owned core after a checkpoint; sar-se: create the view')
@@ -86,6 +90,9 @@ def main():
             if (args.planned_fill or args.center) and args.module!='cdac-paired':
                 raise SystemExit('--planned-fill and --center apply to --module cdac-paired')
             options=(['--planned-fill'] if args.planned_fill else [])+(['--center',args.center] if args.center else [])
+            if args.candidate:
+                if args.module!='bootstrap':raise SystemExit('--candidate applies to --module bootstrap')
+                options+=['--candidate',args.candidate]
         modules={'generate':(generator,options),'deploy':('Layout.tools.deploy',['--apply']),
                  'prepare-tt':('Layout.tools.simulation.prepare_integrated_sim',
                                [getattr(args,'physical_identity',''),getattr(args,'run_id','')]+(['--prefill'] if getattr(args,'prefill',False) else [])
