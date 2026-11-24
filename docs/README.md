@@ -9,4 +9,4 @@
 - Project skills and delivery steps are covered in the [Development workflow](development-workflow.md).
 - Project terminology and confirmed design decisions are in the [Glossary](../GLOSSARY.md) and [Architecture decisions](adr/README.md).
 
-Use the Git commit in `results/provenance.json` and the local `work/legacy/` snapshot for historical derivations and reports. Personal study notes are at `E:/Learning/SAR-ADC-T28`.
+For historical derivations, the provenance record gives the source commit and frozen B DUT digest. [Historical provenance](../results/provenance.json)

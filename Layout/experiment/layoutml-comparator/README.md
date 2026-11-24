@@ -1,6 +1,8 @@
 # StrongARM 比较器 · Virtuoso 原生版图
 
-当前可编辑视图位于 `thu-wei` 上的 `SAR_ADC_T28_LAYOUT / sar_strongarm_lml_exp / layout`。工程使用 `llm_IO/SAR_ADC_T28_LAYOUT` 库。在同一 cellview 内修改，服务器按运行身份保留写入前的 OA 检查点。下方的 LayoutML 图与第一次交接记录保留作历史对照。
+本实验的可编辑视图位于 `thu-wei` 上的 `SAR_ADC_T28_LAYOUT / sar_strongarm_lml_exp / layout`。工程使用 `llm_IO/SAR_ADC_T28_LAYOUT` 库。在同一 cellview 内修改，服务器按运行身份保留写入前的 OA 检查点。下方的 LayoutML 图与第一次交接记录保留作历史对照。
+
+r8 整机使用的比较器及其验证记录见[版图索引](../../README.md)。
 
 ## 工作流复盘
 
