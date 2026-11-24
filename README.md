@@ -55,6 +55,7 @@ All 12 short functional runs passed. The table shows the **verify stimulus** at 
 
 | Review item | Recorded outcome |
 | --- | --- |
+| Board readout at FF hot | With 0.99 V core, 1.98 V IO, a 0.2 Ω / 2 nH bond and 15 pF per output, the board word settled 2.046 ns after register capture for the scored 0xFF conversion. The slower direction of the 0x7F ↔ 0x80 eight-bit switching test settled in 2.023 ns. [Endpoint conversion](results/integration/ffh_board_conversion.md) · [Simultaneous switching](results/integration/ffh_board_switching.md) |
 | CDAC gain | The standalone TT bit-weight measurement on the stacked CDAC with planned fill gave a scale factor of 0.95950 and a code-domain gain error of 4.22%, within the 4.7% CDAC allocation. [CDAC bit weights and gain](Layout/results/cdac.md#gain-error-assessment) |
 | Dynamic, static and power targets | The final TT 1,024-point transient-noise FFT at −1 dBFS (bin 461, 10 MS/s) is pending. Final Stage 6 SNDR, ENOB, full-code DNL/INL and average power are unreported in the current results index. [FFT setup](Layout/tools/simulation/prepare_stage6.py) · [Electrical results by revision](results/README.md) |
 | FF-cold device stress | **Open.** At 0.99 V and −40 °C, 16 VDS pairs exceeded the project duration screen over eight extreme frames. SAR bit-1 register PMOS MM79 reached 1.11185 V absolute VDS and spent 757.8 ps above 1.10 V in a sliding 10 ns window (limit 100 ps). [Terminal measurements](results/integration/stage6_ff_electrical_20261124.json) · [Project rule](specs/soa_rule.yaml) |
