@@ -24,6 +24,8 @@ EXTERNAL.update({f'DEL{size:03d}D1BWP12T30P140':['I','Z','VDD','VSS']
 POWER = {'VDD','VDD!','AVDD','DVDD'}
 GROUND = {'VSS','0'}
 COLORS = {'wire':'#30485d','clock':'#94601a','analog':'#226e85','power':'#647584'}
+BLOCK_COLORS = {'sar_bootstrap_flat_8b_p':'#eaf5ef', 'sar8j_r1_cdac':'#eef4e3',
+                'sar_strongarm_t28':'#eaf2fa', 'sar8_se_ctrl':'#f1eef8', 'sar8i_refword':'#f6f0e5'}
 
 def q(value): return json.dumps(str(value), ensure_ascii=False)
 def xy(point): return '(%g,%g)' % tuple(point)
@@ -92,7 +94,10 @@ def symbol(master, ports):
                 label=re.sub(r'\d+$','',p)+'[%s:%s]'%(max(bits),min(bits))
             text(ex+(.5 if side=='left' else -.5 if side=='right' else 0),ey+(.8 if side=='down' else -.8 if side=='up' else 0),label,align='start' if side=='left' else 'end' if side=='right' else 'middle')
     corners=[(-w,h),(w,h),(w,-h),(-w,-h),(-w,h)]
-    lines.insert(0,'@LINE {'+' '.join(xy(point) for point in corners)+'};')
+    outline='@LINE'
+    if master in BLOCK_COLORS:
+        outline+='(fill="fillcolor",fillcolor='+q(BLOCK_COLORS[master])+')'
+    lines.insert(0,outline+' {'+' '.join(xy(point) for point in corners)+'};')
     # Native library symbols include their real power terminals; no made-up body.
     gate='INV' if master in {'sar8p_inv','INVD1BWP12T30P140'} else 'BUF' if master in {'sar8p_buf','sar8p_clkbuf'} else 'NAND' if master in {'sar8p_nand2','ND2D1BWP12T30P140'} else 'AND' if master=='sar8p_and2' else 'OR' if master=='sar8p_or2' else 'XOR' if master=='sar8p_xor2' else 'DFF' if master in {'sar8p_dffr','DFCNQD1BWP12T30P140'} else 'MUX' if master=='sar8p_mux2' else None
     if gate:
@@ -119,16 +124,18 @@ def symbol(master, ports):
             if gate=='XOR':lines+=['@LINE {(-6,5) (-4.8,2) (-4.5,0) (-4.8,-2) (-6,-5)};']
         else:
             lines+=['@LINE {(-5,5) (5,5) (5,-5) (-5,-5) (-5,5)};'];text(1,0,gate,.85)
-    if re.fullmatch(r'sar8j_r1_sw_b\d',master):
-        lines=['@LINE {(-11,7) (11,7) (11,-7) (-11,-7) (-11,7)};'];pins={};dirs={};w=11;h=7
+    switch=re.fullmatch(r'sar8j_r1_sw_b\d',master)
+    if switch:
+        lines=['@LINE {(-9,7) (9,7) (9,-7) (-9,-7) (-9,7)};'];pins={};dirs={};w=9;h=7
         for p,x,y,d in [('BOT',0,12,'up'),('GN',-5,-12,'down'),('GP',5,-12,'down'),
-                        ('VREFN',-13,-4,'left'),('VREFP',-13,4,'left'),('VDD',13,4,'right'),('VSS',13,-4,'right')]:
+                        ('VREFN',-11,-4,'left'),('VREFP',-11,4,'left'),('VDD',11,4,'right'),('VSS',11,-4,'right')]:
             pin([p],x,y,d)
             ex=x+(2 if d=='left' else -2 if d=='right' else 0);ey=7 if d=='up' else -7 if d=='down' else y
             lines.append('@LINE {%s %s};'%(xy((x,y)),xy((ex,ey))))
             text(ex+(1 if d=='left' else -1 if d=='right' else 0),ey+(.8 if d=='down' else -.8 if d=='up' else 0),p,.65,'start' if d=='left' else 'end' if d=='right' else 'middle')
+    model_caption='' if gate or switch else '${model}'
     lines+=['? @TEXT("${name}",key="name",size=1.6,halign="middle") => @PLACE(0,%g);'%(h+3.5),
-            '? @TEXT("${model}",key="model",size=0.85,halign="middle") => @PLACE(0,%g);'%(-h-4)]
+            '? @TEXT(%s,key="model",size=0.85,halign="middle") => @PLACE(0,%g);'%(q(model_caption),-h-4)]
     return Symbol('S_'+master,pins,dirs,w*2+4,h*2+8,lines)
 
 def primitive(master):
@@ -167,6 +174,18 @@ class Sheet:
         i=int(t) if t.isdigit() else self.ports[master].index(t)+1
         x,y,o=self.pos[inst];dx,dy=turn(sym.pins[i],o)
         return (x+dx,y+dy),nodes[i-1],inst,i
+    def caption(self,name,title,dy=0):
+        x,y,_=self.pos[name]
+        self.emit('#%s @TEXT(%s,key="name",size=1.65,halign="middle",textcolor="#223d52") => @PLACE%s;'
+                  %(name,q(title),xy((x,y+dy))))
+        self.emit('#%s @TEXT("",key="model");'%name)
+    def input_port(self,ref,reach=10,color='wire'):
+        (x,y),n,inst,i=self.pin(ref)
+        self.serial+=1;tag=f'%sar_port{self.serial}'
+        self.emit('%s = $IO_PORT @ATTACH %s => @PLACE%s;'%(tag,net(n),xy((x-reach,y))))
+        self.emit('%s @WIRE(mode="straight",linecolor=%s,linewidth=0.16) {%s:p #%s:%s};'
+                  %(net(n),q(COLORS[color]),tag,inst,i))
+        self.wired.add((inst,i))
     def wire(self,n,*points,color='wire'):
         out=[];refs=[]
         for p in points:
@@ -194,7 +213,7 @@ class Sheet:
         if via is None:
             mid=(p[0]+e[0])/2;via=[(mid,p[1]),(mid,e[1])]
         self.wire(n,a,*via,b)
-    def bus(self,refs,via=None):
+    def bus(self,refs,via=None,color=None):
         """Join complete grouped pins, preserving their explicit scalar order."""
         nets=None;ends=[]
         for inst,first in refs:
@@ -205,7 +224,9 @@ class Sheet:
             nets=got;ends.append((inst,i,self.pin(inst+':'+str(i))[0]));self.wired.update((inst,t) for t in members)
         a,ai,p=ends[0];b,bi,e=ends[-1];mid=(p[0]+e[0])/2
         points=via if via is not None else [(mid,p[1]),(mid,e[1])]
-        self.emit('{%s} @WIRE(mode="straight",linewidth=0.3) {#%s:%s %s #%s:%s};'%(' '.join(net(n) for n in nets),a,ai,' '.join(xy(v) for v in points),b,bi))
+        style=',linecolor='+q(color) if color else ''
+        self.emit('{%s} @WIRE(mode="straight",linewidth=0.24%s) {#%s:%s %s #%s:%s};'
+                  %(' '.join(net(n) for n in nets),style,a,ai,' '.join(xy(v) for v in points),b,bi))
     def local(self,exclude=(),distance=65):
         """Wire short internal links. Global clocks and cross-section nets use named ports."""
         by={}

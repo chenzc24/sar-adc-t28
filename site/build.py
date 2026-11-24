@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import html
 import json
+import posixpath
 import shutil
 import subprocess
 from html.parser import HTMLParser
@@ -18,39 +19,48 @@ SITE = Path(__file__).resolve().parent
 ROOT = SITE.parent
 REPOSITORY = "https://github.com/chenzc24/sar-adc-t28"
 PAGES_URL = "https://chenzc24.github.io/sar-adc-t28/"
-REVISION = "63c36806c5d7f612bb7e9ecafb4d3ce2da7a78cc"
+REVISION = "eb75b017230ad150ea4b2f5f8c0d6612f8e20c01"
 SNAPSHOT = f"{REPOSITORY}/blob/{REVISION}"
 PAGES = {
-    "index": ("Overview", "An 8-bit, 10 MS/s asynchronous SAR ADC in TSMC 28 nm."),
-    "architecture": ("Architecture", "The sampling, decision and feedback paths of the SAR ADC."),
-    "schematic": ("Schematics", "Browse the current circuit hierarchy and Spectre sources in RNL Viewer."),
-    "verification": ("Verification", "Post-layout measurements, limits and coverage for the SAR ADC."),
-    "layout": ("Layout", "The routed ADC core, filled die, IO ring and physical verification."),
-    "review": ("Design review", "Open design and verification items with their evidence and acceptance criteria."),
-    "history": ("History", "The SAR ADC design revisions, experiments and historical measurements."),
+    "en": {
+        "index": ("Overview", "An 8-bit, 10 MS/s asynchronous SAR ADC in TSMC 28 nm."),
+        "schematic": ("Schematics", "Browse the current circuit hierarchy in RNL Viewer."),
+        "layout": ("Layout", "Inspect the unfilled r8 die from the IO ring to individual devices."),
+        "verification": ("Verification", "Post-layout results, limits and open checks."),
+        "history": ("History", "The SAR ADC design revisions and historical measurements."),
+    },
+    "zh-CN": {
+        "index": ("概览", "TSMC 28 nm 工艺的 8 位、10 MS/s 异步 SAR ADC。"),
+        "schematic": ("原理图", "用 RNL Viewer 查看当前电路与模块层次。"),
+        "layout": ("版图", "查看 r8 无填充版图，从 IO 环放大到单个晶体管。"),
+        "verification": ("验证", "后仿结果、指标和待完成的验证。"),
+        "history": ("迭代", "ADC 的设计变更与历史测量。"),
+    },
 }
+REDIRECTS = {"architecture": ("index", "architecture"), "review": ("verification", "electrical-checks")}
 FIGURES = {
     "assets/baseline-spectrum.png": "results/fft/ab_spectrum.png",
 }
-STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js", "assets/schematic-view.js")
+STATIC = ("assets/project.css", "assets/layout-view.css", "assets/layout-view.js",
+          "assets/schematic-view.js", "assets/language.js")
 LAYOUT_PART_SIZE = 192 * 1024
 RNL_VIEWER = "https://rich-netlist.github.io/rnl/viewer/"
 RNL_ENTRY = "design/rnl/export.scs"
 SCHEMATIC_LEVELS = {
-    "ADC core": "sar_adc8_join_r4",
-    "Bootstrap": "sar_bootstrap_flat_8b_p",
-    "CDAC": "sar8j_r1_cdac",
-    "StrongARM": "sar_strongarm_t28",
-    "SAR controller": "sar8_se_ctrl",
-    "Reference drive": "sar8i_refword",
+    "sar_adc8_join_r4": ("ADC core", "ADC 核心"),
+    "sar_bootstrap_flat_8b_p": ("Bootstrap", "自举采样"),
+    "sar8j_r1_cdac": ("CDAC", "CDAC"),
+    "sar_strongarm_t28": ("StrongARM", "StrongARM"),
+    "sar8_se_ctrl": ("SAR controller", "SAR 控制器"),
+    "sar8i_refword": ("Reference drive", "参考驱动"),
 }
 BLOCKS = {
-    "bootstrap_n": ("Bootstrap N", "bootstrap", "bootstrap"),
-    "bootstrap_p": ("Bootstrap P", "bootstrap", "bootstrap"),
-    "cdac": ("MOM CDAC", "cdac", "cdac"),
-    "comparator": ("StrongARM", "comparator", "comparator"),
-    "reference": ("Reference drive", "reference", "reference"),
-    "sar": ("SAR logic", "sar", "sar"),
+    "bootstrap_n": (("Bootstrap N", "自举 N"), "bootstrap", "bootstrap"),
+    "bootstrap_p": (("Bootstrap P", "自举 P"), "bootstrap", "bootstrap"),
+    "cdac": (("MOM CDAC", "MOM CDAC"), "cdac", "cdac"),
+    "comparator": (("StrongARM", "StrongARM"), "comparator", "comparator"),
+    "reference": (("Reference drive", "参考驱动"), "reference", "reference"),
+    "sar": (("SAR logic", "SAR 逻辑"), "sar", "sar"),
 }
 
 
@@ -65,7 +75,6 @@ def frozen_file(path):
 def schematic_workspace(base_url, upgrader, checker):
     workspace = json.loads((ROOT / "design/rnl/workspace.json").read_text(encoding="utf-8"))
     design = json.loads((ROOT / "design/manifest.json").read_text(encoding="utf-8"))
-    scheme, host, *_ = urlsplit(base_url)
     revision = git_output("rev-parse", "HEAD").decode().strip()
     workspace.update(
         base=f"{base_url}rnl/source/",
@@ -88,7 +97,7 @@ def schematic_workspace(base_url, upgrader, checker):
     if hashlib.sha256(dut.read_bytes()).hexdigest() != drawing["source_hashes"]["design/dut.scs"]:
         raise SystemExit("Regenerate the native RNL workspace for the current DUT entry.")
     levels = drawing["levels"]
-    if any(level not in levels for level in SCHEMATIC_LEVELS.values()):
+    if any(level not in levels for level in SCHEMATIC_LEVELS):
         raise SystemExit("Check the site's schematic module links against the current hierarchy.")
     entry = convert(ROOT / RNL_ENTRY, upgrader, checker)
     workspace["entry"] = RNL_ENTRY
@@ -96,32 +105,39 @@ def schematic_workspace(base_url, upgrader, checker):
     files = {f"rnl/source/{RNL_ENTRY}": entry}
     files["rnl/workspace.json"] = json.dumps(workspace, indent=2).encode()
 
+    return files, workspace
+
+
+def schematic_context(workspace, base_url, locale):
+    scheme, host, *_ = urlsplit(base_url)
+    chinese = locale == "zh-CN"
+
     def url(level, embed=False):
-        params = {"manifest": f"{base_url}rnl/workspace.json", "level": level, "lang": "en"}
+        params = {"manifest": f"{base_url}rnl/workspace.json", "level": level}
         if embed:
             params.update(embed="1", origin=f"{scheme}://{host}")
         return html.escape(f"{RNL_VIEWER}?{urlencode(params)}", quote=True)
 
-    links = "\n".join(f'<a href="{url(level, True)}" data-level="{level}" target="rnl-frame">{label}</a>'
-                      for label, level in SCHEMATIC_LEVELS.items())
-    return files, {
-        "rnl_embed": url(design["top"], True),
-        "rnl_full": url(design["top"]),
+    links = "\n".join(f'<a href="{url(level, True)}" data-level="{level}" target="rnl-frame">{labels[chinese]}</a>'
+                      for level, labels in SCHEMATIC_LEVELS.items())
+    return {
+        "rnl_embed": url(workspace["level"], True),
+        "rnl_full": url(workspace["level"]),
         "rnl_links": links,
         "rnl_version": "0.4",
-        "rnl_top": design["top"],
-        "rnl_revision": revision[:7],
+        "rnl_top": workspace["level"],
+        "rnl_revision": workspace["source"]["commit"][:7],
         "rnl_entry": f'rnl/source/{workspace["entry"]}',
     }
 
 
-def floorplan():
+def floorplan(locale):
     plan = json.loads(frozen_file("Layout/design/floorplan.json"))
     xmin, ymin, xmax, ymax = plan["core_bbox"]
     width, height = xmax - xmin, ymax - ymin
     regions = []
     for block in plan["blocks"]:
-        label, anchor, theme = BLOCKS[block["id"]]
+        labels, anchor, theme = BLOCKS[block["id"]]
         x, y = block["origin"]
         w, h = block["size"]
         position = (
@@ -130,39 +146,65 @@ def floorplan():
         )
         regions.append(
             f'<a class="region region-{theme}" style="{position}" '
-            f'href="architecture.html#{anchor}"><span>{label}</span></a>'
+            f'href="#{anchor}"><span>{labels[locale == "zh-CN"]}</span></a>'
         )
     return "\n".join(regions)
 
 
-def navigation(current):
+def navigation(current, locale):
     links = []
-    for page, (label, _) in PAGES.items():
+    for page, (label, _) in PAGES[locale].items():
         active = ' aria-current="page"' if page == current else ""
         links.append(f'<a href="{page}.html"{active}>{label}</a>')
     return "\n".join(links)
 
 
-def render_pages(schematic):
+def render_pages(workspace, base_url):
     layout = Template((SITE / "layout.html").read_text(encoding="utf-8"))
-    context = {
+    shared = {
         "repository": REPOSITORY,
         "snapshot": SNAPSHOT,
         "revision": REVISION,
         "short_revision": REVISION[:7],
-        "floorplan": floorplan(),
-        **schematic,
     }
     pages = {}
-    for name, (label, description) in PAGES.items():
-        article = Template((SITE / "pages" / f"{name}.html").read_text(encoding="utf-8"))
-        pages[f"{name}.html"] = layout.substitute(
-            context,
-            title=html.escape(f"{label} · SAR ADC T28"),
-            description=html.escape(description),
-            navigation=navigation(name),
-            content=article.substitute(context),
-        )
+    for locale, entries in PAGES.items():
+        chinese = locale == "zh-CN"
+        prefix = "zh/" if chinese else ""
+        alternate_prefix = "../" if chinese else "zh/"
+        context = {
+            **shared,
+            **schematic_context(workspace, base_url, locale),
+            "locale": locale,
+            "asset_base": "../" if chinese else "",
+            "floorplan": floorplan(locale),
+            "skip": "跳到正文" if chinese else "Skip to content",
+            "nav_label": "主导航" if chinese else "Main navigation",
+            "switch_locale": "en" if chinese else "zh-CN",
+            "switch_label": "English" if chinese else "中文",
+            "evidence_label": "数据快照" if chinese else "Evidence snapshot",
+        }
+        for name, (label, description) in entries.items():
+            filename = f"{prefix}{name}.html"
+            article = Template((SITE / "pages" / filename).read_text(encoding="utf-8"))
+            pages[filename] = layout.substitute(
+                context,
+                language_link=f"{alternate_prefix}{name}.html",
+                title=html.escape(f"{label} · SAR ADC T28"),
+                description=html.escape(description),
+                navigation=navigation(name, locale),
+                content=article.substitute(context),
+            )
+        for legacy, (name, fragment) in REDIRECTS.items():
+            target = f"{name}.html#{fragment}"
+            label = entries[name][0]
+            pages[f"{prefix}{legacy}.html"] = (
+                f'<!doctype html><html lang="{locale}"><head><meta charset="utf-8">'
+                f'<title>{label} · SAR ADC T28</title>'
+                f'<noscript><meta http-equiv="refresh" content="0; url={target}"></noscript></head><body>'
+                f'<a href="{target}" id="moved-page">{label}</a>'
+                f'<script src="{context["asset_base"]}assets/language.js" defer></script></body></html>'
+            )
     return pages
 
 
@@ -199,7 +241,7 @@ def check_links(pages, assets):
                 if source not in tracked:
                     errors.append(f"{name}: missing source {source}")
             elif not target.scheme and not target.netloc:
-                path = str(PurePosixPath(unquote(target.path))) if target.path else name
+                path = posixpath.normpath(posixpath.join(posixpath.dirname(name), unquote(target.path))) if target.path else name
                 if path not in pages and path not in assets:
                     errors.append(f"{name}: missing local file {link}")
                 elif target.fragment and path in parsed and unquote(target.fragment) not in parsed[path].ids:
@@ -228,9 +270,10 @@ def layout_artifacts():
 
 
 def build(output, base_url, upgrader, checker):
-    schematic, context = schematic_workspace(base_url.rstrip("/") + "/", upgrader, checker)
+    base_url = base_url.rstrip("/") + "/"
+    schematic, workspace = schematic_workspace(base_url, upgrader, checker)
     artifacts = {**schematic, **layout_artifacts()}
-    pages = render_pages(context)
+    pages = render_pages(workspace, base_url)
     check_links(pages, {*FIGURES, *STATIC, *artifacts})
     for name, content in pages.items():
         destination = output / name

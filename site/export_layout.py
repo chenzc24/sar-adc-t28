@@ -43,6 +43,8 @@ LANDMARKS = {
 }
 FILL = re.compile(r"^sar8_adc_core_fill5(?:_|$)|^sar8_cdac_fill_plan$|^sar_bootstrap_flat_8b_p_fill$")
 VIA_MASTER = re.compile(r"M[2-9]_M[1-8]_CDNS_\d+")
+MOS_MASTER = re.compile(r"[np]ch(?:_[A-Za-z0-9]+)+_CDNS_\d+")
+TERMINAL_PURPOSE = (127, 0)
 
 
 def nm(value):
@@ -132,6 +134,7 @@ def export(source, output):
     excluded = set()
     shape_counts = Counter()
     cell_bounds = {}
+    terminal_labels = {}
     instance_records = 0
     names = {cell.name: f"C{index}" for index, cell in enumerate(library.cells)}
 
@@ -147,18 +150,24 @@ def export(source, output):
         written.add(name)
         owned = cell.name.startswith("sar")
         via = VIA_MASTER.fullmatch(cell.name)
-        cell_labels[name] = cell.name if owned else "Generated via" if via else "Library cell"
+        mos = MOS_MASTER.fullmatch(cell.name)
+        cell_labels[name] = cell.name if owned else "Generated via" if via else "MOS transistor" if mos else "Library cell"
         box = cell_box(cell)
         cell_bounds[name] = box
         lines.append(f"cell {name} {{")
         children = []
-        if owned or via or cell.name == "PAD60GU":
+        if owned or via or mos or cell.name == "PAD60GU":
             for poly in cell.get_polygons(depth=0):
                 layer = DRAWING.get((poly.layer, poly.datatype))
                 if not layer or (cell.name == "PAD60GU" and not layer.startswith("M")):
                     continue
                 lines.append("  " + polygon_line(poly))
                 shape_counts[layer] += 1
+            if mos:
+                terminals = [(label.text, *map(nm, label.origin)) for label in cell.labels
+                             if (label.layer, label.texttype) == TERMINAL_PURPOSE and label.text in {"D", "S"}]
+                if terminals:
+                    terminal_labels[name] = terminals
             for ref in cell.references:
                 child = ref.cell
                 if FILL.search(child.name) or child.name.startswith(("FILL", "PFILLER")):
@@ -182,6 +191,8 @@ def export(source, output):
     missing = {name for name in ("M8", "M9", "VIA7", "VIA8") if not shape_counts[name]}
     if missing:
         raise ValueError(f"Missing 1P9M routing purposes: {', '.join(sorted(missing))}")
+    if not terminal_labels:
+        raise ValueError("The published transistor cells have no source or drain labels.")
     lines.append(f"top {names[top.name]}")
     data = gzip.compress(("\n".join(lines) + "\n").encode(), mtime=0)
     release = {
@@ -195,6 +206,8 @@ def export(source, output):
         "landmarks": {names[name]: label for name, label in LANDMARKS.items() if names.get(name) in written},
         "excluded_fill_cells": sorted(excluded),
         "gds_layer_purposes": {name: list(spec) for spec, name, _ in LAYERS},
+        "terminal_label_purpose": list(TERMINAL_PURPOSE),
+        "terminal_labels_nm": terminal_labels,
         "shape_counts": shape_counts,
         "instance_records": instance_records,
     }

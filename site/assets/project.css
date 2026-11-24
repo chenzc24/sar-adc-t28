@@ -48,9 +48,12 @@ code { font-family: var(--mono); font-size: .9em; overflow-wrap: anywhere; }
 .site-nav a { padding: .48rem .64rem; border-radius: .42rem; color: var(--muted); font-size: .88rem; font-weight: 650; text-decoration: none; white-space: nowrap; }
 .site-nav a:hover { color: var(--ink); background: #edf1e7; }
 .site-nav a[aria-current="page"] { color: var(--ink); background: #e8efdf; }
-.repo-link { justify-self: end; border: 1px solid var(--line); padding: .38rem .68rem; border-radius: .45rem; color: var(--ink); font-size: .86rem; font-weight: 680; text-decoration: none; white-space: nowrap; }
+.header-actions { display: flex; justify-content: end; gap: .45rem; }
+.repo-link { border: 1px solid var(--line); padding: .38rem .68rem; border-radius: .45rem; color: var(--ink); font-size: .86rem; font-weight: 680; text-decoration: none; white-space: nowrap; }
 .repo-link:hover { background: #edf1e7; }
 .repo-link span { margin-left: .22rem; color: var(--green); }
+[lang="zh-CN"] body { font-family: "Inter", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif; }
+[lang="zh-CN"] :is(h1, h2, h3) { letter-spacing: -.02em; }
 
 .hero { display: grid; grid-template-columns: 1fr 1.02fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); padding-block: 3.3rem 2.7rem; }
 .hero h1 { margin: .85rem 0 1.1rem; font-size: clamp(4.25rem, 7.8vw, 7.45rem); line-height: .94; letter-spacing: -.083em; }
@@ -140,6 +143,7 @@ code { font-family: var(--mono); font-size: .9em; overflow-wrap: anywhere; }
 .schematic-frame { display: block; width: 100%; height: clamp(31rem, 74vh, 53rem); margin-top: .8rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--surface); }
 
 .signal-panel { padding: clamp(1rem, 2.6vw, 2rem); border-radius: .75rem; background: var(--dark); color: #f0f4eb; }
+.signal-panel + .block-list, .table-wrap + .review-list { margin-top: 1rem; }
 .panel-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .45rem 1rem; align-items: baseline; margin-bottom: 1.45rem; }
 .panel-heading h2 { font-size: clamp(1.45rem, 2.7vw, 2.1rem); }
 .panel-heading code { color: #bed7b6; }
@@ -244,6 +248,8 @@ td { color: #36493f; }
   .shell { width: calc(100% - 2rem); }
   .site-nav { margin-inline: -.28rem; }
   .site-nav a { padding: .4rem .32rem; font-size: .78rem; }
+  .header-actions { gap: .3rem; }
+  .repo-link { padding-inline: .45rem; }
   .hero { padding-block: 1.7rem 1.6rem; }
   .hero h1 { margin-top: .55rem; }
   .hero-floorplan { padding: .95rem; gap: .9rem; }
